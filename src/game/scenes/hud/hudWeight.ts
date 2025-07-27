@@ -44,9 +44,13 @@ class HudWeight {
       callback: () => {
         current++;
         weightNumbersContainer.updateWeight(current);
-        pointerContainer.updateWeight(current, DELAY_BETWEEN_UPDATES);
       },
     });
+
+    pointerContainer.updateWeight(
+      currentWeight,
+      DELAY_BETWEEN_UPDATES * currentWeight
+    );
 
     return container;
   }

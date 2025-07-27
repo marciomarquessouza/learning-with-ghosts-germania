@@ -35,10 +35,6 @@ class HudStamps {
 
     return container;
   }
-
-  update() {
-    // Update HUD elements based on game state
-  }
 }
 
 export const hudStamps = new HudStamps();

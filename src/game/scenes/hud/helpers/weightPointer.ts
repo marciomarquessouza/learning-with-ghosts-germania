@@ -43,7 +43,7 @@ class WeightPointer {
         duration,
         ease: "Sine.easeInOut",
         onComplete: () => {
-          pointer.rotation = targetRotation; // 🔒 forcibly set the end value
+          pointer.rotation = targetRotation;
         },
       });
 
