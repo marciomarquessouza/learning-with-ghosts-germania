@@ -19,7 +19,7 @@ class NoiseEffect {
         { key: NOISE_ATLAS, frame: "noise_4" },
         { key: NOISE_ATLAS, frame: "noise_5" },
       ],
-      frameRate: 4,
+      frameRate: 5,
       repeat: -1,
     });
 
