@@ -10,6 +10,15 @@
   --color-foreground: var(--foreground);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
+  --font-primary: var(--font-primary);
+  --font-secondary: var(--font-secondary);
+}
+
+@font-face {
+  font-family: "SpecialElite";
+  src: url("/fonts/SpecialElite-Regular.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
 }
 
 @media (prefers-color-scheme: dark) {
