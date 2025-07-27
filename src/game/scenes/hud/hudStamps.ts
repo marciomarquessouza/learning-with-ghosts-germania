@@ -20,18 +20,19 @@ class HudStamps {
 
     container.add(background);
 
-    const countText = scene.add.text(
-      -HUD_STAMPS_IMG_WIDTH / 2 + 36,
-      HUD_STAMPS_IMG_HEIGHT / 2 - 45,
-      "Total: 0/4",
-      {
-        fontFamily: "SpecialElite",
-        fontSize: "25px",
-        color: "#000000",
-      }
-    );
-
-    container.add(countText);
+    document.fonts.ready.then(() => {
+      const countText = scene.add.text(
+        -HUD_STAMPS_IMG_WIDTH / 2 + 36,
+        HUD_STAMPS_IMG_HEIGHT / 2 - 45,
+        "Total: 0/4",
+        {
+          fontFamily: "SpecialElite",
+          fontSize: "25px",
+          color: "#000000",
+        }
+      );
+      container.add(countText);
+    });
 
     return container;
   }

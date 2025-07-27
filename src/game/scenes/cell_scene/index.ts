@@ -22,6 +22,9 @@ class CellScene extends Phaser.Scene {
   }
 
   create() {
+    this.add.text(0, 0, "", {
+      fontFamily: "SpecialElite",
+    });
     const centerX = this.cameras.main.centerX;
     const centerY = this.cameras.main.centerY;
 
