@@ -35,7 +35,7 @@ class CellScene extends Phaser.Scene {
     const background = this.add.image(centerX, centerY, CELL);
     background.setDisplaySize(this.scale.width, this.scale.height);
 
-    calendar.create(this, 1).setPosition(1390, 200).setScale(0.8);
+    calendar.create(this);
 
     sisyphusSignal.create(this);
 

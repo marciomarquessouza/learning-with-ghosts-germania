@@ -1,7 +1,8 @@
 import { CALENDAR_IMG } from "@/constants/images";
+import { useGameStore } from "@/store/gameStore";
 
 type CalendarContainer = Phaser.GameObjects.Container & {
-  updateDay: (value: number) => void;
+  increaseDay: () => void;
 };
 
 const CALENDAR_KEY = "calendar";
@@ -11,8 +12,12 @@ class Calendar {
     scene.load.image(CALENDAR_KEY, CALENDAR_IMG);
   }
 
-  create(scene: Phaser.Scene, day: number = 1): CalendarContainer {
-    const container = scene.add.container(0, 0);
+  create(scene: Phaser.Scene): CalendarContainer {
+    const day = useGameStore.getState().day;
+    const container = scene.add
+      .container(0, 0)
+      .setPosition(1390, 200)
+      .setScale(0.8);
     const calendarImage = scene.add.image(0, 0, CALENDAR_KEY);
     calendarImage.setOrigin(0.5, 0);
     calendarImage.setScale(1.2);
@@ -28,12 +33,14 @@ class Calendar {
       dayText.setFontFamily("SpecialElite");
     });
 
-    function updateDay(newDay: number) {
-      dayText.setText(`Day ${newDay}`);
+    function increaseDay() {
+      useGameStore.getState().increaseDay();
+      const newDay = useGameStore.getState().day;
+      dayText.setText(`${newDay}`);
     }
 
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    (container as any).updateDay = updateDay;
+    (container as any).increaseDay = increaseDay;
 
     container.add(calendarImage);
     container.add(dayText);

@@ -5,6 +5,7 @@ import {
 } from "@/constants/images";
 import { weightNumbers } from "./helpers/weightNumbers";
 import { weightPointer } from "./helpers/weightPointer";
+import { useGameStore } from "@/store/gameStore";
 
 const HUD_WEIGHT_BACKGROUND = "hudWeightBackground";
 const DELAY_BETWEEN_UPDATES = 15;
@@ -17,8 +18,7 @@ class HudWeight {
   }
 
   create(scene: Phaser.Scene): Phaser.GameObjects.Container {
-    const MOCKED_WEIGHT = 75; // Mocked weight for testing purposes
-    const currentWeight = MOCKED_WEIGHT;
+    const currentWeight = useGameStore.getState().weight;
     const positionX = HUD_WEIGHT_IMG_WIDTH / 2;
     const positionY = HUD_WEIGHT_IMG_HEIGHT / 2 + 40;
     const container = scene.add.container(positionX, positionY);

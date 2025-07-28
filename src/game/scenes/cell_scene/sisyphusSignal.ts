@@ -14,7 +14,7 @@ class SisyphusSignal {
 
     const signalImage = scene.add.image(0, 0, SISYPHUS_SIGNAL_KEY);
     signalImage.setOrigin(0.5, 0.5);
-    signalImage.setAlpha(0.6);
+    signalImage.setAlpha(0.5);
 
     container.add(signalImage);
 
