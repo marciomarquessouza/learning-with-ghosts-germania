@@ -2,6 +2,8 @@ import { CELL_IMAGE } from "@/constants/images";
 import { createScene } from "@/game/core/CreateScene";
 import { noiseEffect } from "./noiseEffect";
 import { hud } from "../hud";
+import { calendar } from "./calendar";
+import { sisyphusSignal } from "./sisyphusSignal";
 
 const SCENE_NAME = "CellScene";
 const CELL = "cell";
@@ -18,6 +20,8 @@ class CellScene extends Phaser.Scene {
     const load: Phaser.Loader.LoaderPlugin = this.load;
     load.image(CELL, CELL_IMAGE);
     noiseEffect.preload(this);
+    calendar.preload(this);
+    sisyphusSignal.preload(this);
     hud.preload(this);
   }
 
@@ -30,6 +34,10 @@ class CellScene extends Phaser.Scene {
 
     const background = this.add.image(centerX, centerY, CELL);
     background.setDisplaySize(this.scale.width, this.scale.height);
+
+    calendar.create(this, 1).setPosition(1390, 200).setScale(0.8);
+
+    sisyphusSignal.create(this);
 
     noiseEffect.create(this);
 

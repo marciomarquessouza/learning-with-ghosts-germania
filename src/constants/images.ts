@@ -12,6 +12,12 @@ export const GHOST_LOADER_FLOOR =
 export const CELL_IMAGE = "/cell/josef_g_cell_clean.png";
 export const NOISE_ATLAS_IMG = "/cell/noise_spritesheet.png";
 export const NOISE_ATLAS_JSON = "/cell/noise_spritesheet.json";
+export const CALENDAR_IMG = "/cell/calendar.png";
+export const CALENDAR_IMG_WIDTH = 123;
+export const CALENDAR_IMG_HEIGHT = 175;
+export const SISYPHUS_SIGNAL_IMG = "/cell/sisyphus_signal.png";
+export const SISYPHUS_SIGNAL_IMG_WIDTH = 148;
+export const SISYPHUS_SIGNAL_IMG_HEIGHT = 111;
 // HUD STAMPS IMAGES
 export const HUD_STAMPS_IMG = "/hud/hud_stamps.png";
 export const HUD_STAMPS_IMG_WIDTH = 207;
