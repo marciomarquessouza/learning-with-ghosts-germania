@@ -1,3 +1,4 @@
+import { DEFAULT_INITIAL_WEIGHT } from "@/constants/game";
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
 
@@ -21,6 +22,7 @@ export type GameState = {
   day: number;
   weight: number;
   stamps: Stamp[];
+  debugMode: boolean;
   // actions
   increaseDay: () => void;
   setWeight: (amount: number) => void;
@@ -36,8 +38,9 @@ export const useGameStore = create<GameState>()(
   persist(
     (set) => ({
       day: 2,
-      weight: 60,
+      weight: DEFAULT_INITIAL_WEIGHT,
       stamps: [],
+      debugMode: false,
       increaseDay: () => set((state) => ({ day: state.day + 1 })),
       setWeight: (amount: number) => set(() => ({ weight: amount })),
       increaseWeight: (amount: number) =>
@@ -51,7 +54,8 @@ export const useGameStore = create<GameState>()(
           stamps: state.stamps.filter((stamp) => stamp.id !== stampId),
         })),
       resetStamps: () => set({ stamps: [] }),
-      resetGame: () => set({ day: 1, weight: 75, stamps: [] }),
+      resetGame: () =>
+        set({ day: 1, weight: DEFAULT_INITIAL_WEIGHT, stamps: [] }),
     }),
     {
       name: "game-storage",

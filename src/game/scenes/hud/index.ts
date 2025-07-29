@@ -15,6 +15,7 @@ class Hud {
     const hudActionsContainer = hudActions.create(scene);
 
     const container = scene.add.container(0, 0);
+    container.name = "hud";
     container.add(hudWeightContainer);
     container.add(hudStampsContainer);
     container.add(hudActionsContainer);

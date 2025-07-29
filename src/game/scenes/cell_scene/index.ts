@@ -4,6 +4,7 @@ import { noiseEffect } from "./noiseEffect";
 import { hud } from "../hud";
 import { calendar } from "./calendar";
 import { sisyphusSignal } from "./sisyphusSignal";
+import { selectableAreas } from "./selectableAreas";
 
 const SCENE_NAME = "CellScene";
 const CELL = "cell";
@@ -40,6 +41,8 @@ class CellScene extends Phaser.Scene {
     sisyphusSignal.create(this);
 
     noiseEffect.create(this);
+
+    selectableAreas.create(this);
 
     const hudContainer = hud.create(this);
 

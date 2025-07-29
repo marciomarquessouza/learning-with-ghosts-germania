@@ -1,36 +1,43 @@
-import { NOISE_ATLAS_IMG, NOISE_ATLAS_JSON } from "@/constants/images";
-
-const NOISE_ATLAS = "noiseAtlas";
-const NOISE_ANIM = "noiseAnim";
+import { Noise } from "./helper/noise/Noise";
+import { noiseBed } from "./helper/noise/noiseBed";
+import { noiseDefault } from "./helper/noise/noiseDefault";
+import { noiseDesk } from "./helper/noise/noiseDesk";
+import { gameEvents } from "@/game/events";
 
 class NoiseEffect {
+  private currentNoise: Noise | null = null;
+
   preload(scene: Phaser.Scene): void {
-    scene.load.atlas(NOISE_ATLAS, NOISE_ATLAS_IMG, NOISE_ATLAS_JSON);
+    noiseDefault.preload(scene);
+    noiseDesk.preload(scene);
+    noiseBed.preload(scene);
   }
 
-  create(scene: Phaser.Scene): Phaser.GameObjects.Sprite {
-    scene.anims.create({
-      key: NOISE_ANIM,
-      frames: [
-        { key: NOISE_ATLAS, frame: "noise_0" },
-        { key: NOISE_ATLAS, frame: "noise_1" },
-        { key: NOISE_ATLAS, frame: "noise_2" },
-        { key: NOISE_ATLAS, frame: "noise_3" },
-        { key: NOISE_ATLAS, frame: "noise_4" },
-        { key: NOISE_ATLAS, frame: "noise_5" },
-      ],
-      frameRate: 5,
-      repeat: -1,
+  create(scene: Phaser.Scene) {
+    this.update(scene, noiseDefault);
+    gameEvents.on("noise-effect", (noiseType) => {
+      switch (noiseType) {
+        case "desk":
+          this.update(scene, noiseDesk);
+          break;
+        case "bed":
+          this.update(scene, noiseBed);
+          break;
+        case "default":
+        default:
+          this.update(scene, noiseDefault);
+          break;
+      }
     });
+  }
 
-    const noise = scene.add
-      .sprite(0, 0, NOISE_ATLAS, "noise_0")
-      .setOrigin(0)
-      .setAlpha(0.8);
-
-    noise.play(NOISE_ANIM);
-
-    return noise;
+  update(scene: Phaser.Scene, noise: Noise) {
+    if (this.currentNoise) {
+      this.currentNoise.destroy();
+      this.currentNoise = null;
+    }
+    this.currentNoise = noise;
+    this.currentNoise.create(scene);
   }
 }
 
