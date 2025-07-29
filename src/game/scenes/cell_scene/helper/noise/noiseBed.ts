@@ -47,7 +47,7 @@ class NoiseBed extends Noise {
     }
 
     this.noise = scene.add
-      .sprite(0, 0, BED_NOISE_ANIM, "noise_0")
+      .sprite(0, 0, BED_NOISE_ATLAS, "noise_0")
       .setOrigin(0)
       .setAlpha(0.8);
 
