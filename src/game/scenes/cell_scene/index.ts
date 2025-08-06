@@ -3,7 +3,6 @@ import { createScene } from "@/game/core/CreateScene";
 import { noiseEffect } from "./noiseEffect";
 import { hud } from "../hud";
 import { calendar } from "./calendar";
-import { sisyphusSignal } from "./sisyphusSignal";
 import { selectableAreas } from "./selectableAreas";
 
 const SCENE_NAME = "CellScene";
@@ -22,7 +21,6 @@ class CellScene extends Phaser.Scene {
     load.image(CELL, CELL_IMAGE);
     noiseEffect.preload(this);
     calendar.preload(this);
-    sisyphusSignal.preload(this);
     hud.preload(this);
   }
 
@@ -36,9 +34,7 @@ class CellScene extends Phaser.Scene {
     const background = this.add.image(centerX, centerY, CELL);
     background.setDisplaySize(this.scale.width, this.scale.height);
 
-    calendar.create(this);
-
-    sisyphusSignal.create(this);
+    const calendarContainer = calendar.create(this);
 
     noiseEffect.create(this);
 
@@ -47,6 +43,7 @@ class CellScene extends Phaser.Scene {
     const hudContainer = hud.create(this);
 
     this.children.bringToTop(hudContainer);
+    this.children.bringToTop(calendarContainer);
   }
 
   update(): void {}

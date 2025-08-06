@@ -16,8 +16,9 @@ class Calendar {
     const day = useGameStore.getState().day;
     const container = scene.add
       .container(0, 0)
-      .setPosition(1390, 200)
+      .setPosition(1390, 180)
       .setScale(0.8);
+    container.name = "calendar";
     const calendarImage = scene.add.image(0, 0, CALENDAR_KEY);
     calendarImage.setOrigin(0.5, 0);
     calendarImage.setScale(1.2);

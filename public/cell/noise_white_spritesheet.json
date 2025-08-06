@@ -1,6 +1,6 @@
 {
   "frames": {
-    "noise_0": {
+    "noise_white_0": {
       "frame": {
         "x": 0,
         "y": 0,
@@ -20,7 +20,7 @@
         "h": 1080
       }
     },
-    "noise_1": {
+    "noise_white_1": {
       "frame": {
         "x": 1920,
         "y": 0,
@@ -40,7 +40,7 @@
         "h": 1080
       }
     },
-    "noise_2": {
+    "noise_white_2": {
       "frame": {
         "x": 3840,
         "y": 0,
@@ -60,7 +60,7 @@
         "h": 1080
       }
     },
-    "noise_3": {
+    "noise_white_3": {
       "frame": {
         "x": 0,
         "y": 1080,
@@ -80,7 +80,7 @@
         "h": 1080
       }
     },
-    "noise_4": {
+    "noise_white_4": {
       "frame": {
         "x": 1920,
         "y": 1080,
@@ -100,7 +100,7 @@
         "h": 1080
       }
     },
-    "noise_5": {
+    "noise_white_5": {
       "frame": {
         "x": 3840,
         "y": 1080,
@@ -122,7 +122,7 @@
     }
   },
   "meta": {
-    "image": "noise_spritesheet_desk.png",
+    "image": "noise_white_spritesheet.png",
     "size": {
       "w": 5760,
       "h": 2160

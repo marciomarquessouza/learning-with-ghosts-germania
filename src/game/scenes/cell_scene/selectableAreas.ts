@@ -9,14 +9,42 @@ class SelectableAreas {
       scene,
       deskPosition,
       deskSize,
-      "desk",
+      "selectable",
       handleDeskClick
     );
 
-    const bedPosition = { x: 345, y: 589 };
-    const bedSize = { width: 530, height: 491 };
+    const bedPosition = { x: 320, y: 575 };
+    const bedSize = { width: 585, height: 500 };
     const handleBedClick = () => console.log("#BED");
-    createSelectableArea(scene, bedPosition, bedSize, "bed", handleBedClick);
+    createSelectableArea(
+      scene,
+      bedPosition,
+      bedSize,
+      "selectable",
+      handleBedClick
+    );
+
+    const foodPosition = { x: 430, y: 59 };
+    const foodSize = { width: 395, height: 404 };
+    const handleFoodClick = () => console.log("#FOOD");
+    createSelectableArea(
+      scene,
+      foodPosition,
+      foodSize,
+      "selectable",
+      handleFoodClick
+    );
+
+    const sisyphusPosition = { x: 928, y: 615 };
+    const sisyphusSize = { width: 249, height: 254 };
+    const handleSisyphusClick = () => console.log("#Sisyphus");
+    createSelectableArea(
+      scene,
+      sisyphusPosition,
+      sisyphusSize,
+      "selectable",
+      handleSisyphusClick
+    );
   }
 }
 

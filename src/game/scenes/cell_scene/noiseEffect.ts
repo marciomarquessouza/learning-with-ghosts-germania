@@ -1,7 +1,6 @@
 import { Noise } from "./helper/noise/Noise";
-import { noiseBed } from "./helper/noise/noiseBed";
 import { noiseDefault } from "./helper/noise/noiseDefault";
-import { noiseDesk } from "./helper/noise/noiseDesk";
+import { noiseSelectable } from "./helper/noise/noiseSelectable";
 import { gameEvents } from "@/game/events";
 
 class NoiseEffect {
@@ -9,35 +8,24 @@ class NoiseEffect {
 
   preload(scene: Phaser.Scene): void {
     noiseDefault.preload(scene);
-    noiseDesk.preload(scene);
-    noiseBed.preload(scene);
+    noiseSelectable.preload(scene);
   }
 
   create(scene: Phaser.Scene) {
-    this.update(scene, noiseDefault);
-    gameEvents.on("noise-effect", (noiseType) => {
-      switch (noiseType) {
-        case "desk":
-          this.update(scene, noiseDesk);
-          break;
-        case "bed":
-          this.update(scene, noiseBed);
-          break;
-        case "default":
-        default:
-          this.update(scene, noiseDefault);
-          break;
+    gameEvents.on("noise-effect", (payload) => {
+      if (this.currentNoise) {
+        this.currentNoise.destroy();
+        this.currentNoise = null;
+      }
+
+      if (payload.key === "selectable") {
+        this.currentNoise = noiseSelectable;
+        this.currentNoise.create(scene, payload.position, payload.size);
+      } else {
+        this.currentNoise = noiseDefault;
+        this.currentNoise.create(scene);
       }
     });
-  }
-
-  update(scene: Phaser.Scene, noise: Noise) {
-    if (this.currentNoise) {
-      this.currentNoise.destroy();
-      this.currentNoise = null;
-    }
-    this.currentNoise = noise;
-    this.currentNoise.create(scene);
   }
 }
 

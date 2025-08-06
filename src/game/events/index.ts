@@ -1,11 +1,14 @@
 import mitt from "mitt";
 
+export type Position = { x: number; y: number };
+export type Size = { width: number; height: number };
+
 export type TransitionOptions = Omit<
   Phaser.Types.Scenes.SceneTransitionConfig,
   "target"
 >;
 
-export type NoiseKeys = "default" | "desk" | "bed";
+export type NoiseKeys = "default" | "selectable";
 
 export type Events = {
   "change-scene": {
@@ -13,7 +16,7 @@ export type Events = {
     fade?: boolean;
     options?: TransitionOptions;
   };
-  "noise-effect": NoiseKeys;
+  "noise-effect": { key: NoiseKeys; position?: Position; size?: Size };
 };
 
 export const gameEvents = mitt<Events>();

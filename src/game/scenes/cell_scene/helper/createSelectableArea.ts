@@ -23,14 +23,18 @@ export function createSelectableArea(
   );
   container.setSize(area.width, area.height);
   container.setInteractive({ useHandCursor: true });
+
   container.on("pointerover", () => {
-    gameEvents.emit("noise-effect", key);
+    gameEvents.emit("noise-effect", { key, position, size });
   });
+
   container.on("pointerout", () => {
-    gameEvents.emit("noise-effect", "default");
+    gameEvents.emit("noise-effect", { key: "default" });
     const hud = scene.children.getByName("hud") as Phaser.GameObjects.Container;
+
     scene.children.bringToTop(hud);
   });
+
   container.on("pointerdown", () => {
     onClick();
   });
