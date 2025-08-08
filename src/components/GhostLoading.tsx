@@ -2,6 +2,7 @@
 import Image from "next/image";
 import { motion } from "framer-motion";
 import { GHOST_LOADER_BODY, GHOST_LOADER_FLOOR } from "@/constants/images";
+import { WaveText } from "./WaveText";
 
 export function GhostLoading() {
   return (
@@ -46,9 +47,9 @@ export function GhostLoading() {
       </div>
 
       <div className="my-4">
-        <p className="font-primary font-medium text-2xl text-white">
-          Looooading....
-        </p>
+        <div className="font-primary font-medium text-2xl text-white">
+          <WaveText text="Loooaaading...." />
+        </div>
       </div>
     </div>
   );

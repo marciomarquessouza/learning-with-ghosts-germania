@@ -1,10 +1,15 @@
+import { gameEvents } from "@/game/events";
 import { createSelectableArea } from "./helper/createSelectableArea";
 
 class SelectableAreas {
   create(scene: Phaser.Scene) {
     const deskPosition = { x: 1206, y: 519 };
     const deskSize = { width: 411, height: 530 };
-    const handleDeskClick = () => console.log("#DESK");
+    const handleDeskClick = () =>
+      gameEvents.emit("show-message", {
+        title: "Message",
+        text: "You clicked on the desk",
+      });
     createSelectableArea(
       scene,
       deskPosition,
@@ -15,7 +20,11 @@ class SelectableAreas {
 
     const bedPosition = { x: 320, y: 575 };
     const bedSize = { width: 585, height: 500 };
-    const handleBedClick = () => console.log("#BED");
+    const handleBedClick = () =>
+      gameEvents.emit("show-message", {
+        title: "Message",
+        text: "You clicked on the bed",
+      });
     createSelectableArea(
       scene,
       bedPosition,
@@ -26,7 +35,11 @@ class SelectableAreas {
 
     const foodPosition = { x: 430, y: 59 };
     const foodSize = { width: 395, height: 404 };
-    const handleFoodClick = () => console.log("#FOOD");
+    const handleFoodClick = () =>
+      gameEvents.emit("show-message", {
+        title: "Message",
+        text: "You clicked on the food",
+      });
     createSelectableArea(
       scene,
       foodPosition,
@@ -37,7 +50,11 @@ class SelectableAreas {
 
     const sisyphusPosition = { x: 928, y: 615 };
     const sisyphusSize = { width: 249, height: 254 };
-    const handleSisyphusClick = () => console.log("#Sisyphus");
+    const handleSisyphusClick = () =>
+      gameEvents.emit("show-message", {
+        title: "Message",
+        text: "You clicked on the Sisyphus Lair",
+      });
     createSelectableArea(
       scene,
       sisyphusPosition,

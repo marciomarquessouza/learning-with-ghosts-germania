@@ -16,6 +16,11 @@ export type Events = {
     fade?: boolean;
     options?: TransitionOptions;
   };
+  "show-message": {
+    title: string;
+    text: string;
+    closeAfter?: number;
+  };
   "noise-effect": { key: NoiseKeys; position?: Position; size?: Size };
 };
 
