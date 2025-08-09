@@ -9,9 +9,12 @@ export enum CHARACTERS {
   DOLORES = "DOLORES",
 }
 
-export const DIALOGUE_MAP = {
+export const DIALOGUE_MAP: {
+  [key: string]: { displayName: string; honorific?: string; avatar: string };
+} = {
   [CHARACTERS.MARLENE]: {
     displayName: "Frau Marlene",
+    honorific: "Fau",
     avatar: "/dialogue/dialogue_avatar_marlene.png",
   },
   [CHARACTERS.ELISA]: {

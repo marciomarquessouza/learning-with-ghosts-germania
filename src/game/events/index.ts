@@ -1,3 +1,4 @@
+import { CHARACTERS } from "@/constants/game";
 import mitt from "mitt";
 
 export type Position = { x: number; y: number };
@@ -10,6 +11,17 @@ export type TransitionOptions = Omit<
 
 export type NoiseKeys = "default" | "selectable";
 
+export interface DialogueLine {
+  text: string;
+  character: CHARACTERS;
+  speed?: number;
+}
+
+export interface DialogueEvent {
+  lines: DialogueLine[];
+  onComplete?: () => void;
+}
+
 export type Events = {
   "change-scene": {
     targetScene: string;
@@ -21,6 +33,7 @@ export type Events = {
     text: string;
     closeAfter?: number;
   };
+  "show-dialogue": DialogueEvent;
   "noise-effect": { key: NoiseKeys; position?: Position; size?: Size };
 };
 
