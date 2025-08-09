@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect, useCallback, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useTypewriter } from "@/hooks/useTypewriter";
 import { DialogueEvent, DialogueLine, gameEvents } from "@/game/events";
@@ -21,8 +21,11 @@ export function DialogueBox() {
   } = useTypewriter();
   const [lineIndex, setLineIndex] = useState(0);
   const [lines, setLines] = useState<DialogueLine[]>([]);
-  const characterDetails = useCharacterDetails(character);
   const [isLastLine, setLastLine] = useState(false);
+  const characterDetails = useCharacterDetails(character);
+
+  // ref para foco e key handling local
+  const boxRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const handler = (payload: DialogueEvent) => {
@@ -30,9 +33,7 @@ export function DialogueBox() {
       setLineIndex(0);
       setCharacter(payload.lines[0].character);
       setTextToType(payload.lines[0].text);
-      if (payload.lines.length === 1) {
-        setLastLine(true);
-      }
+      setLastLine(payload.lines.length === 1);
       setVisible(true);
     };
 
@@ -40,7 +41,15 @@ export function DialogueBox() {
     return () => gameEvents.off("show-dialogue", handler);
   }, [setTextToType]);
 
-  const handleOnClick = useCallback(() => {
+  // dar foco quando abrir
+  useEffect(() => {
+    if (visible) {
+      // dá um tick pro motion montar antes do focus
+      requestAnimationFrame(() => boxRef.current?.focus());
+    }
+  }, [visible]);
+
+  const advanceLine = useCallback(() => {
     const newIndex = lineIndex + 1;
     const newLine = lines[newIndex];
 
@@ -57,21 +66,49 @@ export function DialogueBox() {
     startTyping();
   }, [lineIndex, lines, startTyping, setTextToType]);
 
+  const handleOnClick = useCallback(() => {
+    handleTextClick(() => advanceLine());
+  }, [handleTextClick, advanceLine]);
+
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLDivElement>) => {
+    if (e.repeat) return;
+
+    const tag = (e.target as HTMLElement).tagName;
+    if (
+      tag === "INPUT" ||
+      tag === "TEXTAREA" ||
+      tag === "SELECT" ||
+      (e.target as HTMLElement).isContentEditable
+    ) {
+      return;
+    }
+
+    if (e.key === "Enter" || e.key === " ") {
+      e.preventDefault();
+      handleTextClick(() => advanceLine());
+    }
+  };
+
   if (!visible || !characterDetails) return null;
 
   return (
     <AnimatePresence>
       {visible && (
         <motion.div
-          className={`fixed left-1/2 -translate-x-1/2 min-w-6/12 ${heightClass} 
+          ref={boxRef}
+          tabIndex={0}
+          className={`fixed left-1/2 -translate-x-1/2 ${heightClass} w-[920px]
                       bg-[url('/dialogue/dialogue_background.png')] bg-cover bg-center
-                      border-y border-neutral-800 shadow-xl`}
+                      border-y border-neutral-800 shadow-xl outline-none`} // outline-none pra não mostrar focus ring
           initial={{ opacity: 0, bottom: -40 }}
           animate={{ opacity: 1, bottom: 40 }}
           exit={{ opacity: 0, bottom: -40 }}
           onAnimationComplete={startTyping}
           transition={{ duration: 0.5, ease: "linear" }}
-          onClick={() => handleTextClick()}
+          onClick={handleOnClick}
+          onKeyDown={handleKeyDown}
+          role="dialog"
+          aria-live="polite"
         >
           <div className="absolute inset-0 bg-neutral-900/10"></div>
 
@@ -99,7 +136,7 @@ export function DialogueBox() {
                 <span className="text-neutral-800"> says:</span>
               </div>
 
-              <div className="mt-2 bg-[rgba(245,245,245,0.5)] px-4 py-2 outline-1 outline-neutral-300 rounded-sm flex-1 overflow-auto">
+              <div className="mt-2 bg-[rgba(245,245,245,0.5)] px-4 py-2 outline outline-1 outline-neutral-300 rounded-sm flex-1 overflow-auto">
                 <p className="text-neutral-900 font-mono text-base leading-snug whitespace-pre-line">
                   {displayedText}
                 </p>
@@ -114,18 +151,18 @@ export function DialogueBox() {
                 />
               </div>
             </div>
+
             {isComplete && (
               <div className="absolute right-4 -bottom-4">
                 <button
                   className="shrink-0 h-[44px] px-5 bg-red-700 text-white 
-                          font-primary font-semibold tracking-wide uppercase
-                          flex items-center gap-2 shadow-md hover:bg-red-800
-                          cursor-pointer"
+                             font-primary font-semibold tracking-wide uppercase
+                             flex items-center gap-2 shadow-md hover:bg-red-800 cursor-pointer"
                   type="button"
-                  onClick={handleOnClick}
+                  onClick={advanceLine}
                 >
                   {isLastLine ? "Close" : "Continue"}
-                  <span aria-hidden> {isLastLine ? "x" : "►"}</span>
+                  <span aria-hidden> {isLastLine ? "X" : "►"}</span>
                 </button>
               </div>
             )}
