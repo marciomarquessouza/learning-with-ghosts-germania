@@ -1,18 +1,20 @@
-import { useState, useEffect, useCallback, useRef } from "react";
+import { useState, useEffect, useCallback, useRef, useMemo } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useTypewriter } from "@/hooks/useTypewriter";
-import { DialogueEvent, DialogueLine, gameEvents } from "@/events";
+import { DialogueEvent, gameEvents, InteractionLine } from "@/events";
 import { CHARACTERS } from "@/constants/game";
 import { useDeviceType } from "@/hooks/useDeviceType";
 import Image from "next/image";
 import { useCharacterDetails } from "@/hooks/useCharacterDetails";
 import { useUiStore } from "@/store/uiStore";
 import { useDialogueKeyDown } from "@/hooks/useDialogueKeyDown";
-import { DialogueBox } from "./DialogueBox";
+import { DialogueLines } from "./DialogueLines";
+import { Alternatives } from "./Alternatives";
+import { DialogueCTA } from "./DialogueCTA";
+import { getDialogueDimension } from "./helpers/getDialgueDimension";
 
 export function InteractionBox() {
   const device = useDeviceType();
-  const heightClass = device === "mobile" ? "h-[60px]" : "h-[180px]";
   const [visible, setVisible] = useState(false);
   const [character, setCharacter] = useState<CHARACTERS | null>(null);
   const {
@@ -23,11 +25,17 @@ export function InteractionBox() {
     handleTextClick,
   } = useTypewriter();
   const [lineIndex, setLineIndex] = useState(0);
-  const [lines, setLines] = useState<DialogueLine[]>([]);
+  const [lines, setLines] = useState<InteractionLine[]>([]);
   const [isLastLine, setLastLine] = useState(false);
+  const [selectedAlternative, setSelectedAlternative] = useState<string | null>(
+    null
+  );
   const characterDetails = useCharacterDetails(character);
   const { setInteractionDialogueOpen } = useUiStore();
-
+  const { heightClass, widthClass } = useMemo(
+    () => getDialogueDimension(device),
+    [device]
+  );
   const boxRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -39,6 +47,10 @@ export function InteractionBox() {
 
   useEffect(() => {
     const handler = (payload: DialogueEvent) => {
+      if (payload.lines[0].type === "alternatives") {
+        // first alternative as default
+        setSelectedAlternative(payload.lines[0].alternatives[0].id);
+      }
       setLines(payload.lines);
       setLineIndex(0);
       setCharacter(payload.lines[0].character);
@@ -52,6 +64,11 @@ export function InteractionBox() {
   }, [setTextToType]);
 
   const advanceLine = useCallback(() => {
+    if (lines[lineIndex].type === "alternatives" && selectedAlternative) {
+      lines[lineIndex].onSubmitted(selectedAlternative);
+      setSelectedAlternative(null);
+    }
+
     const newIndex = lineIndex + 1;
     const newLine = lines[newIndex];
 
@@ -66,11 +83,18 @@ export function InteractionBox() {
     setLastLine(newIndex === lines.length - 1);
     setTextToType(newLine.text);
     startTyping();
-  }, [lineIndex, lines, startTyping, setTextToType]);
+  }, [lineIndex, lines, startTyping, setTextToType, selectedAlternative]);
 
   const handleOnClick = useCallback(() => {
+    if (lines[lineIndex].type === "alternatives") {
+      return;
+    }
     handleTextClick(() => advanceLine());
-  }, [handleTextClick, advanceLine]);
+  }, [handleTextClick, advanceLine, lineIndex, lines]);
+
+  const handleOnSelected = useCallback((alternativeId: string) => {
+    setSelectedAlternative(alternativeId);
+  }, []);
 
   const handleKeyDown = useDialogueKeyDown({
     keyAction: () => handleTextClick(() => advanceLine()),
@@ -84,7 +108,7 @@ export function InteractionBox() {
         <motion.div
           ref={boxRef}
           tabIndex={0}
-          className={`fixed left-1/2 -translate-x-1/2 ${heightClass} min-w-6/12
+          className={`fixed left-1/2 -translate-x-1/2 ${heightClass} ${widthClass}
                       bg-[url('/dialogue/dialogue_background.png')] bg-cover bg-center
                       border-y border-neutral-800 shadow-xl outline-none`} // outline-none pra não mostrar focus ring
           initial={{ opacity: 0, bottom: -40 }}
@@ -110,10 +134,23 @@ export function InteractionBox() {
             </div>
 
             <div className="flex-1 min-w-0 pr-4 pt-4 flex flex-col h-full">
-              <DialogueBox
-                characterDetails={characterDetails}
-                displayedText={displayedText}
-              />
+              {lines[lineIndex].type === "dialogue" && (
+                <DialogueLines
+                  displayedText={displayedText}
+                  characterDetails={characterDetails}
+                />
+              )}
+
+              {lines[lineIndex].type === "alternatives" && (
+                <Alternatives
+                  displayedText={displayedText}
+                  isTypeWritingComplete={isComplete}
+                  characterDetails={characterDetails}
+                  selectedAlternative={selectedAlternative}
+                  alternatives={lines[lineIndex].alternatives}
+                  onSelected={handleOnSelected}
+                />
+              )}
 
               <div className="-mt-2 mb-1 flex justify-center">
                 <Image
@@ -125,20 +162,12 @@ export function InteractionBox() {
               </div>
             </div>
 
-            {isComplete && (
-              <div className="absolute right-4 -bottom-4">
-                <button
-                  className="shrink-0 h-[44px] px-5 bg-red-700 text-white 
-                             font-primary font-semibold tracking-wide uppercase
-                             flex items-center gap-2 shadow-md hover:bg-red-800 cursor-pointer"
-                  type="button"
-                  onClick={advanceLine}
-                >
-                  {isLastLine ? "Close" : "Continue"}
-                  <span aria-hidden> {isLastLine ? "X" : "►"}</span>
-                </button>
-              </div>
-            )}
+            <DialogueCTA
+              isTypeWritingComplete={isComplete}
+              isLastLine={isLastLine}
+              interactionType={lines[lineIndex].type}
+              onClick={advanceLine}
+            />
           </div>
         </motion.div>
       )}

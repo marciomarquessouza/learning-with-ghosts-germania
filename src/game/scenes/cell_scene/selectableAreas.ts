@@ -10,6 +10,7 @@ class SelectableAreas {
       gameEvents.emit("show-dialogue", {
         lines: [
           {
+            type: "dialogue",
             character: CHARACTERS.ELISA,
             text: ` The Brain—is wider than the Sky— 
                 For—put them side by side—
@@ -17,6 +18,7 @@ class SelectableAreas {
                 With ease—and you—beside—`,
           },
           {
+            type: "dialogue",
             character: CHARACTERS.MARLENE,
             text: ` The Brain is deeper than the sea—
                     For—hold them—Blue to Blue—
@@ -39,8 +41,25 @@ class SelectableAreas {
       gameEvents.emit("show-dialogue", {
         lines: [
           {
-            character: CHARACTERS.MARLENE,
-            text: "I hate you",
+            type: "alternatives",
+            character: CHARACTERS.JOSEF,
+            text: "What should he do with the bed?",
+            alternatives: [
+              {
+                id: "sleep",
+                text: "Sleeping to try to dream something beautiful",
+              },
+              {
+                id: "discovery",
+                text: "Check if there is anything under the bed",
+              },
+              {
+                id: "nothing",
+                text: "Do Nothing",
+              },
+            ],
+            onSubmitted: (alternativeId) =>
+              console.log("Selected: ", alternativeId),
           },
         ],
       });

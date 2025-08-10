@@ -1,13 +1,13 @@
 import { CharacterDetails } from "@/hooks/useCharacterDetails";
 
 export interface DialogueBoxProps {
-  characterDetails: CharacterDetails;
   displayedText: string;
+  characterDetails: CharacterDetails;
 }
 
-export function DialogueBox({
-  characterDetails,
+export function DialogueLines({
   displayedText,
+  characterDetails,
 }: DialogueBoxProps) {
   return (
     <>

@@ -10,15 +10,33 @@ export type TransitionOptions = Omit<
 >;
 
 export type NoiseKeys = "default" | "selectable";
+export type InteractionTypes = "dialogue" | "alternatives";
+
+export interface Alternative {
+  id: string;
+  text: string;
+}
 
 export interface DialogueLine {
+  type: "dialogue";
   text: string;
   character: CHARACTERS;
   speed?: number;
 }
 
+export interface AlternativeLine {
+  type: "alternatives";
+  text: string;
+  character: CHARACTERS;
+  speed?: number;
+  alternatives: Alternative[];
+  onSubmitted: (alternativeId?: string) => void;
+}
+
+export type InteractionLine = DialogueLine | AlternativeLine;
+
 export interface DialogueEvent {
-  lines: DialogueLine[];
+  lines: InteractionLine[];
   onComplete?: () => void;
 }
 
