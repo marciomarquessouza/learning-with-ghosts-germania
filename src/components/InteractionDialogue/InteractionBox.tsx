@@ -1,7 +1,7 @@
 import { useState, useEffect, useCallback, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useTypewriter } from "@/hooks/useTypewriter";
-import { DialogueEvent, DialogueLine, gameEvents } from "@/game/events";
+import { DialogueEvent, DialogueLine, gameEvents } from "@/events";
 import { CHARACTERS } from "@/constants/game";
 import { useDeviceType } from "@/hooks/useDeviceType";
 import Image from "next/image";

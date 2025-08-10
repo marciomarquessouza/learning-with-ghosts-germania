@@ -1,4 +1,4 @@
-import { gameEvents } from "@/game/events";
+import { gameEvents } from "@/events";
 import { createSelectableArea } from "./helper/createSelectableArea";
 import { CHARACTERS } from "@/constants/game";
 

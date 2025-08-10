@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { gameEvents } from "@/game/events";
+import { gameEvents } from "@/events";
 import { useTypewriter } from "@/hooks/useTypewriter";
 
 export function MessageBox() {

@@ -1,4 +1,4 @@
-import { gameEvents, TransitionOptions } from "../events";
+import { gameEvents, TransitionOptions } from "../../events";
 
 /**
  * SceneManager is a singleton class that manages the current scene.

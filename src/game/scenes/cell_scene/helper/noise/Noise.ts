@@ -1,4 +1,4 @@
-import { Position, Size } from "@/game/events";
+import { Position, Size } from "@/events";
 
 export abstract class Noise {
   abstract preload(scene: Phaser.Scene): void;

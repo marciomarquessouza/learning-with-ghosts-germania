@@ -1,4 +1,4 @@
-import { gameEvents, NoiseKeys } from "@/game/events";
+import { gameEvents, NoiseKeys } from "@/events";
 import { useCellStore } from "@/store/cellStore";
 import { useUiStore } from "@/store/uiStore";
 

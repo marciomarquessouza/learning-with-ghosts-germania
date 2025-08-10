@@ -1,7 +1,7 @@
 import { Noise } from "./helper/noise/Noise";
 import { noiseDefault } from "./helper/noise/noiseDefault";
 import { noiseSelectable } from "./helper/noise/noiseSelectable";
-import { gameEvents } from "@/game/events";
+import { gameEvents } from "@/events";
 
 class NoiseEffect {
   private currentNoise: Noise | null = null;
