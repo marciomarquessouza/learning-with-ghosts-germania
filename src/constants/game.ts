@@ -23,7 +23,7 @@ export const DIALOGUE_MAP: {
   },
   [CHARACTERS.JOSEF]: {
     displayName: "Josef G.",
-    avatar: "/dialogue/dialogue_avatar_elisa.png",
+    avatar: "/dialogue/dialogue_avatar_josef.png",
   },
   [CHARACTERS.DOLORES]: {
     displayName: "Dolores",

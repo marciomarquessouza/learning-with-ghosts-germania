@@ -24,7 +24,6 @@ export function DialogueBox() {
   const [isLastLine, setLastLine] = useState(false);
   const characterDetails = useCharacterDetails(character);
 
-  // ref para foco e key handling local
   const boxRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -41,10 +40,8 @@ export function DialogueBox() {
     return () => gameEvents.off("show-dialogue", handler);
   }, [setTextToType]);
 
-  // dar foco quando abrir
   useEffect(() => {
     if (visible) {
-      // dá um tick pro motion montar antes do focus
       requestAnimationFrame(() => boxRef.current?.focus());
     }
   }, [visible]);
@@ -97,7 +94,7 @@ export function DialogueBox() {
         <motion.div
           ref={boxRef}
           tabIndex={0}
-          className={`fixed left-1/2 -translate-x-1/2 ${heightClass} w-[920px]
+          className={`fixed left-1/2 -translate-x-1/2 ${heightClass} min-w-6/12
                       bg-[url('/dialogue/dialogue_background.png')] bg-cover bg-center
                       border-y border-neutral-800 shadow-xl outline-none`} // outline-none pra não mostrar focus ring
           initial={{ opacity: 0, bottom: -40 }}
@@ -126,11 +123,10 @@ export function DialogueBox() {
               <div className="text-xl font-primary font-semibold tracking-wide">
                 {characterDetails.hasHonorific && (
                   <span className="text-neutral-800">
-                    {characterDetails.honorific}
+                    {`${characterDetails.honorific} `}
                   </span>
                 )}
                 <span className="text-[#B20F00] font-bold">
-                  {" "}
                   {characterDetails.characterName}
                 </span>
                 <span className="text-neutral-800"> says:</span>
