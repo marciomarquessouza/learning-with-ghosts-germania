@@ -11,15 +11,18 @@ export const useDialogueKeyDown =
   (e: React.KeyboardEvent<HTMLDivElement>) => {
     if (e.repeat) return;
 
-    const tag = (e.target as HTMLElement).tagName;
-    if (
-      tag === "INPUT" ||
+    const el = e.target as HTMLElement;
+    const tag = el.tagName;
+    const type = (el as HTMLInputElement).type?.toLowerCase?.() || "";
+
+    const isTypingField =
       tag === "TEXTAREA" ||
       tag === "SELECT" ||
-      (e.target as HTMLElement).isContentEditable
-    ) {
-      return;
-    }
+      (tag === "INPUT" &&
+        !["radio", "checkbox", "button", "submit"].includes(type)) ||
+      el.isContentEditable;
+
+    if (isTypingField) return;
 
     const key = e.key.toLowerCase();
     const code = e.code;
