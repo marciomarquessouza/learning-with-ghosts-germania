@@ -61,6 +61,15 @@ class SelectableAreas {
             onSubmitted: (alternativeId) =>
               console.log("Selected: ", alternativeId),
           },
+          {
+            type: "input",
+            character: CHARACTERS.ELISA,
+            text: 'How do you say "Excuse me, please" (formal) in German?',
+            inputLabel: "Your Answer (tip: use stamps to help you)",
+            onSubmitted(answer) {
+              console.log("Answer: ", answer);
+            },
+          },
         ],
       });
     createSelectableArea(

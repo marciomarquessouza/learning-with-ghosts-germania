@@ -19,6 +19,10 @@ export function DialogueCTA({
       return { text: "DECIDE", icon: "#" };
     }
 
+    if (interactionType === "input") {
+      return { text: "ANSWER", icon: "!" };
+    }
+
     if (isLastLine) {
       return { text: "CLOSE", icon: "X" };
     }

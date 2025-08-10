@@ -12,6 +12,7 @@ import { DialogueLines } from "./DialogueLines";
 import { Alternatives } from "./Alternatives";
 import { DialogueCTA } from "./DialogueCTA";
 import { getDialogueDimension } from "./helpers/getDialgueDimension";
+import { InputText } from "./InputText";
 
 export function InteractionBox() {
   const device = useDeviceType();
@@ -30,6 +31,7 @@ export function InteractionBox() {
   const [selectedAlternative, setSelectedAlternative] = useState<string | null>(
     null
   );
+  const [answer, setAnswer] = useState<string>("");
   const characterDetails = useCharacterDetails(character);
   const { setInteractionDialogueOpen } = useUiStore();
   const { heightClass, widthClass } = useMemo(
@@ -47,10 +49,6 @@ export function InteractionBox() {
 
   useEffect(() => {
     const handler = (payload: DialogueEvent) => {
-      if (payload.lines[0].type === "alternatives") {
-        // first alternative as default
-        setSelectedAlternative(payload.lines[0].alternatives[0].id);
-      }
       setLines(payload.lines);
       setLineIndex(0);
       setCharacter(payload.lines[0].character);
@@ -69,6 +67,11 @@ export function InteractionBox() {
       setSelectedAlternative(null);
     }
 
+    if (lines[lineIndex].type === "input") {
+      lines[lineIndex].onSubmitted(answer);
+      setAnswer("");
+    }
+
     const newIndex = lineIndex + 1;
     const newLine = lines[newIndex];
 
@@ -83,18 +86,21 @@ export function InteractionBox() {
     setLastLine(newIndex === lines.length - 1);
     setTextToType(newLine.text);
     startTyping();
-  }, [lineIndex, lines, startTyping, setTextToType, selectedAlternative]);
+  }, [
+    lineIndex,
+    lines,
+    startTyping,
+    setTextToType,
+    selectedAlternative,
+    answer,
+  ]);
 
   const handleOnClick = useCallback(() => {
-    if (lines[lineIndex].type === "alternatives") {
+    if (lines[lineIndex].type !== "dialogue") {
       return;
     }
     handleTextClick(() => advanceLine());
   }, [handleTextClick, advanceLine, lineIndex, lines]);
-
-  const handleOnSelected = useCallback((alternativeId: string) => {
-    setSelectedAlternative(alternativeId);
-  }, []);
 
   const handleKeyDown = useDialogueKeyDown({
     keyAction: () => handleTextClick(() => advanceLine()),
@@ -148,7 +154,19 @@ export function InteractionBox() {
                   characterDetails={characterDetails}
                   selectedAlternative={selectedAlternative}
                   alternatives={lines[lineIndex].alternatives}
-                  onSelected={handleOnSelected}
+                  onSelected={setSelectedAlternative}
+                />
+              )}
+
+              {lines[lineIndex].type === "input" && (
+                <InputText
+                  questionText={displayedText}
+                  isTypeWritingComplete={isComplete}
+                  inputLabel={lines[lineIndex].inputLabel}
+                  answerText={answer}
+                  characterDetails={characterDetails}
+                  onAnswerChange={setAnswer}
+                  onSubmit={advanceLine}
                 />
               )}
 

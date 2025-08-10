@@ -10,18 +10,22 @@ export type TransitionOptions = Omit<
 >;
 
 export type NoiseKeys = "default" | "selectable";
-export type InteractionTypes = "dialogue" | "alternatives";
-
-export interface Alternative {
-  id: string;
-  text: string;
-}
+export type InteractionTypes =
+  | "dialogue"
+  | "alternatives"
+  | "input"
+  | "feedback";
 
 export interface DialogueLine {
   type: "dialogue";
   text: string;
   character: CHARACTERS;
   speed?: number;
+}
+
+export interface Alternative {
+  id: string;
+  text: string;
 }
 
 export interface AlternativeLine {
@@ -33,7 +37,16 @@ export interface AlternativeLine {
   onSubmitted: (alternativeId?: string) => void;
 }
 
-export type InteractionLine = DialogueLine | AlternativeLine;
+export interface InputLine {
+  type: "input";
+  text: string;
+  inputLabel: React.ReactNode;
+  character: CHARACTERS;
+  speed?: number;
+  onSubmitted: (answer: string) => void;
+}
+
+export type InteractionLine = DialogueLine | AlternativeLine | InputLine;
 
 export interface DialogueEvent {
   lines: InteractionLine[];

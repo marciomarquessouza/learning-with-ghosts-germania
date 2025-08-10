@@ -26,6 +26,13 @@ export function Alternatives({
   };
 
   useEffect(() => {
+    if (selectedAlternative === null) {
+      // first alternative as default
+      onSelected(alternatives[0].id);
+    }
+  }, [onSelected, selectedAlternative, alternatives]);
+
+  useEffect(() => {
     requestAnimationFrame(() => firstInputRef.current?.focus());
   }, [isTypeWritingComplete]);
 
