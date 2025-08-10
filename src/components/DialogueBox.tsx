@@ -6,6 +6,7 @@ import { CHARACTERS } from "@/constants/game";
 import { useDeviceType } from "@/hooks/useDeviceType";
 import Image from "next/image";
 import { useCharacterDetails } from "@/hooks/useCharacterDetails";
+import { useUiStore } from "@/store/uiStore";
 
 export function DialogueBox() {
   const device = useDeviceType();
@@ -23,11 +24,13 @@ export function DialogueBox() {
   const [lines, setLines] = useState<DialogueLine[]>([]);
   const [isLastLine, setLastLine] = useState(false);
   const characterDetails = useCharacterDetails(character);
+  const { setInteractionDialogueOpen } = useUiStore();
 
   const boxRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const handler = (payload: DialogueEvent) => {
+      setInteractionDialogueOpen(true);
       setLines(payload.lines);
       setLineIndex(0);
       setCharacter(payload.lines[0].character);
@@ -38,7 +41,7 @@ export function DialogueBox() {
 
     gameEvents.on("show-dialogue", handler);
     return () => gameEvents.off("show-dialogue", handler);
-  }, [setTextToType]);
+  }, [setTextToType, setInteractionDialogueOpen]);
 
   useEffect(() => {
     if (visible) {
@@ -51,6 +54,7 @@ export function DialogueBox() {
     const newLine = lines[newIndex];
 
     if (!newLine) {
+      setInteractionDialogueOpen(false);
       setVisible(false);
       setLastLine(false);
       return;
@@ -61,7 +65,13 @@ export function DialogueBox() {
     setLastLine(newIndex === lines.length - 1);
     setTextToType(newLine.text);
     startTyping();
-  }, [lineIndex, lines, startTyping, setTextToType]);
+  }, [
+    lineIndex,
+    lines,
+    startTyping,
+    setTextToType,
+    setInteractionDialogueOpen,
+  ]);
 
   const handleOnClick = useCallback(() => {
     handleTextClick(() => advanceLine());

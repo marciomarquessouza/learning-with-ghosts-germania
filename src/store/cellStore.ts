@@ -17,7 +17,7 @@ export type Stamp = {
   quantity: number;
 };
 
-export type GameState = {
+export type CellState = {
   // states
   day: number;
   weight: number;
@@ -34,7 +34,7 @@ export type GameState = {
   resetGame: () => void;
 };
 
-export const useGameStore = create<GameState>()(
+export const useCellStore = create<CellState>()(
   persist(
     (set) => ({
       day: 2,
@@ -58,7 +58,7 @@ export const useGameStore = create<GameState>()(
         set({ day: 1, weight: DEFAULT_INITIAL_WEIGHT, stamps: [] }),
     }),
     {
-      name: "game-storage",
+      name: "cell-storage",
     }
   )
 );
