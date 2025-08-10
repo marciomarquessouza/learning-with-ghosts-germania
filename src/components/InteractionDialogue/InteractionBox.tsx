@@ -7,8 +7,10 @@ import { useDeviceType } from "@/hooks/useDeviceType";
 import Image from "next/image";
 import { useCharacterDetails } from "@/hooks/useCharacterDetails";
 import { useUiStore } from "@/store/uiStore";
+import { useDialogueKeyDown } from "@/hooks/useDialogueKeyDown";
+import { DialogueBox } from "./DialogueBox";
 
-export function DialogueBox() {
+export function InteractionBox() {
   const device = useDeviceType();
   const heightClass = device === "mobile" ? "h-[60px]" : "h-[180px]";
   const [visible, setVisible] = useState(false);
@@ -29,8 +31,14 @@ export function DialogueBox() {
   const boxRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
+    setInteractionDialogueOpen(visible);
+    if (visible) {
+      requestAnimationFrame(() => boxRef.current?.focus());
+    }
+  }, [visible, setInteractionDialogueOpen]);
+
+  useEffect(() => {
     const handler = (payload: DialogueEvent) => {
-      setInteractionDialogueOpen(true);
       setLines(payload.lines);
       setLineIndex(0);
       setCharacter(payload.lines[0].character);
@@ -41,20 +49,13 @@ export function DialogueBox() {
 
     gameEvents.on("show-dialogue", handler);
     return () => gameEvents.off("show-dialogue", handler);
-  }, [setTextToType, setInteractionDialogueOpen]);
-
-  useEffect(() => {
-    if (visible) {
-      requestAnimationFrame(() => boxRef.current?.focus());
-    }
-  }, [visible]);
+  }, [setTextToType]);
 
   const advanceLine = useCallback(() => {
     const newIndex = lineIndex + 1;
     const newLine = lines[newIndex];
 
     if (!newLine) {
-      setInteractionDialogueOpen(false);
       setVisible(false);
       setLastLine(false);
       return;
@@ -65,36 +66,15 @@ export function DialogueBox() {
     setLastLine(newIndex === lines.length - 1);
     setTextToType(newLine.text);
     startTyping();
-  }, [
-    lineIndex,
-    lines,
-    startTyping,
-    setTextToType,
-    setInteractionDialogueOpen,
-  ]);
+  }, [lineIndex, lines, startTyping, setTextToType]);
 
   const handleOnClick = useCallback(() => {
     handleTextClick(() => advanceLine());
   }, [handleTextClick, advanceLine]);
 
-  const handleKeyDown = (e: React.KeyboardEvent<HTMLDivElement>) => {
-    if (e.repeat) return;
-
-    const tag = (e.target as HTMLElement).tagName;
-    if (
-      tag === "INPUT" ||
-      tag === "TEXTAREA" ||
-      tag === "SELECT" ||
-      (e.target as HTMLElement).isContentEditable
-    ) {
-      return;
-    }
-
-    if (e.key === "Enter" || e.key === " ") {
-      e.preventDefault();
-      handleTextClick(() => advanceLine());
-    }
-  };
+  const handleKeyDown = useDialogueKeyDown({
+    keyAction: () => handleTextClick(() => advanceLine()),
+  });
 
   if (!visible || !characterDetails) return null;
 
@@ -130,23 +110,10 @@ export function DialogueBox() {
             </div>
 
             <div className="flex-1 min-w-0 pr-4 pt-4 flex flex-col h-full">
-              <div className="text-xl font-primary font-semibold tracking-wide">
-                {characterDetails.hasHonorific && (
-                  <span className="text-neutral-800">
-                    {`${characterDetails.honorific} `}
-                  </span>
-                )}
-                <span className="text-[#B20F00] font-bold">
-                  {characterDetails.characterName}
-                </span>
-                <span className="text-neutral-800"> says:</span>
-              </div>
-
-              <div className="mt-2 bg-[rgba(245,245,245,0.5)] px-4 py-2 outline outline-1 outline-neutral-300 rounded-sm flex-1 overflow-auto">
-                <p className="text-neutral-900 font-mono text-base leading-snug whitespace-pre-line">
-                  {displayedText}
-                </p>
-              </div>
+              <DialogueBox
+                characterDetails={characterDetails}
+                displayedText={displayedText}
+              />
 
               <div className="-mt-2 mb-1 flex justify-center">
                 <Image

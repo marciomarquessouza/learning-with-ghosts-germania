@@ -1,7 +1,16 @@
 import { useMemo } from "react";
 import { CHARACTERS, DIALOGUE_MAP } from "@/constants/game";
 
-export const useCharacterDetails = (character: CHARACTERS | null) => {
+export interface CharacterDetails {
+  characterName: string;
+  avatarURL: string;
+  hasHonorific: boolean;
+  honorific: string;
+}
+
+export const useCharacterDetails = (
+  character: CHARACTERS | null
+): CharacterDetails | null => {
   return useMemo(() => {
     if (!character) return null;
 

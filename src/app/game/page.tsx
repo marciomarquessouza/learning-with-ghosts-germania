@@ -1,5 +1,5 @@
 "use client";
-import { DialogueBox } from "@/components/DialogueBox";
+import { InteractionBox } from "@/components/InteractionDialogue/InteractionBox";
 import { MessageBox } from "@/components/MessageBox";
 import RotateOverlay from "@/components/RotateOverlay";
 import dynamic from "next/dynamic";
@@ -13,7 +13,7 @@ export default function Game() {
     <div className="bg-black text-white w-screen h-screen overflow-hidden">
       <RotateOverlay />
       <MessageBox />
-      <DialogueBox />
+      <InteractionBox />
       <GameRoot />
       <div id="game-container" className="w-full h-full"></div>
     </div>
