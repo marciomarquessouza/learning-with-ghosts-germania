@@ -4,6 +4,7 @@ import { noiseEffect } from "./noiseEffect";
 import { hud } from "../hud";
 import { calendar } from "./calendar";
 import { selectableAreas } from "./selectableAreas";
+import { gameEvents } from "@/events";
 
 const SCENE_NAME = "CellScene";
 const CELL = "cell";
@@ -33,6 +34,9 @@ class CellScene extends Phaser.Scene {
 
     const background = this.add.image(centerX, centerY, CELL);
     background.setDisplaySize(this.scale.width, this.scale.height);
+
+    // TODO: Remove after tests
+    gameEvents.emit("show-introduction", { title: "Welcome to Prison" });
 
     const calendarContainer = calendar.create(this);
 

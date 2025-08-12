@@ -53,6 +53,11 @@ export interface DialogueEvent {
   onComplete?: () => void;
 }
 
+export interface IntroductionEvent {
+  title: string;
+  hideAfter?: number;
+}
+
 export type Events = {
   "change-scene": {
     targetScene: string;
@@ -65,6 +70,7 @@ export type Events = {
     closeAfter?: number;
   };
   "show-dialogue": DialogueEvent;
+  "show-introduction": IntroductionEvent;
   "noise-effect": { key: NoiseKeys; position?: Position; size?: Size };
 };
 

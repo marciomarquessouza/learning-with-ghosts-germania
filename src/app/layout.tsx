@@ -5,6 +5,7 @@ import {
   Josefin_Sans,
   Russo_One,
   Special_Elite,
+  UnifrakturMaguntia,
 } from "next/font/google";
 import "./globals.css";
 
@@ -29,6 +30,12 @@ const russoOne = Russo_One({
   variable: "--font-secondary",
 });
 
+const unifrakturMaguntia = UnifrakturMaguntia({
+  subsets: ["latin"],
+  weight: "400",
+  variable: "--font-unifraktur",
+});
+
 const specialElite = Special_Elite({
   weight: "400",
   variable: "--font-special-elite",
@@ -49,7 +56,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${geistMono.variable} ${geistSans.variable} ${josefinSans.variable} ${russoOne.variable} ${specialElite.variable} antialiased`}
+        className={`${geistMono.variable} ${geistSans.variable} ${josefinSans.variable} ${russoOne.variable} ${specialElite.variable} ${unifrakturMaguntia.variable} antialiased`}
       >
         {children}
       </body>

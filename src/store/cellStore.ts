@@ -37,7 +37,7 @@ export type CellState = {
 export const useCellStore = create<CellState>()(
   persist(
     (set) => ({
-      day: 2,
+      day: 1,
       weight: DEFAULT_INITIAL_WEIGHT,
       stamps: [],
       debugMode: false,
