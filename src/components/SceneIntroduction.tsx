@@ -15,7 +15,7 @@ export function SceneIntroduction() {
       setTitle(payload.title);
       setPhase("entering");
 
-      const visibleTime = payload.hideAfter || 3800;
+      const visibleTime = payload.hideAfter || 3500;
 
       setTimeout(() => {
         setPhase("exiting");
