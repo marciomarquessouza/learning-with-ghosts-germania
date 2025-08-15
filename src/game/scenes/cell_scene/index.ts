@@ -38,6 +38,8 @@ class CellScene extends Phaser.Scene {
     // TODO: Remove after tests
     gameEvents.emit("show-introduction", { title: "Welcome to Prison" });
 
+    gameEvents.emit("bars-action", { messagesCounter: 1 });
+
     const calendarContainer = calendar.create(this);
 
     noiseEffect.create(this);

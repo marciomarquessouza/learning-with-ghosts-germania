@@ -71,6 +71,7 @@ export type Events = {
   };
   "show-dialogue": DialogueEvent;
   "show-introduction": IntroductionEvent;
+  "bars-action": { messagesCounter: number };
   "noise-effect": { key: NoiseKeys; position?: Position; size?: Size };
 };
 

@@ -3,6 +3,8 @@ import Image from "next/image";
 import { gameEvents, IntroductionEvent } from "@/events";
 import { useCellStore } from "@/store/cellStore";
 
+const DEFAULT_HIDE_AFTER = 3000;
+
 export function SceneIntroduction() {
   const [phase, setPhase] = useState<"hidden" | "entering" | "exiting">(
     "hidden"
@@ -15,7 +17,7 @@ export function SceneIntroduction() {
       setTitle(payload.title);
       setPhase("entering");
 
-      const visibleTime = payload.hideAfter || 3500;
+      const visibleTime = payload.hideAfter || DEFAULT_HIDE_AFTER;
 
       setTimeout(() => {
         setPhase("exiting");

@@ -42,3 +42,7 @@ export const HUD_WEIGHT_NUMBER_HEIGHT = 72.41;
 export const HUD_ACTIONS_IMG = "/hud/hud_actions.png";
 export const HUD_ACTIONS_IMG_WIDTH = 221;
 export const HUD_ACTIONS_IMG_HEIGHT = 615;
+export const HUD_ACTION_BARS_IMG = "/hud/action_icons/bars_icon.png";
+export const HUD_ACTION_SOLITARY_IMG = "/hud/action_icons/solitary_icon.png";
+export const HUD_ACTION_CHALLENGE_IMG = "/hud/action_icons/challenge_icon.png";
+export const HUD_ACTION_EXIT_IMG = "/hud/action_icons/exit_icon.png";
