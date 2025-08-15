@@ -1,4 +1,5 @@
 import { CHARACTERS } from "@/constants/game";
+import { ACTIONS_ICONS } from "@/game/scenes/hud/helpers/actionIcons";
 import mitt from "mitt";
 
 export type Position = { x: number; y: number };
@@ -71,7 +72,7 @@ export type Events = {
   };
   "show-dialogue": DialogueEvent;
   "show-introduction": IntroductionEvent;
-  "bars-action": { messagesCounter: number };
+  "hud-actions-badge": { icon: ACTIONS_ICONS; count: number };
   "noise-effect": { key: NoiseKeys; position?: Position; size?: Size };
 };
 

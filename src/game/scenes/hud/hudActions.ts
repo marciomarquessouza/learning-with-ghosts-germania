@@ -1,9 +1,6 @@
-import {
-  HUD_ACTIONS_IMG,
-  HUD_WEIGHT_IMG_WIDTH,
-  HUD_ACTIONS_IMG_HEIGHT,
-} from "@/constants/images";
+import { HUD_ACTIONS_IMG, HUD_WEIGHT_IMG_WIDTH } from "@/constants/images";
 import { actionIcons, ACTIONS_ICONS } from "./helpers/actionIcons";
+import { gameEvents } from "@/events";
 
 const HUD_ACTIONS_BACKGROUND = "hudActionsBackground";
 
@@ -29,6 +26,11 @@ class HUdActions {
       },
       { name: ACTIONS_ICONS.EXIT, action: () => console.log("#EXIT") },
     ]);
+
+    gameEvents.on("hud-actions-badge", ({ icon, count }) => {
+      actionIcons.setBadgeCount(icon, count);
+    });
+
     container.add(iconsList);
 
     return container;

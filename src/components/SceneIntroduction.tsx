@@ -3,7 +3,7 @@ import Image from "next/image";
 import { gameEvents, IntroductionEvent } from "@/events";
 import { useCellStore } from "@/store/cellStore";
 
-const DEFAULT_HIDE_AFTER = 3000;
+const DEFAULT_HIDE_AFTER = 2800;
 
 export function SceneIntroduction() {
   const [phase, setPhase] = useState<"hidden" | "entering" | "exiting">(

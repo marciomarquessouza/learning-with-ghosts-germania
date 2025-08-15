@@ -1,6 +1,7 @@
 import { gameEvents } from "@/events";
 import { createSelectableArea } from "./helper/createSelectableArea";
 import { CHARACTERS } from "@/constants/game";
+import { ACTIONS_ICONS } from "../hud/helpers/actionIcons";
 
 class SelectableAreas {
   create(scene: Phaser.Scene) {
@@ -59,7 +60,10 @@ class SelectableAreas {
               },
             ],
             onSubmitted: (alternativeId) =>
-              console.log("Selected: ", alternativeId),
+              gameEvents.emit("hud-actions-badge", {
+                icon: ACTIONS_ICONS.BARS,
+                count: 1,
+              }),
           },
           {
             type: "input",

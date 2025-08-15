@@ -5,14 +5,11 @@ import {
   HUD_ACTION_EXIT_IMG,
 } from "@/constants/images";
 import { attachBadgeToIcon } from "./attachBadgeIcon";
-import { gameEvents } from "@/events";
 
-const ICON_WIDTH = 94;
 const ICON_HEIGHT = 110;
 const LIST_GAP = 5;
 const HOVER_SCALE = 1.08;
 const DOWN_SCALE = 0.94;
-const HOVER_TINT = 0x000000;
 const TWEEN_MS = 120;
 
 export enum ACTIONS_ICONS {
@@ -28,6 +25,10 @@ export interface ActionIconMap {
 }
 
 class ActionIcons {
+  private badgeActions: {
+    [key: string]: { setCount: (qnt: number) => void };
+  } = {};
+
   preload(scene: Phaser.Scene): void {
     scene.load.image(ACTIONS_ICONS.BARS, HUD_ACTION_BARS_IMG);
     scene.load.image(ACTIONS_ICONS.SOLITARY, HUD_ACTION_SOLITARY_IMG);
@@ -84,16 +85,17 @@ class ActionIcons {
         strokeWidth: 1.2,
       });
 
-      if (actionIcon.name === ACTIONS_ICONS.BARS) {
-        setCount(1);
-      } else {
-        setCount(0);
-      }
+      setCount(0);
+      this.badgeActions[actionIcon.name] = { setCount };
 
       positionY += ICON_HEIGHT + LIST_GAP;
     });
 
     return actionItemsContainer;
+  }
+
+  setBadgeCount(icon: ACTIONS_ICONS, qnt: number) {
+    this.badgeActions[icon]?.setCount(qnt);
   }
 }
 
