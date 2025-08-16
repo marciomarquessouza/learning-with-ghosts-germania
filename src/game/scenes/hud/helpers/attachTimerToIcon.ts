@@ -68,8 +68,10 @@ export function attachTimerToIcon(
     loop: true,
     callback: () => {
       if (currentTime === 0) {
-        onFinish(), timerEvent.remove();
+        onFinish();
+        timerEvent.remove();
         destroyTimer();
+        return;
       }
 
       setTimer(currentTime);

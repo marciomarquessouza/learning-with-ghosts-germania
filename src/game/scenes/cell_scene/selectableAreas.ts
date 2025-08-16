@@ -74,7 +74,7 @@ class SelectableAreas {
               console.log("Answer: ", answer);
               gameEvents.emit("hud-actions-timer", {
                 icon: ACTIONS_ICONS.CHALLENGE,
-                timeInSeconds: 300,
+                timeInSeconds: 30,
                 onFinish: () => console.log("TIME FINISHED"),
               });
             },
