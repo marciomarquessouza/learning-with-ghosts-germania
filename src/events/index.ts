@@ -73,6 +73,11 @@ export type Events = {
   "show-dialogue": DialogueEvent;
   "show-introduction": IntroductionEvent;
   "hud-actions-badge": { icon: ACTIONS_ICONS; count: number };
+  "hud-actions-timer": {
+    icon: ACTIONS_ICONS;
+    timeInSeconds: number;
+    onFinish: () => void;
+  };
   "noise-effect": { key: NoiseKeys; position?: Position; size?: Size };
 };
 

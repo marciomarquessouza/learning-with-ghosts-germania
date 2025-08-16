@@ -15,33 +15,23 @@ type BadgeOptions = {
 export function attachBadgeToIcon(
   scene: Phaser.Scene,
   iconImage: Phaser.GameObjects.Image,
+  iconContainer: Phaser.GameObjects.Container,
   initialCount = 0,
-  opts: BadgeOptions = {}
+  options: BadgeOptions = {}
 ) {
   const {
     radius,
-    offsetX = 6,
-    offsetY = -6,
+    offsetX = 0,
+    offsetY = 30,
     backgroundColor = 0xd0021b,
     strokeColor = 0xffffff,
-    strokeWidth = 1.5,
+    strokeWidth = 1.2,
     textColor = "#ffffff",
     fontFamily = "sans-serif",
     fontWeight = "700",
     fontSize,
     capAt99 = true,
-  } = opts;
-
-  const parent =
-    iconImage.parentContainer as Phaser.GameObjects.Container | null;
-  const container = scene.add.container(iconImage.x, iconImage.y);
-  iconImage.setPosition(0, 0);
-  if (parent) {
-    parent.add(container);
-  } else {
-    scene.add.existing(container);
-  }
-  container.add(iconImage);
+  } = options;
 
   const computedRadius =
     radius ??
@@ -63,7 +53,7 @@ export function attachBadgeToIcon(
   });
   badgeText.setOrigin(0.5);
 
-  container.add([badgeGfx, badgeText]);
+  iconContainer.add([badgeGfx, badgeText]);
 
   function setCount(count: number) {
     const label = capAt99 && count >= 100 ? "99+" : String(count);
@@ -128,5 +118,5 @@ export function attachBadgeToIcon(
 
   setCount(initialCount);
 
-  return { container, setCount, show, hide, destroy };
+  return { setCount, show, hide, destroy };
 }

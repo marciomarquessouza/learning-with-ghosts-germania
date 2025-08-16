@@ -72,6 +72,11 @@ class SelectableAreas {
             inputLabel: "Your Answer (tip: use stamps to help you)",
             onSubmitted(answer) {
               console.log("Answer: ", answer);
+              gameEvents.emit("hud-actions-timer", {
+                icon: ACTIONS_ICONS.CHALLENGE,
+                timeInSeconds: 300,
+                onFinish: () => console.log("TIME FINISHED"),
+              });
             },
           },
         ],

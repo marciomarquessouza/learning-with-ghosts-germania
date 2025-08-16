@@ -4,7 +4,8 @@ import {
   HUD_ACTION_SOLITARY_IMG,
   HUD_ACTION_EXIT_IMG,
 } from "@/constants/images";
-import { attachBadgeToIcon } from "./attachBadgeIcon";
+import { attachBadgeToIcon } from "./attachBadgeToIcon";
+import { attachTimerToIcon } from "./attachTimerToIcon";
 
 const ICON_HEIGHT = 110;
 const LIST_GAP = 5;
@@ -26,7 +27,11 @@ export interface ActionIconMap {
 
 class ActionIcons {
   private badgeActions: {
-    [key: string]: { setCount: (qnt: number) => void };
+    [key: string]: {
+      iconImage: Phaser.GameObjects.Image;
+      iconContainer: Phaser.GameObjects.Container;
+      setCount: (qnt: number) => void;
+    };
   } = {};
 
   preload(scene: Phaser.Scene): void {
@@ -41,7 +46,10 @@ class ActionIcons {
 
     let positionY = 0;
     iconsMap.forEach((actionIcon) => {
-      const iconImage = scene.add.image(0, positionY, actionIcon.name);
+      const iconImage = scene.add.image(0, 0, actionIcon.name);
+      const iconContainer = scene.add.container(0, positionY);
+      iconContainer.add(iconImage);
+
       iconImage.setInteractive({ useHandCursor: true });
 
       iconImage.on("pointerover", () => {
@@ -76,17 +84,15 @@ class ActionIcons {
         });
       });
 
-      actionItemsContainer.add(iconImage);
+      actionItemsContainer.add(iconContainer);
 
-      const { setCount } = attachBadgeToIcon(scene, iconImage, 3, {
-        offsetX: 0,
-        offsetY: 30,
-        backgroundColor: 0xb30a0a,
-        strokeWidth: 1.2,
-      });
+      const { setCount } = attachBadgeToIcon(scene, iconImage, iconContainer);
 
-      setCount(0);
-      this.badgeActions[actionIcon.name] = { setCount };
+      this.badgeActions[actionIcon.name] = {
+        iconImage,
+        iconContainer,
+        setCount,
+      };
 
       positionY += ICON_HEIGHT + LIST_GAP;
     });
@@ -96,6 +102,23 @@ class ActionIcons {
 
   setBadgeCount(icon: ACTIONS_ICONS, qnt: number) {
     this.badgeActions[icon]?.setCount(qnt);
+  }
+
+  attachTimer(
+    scene: Phaser.Scene,
+    icon: ACTIONS_ICONS,
+    timeInSeconds: number,
+    onFinish: () => void
+  ) {
+    if (this.badgeActions[icon]) {
+      attachTimerToIcon(
+        scene,
+        this.badgeActions[icon].iconImage,
+        this.badgeActions[icon].iconContainer,
+        timeInSeconds,
+        onFinish
+      );
+    }
   }
 }
 

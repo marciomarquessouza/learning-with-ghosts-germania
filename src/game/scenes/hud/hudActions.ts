@@ -31,6 +31,10 @@ class HUdActions {
       actionIcons.setBadgeCount(icon, count);
     });
 
+    gameEvents.on("hud-actions-timer", ({ icon, timeInSeconds, onFinish }) => {
+      actionIcons.attachTimer(scene, icon, timeInSeconds, onFinish);
+    });
+
     container.add(iconsList);
 
     return container;
