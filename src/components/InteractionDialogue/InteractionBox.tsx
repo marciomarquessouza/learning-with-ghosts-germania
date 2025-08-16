@@ -136,6 +136,7 @@ export function InteractionBox() {
                 width={136}
                 height={179}
                 alt={`${characterDetails.characterName} picture`}
+                priority
               />
             </div>
 

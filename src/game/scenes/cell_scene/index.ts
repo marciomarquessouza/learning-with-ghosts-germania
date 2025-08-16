@@ -4,7 +4,7 @@ import { noiseEffect } from "./noiseEffect";
 import { hud } from "../hud";
 import { calendar } from "./calendar";
 import { selectableAreas } from "./selectableAreas";
-import { gameEvents } from "@/events";
+import { getDayAction } from "@/game/actions/getAction";
 
 const SCENE_NAME = "CellScene";
 const CELL = "cell";
@@ -35,21 +35,17 @@ class CellScene extends Phaser.Scene {
     const background = this.add.image(centerX, centerY, CELL);
     background.setDisplaySize(this.scale.width, this.scale.height);
 
-    // TODO: Remove after tests
-    gameEvents.emit("show-introduction", { title: "Welcome to Prison" });
-
-    gameEvents.emit("bars-action", { messagesCounter: 1 });
-
     const calendarContainer = calendar.create(this);
 
     noiseEffect.create(this);
 
-    selectableAreas.create(this);
-
-    const hudContainer = hud.create(this);
-
-    this.children.bringToTop(hudContainer);
-    this.children.bringToTop(calendarContainer);
+    getDayAction().then((dayActions) => {
+      dayActions.onStart();
+      selectableAreas.create(this, dayActions);
+      const hudContainer = hud.create(this, dayActions);
+      this.children.bringToTop(hudContainer);
+      this.children.bringToTop(calendarContainer);
+    });
   }
 
   update(): void {}

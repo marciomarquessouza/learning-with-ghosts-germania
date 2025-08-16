@@ -1,3 +1,4 @@
+import { DayActions } from "@/game/actions/defaultActions";
 import { hudActions } from "./hudActions";
 import { hudStamps } from "./hudStamps";
 import { hudWeight } from "./hudWeight";
@@ -9,10 +10,13 @@ class Hud {
     hudActions.preload(scene);
   }
 
-  create(scene: Phaser.Scene): Phaser.GameObjects.Container {
+  create(
+    scene: Phaser.Scene,
+    dayActions: DayActions
+  ): Phaser.GameObjects.Container {
     const hudWeightContainer = hudWeight.create(scene);
     const hudStampsContainer = hudStamps.create(scene);
-    const hudActionsContainer = hudActions.create(scene);
+    const hudActionsContainer = hudActions.create(scene, dayActions);
 
     const container = scene.add.container(0, 0);
     container.name = "hud";
