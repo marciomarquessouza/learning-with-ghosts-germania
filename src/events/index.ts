@@ -57,6 +57,7 @@ export interface DialogueEvent {
 export interface IntroductionEvent {
   title: string;
   hideAfter?: number;
+  afterClose?: () => void;
 }
 
 export type Events = {
@@ -70,6 +71,7 @@ export type Events = {
     text: string;
     closeAfter?: number;
   };
+  "hide-message": { delay?: number };
   "show-dialogue": DialogueEvent;
   "show-introduction": IntroductionEvent;
   "hud-actions-badge": { icon: ACTIONS_ICONS; count: number };

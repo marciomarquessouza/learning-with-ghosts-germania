@@ -23,6 +23,7 @@ export function SceneIntroduction() {
         setPhase("exiting");
         setTimeout(() => {
           setPhase("hidden");
+          payload.afterClose?.();
         }, 700);
       }, visibleTime);
     };

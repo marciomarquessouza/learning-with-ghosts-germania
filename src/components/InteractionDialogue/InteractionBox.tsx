@@ -38,6 +38,7 @@ export function InteractionBox() {
     () => getDialogueDimension(device),
     [device]
   );
+  const onCompleteRef = useRef<() => void | null>(null);
   const boxRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -54,6 +55,7 @@ export function InteractionBox() {
       setCharacter(payload.lines[0].character);
       setTextToType(payload.lines[0].text);
       setLastLine(payload.lines.length === 1);
+      onCompleteRef.current = payload?.onComplete ?? null;
       setVisible(true);
     };
 
@@ -78,6 +80,10 @@ export function InteractionBox() {
     if (!newLine) {
       setVisible(false);
       setLastLine(false);
+      if (onCompleteRef.current) {
+        onCompleteRef.current?.();
+        onCompleteRef.current = null;
+      }
       return;
     }
 
