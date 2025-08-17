@@ -6,7 +6,7 @@ import { calendar } from "./calendar";
 import { selectableAreas } from "./selectableAreas";
 import { getDayAction } from "@/game/actions/getAction";
 
-const SCENE_NAME = "CellScene";
+export const SCENE_NAME = "CellScene";
 const CELL = "cell";
 
 class CellScene extends Phaser.Scene {

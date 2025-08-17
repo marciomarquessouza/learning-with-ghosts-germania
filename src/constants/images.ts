@@ -46,3 +46,6 @@ export const HUD_ACTION_BARS_IMG = "/hud/action_icons/bars_icon.png";
 export const HUD_ACTION_SOLITARY_IMG = "/hud/action_icons/solitary_icon.png";
 export const HUD_ACTION_CHALLENGE_IMG = "/hud/action_icons/challenge_icon.png";
 export const HUD_ACTION_EXIT_IMG = "/hud/action_icons/exit_icon.png";
+
+// GHOST DREAM IMAGES
+export const CEMETERY_IMAGE = "/ghost_dream/cemetery.png";

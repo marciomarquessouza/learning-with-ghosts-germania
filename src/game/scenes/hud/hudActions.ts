@@ -26,7 +26,7 @@ class HUdActions {
       { name: ACTIONS_ICONS.SOLITARY, action: () => console.log("#SOLITARY") },
       {
         name: ACTIONS_ICONS.CHALLENGE,
-        action: () => console.log("#CHALLENGE"),
+        action: () => dayActions.onChallengeClick(),
       },
       { name: ACTIONS_ICONS.EXIT, action: () => console.log("#EXIT") },
     ]);

@@ -3,6 +3,7 @@ import { GhostLoading } from "@/components/GhostLoading";
 import { createConfig } from "./phaser/createConfig";
 import { initPhaser } from "./phaser/initPhaser";
 import { cellScene } from "./scenes/cell_scene";
+import { ghostDreamScene } from "./scenes/ghost_dream_scene";
 
 export default function MainGame() {
   const [fakeLoading, setFakeLoading] = useState(true);
@@ -23,7 +24,7 @@ export default function MainGame() {
 
     if (!fakeLoading && loading && !started.current) {
       started.current = true;
-      const gameConfig = createConfig([cellScene]);
+      const gameConfig = createConfig([cellScene, ghostDreamScene]);
       initPhaser({ ...gameConfig, parent: "game-container" }).then(() => {
         setLoading(false);
       });

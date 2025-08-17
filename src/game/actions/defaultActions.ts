@@ -85,6 +85,31 @@ export class DayActions {
       ],
     });
   }
+
+  onChallengeClick() {
+    gameEvents.emit("show-dialogue", {
+      lines: [
+        {
+          type: "alternatives",
+          character: CHARACTERS.MARLENE,
+          text: "Você realmente quer iniciar o desafio do dia agora?",
+          alternatives: [
+            {
+              id: "skip",
+              text: "NÃO - eu quero me preparar mais",
+            },
+            {
+              id: "challenge",
+              text: "SIM - eu quero fayer o desafio agora!",
+            },
+          ],
+          onSubmitted: (id) => {
+            console.log("#CHALLENGE AINDA NÃO IMPLEMENTADO", id);
+          },
+        },
+      ],
+    });
+  }
 }
 
 export const defaultDayActions = new DayActions();
