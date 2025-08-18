@@ -15,14 +15,17 @@ class GhostDreamScene extends Phaser.Scene {
   }
 
   create() {
-    this.add.text(0, 0, "", {
-      fontFamily: "SpecialElite",
-    });
-    const centerX = this.cameras.main.centerX;
-    const centerY = this.cameras.main.centerY;
+    const background = this.add
+      .image(0, 0, CEMETERY)
+      .setOrigin(0, 0)
+      .setDepth(-100);
+    this.physics.world.setBounds(0, 0, background.width, background.height);
 
-    const background = this.add.image(centerX, centerY, CEMETERY);
-    background.setDisplaySize(this.scale.width, this.scale.height);
+    // this.josef = this.physics.add.sprite(100, 300, 'josef_ghost');
+    // this.josef.setCollideWorldBounds(true);
+
+    this.cameras.main.setBounds(0, 0, background.width, background.height);
+    // this.cameras.main.startFollow(this.josef, true, 0.08, 0.08)
   }
 
   update() {}

@@ -21,10 +21,10 @@ export const CALENDAR_IMG = "/cell/calendar.png";
 export const CALENDAR_IMG_WIDTH = 123;
 export const CALENDAR_IMG_HEIGHT = 175;
 
-// HUD STAMPS IMAGES
-export const HUD_STAMPS_IMG = "/hud/hud_stamps.png";
-export const HUD_STAMPS_IMG_WIDTH = 207;
-export const HUD_STAMPS_IMG_HEIGHT = 1080;
+// HUD THERMOMETER IMAGES
+export const HUD_THERMOMETER_IMG = "/hud/hud_thermometer.png";
+export const HUD_THERMOMETER_IMG_WIDTH = 207;
+export const HUD_THERMOMETER_IMG_HEIGHT = 1080;
 
 // HUD WEIGHT IMAGE
 export const HUD_WEIGHT_IMG = "/hud/hud_weight.png";
