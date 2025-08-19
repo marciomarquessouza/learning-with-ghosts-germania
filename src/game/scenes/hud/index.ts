@@ -15,7 +15,10 @@ class Hud {
     dayActions: DayActions
   ): Phaser.GameObjects.Container {
     const hudWeightContainer = hudWeight.create(scene);
+
     const hudThermometerContainer = hudThermometer.create(scene);
+    hudThermometer.setLevel(scene, "INITIAL");
+
     const hudActionsContainer = hudActions.create(scene, dayActions);
 
     const container = scene.add.container(0, 0);

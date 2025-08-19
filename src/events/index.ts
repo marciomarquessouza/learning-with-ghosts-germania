@@ -1,5 +1,6 @@
 import { CHARACTERS } from "@/constants/game";
 import { ACTIONS_ICONS } from "@/game/scenes/hud/helpers/actionIcons";
+import { ThermoLevel } from "@/game/scenes/hud/hudThermometer";
 import mitt from "mitt";
 
 export type Position = { x: number; y: number };
@@ -80,6 +81,8 @@ export type Events = {
     timeInSeconds: number;
     onFinish: () => void;
   };
+  "hud-thermometer-to": { value: number; duration?: number };
+  "hud-thermometer-level": { level: ThermoLevel; duration?: number };
   "noise-effect": { key: NoiseKeys; position?: Position; size?: Size };
 };
 
