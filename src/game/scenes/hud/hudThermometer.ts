@@ -13,7 +13,7 @@ const HUD_THERMOMETER_BACKGROUND = "hudThermometerBackground";
  * 0.76 - 1: MASTER
  */
 
-class HudStamps {
+class HudThermometer {
   preload(scene: Phaser.Scene): void {
     scene.load.image(HUD_THERMOMETER_BACKGROUND, HUD_THERMOMETER_IMG);
   }
@@ -75,4 +75,4 @@ class HudStamps {
   }
 }
 
-export const hudStamps = new HudStamps();
+export const hudThermometer = new HudThermometer();

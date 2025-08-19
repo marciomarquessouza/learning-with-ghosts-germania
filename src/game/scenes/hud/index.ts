@@ -1,12 +1,12 @@
 import { DayActions } from "@/game/actions/defaultActions";
 import { hudActions } from "./hudActions";
-import { hudStamps } from "./hudStamps";
+import { hudThermometer } from "./hudThermometer";
 import { hudWeight } from "./hudWeight";
 
 class Hud {
   preload(scene: Phaser.Scene): void {
     hudWeight.preload(scene);
-    hudStamps.preload(scene);
+    hudThermometer.preload(scene);
     hudActions.preload(scene);
   }
 
@@ -15,13 +15,13 @@ class Hud {
     dayActions: DayActions
   ): Phaser.GameObjects.Container {
     const hudWeightContainer = hudWeight.create(scene);
-    const hudStampsContainer = hudStamps.create(scene);
+    const hudThermometerContainer = hudThermometer.create(scene);
     const hudActionsContainer = hudActions.create(scene, dayActions);
 
     const container = scene.add.container(0, 0);
     container.name = "hud";
     container.add(hudWeightContainer);
-    container.add(hudStampsContainer);
+    container.add(hudThermometerContainer);
     container.add(hudActionsContainer);
 
     return container;
