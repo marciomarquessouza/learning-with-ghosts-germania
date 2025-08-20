@@ -26,7 +26,7 @@ export function MessageBox() {
 
       setTimeout(() => {
         setVisible(false);
-      }, payload.closeAfter || 15_000);
+      }, payload.closeAfter || 5_000);
     };
 
     gameEvents.on("show-message", handler);
