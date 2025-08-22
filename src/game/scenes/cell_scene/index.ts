@@ -5,6 +5,8 @@ import { hud } from "../hud";
 import { calendar } from "./calendar";
 import { selectableAreas } from "./selectableAreas";
 import { getDayAction } from "@/game/actions/getAction";
+import { gameEvents } from "@/events";
+import { startDreamTransition } from "./helper/startDreamTransition";
 
 export const SCENE_NAME = "CellScene";
 const CELL = "cell";
@@ -45,6 +47,10 @@ class CellScene extends Phaser.Scene {
       const hudContainer = hud.create(this, dayActions);
       this.children.bringToTop(hudContainer);
       this.children.bringToTop(calendarContainer);
+    });
+
+    gameEvents.on("dream-transition", () => {
+      startDreamTransition(this);
     });
   }
 

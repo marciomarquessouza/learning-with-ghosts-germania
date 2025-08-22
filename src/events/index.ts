@@ -83,6 +83,7 @@ export type Events = {
   };
   "hud-thermometer-to": { value: number; duration?: number };
   "hud-thermometer-level": { level: ThermoLevel; duration?: number };
+  "dream-transition": { default?: boolean };
   "noise-effect": { key: NoiseKeys; position?: Position; size?: Size };
 };
 

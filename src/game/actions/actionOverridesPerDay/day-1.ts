@@ -122,9 +122,7 @@ class DayActions1 extends DayActions {
             ],
             onSubmitted: (alternativeId) => {
               if (alternativeId === "sleeping_with_ghosts") {
-                gameEvents.emit("change-scene", {
-                  targetScene: GHOST_DREAM_SCENE,
-                });
+                gameEvents.emit("dream-transition", {});
               }
             },
           },
