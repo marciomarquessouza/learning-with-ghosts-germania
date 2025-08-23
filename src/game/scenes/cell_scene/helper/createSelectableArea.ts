@@ -1,4 +1,4 @@
-import { gameEvents, NoiseKeys } from "@/events";
+import { cellEvents, NoiseKeys } from "@/events/cellEvents";
 import { useCellStore } from "@/store/cellStore";
 import { useUiStore } from "@/store/uiStore";
 
@@ -27,12 +27,12 @@ export function createSelectableArea(
 
   container.on("pointerover", () => {
     if (useUiStore.getState().isInteractionDialogueOpen) return;
-    gameEvents.emit("noise-effect", { key, position, size });
+    cellEvents.emit("noise-effect", { key, position, size });
   });
 
   container.on("pointerout", () => {
     if (useUiStore.getState().isInteractionDialogueOpen) return;
-    gameEvents.emit("noise-effect", { key: "default" });
+    cellEvents.emit("noise-effect", { key: "default" });
     const hud = scene.children.getByName("hud") as Phaser.GameObjects.Container;
 
     scene.children.bringToTop(hud);

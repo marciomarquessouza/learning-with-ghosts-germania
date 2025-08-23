@@ -1,4 +1,4 @@
-import { Alternative } from "@/events";
+import { Alternative } from "@/events/gameEvents";
 import { CharacterDetails } from "@/hooks/useCharacterDetails";
 import { useEffect, useRef } from "react";
 

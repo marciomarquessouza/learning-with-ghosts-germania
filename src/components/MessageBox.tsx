@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { gameEvents } from "@/events";
 import { useTypewriter } from "@/hooks/useTypewriter";
+import { gameEvents } from "@/events/gameEvents";
 
 export function MessageBox() {
   const [title, setTitle] = useState("");

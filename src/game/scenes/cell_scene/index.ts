@@ -5,7 +5,7 @@ import { hud } from "../hud";
 import { calendar } from "./calendar";
 import { selectableAreas } from "./selectableAreas";
 import { getDayAction } from "@/game/actions/getAction";
-import { gameEvents } from "@/events";
+import { cellEvents } from "@/events/cellEvents";
 import { startDreamTransition } from "./helper/startDreamTransition";
 
 export const SCENE_NAME = "CellScene";
@@ -49,8 +49,8 @@ class CellScene extends Phaser.Scene {
       this.children.bringToTop(calendarContainer);
     });
 
-    gameEvents.on("dream-transition", () => {
-      startDreamTransition(this);
+    cellEvents.on("dream-transition", ({ afterClose }) => {
+      startDreamTransition(this, afterClose);
     });
   }
 

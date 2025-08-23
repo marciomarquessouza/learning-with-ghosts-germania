@@ -48,4 +48,5 @@ export const HUD_ACTION_CHALLENGE_IMG = "/hud/action_icons/challenge_icon.png";
 export const HUD_ACTION_EXIT_IMG = "/hud/action_icons/exit_icon.png";
 
 // GHOST DREAM IMAGES
+export const GHOSTS_TITLE = "/ghost_dream/introduction/ghosts_title.png";
 export const CEMETERY_IMAGE = "/ghost_dream/cemetery.png";

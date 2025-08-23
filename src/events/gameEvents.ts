@@ -1,17 +1,12 @@
 import { CHARACTERS } from "@/constants/game";
 import { ACTIONS_ICONS } from "@/game/scenes/hud/helpers/actionIcons";
-import { ThermoLevel } from "@/game/scenes/hud/hudThermometer";
 import mitt from "mitt";
-
-export type Position = { x: number; y: number };
-export type Size = { width: number; height: number };
 
 export type TransitionOptions = Omit<
   Phaser.Types.Scenes.SceneTransitionConfig,
   "target"
 >;
 
-export type NoiseKeys = "default" | "selectable";
 export type InteractionTypes =
   | "dialogue"
   | "alternatives"
@@ -81,10 +76,6 @@ export type Events = {
     timeInSeconds: number;
     onFinish: () => void;
   };
-  "hud-thermometer-to": { value: number; duration?: number };
-  "hud-thermometer-level": { level: ThermoLevel; duration?: number };
-  "dream-transition": { default?: boolean };
-  "noise-effect": { key: NoiseKeys; position?: Position; size?: Size };
 };
 
 export const gameEvents = mitt<Events>();

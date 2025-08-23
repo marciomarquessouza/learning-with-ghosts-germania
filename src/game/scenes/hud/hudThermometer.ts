@@ -3,7 +3,7 @@ import {
   HUD_THERMOMETER_IMG_WIDTH,
   HUD_WEIGHT_POINTER_HEIGHT,
 } from "@/constants/images";
-import { gameEvents } from "@/events";
+import { cellEvents } from "@/events/cellEvents";
 
 const HUD_THERMOMETER_BACKGROUND = "hudThermometerBackground";
 
@@ -74,11 +74,11 @@ export class HudThermometer {
       countText.setOrigin(0.5, 1);
       this.container.add(countText);
 
-      gameEvents.on("hud-thermometer-to", ({ value, duration }) => {
+      cellEvents.on("hud-thermometer-to", ({ value, duration }) => {
         this.animateTo(scene, value, duration || 1500);
       });
 
-      gameEvents.on("hud-thermometer-level", ({ level, duration }) => {
+      cellEvents.on("hud-thermometer-level", ({ level, duration }) => {
         this.setLevel(scene, level, duration || 1500);
       });
     });

@@ -1,6 +1,6 @@
 import { HUD_ACTIONS_IMG, HUD_WEIGHT_IMG_WIDTH } from "@/constants/images";
 import { actionIcons, ACTIONS_ICONS } from "./helpers/actionIcons";
-import { gameEvents } from "@/events";
+import { gameEvents } from "@/events/gameEvents";
 import { DayActions } from "@/game/actions/defaultActions";
 
 const HUD_ACTIONS_BACKGROUND = "hudActionsBackground";

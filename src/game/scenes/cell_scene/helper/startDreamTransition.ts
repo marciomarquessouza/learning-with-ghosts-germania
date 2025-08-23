@@ -1,7 +1,7 @@
-import { gameEvents } from "@/events";
-import { GHOST_DREAM_SCENE } from "../../ghost_dream_scene";
-
-export function startDreamTransition(scene: Phaser.Scene) {
+export function startDreamTransition(
+  scene: Phaser.Scene,
+  afterClose?: () => void
+) {
   const camera = scene.cameras.main;
 
   const transition = scene.add.graphics().setDepth(9999);
@@ -13,7 +13,6 @@ export function startDreamTransition(scene: Phaser.Scene) {
 
   camera.once("camerafadeoutcomplete", () => {
     camera.flash(120, 180, 0, 0);
-
-    gameEvents.emit("change-scene", { targetScene: GHOST_DREAM_SCENE });
+    afterClose?.();
   });
 }

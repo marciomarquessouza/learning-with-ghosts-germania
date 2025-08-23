@@ -1,4 +1,5 @@
 "use client";
+import { DreamIntroduction } from "@/components/DreamIntroduction";
 import { InteractionBox } from "@/components/InteractionDialogue/InteractionBox";
 import { MessageBox } from "@/components/MessageBox";
 import RotateOverlay from "@/components/RotateOverlay";
@@ -14,6 +15,7 @@ export default function Game() {
     <div className="bg-black text-white w-screen h-screen overflow-hidden">
       <RotateOverlay />
       <SceneIntroduction />
+      <DreamIntroduction />
       <MessageBox />
       <InteractionBox />
       <GameRoot />

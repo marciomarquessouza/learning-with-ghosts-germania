@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import Image from "next/image";
-import { gameEvents, IntroductionEvent } from "@/events";
+import { gameEvents, IntroductionEvent } from "@/events/gameEvents";
 import { useCellStore } from "@/store/cellStore";
 
 const DEFAULT_HIDE_AFTER = 2800;

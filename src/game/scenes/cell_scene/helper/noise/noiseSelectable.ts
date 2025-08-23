@@ -4,7 +4,7 @@ import {
   NOISE_WHITE_ATLAS_JSON,
 } from "@/constants/images";
 import { Noise } from "./Noise";
-import { Position, Size } from "@/events";
+import { Position, Size } from "@/events/cellEvents";
 
 export const WHITE_BASE = "whiteBase";
 export const NOISE_WHITE_ATLAS = "noiseWhiteAtlas";

@@ -1,7 +1,9 @@
-import { gameEvents } from "@/events";
+import { gameEvents } from "@/events/gameEvents";
 import { DayActions } from "../defaultActions";
 import { CHARACTERS } from "@/constants/game";
 import { ACTIONS_ICONS } from "@/game/scenes/hud/helpers/actionIcons";
+import { dreamEvents } from "@/events/dreamEvents";
+import { cellEvents } from "@/events/cellEvents";
 import { GHOST_DREAM_SCENE } from "@/game/scenes/ghost_dream_scene";
 
 class DayActions1 extends DayActions {
@@ -122,7 +124,16 @@ class DayActions1 extends DayActions {
             ],
             onSubmitted: (alternativeId) => {
               if (alternativeId === "sleeping_with_ghosts") {
-                gameEvents.emit("dream-transition", {});
+                cellEvents.emit("dream-transition", {
+                  afterClose: () =>
+                    dreamEvents.emit("show-introduction", {
+                      lesson: "Greetings",
+                      afterClose: () =>
+                        gameEvents.emit("change-scene", {
+                          targetScene: GHOST_DREAM_SCENE,
+                        }),
+                    }),
+                });
               }
             },
           },

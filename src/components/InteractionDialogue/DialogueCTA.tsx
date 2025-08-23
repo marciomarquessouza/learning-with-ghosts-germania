@@ -1,4 +1,4 @@
-import { InteractionTypes } from "@/events";
+import { InteractionTypes } from "@/events/gameEvents";
 import { useMemo } from "react";
 
 export interface DialogueCTAProps {

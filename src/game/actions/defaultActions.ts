@@ -1,5 +1,5 @@
 import { CHARACTERS } from "@/constants/game";
-import { gameEvents } from "@/events";
+import { gameEvents } from "@/events/gameEvents";
 
 export class DayActions {
   clicked = {
