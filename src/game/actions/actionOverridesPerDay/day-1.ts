@@ -1,4 +1,4 @@
-import { gameEvents } from "@/events/gameEvents";
+import { GAME_WORLDS, gameEvents } from "@/events/gameEvents";
 import { DayActions } from "../defaultActions";
 import { CHARACTERS } from "@/constants/game";
 import { ACTIONS_ICONS } from "@/game/scenes/hud/helpers/actionIcons";
@@ -129,8 +129,8 @@ class DayActions1 extends DayActions {
                     dreamEvents.emit("show-introduction", {
                       lesson: "Greetings",
                       afterClose: () =>
-                        gameEvents.emit("change-scene", {
-                          targetScene: GHOST_DREAM_SCENE,
+                        gameEvents.emit("change-world", {
+                          targetWorld: GAME_WORLDS.DREAM,
                         }),
                     }),
                 });

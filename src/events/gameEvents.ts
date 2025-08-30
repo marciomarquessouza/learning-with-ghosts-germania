@@ -2,6 +2,11 @@ import { CHARACTERS } from "@/constants/game";
 import { ACTIONS_ICONS } from "@/game/scenes/hud/helpers/actionIcons";
 import mitt from "mitt";
 
+export enum GAME_WORLDS {
+  REAL = "REAL",
+  DREAM = "DREAM",
+}
+
 export type TransitionOptions = Omit<
   Phaser.Types.Scenes.SceneTransitionConfig,
   "target"
@@ -57,6 +62,9 @@ export interface IntroductionEvent {
 }
 
 export type Events = {
+  "change-world": {
+    targetWorld: GAME_WORLDS;
+  };
   "change-scene": {
     targetScene: string;
     fade?: boolean;

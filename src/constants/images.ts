@@ -47,6 +47,17 @@ export const HUD_ACTION_SOLITARY_IMG = "/hud/action_icons/solitary_icon.png";
 export const HUD_ACTION_CHALLENGE_IMG = "/hud/action_icons/challenge_icon.png";
 export const HUD_ACTION_EXIT_IMG = "/hud/action_icons/exit_icon.png";
 
+// ACTORS
+export const JOSEF_GHOST_IMG = "/actors/josef_ghost/josef_ghost.png";
+
 // GHOST DREAM IMAGES
 export const GHOSTS_TITLE = "/ghost_dream/introduction/ghosts_title.png";
 export const CEMETERY_IMAGE = "/ghost_dream/cemetery.png";
+export const CEMETERY_BLACK_BCK_IMG =
+  "/ghost_dream/cemetery/cemetery_black_background.png";
+export const CEMETERY_SKY_IMG = "/ghost_dream/cemetery/cemetery_sky.png";
+export const CEMETERY_BACKGROUND_IMG =
+  "/ghost_dream/cemetery/cemetery_background.png";
+export const CEMETERY_ROAD_IMG = "/ghost_dream/cemetery/cemetery_road.png";
+export const CEMETERY_MOON_IMG = "/ghost_dream/cemetery/cemetery_moon.png";
+export const CEMETERY_CLOUDS_IMG = "/ghost_dream/cemetery/cemetery_clouds.png";

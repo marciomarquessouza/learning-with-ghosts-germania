@@ -10,7 +10,7 @@ export const createConfig = (
     height: DEFAULT_HEIGHT,
     type: Phaser.AUTO,
     scale: {
-      mode: Phaser.Scale.FIT,
+      mode: Phaser.Scale.HEIGHT_CONTROLS_WIDTH,
       autoCenter: Phaser.Scale.CENTER_BOTH,
     },
     render: {
