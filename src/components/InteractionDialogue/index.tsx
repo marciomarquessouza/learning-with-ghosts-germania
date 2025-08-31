@@ -107,8 +107,10 @@ export function InteractionBox() {
 
   const handleOnClick = useCallback(() => {
     if (lines[lineIndex].type !== "dialogue") {
+      advanceLine();
       return;
     }
+
     handleTextClick(() => advanceLine());
   }, [handleTextClick, advanceLine, lineIndex, lines]);
 
@@ -195,7 +197,7 @@ export function InteractionBox() {
               isTypeWritingComplete={isComplete}
               isLastLine={isLastLine}
               interactionType={lines[lineIndex].type}
-              onClick={advanceLine}
+              onClick={handleOnClick}
             />
           </div>
         </motion.div>

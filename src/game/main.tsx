@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { GhostLoading } from "@/components/GhostLoading";
 import { initPhaser } from "./phaser/initPhaser";
 import { GAME_WORLDS, gameEvents } from "@/events/gameEvents";
@@ -10,6 +10,10 @@ export default function MainGame() {
   const [world, setWorld] = useState<GAME_WORLDS>(GAME_WORLDS.REAL);
   const started = useRef(false);
   const currentGame = useRef<Phaser.Game | null>(null);
+  const showLoading = useMemo(
+    () => loading && world === GAME_WORLDS.REAL,
+    [loading, world]
+  );
 
   useEffect(() => {
     if (typeof window !== "object") {
@@ -46,5 +50,5 @@ export default function MainGame() {
     };
   }, [loading, fakeLoading, world]);
 
-  return loading ? <GhostLoading /> : null;
+  return showLoading ? <GhostLoading /> : null;
 }

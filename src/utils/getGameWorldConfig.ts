@@ -10,7 +10,7 @@ export function getGameWorldConfig(
     case GAME_WORLDS.DREAM:
       return createConfig([ghostDreamScene], {
         scale: {
-          mode: Phaser.Scale.ENVELOP,
+          mode: Phaser.Scale.EXPAND,
           autoCenter: Phaser.Scale.CENTER_BOTH,
         },
       });

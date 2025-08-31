@@ -15,6 +15,10 @@ export function DialogueCTA({
   onClick,
 }: DialogueCTAProps) {
   const ctaDetails: { text: string; icon: string } = useMemo(() => {
+    if (!isTypeWritingComplete) {
+      return { text: "RESUME", icon: "↫" };
+    }
+
     if (interactionType === "alternatives") {
       return { text: "DECIDE", icon: "#" };
     }
@@ -28,24 +32,20 @@ export function DialogueCTA({
     }
 
     return { text: "CONTINUE", icon: "►" };
-  }, [interactionType, isLastLine]);
+  }, [isTypeWritingComplete, interactionType, isLastLine]);
 
   return (
-    <>
-      {isTypeWritingComplete && (
-        <div className="absolute right-4 -bottom-4">
-          <button
-            className="shrink-0 h-[44px] px-5 bg-red-700 text-white 
+    <div className="absolute right-4 -bottom-4">
+      <button
+        className="shrink-0 h-[44px] px-5 bg-red-700 text-white w-40 justify-center
                              font-primary font-semibold tracking-wide uppercase
                              flex items-center gap-2 shadow-md hover:bg-red-800 cursor-pointer"
-            type="button"
-            onClick={onClick}
-          >
-            {ctaDetails.text}
-            <span aria-hidden> {ctaDetails.icon}</span>
-          </button>
-        </div>
-      )}
-    </>
+        type="button"
+        onClick={onClick}
+      >
+        {ctaDetails.text}
+        <span aria-hidden> {ctaDetails.icon}</span>
+      </button>
+    </div>
   );
 }

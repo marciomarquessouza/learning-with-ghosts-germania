@@ -1,6 +1,6 @@
 "use client";
 import { DreamIntroduction } from "@/components/DreamIntroduction";
-import { InteractionBox } from "@/components/InteractionDialogue/InteractionBox";
+import { InteractionBox } from "@/components/InteractionDialogue";
 import { MessageBox } from "@/components/MessageBox";
 import RotateOverlay from "@/components/RotateOverlay";
 import { SceneIntroduction } from "@/components/SceneIntroduction";

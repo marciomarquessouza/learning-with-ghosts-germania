@@ -4,7 +4,6 @@ import { CHARACTERS } from "@/constants/game";
 import { ACTIONS_ICONS } from "@/game/scenes/hud/helpers/actionIcons";
 import { dreamEvents } from "@/events/dreamEvents";
 import { cellEvents } from "@/events/cellEvents";
-import { GHOST_DREAM_SCENE } from "@/game/scenes/ghost_dream_scene";
 
 class DayActions1 extends DayActions {
   constructor() {
@@ -68,12 +67,12 @@ class DayActions1 extends DayActions {
           },
           {
             type: "dialogue",
-            text: "In ten minutes your first test begins. The topic: greetings in German.'",
+            text: `In ten minutes your first test begins. The topic: "GREETINGS" in German.`,
             character: CHARACTERS.MARLENE,
           },
           {
             type: "dialogue",
-            text: "Do well, and you eat. Fail, and hunger will be your teacher.",
+            text: "Do well, and you eat. Fail and you will spend a day hungry to try to improve..",
             character: CHARACTERS.MARLENE,
           },
           {
@@ -98,7 +97,7 @@ class DayActions1 extends DayActions {
       };
     } else {
       gameEvents.emit("show-message", {
-        title: "Mensagem",
+        title: "Message",
         text: "There is no one in the bars at the moment",
       });
     }
@@ -111,15 +110,15 @@ class DayActions1 extends DayActions {
           {
             type: "alternatives",
             character: CHARACTERS.JOSEF,
-            text: "O que deseja fazer?",
+            text: "What do you want to do?",
             alternatives: [
               {
                 id: "sleeping_with_ghosts",
-                text: "Dormir até o desafio chegar",
+                text: "Sleep until the challenge arrives",
               },
               {
                 id: "nothing",
-                text: "Fazer nada",
+                text: "Do nothing",
               },
             ],
             onSubmitted: (alternativeId) => {
