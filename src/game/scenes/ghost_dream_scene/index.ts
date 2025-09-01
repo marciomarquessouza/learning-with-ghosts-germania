@@ -49,7 +49,9 @@ class GhostDreamScene extends Phaser.Scene {
     camera.fadeIn(FADE_IN_DURATION, FADE_COLOR.r, FADE_COLOR.g, FADE_COLOR.b);
   }
 
-  update(delta: number) {
+  update(time: number, delta: number) {
+    console.log("#HERE time", time);
+    console.log("#HERE delta", delta);
     cemeteryScenario.update(delta);
     ghostJosef.update();
   }

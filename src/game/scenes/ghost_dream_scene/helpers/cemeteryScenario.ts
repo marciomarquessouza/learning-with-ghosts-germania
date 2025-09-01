@@ -77,7 +77,7 @@ class CemeteryScenario {
 
   update(delta: number) {
     if (!this.clouds) return;
-    this.clouds.tilePositionX += (this.cloudsSpeedPxPerSec * delta) / 1000000;
+    this.clouds.tilePositionX += (this.cloudsSpeedPxPerSec * delta) / 1000;
   }
 }
 
