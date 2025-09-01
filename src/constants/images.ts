@@ -50,6 +50,8 @@ export const HUD_ACTION_EXIT_IMG = "/hud/action_icons/exit_icon.png";
 // ACTORS
 export const JOSEF_GHOST_IMG = "/actors/josef_ghost/josef_ghost.png";
 export const GHOST_SHADOW_IMG = "/actors/josef_ghost/ghost_shadow.png";
+export const GHOST_ATLAS_IMG = "/actors/josef_ghost/ghost_spritesheet.png";
+export const GHOST_ATLAS_JSON = "/actors/josef_ghost/ghost_spritesheet.json";
 
 // GHOST DREAM IMAGES
 export const GHOSTS_TITLE = "/ghost_dream/introduction/ghosts_title.png";
