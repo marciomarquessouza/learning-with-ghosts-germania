@@ -1,7 +1,8 @@
 import { ghostJosef } from "../../actors/ghostJosef/GhostJosef";
 import { createScene } from "@/game/core/CreateScene";
-import { hud } from "../hud";
+import { hud, HUD_ITEMS } from "../hud";
 import { cemeteryScenario } from "./helpers/cemeteryScenario";
+import { getDayAction } from "@/game/actions/getAction";
 
 export const GHOST_DREAM_SCENE = "GhostDreamScene";
 export const DEFAULT_POSITION_X = 510;
@@ -25,7 +26,7 @@ class GhostDreamScene extends Phaser.Scene {
 
   create() {
     const scenario = cemeteryScenario.create(this);
-    this.physics.world.setBounds(0, 0, scenario.width, scenario.height);
+    this.physics.world.setBounds(0, 0, scenario.width - 200, scenario.height);
     const ghostSprite = ghostJosef.create(
       this,
       DEFAULT_POSITION_X,
@@ -35,6 +36,14 @@ class GhostDreamScene extends Phaser.Scene {
     const camera = this.cameras.main;
     camera.setBounds(0, 0, scenario.width, scenario.height);
     camera.startFollow(ghostSprite, true, 0.12, 0.12);
+
+    getDayAction().then((dayActions) => {
+      const hudContainer = hud.create(this, dayActions, [
+        HUD_ITEMS.WEIGHT,
+        HUD_ITEMS.THERMOMETER,
+      ]);
+      this.children.bringToTop(hudContainer);
+    });
 
     camera.setBackgroundColor(0x000000);
     camera.fadeIn(FADE_IN_DURATION, FADE_COLOR.r, FADE_COLOR.g, FADE_COLOR.b);
