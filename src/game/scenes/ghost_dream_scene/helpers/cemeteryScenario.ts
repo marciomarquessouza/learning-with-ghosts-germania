@@ -15,6 +15,9 @@ const CEMETERY_MOON = "cemeteryMoon";
 const CEMETERY_CLOUDS = "cemeteryClouds";
 
 class CemeteryScenario {
+  private clouds?: Phaser.GameObjects.TileSprite;
+  private cloudsSpeedPxPerSec = 8;
+
   preload(scene: Phaser.Scene) {
     const load: Phaser.Loader.LoaderPlugin = scene.load;
 
@@ -33,26 +36,32 @@ class CemeteryScenario {
       .setOrigin(0, 0)
       .setDepth(-100);
     container.add(background);
+
     const cemeterySky = scene.add
       .image(0, 0, CEMETERY_SKY)
       .setOrigin(0, 0)
       .setDepth(-90);
     container.add(cemeterySky);
+
     const cemeteryClouds = scene.add
-      .image(0, 0, CEMETERY_CLOUDS)
+      .tileSprite(0, 0, background.width, background.height, CEMETERY_CLOUDS)
       .setOrigin(0, 0)
       .setDepth(-80);
     container.add(cemeteryClouds);
+    this.clouds = cemeteryClouds;
+
     const cemeteryMoon = scene.add
       .image(0, 0, CEMETERY_MOON)
       .setOrigin(0, 0)
       .setDepth(-70);
     container.add(cemeteryMoon);
+
     const cemeteryBackground = scene.add
       .image(0, 0, CEMETERY_BACKGROUND)
       .setOrigin(0, 0)
       .setDepth(-60);
     container.add(cemeteryBackground);
+
     const cemeteryRoad = scene.add
       .image(0, 0, CEMETERY_ROAD)
       .setOrigin(0, 0)
@@ -64,6 +73,11 @@ class CemeteryScenario {
       width: background.width,
       height: background.height,
     };
+  }
+
+  update(delta: number) {
+    if (!this.clouds) return;
+    this.clouds.tilePositionX += (this.cloudsSpeedPxPerSec * delta) / 1000000;
   }
 }
 
