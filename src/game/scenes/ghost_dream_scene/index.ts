@@ -3,6 +3,7 @@ import { createScene } from "@/game/core/CreateScene";
 import { hud, HUD_ITEMS } from "../hud";
 import { cemeteryScenario } from "./helpers/cemeteryScenario";
 import { getDayAction } from "@/game/actions/getAction";
+import { ghostElisa } from "@/game/actors/ghostElisa/GhostElisa";
 
 export const GHOST_DREAM_SCENE = "GhostDreamScene";
 export const DEFAULT_POSITION_X = 510;
@@ -19,6 +20,7 @@ class GhostDreamScene extends Phaser.Scene {
   preload() {
     cemeteryScenario.preload(this);
     ghostJosef.preload(this);
+    ghostElisa.preload(this);
 
     this.physics.world.setBounds(0, 0, 2000, 1200);
     hud.preload(this);
@@ -32,6 +34,7 @@ class GhostDreamScene extends Phaser.Scene {
       DEFAULT_POSITION_X,
       DEFAULT_POSITION_Y
     );
+    ghostElisa.create(this, scenario.width - 800, DEFAULT_POSITION_Y - 55);
 
     const camera = this.cameras.main;
     camera.setBounds(0, 0, scenario.width, scenario.height);
@@ -49,9 +52,7 @@ class GhostDreamScene extends Phaser.Scene {
     camera.fadeIn(FADE_IN_DURATION, FADE_COLOR.r, FADE_COLOR.g, FADE_COLOR.b);
   }
 
-  update(time: number, delta: number) {
-    console.log("#HERE time", time);
-    console.log("#HERE delta", delta);
+  update(_time: number, delta: number) {
     cemeteryScenario.update(delta);
     ghostJosef.update();
   }

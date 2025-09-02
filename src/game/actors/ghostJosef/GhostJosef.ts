@@ -27,11 +27,9 @@ export class GhostJosef {
   speed = 160;
   pauseLevitation = false;
 
-  constructor() {}
-
   preload(scene: Phaser.Scene) {
     const load: Phaser.Loader.LoaderPlugin = scene.load;
-    scene.load.atlas(GHOST_ATLAS, GHOST_ATLAS_IMG, GHOST_ATLAS_JSON);
+    load.atlas(GHOST_ATLAS, GHOST_ATLAS_IMG, GHOST_ATLAS_JSON);
     load.image(JOSEF_GHOST, JOSEF_GHOST_IMG);
     load.image(GHOST_SHADOW, GHOST_SHADOW_IMG);
   }
