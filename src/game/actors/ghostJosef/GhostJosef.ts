@@ -33,7 +33,12 @@ export class GhostJosef {
 
   // baselines for stable math
   private baseY = 0;
+
+    // --- Shadow tuning ---
   private baseShadowScaleX = 1;
+  private shadowScaleFactor = 0.002; // how much the shadow squashes per px of height
+  private shadowAlphaMin = 0.35;     // most transparent (when highest)
+  private shadowAlphaMax = 0.9;      // most opaque (when lowest)
 
   preload(scene: Phaser.Scene) {
     const load = scene.load;
@@ -70,15 +75,13 @@ export class GhostJosef {
     this.sprite = scene.physics.add.sprite(startX, startY, GHOST_ATLAS, 0);
     this.sprite.setDepth(10).setCollideWorldBounds(true);
     this.sprite.play(GHOST_IDLE_ANIM, true);
-    // optional: ghosts usually shouldn’t be affected by gravity
-    // this.sprite.body.setAllowGravity(false);
 
     this.shadow = scene.physics.add.sprite(startX, startY + 170, GHOST_SHADOW).setDepth(10);
-    // this.shadow.body.setAllowGravity(false);
 
     // baselines
     this.baseY = startY;
     this.baseShadowScaleX = this.shadow.scaleX;
+    this.shadow.setAlpha(this.shadowAlphaMax);
 
     if (!scene.input.keyboard) throw new Error("Mobile/Tablet version not implemented");
     this.cursors = scene.input.keyboard.createCursorKeys();
@@ -100,14 +103,22 @@ export class GhostJosef {
     const offset = Math.sin(this.phase) * this.levitationMax; // position offset (px)
     const vy = Math.cos(this.phase) * this.angularSpeed * this.levitationMax; // px/s
 
-    // shadow squash based on height (time-independent)
-    const scaleX = this.baseShadowScaleX - offset * 0.002; // tweak factor as you like
-    this.shadow?.setScale(scaleX, this.shadow.scaleY);
+    // --- Shadow squash (time-independent)
+    const scaleX = Phaser.Math.Clamp(
+      this.baseShadowScaleX - offset * this.shadowScaleFactor,
+      0.1, 10
+    );
 
-    // keep shadow under the sprite horizontally
-    if (this.sprite && this.shadow) {
-      this.shadow.setPosition(this.sprite.x, this.shadow.y);
-    }
+    // --- Shadow alpha: 0..1 factor where 0 = lowest, 1 = highest
+    const upT = (-offset + this.levitationMax) / (2 * this.levitationMax); // 0 = baixo, 1 = alto
+    // linear map: highest => min alpha, lowest => max alpha
+    const alpha = Phaser.Math.Linear(this.shadowAlphaMax, this.shadowAlphaMin, upT);
+
+    this.shadow?.setScale(scaleX, this.shadow.scaleY).setAlpha(alpha);
+
+    // keep shadow under the ghost horizontally
+    if (this.sprite && this.shadow) this.shadow.setPosition(this.sprite.x, this.shadow.y);
+
 
     return { offset, vy };
   }
