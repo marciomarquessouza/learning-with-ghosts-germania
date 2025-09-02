@@ -52,9 +52,9 @@ class GhostDreamScene extends Phaser.Scene {
     camera.fadeIn(FADE_IN_DURATION, FADE_COLOR.r, FADE_COLOR.g, FADE_COLOR.b);
   }
 
-  update(_time: number, delta: number) {
+  update(time: number, delta: number) {
     cemeteryScenario.update(delta);
-    ghostJosef.update();
+    ghostJosef.update(time, delta);
   }
 }
 
