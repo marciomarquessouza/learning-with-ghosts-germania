@@ -7,11 +7,11 @@ import { getGameWorldConfig } from "@/utils/getGameWorldConfig";
 export default function MainGame() {
   const [fakeLoading, setFakeLoading] = useState(true);
   const [loading, setLoading] = useState(true);
-  const [world, setWorld] = useState<GAME_WORLDS>(GAME_WORLDS.DREAM);
+  const [world, setWorld] = useState<GAME_WORLDS>(GAME_WORLDS.REAL);
   const started = useRef(false);
   const currentGame = useRef<Phaser.Game | null>(null);
   const showLoading = useMemo(
-    () => loading && world === GAME_WORLDS.REAL,
+    () => loading && world === GAME_WORLDS.DREAM,
     [loading, world]
   );
 

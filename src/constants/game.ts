@@ -3,10 +3,16 @@ export const DEFAULT_HEIGHT = 1080;
 export const DEFAULT_INITIAL_WEIGHT = 75;
 
 export enum CHARACTERS {
-  MARLENE = "MARLENE",
-  ELISA = "ELISA",
-  JOSEF = "JOSEF",
-  DOLORES = "DOLORES",
+  MARLENE = "marlene",
+  ELISA = "elisa",
+  JOSEF = "josef",
+}
+
+export enum MOODS {
+  NEUTRAL = "neutral",
+  SAD = "sad",
+  ANGRY = "angry",
+  HAPPY = "happy",
 }
 
 export const DIALOGUE_MAP: {
@@ -24,9 +30,5 @@ export const DIALOGUE_MAP: {
   [CHARACTERS.JOSEF]: {
     displayName: "Josef G.",
     avatar: "/dialogue/dialogue_avatar_josef.png",
-  },
-  [CHARACTERS.DOLORES]: {
-    displayName: "Dolores",
-    avatar: "/dialogue/dialogue_avatar_elisa.png",
   },
 };

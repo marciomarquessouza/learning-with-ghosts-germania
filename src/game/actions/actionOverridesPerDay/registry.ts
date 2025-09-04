@@ -4,5 +4,5 @@ export const dayImporters: Record<
   number,
   () => Promise<{ dayAction: DayActions }>
 > = {
-  1: () => import("./day-1"),
+  1: () => import("./day_01.actions"),
 };
