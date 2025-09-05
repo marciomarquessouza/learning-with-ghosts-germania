@@ -4,6 +4,14 @@ import { CHARACTERS } from "@/constants/game";
 import { ACTIONS_ICONS } from "@/game/scenes/hud/helpers/actionIcons";
 import { dreamEvents } from "@/events/dreamEvents";
 import { cellEvents } from "@/events/cellEvents";
+import { runSteps } from "@/events/steps/runSteps";
+import {
+  stepBarsCount,
+  stepDayIntroduction,
+  stepGameMessage,
+  stepTextDialogue,
+} from "@/events/steps";
+import { dialogues } from "./day_01.dialogues";
 
 class DayActions1 extends DayActions {
   constructor() {
@@ -11,43 +19,18 @@ class DayActions1 extends DayActions {
   }
 
   onStart(): void {
-    gameEvents.emit("show-introduction", {
-      title: "Welcome to the Prison",
-      afterClose: () => firstDialogue(),
-    });
-
-    const firstDialogue = () => {
-      gameEvents.emit("show-dialogue", {
-        lines: [
-          {
-            type: "dialogue",
-            text: ` This cell is my new home.
-                    I was jailed for not speaking German in Germany.
-                    Logic... or absurdity?`,
-            character: CHARACTERS.JOSEF,
-          },
-          {
-            type: "dialogue",
-            text: ` I don’t want to do anything.
-                    I don’t want to think.
-                    I just want to sleep.`,
-            character: CHARACTERS.JOSEF,
-          },
-        ],
-        onComplete: () => marleneCalling(),
-      });
-
-      const marleneCalling = () => {
-        gameEvents.emit("show-message", {
-          title: "A voice calls you through the bars",
-          text: 'Click on "Bars" in the actions menu.',
-        });
-        gameEvents.emit("hud-actions-badge", {
-          icon: ACTIONS_ICONS.BARS,
-          count: 1,
-        });
-      };
-    };
+    runSteps(
+      [
+        stepDayIntroduction("Welcome to the Prison"),
+        stepTextDialogue(dialogues.welcome),
+        stepBarsCount(1),
+        stepGameMessage(
+          "A voice calls you through the bars",
+          'Click on "Bars" in the actions menu.'
+        ),
+      ],
+      {}
+    );
   }
 
   onBarsClick(): void {
