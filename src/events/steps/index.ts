@@ -1,30 +1,62 @@
 import { Step } from "@/events/steps/runSteps";
-import { DialogueLine } from "@/utils/dialogueExpressions";
 import { showTextDialogue } from "../helpers/showTextDialogue";
-import { showGameMessage } from "../helpers/showGameMessage";
-import { setBarsCount } from "../helpers/setBarsCount";
-import { showDayIntroduction } from "../helpers/showDayIntroduction";
+import { GameMessage, showGameMessage } from "../helpers/showGameMessage";
+import { BarsCount, setBarsCount } from "../helpers/setBarsCount";
+import {
+  DayIntroduction,
+  showDayIntroduction,
+} from "../helpers/showDayIntroduction";
+import { ChallengeEvent, setChallenge } from "../helpers/setChallenge";
+import { DialogueEvent } from "../gameEvents";
+import { showDreamTransition } from "../helpers/showDreamTransition";
+import {
+  ShowDreamIntroduction,
+  showDreamIntroduction,
+} from "../helpers/showDreamIntroduction";
+import { GameWorld, setGameWorld } from "../helpers/setGameWorld";
 
 export const stepTextDialogue =
-  (dialogues: DialogueLine[]): Step =>
+  (payload: DialogueEvent): Step =>
   async () => {
-    await showTextDialogue(dialogues);
+    await showTextDialogue(payload);
   };
 
 export const stepGameMessage =
-  (title: string, text: string, closeAfter?: number): Step =>
+  (payload: GameMessage): Step =>
   async () => {
-    await showGameMessage(title, text, closeAfter);
+    await showGameMessage(payload);
   };
 
 export const stepBarsCount =
-  (count: number): Step =>
+  (payload: BarsCount): Step =>
   async () => {
-    await setBarsCount(count);
+    await setBarsCount(payload);
   };
 
 export const stepDayIntroduction =
-  (title: string, hideAfter?: number): Step =>
+  (payload: DayIntroduction): Step =>
   async () => {
-    await showDayIntroduction(title, hideAfter);
+    await showDayIntroduction(payload);
+  };
+
+export const stepSetChallenge =
+  (payload: ChallengeEvent): Step =>
+  async () => {
+    await setChallenge(payload);
+  };
+
+export const stepShowDreamTransition = (): Step => async () => {
+  await showDreamTransition();
+};
+
+export const stepShowDreamIntroduction =
+  (payload: ShowDreamIntroduction): Step =>
+  async () => {
+    await showDreamIntroduction(payload);
+  };
+
+export const stepSetGameWorld =
+  (payload: GameWorld): Step =>
+  async () => {
+    await setGameWorld(payload);
   };

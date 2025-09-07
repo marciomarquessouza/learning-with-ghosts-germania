@@ -1,9 +1,14 @@
 import { gameEvents } from "../gameEvents";
 
-export function showDayIntroduction(
-  title: string,
-  hideAfter?: number
-): Promise<void> {
+export interface DayIntroduction {
+  title: string;
+  hideAfter?: number;
+}
+
+export function showDayIntroduction({
+  title,
+  hideAfter,
+}: DayIntroduction): Promise<void> {
   return new Promise((resolve) => {
     gameEvents.emit("show-introduction", {
       title,

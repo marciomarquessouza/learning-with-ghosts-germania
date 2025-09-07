@@ -1,4 +1,4 @@
-import { CHARACTERS } from "@/constants/game";
+import { CHARACTERS, MOODS } from "@/constants/game";
 import { ACTIONS_ICONS } from "@/game/scenes/hud/helpers/actionIcons";
 import mitt from "mitt";
 
@@ -22,6 +22,7 @@ export interface DialogueLine {
   type: "dialogue";
   text: string;
   character: CHARACTERS;
+  mood?: MOODS;
   speed?: number;
 }
 
@@ -34,6 +35,7 @@ export interface AlternativeLine {
   type: "alternatives";
   text: string;
   character: CHARACTERS;
+  mood?: MOODS;
   speed?: number;
   alternatives: Alternative[];
   onSubmitted: (alternativeId?: string) => void;

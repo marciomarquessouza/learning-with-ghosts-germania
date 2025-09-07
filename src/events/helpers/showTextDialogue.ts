@@ -1,15 +1,16 @@
-import { gameEvents } from "@/events/gameEvents";
-import { DialogueLine } from "@/utils/dialogueExpressions";
+import { DialogueEvent, gameEvents } from "@/events/gameEvents";
 
-export function showTextDialogue(dialogues: DialogueLine[]): Promise<void> {
+export function showTextDialogue({
+  lines,
+  onComplete,
+}: DialogueEvent): Promise<void> {
   return new Promise((resolve) => {
     gameEvents.emit("show-dialogue", {
-      lines: dialogues.map((dialogue) => ({
-        type: "dialogue",
-        character: dialogue.character,
-        text: dialogue.text,
-      })),
-      onComplete: () => resolve(),
+      lines,
+      onComplete: () => {
+        onComplete?.();
+        resolve();
+      },
     });
   });
 }

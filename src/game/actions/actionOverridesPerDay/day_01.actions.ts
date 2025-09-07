@@ -1,14 +1,15 @@
 import { GAME_WORLDS, gameEvents } from "@/events/gameEvents";
 import { DayActions } from "../defaultActions";
 import { CHARACTERS } from "@/constants/game";
-import { ACTIONS_ICONS } from "@/game/scenes/hud/helpers/actionIcons";
-import { dreamEvents } from "@/events/dreamEvents";
-import { cellEvents } from "@/events/cellEvents";
 import { runSteps } from "@/events/steps/runSteps";
 import {
   stepBarsCount,
   stepDayIntroduction,
   stepGameMessage,
+  stepSetChallenge,
+  stepSetGameWorld,
+  stepShowDreamIntroduction,
+  stepShowDreamTransition,
   stepTextDialogue,
 } from "@/events/steps";
 import { dialogues } from "./day_01.dialogues";
@@ -21,13 +22,13 @@ class DayActions1 extends DayActions {
   onStart(): void {
     runSteps(
       [
-        stepDayIntroduction("Welcome to the Prison"),
-        stepTextDialogue(dialogues.welcome),
-        stepBarsCount(1),
-        stepGameMessage(
-          "A voice calls you through the bars",
-          'Click on "Bars" in the actions menu.'
-        ),
+        stepDayIntroduction({ title: "Welcome to the Prison" }),
+        stepTextDialogue({ lines: dialogues.welcome() }),
+        stepBarsCount({ count: 1 }),
+        stepGameMessage({
+          title: "A voice calls you through the bars",
+          text: 'Click on "Bars" in the actions menu.',
+        }),
       ],
       {}
     );
@@ -36,48 +37,15 @@ class DayActions1 extends DayActions {
   onBarsClick(): void {
     if (this.clicked.bars === 0) {
       this.clicked.bars = 1;
-      gameEvents.emit("hide-message", {});
-      gameEvents.emit("hud-actions-badge", {
-        icon: ACTIONS_ICONS.BARS,
-        count: 0,
-      });
-      gameEvents.emit("show-dialogue", {
-        lines: [
-          {
-            type: "dialogue",
-            text: "Prisoner Josef G. Already feeling at home in your cell?",
-            character: CHARACTERS.MARLENE,
-          },
-          {
-            type: "dialogue",
-            text: `In ten minutes your first test begins. The topic: "GREETINGS" in German.`,
-            character: CHARACTERS.MARLENE,
-          },
-          {
-            type: "dialogue",
-            text: "Do well, and you eat. Fail and you will spend a day hungry to try to improve..",
-            character: CHARACTERS.MARLENE,
-          },
-          {
-            type: "dialogue",
-            text: "But… I have no books. Nothing to study with.",
-            character: CHARACTERS.JOSEF,
-          },
-          {
-            type: "dialogue",
-            text: "[MARLENE SMILES] That’s your problem. See you in ten minutes.",
-            character: CHARACTERS.MARLENE,
-          },
+      runSteps(
+        [
+          stepGameMessage({ hide: true }),
+          stepBarsCount({ count: 0 }),
+          stepTextDialogue({ lines: dialogues.marlene_first_interaction() }),
+          stepSetChallenge({ countdown: 600, onFinish: () => {} }),
         ],
-        onComplete: () => startChallengeTimer(),
-      });
-      const startChallengeTimer = () => {
-        gameEvents.emit("hud-actions-timer", {
-          icon: ACTIONS_ICONS.CHALLENGE,
-          timeInSeconds: 600,
-          onFinish: () => {},
-        });
-      };
+        {}
+      );
     } else {
       gameEvents.emit("show-message", {
         title: "Message",
@@ -88,39 +56,28 @@ class DayActions1 extends DayActions {
 
   onBedClick(): void {
     if (this.clicked.bars > 0) {
-      gameEvents.emit("show-dialogue", {
-        lines: [
-          {
-            type: "alternatives",
-            character: CHARACTERS.JOSEF,
-            text: "What do you want to do?",
-            alternatives: [
+      runSteps(
+        [
+          stepTextDialogue({
+            lines: dialogues.bed_alternatives([
               {
                 id: "sleeping_with_ghosts",
-                text: "Sleep until the challenge arrives",
+                do: () =>
+                  runSteps(
+                    [
+                      stepShowDreamTransition(),
+                      stepShowDreamIntroduction({ lesson: "Greetings" }),
+                      stepSetGameWorld({ targetWorld: GAME_WORLDS.DREAM }),
+                    ],
+                    {}
+                  ),
               },
-              {
-                id: "nothing",
-                text: "Do nothing",
-              },
-            ],
-            onSubmitted: (alternativeId) => {
-              if (alternativeId === "sleeping_with_ghosts") {
-                cellEvents.emit("dream-transition", {
-                  afterClose: () =>
-                    dreamEvents.emit("show-introduction", {
-                      lesson: "Greetings",
-                      afterClose: () =>
-                        gameEvents.emit("change-world", {
-                          targetWorld: GAME_WORLDS.DREAM,
-                        }),
-                    }),
-                });
-              }
-            },
-          },
+              { id: "nothing", do: () => {} },
+            ]),
+          }),
         ],
-      });
+        {}
+      );
     } else {
       gameEvents.emit("show-dialogue", {
         lines: [

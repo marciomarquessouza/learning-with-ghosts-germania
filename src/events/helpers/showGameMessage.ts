@@ -1,16 +1,28 @@
 import { gameEvents } from "../gameEvents";
 
-export function showGameMessage(
-  title: string,
-  text: string,
-  closeAfter?: number
-): Promise<void> {
+export interface GameMessage {
+  title?: string;
+  text?: string;
+  closeAfter?: number;
+  hide?: boolean;
+}
+
+export function showGameMessage({
+  title,
+  text,
+  closeAfter,
+  hide,
+}: GameMessage): Promise<void> {
   return new Promise((resolve) => {
-    gameEvents.emit("show-message", {
-      title,
-      text,
-      closeAfter,
-    });
+    if (hide) {
+      gameEvents.emit("hide-message", {});
+    } else {
+      gameEvents.emit("show-message", {
+        title: title || "",
+        text: text || "",
+        closeAfter,
+      });
+    }
     return resolve();
   });
 }

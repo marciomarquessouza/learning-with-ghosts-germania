@@ -11,7 +11,7 @@ export default function MainGame() {
   const started = useRef(false);
   const currentGame = useRef<Phaser.Game | null>(null);
   const showLoading = useMemo(
-    () => loading && world === GAME_WORLDS.DREAM,
+    () => loading && world === GAME_WORLDS.REAL,
     [loading, world]
   );
 

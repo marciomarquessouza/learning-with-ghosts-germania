@@ -105,6 +105,14 @@ export function InteractionBox() {
     answer,
   ]);
 
+  const handleClickOnText = useCallback(() => {
+    if (lines[lineIndex].type !== "dialogue") {
+      return;
+    }
+
+    handleTextClick(() => advanceLine());
+  }, [handleTextClick, advanceLine, lineIndex, lines]);
+
   const handleOnClick = useCallback(() => {
     if (lines[lineIndex].type !== "dialogue") {
       advanceLine();
@@ -134,7 +142,7 @@ export function InteractionBox() {
           exit={{ opacity: 0, bottom: -40 }}
           onAnimationComplete={startTyping}
           transition={{ duration: 0.5, ease: "linear" }}
-          onClick={handleOnClick}
+          onClick={handleClickOnText}
           onKeyDown={handleKeyDown}
           role="dialog"
           aria-live="polite"
