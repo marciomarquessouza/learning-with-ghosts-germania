@@ -1,4 +1,3 @@
-import { runAlternative, RunAlternative } from "@/events/steps/runAlternative";
 import { alternatives, dialogue } from "@/utils/dialogues";
 
 export const dialogues = {
@@ -36,13 +35,7 @@ export const dialogues = {
       See you in ten minutes.
     `,
   ],
-  one_test: (options: RunAlternative[]) => [
-    alternatives.elisa.angry`Test`.alternatives(
-      { id: "alternative_01", text: "Text 01" },
-      { id: "alternative_02", text: "Text 02" }
-    )(runAlternative(options)),
-  ],
-  bed_alternatives: (options: RunAlternative[]) => [
+  bed_alternatives: () => [
     alternatives.josef.neutral`
       What do you want to do?
     `.alternatives(
@@ -54,6 +47,6 @@ export const dialogues = {
         id: "nothing",
         text: "Do nothing",
       }
-    )(runAlternative(options)),
+    ),
   ],
 };

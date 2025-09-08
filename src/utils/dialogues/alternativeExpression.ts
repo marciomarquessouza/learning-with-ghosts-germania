@@ -4,9 +4,7 @@ import { Alternative, AlternativeLine } from "@/events/gameEvents";
 import { dedent } from "../dedent";
 
 type AlternativesBuilder = {
-  alternatives: (
-    ...opts: Alternative[]
-  ) => (onSubmitted: (alternativeId?: string) => void) => AlternativeLine;
+  alternatives: (...opts: Alternative[]) => AlternativeLine;
 };
 
 function createAlternativeTag(character: CHARACTERS, mood: MOODS) {
@@ -16,16 +14,14 @@ function createAlternativeTag(character: CHARACTERS, mood: MOODS) {
   ): AlternativesBuilder => {
     const text = dedent(strings, values).trim();
     return {
-      alternatives:
-        (...opts: Alternative[]) =>
-        (onSubmitted: (alternativeId?: string) => void) => ({
-          type: "alternatives",
-          text,
-          character,
-          mood,
-          alternatives: opts,
-          onSubmitted,
-        }),
+      alternatives: (...opts: Alternative[]) => ({
+        type: "alternatives",
+        text,
+        character,
+        mood,
+        alternatives: opts,
+        onSubmitted: () => {},
+      }),
     };
   };
 }

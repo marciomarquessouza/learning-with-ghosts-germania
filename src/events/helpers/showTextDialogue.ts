@@ -1,10 +1,15 @@
 import { DialogueEvent, gameEvents } from "@/events/gameEvents";
 
-export function showTextDialogue({
-  lines,
-  onComplete,
-}: DialogueEvent): Promise<void> {
+export function showTextDialogue(
+  { lines, onComplete }: DialogueEvent,
+  setAlternative: (id?: string) => void = () => {}
+): Promise<void> {
   return new Promise((resolve) => {
+    lines.forEach((line) => {
+      if (line.type === "alternatives") {
+        line.onSubmitted = setAlternative;
+      }
+    });
     gameEvents.emit("show-dialogue", {
       lines,
       onComplete: () => {

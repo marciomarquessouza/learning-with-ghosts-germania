@@ -61,24 +61,21 @@ class DayActions1 extends DayActions {
       runSteps(
         [
           stepTextDialogue({
-            lines: dialogues.bed_alternatives([
-              {
-                id: "sleeping_with_ghosts",
-                do: () =>
-                  runSteps(
-                    [
-                      stepShowDreamTransition(),
-                      stepShowDreamIntroduction({ lesson: "Greetings" }),
-                      stepSetGameWorld({ targetWorld: GAME_WORLDS.DREAM }),
-                    ],
-                    {}
-                  ),
-              },
-              { id: "nothing", do: () => {} },
-            ]),
+            lines: dialogues.bed_alternatives(),
           }),
+          stepShowDreamTransition({
+            showWhenAlternativeIs: "sleeping_with_ghosts",
+          }),
+          stepShowDreamIntroduction(
+            { lesson: "Greetings" },
+            { showWhenAlternativeIs: "sleeping_with_ghosts" }
+          ),
+          stepSetGameWorld(
+            { targetWorld: GAME_WORLDS.DREAM },
+            { showWhenAlternativeIs: "sleeping_with_ghosts" }
+          ),
         ],
-        {}
+        { alternativeId: undefined }
       );
     } else {
       showTextDialogue({ lines: defaultDialogues.before_sleep() });

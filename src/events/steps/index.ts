@@ -1,4 +1,4 @@
-import { Step } from "@/events/steps/runSteps";
+import { Step, stepBase, StepOptions } from "@/events/steps/runSteps";
 import { showTextDialogue } from "../helpers/showTextDialogue";
 import { GameMessage, showGameMessage } from "../helpers/showGameMessage";
 import { BarsCount, setBarsCount } from "../helpers/setBarsCount";
@@ -15,48 +15,45 @@ import {
 } from "../helpers/showDreamIntroduction";
 import { GameWorld, setGameWorld } from "../helpers/setGameWorld";
 
-export const stepTextDialogue =
-  (payload: DialogueEvent): Step =>
-  async () => {
-    await showTextDialogue(payload);
-  };
-
-export const stepGameMessage =
-  (payload: GameMessage): Step =>
-  async () => {
-    await showGameMessage(payload);
-  };
-
-export const stepBarsCount =
-  (payload: BarsCount): Step =>
-  async () => {
-    await setBarsCount(payload);
-  };
-
-export const stepDayIntroduction =
-  (payload: DayIntroduction): Step =>
-  async () => {
-    await showDayIntroduction(payload);
-  };
-
-export const stepSetChallenge =
-  (payload: ChallengeEvent): Step =>
-  async () => {
-    await setChallenge(payload);
-  };
-
-export const stepShowDreamTransition = (): Step => async () => {
-  await showDreamTransition();
+export const stepTextDialogue = (
+  payload: DialogueEvent,
+  options?: StepOptions
+): Step => {
+  return stepBase((context) => {
+    const setAlternative = (id?: string) => (context.alternativeId = id);
+    return showTextDialogue(payload, setAlternative);
+  }, options);
 };
 
-export const stepShowDreamIntroduction =
-  (payload: ShowDreamIntroduction): Step =>
-  async () => {
-    await showDreamIntroduction(payload);
-  };
+export const stepGameMessage = (
+  payload: GameMessage,
+  options?: StepOptions
+): Step => stepBase(() => showGameMessage(payload), options);
 
-export const stepSetGameWorld =
-  (payload: GameWorld): Step =>
-  async () => {
-    await setGameWorld(payload);
-  };
+export const stepBarsCount = (
+  payload: BarsCount,
+  options?: StepOptions
+): Step => stepBase(() => setBarsCount(payload), options);
+
+export const stepDayIntroduction = (
+  payload: DayIntroduction,
+  options?: StepOptions
+): Step => stepBase(() => showDayIntroduction(payload), options);
+
+export const stepSetChallenge = (
+  payload: ChallengeEvent,
+  options?: StepOptions
+): Step => stepBase(() => setChallenge(payload), options);
+
+export const stepShowDreamTransition = (options?: StepOptions): Step =>
+  stepBase(() => showDreamTransition(), options);
+
+export const stepShowDreamIntroduction = (
+  payload: ShowDreamIntroduction,
+  options?: StepOptions
+): Step => stepBase(() => showDreamIntroduction(payload), options);
+
+export const stepSetGameWorld = (
+  payload: GameWorld,
+  options?: StepOptions
+): Step => stepBase(() => setGameWorld(payload), options);
