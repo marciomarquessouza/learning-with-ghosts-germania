@@ -1,6 +1,6 @@
 import { DialogueEvent, gameEvents } from "@/events/gameEvents";
 
-export function showTextDialogue(
+export function showDialogue(
   { lines, onComplete }: DialogueEvent,
   setAlternative: (id?: string) => void = () => {}
 ): Promise<void> {

@@ -9,10 +9,10 @@ import {
   stepSetGameWorld,
   stepShowDreamIntroduction,
   stepShowDreamTransition,
-  stepTextDialogue,
+  stepShowDialogue,
 } from "@/events/steps";
 import { dialogues } from "./day_01.dialogues";
-import { showTextDialogue } from "@/events/helpers/showTextDialogue";
+import { showDialogue } from "@/events/helpers/showDialogue";
 import { defaultDialogues } from "../default.dialogues";
 import { showGameMessage } from "@/events/helpers/showGameMessage";
 
@@ -25,7 +25,7 @@ class DayActions1 extends DayActions {
     runSteps(
       [
         stepDayIntroduction({ title: "Welcome to the Prison" }),
-        stepTextDialogue({ lines: dialogues.welcome() }),
+        stepShowDialogue({ lines: dialogues.welcome() }),
         stepBarsCount({ count: 1 }),
         stepGameMessage({
           title: "A voice calls you through the bars",
@@ -43,7 +43,7 @@ class DayActions1 extends DayActions {
         [
           stepGameMessage({ hide: true }),
           stepBarsCount({ count: 0 }),
-          stepTextDialogue({ lines: dialogues.marlene_first_interaction() }),
+          stepShowDialogue({ lines: dialogues.marlene_first_interaction() }),
           stepSetChallenge({ countdown: 600, onFinish: () => {} }),
         ],
         {}
@@ -60,7 +60,7 @@ class DayActions1 extends DayActions {
     if (this.clicked.bars > 0) {
       runSteps(
         [
-          stepTextDialogue({
+          stepShowDialogue({
             lines: dialogues.bed_alternatives(),
           }),
           stepShowDreamTransition({
@@ -78,24 +78,24 @@ class DayActions1 extends DayActions {
         { alternativeId: undefined }
       );
     } else {
-      showTextDialogue({ lines: defaultDialogues.before_sleep() });
+      showDialogue({ lines: defaultDialogues.before_sleep() });
     }
   }
 
   onChallengeClick(): void {
-    showTextDialogue({ lines: defaultDialogues.default_challenge_dialogue() });
+    showDialogue({ lines: defaultDialogues.default_challenge_dialogue() });
   }
 
   onDeskClick(): void {
-    showTextDialogue({ lines: defaultDialogues.default_desk_dialogue() });
+    showDialogue({ lines: defaultDialogues.default_desk_dialogue() });
   }
 
   onFoodClick(): void {
-    showTextDialogue({ lines: defaultDialogues.default_food_dialogue() });
+    showDialogue({ lines: defaultDialogues.default_food_dialogue() });
   }
 
   onRatClick(): void {
-    showTextDialogue({ lines: defaultDialogues.default_rat_dialogue() });
+    showDialogue({ lines: defaultDialogues.default_rat_dialogue() });
   }
 }
 

@@ -1,5 +1,5 @@
 import { Step, stepBase, StepOptions } from "@/events/steps/runSteps";
-import { showTextDialogue } from "../helpers/showTextDialogue";
+import { showDialogue } from "../helpers/showDialogue";
 import { GameMessage, showGameMessage } from "../helpers/showGameMessage";
 import { BarsCount, setBarsCount } from "../helpers/setBarsCount";
 import {
@@ -15,13 +15,13 @@ import {
 } from "../helpers/showDreamIntroduction";
 import { GameWorld, setGameWorld } from "../helpers/setGameWorld";
 
-export const stepTextDialogue = (
+export const stepShowDialogue = (
   payload: DialogueEvent,
   options?: StepOptions
 ): Step => {
   return stepBase((context) => {
     const setAlternative = (id?: string) => (context.alternativeId = id);
-    return showTextDialogue(payload, setAlternative);
+    return showDialogue(payload, setAlternative);
   }, options);
 };
 
