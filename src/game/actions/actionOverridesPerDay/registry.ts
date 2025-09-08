@@ -1,4 +1,4 @@
-import { DayActions } from "../defaultActions";
+import { DayActions } from "../default.actions";
 
 export const dayImporters: Record<
   number,

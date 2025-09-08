@@ -1,5 +1,6 @@
-/* eslint-disable @typescript-eslint/no-empty-object-type */
-type Context = {};
+type Context = {
+  alternativeId?: string;
+};
 
 export type Step = (context: Context) => Promise<void>;
 

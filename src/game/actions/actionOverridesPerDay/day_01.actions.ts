@@ -1,6 +1,5 @@
-import { GAME_WORLDS, gameEvents } from "@/events/gameEvents";
-import { DayActions } from "../defaultActions";
-import { CHARACTERS } from "@/constants/game";
+import { GAME_WORLDS } from "@/events/gameEvents";
+import { DayActions } from "../default.actions";
 import { runSteps } from "@/events/steps/runSteps";
 import {
   stepBarsCount,
@@ -13,6 +12,9 @@ import {
   stepTextDialogue,
 } from "@/events/steps";
 import { dialogues } from "./day_01.dialogues";
+import { showTextDialogue } from "@/events/helpers/showTextDialogue";
+import { defaultDialogues } from "../default.dialogues";
+import { showGameMessage } from "@/events/helpers/showGameMessage";
 
 class DayActions1 extends DayActions {
   constructor() {
@@ -47,7 +49,7 @@ class DayActions1 extends DayActions {
         {}
       );
     } else {
-      gameEvents.emit("show-message", {
+      showGameMessage({
         title: "Message",
         text: "There is no one in the bars at the moment",
       });
@@ -79,69 +81,24 @@ class DayActions1 extends DayActions {
         {}
       );
     } else {
-      gameEvents.emit("show-dialogue", {
-        lines: [
-          {
-            type: "dialogue",
-            character: CHARACTERS.JOSEF,
-            text: ` Converse com a general nas barras.
-                    Depois dormimos...`,
-          },
-        ],
-      });
+      showTextDialogue({ lines: defaultDialogues.before_sleep() });
     }
   }
 
   onChallengeClick(): void {
-    gameEvents.emit("show-dialogue", {
-      lines: [
-        {
-          type: "dialogue",
-          character: CHARACTERS.JOSEF,
-          text: `Eu não quero fazer o desafio agora.
-                 Prefiro dormir antes de encontrar aquela mulher terrível.`,
-        },
-      ],
-    });
+    showTextDialogue({ lines: defaultDialogues.default_challenge_dialogue() });
   }
 
   onDeskClick(): void {
-    gameEvents.emit("show-dialogue", {
-      lines: [
-        {
-          type: "dialogue",
-          character: CHARACTERS.JOSEF,
-          text: `Eu não quero fazer nada na mesa agora.
-                 Eu só quero domir...`,
-        },
-      ],
-    });
+    showTextDialogue({ lines: defaultDialogues.default_desk_dialogue() });
   }
 
   onFoodClick(): void {
-    gameEvents.emit("show-dialogue", {
-      lines: [
-        {
-          type: "dialogue",
-          character: CHARACTERS.JOSEF,
-          text: `Não teremos comida até vencer o desafio de idioma.
-                 Esqueça isso. Eu só quero dormir`,
-        },
-      ],
-    });
+    showTextDialogue({ lines: defaultDialogues.default_food_dialogue() });
   }
 
   onRatClick(): void {
-    gameEvents.emit("show-dialogue", {
-      lines: [
-        {
-          type: "dialogue",
-          character: CHARACTERS.JOSEF,
-          text: `Parece que preciso tomar cuidado com a minha comida.
-                 Tem um rato aqui`,
-        },
-      ],
-    });
+    showTextDialogue({ lines: defaultDialogues.default_rat_dialogue() });
   }
 }
 
