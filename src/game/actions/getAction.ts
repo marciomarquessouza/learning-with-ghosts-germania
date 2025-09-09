@@ -1,6 +1,9 @@
 import { useCellStore } from "@/store/cellStore";
-import { DayActions, defaultDayActions } from "./default.actions";
-import { dayImporters } from "./actionOverridesPerDay/registry";
+import {
+  DayActions,
+  defaultDayActions,
+} from "./actionDefaultPerDay/default.actions";
+import { dayImporters } from "./registry";
 
 const cache = new Map<number, DayActions>();
 

@@ -39,17 +39,20 @@ class GhostDreamScene extends Phaser.Scene {
     const camera = this.cameras.main;
     camera.setBounds(0, 0, scenario.width, scenario.height);
     camera.startFollow(ghostSprite, true, 0.12, 0.12);
+    camera.setBackgroundColor(0x000000);
 
     getDayAction().then((dayActions) => {
+      dayActions.setStage("learning");
       const hudContainer = hud.create(this, dayActions, [
         HUD_ITEMS.WEIGHT,
         HUD_ITEMS.THERMOMETER,
       ]);
       this.children.bringToTop(hudContainer);
+      camera.fadeIn(FADE_IN_DURATION, FADE_COLOR.r, FADE_COLOR.g, FADE_COLOR.b);
+      camera.once("camerafadeincomplete", () => {
+        dayActions.onStart();
+      });
     });
-
-    camera.setBackgroundColor(0x000000);
-    camera.fadeIn(FADE_IN_DURATION, FADE_COLOR.r, FADE_COLOR.g, FADE_COLOR.b);
   }
 
   update(time: number, delta: number) {

@@ -1,5 +1,5 @@
 import { createSelectableArea } from "./helper/createSelectableArea";
-import { DayActions } from "@/game/actions/default.actions";
+import { DayActions } from "@/game/actions/actionDefaultPerDay/default.actions";
 
 class SelectableAreas {
   create(scene: Phaser.Scene, dayActions: DayActions) {

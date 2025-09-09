@@ -49,4 +49,28 @@ export const dialogues = {
       }
     ),
   ],
+  dream_introduction: () => [
+    dialogue.josef.neutral`
+      Espera ai...
+      Será que eu morri..
+      E virei um Fantasma?
+    `,
+    dialogue.josef.happy`
+      Quer dizer que eu nõa preciso mais
+      voltar para aquela prisão?
+    `,
+    dialogue.elisa.neutral`
+      Você não morreu Josef...
+      Você apenas está sonhando...
+      Que é um Fantasma
+    `,
+    dialogue.josef.neutral`
+      De que é esta voz...
+      Quem é você?
+    `,
+    dialogue.elisa.neutral`
+      Ande um pouco para frente...
+      E você verá meu querido
+    `,
+  ],
 };

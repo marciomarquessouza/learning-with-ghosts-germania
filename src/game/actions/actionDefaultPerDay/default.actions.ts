@@ -1,7 +1,14 @@
 import { CHARACTERS } from "@/constants/game";
 import { gameEvents } from "@/events/gameEvents";
+import { showDialogue } from "@/events/helpers/showDialogue";
+import { stepDayIntroduction } from "@/events/steps";
+import { runSteps } from "@/events/steps/runSteps";
+import { defaultDialogues } from "./default.dialogues";
+
+export type Stage = "introduction" | "lesson" | "learning" | "challenge";
 
 export class DayActions {
+  public stage: Stage = "introduction";
   clicked = {
     desk: 0,
     ratHole: 0,
@@ -12,23 +19,27 @@ export class DayActions {
     bars: 0,
   };
 
+  setStage(stage: Stage) {
+    this.stage = stage;
+  }
+
   onStart() {
-    gameEvents.emit("show-introduction", {
-      title: "More one day...",
-    });
+    switch (this.stage) {
+      case "introduction":
+      default:
+        runSteps(
+          [
+            stepDayIntroduction({
+              title: "More one day...",
+            }),
+          ],
+          {}
+        );
+    }
   }
 
   onDeskClick() {
-    gameEvents.emit("show-dialogue", {
-      lines: [
-        {
-          type: "dialogue",
-          character: CHARACTERS.JOSEF,
-          text: "I don't want to do anything at this table right now",
-        },
-      ],
-    });
-
+    showDialogue({ lines: defaultDialogues.default_desk_dialogue() });
     this.clicked.desk += 1;
   }
 
