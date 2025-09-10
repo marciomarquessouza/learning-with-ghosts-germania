@@ -53,6 +53,7 @@ export interface InputLine {
 export type InteractionLine = DialogueLine | AlternativeLine | InputLine;
 
 export interface DialogueEvent {
+  dialogueId?: string;
   lines: InteractionLine[];
   onComplete?: () => void;
 }
@@ -79,6 +80,7 @@ export type Events = {
   };
   "hide-message": { delay?: number };
   "show-dialogue": DialogueEvent;
+  "hide-dialogue": { dialogueId?: string };
   "show-introduction": IntroductionEvent;
   "hud-actions-badge": { icon: ACTIONS_ICONS; count: number };
   "hud-actions-timer": {

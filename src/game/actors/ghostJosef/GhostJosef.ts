@@ -4,6 +4,7 @@ import {
   GHOST_ATLAS_IMG,
   GHOST_ATLAS_JSON,
 } from "@/constants/images";
+import { gameEvents } from "@/events/gameEvents";
 
 const JOSEF_GHOST = "ghost";
 const GHOST_SHADOW = "ghostShadow";
@@ -12,6 +13,7 @@ const GHOST_IDLE_ANIM = "ghostIdleAnim";
 const GHOST_MOVE_ANIM = "ghostMoveAnim";
 
 export class GhostJosef {
+  public lockMovement = false;
   // --- Levitation config (time-based) ---
   levitationHz = 0.25; // 0.25 cycles/sec => 4s per full bob
   levitationMax = 30; // amplitude in px
@@ -51,6 +53,14 @@ export class GhostJosef {
   }
 
   create(scene: Phaser.Scene, startX: number, startY: number) {
+    gameEvents.on("show-dialogue", () => {
+      this.lockMovement = true;
+    });
+
+    gameEvents.on("hide-dialogue", () => {
+      this.lockMovement = false;
+    });
+
     if (!scene.anims.exists(GHOST_IDLE_ANIM)) {
       scene.anims.create({
         key: GHOST_IDLE_ANIM,
@@ -141,11 +151,11 @@ export class GhostJosef {
     const right = this.cursors?.right.isDown || this.keyMap?.D.isDown;
 
     let vx = 0;
-    if (left) {
+    if (left && !this.lockMovement) {
       vx -= this.speed;
       this.sprite.flipX = true;
     }
-    if (right) {
+    if (right && !this.lockMovement) {
       vx += this.speed;
       this.sprite.flipX = false;
     }

@@ -17,6 +17,7 @@ import { Alternatives } from "./Alternatives";
 import { DialogueCTA } from "./DialogueCTA";
 import { getDialogueDimension } from "./helpers/getDialgueDimension";
 import { InputText } from "./InputText";
+import { getUUID } from "@/utils/getUUID";
 
 export function InteractionBox() {
   const device = useDeviceType();
@@ -44,6 +45,7 @@ export function InteractionBox() {
   );
   const onCompleteRef = useRef<() => void | null>(null);
   const boxRef = useRef<HTMLDivElement>(null);
+  const dialogueId = useRef<string>("");
 
   useEffect(() => {
     setInteractionDialogueOpen(visible);
@@ -54,6 +56,7 @@ export function InteractionBox() {
 
   useEffect(() => {
     const handler = (payload: DialogueEvent) => {
+      dialogueId.current = getUUID();
       setLines(payload.lines);
       setLineIndex(0);
       setCharacter(payload.lines[0].character);
@@ -82,6 +85,7 @@ export function InteractionBox() {
     const newLine = lines[newIndex];
 
     if (!newLine) {
+      gameEvents.emit("hide-dialogue", { dialogueId: dialogueId.current });
       setVisible(false);
       setLastLine(false);
       if (onCompleteRef.current) {
