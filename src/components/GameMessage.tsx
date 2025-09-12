@@ -1,37 +1,31 @@
-import { useEffect, useState } from "react";
+import { ReactNode, useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { useTypewriter } from "@/hooks/useTypewriter";
 import { gameEvents } from "@/events/gameEvents";
+import { Button } from "./Button";
 
 export function GameMessage() {
   const [title, setTitle] = useState("");
+  const [text, setText] = useState<ReactNode>("");
   const [visible, setVisible] = useState(false);
-  const {
-    displayedText,
-    isComplete,
-    setTextToType,
-    startTyping,
-    handleTextClick,
-  } = useTypewriter();
 
   useEffect(() => {
     const handler = (payload: {
       title: string;
-      text: string;
+      text: React.ReactNode;
       closeAfter?: number;
     }) => {
-      setTextToType(payload.text);
       setTitle(payload.title);
+      setText(payload.text);
       setVisible(true);
 
       setTimeout(() => {
         setVisible(false);
-      }, payload.closeAfter || 5_000);
+      }, payload.closeAfter || 8_000);
     };
 
     gameEvents.on("show-game-message", handler);
     return () => gameEvents.off("show-game-message", handler);
-  }, [setTextToType]);
+  }, []);
 
   useEffect(() => {
     const handler = (payload: { delay?: number }) => {
@@ -49,34 +43,46 @@ export function GameMessage() {
     return () => gameEvents.off("hide-game-message", handler);
   }, []);
 
-  const handleOnClick = () => {
-    handleTextClick(() => setVisible(false));
+  const handleCloseClick = () => {
+    setVisible(false);
   };
 
   return (
     <AnimatePresence>
       {visible && (
         <motion.div
-          className="fixed left-1/2 -translate-x-1/2 w-[520px] bg-neutral-900 text-white border border-red-700 pb-4 shadow-xl cursor-pointer"
+          className="fixed mt-2 left-1/2 -translate-x-1/2 w-[968px] h-[242px] cursor-pointer
+            bg-[url('/ui/common/game-message-background.png')] bg-cover bg-center
+            outline-none
+          "
           initial={{ opacity: 0, top: -40 }}
           animate={{ opacity: 1, top: 20 }}
           exit={{ opacity: 0, top: -40 }}
-          onAnimationComplete={startTyping}
           transition={{ duration: 0.5, ease: "linear" }}
-          onClick={handleOnClick}
         >
-          <div className="text-sm text-white bg-red-700 font-bold mb-2 uppercase tracking-wide px-4 py-2">
-            ⏵︎ {title}
+          <div
+            className="fixed -top-6 left-1/2 -translate-x-1/2 bg-black w-[206px] h-12
+            flex items-center justify-center
+          "
+          >
+            <p className="font-sans text-3xl">
+              <span className="text-red-700">M</span>essage
+            </p>
           </div>
-          <div className="whitespace-pre-wrap font-mono text-base leading-snug px-4 py-2">
-            {displayedText}
+          <div className="flex-1 w-full justify-center mt-8 px-4 py-2">
+            <p className="text-center text-xl text-white font-mono mb-2 uppercase tracking-wide">
+              {title}
+            </p>
+          </div>
+          <div className="flex-1 w-full whitespace-pre-wrap px-4 py-2">
+            <p className="text-center text-2xl font-mono text-black leading-snug">
+              {text}
+            </p>
           </div>
 
-          {isComplete && (
-            <div className="mt-2 mr-2 text-xs text-right text-red-400">
-              X close
-            </div>
-          )}
+          <div className="absolute right-2 bottom-0">
+            <Button label="Close" labelIcon="X" onClick={handleCloseClick} />
+          </div>
         </motion.div>
       )}
     </AnimatePresence>

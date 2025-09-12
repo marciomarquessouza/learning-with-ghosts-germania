@@ -140,7 +140,7 @@ export function Dialogue() {
           tabIndex={0}
           className={`fixed left-1/2 -translate-x-1/2 ${heightClass} ${widthClass}
                       bg-[url('/dialogue/dialogue_background.png')] bg-cover bg-center
-                      border-y border-neutral-800 shadow-xl outline-none`} // outline-none pra não mostrar focus ring
+                      border-y border-neutral-800 shadow-xl outline-none`}
           initial={{ opacity: 0, bottom: -40 }}
           animate={{ opacity: 1, bottom: 40 }}
           exit={{ opacity: 0, bottom: -40 }}

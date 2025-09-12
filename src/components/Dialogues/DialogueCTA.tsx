@@ -1,5 +1,6 @@
 import { InteractionTypes } from "@/events/gameEvents";
 import { useMemo } from "react";
+import { Button } from "../Button";
 
 export interface DialogueCTAProps {
   isTypeWritingComplete: boolean;
@@ -36,16 +37,11 @@ export function DialogueCTA({
 
   return (
     <div className="absolute right-4 -bottom-4">
-      <button
-        className="shrink-0 h-[44px] px-5 bg-red-700 text-white w-40 justify-center
-                             font-primary font-semibold tracking-wide uppercase
-                             flex items-center gap-2 shadow-md hover:bg-red-800 cursor-pointer"
-        type="button"
+      <Button
+        label={ctaDetails.text}
+        labelIcon={ctaDetails.icon}
         onClick={onClick}
-      >
-        {ctaDetails.text}
-        <span aria-hidden> {ctaDetails.icon}</span>
-      </button>
+      />
     </div>
   );
 }

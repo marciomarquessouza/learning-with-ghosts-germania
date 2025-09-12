@@ -1,6 +1,7 @@
 import { CHARACTERS, MOODS } from "@/constants/game";
 import { ACTIONS_ICONS } from "@/game/scenes/hud/helpers/actionIcons";
 import mitt from "mitt";
+import { ReactNode } from "react";
 
 export enum GAME_WORLDS {
   REAL = "REAL",
@@ -75,7 +76,7 @@ export type Events = {
   };
   "show-game-message": {
     title: string;
-    text: string;
+    text: ReactNode;
     closeAfter?: number;
   };
   "hide-game-message": { delay?: number };
