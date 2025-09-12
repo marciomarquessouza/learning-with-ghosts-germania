@@ -73,12 +73,12 @@ export type Events = {
     fade?: boolean;
     options?: TransitionOptions;
   };
-  "show-message": {
+  "show-game-message": {
     title: string;
     text: string;
     closeAfter?: number;
   };
-  "hide-message": { delay?: number };
+  "hide-game-message": { delay?: number };
   "show-dialogue": DialogueEvent;
   "hide-dialogue": { dialogueId?: string };
   "show-introduction": IntroductionEvent;

@@ -19,7 +19,7 @@ import { getDialogueDimension } from "./helpers/getDialgueDimension";
 import { InputText } from "./InputText";
 import { getUUID } from "@/utils/getUUID";
 
-export function InteractionBox() {
+export function Dialogue() {
   const device = useDeviceType();
   const [visible, setVisible] = useState(false);
   const [character, setCharacter] = useState<CHARACTERS | null>(null);

@@ -1,7 +1,7 @@
 "use client";
 import { DreamIntroduction } from "@/components/DreamIntroduction";
-import { InteractionBox } from "@/components/InteractionDialogue";
-import { MessageBox } from "@/components/MessageBox";
+import { Dialogue } from "@/components/Dialogues";
+import { GameMessage } from "@/components/GameMessage";
 import RotateOverlay from "@/components/RotateOverlay";
 import { SceneIntroduction } from "@/components/SceneIntroduction";
 import dynamic from "next/dynamic";
@@ -16,8 +16,8 @@ export default function Game() {
       <RotateOverlay />
       <SceneIntroduction />
       <DreamIntroduction />
-      <MessageBox />
-      <InteractionBox />
+      <GameMessage />
+      <Dialogue />
       <GameRoot />
       <div id="game-container" className="w-full h-full"></div>
     </div>

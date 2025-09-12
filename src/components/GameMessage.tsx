@@ -3,7 +3,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { useTypewriter } from "@/hooks/useTypewriter";
 import { gameEvents } from "@/events/gameEvents";
 
-export function MessageBox() {
+export function GameMessage() {
   const [title, setTitle] = useState("");
   const [visible, setVisible] = useState(false);
   const {
@@ -29,8 +29,8 @@ export function MessageBox() {
       }, payload.closeAfter || 5_000);
     };
 
-    gameEvents.on("show-message", handler);
-    return () => gameEvents.off("show-message", handler);
+    gameEvents.on("show-game-message", handler);
+    return () => gameEvents.off("show-game-message", handler);
   }, [setTextToType]);
 
   useEffect(() => {
@@ -45,8 +45,8 @@ export function MessageBox() {
       }, payload.delay);
     };
 
-    gameEvents.on("hide-message", handler);
-    return () => gameEvents.off("hide-message", handler);
+    gameEvents.on("hide-game-message", handler);
+    return () => gameEvents.off("hide-game-message", handler);
   }, []);
 
   const handleOnClick = () => {
