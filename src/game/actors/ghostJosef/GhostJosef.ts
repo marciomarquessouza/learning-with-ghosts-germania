@@ -2,7 +2,7 @@ import { gameEvents } from "@/events/gameEvents";
 import { ghostAnimations } from "./helpers/GhostAnimations";
 import { ghostLevitation } from "./helpers/GhostLevitation";
 import { ghostShadow } from "./helpers/GhostShadow";
-import { MOODS } from "@/constants/game";
+import { CHARACTERS } from "@/constants/game";
 
 export class GhostJosef {
   public lockMovement = false;
@@ -42,8 +42,10 @@ export class GhostJosef {
       this.lockMovement = false;
     });
 
-    gameEvents.on("set-mood", ({ mood }) => {
-      ghostAnimations.playByMood(mood, this.sprite);
+    gameEvents.on("set-mood", ({ mood, character }) => {
+      if (character === CHARACTERS.JOSEF) {
+        ghostAnimations.playByMood(mood, this.sprite);
+      }
     });
 
     return this.sprite;

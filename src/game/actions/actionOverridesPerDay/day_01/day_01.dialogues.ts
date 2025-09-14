@@ -1,3 +1,4 @@
+import { CHARACTERS, MOODS } from "@/constants/game";
 import { alternatives, dialogue } from "@/utils/dialogues";
 
 export const dialogues = {
@@ -59,16 +60,21 @@ export const dialogues = {
       Quer dizer que eu nõa preciso mais
       voltar para aquela prisão?
     `,
-    dialogue.elisa.embarrassed`
+    dialogue.elisa.neutral`
       Você não morreu Josef...
       Você apenas está sonhando...
       Que é um Fantasma
-    `,
-    dialogue.josef.sad`
+    `.reactions([
+      {
+        character: CHARACTERS.JOSEF,
+        mood: MOODS.EMBARRASSED,
+      },
+    ]),
+    dialogue.josef.embarrassed`
       De que é esta voz...
       Quem é você?
     `,
-    dialogue.elisa.flushed`
+    dialogue.elisa.embarrassed`
       Ande um pouco para frente...
       E você verá meu querido
     `,

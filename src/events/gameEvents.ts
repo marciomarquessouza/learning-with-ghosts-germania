@@ -24,10 +24,15 @@ export interface Alternative {
   text: string;
 }
 
+export type CharacterMood = {
+  character: CHARACTERS;
+  mood: MOODS;
+};
+
 export interface BaseLine {
   text: string;
   character: CHARACTERS;
-  mood?: MOODS;
+  moods?: CharacterMood[];
   speed?: number;
 }
 
@@ -78,7 +83,7 @@ export type Events = {
   "hide-game-message": { delay?: number };
   "show-dialogue": DialogueEvent;
   "hide-dialogue": { dialogueId?: string };
-  "set-mood": { mood: MOODS };
+  "set-mood": { mood: MOODS; character: CHARACTERS };
   "show-introduction": IntroductionEvent;
   "hud-actions-badge": { icon: ACTIONS_ICONS; count: number };
   "hud-actions-timer": {

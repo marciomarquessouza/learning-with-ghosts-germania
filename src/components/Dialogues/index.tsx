@@ -18,7 +18,7 @@ import { DialogueCTA } from "./DialogueCTA";
 import { getDialogueDimension } from "./helpers/getDialgueDimension";
 import { InputText } from "./InputText";
 import { getUUID } from "@/utils/getUUID";
-import { setMood } from "@/events/helpers/setMood";
+import { setCharactersMood } from "@/events/helpers/setCharactersMood";
 
 export function Dialogue() {
   const device = useDeviceType();
@@ -60,7 +60,7 @@ export function Dialogue() {
       dialogueId.current = getUUID();
       setLines(payload.lines);
       setLineIndex(0);
-      setMood(payload.lines[0].mood);
+      setCharactersMood(payload.lines[0].moods);
       setCharacter(payload.lines[0].character);
       setTextToType(payload.lines[0].text);
       setLastLine(payload.lines.length === 1);
@@ -90,7 +90,12 @@ export function Dialogue() {
       gameEvents.emit("hide-dialogue", { dialogueId: dialogueId.current });
       setVisible(false);
       setLastLine(false);
-      setMood(MOODS.NEUTRAL);
+      setCharactersMood(
+        Object.values(CHARACTERS).map((character) => ({
+          mood: MOODS.NEUTRAL,
+          character,
+        }))
+      );
       if (onCompleteRef.current) {
         onCompleteRef.current?.();
         onCompleteRef.current = null;
@@ -101,7 +106,7 @@ export function Dialogue() {
     setLineIndex(newIndex);
     setCharacter(newLine.character);
     setLastLine(newIndex === lines.length - 1);
-    setMood(newLine.mood);
+    setCharactersMood(newLine.moods);
     setTextToType(newLine.text);
     startTyping();
   }, [

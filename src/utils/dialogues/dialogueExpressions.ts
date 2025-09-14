@@ -1,20 +1,28 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { CHARACTERS, MOODS } from "@/constants/game";
 import { dedent } from "../dedent";
-import { DialogueLine } from "@/events/gameEvents";
+import { CharacterMood, DialogueLine } from "@/events/gameEvents";
+
+interface DialogueTag extends DialogueLine {
+  reactions: (charactersMood: CharacterMood[]) => DialogueLine;
+}
 
 function createDialogueTag(character: CHARACTERS, mood: MOODS) {
-  return (
-    strings: TemplateStringsArray,
-    ...values: unknown[]
-  ): DialogueLine => {
+  return (strings: TemplateStringsArray, ...values: unknown[]): DialogueTag => {
     const text = dedent(strings, values).trim();
-
-    return {
+    const dialogueLine = Object.freeze({
       type: "dialogue",
       character,
-      mood,
+      moods: [{ character, mood }],
       text,
+    });
+
+    return {
+      ...dialogueLine,
+      reactions: (charactersMood) => ({
+        ...dialogueLine,
+        moods: charactersMood,
+      }),
     };
   };
 }
@@ -24,7 +32,7 @@ export function createDialogue(
   moods: MOODS[]
 ): Record<
   CHARACTERS,
-  Record<MOODS, (s: TemplateStringsArray, ...v: unknown[]) => DialogueLine>
+  Record<MOODS, (s: TemplateStringsArray, ...v: unknown[]) => DialogueTag>
 > {
   const out: any = {};
   for (const character of characters) {
