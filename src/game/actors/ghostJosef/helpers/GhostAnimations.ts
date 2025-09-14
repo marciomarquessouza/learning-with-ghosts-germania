@@ -17,7 +17,7 @@ class GhostAnimations {
     GHOST_SAD_ANIM: "ghostSadAnim",
     GHOST_ANGRY_ANIM: "ghostAngryAnim",
     GHOST_HAPPY_ANIM: "ghostHappyAnim",
-    GHOST_EMBARRASSED_ANIM: "ghostEmbarrassedAnim",
+    GHOST_SURPRISED_ANIM: "ghostSurprisedAnim",
     GHOST_FLUSHED_ANIM: "ghostFlushedAnim",
   };
   public currentAnimation = this.animations.GHOST_IDLE_ANIM;
@@ -81,9 +81,9 @@ class GhostAnimations {
       });
     }
 
-    if (!scene.anims.exists(this.animations.GHOST_EMBARRASSED_ANIM)) {
+    if (!scene.anims.exists(this.animations.GHOST_SURPRISED_ANIM)) {
       scene.anims.create({
-        key: this.animations.GHOST_EMBARRASSED_ANIM,
+        key: this.animations.GHOST_SURPRISED_ANIM,
         frames: [{ key: GHOST_ATLAS, frame: "ghost_7", duration: 10 }],
         frameRate: 20,
         repeat: -1,
@@ -102,7 +102,7 @@ class GhostAnimations {
     return scene.physics.add.sprite(startX, startY, GHOST_ATLAS, 0);
   }
 
-  playByMood(mood: MOODS, sprite: Phaser.Physics.Arcade.Sprite | null) {
+  setAnimationByMood(mood: MOODS) {
     switch (mood) {
       case MOODS.HAPPY:
         this.currentAnimation = this.animations.GHOST_HAPPY_ANIM;
@@ -113,8 +113,8 @@ class GhostAnimations {
       case MOODS.ANGRY:
         this.currentAnimation = this.animations.GHOST_ANGRY_ANIM;
         break;
-      case MOODS.EMBARRASSED:
-        this.currentAnimation = this.animations.GHOST_EMBARRASSED_ANIM;
+      case MOODS.SURPRISED:
+        this.currentAnimation = this.animations.GHOST_SURPRISED_ANIM;
         break;
       case MOODS.FLUSHED:
         this.currentAnimation = this.animations.GHOST_FLUSHED_ANIM;

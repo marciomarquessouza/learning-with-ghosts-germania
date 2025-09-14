@@ -67,14 +67,14 @@ export const dialogues = {
     `.reactions([
       {
         character: CHARACTERS.JOSEF,
-        mood: MOODS.EMBARRASSED,
+        mood: MOODS.SURPRISED,
       },
     ]),
-    dialogue.josef.embarrassed`
+    dialogue.josef.surprised`
       De que é esta voz...
       Quem é você?
     `,
-    dialogue.elisa.embarrassed`
+    dialogue.elisa.surprised`
       Ande um pouco para frente...
       E você verá meu querido
     `,

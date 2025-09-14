@@ -44,7 +44,7 @@ export class GhostJosef {
 
     gameEvents.on("set-mood", ({ mood, character }) => {
       if (character === CHARACTERS.JOSEF) {
-        ghostAnimations.playByMood(mood, this.sprite);
+        ghostAnimations.setAnimationByMood(mood);
       }
     });
 

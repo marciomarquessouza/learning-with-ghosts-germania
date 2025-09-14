@@ -13,7 +13,7 @@ export enum MOODS {
   SAD = "sad",
   ANGRY = "angry",
   HAPPY = "happy",
-  EMBARRASSED = "embarrassed",
+  SURPRISED = "surprised",
   FLUSHED = "flushed",
 }
 
