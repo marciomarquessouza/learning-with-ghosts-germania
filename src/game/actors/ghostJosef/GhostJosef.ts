@@ -2,6 +2,7 @@ import { gameEvents } from "@/events/gameEvents";
 import { ghostAnimations } from "./helpers/GhostAnimations";
 import { ghostLevitation } from "./helpers/GhostLevitation";
 import { ghostShadow } from "./helpers/GhostShadow";
+import { MOODS } from "@/constants/game";
 
 export class GhostJosef {
   public lockMovement = false;
@@ -19,14 +20,6 @@ export class GhostJosef {
   }
 
   create(scene: Phaser.Scene, startX: number, startY: number) {
-    gameEvents.on("show-dialogue", () => {
-      this.lockMovement = true;
-    });
-
-    gameEvents.on("hide-dialogue", () => {
-      this.lockMovement = false;
-    });
-
     this.sprite = ghostAnimations.create(scene, startX, startY);
     this.sprite.setDepth(10).setCollideWorldBounds(true);
     this.sprite.play(ghostAnimations.animations.GHOST_IDLE_ANIM, true);
@@ -40,6 +33,18 @@ export class GhostJosef {
       A: scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.A),
       D: scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.D),
     };
+
+    gameEvents.on("show-dialogue", () => {
+      this.lockMovement = true;
+    });
+
+    gameEvents.on("hide-dialogue", () => {
+      this.lockMovement = false;
+    });
+
+    gameEvents.on("set-mood", ({ mood }) => {
+      ghostAnimations.playByMood(mood, this.sprite);
+    });
 
     return this.sprite;
   }
@@ -64,7 +69,7 @@ export class GhostJosef {
     this.sprite.anims.play(
       moving
         ? ghostAnimations.animations.GHOST_MOVE_ANIM
-        : ghostAnimations.animations.GHOST_IDLE_ANIM,
+        : ghostAnimations.currentAnimation,
       true
     );
 

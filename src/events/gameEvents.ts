@@ -19,35 +19,31 @@ export type InteractionTypes =
   | "input"
   | "feedback";
 
-export interface DialogueLine {
-  type: "dialogue";
-  text: string;
-  character: CHARACTERS;
-  mood?: MOODS;
-  speed?: number;
-}
-
 export interface Alternative {
   id: string;
   text: string;
 }
 
-export interface AlternativeLine {
-  type: "alternatives";
+export interface BaseLine {
   text: string;
   character: CHARACTERS;
   mood?: MOODS;
   speed?: number;
+}
+
+export interface DialogueLine extends BaseLine {
+  type: "dialogue";
+}
+
+export interface AlternativeLine extends BaseLine {
+  type: "alternatives";
   alternatives: Alternative[];
   onSubmitted: (alternativeId?: string) => void;
 }
 
-export interface InputLine {
+export interface InputLine extends BaseLine {
   type: "input";
-  text: string;
   inputLabel: React.ReactNode;
-  character: CHARACTERS;
-  speed?: number;
   onSubmitted: (answer: string) => void;
 }
 
@@ -82,6 +78,7 @@ export type Events = {
   "hide-game-message": { delay?: number };
   "show-dialogue": DialogueEvent;
   "hide-dialogue": { dialogueId?: string };
+  "set-mood": { mood: MOODS };
   "show-introduction": IntroductionEvent;
   "hud-actions-badge": { icon: ACTIONS_ICONS; count: number };
   "hud-actions-timer": {

@@ -6,7 +6,7 @@ import {
   gameEvents,
   InteractionLine,
 } from "@/events/gameEvents";
-import { CHARACTERS } from "@/constants/game";
+import { CHARACTERS, MOODS } from "@/constants/game";
 import { useDeviceType } from "@/hooks/useDeviceType";
 import Image from "next/image";
 import { useCharacterDetails } from "@/hooks/useCharacterDetails";
@@ -18,6 +18,7 @@ import { DialogueCTA } from "./DialogueCTA";
 import { getDialogueDimension } from "./helpers/getDialgueDimension";
 import { InputText } from "./InputText";
 import { getUUID } from "@/utils/getUUID";
+import { setMood } from "@/events/helpers/setMood";
 
 export function Dialogue() {
   const device = useDeviceType();
@@ -59,6 +60,7 @@ export function Dialogue() {
       dialogueId.current = getUUID();
       setLines(payload.lines);
       setLineIndex(0);
+      setMood(payload.lines[0].mood);
       setCharacter(payload.lines[0].character);
       setTextToType(payload.lines[0].text);
       setLastLine(payload.lines.length === 1);
@@ -88,6 +90,7 @@ export function Dialogue() {
       gameEvents.emit("hide-dialogue", { dialogueId: dialogueId.current });
       setVisible(false);
       setLastLine(false);
+      setMood(MOODS.NEUTRAL);
       if (onCompleteRef.current) {
         onCompleteRef.current?.();
         onCompleteRef.current = null;
@@ -98,6 +101,7 @@ export function Dialogue() {
     setLineIndex(newIndex);
     setCharacter(newLine.character);
     setLastLine(newIndex === lines.length - 1);
+    setMood(newLine.mood);
     setTextToType(newLine.text);
     startTyping();
   }, [

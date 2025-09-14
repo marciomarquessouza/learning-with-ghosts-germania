@@ -59,16 +59,16 @@ export const dialogues = {
       Quer dizer que eu nõa preciso mais
       voltar para aquela prisão?
     `,
-    dialogue.elisa.neutral`
+    dialogue.elisa.embarrassed`
       Você não morreu Josef...
       Você apenas está sonhando...
       Que é um Fantasma
     `,
-    dialogue.josef.neutral`
+    dialogue.josef.sad`
       De que é esta voz...
       Quem é você?
     `,
-    dialogue.elisa.neutral`
+    dialogue.elisa.flushed`
       Ande um pouco para frente...
       E você verá meu querido
     `,
