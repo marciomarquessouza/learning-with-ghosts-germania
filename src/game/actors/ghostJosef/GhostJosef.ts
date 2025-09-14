@@ -1,16 +1,7 @@
-import {
-  JOSEF_GHOST_IMG,
-  GHOST_SHADOW_IMG,
-  GHOST_ATLAS_IMG,
-  GHOST_ATLAS_JSON,
-} from "@/constants/images";
 import { gameEvents } from "@/events/gameEvents";
+import { ghostAnimations } from "./helpers/GhostAnimations";
 
-const JOSEF_GHOST = "ghost";
 const GHOST_SHADOW = "ghostShadow";
-const GHOST_ATLAS = "ghostAtlas";
-const GHOST_IDLE_ANIM = "ghostIdleAnim";
-const GHOST_MOVE_ANIM = "ghostMoveAnim";
 
 export class GhostJosef {
   public lockMovement = false;
@@ -46,10 +37,7 @@ export class GhostJosef {
   private shadowAlphaMax = 0.9; // most opaque (when lowest)
 
   preload(scene: Phaser.Scene) {
-    const load = scene.load;
-    load.atlas(GHOST_ATLAS, GHOST_ATLAS_IMG, GHOST_ATLAS_JSON);
-    load.image(JOSEF_GHOST, JOSEF_GHOST_IMG);
-    load.image(GHOST_SHADOW, GHOST_SHADOW_IMG);
+    ghostAnimations.preload(scene);
   }
 
   create(scene: Phaser.Scene, startX: number, startY: number) {
@@ -61,33 +49,9 @@ export class GhostJosef {
       this.lockMovement = false;
     });
 
-    if (!scene.anims.exists(GHOST_IDLE_ANIM)) {
-      scene.anims.create({
-        key: GHOST_IDLE_ANIM,
-        frames: [
-          { key: GHOST_ATLAS, frame: "ghost_0", duration: 800 },
-          { key: GHOST_ATLAS, frame: "ghost_1", duration: 10 },
-          { key: GHOST_ATLAS, frame: "ghost_2", duration: 10 },
-          { key: GHOST_ATLAS, frame: "ghost_1", duration: 10 },
-          { key: GHOST_ATLAS, frame: "ghost_0", duration: 800 },
-        ],
-        frameRate: 20,
-        repeat: -1,
-      });
-    }
-
-    if (!scene.anims.exists(GHOST_MOVE_ANIM)) {
-      scene.anims.create({
-        key: GHOST_MOVE_ANIM,
-        frames: [{ key: GHOST_ATLAS, frame: "ghost_3", duration: 10 }],
-        frameRate: 20,
-        repeat: -1,
-      });
-    }
-
-    this.sprite = scene.physics.add.sprite(startX, startY, GHOST_ATLAS, 0);
+    this.sprite = ghostAnimations.create(scene, startX, startY);
     this.sprite.setDepth(10).setCollideWorldBounds(true);
-    this.sprite.play(GHOST_IDLE_ANIM, true);
+    this.sprite.play(ghostAnimations.animations.GHOST_IDLE_ANIM, true);
 
     this.shadow = scene.physics.add
       .sprite(startX, startY + 170, GHOST_SHADOW)
@@ -161,7 +125,12 @@ export class GhostJosef {
     }
 
     const moving = vx !== 0;
-    this.sprite.anims.play(moving ? GHOST_MOVE_ANIM : GHOST_IDLE_ANIM, true);
+    this.sprite.anims.play(
+      moving
+        ? ghostAnimations.animations.GHOST_MOVE_ANIM
+        : ghostAnimations.animations.GHOST_IDLE_ANIM,
+      true
+    );
 
     const { offset } = this.levitationUpdate(delta)!;
 

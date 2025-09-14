@@ -13,6 +13,8 @@ export enum MOODS {
   SAD = "sad",
   ANGRY = "angry",
   HAPPY = "happy",
+  EMBARRASSED = "embarrassed",
+  SCARED = "scared",
 }
 
 export const DIALOGUE_MAP: {
