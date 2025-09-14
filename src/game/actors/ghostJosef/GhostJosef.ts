@@ -1,13 +1,11 @@
 import { gameEvents } from "@/events/gameEvents";
 import { ghostAnimations } from "./helpers/GhostAnimations";
 import { ghostLevitation } from "./helpers/GhostLevitation";
-
-const GHOST_SHADOW = "ghostShadow";
+import { ghostShadow } from "./helpers/GhostShadow";
 
 export class GhostJosef {
   public lockMovement = false;
   sprite: Phaser.Physics.Arcade.Sprite | null = null;
-  shadow: Phaser.Physics.Arcade.Sprite | null = null;
   cursors: Phaser.Types.Input.Keyboard.CursorKeys | null = null;
   keyMap: {
     D: Phaser.Input.Keyboard.Key;
@@ -32,15 +30,8 @@ export class GhostJosef {
     this.sprite = ghostAnimations.create(scene, startX, startY);
     this.sprite.setDepth(10).setCollideWorldBounds(true);
     this.sprite.play(ghostAnimations.animations.GHOST_IDLE_ANIM, true);
-
-    this.shadow = scene.physics.add
-      .sprite(startX, startY + 170, GHOST_SHADOW)
-      .setDepth(10);
-
-    // baselines
+    ghostShadow.create(scene, startX, startY);
     ghostLevitation.baseY = startY;
-    ghostLevitation.baseShadowScaleX = this.shadow.scaleX;
-    this.shadow.setAlpha(ghostLevitation.shadowAlphaMax);
 
     if (!scene.input.keyboard)
       throw new Error("Mobile/Tablet version not implemented");
@@ -80,7 +71,7 @@ export class GhostJosef {
     const { offset } = ghostLevitation.levitationUpdate(
       delta,
       this.sprite,
-      this.shadow
+      ghostShadow
     )!;
 
     this.sprite.setVelocityX(vx);
