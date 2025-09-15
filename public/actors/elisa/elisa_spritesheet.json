@@ -1,0 +1,92 @@
+{
+  "frames": {
+    "elisa_0": {
+      "frame": {
+        "x": 0,
+        "y": 0,
+        "w": 142,
+        "h": 360
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 142,
+        "h": 360
+      },
+      "sourceSize": {
+        "w": 142,
+        "h": 360
+      }
+    },
+    "elisa_1": {
+      "frame": {
+        "x": 142,
+        "y": 0,
+        "w": 142,
+        "h": 360
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 142,
+        "h": 360
+      },
+      "sourceSize": {
+        "w": 142,
+        "h": 360
+      }
+    },
+    "elisa_2": {
+      "frame": {
+        "x": 284,
+        "y": 0,
+        "w": 142,
+        "h": 360
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 142,
+        "h": 360
+      },
+      "sourceSize": {
+        "w": 142,
+        "h": 360
+      }
+    },
+    "elisa_3": {
+      "frame": {
+        "x": 0,
+        "y": 360,
+        "w": 142,
+        "h": 360
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 142,
+        "h": 360
+      },
+      "sourceSize": {
+        "w": 142,
+        "h": 360
+      }
+    }
+  },
+  "meta": {
+    "image": "elisa_spritesheet.png",
+    "size": {
+      "w": 426,
+      "h": 720
+    },
+    "scale": "1"
+  }
+}

@@ -1,12 +1,10 @@
 import { MOODS } from "@/constants/game";
 import {
-  JOSEF_GHOST_IMG,
   GHOST_SHADOW_IMG,
   GHOST_ATLAS_IMG,
   GHOST_ATLAS_JSON,
 } from "@/constants/images";
 
-const JOSEF_GHOST = "ghost";
 const GHOST_SHADOW = "ghostShadow";
 const GHOST_ATLAS = "ghostAtlas";
 
@@ -25,7 +23,6 @@ class GhostAnimations {
   preload(scene: Phaser.Scene) {
     const load = scene.load;
     load.atlas(GHOST_ATLAS, GHOST_ATLAS_IMG, GHOST_ATLAS_JSON);
-    load.image(JOSEF_GHOST, JOSEF_GHOST_IMG);
     load.image(GHOST_SHADOW, GHOST_SHADOW_IMG);
   }
 
