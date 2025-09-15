@@ -42,4 +42,4 @@ class ElisaAnimations {
   }
 }
 
-export const elisaAnimation = new ElisaAnimations();
+export const elisaAnimations = new ElisaAnimations();
