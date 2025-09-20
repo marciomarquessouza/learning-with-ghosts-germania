@@ -2334,6 +2334,11 @@ object.values@^1.1.6, object.values@^1.2.1:
     define-properties "^1.2.1"
     es-object-atoms "^1.0.0"
 
+openai@^5.20.3:
+  version "5.20.3"
+  resolved "https://registry.yarnpkg.com/openai/-/openai-5.20.3.tgz#a3fef81a7610dabe417628185356e6f82fcffc4b"
+  integrity sha512-8V0KgAcPFppDIP8uMBOkhRrhDBuxNQYQxb9IovP4NN4VyaYGISAzYexyYYuAwVul2HB75Wpib0xDboYJqRMNow==
+
 optionator@^0.9.3:
   version "0.9.4"
   resolved "https://registry.yarnpkg.com/optionator/-/optionator-0.9.4.tgz#7ea1c1a5d91d764fb282139c88fe11e182a3a734"
