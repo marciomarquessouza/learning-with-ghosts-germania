@@ -2,37 +2,32 @@ import { gameEvents } from "@/events/gameEvents";
 import { ghostAnimations } from "./helpers/GhostAnimations";
 import { ghostLevitation } from "./helpers/GhostLevitation";
 import { ghostShadow } from "./helpers/GhostShadow";
-import { CHARACTERS } from "@/constants/game";
+import { CHARACTERS, KEY_CODES } from "@/constants/game";
+import { ActorPayload } from "../types/Actor";
+import { createKeyMap } from "@/utils/createKeyMap";
 
 export class GhostJosef {
   public lockMovement = false;
-  sprite: Phaser.Physics.Arcade.Sprite | null = null;
-  cursors: Phaser.Types.Input.Keyboard.CursorKeys | null = null;
-  keyMap: {
-    D: Phaser.Input.Keyboard.Key;
-    A: Phaser.Input.Keyboard.Key;
-  } | null = null;
-
-  speed = 200;
+  public speed = 200;
+  private sprite: Phaser.Physics.Arcade.Sprite | null = null;
+  private cursors: Phaser.Types.Input.Keyboard.CursorKeys | null = null;
+  private keyMap: Partial<
+    Record<keyof typeof KEY_CODES, Phaser.Input.Keyboard.Key>
+  > | null = null;
 
   preload(scene: Phaser.Scene) {
     ghostAnimations.preload(scene);
   }
 
-  create(scene: Phaser.Scene, startX: number, startY: number) {
+  create({ scene, startX, startY, cursors }: ActorPayload) {
     this.sprite = ghostAnimations.create(scene, startX, startY);
     this.sprite.setDepth(10).setCollideWorldBounds(true);
     this.sprite.play(ghostAnimations.animations.GHOST_IDLE_ANIM, true);
     ghostShadow.create(scene, startX, startY);
     ghostLevitation.baseY = startY;
+    this.cursors = cursors;
 
-    if (!scene.input.keyboard)
-      throw new Error("Mobile/Tablet version not implemented");
-    this.cursors = scene.input.keyboard.createCursorKeys();
-    this.keyMap = {
-      A: scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.A),
-      D: scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.D),
-    };
+    this.keyMap = createKeyMap(scene, [KEY_CODES.A, KEY_CODES.D]);
 
     gameEvents.on("show-dialogue", () => {
       this.lockMovement = true;
@@ -54,8 +49,8 @@ export class GhostJosef {
   update(_time: number, delta: number) {
     if (!this.sprite) return;
 
-    const left = this.cursors?.left.isDown || this.keyMap?.A.isDown;
-    const right = this.cursors?.right.isDown || this.keyMap?.D.isDown;
+    const left = this.cursors?.left.isDown || this.keyMap?.A?.isDown;
+    const right = this.cursors?.right.isDown || this.keyMap?.D?.isDown;
 
     let vx = 0;
     if (left && !this.lockMovement) {

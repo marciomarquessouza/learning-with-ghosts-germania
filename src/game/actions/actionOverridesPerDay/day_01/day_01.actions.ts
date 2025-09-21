@@ -97,6 +97,17 @@ class DayActions1 extends DayActions {
     }
   }
 
+  onConfessionalInteraction(): void {
+    runSteps(
+      [
+        stepShowDialogue({
+          lines: dialogues.greetings_lesson(),
+        }),
+      ],
+      {}
+    );
+  }
+
   onChallengeClick(): void {
     showDialogue({ lines: defaultDialogues.default_challenge_dialogue() });
   }

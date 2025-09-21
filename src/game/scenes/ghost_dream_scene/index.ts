@@ -28,13 +28,16 @@ class GhostDreamScene extends Phaser.Scene {
 
   create() {
     const scenario = cemeteryScenario.create(this);
+    if (!this.input.keyboard)
+      throw new Error("Mobile/Tablet version not implemented");
+    const cursors = this.input.keyboard?.createCursorKeys();
     this.physics.world.setBounds(0, 0, scenario.width - 200, scenario.height);
-    const ghostSprite = ghostJosef.create(
-      this,
-      DEFAULT_POSITION_X,
-      DEFAULT_POSITION_Y
-    );
-    ghostElisa.create(this, scenario.width - 800, DEFAULT_POSITION_Y - 55);
+    const ghostSprite = ghostJosef.create({
+      scene: this,
+      startX: DEFAULT_POSITION_X,
+      startY: DEFAULT_POSITION_Y,
+      cursors,
+    });
 
     const camera = this.cameras.main;
     camera.setBounds(0, 0, scenario.width, scenario.height);
@@ -43,6 +46,14 @@ class GhostDreamScene extends Phaser.Scene {
 
     getDayAction().then((dayActions) => {
       dayActions.setStage("learning");
+      ghostElisa.create({
+        scene: this,
+        startX: scenario.width - 800,
+        startY: DEFAULT_POSITION_Y - 55,
+        player: ghostSprite,
+        dayActions,
+        cursors,
+      });
       const hudContainer = hud.create(this, dayActions, [
         HUD_ITEMS.WEIGHT,
         HUD_ITEMS.THERMOMETER,
@@ -58,6 +69,7 @@ class GhostDreamScene extends Phaser.Scene {
   update(time: number, delta: number) {
     cemeteryScenario.update(delta);
     ghostJosef.update(time, delta);
+    ghostElisa.update(this);
   }
 }
 

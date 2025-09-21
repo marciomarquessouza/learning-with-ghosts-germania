@@ -79,4 +79,107 @@ export const dialogues = {
       E você verá meu querido
     `,
   ],
+  greetings_lesson: () => [
+    dialogue.josef.surprised`
+      Mas... quem é você? 
+      Por que uma freira está falando comigo em um cemitério?
+    `,
+    dialogue.elisa.neutral`
+      Ah, claro... apresentações.
+      Meu nome é Eliska. 
+      Morri de fome na mesma cela onde você está agora.
+    `,
+    dialogue.josef.sad`
+      Eliska...? Freira... 
+      Você é então... Santa Virgem Eliska?
+      Eu já ouvi falar de você. 
+      A santa dos expatriados.
+      Você foi presa por ensinar alemão a imigrantes...
+    `,
+    dialogue.elisa.happy`
+      "Santa Virgem Eliska"... sim, já ouvi isso mais vezes do que gostaria. 
+      Se ao menos essa santidade toda viesse com um vale-refeição…
+    `,
+    dialogue.elisa.happy`
+      E sim, eu morri por dar aulas para imigrantes...
+      Que, ao contrário do que dizem, não eram nada grátis.
+      Tinha até pacote premium.
+      Comprei muita vodka e cigarro com essas aulas.
+    `,
+    dialogue.elisa.neutral`
+      Agora, surpresa! 
+      A Santa Virgem aqui não foi para o céu, mas ficou aqui.
+      Não tem TV, então minha diversão é espiar você na cela
+      e invadir seus sonhos de vez em quando.
+    `,
+    dialogue.josef.surprised`
+      Então... você vê tudo que eu faço na minha cela?
+    `,
+    dialogue.elisa.neutral`
+      Sim. 
+      Oh Deus, o que eu fiz para merecer esse castigo...
+      E também sinto cheiro. 
+      Josef, coma mais fibra e beba mais água.
+      Sua cela fede mais que um cadáver.
+      E olha que eu sou um.
+    `,
+    dialogue.elisa.neutral`
+      Eles transformaram o alemão em arma. 
+      Eu ensino porque… é o que me resta.
+      Palavras são a única coisa que ainda me obedecem.
+      E você, Josef, precisa delas para comer.
+    `,
+    dialogue.josef.angry`
+      E por que você faria isso por mim?
+    `,
+    dialogue.elisa.neutral`
+      Porque achei você feio, mas com um bigode sexy.
+    `,
+    dialogue.josef.surprised`
+      Mas... eu não tenho bigode!
+    `,
+    dialogue.elisa.neutral`
+      Oh, verdade! 
+      Então retiro o "sexy".
+      Continua só feio mesmo.
+    `,
+    dialogue.elisa.neutral`
+      Mas vamos logo, antes que eu morra de tédio de novo.
+      Primeira palavra: "Hallo".
+    `,
+    dialogue.josef.neutral`
+      Hallo...
+    `,
+    dialogue.elisa.happy`
+      Muito bem!
+      Olha só, já parece menos ignorante.
+      Agora: "Guten Morgen".
+    `,
+    dialogue.josef.neutral`
+      Guten Morgen.
+    `,
+    dialogue.elisa.surprised`
+      Olha só! Você não engasgou.
+      Milagre maior do que dizem por aí sobre mim.
+    `,
+    dialogue.elisa.neutral`
+      Última: "Tschüss". 
+      Quer dizer "Tchau".
+      Útil pra encerrar conversas idiotas...
+      como essa aqui.
+    `,
+    dialogue.josef.happy`
+      Tschüss.
+    `,
+    dialogue.elisa.neutral`
+      Hah! Viu? Agora pode gritar "Tschüss"
+      pros guardas. Talvez deixem você sair...
+      ou só riam da sua cara.
+    `,
+    dialogue.elisa.neutral`
+      Agora acorde, Josef.
+      Vou te mostrar como memorizar essas palavras.
+      Spoiler: envolve uma tábua Ouija, não uma televisão.
+    `,
+  ],
 };

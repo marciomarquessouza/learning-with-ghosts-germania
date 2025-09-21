@@ -1,4 +1,4 @@
-import { CHARACTERS } from "@/constants/game";
+import { CHARACTERS, MOODS } from "@/constants/game";
 import { gameEvents } from "@/events/gameEvents";
 import { showDialogue } from "@/events/helpers/showDialogue";
 import { stepDayIntroduction } from "@/events/steps";
@@ -55,6 +55,22 @@ export class DayActions {
     });
 
     this.clicked.desk += 1;
+  }
+
+  onConfessionalInteraction() {
+    gameEvents.emit("show-dialogue", {
+      lines: [
+        {
+          type: "dialogue",
+          character: CHARACTERS.ELISA,
+          text: "Olá Josef",
+          moods: [
+            { mood: MOODS.HAPPY, character: CHARACTERS.ELISA },
+            { mood: MOODS.SURPRISED, character: CHARACTERS.JOSEF },
+          ],
+        },
+      ],
+    });
   }
 
   onFoodClick() {

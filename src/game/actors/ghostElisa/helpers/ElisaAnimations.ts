@@ -8,6 +8,7 @@ class ElisaAnimations {
     ELISA_LOOKING_DOWN: "elisaLookingDown",
   };
   public currentAnimation = this.animations.ELISA_IDLE_ANIM;
+  public previousAnimation: string | null = null;
 
   preload(scene: Phaser.Scene) {
     const load = scene.load;
@@ -19,10 +20,10 @@ class ElisaAnimations {
       scene.anims.create({
         key: this.animations.ELISA_IDLE_ANIM,
         frames: [
-          { key: ELISA_ATLAS, frame: "elisa_0", duration: 800 },
-          { key: ELISA_ATLAS, frame: "elisa_1", duration: 10 },
-          { key: ELISA_ATLAS, frame: "elisa_2", duration: 10 },
-          { key: ELISA_ATLAS, frame: "elisa_0", duration: 800 },
+          { key: ELISA_ATLAS, frame: "elisa_0", duration: 1000 },
+          { key: ELISA_ATLAS, frame: "elisa_1", duration: 80 },
+          { key: ELISA_ATLAS, frame: "elisa_2", duration: 80 },
+          { key: ELISA_ATLAS, frame: "elisa_0", duration: 1000 },
         ],
         frameRate: 20,
         repeat: -1,
