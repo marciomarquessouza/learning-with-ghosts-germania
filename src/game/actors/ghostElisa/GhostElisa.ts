@@ -5,7 +5,7 @@ import { elisaInteractionArea } from "./helpers/ElisaInteractionArea";
 import { gameEvents } from "@/events/gameEvents";
 import { ActorPayload } from "../types/Actor";
 import { createKeyMap } from "@/utils/createKeyMap";
-import { KEY_CODES } from "@/constants/game";
+import { CHARACTERS, KEY_CODES } from "@/constants/game";
 
 export interface ElisaPayload extends ActorPayload {
   player: Phaser.Types.Physics.Arcade.ArcadeColliderType;
@@ -37,6 +37,12 @@ export class GhostElisa {
       this.closeGameMessage
     );
     this.keyMap = createKeyMap(scene, [KEY_CODES.E]);
+
+    gameEvents.on("set-mood", ({ mood, character }) => {
+      if (character === CHARACTERS.ELISA) {
+        elisaAnimations.setAnimationByMood(mood);
+      }
+    });
   }
 
   showGameMessage() {

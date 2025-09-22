@@ -83,8 +83,13 @@ export const dialogues = {
     dialogue.josef.surprised`
       Mas... quem é você? 
       Por que uma freira está falando comigo em um cemitério?
-    `,
-    dialogue.elisa.neutral`
+    `.reactions([
+      {
+        mood: MOODS.TALKING,
+        character: CHARACTERS.ELISA,
+      },
+    ]),
+    dialogue.elisa.flushed`
       Ah, claro... apresentações.
       Meu nome é Eliska. 
       Morri de fome na mesma cela onde você está agora.
@@ -106,7 +111,7 @@ export const dialogues = {
       Tinha até pacote premium.
       Comprei muita vodka e cigarro com essas aulas.
     `,
-    dialogue.elisa.neutral`
+    dialogue.elisa.talking`
       Agora, surpresa! 
       A Santa Virgem aqui não foi para o céu, mas ficou aqui.
       Não tem TV, então minha diversão é espiar você na cela
@@ -115,7 +120,7 @@ export const dialogues = {
     dialogue.josef.surprised`
       Então... você vê tudo que eu faço na minha cela?
     `,
-    dialogue.elisa.neutral`
+    dialogue.elisa.angry`
       Sim. 
       Oh Deus, o que eu fiz para merecer esse castigo...
       E também sinto cheiro. 
@@ -123,7 +128,7 @@ export const dialogues = {
       Sua cela fede mais que um cadáver.
       E olha que eu sou um.
     `,
-    dialogue.elisa.neutral`
+    dialogue.elisa.angry`
       Eles transformaram o alemão em arma. 
       Eu ensino porque… é o que me resta.
       Palavras são a única coisa que ainda me obedecem.
@@ -132,18 +137,18 @@ export const dialogues = {
     dialogue.josef.angry`
       E por que você faria isso por mim?
     `,
-    dialogue.elisa.neutral`
+    dialogue.elisa.flushed`
       Porque achei você feio, mas com um bigode sexy.
     `,
     dialogue.josef.surprised`
       Mas... eu não tenho bigode!
     `,
-    dialogue.elisa.neutral`
+    dialogue.elisa.happy`
       Oh, verdade! 
       Então retiro o "sexy".
       Continua só feio mesmo.
     `,
-    dialogue.elisa.neutral`
+    dialogue.elisa.flushed`
       Mas vamos logo, antes que eu morra de tédio de novo.
       Primeira palavra: "Hallo".
     `,
@@ -162,7 +167,7 @@ export const dialogues = {
       Olha só! Você não engasgou.
       Milagre maior do que dizem por aí sobre mim.
     `,
-    dialogue.elisa.neutral`
+    dialogue.elisa.talking`
       Última: "Tschüss". 
       Quer dizer "Tchau".
       Útil pra encerrar conversas idiotas...
@@ -171,12 +176,12 @@ export const dialogues = {
     dialogue.josef.happy`
       Tschüss.
     `,
-    dialogue.elisa.neutral`
+    dialogue.elisa.talking`
       Hah! Viu? Agora pode gritar "Tschüss"
       pros guardas. Talvez deixem você sair...
       ou só riam da sua cara.
     `,
-    dialogue.elisa.neutral`
+    dialogue.elisa.talking`
       Agora acorde, Josef.
       Vou te mostrar como memorizar essas palavras.
       Spoiler: envolve uma tábua Ouija, não uma televisão.

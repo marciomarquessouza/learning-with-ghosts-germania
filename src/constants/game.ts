@@ -1,3 +1,5 @@
+import Phaser from "phaser";
+
 export const DEFAULT_WIDTH = 1920;
 export const DEFAULT_HEIGHT = 1080;
 export const DEFAULT_INITIAL_WEIGHT = 75;
@@ -12,6 +14,7 @@ export enum CHARACTERS {
 
 export enum MOODS {
   NEUTRAL = "neutral",
+  TALKING = "talking",
   SAD = "sad",
   ANGRY = "angry",
   HAPPY = "happy",

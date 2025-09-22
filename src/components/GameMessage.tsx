@@ -20,7 +20,7 @@ export function GameMessage() {
 
       setTimeout(() => {
         setVisible(false);
-      }, payload.closeAfter || 8_000);
+      }, payload.closeAfter || 7_000);
     };
 
     gameEvents.on("show-game-message", handler);
