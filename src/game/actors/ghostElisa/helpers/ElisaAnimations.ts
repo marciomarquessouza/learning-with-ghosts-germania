@@ -120,7 +120,7 @@ class ElisaAnimations {
         break;
       case MOODS.NEUTRAL:
       default:
-        this.currentAnimation = this.animations.ELISA_FLUSHED_ANIM;
+        this.currentAnimation = this.animations.ELISA_IDLE_ANIM;
         break;
     }
   }

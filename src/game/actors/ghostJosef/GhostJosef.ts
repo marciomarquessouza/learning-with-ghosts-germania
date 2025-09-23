@@ -2,9 +2,11 @@ import { gameEvents } from "@/events/gameEvents";
 import { ghostAnimations } from "./helpers/GhostAnimations";
 import { ghostLevitation } from "./helpers/GhostLevitation";
 import { ghostShadow } from "./helpers/GhostShadow";
-import { CHARACTERS, KEY_CODES } from "@/constants/game";
+import { CHARACTERS } from "@/constants/game";
 import { ActorPayload } from "../types/Actor";
 import { createKeyMap } from "@/utils/createKeyMap";
+
+export const KEY_CODES = Phaser.Input.Keyboard.KeyCodes;
 
 export class GhostJosef {
   public lockMovement = false;

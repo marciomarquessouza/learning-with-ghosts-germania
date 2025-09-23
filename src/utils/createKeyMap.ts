@@ -1,6 +1,4 @@
-import { KEY_CODES } from "@/constants/game";
-import Phaser from "phaser";
-
+export const KEY_CODES = Phaser.Input.Keyboard.KeyCodes;
 type KeyCodeNames = keyof typeof Phaser.Input.Keyboard.KeyCodes;
 
 /**

@@ -63,7 +63,7 @@ export const dialogues = {
     dialogue.elisa.neutral`
       Você não morreu Josef...
       Você apenas está sonhando...
-      Que é um Fantasma
+      Que é um Fantasma.
     `.reactions([
       {
         character: CHARACTERS.JOSEF,
@@ -71,7 +71,7 @@ export const dialogues = {
       },
     ]),
     dialogue.josef.surprised`
-      De que é esta voz...
+      De que é esta voz?
       Quem é você?
     `,
     dialogue.elisa.surprised`
@@ -81,110 +81,34 @@ export const dialogues = {
   ],
   greetings_lesson: () => [
     dialogue.josef.surprised`
-      Mas... quem é você? 
-      Por que uma freira está falando comigo em um cemitério?
+      Um confessionário...
+      e uma Freira?
+      Quem é você? O que está acontecendo?
     `.reactions([
       {
-        mood: MOODS.TALKING,
+        mood: MOODS.NEUTRAL,
         character: CHARACTERS.ELISA,
       },
     ]),
-    dialogue.elisa.flushed`
-      Ah, claro... apresentações.
-      Meu nome é Eliska. 
-      Morri de fome na mesma cela onde você está agora.
-    `,
-    dialogue.josef.sad`
-      Eliska...? Freira... 
-      Você é então... Santa Virgem Eliska?
-      Eu já ouvi falar de você. 
-      A santa dos expatriados.
-      Você foi presa por ensinar alemão a imigrantes...
-    `,
     dialogue.elisa.happy`
-      "Santa Virgem Eliska"... sim, já ouvi isso mais vezes do que gostaria. 
-      Se ao menos essa santidade toda viesse com um vale-refeição…
-    `,
-    dialogue.elisa.happy`
-      E sim, eu morri por dar aulas para imigrantes...
-      Que, ao contrário do que dizem, não eram nada grátis.
-      Tinha até pacote premium.
-      Comprei muita vodka e cigarro com essas aulas.
-    `,
-    dialogue.elisa.talking`
-      Agora, surpresa! 
-      A Santa Virgem aqui não foi para o céu, mas ficou aqui.
-      Não tem TV, então minha diversão é espiar você na cela
-      e invadir seus sonhos de vez em quando.
-    `,
+      Olá Josef!
+      Meu nome Eliska.
+      Bem vindo ao seu sonho
+    `.reactions([
+      {
+        mood: MOODS.NEUTRAL,
+        character: CHARACTERS.JOSEF,
+      },
+    ]),
     dialogue.josef.surprised`
-      Então... você vê tudo que eu faço na minha cela?
-    `,
-    dialogue.elisa.angry`
-      Sim. 
-      Oh Deus, o que eu fiz para merecer esse castigo...
-      E também sinto cheiro. 
-      Josef, coma mais fibra e beba mais água.
-      Sua cela fede mais que um cadáver.
-      E olha que eu sou um.
-    `,
-    dialogue.elisa.angry`
-      Eles transformaram o alemão em arma. 
-      Eu ensino porque… é o que me resta.
-      Palavras são a única coisa que ainda me obedecem.
-      E você, Josef, precisa delas para comer.
-    `,
-    dialogue.josef.angry`
-      E por que você faria isso por mim?
-    `,
-    dialogue.elisa.flushed`
-      Porque achei você feio, mas com um bigode sexy.
-    `,
-    dialogue.josef.surprised`
-      Mas... eu não tenho bigode!
-    `,
-    dialogue.elisa.happy`
-      Oh, verdade! 
-      Então retiro o "sexy".
-      Continua só feio mesmo.
-    `,
-    dialogue.elisa.flushed`
-      Mas vamos logo, antes que eu morra de tédio de novo.
-      Primeira palavra: "Hallo".
-    `,
-    dialogue.josef.neutral`
-      Hallo...
-    `,
-    dialogue.elisa.happy`
-      Muito bem!
-      Olha só, já parece menos ignorante.
-      Agora: "Guten Morgen".
-    `,
-    dialogue.josef.neutral`
-      Guten Morgen.
-    `,
-    dialogue.elisa.surprised`
-      Olha só! Você não engasgou.
-      Milagre maior do que dizem por aí sobre mim.
-    `,
-    dialogue.elisa.talking`
-      Última: "Tschüss". 
-      Quer dizer "Tchau".
-      Útil pra encerrar conversas idiotas...
-      como essa aqui.
-    `,
-    dialogue.josef.happy`
-      Tschüss.
-    `,
-    dialogue.elisa.talking`
-      Hah! Viu? Agora pode gritar "Tschüss"
-      pros guardas. Talvez deixem você sair...
-      ou só riam da sua cara.
-    `,
-    dialogue.elisa.talking`
-      Agora acorde, Josef.
-      Vou te mostrar como memorizar essas palavras.
-      Spoiler: envolve uma tábua Ouija, não uma televisão.
-    `,
+      Eliska? Você é... a Santa Virgem Eliska?
+      A Padroeira dos Expatriados?
+      Aquela que morreu por ensinar Alemão aos pobres?
+    `.reactions([
+      {
+        mood: MOODS.SURPRISED,
+        character: CHARACTERS.ELISA,
+      },
+    ]),
   ],
 };

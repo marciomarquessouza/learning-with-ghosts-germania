@@ -5,7 +5,9 @@ import { elisaInteractionArea } from "./helpers/ElisaInteractionArea";
 import { gameEvents } from "@/events/gameEvents";
 import { ActorPayload } from "../types/Actor";
 import { createKeyMap } from "@/utils/createKeyMap";
-import { CHARACTERS, KEY_CODES } from "@/constants/game";
+import { CHARACTERS } from "@/constants/game";
+
+export const KEY_CODES = Phaser.Input.Keyboard.KeyCodes;
 
 export interface ElisaPayload extends ActorPayload {
   player: Phaser.Types.Physics.Arcade.ArcadeColliderType;
