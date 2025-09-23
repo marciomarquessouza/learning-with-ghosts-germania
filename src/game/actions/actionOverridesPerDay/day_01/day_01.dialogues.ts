@@ -52,18 +52,18 @@ export const dialogues = {
   ],
   dream_introduction: () => [
     dialogue.josef.neutral`
-      Espera ai...
-      Será que eu morri..
-      E virei um Fantasma?
+      Wait a second...
+      Could it be that I died...
+      And became a Ghost?
     `,
     dialogue.josef.happy`
-      Quer dizer que eu nõa preciso mais
-      voltar para aquela prisão?
+      Does that mean I don’t need
+      to go back to that prison anymore?
     `,
     dialogue.elisa.neutral`
-      Você não morreu Josef...
-      Você apenas está sonhando...
-      Que é um Fantasma.
+      You didn’t die, Josef...
+      You’re just dreaming...
+      That you’re a Ghost.
     `.reactions([
       {
         character: CHARACTERS.JOSEF,
@@ -71,18 +71,17 @@ export const dialogues = {
       },
     ]),
     dialogue.josef.surprised`
-      De que é esta voz?
-      Quem é você?
+      Whose voice is this?
+      Who are you?
     `,
     dialogue.elisa.surprised`
-      Ande um pouco para frente...
-      E você verá meu querido
+      Walk a little forward...
+      And you will see, my dear.
     `,
   ],
-  greetings_lesson: () => [
+  lesson_preparation: () => [
     dialogue.josef.surprised`
-      Um confessionário...
-      e uma Freira?
+      O que... um confessionario com uma... freira?
       Quem é você? O que está acontecendo?
     `.reactions([
       {
@@ -91,12 +90,42 @@ export const dialogues = {
       },
     ]),
     dialogue.elisa.happy`
-      Olá Josef!
-      Meu nome Eliska.
-      Bem vindo ao seu sonho
+      Olá Josef! Meu nome Eliska.
+      Eu sou um fantasma... de verdade.
+      Eu morri na mesma cela que voce está agora.
     `.reactions([
       {
         mood: MOODS.NEUTRAL,
+        character: CHARACTERS.JOSEF,
+      },
+    ]),
+    dialogue.josef.surprised`
+      Voce... esta realmente morta?
+      Mas... como você pode falar comigo?
+      Eu estou sonhando?
+    `.reactions([
+      {
+        mood: MOODS.SURPRISED,
+        character: CHARACTERS.ELISA,
+      },
+    ]),
+    dialogue.elisa.happy`
+      Oh... que bonitinho. Voce eh do tipo lerdo e burro. Que sorte a minha.
+      Eu morri de forme e fui enterrada debaixo da cama que voce esta rocando como um porco agora.
+      Eu nao fui para o ceu e de algum modo eu posso comunicar com voce nos seus sonhos.
+    `.reactions([
+      {
+        mood: MOODS.SURPRISED,
+        character: CHARACTERS.JOSEF,
+      },
+    ]),
+    dialogue.elisa.neutral`
+      Veja que sorte a minha. 
+      Em vez de encontrar Deus eu encontro... voce. 
+      Como poderia ser melhor....
+    `.reactions([
+      {
+        mood: MOODS.SURPRISED,
         character: CHARACTERS.JOSEF,
       },
     ]),

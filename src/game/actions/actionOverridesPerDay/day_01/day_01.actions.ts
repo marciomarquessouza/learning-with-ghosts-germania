@@ -101,7 +101,7 @@ class DayActions1 extends DayActions {
     runSteps(
       [
         stepShowDialogue({
-          lines: dialogues.greetings_lesson(),
+          lines: dialogues.lesson_preparation(),
         }),
       ],
       {}
