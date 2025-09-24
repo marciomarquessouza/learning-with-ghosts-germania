@@ -10,10 +10,11 @@ interface DialogueTag extends DialogueLine {
 function createDialogueTag(character: CHARACTERS, mood: MOODS) {
   return (strings: TemplateStringsArray, ...values: unknown[]): DialogueTag => {
     const text = dedent(strings, values).trim();
+    const moods: CharacterMood[] = [{ character, mood }];
     const dialogueLine = Object.freeze({
       type: "dialogue",
       character,
-      moods: [{ character, mood }],
+      moods,
       text,
     });
 
@@ -21,7 +22,7 @@ function createDialogueTag(character: CHARACTERS, mood: MOODS) {
       ...dialogueLine,
       reactions: (charactersMood) => ({
         ...dialogueLine,
-        moods: charactersMood,
+        moods: [...moods, ...charactersMood],
       }),
     };
   };
