@@ -52,92 +52,108 @@ export const dialogues = {
   ],
   dream_introduction: () => [
     dialogue.josef.neutral`
-      Wait a second...
-      Could it be that I died...
+      Wait a second...  
+      Could it be that I died...  
       And became a Ghost?
-    `,
+  `,
     dialogue.josef.happy`
       Does that mean I don’t need
       to go back to that prison anymore?
-    `,
+  `,
     dialogue.elisa.neutral`
-      You didn’t die, Josef...
-      You’re just dreaming...
-      That you’re a Ghost.
-    `.reactions([
+      You didn’t die, Josef — don’t get so smug. ♦  
+      You’re only dreaming that you’re dead, a ghost. †  
+  `.reactions([
       {
         character: CHARACTERS.JOSEF,
         mood: MOODS.SURPRISED,
       },
     ]),
     dialogue.josef.surprised`
-      Whose voice is this?
+      Whose voice is this?  
       Who are you?
-    `,
+  `,
     dialogue.elisa.surprised`
-      Walk a little forward...
-      And you will see, my dear.
-    `,
+      Walk a bit further, and open your eyes. †
+      Then you will see me, darling — lucky you. ♦
+  `,
   ],
+
   lesson_preparation: () => [
     dialogue.josef.surprised`
-      O que... um confessionario com uma... freira?
-      Quem é você? O que está acontecendo?
-    `.reactions([
-      {
-        mood: MOODS.NEUTRAL,
-        character: CHARACTERS.ELISA,
-      },
-    ]),
+      A confessional… with a nun?
+      Who the hell are you? What is happening?
+  `.reactions([{ mood: MOODS.TALKING, character: CHARACTERS.ELISA }]),
+
     dialogue.elisa.happy`
-      Olá Josef! Meu nome Eliska.
-      Eu sou um fantasma... de verdade.
-      Eu morri na mesma cela que voce está agora.
-    `.reactions([
-      {
-        mood: MOODS.NEUTRAL,
-        character: CHARACTERS.JOSEF,
-      },
-    ]),
+      Hello, Josef. My name is Eliska. †  
+      Unlike you, I’m dead — a fucking ghost. ♦  
+  `.reactions([{ mood: MOODS.SURPRISED, character: CHARACTERS.JOSEF }]),
+
     dialogue.josef.surprised`
-      Voce... esta realmente morta?
-      Mas... como você pode falar comigo?
-      Eu estou sonhando?
-    `.reactions([
-      {
-        mood: MOODS.SURPRISED,
-        character: CHARACTERS.ELISA,
-      },
-    ]),
-    dialogue.elisa.happy`
-      Oh... que bonitinho. Voce eh do tipo lerdo e burro. Que sorte a minha.
-      Eu morri de forme e fui enterrada debaixo da cama que voce esta rocando como um porco agora.
-      Eu nao fui para o ceu e de algum modo eu posso comunicar com voce nos seus sonhos.
-    `.reactions([
-      {
-        mood: MOODS.SURPRISED,
-        character: CHARACTERS.JOSEF,
-      },
-    ]),
-    dialogue.elisa.neutral`
-      Veja que sorte a minha. 
-      Em vez de encontrar Deus eu encontro... voce. 
-      Como poderia ser melhor....
-    `.reactions([
-      {
-        mood: MOODS.SURPRISED,
-        character: CHARACTERS.JOSEF,
-      },
-    ]),
+      You… you’re really dead?  
+      How can you even talk to me?  
+      How did you crawl into my dream?  
+  `.reactions([{ mood: MOODS.SURPRISED, character: CHARACTERS.ELISA }]),
+
+    dialogue.elisa.talking`
+      Oh, sweet Jesus… you’re slow as shit. ♦  
+      Fine, let me spell it out: I’m a ghost. †  
+      I sneak inside your dreams because I can. †  
+  `.reactions([{ mood: MOODS.SURPRISED, character: CHARACTERS.JOSEF }]),
+
+    dialogue.elisa.talking`
+      My name is Eliska. I was a nun once. †  
+      I rotted in this cell and starved to death. †  
+      And guess what? Heaven slammed its fucking gates. ♦  
+      So here I am — stuck talking to your ass. ♦  
+  `.reactions([{ mood: MOODS.SURPRISED, character: CHARACTERS.JOSEF }]),
+
     dialogue.josef.surprised`
-      Eliska? Você é... a Santa Virgem Eliska?
-      A Padroeira dos Expatriados?
-      Aquela que morreu por ensinar Alemão aos pobres?
-    `.reactions([
-      {
-        mood: MOODS.SURPRISED,
-        character: CHARACTERS.ELISA,
-      },
-    ]),
+      Eliska? You’re… Saint Virgin Eliska?
+      Patron of Expatriates?
+      The one who died teaching German to immigrants?
+  `.reactions([{ mood: MOODS.SURPRISED, character: CHARACTERS.ELISA }]),
+
+    dialogue.elisa.talking`
+      They slapped “Virgin” on me — hell of a brand. †  
+      Sure, I died teaching, but not for free, dumbass. ♦  
+      And now it seems I’ll do the same for you. †  
+  `.reactions([{ mood: MOODS.SURPRISED, character: CHARACTERS.JOSEF }]),
+
+    dialogue.josef.sad`
+      Thank you, Saint Eliska… but I don’t want this.  
+      I’d rather die and be a ghost like you.  
+  `.reactions([{ mood: MOODS.TALKING, character: CHARACTERS.ELISA }]),
+
+    dialogue.elisa.talking`
+      Don’t call me saint — I was never holy. †  
+      But hell, maybe you need motivation. †  
+  `.reactions([{ mood: MOODS.NEUTRAL, character: CHARACTERS.JOSEF }]),
+
+    dialogue.elisa.talking`
+      Here’s the deal: if you do today’s damn lesson, ♦  
+      I’ll throw you a reward. ♦  
+  `.reactions([{ mood: MOODS.NEUTRAL, character: CHARACTERS.JOSEF }]),
+
+    dialogue.elisa.flushed`
+      I could tell you a secret — filthy, private. ♦  
+      Something no living soul has ever known… †  
+      or maybe… ♦  
+  `.reactions([{ mood: MOODS.NEUTRAL, character: CHARACTERS.JOSEF }]),
+
+    dialogue.elisa.talking`
+      As a ghost I picked up some nasty powers. †  
+      I can see your future, Josef. ♦  
+      I could spill it, right here. ♦  
+  `.reactions([{ mood: MOODS.SURPRISED, character: CHARACTERS.JOSEF }]),
+
+    alternatives.josef.neutral`
+      What reward do you want from Eliska?
+  `.alternatives(
+      { text: "Eliska’s dirty secret", id: "eliska_secret" },
+      { text: "Know your future", id: "josef_future" },
+      { text: "Skip the lesson and wake up", id: "exit" }
+    ),
   ],
 };
