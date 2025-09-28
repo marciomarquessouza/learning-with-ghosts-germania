@@ -156,4 +156,25 @@ export const dialogues = {
       { text: "Skip the lesson and wake up", id: "exit" }
     ),
   ],
+  post_introduction_eliska_secret: () => [
+    dialogue.elisa.flushed`
+      A secret, Josef? You’ll have to earn that sin. ♦  
+      First learn to greet me — say “Hallo” like a man. †  
+      Whisper it well, and maybe I’ll whisper back. ♦  
+    `.reactions([{ mood: MOODS.NEUTRAL, character: CHARACTERS.JOSEF }]),
+  ],
+  post_introduction_josef_future: () => [
+    dialogue.elisa.flushed`
+      Your future waits, but greetings come before graves. †  
+      Say “Guten Tag,” and face the world you dread. †  
+      Without a tongue for welcome, fate stays silent. ♦  
+    `.reactions([{ mood: MOODS.NEUTRAL, character: CHARACTERS.JOSEF }]),
+  ],
+  post_introduction_exit: () => [
+    dialogue.elisa.flushed`
+      Wake up? Idiot. The dead still need to greet. ♦  
+      Even ghosts say “Hallo” before they haunt. †  
+      Try it, or keep your rotten mouth shut tight. ♦ 
+    `.reactions([{ mood: MOODS.NEUTRAL, character: CHARACTERS.JOSEF }]),
+  ],
 };

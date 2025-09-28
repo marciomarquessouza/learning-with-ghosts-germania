@@ -42,8 +42,8 @@ class DayActions1 extends DayActions {
         [
           stepShowDialogue({ lines: dialogues.dream_introduction() }),
           stepGameMessage({
-            title: "Vá até a Elisa",
-            text: "Use as setas do teclado ou as teacla A e D",
+            title: "Go to Eliska",
+            text: "Use the arrow keys or the A and D keys",
           }),
         ],
         {}
@@ -103,8 +103,26 @@ class DayActions1 extends DayActions {
         stepShowDialogue({
           lines: dialogues.lesson_preparation(),
         }),
+        stepShowDialogue(
+          {
+            lines: dialogues.post_introduction_eliska_secret(),
+          },
+          { showWhenAlternativeIs: "eliska_secret" }
+        ),
+        stepShowDialogue(
+          {
+            lines: dialogues.post_introduction_josef_future(),
+          },
+          { showWhenAlternativeIs: "josef_future" }
+        ),
+        stepShowDialogue(
+          {
+            lines: dialogues.post_introduction_exit(),
+          },
+          { showWhenAlternativeIs: "exit" }
+        ),
       ],
-      {}
+      { alternativeId: undefined }
     );
   }
 
