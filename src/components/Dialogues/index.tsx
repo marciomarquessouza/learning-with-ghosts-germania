@@ -19,6 +19,7 @@ import { getDialogueDimension } from "./helpers/getDialgueDimension";
 import { InputText } from "./InputText";
 import { getUUID } from "@/utils/getUUID";
 import { setCharactersMood } from "@/events/helpers/setCharactersMood";
+import { handleAlternativeKeyDown } from "@/utils/dialogues/handleAlternativeKeyDown";
 
 export function Dialogue() {
   const device = useDeviceType();
@@ -136,6 +137,25 @@ export function Dialogue() {
   }, [handleTextClick, advanceLine, lineIndex, lines]);
 
   const handleKeyDown = useDialogueKeyDown({
+    keyUp: () => {
+      if (lines[lineIndex].type === "alternatives") {
+        handleAlternativeKeyDown({
+          alternatives: lines[lineIndex].alternatives,
+          selectedAlternative,
+          setAlternative: setSelectedAlternative,
+          selectPrevious: true,
+        });
+      }
+    },
+    keyDown: () => {
+      if (lines[lineIndex].type === "alternatives") {
+        handleAlternativeKeyDown({
+          alternatives: lines[lineIndex].alternatives,
+          selectedAlternative,
+          setAlternative: setSelectedAlternative,
+        });
+      }
+    },
     keyAction: () => handleTextClick(() => advanceLine()),
   });
 

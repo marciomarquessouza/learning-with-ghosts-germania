@@ -90,16 +90,16 @@ export function Alternatives({
                     </svg>
                   </span>
                   <span
-                    className=" font-mono leading-tight
-								px-1
-								peer-checked:text-white
-								bg-none peer-checked:bg-black
-								shadow-none peer-checked:shadow-[0_0_0_1px_rgba(0,0,0,0.6)]
-								peer-focus-visible:outline-1 peer-focus-visible:outline-neutral-700
-								peer-hover:outline-1 peer-hover:outline-neutral-700
-								transition-colors
-								"
+                    className="font-mono leading-tight px-1
+                               peer-checked:text-white
+                               bg-none peer-checked:bg-black
+                               shadow-none peer-checked:shadow-[0_0_0_1px_rgba(0,0,0,0.6)]
+                               peer-focus-visible:outline-1 peer-focus-visible:outline-neutral-700
+                               peer-hover:outline-1 peer-hover:outline-neutral-700
+                               transition-colors
+                               "
                   >
+                    {" "}
                     - {alternative.text}
                   </span>
                 </label>
