@@ -2,6 +2,7 @@ import { DayActions } from "@/game/actions/actionDefaultPerDay/default.actions";
 import { hudActions } from "./hudActions";
 import { hudThermometer } from "./hudThermometer";
 import { hudWeight } from "./hudWeight";
+import { dreamEvents } from "@/events/dreamEvents";
 
 export enum HUD_ITEMS {
   WEIGHT = "WEIGHT",
@@ -31,19 +32,37 @@ class Hud {
 
     if (show.includes(HUD_ITEMS.WEIGHT)) {
       const hudWeightContainer = hudWeight.create(scene);
+      hudWeightContainer.setName(HUD_ITEMS.WEIGHT);
       container.add(hudWeightContainer);
     }
 
     if (show.includes(HUD_ITEMS.THERMOMETER)) {
       const hudThermometerContainer = hudThermometer.create(scene);
       hudThermometer.setLevel(scene, "INITIAL");
+      hudThermometerContainer.setName(HUD_ITEMS.THERMOMETER);
       container.add(hudThermometerContainer);
     }
 
     if (show.includes(HUD_ITEMS.ACTIONS)) {
       const hudActionsContainer = hudActions.create(scene, dayActions);
+      hudActionsContainer.setName(HUD_ITEMS.ACTIONS);
       container.add(hudActionsContainer);
     }
+
+    const toggleItem = (item: HUD_ITEMS, option: "show" | "hide" = "show") => {
+      const hudObject = container.getByName(
+        item
+      ) as Phaser.GameObjects.Container;
+      if (hudObject) hudObject.setVisible(option === "show");
+    };
+
+    dreamEvents.on("show-hud-items", (items) => {
+      items.forEach((item) => toggleItem(item, "show"));
+    });
+
+    dreamEvents.on("hide-hud-items", (items) => {
+      items.forEach((item) => toggleItem(item, "hide"));
+    });
 
     return container;
   }

@@ -53,6 +53,7 @@ class GhostDreamScene extends Phaser.Scene {
         player: ghostSprite,
         dayActions,
         cursors,
+        camera,
       });
       const hudContainer = hud.create(this, dayActions, [
         HUD_ITEMS.WEIGHT,
