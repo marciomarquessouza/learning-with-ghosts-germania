@@ -2,6 +2,7 @@ import { CHARACTERS, MOODS } from "@/constants/game";
 import { ACTIONS_ICONS } from "@/game/scenes/hud/helpers/actionIcons";
 import mitt from "mitt";
 import { ReactNode } from "react";
+import { HUD_ITEMS } from "@/game/scenes/hud";
 
 export enum GAME_WORLDS {
   REAL = "REAL",
@@ -66,6 +67,11 @@ export interface IntroductionEvent {
   afterClose?: () => void;
 }
 
+export interface ZoomProps {
+  zoom: number;
+  duration?: number;
+}
+
 export type Events = {
   "change-world": {
     targetWorld: GAME_WORLDS;
@@ -91,6 +97,9 @@ export type Events = {
     timeInSeconds: number;
     onFinish: () => void;
   };
+  "show-hud-items": HUD_ITEMS[];
+  "hide-hud-items": HUD_ITEMS[];
+  "camera-zoom-to": ZoomProps;
 };
 
 export const gameEvents = mitt<Events>();

@@ -4,13 +4,11 @@ import { hud, HUD_ITEMS } from "../hud";
 import { cemeteryScenario } from "./helpers/cemeteryScenario";
 import { getDayAction } from "@/game/actions/getAction";
 import { ghostElisa } from "@/game/actors/ghostElisa/GhostElisa";
+import { dreamCamera } from "@/game/cameras/DreamCamera";
 
 export const GHOST_DREAM_SCENE = "GhostDreamScene";
 export const DEFAULT_POSITION_X = 510;
 export const DEFAULT_POSITION_Y = 720;
-
-const FADE_IN_DURATION = 1500;
-const FADE_COLOR = { r: 0, g: 0, b: 0 };
 
 class GhostDreamScene extends Phaser.Scene {
   constructor() {
@@ -39,10 +37,12 @@ class GhostDreamScene extends Phaser.Scene {
       cursors,
     });
 
-    const camera = this.cameras.main;
-    camera.setBounds(0, 0, scenario.width, scenario.height);
-    camera.startFollow(ghostSprite, true, 0.12, 0.12);
-    camera.setBackgroundColor(0x000000);
+    dreamCamera.create(this, ghostSprite, {
+      x: 0,
+      y: 0,
+      width: scenario.width,
+      height: scenario.height,
+    });
 
     getDayAction().then((dayActions) => {
       dayActions.setStage("learning");
@@ -53,17 +53,11 @@ class GhostDreamScene extends Phaser.Scene {
         player: ghostSprite,
         dayActions,
         cursors,
-        camera,
+        camera: dreamCamera.mainCamera,
       });
-      const hudContainer = hud.create(this, dayActions, [
-        HUD_ITEMS.WEIGHT,
-        HUD_ITEMS.THERMOMETER,
-      ]);
+      const hudContainer = hud.create(this, dayActions, [HUD_ITEMS.WEIGHT]);
       this.children.bringToTop(hudContainer);
-      camera.fadeIn(FADE_IN_DURATION, FADE_COLOR.r, FADE_COLOR.g, FADE_COLOR.b);
-      camera.once("camerafadeincomplete", () => {
-        dayActions.onStart();
-      });
+      dreamCamera.fadeIn({ onComplete: () => dayActions.onStart() });
     });
   }
 

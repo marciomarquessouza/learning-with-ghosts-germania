@@ -10,6 +10,7 @@ import {
   stepShowDreamIntroduction,
   stepShowDreamTransition,
   stepShowDialogue,
+  stepShowLessonIntroduction,
 } from "@/events/steps";
 import { dialogues } from "./day_01.dialogues";
 import { showDialogue } from "@/events/helpers/showDialogue";
@@ -97,33 +98,34 @@ class DayActions1 extends DayActions {
     }
   }
 
-  onConfessionalInteraction(): void {
-    runSteps(
+  async onConfessionalInteraction() {
+    const context = { alternativeId: undefined };
+    await runSteps(
       [
-        stepShowDialogue({
-          lines: dialogues.lesson_preparation(),
-        }),
+        stepShowDialogue({ lines: dialogues.lesson_preparation() }),
         stepShowDialogue(
-          {
-            lines: dialogues.post_introduction_eliska_secret(),
-          },
+          { lines: dialogues.post_introduction_eliska_secret() },
           { showWhenAlternativeIs: "eliska_secret" }
         ),
         stepShowDialogue(
-          {
-            lines: dialogues.post_introduction_josef_future(),
-          },
+          { lines: dialogues.post_introduction_josef_future() },
           { showWhenAlternativeIs: "josef_future" }
         ),
         stepShowDialogue(
-          {
-            lines: dialogues.post_introduction_exit(),
-          },
+          { lines: dialogues.post_introduction_exit() },
           { showWhenAlternativeIs: "exit" }
         ),
       ],
-      { alternativeId: undefined }
+      context
     );
+
+    if (context.alternativeId !== "exit") {
+      this.onLessonStart();
+    }
+  }
+
+  onLessonStart(): void {
+    runSteps([stepShowLessonIntroduction({})], {});
   }
 
   onChallengeClick(): void {

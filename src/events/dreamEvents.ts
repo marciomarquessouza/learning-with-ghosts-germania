@@ -1,5 +1,9 @@
-import { HUD_ITEMS } from "@/game/scenes/hud";
 import mitt from "mitt";
+
+export interface LessonIntroductionProps {
+  hideAfter?: number;
+  afterClose?: () => void;
+}
 
 export type Events = {
   "show-introduction": {
@@ -7,8 +11,7 @@ export type Events = {
     hideAfter?: number;
     afterClose?: () => void;
   };
-  "show-hud-items": HUD_ITEMS[];
-  "hide-hud-items": HUD_ITEMS[];
+  "show-lesson-introduction": LessonIntroductionProps;
 };
 
 export const dreamEvents = mitt<Events>();

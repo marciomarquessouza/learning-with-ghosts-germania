@@ -14,6 +14,8 @@ import {
   showDreamIntroduction,
 } from "../helpers/showDreamIntroduction";
 import { GameWorld, setGameWorld } from "../helpers/setGameWorld";
+import { LessonIntroductionProps } from "../dreamEvents";
+import { showLessonIntroduction } from "../helpers/showLessonIntroduction";
 
 export const stepShowDialogue = (
   payload: DialogueEvent,
@@ -57,3 +59,8 @@ export const stepSetGameWorld = (
   payload: GameWorld,
   options?: StepOptions
 ): Step => stepBase(() => setGameWorld(payload), options);
+
+export const stepShowLessonIntroduction = (
+  payload: LessonIntroductionProps,
+  options?: StepOptions
+): Step => stepBase(() => showLessonIntroduction(payload), options);

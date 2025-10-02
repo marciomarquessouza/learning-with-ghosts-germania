@@ -6,7 +6,6 @@ import { gameEvents } from "@/events/gameEvents";
 import { ActorPayload } from "../types/Actor";
 import { createKeyMap } from "@/utils/createKeyMap";
 import { CHARACTERS } from "@/constants/game";
-import { dreamEvents } from "@/events/dreamEvents";
 import { HUD_ITEMS } from "@/game/scenes/hud";
 
 export const KEY_CODES = Phaser.Input.Keyboard.KeyCodes;
@@ -20,7 +19,6 @@ export class GhostElisa {
   private elisaSprite: Phaser.Physics.Arcade.Sprite | null = null;
   private dayActions: DayActions | null = null;
   private cursors: Phaser.Types.Input.Keyboard.CursorKeys | null = null;
-  private camera: Phaser.Cameras.Scene2D.Camera | null = null;
   private keyMap: Partial<
     Record<keyof typeof KEY_CODES, Phaser.Input.Keyboard.Key>
   > | null = null;
@@ -30,18 +28,9 @@ export class GhostElisa {
     elisaAnimations.preload(scene);
   }
 
-  create({
-    scene,
-    startX,
-    startY,
-    player,
-    dayActions,
-    cursors,
-    camera,
-  }: ElisaPayload) {
+  create({ scene, startX, startY, player, dayActions, cursors }: ElisaPayload) {
     this.dayActions = dayActions || null;
     this.cursors = cursors;
-    this.camera = camera;
     this.elisaSprite = elisaAnimations.create(scene, 130, 0);
     confessional.create(scene, this.elisaSprite, startX, startY);
     elisaInteractionArea.create(
@@ -84,12 +73,12 @@ export class GhostElisa {
       elisaInteractionArea.isOverlapping &&
       (this.cursors?.space.isDown || this.keyMap?.E?.isDown)
     ) {
-      dreamEvents.emit("hide-hud-items", [
+      gameEvents.emit("hide-hud-items", [
         HUD_ITEMS.WEIGHT,
         HUD_ITEMS.THERMOMETER,
       ]);
-      this.camera?.zoomTo(1.2, 200);
       this.closeGameMessage();
+      gameEvents.emit("camera-zoom-to", { zoom: 1.2, duration: 200 });
       this.dayActions?.onConfessionalInteraction();
     }
   }

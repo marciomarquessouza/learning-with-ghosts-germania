@@ -2,7 +2,7 @@ import { DayActions } from "@/game/actions/actionDefaultPerDay/default.actions";
 import { hudActions } from "./hudActions";
 import { hudThermometer } from "./hudThermometer";
 import { hudWeight } from "./hudWeight";
-import { dreamEvents } from "@/events/dreamEvents";
+import { gameEvents } from "@/events/gameEvents";
 
 export enum HUD_ITEMS {
   WEIGHT = "WEIGHT",
@@ -56,11 +56,11 @@ class Hud {
       if (hudObject) hudObject.setVisible(option === "show");
     };
 
-    dreamEvents.on("show-hud-items", (items) => {
+    gameEvents.on("show-hud-items", (items) => {
       items.forEach((item) => toggleItem(item, "show"));
     });
 
-    dreamEvents.on("hide-hud-items", (items) => {
+    gameEvents.on("hide-hud-items", (items) => {
       items.forEach((item) => toggleItem(item, "hide"));
     });
 

@@ -73,6 +73,8 @@ export class DayActions {
     });
   }
 
+  onLessonStart() {}
+
   onFoodClick() {
     gameEvents.emit("show-dialogue", {
       lines: [

@@ -5,6 +5,7 @@ import { GameMessage } from "@/components/GameMessage";
 import RotateOverlay from "@/components/RotateOverlay";
 import { SceneIntroduction } from "@/components/SceneIntroduction";
 import dynamic from "next/dynamic";
+import { LessonIntroduction } from "@/components/LessonIntroduction";
 
 const GameRoot = dynamic(() => import("@/game/main"), {
   ssr: false,
@@ -16,6 +17,7 @@ export default function Game() {
       <RotateOverlay />
       <SceneIntroduction />
       <DreamIntroduction />
+      <LessonIntroduction />
       <GameMessage />
       <Dialogue />
       <GameRoot />
