@@ -4,6 +4,10 @@ import { showDialogue } from "@/events/helpers/showDialogue";
 import { stepDayIntroduction } from "@/events/steps";
 import { runSteps } from "@/events/steps/runSteps";
 import { defaultDialogues } from "./default.dialogues";
+import { Lesson } from "@/types";
+import { defaultLesson } from "./default.lessons";
+import { useLessonStore } from "@/store/lessonStore";
+import { useGameStore } from "@/store/gameStore";
 
 export type Stage = "introduction" | "lesson" | "learning" | "challenge";
 
@@ -18,6 +22,31 @@ export class DayActions {
     challenge: 0,
     bars: 0,
   };
+
+  get lesson(): Lesson | null {
+    return useLessonStore.getState().getLesson();
+  }
+
+  set lesson(lesson: Lesson) {
+    useLessonStore.getState().update(lesson);
+  }
+
+  constructor(dayLesson: Lesson) {
+    this.createDayLesson(dayLesson);
+  }
+
+  private createDayLesson(dayLesson: Lesson) {
+    if (!this.lesson) {
+      this.lesson = dayLesson;
+      return;
+    }
+    const currentDay = useGameStore.getState().day;
+    const lessonDay = this.lesson.day;
+
+    if (currentDay > lessonDay) {
+      this.lesson = dayLesson;
+    }
+  }
 
   setStage(stage: Stage) {
     this.stage = stage;
@@ -141,4 +170,4 @@ export class DayActions {
   }
 }
 
-export const defaultDayActions = new DayActions();
+export const defaultDayActions = new DayActions(defaultLesson);

@@ -2,13 +2,14 @@ import { Lesson } from "@/types";
 
 export const lesson: Lesson = {
   id: "greetings",
+  day: 1,
   title: "Greetings",
   challenges: [
     {
       id: "1",
       reference: "Hello",
       challenge: "Hallo",
-      phase: "hide",
+      phase: "visible",
     },
     {
       id: "2",

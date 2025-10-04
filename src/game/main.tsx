@@ -1,19 +1,32 @@
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { GhostLoading } from "@/components/GhostLoading";
 import { initPhaser } from "./phaser/initPhaser";
 import { GAME_WORLDS, gameEvents } from "@/events/gameEvents";
 import { getGameWorldConfig } from "@/utils/getGameWorldConfig";
+import { useGameStore } from "@/store/gameStore";
+import { useCellStore } from "@/store/cellStore";
+import { DEFAULT_INITIAL_WEIGHT } from "@/constants/game";
 
 export default function MainGame() {
   const [fakeLoading, setFakeLoading] = useState(true);
   const [loading, setLoading] = useState(true);
   const [world, setWorld] = useState<GAME_WORLDS>(GAME_WORLDS.DREAM);
+  const { day, setDay } = useGameStore();
+  const { setWeight } = useCellStore();
   const started = useRef(false);
   const currentGame = useRef<Phaser.Game | null>(null);
   const showLoading = useMemo(
     () => loading && world === GAME_WORLDS.REAL,
     [loading, world]
   );
+
+  const checkIfIsFirstDay = useCallback(() => {
+    // Necessary to initialize the Local Storage and Store
+    if (day === 0) {
+      setDay(1);
+      setWeight(DEFAULT_INITIAL_WEIGHT);
+    }
+  }, [day, setDay, setWeight]);
 
   useEffect(() => {
     if (typeof window !== "object") {
@@ -40,6 +53,7 @@ export default function MainGame() {
       started.current = true;
       const gameConfig = getGameWorldConfig(world);
       initPhaser({ ...gameConfig, parent: "game-container" }).then((game) => {
+        checkIfIsFirstDay();
         setLoading(false);
         currentGame.current = game;
       });
@@ -48,7 +62,7 @@ export default function MainGame() {
     return () => {
       gameEvents.off("change-world", handle);
     };
-  }, [loading, fakeLoading, world]);
+  }, [loading, fakeLoading, world, checkIfIsFirstDay]);
 
   return showLoading ? <GhostLoading /> : null;
 }

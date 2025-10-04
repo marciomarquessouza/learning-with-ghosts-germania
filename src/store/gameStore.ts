@@ -14,7 +14,7 @@ export interface GameState {
 export const useGameStore = create<GameState>()(
   persist(
     (set) => ({
-      day: 1,
+      day: 0,
       debugMode: false,
       setDay: (day: number) => set((state) => ({ ...state, day })),
       increaseDay: () => set((state) => ({ ...state, day: state.day + 1 })),

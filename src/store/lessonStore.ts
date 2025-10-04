@@ -7,16 +7,23 @@ import { persist } from "zustand/middleware";
  */
 export interface LessonState extends Lesson {
   // actions
+  getLesson: () => Lesson | null;
   update: (lesson: Lesson) => void;
   updateChallengesPhase: (ids: string[], phase: ChallengePhase) => void;
 }
 
 export const useLessonStore = create<LessonState>()(
   persist(
-    (set) => ({
+    (set, get) => ({
       id: "",
       title: "",
+      day: 0,
       challenges: [] as Challenge[],
+      getLesson: () => {
+        const { id, day, title, challenges } = get();
+        if (!id) return null;
+        return { id, day, title, challenges };
+      },
       update: (lesson: Lesson) => set((state) => ({ ...state, ...lesson })),
       updateChallenge: (id: string, updatedChallenge: Challenge) =>
         set((state) => ({

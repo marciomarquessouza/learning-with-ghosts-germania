@@ -9,6 +9,7 @@ export type Challenge = {
 
 export type Lesson = {
   id: string;
+  day: number;
   title: string;
   challenges: Challenge[];
 };

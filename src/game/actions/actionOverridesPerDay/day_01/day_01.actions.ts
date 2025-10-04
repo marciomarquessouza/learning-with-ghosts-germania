@@ -16,10 +16,12 @@ import { dialogues } from "./day_01.dialogues";
 import { showDialogue } from "@/events/helpers/showDialogue";
 import { defaultDialogues } from "../../actionDefaultPerDay/default.dialogues";
 import { showGameMessage } from "@/events/helpers/showGameMessage";
+import { Lesson } from "@/types";
+import { lesson } from "./day_01.lesson";
 
 class DayActions1 extends DayActions {
-  constructor() {
-    super();
+  constructor(lesson: Lesson) {
+    super(lesson);
   }
 
   onStart(): void {
@@ -145,4 +147,4 @@ class DayActions1 extends DayActions {
   }
 }
 
-export const dayAction = new DayActions1();
+export const dayAction = new DayActions1(lesson);
