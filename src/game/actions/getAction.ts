@@ -1,4 +1,4 @@
-import { useCellStore } from "@/store/cellStore";
+import { useGameStore } from "@/store/gameStore";
 import {
   DayActions,
   defaultDayActions,
@@ -8,7 +8,7 @@ import { dayImporters } from "./registry";
 const cache = new Map<number, DayActions>();
 
 export async function getDayAction(): Promise<DayActions> {
-  const day = useCellStore.getState().day;
+  const day = useGameStore.getState().day;
   if (cache.has(day)) return cache.get(day)!;
 
   const importer = dayImporters[day];

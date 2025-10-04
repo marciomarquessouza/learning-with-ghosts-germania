@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import Image from "next/image";
 import { dreamEvents, LessonIntroductionProps } from "@/events/dreamEvents";
 import { useLessonStore } from "@/store/lessonStore";
+import { useGameStore } from "@/store/gameStore";
 
 const DEFAULT_HIDE_AFTER = 2800;
 
@@ -9,7 +10,8 @@ export function LessonIntroduction() {
   const [phase, setPhase] = useState<"hidden" | "entering" | "exiting">(
     "hidden"
   );
-  const { day, lessonTitle: title, questionsQnt: quantity } = useLessonStore();
+  const { title } = useLessonStore();
+  const { day } = useGameStore();
 
   useEffect(() => {
     const handler = ({ hideAfter, afterClose }: LessonIntroductionProps) => {

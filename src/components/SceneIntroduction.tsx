@@ -1,7 +1,8 @@
 import { useEffect, useState } from "react";
 import Image from "next/image";
 import { gameEvents, IntroductionEvent } from "@/events/gameEvents";
-import { useCellStore } from "@/store/cellStore";
+import { useLessonStore } from "@/store/lessonStore";
+import { useGameStore } from "@/store/gameStore";
 
 const DEFAULT_HIDE_AFTER = 2800;
 
@@ -9,12 +10,11 @@ export function SceneIntroduction() {
   const [phase, setPhase] = useState<"hidden" | "entering" | "exiting">(
     "hidden"
   );
-  const [title, setTitle] = useState("");
-  const { day } = useCellStore();
+  const { title } = useLessonStore();
+  const { day } = useGameStore();
 
   useEffect(() => {
     const handler = (payload: IntroductionEvent) => {
-      setTitle(payload.title);
       setPhase("entering");
 
       const visibleTime = payload.hideAfter || DEFAULT_HIDE_AFTER;

@@ -1,5 +1,5 @@
 import { CALENDAR_IMG } from "@/constants/images";
-import { useCellStore } from "@/store/cellStore";
+import { useGameStore } from "@/store/gameStore";
 
 type CalendarContainer = Phaser.GameObjects.Container & {
   increaseDay: () => void;
@@ -13,7 +13,8 @@ class Calendar {
   }
 
   create(scene: Phaser.Scene): CalendarContainer {
-    const day = useCellStore.getState().day;
+    const day = useGameStore.getState().day;
+
     const container = scene.add
       .container(0, 0)
       .setPosition(1390, 180)
@@ -35,8 +36,8 @@ class Calendar {
     });
 
     function increaseDay() {
-      useCellStore.getState().increaseDay();
-      const newDay = useCellStore.getState().day;
+      useGameStore.getState().increaseDay();
+      const newDay = useGameStore.getState().day;
       dayText.setText(`${newDay}`);
     }
 

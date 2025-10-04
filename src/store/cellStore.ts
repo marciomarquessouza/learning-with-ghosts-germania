@@ -17,31 +17,28 @@ export type Stamp = {
   quantity: number;
 };
 
+/**
+ * Controls the Josef G cell state
+ * */
 export type CellState = {
   // states
-  day: number;
   weight: number;
   stamps: Stamp[];
-  debugMode: boolean;
+
   // actions
-  increaseDay: () => void;
   setWeight: (amount: number) => void;
   increaseWeight: (amount: number) => void;
   decreaseWeight: (amount: number) => void;
   addStamp: (stamp: Stamp) => void;
   removeStamp: (stampId: string) => void;
   resetStamps: () => void;
-  resetGame: () => void;
 };
 
 export const useCellStore = create<CellState>()(
   persist(
     (set) => ({
-      day: 1,
       weight: DEFAULT_INITIAL_WEIGHT,
       stamps: [],
-      debugMode: false,
-      increaseDay: () => set((state) => ({ day: state.day + 1 })),
       setWeight: (amount: number) => set(() => ({ weight: amount })),
       increaseWeight: (amount: number) =>
         set((state) => ({ weight: state.weight + amount })),
@@ -54,8 +51,6 @@ export const useCellStore = create<CellState>()(
           stamps: state.stamps.filter((stamp) => stamp.id !== stampId),
         })),
       resetStamps: () => set({ stamps: [] }),
-      resetGame: () =>
-        set({ day: 1, weight: DEFAULT_INITIAL_WEIGHT, stamps: [] }),
     }),
     {
       name: "cell-storage",

@@ -1,28 +1,37 @@
+import { Challenge, ChallengePhase, Lesson } from "@/types";
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
 
-export type LessonState = {
-  // states
-  day: number;
-  lessonTitle: string;
-  questionsQnt: number;
+/**
+ * Controls the current lesson and its challenges
+ */
+export interface LessonState extends Lesson {
   // actions
-  setDay: (day: number) => void;
-  increaseDay: () => void;
-  setLessonTitle: (title: string) => void;
-  setQuestionsQnt: (qnt: number) => void;
-};
+  update: (lesson: Lesson) => void;
+  updateChallengesPhase: (ids: string[], phase: ChallengePhase) => void;
+}
 
 export const useLessonStore = create<LessonState>()(
   persist(
     (set) => ({
-      day: 1,
-      lessonTitle: "Greetings",
-      questionsQnt: 10,
-      setDay: (day: number) => set(() => ({ day })),
-      increaseDay: () => set((state) => ({ day: state.day + 1 })),
-      setLessonTitle: (title: string) => set(() => ({ lessonTitle: title })),
-      setQuestionsQnt: (qnt: number) => set(() => ({ questionsQnt: qnt })),
+      id: "",
+      title: "",
+      challenges: [] as Challenge[],
+      update: (lesson: Lesson) => set((state) => ({ ...state, ...lesson })),
+      updateChallenge: (id: string, updatedChallenge: Challenge) =>
+        set((state) => ({
+          ...state,
+          challenges: state.challenges.map((challenge) =>
+            challenge.id === id ? updatedChallenge : challenge
+          ),
+        })),
+      updateChallengesPhase: (ids: string[], phase: ChallengePhase) =>
+        set((state) => ({
+          ...state,
+          challenges: state.challenges.map((challenge) =>
+            ids.includes(challenge.id) ? { ...challenge, phase } : challenge
+          ),
+        })),
     }),
     {
       name: "lesson-storage",
