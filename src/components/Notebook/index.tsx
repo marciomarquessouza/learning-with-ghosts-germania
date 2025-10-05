@@ -5,7 +5,7 @@ import { usePagination } from "@/hooks/usePagination";
 import { PaginationControls } from "../Pagination/PaginationControl";
 import { ChallengeNotebookEvents, lessonEvents } from "@/events/lessonEvents";
 import { AnimatePresence, motion } from "framer-motion";
-import { Button } from "../Button";
+import { ButtonTransparent } from "../ButtonTransparent";
 
 export function Notebook() {
   const lesson = useLessonStore();
@@ -89,10 +89,9 @@ export function Notebook() {
             </div>
           </div>
           <div className="absolute -right-6 -bottom-10">
-            <Button
+            <ButtonTransparent
               label="Close"
               labelIcon="X"
-              variant="transparent"
               onClick={handleCloseClick}
             />
           </div>
