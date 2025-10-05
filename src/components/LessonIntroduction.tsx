@@ -1,11 +1,9 @@
 import { useEffect, useState } from "react";
 import Image from "next/image";
-import { dreamEvents, LessonIntroductionProps } from "@/events/dreamEvents";
+import { dreamEvents } from "@/events/dreamEvents";
 import { useLessonStore } from "@/store/lessonStore";
 import { useGameStore } from "@/store/gameStore";
 import { NotebookToggleButton } from "./Notebook/NotebookToggleButton";
-
-const DEFAULT_HIDE_AFTER = 2800;
 
 export function LessonIntroduction() {
   const [phase, setPhase] = useState<"hidden" | "entering" | "exiting">(

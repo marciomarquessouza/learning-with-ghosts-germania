@@ -27,7 +27,7 @@ export const DIALOGUE_MAP: {
     avatar: "/dialogue/dialogue_avatar_marlene.png",
   },
   [CHARACTERS.ELISA]: {
-    displayName: "Elisa",
+    displayName: "Saint Eliska",
     avatar: "/dialogue/dialogue_avatar_elisa.png",
   },
   [CHARACTERS.JOSEF]: {
