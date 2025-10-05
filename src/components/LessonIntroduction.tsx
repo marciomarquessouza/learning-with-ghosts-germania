@@ -3,6 +3,7 @@ import Image from "next/image";
 import { dreamEvents, LessonIntroductionProps } from "@/events/dreamEvents";
 import { useLessonStore } from "@/store/lessonStore";
 import { useGameStore } from "@/store/gameStore";
+import { NotebookToggleButton } from "./Notebook/NotebookToggleButton";
 
 const DEFAULT_HIDE_AFTER = 2800;
 
@@ -14,17 +15,8 @@ export function LessonIntroduction() {
   const { day } = useGameStore();
 
   useEffect(() => {
-    const handler = ({ hideAfter, afterClose }: LessonIntroductionProps) => {
+    const handler = () => {
       setPhase("entering");
-      const visibleTime = hideAfter || DEFAULT_HIDE_AFTER;
-
-      // setTimeout(() => {
-      //   setPhase("exiting");
-      //   setTimeout(() => {
-      //     setPhase("hidden");
-      //     afterClose?.();
-      //   }, 700);
-      // }, visibleTime);
     };
 
     dreamEvents.on("show-lesson-introduction", handler);
@@ -37,7 +29,7 @@ export function LessonIntroduction() {
 
   return (
     <>
-      <div className="pointer-events-none fixed left-0 top-20 z-[60] w-screen -translate-y-1/2">
+      <div className="fixed left-0 top-20 z-[60] w-screen -translate-y-1/2">
         <div
           className={`w-screen h-40 bg-black shadow-xl`}
           style={{
@@ -46,8 +38,9 @@ export function LessonIntroduction() {
             } 700ms cubic-bezier(.22,.99,.36,.99) forwards`,
           }}
         >
+          <NotebookToggleButton />
           <div
-            className="flex h-full w-full items-center justify-center gap-6 px-4 text-white opacity-0"
+            className="pointer-events-none flex h-full w-full items-center justify-center gap-6 px-4 text-white opacity-0"
             style={{
               animation: `${
                 isEntering ? "scene-intro-fade-in" : "scene-intro-fade-out"

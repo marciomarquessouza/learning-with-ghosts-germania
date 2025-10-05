@@ -1,5 +1,5 @@
 import { cellEvents, NoiseKeys } from "@/events/cellEvents";
-import { useCellStore } from "@/store/cellStore";
+import { useGameStore } from "@/store/gameStore";
 import { useUiStore } from "@/store/uiStore";
 
 export function createSelectableArea(
@@ -9,7 +9,7 @@ export function createSelectableArea(
   key: NoiseKeys,
   onClick: () => void
 ) {
-  const debugMode = useCellStore.getState().debugMode;
+  const debugMode = useGameStore.getState().debugMode;
   const area = scene.add
     .rectangle(0, 0, size.width, size.height, 0x00ff00)
     .setOrigin(0.5, 0.5)

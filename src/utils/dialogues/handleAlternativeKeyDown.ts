@@ -1,4 +1,4 @@
-import { Alternative } from "@/events/gameEvents";
+import { Alternative } from "@/types";
 
 export interface SelectNextAlternativeProps {
   alternatives: Alternative[];

@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { CHARACTERS, MOODS } from "@/constants/game";
 import { dedent } from "../dedent";
-import { CharacterMood, DialogueLine } from "@/events/gameEvents";
+import { CharacterMood, DialogueLine } from "@/types";
 
 interface DialogueTag extends DialogueLine {
   reactions: (charactersMood: CharacterMood[]) => DialogueLine;

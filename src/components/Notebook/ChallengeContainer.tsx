@@ -1,11 +1,6 @@
 import { Challenge } from "@/types";
 
-export function ChallengeContainer({
-  id,
-  reference,
-  challenge,
-  phase,
-}: Challenge) {
+export function ChallengeContainer({ reference, challenge, phase }: Challenge) {
   const isLong = reference.length > 12 || challenge.length > 12;
 
   if (phase === "hide") {

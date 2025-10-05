@@ -6,7 +6,12 @@ export interface ChallengeNotebookEvents {
   phase: ChallengePhase;
 }
 
+export interface ToggleNotebookEvents {
+  delay?: number;
+}
+
 export type Events = {
+  "toggle-notebook": ToggleNotebookEvents;
   "challenge-notebook-phase": ChallengeNotebookEvents;
 };
 

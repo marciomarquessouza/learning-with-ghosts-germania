@@ -1,4 +1,3 @@
-import { GAME_WORLDS } from "@/events/gameEvents";
 import { DayActions } from "../../actionDefaultPerDay/default.actions";
 import { runSteps } from "@/events/steps/runSteps";
 import {
@@ -16,7 +15,7 @@ import { dialogues } from "./day_01.dialogues";
 import { showDialogue } from "@/events/helpers/showDialogue";
 import { defaultDialogues } from "../../actionDefaultPerDay/default.dialogues";
 import { showGameMessage } from "@/events/helpers/showGameMessage";
-import { Lesson } from "@/types";
+import { GAME_WORLDS, Lesson } from "@/types";
 import { lesson } from "./day_01.lesson";
 
 class DayActions1 extends DayActions {

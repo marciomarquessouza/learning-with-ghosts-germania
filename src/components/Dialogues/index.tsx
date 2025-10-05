@@ -1,11 +1,7 @@
 import { useState, useEffect, useCallback, useRef, useMemo } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useTypewriter } from "@/hooks/useTypewriter";
-import {
-  DialogueEvent,
-  gameEvents,
-  InteractionLine,
-} from "@/events/gameEvents";
+import { DialogueEvent, gameEvents } from "@/events/gameEvents";
 import { CHARACTERS, MOODS } from "@/constants/game";
 import { useDeviceType } from "@/hooks/useDeviceType";
 import Image from "next/image";
@@ -20,6 +16,7 @@ import { InputText } from "./InputText";
 import { getUUID } from "@/utils/getUUID";
 import { setCharactersMood } from "@/events/helpers/setCharactersMood";
 import { handleAlternativeKeyDown } from "@/utils/dialogues/handleAlternativeKeyDown";
+import { InteractionLine } from "@/types";
 
 export function Dialogue() {
   const device = useDeviceType();

@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { CHARACTERS, MOODS } from "@/constants/game";
-import { Alternative, AlternativeLine } from "@/events/gameEvents";
 import { dedent } from "../dedent";
+import { Alternative, AlternativeLine } from "@/types";
 
 type AlternativesBuilder = {
   alternatives: (...opts: Alternative[]) => AlternativeLine;

@@ -1,6 +1,6 @@
-import { InteractionTypes } from "@/events/gameEvents";
 import { useMemo } from "react";
 import { Button } from "../Button";
+import { InteractionTypes } from "@/types";
 
 export interface DialogueCTAProps {
   isTypeWritingComplete: boolean;

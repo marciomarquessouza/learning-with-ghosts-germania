@@ -1,4 +1,5 @@
-import { CharacterMood, gameEvents } from "../gameEvents";
+import { CharacterMood } from "@/types";
+import { gameEvents } from "../gameEvents";
 
 export function setCharactersMood(
   charactersMood?: CharacterMood[]

@@ -1,0 +1,44 @@
+import { lessonEvents } from "@/events/lessonEvents";
+import Image from "next/image";
+
+export function NotebookToggleButton() {
+  const handleOnClick = () => {
+    lessonEvents.emit("toggle-notebook", {});
+  };
+
+  return (
+    <button
+      type="button"
+      onClick={handleOnClick}
+      aria-controls="notebook"
+      className={[
+        "group fixed top-6 left-12 z-[120] cursor-pointer",
+        "h-24 w-24 select-none",
+        "transition-transform duration-200 ease-out",
+        "hover:scale-[1.04] hover:-translate-y-0.5 active:scale-[0.98]",
+      ].join(" ")}
+    >
+      <span className="relative block h-full w-full">
+        <Image
+          src="/hud/notebook_notes_icon.png"
+          alt="Notebook icon"
+          fill
+          sizes="96px"
+          draggable={false}
+          className="object-contain transition-opacity duration-200 ease-out group-hover:opacity-0"
+          priority
+        />
+
+        <Image
+          src="/hud/notebook_notes_icon_hover.png"
+          alt="Notebook icon hover"
+          fill
+          sizes="96px"
+          draggable={false}
+          className="object-contain opacity-0 transition-opacity duration-200 ease-out group-hover:opacity-100"
+          priority
+        />
+      </span>
+    </button>
+  );
+}

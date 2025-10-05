@@ -1,4 +1,5 @@
-import { GAME_WORLDS, gameEvents } from "../gameEvents";
+import { GAME_WORLDS } from "@/types";
+import { gameEvents } from "../gameEvents";
 
 export interface GameWorld {
   targetWorld: GAME_WORLDS;

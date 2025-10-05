@@ -1,11 +1,12 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { GhostLoading } from "@/components/GhostLoading";
 import { initPhaser } from "./phaser/initPhaser";
-import { GAME_WORLDS, gameEvents } from "@/events/gameEvents";
+import { gameEvents } from "@/events/gameEvents";
 import { getGameWorldConfig } from "@/utils/getGameWorldConfig";
 import { useGameStore } from "@/store/gameStore";
 import { useCellStore } from "@/store/cellStore";
 import { DEFAULT_INITIAL_WEIGHT } from "@/constants/game";
+import { GAME_WORLDS } from "@/types";
 
 export default function MainGame() {
   const [fakeLoading, setFakeLoading] = useState(true);

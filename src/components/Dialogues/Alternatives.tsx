@@ -1,5 +1,5 @@
-import { Alternative } from "@/events/gameEvents";
 import { CharacterDetails } from "@/hooks/useCharacterDetails";
+import { Alternative } from "@/types";
 import { useEffect, useRef } from "react";
 
 export interface AlternativesProps {

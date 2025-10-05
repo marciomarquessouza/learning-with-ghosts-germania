@@ -1,7 +1,7 @@
-import { GAME_WORLDS } from "@/events/gameEvents";
 import { createConfig } from "@/game/phaser/createConfig";
 import { cellScene } from "@/game/scenes/cell_scene";
 import { ghostDreamScene } from "@/game/scenes/ghost_dream_scene";
+import { GAME_WORLDS } from "@/types";
 
 export function getGameWorldConfig(
   world: GAME_WORLDS
