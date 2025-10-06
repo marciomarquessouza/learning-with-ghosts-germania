@@ -13,6 +13,7 @@ export interface ToggleNotebookEvents {
 export type Events = {
   "toggle-notebook": ToggleNotebookEvents;
   "challenge-notebook-phase": ChallengeNotebookEvents;
+  "show-lesson": undefined;
 };
 
 export const lessonEvents = mitt<Events>();
