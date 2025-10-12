@@ -3,33 +3,33 @@ import { useLessonStore } from "@/store/lessonStore";
 import { ChallengeContainer } from "./ChallengeContainer";
 import { usePagination } from "@/hooks/usePagination";
 import { PaginationControls } from "../Pagination/PaginationControl";
-import { ChallengeNotebookEvents, lessonEvents } from "@/events/lessonEvents";
+import { LessonEntryNotebookEvents, lessonEvents } from "@/events/lessonEvents";
 import { AnimatePresence, motion } from "framer-motion";
 import { ButtonTransparent } from "../ButtonTransparent";
 
 export function Notebook() {
-  const lesson = useLessonStore();
+  const { lesson, updateEntriesPhase } = useLessonStore();
   const {
-    list: challenges,
+    list: lessonEntries,
     currentPage,
     totalPages,
     previousPage,
     nextPage,
     hasPagination,
   } = usePagination(
-    lesson.challenges.filter(({ phase }) => phase === "visible"),
+    lesson.entries.filter(({ phase }) => phase === "visible"),
     6
   );
   const [visible, setVisible] = useState(false);
 
   useEffect(() => {
-    const handle = ({ ids, phase }: ChallengeNotebookEvents) => {
-      lesson.updateChallengesPhase(ids, phase);
+    const handle = ({ ids, phase }: LessonEntryNotebookEvents) => {
+      updateEntriesPhase(ids, phase);
     };
-    lessonEvents.on("challenge-notebook-phase", handle);
+    lessonEvents.on("lesson-entry-notebook-phase", handle);
 
-    return () => lessonEvents.off("challenge-notebook-phase", handle);
-  }, [lesson]);
+    return () => lessonEvents.off("lesson-entry-notebook-phase", handle);
+  }, [updateEntriesPhase]);
 
   useEffect(() => {
     const handler = (payload: { delay?: number }) => {
@@ -72,8 +72,8 @@ export function Notebook() {
                 {lesson.title}
               </p>
               <div data-test-id="challenges-container" className="">
-                {challenges.map((challenge) => (
-                  <ChallengeContainer key={challenge.id} {...challenge} />
+                {lessonEntries.map((entry) => (
+                  <ChallengeContainer key={entry.id} {...entry} />
                 ))}
               </div>
             </div>

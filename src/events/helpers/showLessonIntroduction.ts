@@ -1,12 +1,14 @@
-import { dreamEvents, LessonIntroductionProps } from "../dreamEvents";
+import { lessonEvents, LessonIntroductionProps } from "../lessonEvents";
 
 export function showLessonIntroduction({
-  hideAfter,
+  onVisible,
 }: LessonIntroductionProps): Promise<void> {
   return new Promise((resolve) => {
-    dreamEvents.emit("show-lesson-introduction", {
-      hideAfter,
-      afterClose: () => resolve(),
+    lessonEvents.emit("show-lesson-introduction", {
+      onVisible: () => {
+        onVisible?.();
+        resolve();
+      },
     });
   });
 }

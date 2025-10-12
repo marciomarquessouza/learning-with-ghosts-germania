@@ -1,42 +1,44 @@
-import { Challenge, ChallengePhase, Lesson } from "@/types";
+import { CHARACTERS } from "@/constants/game";
+import { LessonEntry, LessonEntryPhase, Lesson } from "@/types";
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
 
 /**
  * Controls the current lesson and its challenges
  */
-export interface LessonState extends Lesson {
-  // actions
-  getLesson: () => Lesson | null;
+export interface LessonState {
+  lesson: Lesson;
   update: (lesson: Lesson) => void;
-  updateChallengesPhase: (ids: string[], phase: ChallengePhase) => void;
+  updateEntry: (id: string, entry: LessonEntry) => void;
+  updateEntriesPhase: (ids: string[], phase: LessonEntryPhase) => void;
 }
 
 export const useLessonStore = create<LessonState>()(
   persist(
-    (set, get) => ({
-      id: "",
-      title: "",
-      day: 0,
-      challenges: [] as Challenge[],
-      getLesson: () => {
-        const { id, day, title, challenges } = get();
-        if (!id) return null;
-        return { id, day, title, challenges };
+    (set) => ({
+      lesson: {
+        id: "",
+        title: "",
+        day: 0,
+        character: CHARACTERS.JOSEF,
+        entries: [] as LessonEntry[],
       },
-      update: (lesson: Lesson) => set((state) => ({ ...state, ...lesson })),
-      updateChallenge: (id: string, updatedChallenge: Challenge) =>
+      update: (lesson: Lesson) => set((state) => ({ ...state, lesson })),
+      updateEntry: (id: string, updatedEntry: LessonEntry) =>
         set((state) => ({
           ...state,
-          challenges: state.challenges.map((challenge) =>
-            challenge.id === id ? updatedChallenge : challenge
-          ),
+          lesson: {
+            ...state.lesson,
+            entries: state.lesson.entries.map((entry) =>
+              entry.id === id ? updatedEntry : entry
+            ),
+          },
         })),
-      updateChallengesPhase: (ids: string[], phase: ChallengePhase) =>
+      updateEntriesPhase: (ids: string[], phase: LessonEntryPhase) =>
         set((state) => ({
           ...state,
-          challenges: state.challenges.map((challenge) =>
-            ids.includes(challenge.id) ? { ...challenge, phase } : challenge
+          entries: state.lesson.entries.map((entry) =>
+            ids.includes(entry.id) ? { ...entry, phase } : entry
           ),
         })),
     }),

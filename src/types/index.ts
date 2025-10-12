@@ -1,19 +1,31 @@
 import { CHARACTERS, MOODS } from "@/constants/game";
 
-export type ChallengePhase = "hide" | "visible";
+export type LessonEntryPhase = "hide" | "visible";
+export type LessonStepType =
+  | "introduction"
+  | "listening"
+  | "pronunciation"
+  | "writing";
 
-export type Challenge = {
+export type LessonEntryStep = {
+  type: LessonStepType;
+  text: string;
+};
+
+export type LessonEntry = {
   id: string;
   reference: string;
-  challenge: string;
-  phase: ChallengePhase;
+  target: string;
+  steps: LessonEntryStep[];
+  phase: LessonEntryPhase;
 };
 
 export type Lesson = {
   id: string;
   day: number;
   title: string;
-  challenges: Challenge[];
+  character: CHARACTERS;
+  entries: LessonEntry[];
 };
 
 export enum GAME_WORLDS {
@@ -26,11 +38,7 @@ export type TransitionOptions = Omit<
   "target"
 >;
 
-export type InteractionTypes =
-  | "dialogue"
-  | "alternatives"
-  | "input"
-  | "feedback";
+export type InteractionTypes = "dialogue" | "alternatives" | "input" | "lesson";
 
 export interface Alternative {
   id: string;

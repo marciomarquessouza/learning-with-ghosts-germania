@@ -1,19 +1,30 @@
-import { ChallengePhase } from "@/types";
+import { LessonEntryPhase, Lesson } from "@/types";
 import mitt from "mitt";
 
-export interface ChallengeNotebookEvents {
+export interface LessonEvent {
+  lesson: Lesson;
+  onComplete?: () => void;
+}
+
+export interface LessonEntryNotebookEvents {
   ids: string[];
-  phase: ChallengePhase;
+  phase: LessonEntryPhase;
 }
 
 export interface ToggleNotebookEvents {
   delay?: number;
 }
 
+export interface LessonIntroductionProps {
+  onVisible?: () => void;
+}
+
 export type Events = {
+  "show-lesson-introduction": LessonIntroductionProps;
   "toggle-notebook": ToggleNotebookEvents;
-  "challenge-notebook-phase": ChallengeNotebookEvents;
-  "show-lesson": undefined;
+  "lesson-entry-notebook-phase": LessonEntryNotebookEvents;
+  "show-lesson": LessonEvent;
+  "hide-lesson": { lessonId: string };
 };
 
 export const lessonEvents = mitt<Events>();

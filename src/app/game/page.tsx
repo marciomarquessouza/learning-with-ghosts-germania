@@ -7,7 +7,7 @@ import { SceneIntroduction } from "@/components/SceneIntroduction";
 import dynamic from "next/dynamic";
 import { LessonIntroduction } from "@/components/LessonIntroduction";
 import { Notebook } from "@/components/Notebook";
-import { Lesson } from "@/components/Lessons";
+import { LessonDialog } from "@/components/Lessons";
 
 const GameRoot = dynamic(() => import("@/game/main"), {
   ssr: false,
@@ -22,7 +22,7 @@ export default function Game() {
       <DreamIntroduction />
       <LessonIntroduction />
       <GameMessage />
-      <Lesson />
+      <LessonDialog />
       <Dialogue />
       <GameRoot />
       <div id="game-container" className="w-full h-full"></div>

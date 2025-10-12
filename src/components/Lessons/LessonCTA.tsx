@@ -6,7 +6,7 @@ export interface DialogueCTAProps {
 
 export function LessonCTA({ onClick }: DialogueCTAProps) {
   return (
-    <div className="absolute right-4 -bottom-2">
+    <div className="absolute right-4 -bottom-9">
       <Button label="CLOSE" labelIcon="X" onClick={onClick} />
     </div>
   );

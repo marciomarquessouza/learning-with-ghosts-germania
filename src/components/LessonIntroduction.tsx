@@ -1,24 +1,27 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
-import { dreamEvents } from "@/events/dreamEvents";
 import { useLessonStore } from "@/store/lessonStore";
 import { useGameStore } from "@/store/gameStore";
 import { NotebookToggleButton } from "./Notebook/NotebookToggleButton";
+import { lessonEvents, LessonIntroductionProps } from "@/events/lessonEvents";
 
 export function LessonIntroduction() {
   const [phase, setPhase] = useState<"hidden" | "entering" | "exiting">(
     "hidden"
   );
-  const { title } = useLessonStore();
+  const { lesson } = useLessonStore();
+  const { title } = lesson;
   const { day } = useGameStore();
+  const onVisible = useRef<() => void>(null);
 
   useEffect(() => {
-    const handler = () => {
+    const handler = (payload: LessonIntroductionProps) => {
       setPhase("entering");
+      onVisible.current = payload.onVisible || null;
     };
 
-    dreamEvents.on("show-lesson-introduction", handler);
-    return () => dreamEvents.off("show-lesson-introduction", handler);
+    lessonEvents.on("show-lesson-introduction", handler);
+    return () => lessonEvents.off("show-lesson-introduction", handler);
   }, []);
 
   if (phase === "hidden") return null;
@@ -34,6 +37,11 @@ export function LessonIntroduction() {
             animation: `${
               isEntering ? "scene-intro-slide-in" : "scene-intro-slide-out"
             } 700ms cubic-bezier(.22,.99,.36,.99) forwards`,
+          }}
+          onAnimationEnd={(event) => {
+            if (event.animationName === "scene-intro-slide-in") {
+              onVisible.current?.();
+            }
           }}
         >
           <NotebookToggleButton />

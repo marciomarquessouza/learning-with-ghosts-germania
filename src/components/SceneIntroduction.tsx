@@ -10,7 +10,8 @@ export function SceneIntroduction() {
   const [phase, setPhase] = useState<"hidden" | "entering" | "exiting">(
     "hidden"
   );
-  const { title } = useLessonStore();
+  const { lesson } = useLessonStore();
+  const { title } = lesson;
   const { day } = useGameStore();
 
   useEffect(() => {

@@ -24,7 +24,7 @@ export class DayActions {
   };
 
   get lesson(): Lesson | null {
-    return useLessonStore.getState().getLesson();
+    return useLessonStore.getState().lesson;
   }
 
   set lesson(lesson: Lesson) {

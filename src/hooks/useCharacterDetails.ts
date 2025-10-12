@@ -9,7 +9,7 @@ export interface CharacterDetails {
 }
 
 export const useCharacterDetails = (
-  character: CHARACTERS | null
+  character?: CHARACTERS | null
 ): CharacterDetails | null => {
   return useMemo(() => {
     if (!character) return null;

@@ -1,18 +1,18 @@
-import { Challenge } from "@/types";
+import { LessonEntry } from "@/types";
 import { IconAudio } from "./IconAudio";
 import { IconMic } from "./IconMic";
 import { useState } from "react";
 
 type Mode = "audio" | "speak";
 
-type ChallengeBoxProps = Challenge & {
+type ChallengeBoxProps = Omit<LessonEntry, "steps"> & {
   mode?: Mode;
   onPlay?: (word: string, mode: Mode) => void;
 };
 
 export function ChallengeBox({
   reference,
-  challenge,
+  target,
   phase,
   mode = "audio",
   onPlay,
@@ -26,10 +26,10 @@ export function ChallengeBox({
 
   if (phase === "hide") return null;
 
-  const isLong = reference.length > 12 || challenge.length > 12;
+  const isLong = reference.length > 12 || target.length > 12;
 
   return (
-    <div className="relative ml-8 my-4 w-[480px] grid grid-cols-2 shadow-2xl shadow-black">
+    <div className="relative ml-8 my-1 w-[480px] grid grid-cols-2 shadow-2xl shadow-black">
       <div className="flex items-center justify-end bg-black pr-8 min-h-10 py-1">
         <p
           className={`font-primary text-[#FFF3E4] text-right leading-snug ${
@@ -46,7 +46,7 @@ export function ChallengeBox({
             isLong ? "text-xl" : "text-2xl"
           }`}
         >
-          {challenge}
+          {target}
         </p>
       </div>
 

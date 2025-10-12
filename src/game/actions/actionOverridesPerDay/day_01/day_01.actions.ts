@@ -10,6 +10,7 @@ import {
   stepShowDreamTransition,
   stepShowDialogue,
   stepShowLessonIntroduction,
+  stepShowLesson,
 } from "@/events/steps";
 import { dialogues } from "./day_01.dialogues";
 import { showDialogue } from "@/events/helpers/showDialogue";
@@ -126,7 +127,19 @@ class DayActions1 extends DayActions {
   }
 
   onLessonStart(): void {
-    runSteps([stepShowLessonIntroduction({})], {});
+    if (!this.lesson) {
+      throw new Error("no lesson available");
+    }
+
+    runSteps(
+      [
+        stepShowLessonIntroduction({}),
+        stepShowLesson({
+          lesson: this.lesson,
+        }),
+      ],
+      {}
+    );
   }
 
   onChallengeClick(): void {
