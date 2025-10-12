@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
-import { GhostLoading } from "@/components/GhostLoading";
+import { GhostLoading } from "@/components/HomePage/GhostLoading";
 import { initPhaser } from "./phaser/initPhaser";
 import { gameEvents } from "@/events/gameEvents";
 import { getGameWorldConfig } from "@/utils/getGameWorldConfig";

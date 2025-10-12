@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import { useLessonStore } from "@/store/lessonStore";
 import { useGameStore } from "@/store/gameStore";
-import { NotebookToggleButton } from "./Notebook/NotebookToggleButton";
+import { NotebookToggleButton } from "../Notebook/NotebookToggleButton";
 import { lessonEvents, LessonIntroductionProps } from "@/events/lessonEvents";
 
 export function LessonIntroduction() {

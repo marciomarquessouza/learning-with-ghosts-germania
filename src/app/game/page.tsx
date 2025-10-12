@@ -1,13 +1,13 @@
 "use client";
-import { DreamIntroduction } from "@/components/DreamIntroduction";
+import { DreamIntroduction } from "@/components/Introduction/DreamIntroduction";
 import { Dialogue } from "@/components/Dialogues";
-import { GameMessage } from "@/components/GameMessage";
-import RotateOverlay from "@/components/RotateOverlay";
-import { SceneIntroduction } from "@/components/SceneIntroduction";
+import RotateOverlay from "@/components/HomePage/RotateOverlay";
+import { SceneIntroduction } from "@/components/Introduction/SceneIntroduction";
 import dynamic from "next/dynamic";
-import { LessonIntroduction } from "@/components/LessonIntroduction";
+import { LessonIntroduction } from "@/components/Introduction/LessonIntroduction";
 import { Notebook } from "@/components/Notebook";
 import { LessonDialog } from "@/components/Lessons";
+import { GameMessage } from "@/components/GameMessage";
 
 const GameRoot = dynamic(() => import("@/game/main"), {
   ssr: false,

@@ -5,7 +5,7 @@ import { usePagination } from "@/hooks/usePagination";
 import { PaginationControls } from "../Pagination/PaginationControl";
 import { LessonEntryNotebookEvents, lessonEvents } from "@/events/lessonEvents";
 import { AnimatePresence, motion } from "framer-motion";
-import { ButtonTransparent } from "../ButtonTransparent";
+import { ButtonTransparent } from "../Button/ButtonTransparent";
 
 export function Notebook() {
   const { lesson, updateEntriesPhase } = useLessonStore();
