@@ -3,7 +3,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { getDialogueDimension } from "../Dialogues/helpers/getDialgueDimension";
 import { useDeviceType } from "@/hooks/useDeviceType";
 import Image from "next/image";
-import { ChallengeBox } from "./ChallengeBox";
+import { LessonEntryBox } from "./LessonEntryBox";
 import { LessonCTA } from "./LessonCTA";
 import { useUiStore } from "@/store/uiStore";
 import { LessonEvent, lessonEvents } from "@/events/lessonEvents";
@@ -23,6 +23,7 @@ export function LessonDialog() {
     lessonEntry,
     lessonStep,
     characterDetails,
+    isTypingComplete,
     visible,
     createLesson,
     nextStep,
@@ -55,9 +56,7 @@ export function LessonDialog() {
     nextStep();
   }, [nextStep]);
 
-  const handleClickOnText = useCallback(() => {
-    handleTextClick(() => advanceLine());
-  }, [handleTextClick, advanceLine]);
+  const handleClickOnText = useCallback(() => {}, []);
 
   const handleOnClick = useCallback(() => {}, []);
 
@@ -111,11 +110,15 @@ export function LessonDialog() {
           </div>
           <div className="flex-1 min-w-0 px-6 pt-6 pb-4 flex flex-col h-full">
             <div className="mt-2 bg-[rgba(245,245,245,0.5)] px-2 pt-2.5 pb-2 outline-1 outline-neutral-300 rounded-sm flex-1 overflow-auto">
-              <p className=" text-neutral-900 font-mono text-lg leading-snug whitespace-pre-line mt-2 min-h-8">
+              <p className="text-center min-h-13 text-neutral-900 font-mono text-lg leading-snug whitespace-pre-line mt-2">
                 {displayedText}
               </p>
               <div className="flex justify-center items-center">
-                <ChallengeBox {...lessonEntry} />
+                <LessonEntryBox
+                  {...lessonEntry}
+                  step={lessonStep}
+                  isTypingComplete={isTypingComplete}
+                />
               </div>
             </div>
             <LessonCTA onClick={handleOnClick} />

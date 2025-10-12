@@ -28,4 +28,6 @@ export async function runSteps(steps: Step[], context: Context) {
   for (const step of steps) {
     await step(context);
   }
+
+  return context;
 }

@@ -1,7 +1,11 @@
-import { Challenge } from "@/types";
+import { LessonEntry } from "@/types";
 
-export function ChallengeContainer({ reference, challenge, phase }: Challenge) {
-  const isLong = reference.length > 12 || challenge.length > 12;
+export function LessonEntryContainer({
+  reference,
+  target,
+  phase,
+}: LessonEntry) {
+  const isLong = reference.length > 12 || target.length > 12;
 
   if (phase === "hide") {
     return null;
@@ -24,7 +28,7 @@ export function ChallengeContainer({ reference, challenge, phase }: Challenge) {
             isLong ? "text-xl" : "text-2xl"
           }`}
         >
-          {challenge}
+          {target}
         </p>
       </div>
     </div>

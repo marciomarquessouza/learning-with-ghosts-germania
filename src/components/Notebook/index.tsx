@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { useLessonStore } from "@/store/lessonStore";
-import { ChallengeContainer } from "./ChallengeContainer";
+import { LessonEntryContainer } from "./LessonEntryContainer";
 import { usePagination } from "@/hooks/usePagination";
 import { PaginationControls } from "../Pagination/PaginationControl";
 import { LessonEntryNotebookEvents, lessonEvents } from "@/events/lessonEvents";
@@ -73,7 +73,7 @@ export function Notebook() {
               </p>
               <div data-test-id="challenges-container" className="">
                 {lessonEntries.map((entry) => (
-                  <ChallengeContainer key={entry.id} {...entry} />
+                  <LessonEntryContainer key={entry.id} {...entry} />
                 ))}
               </div>
             </div>

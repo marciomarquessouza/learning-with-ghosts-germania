@@ -100,9 +100,8 @@ class DayActions1 extends DayActions {
     }
   }
 
-  async onConfessionalInteraction() {
-    const context = { alternativeId: undefined };
-    await runSteps(
+  onConfessionalInteraction() {
+    runSteps(
       [
         stepShowDialogue({ lines: dialogues.lesson_preparation() }),
         stepShowDialogue(
@@ -118,12 +117,12 @@ class DayActions1 extends DayActions {
           { showWhenAlternativeIs: "exit" }
         ),
       ],
-      context
-    );
-
-    if (context.alternativeId !== "exit") {
-      this.onLessonStart();
-    }
+      { alternativeId: undefined }
+    ).then((context) => {
+      if (context.alternativeId !== "exit") {
+        this.onLessonStart();
+      }
+    });
   }
 
   onLessonStart(): void {

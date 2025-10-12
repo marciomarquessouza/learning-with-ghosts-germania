@@ -10,8 +10,13 @@ import { Lesson, LessonEntry, LessonEntryStep } from "@/types";
 import { useCharacterDetails } from "@/hooks/useCharacterDetails";
 
 export const useLesson = () => {
-  const { displayedText, setTextToType, startTyping, handleTextClick } =
-    useTypewriter();
+  const {
+    displayedText,
+    setTextToType,
+    startTyping,
+    handleTextClick,
+    isComplete,
+  } = useTypewriter();
   const [state, dispatch] = useReducer(lessonReducer, defaultState);
   const onCompleteRef = useRef<() => void | null>(null);
   const characterDetails = useCharacterDetails(state.lesson?.character);
@@ -88,6 +93,7 @@ export const useLesson = () => {
       lessonEntry,
       lessonStep: getLessonStep(),
       displayedText,
+      isTypingComplete: isComplete,
       visible: state.visible,
       createLesson,
       nextStep,
@@ -99,6 +105,7 @@ export const useLesson = () => {
     state.visible,
     displayedText,
     characterDetails,
+    isComplete,
     getLessonStep,
     getLessonEntry,
     createLesson,
