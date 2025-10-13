@@ -14,6 +14,7 @@ export function LessonEntryBox({
   target,
   isTypingComplete,
   step,
+  audio,
 }: LessonEntryBoxProps) {
   const [isPlaying, setIsPlaying] = useState(false);
   const [visible, setVisible] = useState(false);
@@ -22,7 +23,10 @@ export function LessonEntryBox({
   const [showTarget, setShowTarget] = useState(false);
   const [showAudio, setShowAudio] = useState(false);
 
-  const handleOnPlay = () => setIsPlaying((c) => !c);
+  const handleOnPlay = () => {
+    setIsPlaying((state) => !state);
+    console.log("#AUDIO", audio);
+  };
 
   const isLong = reference.length > 12 || target.length > 12;
 

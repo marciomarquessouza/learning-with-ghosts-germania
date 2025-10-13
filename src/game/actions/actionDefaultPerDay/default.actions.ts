@@ -4,10 +4,11 @@ import { showDialogue } from "@/events/helpers/showDialogue";
 import { stepDayIntroduction } from "@/events/steps";
 import { runSteps } from "@/events/steps/runSteps";
 import { defaultDialogues } from "./default.dialogues";
-import { Lesson } from "@/types";
+import { AudioManifest, Lesson } from "@/types";
 import { defaultLesson } from "./default.lessons";
 import { useLessonStore } from "@/store/lessonStore";
 import { useGameStore } from "@/store/gameStore";
+import { mergeLessonWithAudioManifest } from "@/utils/mergeLessonWithAudioManifest";
 
 export type Stage = "introduction" | "lesson" | "learning" | "challenge";
 
@@ -31,8 +32,12 @@ export class DayActions {
     useLessonStore.getState().update(lesson);
   }
 
-  constructor(dayLesson: Lesson) {
-    this.createDayLesson(dayLesson);
+  constructor(dayLesson: Lesson, audioManifest?: AudioManifest) {
+    const lessonWithAudio = mergeLessonWithAudioManifest(
+      dayLesson,
+      audioManifest
+    );
+    this.createDayLesson(lessonWithAudio);
   }
 
   private createDayLesson(dayLesson: Lesson) {

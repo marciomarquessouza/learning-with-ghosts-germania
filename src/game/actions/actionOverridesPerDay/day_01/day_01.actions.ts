@@ -16,12 +16,13 @@ import { dialogues } from "./day_01.dialogues";
 import { showDialogue } from "@/events/helpers/showDialogue";
 import { defaultDialogues } from "../../actionDefaultPerDay/default.dialogues";
 import { showGameMessage } from "@/events/helpers/showGameMessage";
-import { GAME_WORLDS, Lesson } from "@/types";
+import { AudioManifest, GAME_WORLDS, Lesson } from "@/types";
 import { lesson } from "./day_01.lesson";
+import audioManifest from "./day_01.audio.json";
 
 class DayActions1 extends DayActions {
-  constructor(lesson: Lesson) {
-    super(lesson);
+  constructor(lesson: Lesson, audioManifest?: AudioManifest) {
+    super(lesson, audioManifest);
   }
 
   onStart(): void {
@@ -158,4 +159,4 @@ class DayActions1 extends DayActions {
   }
 }
 
-export const dayAction = new DayActions1(lesson);
+export const dayAction = new DayActions1(lesson, audioManifest);

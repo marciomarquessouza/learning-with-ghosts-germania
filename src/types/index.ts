@@ -16,6 +16,7 @@ export type LessonEntry = {
   id: string;
   reference: string;
   target: string;
+  audio?: string;
   steps: LessonEntryStep[];
   phase: LessonEntryPhase;
 };
@@ -74,3 +75,10 @@ export interface InputLine extends BaseLine {
 }
 
 export type InteractionLine = DialogueLine | AlternativeLine | InputLine;
+
+export interface AudioManifest {
+  [key: string]: {
+    path: string;
+    target: string;
+  };
+}

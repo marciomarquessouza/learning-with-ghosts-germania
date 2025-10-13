@@ -1,0 +1,34 @@
+{
+  "1": {
+    "path": "audio/de/hallo.3da730fc.mp3",
+    "target": "Hallo"
+  },
+  "2": {
+    "path": "audio/de/guten-tag.108e4961.mp3",
+    "target": "Guten Tag"
+  },
+  "3": {
+    "path": "audio/de/guten-abend.b1409778.mp3",
+    "target": "Guten Abend"
+  },
+  "4": {
+    "path": "audio/de/gute-nacht.cb4b5cee.mp3",
+    "target": "Gute Nacht"
+  },
+  "5": {
+    "path": "audio/de/tschuss.13105730.mp3",
+    "target": "Tschüss"
+  },
+  "6": {
+    "path": "audio/de/auf-wiedersehen.9928a0ea.mp3",
+    "target": "Auf Wiedersehen"
+  },
+  "7": {
+    "path": "audio/de/bis-bald.b3c6a21d.mp3",
+    "target": "Bis bald"
+  },
+  "8": {
+    "path": "audio/de/bis-spater.a80d8d9a.mp3",
+    "target": "Bis später"
+  }
+}

@@ -7,7 +7,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "gen:audio": "tsx src/scripts/generate-audio.ts"
+    "gen:audio": "tsx src/scripts/audio/generate-audio.ts"
   },
   "dependencies": {
     "framer-motion": "^12.23.6",
