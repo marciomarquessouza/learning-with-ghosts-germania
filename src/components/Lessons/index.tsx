@@ -58,7 +58,9 @@ export function LessonDialog() {
 
   const handleClickOnText = useCallback(() => {}, []);
 
-  const handleOnClick = useCallback(() => {}, []);
+  const handleOnClick = useCallback(() => {
+    nextStep();
+  }, [nextStep]);
 
   const handleKeyDown = useDialogueKeyDown({
     keyAction: () => handleTextClick(() => advanceLine()),
@@ -121,7 +123,7 @@ export function LessonDialog() {
                 />
               </div>
             </div>
-            <LessonCTA onClick={handleOnClick} />
+            <LessonCTA step={lessonStep} onClick={handleOnClick} />
           </div>
         </motion.div>
       )}

@@ -1,5 +1,5 @@
 import { LessonEntry, LessonEntryStep } from "@/types";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { IconFlagDE } from "./icons/IconFlagDE";
 import { IconFlagUK } from "./icons/IconFlagUK";
 import { AudioButton } from "./AudioButton";
@@ -24,9 +24,10 @@ export function LessonEntryBox({
   const [showTarget, setShowTarget] = useState(false);
   const [showAudio, setShowAudio] = useState(false);
 
-  const handleOnPlay = () => {
+  const handleOnPlay = useCallback(() => {
+    if (!audio) return;
     play(audio);
-  };
+  }, [audio, play]);
 
   const isLong = reference.length > 12 || target.length > 12;
 
@@ -52,7 +53,7 @@ export function LessonEntryBox({
     const t1 = setTimeout(() => setShowReference(true), 40); // 1) EN
     const t2 = setTimeout(() => setShowTarget(true), 180); // 2) DE
     const t3 = setTimeout(() => setShowAudio(true), 320); // 3) Audio
-    const t4 = setTimeout(() => play(audio), 120); // 3) Audio
+    const t4 = setTimeout(() => !!audio && play(audio), 120); // 3) Audio
 
     return () => {
       clearTimeout(t1);
