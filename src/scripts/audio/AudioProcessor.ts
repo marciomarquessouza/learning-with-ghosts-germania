@@ -87,7 +87,9 @@ export class AudioProcessor {
     const filename = this.generateVersionedName(entry);
     const outDir = this.getOutputDir();
     const outPath = path.join(outDir, filename);
-    const publicPath = `audio/${this.language}/${filename}`;
+    const publicPath = `audio/${this.language}/day_${padDay(
+      this.day
+    )}/${filename}`;
 
     try {
       await fs.access(outPath);
@@ -103,7 +105,7 @@ export class AudioProcessor {
           return;
         }
 
-        console.log(`✅ Audio file created: ${filename}`);
+        console.log(`Audio file created: ${filename}`);
         resolve(publicPath);
       });
     });
@@ -121,7 +123,7 @@ export class AudioProcessor {
     let skippedCount = 0;
 
     console.log(
-      `🎯 Processing ${entries.length} entries for day ${this.day} in ${this.language}`
+      `Processing ${entries.length} entries for day ${this.day} in ${this.language}`
     );
 
     for (const entry of entries) {
@@ -138,7 +140,7 @@ export class AudioProcessor {
         };
         processedCount++;
       } catch (error) {
-        console.error(`❌ Failed to process "${entry}":`, error);
+        console.error(`Failed to process "${entry}":`, error);
         throw error;
       }
     }
@@ -146,11 +148,11 @@ export class AudioProcessor {
     await this.writeManifest(manifestPath, manifest);
 
     console.log(`
-📊 Processing Summary:
-   Total entries: ${entries.length}
-   Processed: ${processedCount}
-   Skipped: ${skippedCount}
-   Manifest: ${path.relative(process.cwd(), manifestPath)}
+        - Processing Summary:
+        - Total entries: ${entries.length}
+        - Processed: ${processedCount}
+        - Skipped: ${skippedCount}
+        - Manifest: ${path.relative(process.cwd(), manifestPath)}
     `);
   }
 }

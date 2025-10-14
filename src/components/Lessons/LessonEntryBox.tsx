@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { IconFlagDE } from "./icons/IconFlagDE";
 import { IconFlagUK } from "./icons/IconFlagUK";
 import { AudioButton } from "./AudioButton";
+import { useGameAudio } from "@/hooks/useGameAudio";
 
 type LessonEntryBoxProps = Omit<LessonEntry, "steps"> & {
   step: LessonEntryStep;
@@ -16,7 +17,7 @@ export function LessonEntryBox({
   step,
   audio,
 }: LessonEntryBoxProps) {
-  const [isPlaying, setIsPlaying] = useState(false);
+  const { isPlaying, play } = useGameAudio();
   const [visible, setVisible] = useState(false);
 
   const [showReference, setShowReference] = useState(false);
@@ -24,8 +25,7 @@ export function LessonEntryBox({
   const [showAudio, setShowAudio] = useState(false);
 
   const handleOnPlay = () => {
-    setIsPlaying((state) => !state);
-    console.log("#AUDIO", audio);
+    play(audio);
   };
 
   const isLong = reference.length > 12 || target.length > 12;
@@ -52,13 +52,15 @@ export function LessonEntryBox({
     const t1 = setTimeout(() => setShowReference(true), 40); // 1) EN
     const t2 = setTimeout(() => setShowTarget(true), 180); // 2) DE
     const t3 = setTimeout(() => setShowAudio(true), 320); // 3) Audio
+    const t4 = setTimeout(() => play(audio), 120); // 3) Audio
 
     return () => {
       clearTimeout(t1);
       clearTimeout(t2);
       clearTimeout(t3);
+      clearTimeout(t4);
     };
-  }, [visible]);
+  }, [visible, audio, play]);
 
   if (!visible) return null;
 
@@ -108,11 +110,13 @@ export function LessonEntryBox({
           popClass(showAudio),
         ].join(" ")}
       >
-        <AudioButton
-          stepType={step.type}
-          isPlaying={isPlaying}
-          onClick={handleOnPlay}
-        />
+        {!!audio && (
+          <AudioButton
+            stepType={step.type}
+            isPlaying={isPlaying}
+            onClick={handleOnPlay}
+          />
+        )}
       </div>
     </div>
   );
