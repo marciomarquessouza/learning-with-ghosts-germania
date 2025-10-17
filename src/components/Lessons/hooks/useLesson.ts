@@ -23,11 +23,17 @@ export const useLesson = () => {
 
   useEffect(() => {
     if (!state.lesson) return;
-    if (state.ready && state.entryFlags.isFirstEntry) {
+
+    if (
+      state.ready &&
+      state.entryFlags.isFirstEntry &&
+      state.stepFlags.isFirstStep
+    ) {
       setTextToType(getLessonStep().text);
       showLine();
       return;
     }
+
     if (state.ready) {
       setTextToType(getLessonStep().text);
       showLine();

@@ -18,8 +18,7 @@ export const lesson: Lesson = {
         },
         {
           type: "listening",
-          text: `Pronunciation: HA-loh (like “HAH-loh”). The first syllable is short, the final “o” is an open “oh”.
-                 I’ll say it 3 times. Try to memorize the sound.`,
+          text: `Pronunciation: HA-loh (like “HAH-loh”). The first syllable is short, the final “o” is an open “oh”. I’ll say it 3 times. Try to memorize the sound.`,
         },
         {
           type: "pronunciation",
@@ -44,8 +43,7 @@ export const lesson: Lesson = {
         },
         {
           type: "listening",
-          text: `Pronunciation: GOO-ten tahk. “Guten” has a long “oo”; “Tag” ends with a hard “k” sound.
-I’ll say it 3 times. Listen for the crisp “k” at the end.`,
+          text: `Pronunciation: GOO-ten tahk. “Guten” has a long “oo”; “Tag” ends with a hard “k” sound. I’ll say it 3 times. Listen for the crisp “k” at the end.`,
         },
         {
           type: "pronunciation",
@@ -70,8 +68,7 @@ I’ll say it 3 times. Listen for the crisp “k” at the end.`,
         },
         {
           type: "listening",
-          text: `Pronunciation: GOO-ten AH-bent. The “A” in “Abend” is open (“AH”), and the final “d” is soft.
-I’ll say it 3 times. Focus on the open “AH”.`,
+          text: `Pronunciation: GOO-ten AH-bent. The “A” in “Abend” is open (“AH”), and the final “d” is soft. I’ll say it 3 times. Focus on the open “AH”.`,
         },
         {
           type: "pronunciation",
@@ -122,8 +119,7 @@ I’ll say it 3 times. Focus on the open “AH”.`,
         },
         {
           type: "listening",
-          text: `Pronunciation: roughly “chooss”, but with German “ü” (rounded lips, like French “tu”): tʃyːs.
-                 I’ll say it 3 times. Try to keep your lips rounded on “ü”.`,
+          text: `Pronunciation: roughly “chooss”, but with German “ü” (rounded lips, like French “tu”): tʃyːs. I’ll say it 3 times. Try to keep your lips rounded on “ü”.`,
         },
         {
           type: "pronunciation",
@@ -148,8 +144,7 @@ I’ll say it 3 times. Focus on the open “AH”.`,
         },
         {
           type: "listening",
-          text: `Pronunciation: owf VEE-der-zay-en. Say it in four beats: Auf | Wie-der | se-hen.
-                 I’ll say it 3 times. Keep the flow steady.`,
+          text: `Pronunciation: owf VEE-der-zay-en. Say it in four beats: Auf | Wie-der | se-hen. I’ll say it 3 times. Keep the flow steady.`,
         },
         {
           type: "pronunciation",
@@ -174,8 +169,7 @@ I’ll say it 3 times. Focus on the open “AH”.`,
         },
         {
           type: "listening",
-          text: `Pronunciation: biss balt. Short, crisp consonants.
-                 I’ll say it 3 times. Keep both words short.`,
+          text: `Pronunciation: biss balt. Short, crisp consonants. I’ll say it 3 times. Keep both words short.`,
         },
         {
           type: "pronunciation",
@@ -200,8 +194,7 @@ I’ll say it 3 times. Focus on the open “AH”.`,
         },
         {
           type: "listening",
-          text: `Pronunciation: biss SHPAY-ter. “spä-” has “ä” like “eh” (long), and “t” is clear.
-                 I’ll say it 3 times. Focus on SHPAY.`,
+          text: `Pronunciation: biss SHPAY-ter. “spä-” has “ä” like “eh” (long), and “t” is clear. I’ll say it 3 times. Focus on SHPAY.`,
         },
         {
           type: "pronunciation",

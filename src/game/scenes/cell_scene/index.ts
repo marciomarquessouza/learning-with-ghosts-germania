@@ -1,7 +1,7 @@
 import { CELL_IMAGE } from "@/constants/images";
 import { createScene } from "@/game/core/CreateScene";
 import { noiseEffect } from "./noiseEffect";
-import { hud } from "../hud";
+import { hud, HUD_ITEMS } from "../hud";
 import { calendar } from "./calendar";
 import { selectableAreas } from "./selectableAreas";
 import { getDayAction } from "@/game/actions/getAction";
@@ -44,7 +44,10 @@ class CellScene extends Phaser.Scene {
     getDayAction().then((dayActions) => {
       dayActions.onStart();
       selectableAreas.create(this, dayActions);
-      const hudContainer = hud.create(this, dayActions);
+      const hudContainer = hud.create(this, dayActions, [
+        HUD_ITEMS.WEIGHT,
+        HUD_ITEMS.ACTIONS,
+      ]);
       this.children.bringToTop(hudContainer);
       this.children.bringToTop(calendarContainer);
     });
