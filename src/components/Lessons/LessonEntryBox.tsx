@@ -18,8 +18,8 @@ export function LessonEntryBox({
   step,
   audio,
 }: LessonEntryBoxProps) {
-  const { isPlaying, play } = useGameAudio();
   const [visible, setVisible] = useState(false);
+  const { isPlaying, play } = useGameAudio();
   const flags = useTimeline({
     lines: [
       {
