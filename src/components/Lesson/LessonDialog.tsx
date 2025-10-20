@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useMemo, useRef } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { getDialogueDimension } from "../Dialogues/helpers/getDialgueDimension";
 import { useDeviceType } from "@/hooks/useDeviceType";
@@ -6,11 +6,28 @@ import Image from "next/image";
 import { LessonEntryBox } from "./LessonEntryBox";
 import { LessonCTA } from "./LessonCTA";
 import { useUiStore } from "@/store/uiStore";
-import { LessonEvent, lessonEvents } from "@/events/lessonEvents";
-import { useLesson } from "@/components/Lessons/hooks/useLesson";
 import { useDialogueKeyDown } from "@/hooks/useDialogueKeyDown";
+import { CharacterDetails } from "@/hooks/useCharacterDetails";
+import { LessonEntry, LessonEntryStep } from "@/types";
 
-export function LessonDialog() {
+export interface LessonDialogProps {
+  show: boolean;
+  characterDetails: CharacterDetails | null;
+  stepDescription: string;
+  lessonEntry: Omit<LessonEntry, "steps">;
+  lessonStep: LessonEntryStep;
+  nextStep: () => void;
+}
+
+export function LessonDialog({
+  show,
+  characterDetails,
+  stepDescription,
+  lessonEntry,
+  lessonStep,
+  nextStep,
+}: LessonDialogProps) {
+  const [visible, setVisible] = useState(false);
   const device = useDeviceType();
   const boxRef = useRef<HTMLDivElement>(null);
   const { heightClass, widthClass } = useMemo(
@@ -18,18 +35,12 @@ export function LessonDialog() {
     [device]
   );
   const { setInteractionDialogueOpen } = useUiStore();
-  const {
-    displayedText,
-    lessonEntry,
-    lessonStep,
-    characterDetails,
-    isTypingComplete,
-    visible,
-    createLesson,
-    nextStep,
-    startTyping,
-    handleTextClick,
-  } = useLesson();
+
+  useEffect(() => {
+    if (show && !visible) {
+      setVisible(show);
+    }
+  }, [visible, show]);
 
   useEffect(() => {
     setInteractionDialogueOpen(visible);
@@ -37,20 +48,6 @@ export function LessonDialog() {
       requestAnimationFrame(() => boxRef.current?.focus());
     }
   }, [visible, setInteractionDialogueOpen]);
-
-  useEffect(() => {
-    const handler = (payload: LessonEvent) => {
-      const { lesson } = payload;
-      const onComplete = () => {
-        payload?.onComplete?.();
-        lessonEvents.emit("hide-lesson", { lessonId: lesson.id });
-      };
-      createLesson(lesson, onComplete);
-    };
-
-    lessonEvents.on("show-lesson", handler);
-    return () => lessonEvents.off("show-lesson", handler);
-  }, [createLesson]);
 
   const advanceLine = useCallback(() => {
     nextStep();
@@ -63,8 +60,10 @@ export function LessonDialog() {
   }, [nextStep]);
 
   const handleKeyDown = useDialogueKeyDown({
-    keyAction: () => handleTextClick(() => advanceLine()),
+    // keyAction: () => handleTextClick(() => advanceLine()),
   });
+
+  const startTyping = () => {};
 
   if (!visible || !characterDetails) return null;
 
@@ -113,13 +112,13 @@ export function LessonDialog() {
           <div className="flex-1 min-w-0 px-6 pt-6 pb-4 flex flex-col h-full">
             <div className="mt-2 bg-[rgba(245,245,245,0.5)] px-2 pt-2.5 pb-2 outline-1 outline-neutral-300 rounded-sm flex-1 overflow-auto">
               <p className="text-center min-h-13 text-neutral-900 font-mono text-lg leading-snug whitespace-pre-line mt-2">
-                {displayedText}
+                {stepDescription}
               </p>
               <div className="flex justify-center items-center">
                 <LessonEntryBox
                   {...lessonEntry}
                   step={lessonStep}
-                  isTypingComplete={isTypingComplete}
+                  isTypingComplete={false}
                 />
               </div>
             </div>

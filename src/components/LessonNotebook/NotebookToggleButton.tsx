@@ -20,7 +20,7 @@ export function NotebookToggleButton() {
     >
       <span className="relative block h-full w-full">
         <Image
-          src="/hud/notebook_notes_icon.png"
+          src="/ui/lesson/notebook_notes_icon.png"
           alt="Notebook icon"
           fill
           sizes="96px"
@@ -30,7 +30,7 @@ export function NotebookToggleButton() {
         />
 
         <Image
-          src="/hud/notebook_notes_icon_hover.png"
+          src="/ui/lesson/notebook_notes_icon_hover.png"
           alt="Notebook icon hover"
           fill
           sizes="96px"

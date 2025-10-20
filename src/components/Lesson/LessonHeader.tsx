@@ -2,10 +2,14 @@ import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import { useLessonStore } from "@/store/lessonStore";
 import { useGameStore } from "@/store/gameStore";
-import { NotebookToggleButton } from "../Notebook/NotebookToggleButton";
-import { lessonEvents, LessonIntroductionProps } from "@/events/lessonEvents";
+import { NotebookToggleButton } from "../LessonNotebook/NotebookToggleButton";
+import { LessonExit } from "./LessonExit";
 
-export function LessonIntroduction() {
+interface LessonHeaderProps {
+  show: boolean;
+}
+
+export function LessonHeader({ show }: LessonHeaderProps) {
   const [phase, setPhase] = useState<"hidden" | "entering" | "exiting">(
     "hidden"
   );
@@ -15,14 +19,10 @@ export function LessonIntroduction() {
   const onVisible = useRef<() => void>(null);
 
   useEffect(() => {
-    const handler = (payload: LessonIntroductionProps) => {
+    if (show && phase === "hidden") {
       setPhase("entering");
-      onVisible.current = payload.onVisible || null;
-    };
-
-    lessonEvents.on("show-lesson-introduction", handler);
-    return () => lessonEvents.off("show-lesson-introduction", handler);
-  }, []);
+    }
+  }, [show, phase]);
 
   if (phase === "hidden") return null;
 
@@ -73,6 +73,7 @@ export function LessonIntroduction() {
               </p>
             </div>
           </div>
+          <LessonExit />
         </div>
       </div>
 

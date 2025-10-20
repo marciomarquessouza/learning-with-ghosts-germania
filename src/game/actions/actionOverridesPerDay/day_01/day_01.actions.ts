@@ -102,28 +102,29 @@ class DayActions1 extends DayActions {
   }
 
   onConfessionalInteraction() {
-    runSteps(
-      [
-        stepShowDialogue({ lines: dialogues.lesson_preparation() }),
-        stepShowDialogue(
-          { lines: dialogues.post_introduction_eliska_secret() },
-          { showWhenAlternativeIs: "eliska_secret" }
-        ),
-        stepShowDialogue(
-          { lines: dialogues.post_introduction_josef_future() },
-          { showWhenAlternativeIs: "josef_future" }
-        ),
-        stepShowDialogue(
-          { lines: dialogues.post_introduction_exit() },
-          { showWhenAlternativeIs: "exit" }
-        ),
-      ],
-      { alternativeId: undefined }
-    ).then((context) => {
-      if (context.alternativeId !== "exit") {
-        this.onLessonStart();
-      }
-    });
+    this.onLessonStart();
+    // runSteps(
+    //   [
+    //     stepShowDialogue({ lines: dialogues.lesson_preparation() }),
+    //     stepShowDialogue(
+    //       { lines: dialogues.post_introduction_eliska_secret() },
+    //       { showWhenAlternativeIs: "eliska_secret" }
+    //     ),
+    //     stepShowDialogue(
+    //       { lines: dialogues.post_introduction_josef_future() },
+    //       { showWhenAlternativeIs: "josef_future" }
+    //     ),
+    //     stepShowDialogue(
+    //       { lines: dialogues.post_introduction_exit() },
+    //       { showWhenAlternativeIs: "exit" }
+    //     ),
+    //   ],
+    //   { alternativeId: undefined }
+    // ).then((context) => {
+    //   if (context.alternativeId !== "exit") {
+    //     this.onLessonStart();
+    //   }
+    // });
   }
 
   onLessonStart(): void {

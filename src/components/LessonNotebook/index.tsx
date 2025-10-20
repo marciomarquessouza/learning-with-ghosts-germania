@@ -7,7 +7,7 @@ import { LessonEntryNotebookEvents, lessonEvents } from "@/events/lessonEvents";
 import { AnimatePresence, motion } from "framer-motion";
 import { ButtonTransparent } from "../Button/ButtonTransparent";
 
-export function Notebook() {
+export function LessonNotebook() {
   const { lesson, updateEntriesPhase } = useLessonStore();
   const {
     list: lessonEntries,
@@ -56,7 +56,7 @@ export function Notebook() {
       {visible && (
         <motion.section
           className="fixed top-4 left-4 w-[417px] h-[536px] z-[80]
-                  bg-[url('/hud/notebook_background.png')] bg-cover bg-center
+                  bg-[url('/ui/lesson/notebook_background.png')] bg-cover bg-center
                   outline-none"
           initial={{ opacity: 0, top: -40 }}
           animate={{ opacity: 1, top: 20 }}

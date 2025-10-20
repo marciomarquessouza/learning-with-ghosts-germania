@@ -15,14 +15,12 @@ export const lesson: Lesson = {
         {
           type: "introduction",
           text: `Our first word is “Hallo”. It’s the neutral, everyday way to start a conversation in German — friendly and safe in almost any context.`,
-        },
-        {
-          type: "listening",
-          text: `Pronunciation: HA-loh (like “HAH-loh”). The first syllable is short, the final “o” is an open “oh”. I’ll say it 3 times. Try to memorize the sound.`,
+          instruction: "Escute e Repita (não tenha vergonha, fale alto mesmo!)",
         },
         {
           type: "pronunciation",
-          text: `Your turn. Click the mic and say: “Hallo”. Keep it short and clear: HA-loh.`,
+          text: `HA-loh (like “HAH-loh”). The first syllable is short, the final “o” is an open “oh”. I’ll say it 3 times. Try to memorize the sound.`,
+          instruction: "Your turn. Click the mic and say: “Hallo”.",
         },
         {
           type: "writing",
