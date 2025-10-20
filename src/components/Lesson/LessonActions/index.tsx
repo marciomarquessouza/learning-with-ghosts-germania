@@ -10,7 +10,7 @@ import { CharacterDetails } from "@/hooks/useCharacterDetails";
 import { LessonEntry, LessonEntryStep } from "@/types";
 import { getDialogueDimension } from "@/components/Dialogues/helpers/getDialgueDimension";
 
-export interface LessonDialogProps {
+export interface LessonActionsProps {
   show: boolean;
   characterDetails: CharacterDetails | null;
   stepDescription: string;
@@ -19,14 +19,14 @@ export interface LessonDialogProps {
   nextStep: () => void;
 }
 
-export function LessonDialog({
+export function LessonActions({
   show,
   characterDetails,
   stepDescription,
   lessonEntry,
   lessonStep,
   nextStep,
-}: LessonDialogProps) {
+}: LessonActionsProps) {
   const [visible, setVisible] = useState(false);
   const device = useDeviceType();
   const boxRef = useRef<HTMLDivElement>(null);
@@ -60,7 +60,7 @@ export function LessonDialog({
   }, [nextStep]);
 
   const handleKeyDown = useDialogueKeyDown({
-    // keyAction: () => handleTextClick(() => advanceLine()),
+    // keyAction: () => resumeText(() => advanceLine()),
   });
 
   const startTyping = () => {};
@@ -99,15 +99,6 @@ export function LessonDialog({
               {characterDetails.characterName}
             </span>
             <span className="text-[#B20F00] font-bold"> asks: </span>
-          </div>
-          <div className="absolute -top-10 left-1/2 -translate-x-1/2 w-16 ">
-            <Image
-              src={characterDetails.avatarURL}
-              width={70}
-              height={91}
-              alt={`${characterDetails.characterName} picture`}
-              priority
-            />
           </div>
           <div className="flex-1 min-w-0 px-6 pt-6 pb-4 flex flex-col h-full">
             <div className="mt-2 bg-[rgba(245,245,245,0.5)] px-2 pt-2.5 pb-2 outline-1 outline-neutral-300 rounded-sm flex-1 overflow-auto">

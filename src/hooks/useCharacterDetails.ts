@@ -10,10 +10,8 @@ export interface CharacterDetails {
 
 export const useCharacterDetails = (
   character?: CHARACTERS | null
-): CharacterDetails | null => {
+): CharacterDetails => {
   return useMemo(() => {
-    if (!character) return null;
-
     return {
       characterName: !!character ? DIALOGUE_MAP[character].displayName : "",
       avatarURL: !!character ? DIALOGUE_MAP[character].avatar : "",

@@ -1,22 +1,21 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { LessonEvent, lessonEvents } from "@/events/lessonEvents";
 import { useLesson } from "./hooks/useLesson";
-import { LessonHeader } from "./LessonHeader/LessonHeader";
-import { LessonDialog } from "./LessonDialog";
+import { LessonHeader } from "./LessonHeader";
+import { LessonActions } from "./LessonActions";
 
 function LessonContainer() {
   const {
-    displayedText,
+    lessonDetails,
     lessonEntry,
     lessonStep,
+    stepFlags,
     characterDetails,
-    isTypingComplete,
     visible,
     createLesson,
     nextStep,
-    startTyping,
-    handleTextClick,
   } = useLesson();
+  const [showActions, setShowActions] = useState(false);
 
   useEffect(() => {
     const handler = (payload: LessonEvent) => {
@@ -34,9 +33,15 @@ function LessonContainer() {
 
   return (
     <>
-      <LessonHeader show={visible} />
-      <LessonDialog
-        show={false}
+      <LessonHeader
+        show={visible}
+        lessonDetails={lessonDetails}
+        lessonStep={lessonStep}
+        stepFlags={stepFlags}
+        characterDetails={characterDetails}
+      />
+      <LessonActions
+        show={showActions}
         characterDetails={characterDetails}
         stepDescription="Teste"
         lessonEntry={lessonEntry}

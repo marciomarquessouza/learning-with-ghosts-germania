@@ -1,51 +1,36 @@
 import { useCallback, useEffect, useMemo, useReducer, useRef } from "react";
-import { useTypewriter } from "../../../hooks/useTypewriter";
 import {
   lessonReducer,
   defaultState,
   LessonActions,
   defaultLessonEntry,
+  defaultLessonDetails,
 } from "./reducers/interactionReducer";
-import { Lesson, LessonEntry, LessonEntryStep } from "@/types";
+import { Lesson, LessonDetails, LessonEntry, LessonEntryStep } from "@/types";
 import { useCharacterDetails } from "@/hooks/useCharacterDetails";
 
 export const useLesson = () => {
-  const {
-    displayedText,
-    setTextToType,
-    startTyping,
-    handleTextClick,
-    isComplete,
-  } = useTypewriter();
   const [state, dispatch] = useReducer(lessonReducer, defaultState);
   const onCompleteRef = useRef<() => void | null>(null);
   const characterDetails = useCharacterDetails(state.lesson?.character);
 
-  useEffect(() => {
-    if (!state.lesson) return;
+  const createLesson = useCallback(
+    (lesson: Lesson, onComplete?: () => void | null) => {
+      onCompleteRef.current = onComplete ?? null;
+      dispatch({
+        type: LessonActions.CREATE_LESSON,
+        payload: { lesson },
+      });
+    },
+    []
+  );
 
-    if (
-      state.ready &&
-      state.entryFlags.isFirstEntry &&
-      state.stepFlags.isFirstStep
-    ) {
-      setTextToType(getLessonStep().text);
-      showLine();
-      return;
-    }
-
-    if (state.ready) {
-      setTextToType(getLessonStep().text);
-      showLine();
-      startTyping();
-      return;
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [state.ready]);
-
-  const showLine = () => {
-    dispatch({ type: LessonActions.SHOW_LESSON_STEP });
-  };
+  const getLessonDetails = useCallback((): LessonDetails => {
+    if (!state.lesson) return defaultLessonDetails;
+    const { entries, ...lessonDetails } = state.lesson;
+    void entries;
+    return lessonDetails;
+  }, [state.lesson]);
 
   const getLessonEntry = useCallback((): LessonEntry => {
     if (!state.lesson) return defaultLessonEntry;
@@ -58,17 +43,6 @@ export const useLesson = () => {
     const stepIndex = state.stepFlags.stepIndex;
     return lessonEntry.steps[stepIndex];
   }, [getLessonEntry, state.stepFlags.stepIndex]);
-
-  const createLesson = useCallback(
-    (lesson: Lesson, onComplete?: () => void | null) => {
-      onCompleteRef.current = onComplete ?? null;
-      dispatch({
-        type: LessonActions.CREATE_LESSON,
-        payload: { lesson },
-      });
-    },
-    []
-  );
 
   const nextStep = useCallback(() => {
     if (state.entryFlags.isLastEntry) {
@@ -96,27 +70,25 @@ export const useLesson = () => {
     void steps;
     return {
       characterDetails,
+      lessonDetails: getLessonDetails(),
       lessonEntry,
+      entryFlags: state.entryFlags,
       lessonStep: getLessonStep(),
-      displayedText,
-      isTypingComplete: isComplete,
+      stepFlags: state.stepFlags,
       visible: state.visible,
       createLesson,
       nextStep,
-      startTyping,
-      handleTextClick,
       hideInteraction,
     };
   }, [
     state.visible,
-    displayedText,
+    state.entryFlags,
+    state.stepFlags,
     characterDetails,
-    isComplete,
+    getLessonDetails,
     getLessonStep,
     getLessonEntry,
     createLesson,
-    startTyping,
-    handleTextClick,
     nextStep,
     hideInteraction,
   ]);

@@ -1,23 +1,35 @@
-import { Lesson, LessonEntry } from "@/types";
+import { CHARACTERS } from "@/constants/game";
+import { Lesson, LessonDetails, LessonEntry } from "@/types";
+
+export interface EntryFlags {
+  entryIndex: number;
+  isFirstEntry: boolean;
+  isLastEntry: boolean;
+}
+
+export interface StepFlags {
+  stepIndex: number;
+  isFirstStep: boolean;
+  isLastStep: boolean;
+}
 
 // Lesson: the top-level structure
 // Entry: a word or phrase to learn
 // Step: a part of the entry (introduction, listening, pronunciation, writing)
 interface State {
   lesson: Lesson | null;
-  entryFlags: {
-    entryIndex: number;
-    isFirstEntry: boolean;
-    isLastEntry: boolean;
-  };
-  stepFlags: {
-    stepIndex: number;
-    isFirstStep: boolean;
-    isLastStep: boolean;
-  };
+  entryFlags: EntryFlags;
+  stepFlags: StepFlags;
   visible: boolean;
   ready: boolean;
 }
+
+export const defaultLessonDetails: LessonDetails = {
+  id: "",
+  day: 0,
+  title: "",
+  character: CHARACTERS.ELISA,
+};
 
 export const defaultLessonEntry: LessonEntry = {
   id: "",
@@ -76,7 +88,7 @@ export function lessonReducer(state: State, action: LessonAction): State {
           isLastStep: false,
         },
         ready: true,
-        visible: false,
+        visible: true,
       };
     case LessonActions.SHOW_LESSON_STEP:
       return {

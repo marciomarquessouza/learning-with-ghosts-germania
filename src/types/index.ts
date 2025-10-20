@@ -30,6 +30,8 @@ export type Lesson = {
   entries: LessonEntry[];
 };
 
+export type LessonDetails = Omit<Lesson, "entries">;
+
 export enum GAME_WORLDS {
   REAL = "REAL",
   DREAM = "DREAM",

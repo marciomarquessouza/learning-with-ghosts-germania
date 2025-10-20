@@ -12,13 +12,13 @@ export function NotebookToggleButton() {
       onClick={handleOnClick}
       aria-controls="notebook"
       className={[
-        "group fixed top-6 left-12 z-[120] cursor-pointer",
-        "h-24 w-24 select-none",
+        "flex flex-1 cursor-pointer justify-center items-center",
+        "h-full w-full",
         "transition-transform duration-200 ease-out",
         "hover:scale-[1.04] hover:-translate-y-0.5 active:scale-[0.98]",
       ].join(" ")}
     >
-      <span className="relative block h-full w-full">
+      <span className="relative block h-20 w-20">
         <Image
           src="/ui/lesson/notebook_notes_icon.png"
           alt="Notebook icon"

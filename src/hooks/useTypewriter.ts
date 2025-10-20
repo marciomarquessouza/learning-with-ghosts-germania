@@ -46,7 +46,7 @@ export const useTypewriter = (speed: number = TEXT_SPEED) => {
     setReadyToTyping(true);
   };
 
-  const handleTextClick = useCallback(
+  const resumeText = useCallback(
     (callback?: () => void) => {
       if (!isComplete) {
         if (timeoutRef.current) clearTimeout(timeoutRef.current);
@@ -65,8 +65,8 @@ export const useTypewriter = (speed: number = TEXT_SPEED) => {
       isComplete,
       startTyping,
       setTextToType,
-      handleTextClick,
+      resumeText,
     }),
-    [handleTextClick, displayedText, isComplete]
+    [resumeText, displayedText, isComplete]
   );
 };

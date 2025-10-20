@@ -22,13 +22,8 @@ export function Dialogue() {
   const device = useDeviceType();
   const [visible, setVisible] = useState(false);
   const [character, setCharacter] = useState<CHARACTERS | null>(null);
-  const {
-    displayedText,
-    isComplete,
-    setTextToType,
-    startTyping,
-    handleTextClick,
-  } = useTypewriter();
+  const { displayedText, isComplete, setTextToType, startTyping, resumeText } =
+    useTypewriter();
   const [lineIndex, setLineIndex] = useState(0);
   const [lines, setLines] = useState<InteractionLine[]>([]);
   const [isLastLine, setLastLine] = useState(false);
@@ -121,8 +116,8 @@ export function Dialogue() {
       return;
     }
 
-    handleTextClick(() => advanceLine());
-  }, [handleTextClick, advanceLine, lineIndex, lines]);
+    resumeText(() => advanceLine());
+  }, [resumeText, advanceLine, lineIndex, lines]);
 
   const handleOnClick = useCallback(() => {
     if (lines[lineIndex].type !== "dialogue") {
@@ -130,8 +125,8 @@ export function Dialogue() {
       return;
     }
 
-    handleTextClick(() => advanceLine());
-  }, [handleTextClick, advanceLine, lineIndex, lines]);
+    resumeText(() => advanceLine());
+  }, [resumeText, advanceLine, lineIndex, lines]);
 
   const handleKeyDown = useDialogueKeyDown({
     keyUp: () => {
@@ -153,7 +148,7 @@ export function Dialogue() {
         });
       }
     },
-    keyAction: () => handleTextClick(() => advanceLine()),
+    keyAction: () => resumeText(() => advanceLine()),
   });
 
   if (!visible || !characterDetails) return null;

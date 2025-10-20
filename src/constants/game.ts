@@ -22,12 +22,13 @@ export const DIALOGUE_MAP: {
   [key: string]: { displayName: string; honorific?: string; avatar: string };
 } = {
   [CHARACTERS.MARLENE]: {
-    displayName: "Frau Marlene",
+    displayName: "Marlene",
     honorific: "Fau",
     avatar: "/dialogue/dialogue_avatar_marlene.png",
   },
   [CHARACTERS.ELISA]: {
-    displayName: "Saint Eliska",
+    displayName: "Eliska",
+    honorific: "Saint",
     avatar: "/dialogue/dialogue_avatar_elisa.png",
   },
   [CHARACTERS.JOSEF]: {
