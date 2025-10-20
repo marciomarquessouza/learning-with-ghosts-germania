@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import { useLessonStore } from "@/store/lessonStore";
 import { useGameStore } from "@/store/gameStore";
-import { NotebookToggleButton } from "../LessonNotebook/NotebookToggleButton";
+import { NotebookToggleButton } from "./NotebookToggleButton";
 import { LessonExit } from "./LessonExit";
 
 interface LessonHeaderProps {

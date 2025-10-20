@@ -1,6 +1,5 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { getDialogueDimension } from "../Dialogues/helpers/getDialgueDimension";
 import { useDeviceType } from "@/hooks/useDeviceType";
 import Image from "next/image";
 import { LessonEntryBox } from "./LessonEntryBox";
@@ -9,6 +8,7 @@ import { useUiStore } from "@/store/uiStore";
 import { useDialogueKeyDown } from "@/hooks/useDialogueKeyDown";
 import { CharacterDetails } from "@/hooks/useCharacterDetails";
 import { LessonEntry, LessonEntryStep } from "@/types";
+import { getDialogueDimension } from "@/components/Dialogues/helpers/getDialgueDimension";
 
 export interface LessonDialogProps {
   show: boolean;

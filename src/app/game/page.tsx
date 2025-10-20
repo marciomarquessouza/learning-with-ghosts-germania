@@ -4,9 +4,9 @@ import { Dialogue } from "@/components/Dialogues";
 import RotateOverlay from "@/components/HomePage/RotateOverlay";
 import { SceneIntroduction } from "@/components/Introduction/SceneIntroduction";
 import dynamic from "next/dynamic";
-import { LessonNotebook } from "@/components/LessonNotebook";
 import Lesson from "@/components/Lesson";
 import { GameMessage } from "@/components/GameMessage";
+import { LessonNotebook } from "@/components/Lesson/LessonNotebook";
 
 const GameRoot = dynamic(() => import("@/game/main"), {
   ssr: false,

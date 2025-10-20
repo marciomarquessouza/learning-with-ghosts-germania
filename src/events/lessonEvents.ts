@@ -15,12 +15,7 @@ export interface ToggleNotebookEvents {
   delay?: number;
 }
 
-export interface LessonIntroductionProps {
-  onVisible?: () => void;
-}
-
 export type Events = {
-  "show-lesson-introduction": LessonIntroductionProps;
   "toggle-notebook": ToggleNotebookEvents;
   "lesson-entry-notebook-phase": LessonEntryNotebookEvents;
   "show-lesson": LessonEvent;

@@ -2,10 +2,10 @@ import { useState, useEffect } from "react";
 import { useLessonStore } from "@/store/lessonStore";
 import { LessonEntryContainer } from "./LessonEntryContainer";
 import { usePagination } from "@/hooks/usePagination";
-import { PaginationControls } from "../Pagination/PaginationControl";
 import { LessonEntryNotebookEvents, lessonEvents } from "@/events/lessonEvents";
 import { AnimatePresence, motion } from "framer-motion";
-import { ButtonTransparent } from "../Button/ButtonTransparent";
+import { ButtonTransparent } from "@/components/Button/ButtonTransparent";
+import { PaginationControls } from "@/components/Pagination/PaginationControl";
 
 export function LessonNotebook() {
   const { lesson, updateEntriesPhase } = useLessonStore();

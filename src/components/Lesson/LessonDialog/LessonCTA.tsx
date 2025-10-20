@@ -1,5 +1,5 @@
+import { Button } from "@/components/Button";
 import { LessonEntryStep, LessonStepType } from "@/types";
-import { Button } from "../Button";
 import { useMemo } from "react";
 
 export interface DialogueCTAProps {

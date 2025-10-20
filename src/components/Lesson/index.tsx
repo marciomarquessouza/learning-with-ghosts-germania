@@ -1,8 +1,8 @@
 import { useEffect } from "react";
-import { LessonDialog } from "./LessonDialog";
-import { LessonHeader } from "./LessonHeader";
 import { LessonEvent, lessonEvents } from "@/events/lessonEvents";
 import { useLesson } from "./hooks/useLesson";
+import { LessonHeader } from "./LessonHeader/LessonHeader";
+import { LessonDialog } from "./LessonDialog";
 
 function LessonContainer() {
   const {
@@ -34,9 +34,9 @@ function LessonContainer() {
 
   return (
     <>
-      <LessonHeader show={true} />
+      <LessonHeader show={visible} />
       <LessonDialog
-        show={true}
+        show={false}
         characterDetails={characterDetails}
         stepDescription="Teste"
         lessonEntry={lessonEntry}

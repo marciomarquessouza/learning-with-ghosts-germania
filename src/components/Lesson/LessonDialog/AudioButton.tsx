@@ -1,6 +1,6 @@
 import { LessonStepType } from "@/types";
-import { IconMic } from "./icons/IconMic";
-import { IconAudio } from "./icons/IconAudio";
+import { IconMic } from "@/components/Lesson/icons/IconMic";
+import { IconAudio } from "@/components/Lesson/icons/IconAudio";
 
 export interface AudioButtonProps {
   stepType: LessonStepType;

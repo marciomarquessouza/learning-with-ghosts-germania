@@ -1,4 +1,4 @@
-import { IconFlagDE } from "./icons/IconFlagDE";
+import { IconFlagDE } from "@/components/Lesson/icons/IconFlagDE";
 
 export interface LessonEntryRightProps {
   isLong: boolean;
