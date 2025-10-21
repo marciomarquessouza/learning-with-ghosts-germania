@@ -3,7 +3,7 @@ import { NotebookToggleButton } from "./NotebookToggleButton";
 import { LessonExit } from "./LessonExit";
 import { LessonTitle } from "./LessonTitle";
 import { LessonDetails, LessonEntryStep } from "@/types";
-import { LessonEntry } from "./LessonEntry";
+import { LessonDescription } from "./LessonDescription";
 import { CharacterDetails } from "@/hooks/useCharacterDetails";
 import { StepFlags } from "../hooks/reducers/interactionReducer";
 
@@ -45,12 +45,11 @@ export function LessonHeader({
           className="w-screen h-40 bg-black shadow-xl relative"
           style={{
             animation: `${
-              isEntering ? "scene-intro-slide-in" : "scene-intro-slide-out"
+              isEntering ? "anim-slide-in" : "anim-slide-out"
             } 700ms cubic-bezier(.22,.99,.36,.99) forwards`,
           }}
           onAnimationEnd={(e) => {
-            if (e.animationName === "scene-intro-slide-in")
-              onVisible.current?.();
+            if (e.animationName === "anim-slide-in") onVisible.current?.();
           }}
         >
           <div
@@ -70,8 +69,8 @@ export function LessonHeader({
                     closeAfter={2_000}
                   />
                 ) : (
-                  <LessonEntry
-                    isEntering={isEntering}
+                  <LessonDescription
+                    visible={isEntering}
                     lessonStep={lessonStep}
                     stepFlags={stepFlags}
                     characterDetails={characterDetails}
@@ -102,15 +101,6 @@ export function LessonHeader({
           </div>
         </div>
       </div>
-
-      <style>
-        {`
-          @keyframes scene-intro-slide-in { from { transform: translateX(-100vw); } to { transform: translateX(0); } }
-          @keyframes scene-intro-fade-in  { 0% { opacity: 0; } 100% { opacity: 1; } }
-          @keyframes scene-intro-slide-out{ from { transform: translateX(0); } to { transform: translateX(-100vw); } }
-          @keyframes scene-intro-fade-out { 0% { opacity: 1; } 100% { opacity: 0; } }
-        `}
-      </style>
     </>
   );
 }

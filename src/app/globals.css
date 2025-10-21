@@ -3,6 +3,9 @@
 :root {
   --background: #ffffff;
   --foreground: #171717;
+  --anim-dur: 700ms;
+  --anim-ease: cubic-bezier(0.22, 0.99, 0.36, 0.99);
+  --anim-delay: 0ms;
 }
 
 @theme inline {
@@ -21,6 +24,39 @@
   font-style: normal;
 }
 
+@keyframes scene-intro-slide-in {
+  from {
+    transform: translateX(-100vw);
+  }
+  to {
+    transform: translateX(0);
+  }
+}
+@keyframes scene-intro-fade-in {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+@keyframes scene-intro-slide-out {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-100vw);
+  }
+}
+@keyframes scene-intro-fade-out {
+  0% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
 @media (prefers-color-scheme: dark) {
   :root {
     --background: #0a0a0a;
@@ -32,4 +68,20 @@ body {
   background: var(--background);
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
+}
+
+.anim-fade-in {
+  animation: scene-intro-fade-in var(--anim-dur) var(--anim-ease) both;
+}
+.anim-slide-in {
+  animation: scene-intro-slide-in var(--anim-dur) var(--anim-ease) forwards;
+}
+.anim-fade-out {
+  animation: scene-intro-fade-out var(--anim-dur) var(--anim-ease) both;
+}
+.anim-slide-out {
+  animation: scene-intro-slide-out var(--anim-dur) var(--anim-ease) forwards;
+}
+.anim-has-delay {
+  animation-delay: var(--anim-delay);
 }
