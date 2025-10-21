@@ -31,6 +31,10 @@ function LessonContainer() {
     return () => lessonEvents.off("show-lesson", handler);
   }, [createLesson]);
 
+  const handleOnDescriptionComplete = () => {
+    setShowActions(true);
+  };
+
   return (
     <>
       <LessonHeader
@@ -39,11 +43,11 @@ function LessonContainer() {
         lessonStep={lessonStep}
         stepFlags={stepFlags}
         characterDetails={characterDetails}
+        onCompleteDescription={handleOnDescriptionComplete}
       />
       <LessonActions
         show={showActions}
         characterDetails={characterDetails}
-        stepDescription="Teste"
         lessonEntry={lessonEntry}
         lessonStep={lessonStep}
         nextStep={nextStep}

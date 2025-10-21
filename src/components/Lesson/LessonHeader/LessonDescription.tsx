@@ -9,6 +9,7 @@ export interface LessonDescriptionProps {
   lessonStep: LessonEntryStep;
   stepFlags: StepFlags;
   characterDetails: CharacterDetails;
+  onCompleteDescription?: () => void;
 }
 
 type Phases = "hide" | "entering" | "typing" | "ready" | "exiting";
@@ -18,9 +19,10 @@ export function LessonDescription({
   lessonStep,
   stepFlags,
   characterDetails,
+  onCompleteDescription,
 }: LessonDescriptionProps) {
   const [phase, setPhase] = useState<Phases>("hide");
-  const { displayedText, setTextToType, startTyping } = useTypewriter();
+  const { displayedText, setTextToType, startTyping, isComplete } = useTypewriter();
   const { characterName, honorific, hasHonorific } = characterDetails;
   const currentStep = useRef<number | null>(null);
 
@@ -43,6 +45,13 @@ export function LessonDescription({
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [visible, lessonStep.text, phase, stepFlags.stepIndex]);
+
+  useEffect(() => {
+    if (phase === "typing" && isComplete) {
+      onCompleteDescription?.();
+      setPhase("ready");
+    }
+  }, [displayedText, isComplete, phase, onCompleteDescription]);
 
   const getAnimationStyle = (currentPhase: Phases) => {
     switch (currentPhase) {

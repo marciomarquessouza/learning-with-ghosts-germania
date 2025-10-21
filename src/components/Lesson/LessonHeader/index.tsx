@@ -13,6 +13,7 @@ interface LessonHeaderProps {
   lessonStep: LessonEntryStep;
   stepFlags: StepFlags;
   characterDetails: CharacterDetails;
+  onCompleteDescription?: () => void;
 }
 
 export function LessonHeader({
@@ -21,6 +22,7 @@ export function LessonHeader({
   lessonStep,
   stepFlags,
   characterDetails,
+  onCompleteDescription
 }: LessonHeaderProps) {
   const [phase, setPhase] = useState<"hidden" | "entering" | "exiting">(
     "hidden"
@@ -74,6 +76,7 @@ export function LessonHeader({
                     lessonStep={lessonStep}
                     stepFlags={stepFlags}
                     characterDetails={characterDetails}
+                    onCompleteDescription={onCompleteDescription}
                   />
                 )}
               </div>

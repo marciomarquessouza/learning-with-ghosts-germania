@@ -13,7 +13,6 @@ import { getDialogueDimension } from "@/components/Dialogues/helpers/getDialgueD
 export interface LessonActionsProps {
   show: boolean;
   characterDetails: CharacterDetails | null;
-  stepDescription: string;
   lessonEntry: Omit<LessonEntry, "steps">;
   lessonStep: LessonEntryStep;
   nextStep: () => void;
@@ -22,7 +21,6 @@ export interface LessonActionsProps {
 export function LessonActions({
   show,
   characterDetails,
-  stepDescription,
   lessonEntry,
   lessonStep,
   nextStep,
@@ -103,7 +101,7 @@ export function LessonActions({
           <div className="flex-1 min-w-0 px-6 pt-6 pb-4 flex flex-col h-full">
             <div className="mt-2 bg-[rgba(245,245,245,0.5)] px-2 pt-2.5 pb-2 outline-1 outline-neutral-300 rounded-sm flex-1 overflow-auto">
               <p className="text-center min-h-13 text-neutral-900 font-mono text-lg leading-snug whitespace-pre-line mt-2">
-                {stepDescription}
+                {lessonStep.instruction}
               </p>
               <div className="flex justify-center items-center">
                 <LessonEntryBox
