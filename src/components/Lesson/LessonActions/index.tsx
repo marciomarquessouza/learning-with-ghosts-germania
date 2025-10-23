@@ -1,7 +1,6 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useDeviceType } from "@/hooks/useDeviceType";
-import Image from "next/image";
 import { LessonEntryBox } from "./LessonEntryBox";
 import { LessonCTA } from "./LessonCTA";
 import { useUiStore } from "@/store/uiStore";
@@ -9,6 +8,7 @@ import { useDialogueKeyDown } from "@/hooks/useDialogueKeyDown";
 import { CharacterDetails } from "@/hooks/useCharacterDetails";
 import { LessonEntry, LessonEntryStep } from "@/types";
 import { getDialogueDimension } from "@/components/Dialogues/helpers/getDialgueDimension";
+import { getActionTitleByType } from "../helpers/getActionTitleByType";
 
 export interface LessonActionsProps {
   show: boolean;
@@ -26,6 +26,7 @@ export function LessonActions({
   nextStep,
 }: LessonActionsProps) {
   const [visible, setVisible] = useState(false);
+  const [showEntry, setShowEntry] = useState(false);
   const device = useDeviceType();
   const boxRef = useRef<HTMLDivElement>(null);
   const { heightClass, widthClass } = useMemo(
@@ -38,7 +39,7 @@ export function LessonActions({
     if (show && !visible) {
       setVisible(show);
     }
-  }, [visible, show]);
+  }, [visible, show, lessonStep?.instruction]);
 
   useEffect(() => {
     setInteractionDialogueOpen(visible);
@@ -47,21 +48,16 @@ export function LessonActions({
     }
   }, [visible, setInteractionDialogueOpen]);
 
-  const advanceLine = useCallback(() => {
-    nextStep();
-  }, [nextStep]);
-
   const handleClickOnText = useCallback(() => {}, []);
 
   const handleOnClick = useCallback(() => {
     nextStep();
+    setVisible(false);
   }, [nextStep]);
 
   const handleKeyDown = useDialogueKeyDown({
     // keyAction: () => resumeText(() => advanceLine()),
   });
-
-  const startTyping = () => {};
 
   if (!visible || !characterDetails) return null;
 
@@ -77,7 +73,7 @@ export function LessonActions({
           initial={{ opacity: 0, bottom: -40 }}
           animate={{ opacity: 1, bottom: 46 }}
           exit={{ opacity: 0, bottom: -40 }}
-          onAnimationComplete={startTyping}
+          onAnimationComplete={() => setShowEntry(true)}
           transition={{ duration: 0.5, ease: "linear" }}
           onClick={handleClickOnText}
           onKeyDown={handleKeyDown}
@@ -85,34 +81,21 @@ export function LessonActions({
           aria-live="polite"
         >
           <div
-            className="absolute top-2 left-6
+            className="absolute flex w-full items-center justify-center
 					   text-xl font-primary font-semibold tracking-wide"
           >
-            {characterDetails.hasHonorific && (
-              <span className="text-neutral-800">
-                {`${characterDetails.honorific} `}
-              </span>
-            )}
-            <span className="font-bold text-neutral-800">
-              {characterDetails.characterName}
+            <span className="font-bold text-neutral-800 mt-1">
+              {getActionTitleByType(lessonStep.type)}
             </span>
-            <span className="text-[#B20F00] font-bold"> asks: </span>
           </div>
           <div className="flex-1 min-w-0 px-6 pt-6 pb-4 flex flex-col h-full">
-            <div className="mt-2 bg-[rgba(245,245,245,0.5)] px-2 pt-2.5 pb-2 outline-1 outline-neutral-300 rounded-sm flex-1 overflow-auto">
-              <p className="text-center min-h-13 text-neutral-900 font-mono text-lg leading-snug whitespace-pre-line mt-2">
-                {lessonStep.instruction}
-              </p>
-              <div className="flex justify-center items-center">
-                <LessonEntryBox
-                  {...lessonEntry}
-                  step={lessonStep}
-                  isTypingComplete={false}
-                />
-              </div>
-            </div>
-            <LessonCTA step={lessonStep} onClick={handleOnClick} />
+            <LessonEntryBox
+              {...lessonEntry}
+              step={lessonStep}
+              isTypingComplete={showEntry}
+            />
           </div>
+          <LessonCTA step={lessonStep} onClick={handleOnClick} />
         </motion.div>
       )}
     </AnimatePresence>

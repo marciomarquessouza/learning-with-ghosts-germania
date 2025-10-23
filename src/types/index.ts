@@ -9,7 +9,7 @@ export type LessonStepType =
 
 export type LessonEntryStep = {
   type: LessonStepType;
-  instruction?: string;
+  instruction: string;
   text: string;
 };
 

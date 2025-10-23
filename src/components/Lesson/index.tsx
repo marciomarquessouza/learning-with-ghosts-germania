@@ -35,6 +35,11 @@ function LessonContainer() {
     setShowActions(true);
   };
 
+  const handleNextStep = () => {
+    setShowActions(false);
+    nextStep();
+  };
+
   return (
     <>
       <LessonHeader
@@ -50,7 +55,7 @@ function LessonContainer() {
         characterDetails={characterDetails}
         lessonEntry={lessonEntry}
         lessonStep={lessonStep}
-        nextStep={nextStep}
+        nextStep={handleNextStep}
       />
     </>
   );

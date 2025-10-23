@@ -5,6 +5,7 @@ import { LessonEntryLeft } from "./LessonEntryLeft";
 import { LessonEntryRight } from "./LessonEntryRight";
 import { AudioContainer } from "./AudioContainer";
 import { useTimeline } from "@/hooks/useTimeline";
+import { LessonEntryInstruction } from "./LessonEntryInstruction";
 
 type LessonEntryBoxProps = Omit<LessonEntry, "steps"> & {
   step: LessonEntryStep;
@@ -65,27 +66,36 @@ export function LessonEntryBox({
     ].join(" ");
 
   return (
-    <div className="relative ml-8 my-1 w-[520px] grid grid-cols-2 shadow-2xl shadow-black">
-      <LessonEntryLeft
-        isLong={isLong}
-        reference={reference}
-        showReference={flags.showReference}
-        popClass={popClass}
-      />
-      <LessonEntryRight
-        isLong={isLong}
-        target={target}
-        showTarget={flags.showTarget}
-        popClass={popClass}
-      />
-      <AudioContainer
-        audio={audio}
-        showAudio={flags.showAudio}
-        step={step}
-        isPlaying={isPlaying}
-        popClass={popClass}
-        onClickAudio={handleOnPlay}
-      />
+    <div
+      className={[
+        "flex w-full flex-col justify-start items-center",
+        "mt-2 bg-[rgba(245,245,245,0.5)] px-2 pt-0 pb-2",
+        "outline-1 outline-neutral-300 rounded-sm flex-1 overflow-auto",
+      ].join(" ")}
+    >
+      <LessonEntryInstruction audio={audio} instruction={step.instruction} />
+      <div className="relative ml-8 my-1 w-[520px] grid grid-cols-2 shadow-2xl shadow-black">
+        <LessonEntryLeft
+          isLong={isLong}
+          reference={reference}
+          showReference={flags.showReference}
+          popClass={popClass}
+        />
+        <LessonEntryRight
+          isLong={isLong}
+          target={target}
+          showTarget={flags.showTarget}
+          popClass={popClass}
+        />
+        <AudioContainer
+          audio={audio}
+          showAudio={flags.showAudio}
+          step={step}
+          isPlaying={isPlaying}
+          popClass={popClass}
+          onClickAudio={handleOnPlay}
+        />
+      </div>
     </div>
   );
 }

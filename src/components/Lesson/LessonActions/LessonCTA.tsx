@@ -1,44 +1,33 @@
 import { Button } from "@/components/Button";
-import { LessonEntryStep, LessonStepType } from "@/types";
-import { useMemo } from "react";
+import { LessonEntryStep } from "@/types";
+import { getCTADetailsByStepType } from "../helpers/getCTADetailsByStepType";
 
 export interface DialogueCTAProps {
   step: LessonEntryStep;
+  hasChallengeFinished?: boolean;
   onClick: () => void;
 }
 
-function getCTADetailsByStepType(stepType: LessonStepType): {
-  label: string;
-  icon: string;
-} {
-  switch (stepType) {
-    case "introduction":
-      return {
-        label: "NEXT",
-        icon: "►",
-      };
-    case "listening":
-      return {
-        label: "NEXT",
-        icon: "►",
-      };
-    default:
-      return {
-        label: "CLOSE",
-        icon: "X",
-      };
-  }
-}
-
-export function LessonCTA({ step, onClick }: DialogueCTAProps) {
-  const { label, icon } = useMemo(
-    () => getCTADetailsByStepType(step.type),
-    [step.type]
-  );
-
+export function LessonCTA({
+  step,
+  hasChallengeFinished = false,
+  onClick,
+}: DialogueCTAProps) {
   return (
-    <div className="absolute right-4 -bottom-9">
-      <Button label={label} labelIcon={icon} onClick={onClick} />
+    <div className="absolute right-4 -bottom-6">
+      <div className="flex flex-row gap-4">
+        {getCTADetailsByStepType(step.type).map(
+          ({ label, icon, color }, index) => (
+            <Button
+              key={`${index}`}
+              label={label}
+              labelIcon={icon}
+              color={color}
+              onClick={onClick}
+            />
+          )
+        )}
+      </div>
     </div>
   );
 }
