@@ -34,8 +34,6 @@ export function LessonEntryInstruction({
       switch (action.toLowerCase()) {
         case "audio": {
           const canPlay = Boolean(audio);
-          console.log("#HERE canPlay", canPlay);
-          console.log("#HERE audio", audio);
           nodes.push(
             <button
               key={`aud-${key++}`}
