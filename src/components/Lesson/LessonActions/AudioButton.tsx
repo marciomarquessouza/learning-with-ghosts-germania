@@ -1,6 +1,6 @@
 import { LessonStepType } from "@/types";
-import { IconMic } from "@/components/Lesson/icons/IconMic";
-import { IconAudio } from "@/components/Lesson/icons/IconAudio";
+import { IconMicWithCircle } from "@/components/Lesson/icons/IconMicWithCircle";
+import { IconAudioWithCircle } from "@/components/Lesson/icons/IconAudioWithCircle";
 
 export interface AudioButtonProps {
   stepType: LessonStepType;
@@ -31,9 +31,9 @@ export function AudioButton({
       ].join(" ")}
     >
       {stepType === "pronunciation" ? (
-        <IconMic />
+        <IconMicWithCircle />
       ) : (
-        <IconAudio active={isPlaying} />
+        <IconAudioWithCircle active={isPlaying} />
       )}
     </button>
   );

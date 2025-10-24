@@ -1,5 +1,6 @@
 import { useMemo } from "react";
 import { useGameAudio } from "@/hooks/useGameAudio";
+import { IconAudio } from "../icons/IconAudio";
 
 export interface LessonEntryInstructionProps {
   audio: string | undefined;
@@ -51,7 +52,9 @@ export function LessonEntryInstruction({
               }
             >
               {arg}
-              <span aria-hidden>🔊</span>
+              <span aria-hidden>
+                <IconAudio />
+              </span>
             </button>
           );
           break;
