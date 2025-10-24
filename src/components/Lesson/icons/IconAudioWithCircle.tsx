@@ -1,12 +1,12 @@
 import * as React from "react";
 
 type Props = React.SVGProps<SVGSVGElement> & {
-  active?: boolean;
+  isPlaying?: boolean;
   bars?: number;
 };
 
 export const IconAudioWithCircle: React.FC<Props> = ({
-  active = false,
+  isPlaying = false,
   bars = 5,
   className = "",
   ...props
@@ -61,7 +61,7 @@ export const IconAudioWithCircle: React.FC<Props> = ({
 
       <circle cx="20" cy="20" r="20" fill="#fff" />
 
-      {active ? (
+      {isPlaying ? (
         <g>
           {Array.from({ length: count }).map((_, i) => {
             const x = startX + i * (barW + gap);

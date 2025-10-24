@@ -6,6 +6,7 @@ export interface AudioContainerProps {
   showAudio: boolean;
   step: LessonEntryStep;
   isPlaying: boolean;
+  isRecording: boolean;
   popClass: (on: boolean) => string;
   onClickAudio: () => void;
 }
@@ -14,6 +15,7 @@ export function AudioContainer({
   showAudio,
   step,
   isPlaying,
+  isRecording,
   popClass,
   onClickAudio,
 }: AudioContainerProps) {
@@ -28,6 +30,7 @@ export function AudioContainer({
         <AudioButton
           stepType={step.type}
           isPlaying={isPlaying}
+          isRecording={isRecording}
           onClick={onClickAudio}
         />
       )}

@@ -5,12 +5,14 @@ import { IconAudioWithCircle } from "@/components/Lesson/icons/IconAudioWithCirc
 export interface AudioButtonProps {
   stepType: LessonStepType;
   isPlaying: boolean;
+  isRecording: boolean;
   onClick: () => void;
 }
 
 export function AudioButton({
   stepType,
   isPlaying,
+  isRecording,
   onClick,
 }: AudioButtonProps) {
   return (
@@ -31,9 +33,9 @@ export function AudioButton({
       ].join(" ")}
     >
       {stepType === "pronunciation" ? (
-        <IconMicWithCircle />
+        <IconMicWithCircle isRecording={isRecording} />
       ) : (
-        <IconAudioWithCircle active={isPlaying} />
+        <IconAudioWithCircle isPlaying={isPlaying} />
       )}
     </button>
   );

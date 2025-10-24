@@ -20,7 +20,8 @@ export function LessonEntryBox({
   audio,
 }: LessonEntryBoxProps) {
   const [visible, setVisible] = useState(false);
-  const { isPlaying, play } = useGameAudio();
+  const { isPlaying, play, record, stopRecording, isRecording } =
+    useGameAudio();
   const flags = useTimeline({
     lines: [
       {
@@ -45,9 +46,17 @@ export function LessonEntryBox({
   });
 
   const handleOnPlay = useCallback(() => {
-    if (!audio) return;
-    play(audio);
-  }, [audio, play]);
+    if (step.type === "pronunciation") {
+      if (!isRecording) {
+        record();
+      } else {
+        stopRecording();
+      }
+    } else {
+      if (!audio) return;
+      play(audio);
+    }
+  }, [audio, play, record, isRecording, stopRecording, step.type]);
 
   const isLong = reference.length > 12 || target.length > 12;
 
@@ -92,6 +101,7 @@ export function LessonEntryBox({
           showAudio={flags.showAudio}
           step={step}
           isPlaying={isPlaying}
+          isRecording={isRecording}
           popClass={popClass}
           onClickAudio={handleOnPlay}
         />
