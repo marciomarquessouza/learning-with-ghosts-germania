@@ -1,5 +1,5 @@
 import { useMemo } from "react";
-import { useAudioPlayback } from "@/hooks/useAudioPlayback";
+import { useAudioPlayback } from "@/hooks/audio/useAudioPlayback";
 import { IconAudio } from "../icons/IconAudio";
 
 export interface LessonEntryInstructionProps {

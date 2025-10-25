@@ -1,12 +1,12 @@
 import { LessonEntry, LessonEntryStep } from "@/types";
 import { useCallback, useEffect, useState } from "react";
-import { useAudioPlayback } from "@/hooks/useAudioPlayback";
+import { useAudioPlayback } from "@/hooks/audio/useAudioPlayback";
 import { LessonEntryLeft } from "./LessonEntryLeft";
 import { LessonEntryRight } from "./LessonEntryRight";
 import { AudioContainer } from "./AudioContainer";
 import { useTimeline } from "@/hooks/useTimeline";
 import { LessonEntryInstruction } from "./LessonEntryInstruction";
-import { useAudioRecorder } from "@/hooks/useAudioRecorder";
+import { useAudioRecorder } from "@/hooks/audio/useAudioRecorder";
 
 type LessonEntryBoxProps = Omit<LessonEntry, "steps"> & {
   step: LessonEntryStep;
