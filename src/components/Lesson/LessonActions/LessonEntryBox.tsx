@@ -1,11 +1,12 @@
 import { LessonEntry, LessonEntryStep } from "@/types";
 import { useCallback, useEffect, useState } from "react";
-import { useGameAudio } from "@/hooks/useGameAudio";
+import { useAudioPlayback } from "@/hooks/useAudioPlayback";
 import { LessonEntryLeft } from "./LessonEntryLeft";
 import { LessonEntryRight } from "./LessonEntryRight";
 import { AudioContainer } from "./AudioContainer";
 import { useTimeline } from "@/hooks/useTimeline";
 import { LessonEntryInstruction } from "./LessonEntryInstruction";
+import { useAudioRecorder } from "@/hooks/useAudioRecorder";
 
 type LessonEntryBoxProps = Omit<LessonEntry, "steps"> & {
   step: LessonEntryStep;
@@ -20,8 +21,14 @@ export function LessonEntryBox({
   audio,
 }: LessonEntryBoxProps) {
   const [visible, setVisible] = useState(false);
-  const { isPlaying, play, record, stopRecording, isRecording } =
-    useGameAudio();
+  const { play, isPlaying } = useAudioPlayback();
+  const {
+    audioRecordRef,
+    startRecording,
+    stopRecording,
+    playRecord,
+    recorderState,
+  } = useAudioRecorder();
   const flags = useTimeline({
     lines: [
       {
@@ -45,18 +52,19 @@ export function LessonEntryBox({
     started: visible,
   });
 
-  const handleOnPlay = useCallback(() => {
+  const handleOnPlay = useCallback(async () => {
     if (step.type === "pronunciation") {
-      if (!isRecording) {
-        record();
-      } else {
+      if (recorderState === "idle") {
+        startRecording();
+      }
+      if (recorderState === "recording") {
         stopRecording();
       }
     } else {
       if (!audio) return;
       play(audio);
     }
-  }, [audio, play, record, isRecording, stopRecording, step.type]);
+  }, [audio, play, startRecording, recorderState, stopRecording, step.type]);
 
   const isLong = reference.length > 12 || target.length > 12;
 
@@ -96,15 +104,17 @@ export function LessonEntryBox({
           showTarget={flags.showTarget}
           popClass={popClass}
         />
-        <AudioContainer
-          audio={audio}
-          showAudio={flags.showAudio}
-          step={step}
-          isPlaying={isPlaying}
-          isRecording={isRecording}
-          popClass={popClass}
-          onClickAudio={handleOnPlay}
-        />
+        {audio && (
+          <AudioContainer
+            audioRecordRef={audioRecordRef}
+            showAudioButton={flags.showAudio}
+            step={step}
+            isPlaying={isPlaying}
+            isRecording={recorderState === "recording"}
+            popClass={popClass}
+            onClickAudio={handleOnPlay}
+          />
+        )}
       </div>
     </div>
   );

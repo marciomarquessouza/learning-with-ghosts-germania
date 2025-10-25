@@ -1,5 +1,5 @@
 import { useMemo } from "react";
-import { useGameAudio } from "@/hooks/useGameAudio";
+import { useAudioPlayback } from "@/hooks/useAudioPlayback";
 import { IconAudio } from "../icons/IconAudio";
 
 export interface LessonEntryInstructionProps {
@@ -11,7 +11,7 @@ export function LessonEntryInstruction({
   instruction,
   audio,
 }: LessonEntryInstructionProps) {
-  const { play } = useGameAudio();
+  const { play } = useAudioPlayback();
 
   const rendered = useMemo(() => {
     const nodes: React.ReactNode[] = [];
