@@ -1,40 +1,17 @@
 "use client";
 
-import React, { useCallback, useEffect, useMemo, useState } from "react";
-import {
-  RecorderState,
-  useAudioRecorder,
-} from "@/hooks/audio/useAudioRecorder";
-import {
-  scoreRecording,
-  ScoreResult,
-} from "@/hooks/audio/utils/scoreRecording";
-import { useReferenceAudio } from "@/hooks/audio/useReferenceAudio";
+import React, { useCallback, useMemo, useState } from "react";
+import { useReferenceAudio } from "@/libs/audio/useReferenceAudio";
+import { useAudioRecorder } from "@/libs/audio/useAudioRecorder";
+import { ScoreFeedback } from "./ScoreFeedback";
+import { VoiceIndicator } from "./VoiceIndicator";
+import { AudioProgress } from "./AudioProgress";
+import { useAudioScore } from "@/libs/audio/useAudioScore";
 
-/** =========================
- *  Configuração (ajuste por item)
- *  ========================= */
 const REF_URL = "/audio/de/day_01/hallo.3da730fc.mp3";
-const MAX_DURATION_MS = 3_500;
-
-const LIVE_MATCH = {
-  matchThreshold: 0.93, // 0..1 (cosine)
-  consecutiveMatches: 6, // frames seguidos
-  minElapsedMsBeforeMatch: 450, // atraso mínimo
-  vadRms: 0.015, // energia mínima para voz
-  vadWarmFrames: 6, // frames de aquecimento
-} as const;
-
-const SCORING = {
-  frameSize: 1024,
-  hop: 512,
-  minDurationSec: 0.35,
-  maxDurationSec: 1.2,
-  minMeanRms: 0.02,
-} as const;
 
 /** =========================
- *  Página POC
+ *  POC Page
  *  ========================= */
 export default function PocaudioPage() {
   const {
@@ -44,7 +21,12 @@ export default function PocaudioPage() {
     error: refError,
   } = useReferenceAudio(REF_URL);
   const audioRecorder = useAudioRecorder();
-  const [score, setScore] = useState<ScoreResult | null>(null);
+  const { score, clearScore } = useAudioScore({
+    refAB,
+    recorderState: audioRecorder.recorderState,
+    lastBlob: audioRecorder.lastBlob,
+  });
+
   const [autoStopReason, setAutoStopReason] = useState<
     "timeLimit" | "match" | null
   >(null);
@@ -55,32 +37,17 @@ export default function PocaudioPage() {
   );
 
   const handleStart = useCallback(() => {
-    setScore(null);
+    clearScore();
     setAutoStopReason(null);
     audioRecorder.startRecording({
-      maxDurationMs: MAX_DURATION_MS,
+      maxDurationMs: 5000,
       timesliceMs: 200,
-      onAutoStop: (r) => setAutoStopReason(r),
-      refSignature: refSig ?? undefined,
-      ...LIVE_MATCH,
+      onAutoStop: (r) => {
+        setAutoStopReason(r);
+      },
+      expectedDurationMs: 820,
     });
-  }, [audioRecorder, refSig]);
-
-  // Scoring pós-gravação
-  useEffect(() => {
-    if (audioRecorder.recorderState !== "stopped") return;
-    if (!audioRecorder.lastBlob || !refAB) return;
-
-    let cancelled = false;
-    (async () => {
-      const s = await scoreRecording(refAB, audioRecorder.lastBlob!, SCORING);
-      if (!cancelled) setScore(s);
-    })();
-
-    return () => {
-      cancelled = true;
-    };
-  }, [audioRecorder.recorderState, audioRecorder.lastBlob, refAB]);
+  }, [audioRecorder, clearScore]);
 
   return (
     <div className="min-h-screen bg-[#0B0B0B] text-[#FFF3E4] px-6 py-10">
@@ -99,7 +66,6 @@ export default function PocaudioPage() {
         )}
         {refError && <p className="mt-2 text-xs text-red-400">{refError}</p>}
 
-        {/* Controles */}
         <div className="mt-6 flex flex-wrap gap-3">
           <button
             onClick={handleStart}
@@ -111,10 +77,6 @@ export default function PocaudioPage() {
                   : "bg-[#C20013] hover:bg-[#a10011] active:scale-[.98]"
               }
             `}
-            aria-label="Iniciar gravação"
-            title={
-              !canStart ? "Aguarde a referência carregar" : "Iniciar gravação"
-            }
           >
             <svg
               width="16"
@@ -210,7 +172,10 @@ export default function PocaudioPage() {
           </button>
         </div>
 
-        {/* Barra de progresso e tempo */}
+        {audioRecorder.recorderState === "recording" && (
+          <VoiceIndicator level={audioRecorder.voiceLevel} isRecording={true} />
+        )}
+
         {audioRecorder.audioRecordRef && (
           <AudioProgress
             audioRecordRef={audioRecorder.audioRecordRef}
@@ -218,14 +183,12 @@ export default function PocaudioPage() {
           />
         )}
 
-        {/* Elemento de áudio oculto (motor) */}
         <audio
           ref={audioRecorder.audioRecordRef}
           preload="metadata"
           className="hidden"
         />
 
-        {/* Feedback de auto-stop e score */}
         <div className="mt-4 text-xs text-[#bdbdbd]">
           {autoStopReason && (
             <div className="mb-1">
@@ -236,86 +199,27 @@ export default function PocaudioPage() {
             </div>
           )}
           {score && (
-            <div className="mt-3 text-sm">
-              <div>
-                Score: <strong>{score.score}</strong> / 100
+            <div className="mt-4 text-sm">
+              <div className="flex items-center gap-4 mb-3">
+                <div>
+                  Score: <strong className="text-xl">{score.score}</strong> /
+                  100
+                </div>
+                <ScoreFeedback score={score.score} />
               </div>
-              <div>DTW distance: {score.distance.toFixed(3)}</div>
-              <div>
-                Duração ref: {score.durRef.toFixed(2)}s | usuário:{" "}
-                {score.durUser.toFixed(2)}s
+              <div className="text-xs text-[#bdbdbd] space-y-1">
+                <div>DTW distance: {score.distance.toFixed(3)}</div>
+                <div>
+                  Duração ref: {score.durRef.toFixed(2)}s | usuário:{" "}
+                  {score.durUser.toFixed(2)}s
+                </div>
+                <div>Relação de duração: {score.durRatio.toFixed(2)}</div>
+                <div>RMS médio usuário: {score.meanRmsUser.toFixed(3)}</div>
               </div>
-              <div>Relação de duração: {score.durRatio.toFixed(2)}</div>
-              <div>RMS médio usuário: {score.meanRmsUser.toFixed(3)}</div>
             </div>
           )}
         </div>
       </div>
     </div>
   );
-}
-
-/** =========================
- *  Progresso visual
- *  ========================= */
-function AudioProgress({
-  audioRecordRef,
-  state,
-}: {
-  audioRecordRef: React.RefObject<HTMLAudioElement | null>;
-  state: RecorderState;
-}) {
-  const [current, setCurrent] = useState(0);
-  const [duration, setDuration] = useState(0);
-
-  useEffect(() => {
-    const el = audioRecordRef.current;
-    if (!el) return;
-
-    const onTime = () => setCurrent(el.currentTime || 0);
-    const onLoaded = () => setDuration(el.duration || 0);
-    const onEnded = () => setCurrent(0);
-
-    el.addEventListener("timeupdate", onTime);
-    el.addEventListener("loadedmetadata", onLoaded);
-    el.addEventListener("ended", onEnded);
-    return () => {
-      el.removeEventListener("timeupdate", onTime);
-      el.removeEventListener("loadedmetadata", onLoaded);
-      el.removeEventListener("ended", onEnded);
-    };
-  }, [audioRecordRef]);
-
-  const pct = duration ? Math.min(100, (current / duration) * 100) : 0;
-
-  return (
-    <div className="mt-5">
-      <div className="flex items-center justify-between text-xs text-[#bdbdbd]">
-        <span>{formatTime(current)}</span>
-        <span>{formatTime(duration)}</span>
-      </div>
-      <div className="mt-1 h-2 w-full rounded-full bg-white/10 overflow-hidden">
-        <div
-          className={`h-full ${
-            state === "playing"
-              ? "animate-[pulse_1.6s_ease-in-out_infinite]"
-              : ""
-          }`}
-          style={{
-            width: `${pct}%`,
-            background: "linear-gradient(90deg,#C20013,#ff3b30)",
-          }}
-        />
-      </div>
-    </div>
-  );
-}
-
-function formatTime(t: number) {
-  if (!isFinite(t) || t < 0) return "0:00";
-  const m = Math.floor(t / 60);
-  const s = Math.floor(t % 60)
-    .toString()
-    .padStart(2, "0");
-  return `${m}:${s}`;
 }

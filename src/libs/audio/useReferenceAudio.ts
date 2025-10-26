@@ -20,13 +20,11 @@ export function useReferenceAudio(refUrl: string) {
         if (cancelled) return;
         setRefAB(ab);
 
-        // assinatura com trim de silêncio (implementado dentro do util)
         const sig = await buildReferenceSignature(ab);
         if (cancelled) return;
         setRefSig(sig);
       } catch (e) {
-        console.error("Falha ao carregar referência:", e);
-        if (!cancelled) setErr("Falha ao carregar áudio de referência.");
+        if (!cancelled) setErr("Failed to load reference audio.");
       } finally {
         if (!cancelled) setLoading(false);
       }
