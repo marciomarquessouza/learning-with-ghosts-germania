@@ -1,5 +1,6 @@
+import { downmix } from "./downmix";
+import { normalizePeak } from "./normalizePeak";
 import { mfccSeqFromSignal } from "./mfccSeqFromSignal";
-import { toMonoNormalized } from "./toMonoNormalized";
 
 export async function buildReferenceSignature(
   refArrayBuffer: ArrayBuffer,
@@ -17,18 +18,21 @@ export async function buildReferenceSignature(
   const vadRms = opts?.vadRms ?? 0.015;
   const minSpeechFrames = opts?.minSpeechFrames ?? 6;
 
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const ac = new (window.AudioContext || (window as any).webkitAudioContext)({
-    sampleRate,
-  });
-  const buf = await ac.decodeAudioData(refArrayBuffer.slice(0));
-  const mono = toMonoNormalized(buf);
+  const audioContext = new AudioContext();
+  // The slice(0) is used to create a copy of the ArrayBuffer
+  // and avoid the decodeAudioData change the original one.
+  const audioBuffer = await audioContext.decodeAudioData(
+    refArrayBuffer.slice(0)
+  );
+
+  const mono = downmix(audioBuffer);
+  const monoPeakNormalized = normalizePeak(mono);
 
   let start = 0,
     consec = 0,
     found = false;
-  for (let i = 0; i + frameSize <= mono.length; i += hop) {
-    const frame = mono.subarray(i, i + frameSize);
+  for (let i = 0; i + frameSize <= monoPeakNormalized.length; i += hop) {
+    const frame = monoPeakNormalized.subarray(i, i + frameSize);
     let s = 0;
     for (let k = 0; k < frame.length; k++) s += frame[k] * frame[k];
     const rms = Math.sqrt(s / frame.length);
@@ -43,13 +47,15 @@ export async function buildReferenceSignature(
   }
   if (!found) start = 0;
 
-  // pega ~0.8s de fala
-  const take = Math.min(mono.length - start, Math.floor(0.8 * sampleRate));
-  const slice = mono.subarray(start, start + take);
+  const take = Math.min(
+    monoPeakNormalized.length - start,
+    Math.floor(0.8 * sampleRate)
+  );
+  const slice = monoPeakNormalized.subarray(start, start + take);
 
   const sig = mfccSeqFromSignal(slice, sampleRate, frameSize, hop, 13, 26);
   try {
-    await ac.close();
+    await audioContext.close();
   } catch {}
   return sig;
 }

@@ -1,14 +1,14 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useDeviceType } from "@/hooks/useDeviceType";
-import { LessonEntryBox } from "./LessonEntryBox";
-import { LessonCTA } from "./LessonCTA";
 import { useUiStore } from "@/store/uiStore";
 import { useDialogueKeyDown } from "@/hooks/useDialogueKeyDown";
 import { CharacterDetails } from "@/hooks/useCharacterDetails";
 import { LessonEntry, LessonEntryStep } from "@/types";
 import { getDialogueDimension } from "@/components/Dialogues/helpers/getDialgueDimension";
-import { getActionTitleByType } from "../helpers/getActionTitleByType";
+import { StepIntroduction } from "./StepIntrodution";
+import { StepPronunciation } from "./StepPronunciation";
+import { StepWriting } from "./StepWriting";
 
 export interface LessonActionsProps {
   show: boolean;
@@ -80,22 +80,30 @@ export function LessonActions({
           role="dialog"
           aria-live="polite"
         >
-          <div
-            className="absolute flex w-full items-center justify-center
-					   text-xl font-primary font-semibold tracking-wide"
-          >
-            <span className="font-bold text-neutral-800 mt-1">
-              {getActionTitleByType(lessonStep.type)}
-            </span>
-          </div>
-          <div className="flex-1 min-w-0 px-6 pt-6 pb-4 flex flex-col h-full">
-            <LessonEntryBox
-              {...lessonEntry}
-              step={lessonStep}
-              isTypingComplete={showEntry}
+          {lessonStep.type === "introduction" && (
+            <StepIntroduction
+              lessonEntry={lessonEntry}
+              lessonStep={lessonStep}
+              onClick={handleOnClick}
+              show={showEntry}
             />
-          </div>
-          <LessonCTA step={lessonStep} onClick={handleOnClick} />
+          )}
+          {lessonStep.type === "pronunciation" && (
+            <StepPronunciation
+              lessonEntry={lessonEntry}
+              lessonStep={lessonStep}
+              onClick={handleOnClick}
+              show={showEntry}
+            />
+          )}
+          {lessonStep.type === "writing" && (
+            <StepWriting
+              lessonEntry={lessonEntry}
+              lessonStep={lessonStep}
+              onClick={handleOnClick}
+              show={showEntry}
+            />
+          )}
         </motion.div>
       )}
     </AnimatePresence>

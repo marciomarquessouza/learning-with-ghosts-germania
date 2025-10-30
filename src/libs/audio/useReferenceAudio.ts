@@ -2,7 +2,9 @@ import { useEffect, useState } from "react";
 import { buildReferenceSignature } from "./utils/buildReferenceSignature";
 
 export function useReferenceAudio(refUrl: string) {
-  const [refAB, setRefAB] = useState<ArrayBuffer | null>(null);
+  const [arrayBufferRef, setArrayBufferRef] = useState<ArrayBuffer | null>(
+    null
+  );
   const [refSig, setRefSig] = useState<number[][] | null>(null);
   const [loading, setLoading] = useState(true);
   const [err, setErr] = useState<string | null>(null);
@@ -14,13 +16,13 @@ export function useReferenceAudio(refUrl: string) {
 
     (async () => {
       try {
-        const res = await fetch(refUrl, { cache: "force-cache" });
-        if (!res.ok) throw new Error(`HTTP ${res.status}`);
-        const ab = await res.arrayBuffer();
+        const response = await fetch(refUrl, { cache: "force-cache" });
+        if (!response.ok) throw new Error(`HTTP ${response.status}`);
+        const arrayBuffer = await response.arrayBuffer();
         if (cancelled) return;
-        setRefAB(ab);
+        setArrayBufferRef(arrayBuffer);
 
-        const sig = await buildReferenceSignature(ab);
+        const sig = await buildReferenceSignature(arrayBuffer);
         if (cancelled) return;
         setRefSig(sig);
       } catch (e) {
@@ -35,5 +37,5 @@ export function useReferenceAudio(refUrl: string) {
     };
   }, [refUrl]);
 
-  return { refAB, refSig, loading, error: err };
+  return { arrayBufferRef, refSig, loading, error: err };
 }

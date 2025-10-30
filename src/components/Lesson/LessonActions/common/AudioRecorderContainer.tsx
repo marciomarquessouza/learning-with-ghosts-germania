@@ -1,25 +1,20 @@
 import { RefObject } from "react";
-import { LessonEntryStep } from "@/types";
-import { AudioButton } from "./AudioButton";
+import { popClass } from "../../../../utils/popClass";
 
-export interface AudioContainerProps {
+export interface AudioRecorderContainerProps {
   audioRecordRef: RefObject<HTMLAudioElement | null>;
   showAudioButton: boolean;
-  step: LessonEntryStep;
-  isPlaying: boolean;
   isRecording: boolean;
-  popClass: (on: boolean) => string;
   onClickAudio: () => void;
 }
-export function AudioContainer({
+
+// TODO: update audio recorder container
+export function AudioRecorderContainer({
   audioRecordRef,
   showAudioButton,
-  step,
-  isPlaying,
   isRecording,
-  popClass,
   onClickAudio,
-}: AudioContainerProps) {
+}: AudioRecorderContainerProps) {
   return (
     <div
       className={[
@@ -27,12 +22,12 @@ export function AudioContainer({
         popClass(showAudioButton),
       ].join(" ")}
     >
-      <AudioButton
-        stepType={step.type}
-        isPlaying={isPlaying}
-        isRecording={isRecording}
-        onClick={onClickAudio}
-      />
+      {/* <AudioButton
+		stepType={step.type}
+		isPlaying={isPlaying}
+		isRecording={isRecording}
+		onClick={onClickAudio}
+	  /> */}
       {/* Audio Motor: audio element for audio recorded playback. Should not be visible */}
       <audio ref={audioRecordRef} preload="metadata" className="hidden" />
     </div>

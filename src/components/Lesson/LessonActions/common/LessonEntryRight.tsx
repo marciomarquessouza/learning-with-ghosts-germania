@@ -1,17 +1,16 @@
 import { IconFlagDE } from "@/components/Lesson/icons/IconFlagDE";
+import { popClass } from "../../../../utils/popClass";
 
 export interface LessonEntryRightProps {
   isLong: boolean;
   target: string;
   showTarget: boolean;
-  popClass: (on: boolean) => string;
 }
 
 export function LessonEntryRight({
   isLong,
   target,
   showTarget,
-  popClass,
 }: LessonEntryRightProps) {
   return (
     <div className="flex items-center justify-start bg-[#C20013] pl-8 min-h-10 py-1">
