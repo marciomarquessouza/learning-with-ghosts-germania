@@ -8,7 +8,10 @@ export function subsequenceDtwMin(
 ): number {
   const n = ref.length,
     m = usr.length;
-  if (!n || !m) return 1.0;
+  if (!n || !m) {
+    console.error("Missing reference or record");
+    return 1.0;
+  }
 
   const Lmin = Math.max(3, Math.floor(n * ratioMin));
   const Lmax = Math.min(m, Math.ceil(n * ratioMax));

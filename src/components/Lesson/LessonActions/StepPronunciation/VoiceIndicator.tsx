@@ -5,7 +5,8 @@ export function VoiceIndicator({
   level: number;
   isRecording: boolean;
 }) {
-  const percentage = Math.min(100, level * 100);
+  const amplifiedLevel = Math.pow(level, 0.3);
+  const percentage = Math.min(100, amplifiedLevel * 300);
 
   let color = "bg-red-500";
   if (percentage > 30) color = "bg-yellow-500";
@@ -17,7 +18,7 @@ export function VoiceIndicator({
         <span>Nível de voz</span>
         <span className="font-mono">{percentage.toFixed(0)}%</span>
       </div>
-      <div className="h-3 w-full bg-black rounded-full overflow-hidden">
+      <div className="h-3 w-full bg-gray-200 rounded-full overflow-hidden">
         <div
           className={`h-full ${color} transition-all duration-100 ease-out ${
             isRecording ? "animate-pulse" : ""

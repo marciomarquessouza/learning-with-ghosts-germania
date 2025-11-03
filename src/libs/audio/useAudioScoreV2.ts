@@ -1,12 +1,12 @@
 import { useEffect, useMemo, useState } from "react";
 import { scoreRecording, ScoreResult } from "./utils/scoreRecording";
 import { RecorderState } from "./useAudioRecorder";
+import { audioScore } from "./utils/audioScore";
 
 export interface AudioScoreProps {
-  referenceSignature: number[][] | null;
-  referenceArrayBuffer: ArrayBuffer | null;
+  audioBufferReference: AudioBuffer | null;
+  audioBufferUserRecord: AudioBuffer | null;
   recorderState: RecorderState;
-  lastBlob: Blob | null;
 }
 
 export const MAX_DURATION_SEC = 4.0;
@@ -23,32 +23,31 @@ const SCORING_SETTINGS = {
   maxCostForPerfect: 0.21, // <== Adjust here to calibrate the score
 } as const;
 
-export function useAudioScore({
-  referenceSignature,
-  referenceArrayBuffer,
+export function useAudioScoreV2({
+  audioBufferReference,
+  audioBufferUserRecord,
   recorderState,
-  lastBlob,
 }: AudioScoreProps) {
   const [score, setScore] = useState<ScoreResult | null>(null);
 
   useEffect(() => {
     if (recorderState !== "stopped") return;
-    if (!lastBlob || !referenceArrayBuffer || !referenceSignature) return;
+    if (!audioBufferReference || !audioBufferUserRecord) return;
 
     let cancelled = false;
     (async () => {
-      const s = await scoreRecording(
-        referenceArrayBuffer,
-        lastBlob!,
+      const scoreResult = await audioScore(
+        audioBufferReference,
+        audioBufferUserRecord,
         SCORING_SETTINGS
       );
-      if (!cancelled) setScore(s);
+      if (!cancelled) setScore(scoreResult);
     })();
 
     return () => {
       cancelled = true;
     };
-  }, [recorderState, lastBlob, referenceArrayBuffer, referenceSignature]);
+  }, [recorderState, audioBufferReference, audioBufferUserRecord]);
 
   const clearScore = () => {
     setScore(null);

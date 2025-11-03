@@ -1,11 +1,8 @@
+import { buildSignature } from "./buildSignature";
 import { cmvn } from "./cmvn";
 import { costToScore } from "./costToScore";
-import { downmix } from "./downmix";
 import { frameRms } from "./frameRms";
-import { mfccSeqFromSignal } from "./mfccSeqFromSignal";
-import { normalizePeak } from "./normalizePeak";
 import { subsequenceDtwMin } from "./subsequenceDtwMin";
-import { trimSilence } from "./trimSilence";
 import { withDynamics } from "./withDynamics";
 
 export type ScoreResult = {
@@ -17,9 +14,9 @@ export type ScoreResult = {
   meanRmsUser: number;
 };
 
-export async function scoreRecording(
-  refArrayBuffer: ArrayBuffer,
-  userBlob: Blob,
+export async function audioScore(
+  audioBufferReference: AudioBuffer,
+  audioBufferUserRecord: AudioBuffer,
   opts?: {
     sampleRate?: number;
     frameSize?: number;
@@ -33,47 +30,28 @@ export async function scoreRecording(
     maxCostForPerfect?: number;
   }
 ): Promise<ScoreResult> {
-  const sampleRate = opts?.sampleRate ?? 16000;
   const frameSize = opts?.frameSize ?? 1024;
   const hop = opts?.hop ?? 256;
-  const vadR = opts?.vadRms ?? 0.008;
-
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const ac = new (window.AudioContext || (window as any).webkitAudioContext)({
-    sampleRate,
-  });
 
   try {
-    const [refBuf, userBuf] = await Promise.all([
-      ac.decodeAudioData(refArrayBuffer.slice(0)),
-      userBlob.arrayBuffer().then((ab) => ac.decodeAudioData(ab)),
-    ]);
-
-    const durRef = refBuf.duration;
-    const durUser = userBuf.duration;
+    const durRef = audioBufferReference.duration;
+    const durUser = audioBufferUserRecord.duration;
     const durRatio = durUser / Math.max(durRef, 1e-6);
 
-    // mono + normalize
-    let refMono = downmix(refBuf);
-    refMono = normalizePeak(refMono);
-    let usrMono = downmix(userBuf);
-    usrMono = normalizePeak(usrMono);
-
-    refMono = trimSilence(refMono, sampleRate, frameSize, hop, vadR, 2);
-    usrMono = trimSilence(usrMono, sampleRate, frameSize, hop, vadR, 2);
-
-    if (usrMono.length < frameSize * 2) {
-      let usrMono = downmix(userBuf);
-      usrMono = normalizePeak(usrMono);
-    }
-
-    // MFCC
-    let refM = mfccSeqFromSignal(refMono, sampleRate, frameSize, hop, 13, 26);
-    let usrM = mfccSeqFromSignal(usrMono, sampleRate, frameSize, hop, 13, 26);
+    const { signature: referenceSignature } = await buildSignature(
+      audioBufferReference,
+      {
+        source: "reference",
+      }
+    );
+    const { signature: userRecordSignature, mono: userRecordMono } =
+      await buildSignature(audioBufferUserRecord, {
+        source: "user",
+      });
 
     // CMVN
-    refM = cmvn(refM);
-    usrM = cmvn(usrM);
+    let refM = cmvn(referenceSignature);
+    let usrM = cmvn(userRecordSignature);
 
     // deltas
     refM = withDynamics(refM);
@@ -95,8 +73,8 @@ export async function scoreRecording(
     // RMS
     let sum = 0,
       count = 0;
-    for (let i = 0; i + frameSize <= usrMono.length; i += hop) {
-      sum += frameRms(usrMono.subarray(i, i + frameSize));
+    for (let i = 0; i + frameSize <= userRecordMono.length; i += hop) {
+      sum += frameRms(userRecordMono.subarray(i, i + frameSize));
       count++;
     }
     const meanRmsUser = count ? sum / count : 0;
@@ -125,8 +103,5 @@ export async function scoreRecording(
       meanRmsUser,
     };
   } finally {
-    try {
-      await ac.close();
-    } catch {}
   }
 }

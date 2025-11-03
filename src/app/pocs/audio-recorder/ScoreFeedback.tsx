@@ -1,7 +1,7 @@
 import {
   getScoreFeedback,
   SCORE_THRESHOLDS,
-} from "@/libs/audio/utils/getScoreFeedback";
+} from "@/libs/audio/utils/renderScore/getScoreFeedback";
 
 export function ScoreFeedback({ score }: { score: number }) {
   const feedback = getScoreFeedback(score);
@@ -40,15 +40,9 @@ export function ScoreFeedback({ score }: { score: number }) {
       )} ${getBgColor()}`}
     >
       <div className="flex items-center gap-3">
-        <span className="text-2xl">{getIcon()}</span>
         <div>
           <div className={`text-lg font-bold ${feedback.color}`}>
             {feedback.message}
-          </div>
-          <div className="text-sm text-gray-300 mt-1">
-            {score >= SCORE_THRESHOLDS.PASS
-              ? "🎉 Ótimo trabalho! Continue praticando!"
-              : "💡 Dica: Preste atenção na entonação e nos sons individuais."}
           </div>
         </div>
       </div>
