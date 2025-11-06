@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useState } from "react";
-import { scoreRecording, ScoreResult } from "./utils/scoreRecording";
-import { RecorderState } from "./useAudioRecorder";
+import { ScoreResult } from "./utils/scoreRecording";
+import { RecorderState } from "./useAudioRecorderV2";
 import { audioScore } from "./utils/audioScore";
 
 export interface AudioScoreProps {

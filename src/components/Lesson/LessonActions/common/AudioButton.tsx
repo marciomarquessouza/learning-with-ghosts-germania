@@ -6,6 +6,7 @@ export interface AudioButtonProps {
   stepType: LessonStepType;
   isPlaying?: boolean;
   isRecording?: boolean;
+  isLoading?: boolean;
   onClick: () => void;
 }
 
@@ -13,6 +14,7 @@ export function AudioButton({
   stepType,
   isPlaying = false,
   isRecording = false,
+  isLoading = false,
   onClick,
 }: AudioButtonProps) {
   return (
@@ -33,7 +35,7 @@ export function AudioButton({
       ].join(" ")}
     >
       {stepType === "pronunciation" ? (
-        <IconMicWithCircle isRecording={isRecording} />
+        <IconMicWithCircle isRecording={isRecording} isLoading={isLoading} />
       ) : (
         <IconAudioWithCircle isPlaying={isPlaying} />
       )}

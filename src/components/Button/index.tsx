@@ -8,7 +8,7 @@ interface ButtonProps {
 export function Button({
   label,
   labelIcon,
-  color = "bg-red-700 hover:bg-red-800",
+  color = "bg-[#B40F00] hover:bg-[#941729]",
   onClick,
 }: ButtonProps) {
   return (

@@ -4,7 +4,13 @@ import { useEffect, useRef, useState } from "react";
 import { useVoiceAnalysis } from "./useVoiceAnalysis";
 import { getSupportedOptions } from "./utils/getSupportedOptions";
 
-export type RecorderState = "idle" | "recording" | "stopped" | "playing";
+export type RecorderState =
+  | "idle"
+  | "starting"
+  | "recording"
+  | "stopped"
+  | "playing";
+
 export type AutoStopReason = "timeLimit" | "match";
 
 export type StartOpts = {
@@ -12,6 +18,14 @@ export type StartOpts = {
   timesliceMs?: number;
   onAutoStop?: (reason: AutoStopReason) => void;
   expectedDurationMs?: number;
+};
+
+let cachedRecorderOptions: MediaRecorderOptions | null = null;
+const getCachedOptions = (): MediaRecorderOptions => {
+  if (!cachedRecorderOptions) {
+    cachedRecorderOptions = getSupportedOptions();
+  }
+  return cachedRecorderOptions;
 };
 
 export function useAudioRecorderV2() {
@@ -32,31 +46,13 @@ export function useAudioRecorderV2() {
 
   const { createVoiceAnalysis, stopVoiceAnalysis } = useVoiceAnalysis();
 
-  useEffect(() => {
-    return () => {
-      cleanup();
-    };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-
-  const cleanup = () => {
+  const cleanupRecording = () => {
     stopVoiceAnalysis();
     setVoiceLevel(0);
 
     if (limitTimerRef.current) {
       window.clearTimeout(limitTimerRef.current);
       limitTimerRef.current = null;
-    }
-
-    if (audioContextRef.current) {
-      try {
-        if (audioContextRef.current.state !== "closed") {
-          audioContextRef.current.close();
-        }
-      } catch (e) {
-        console.error("AudioContext already closed");
-      }
-      audioContextRef.current = null;
     }
 
     if (streamRef.current) {
@@ -66,12 +62,42 @@ export function useAudioRecorderV2() {
       });
       streamRef.current = null;
     }
+
+    setMediaRecorder(null);
+  };
+
+  useEffect(() => {
+    return () => {
+      cleanupRecording();
+
+      if (audioContextRef.current) {
+        try {
+          if (audioContextRef.current.state !== "closed") {
+            audioContextRef.current.close();
+          }
+        } catch (e) {
+          console.error("Error closing AudioContext on unmount", e);
+        } finally {
+          audioContextRef.current = null;
+        }
+      }
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  const ensureAudioContext = () => {
+    if (!audioContextRef.current) {
+      audioContextRef.current = new AudioContext();
+    }
+    return audioContextRef.current;
   };
 
   const startRecording = async (opts?: StartOpts) => {
     try {
-      cleanup();
+      setRecorderState("starting");
       setVoiceLevel(0);
+
+      cleanupRecording();
 
       const stream = await navigator.mediaDevices.getUserMedia({
         audio: {
@@ -81,12 +107,10 @@ export function useAudioRecorderV2() {
         },
       });
 
-      const audioContext = new AudioContext();
-      audioContextRef.current = audioContext;
-
+      const audioContext = ensureAudioContext();
       streamRef.current = stream;
 
-      const options = getSupportedOptions();
+      const options = getCachedOptions();
       const mr = new MediaRecorder(stream, options);
       chunksRef.current = [];
       setMediaRecorder(mr);
@@ -100,7 +124,6 @@ export function useAudioRecorderV2() {
       mr.onstart = () => {
         setRecorderState("recording");
 
-        // Create and start voice analysis
         const voiceAnalysis = createVoiceAnalysis(
           stream,
           mr,
@@ -115,22 +138,17 @@ export function useAudioRecorderV2() {
           const type =
             mr.mimeType || (options.mimeType as string) || "audio/webm";
           const blob = new Blob(chunksRef.current, { type });
-          const audioContext = audioContextRef.current;
 
-          blob.arrayBuffer().then((arrayBuffer) => {
-            if (audioContext) {
-              audioContext
-                .decodeAudioData(arrayBuffer)
-                .then((audioBufferResponse) => {
-                  setAudioBufferUserRecord(audioBufferResponse);
-                })
-                .catch((error) => {
-                  throw new Error(error);
-                });
-            } else {
-              throw new Error("No Audio Context");
-            }
-          });
+          const ctx = ensureAudioContext();
+          blob
+            .arrayBuffer()
+            .then((arrayBuffer) => ctx.decodeAudioData(arrayBuffer))
+            .then((audioBufferResponse) => {
+              setAudioBufferUserRecord(audioBufferResponse);
+            })
+            .catch((error) => {
+              console.error("Error decoding audio data", error);
+            });
 
           if (audioUrl) URL.revokeObjectURL(audioUrl);
           const url = URL.createObjectURL(blob);
@@ -143,14 +161,14 @@ export function useAudioRecorderV2() {
           }
         } finally {
           chunksRef.current = [];
-          cleanup();
+          cleanupRecording();
         }
       };
 
       mr.onerror = (err) => {
         console.error("MediaRecorder error:", err);
         setRecorderState("idle");
-        cleanup();
+        cleanupRecording();
       };
 
       if (opts?.maxDurationMs && opts.maxDurationMs > 0) {
@@ -165,6 +183,7 @@ export function useAudioRecorderV2() {
       mr.start(opts?.timesliceMs ?? 100);
     } catch (err) {
       console.error("Error accessing microphone:", err);
+      setRecorderState("idle");
       alert("Error accessing microphone, verify permissions and try again.");
     }
   };
@@ -173,8 +192,10 @@ export function useAudioRecorderV2() {
     if (!mediaRecorder) return;
     if (mediaRecorder.state === "recording") {
       mediaRecorder.stop();
+      return;
     }
-    cleanup();
+    cleanupRecording();
+    setRecorderState("idle");
   };
 
   const playRecord = async () => {

@@ -6,7 +6,7 @@ import { AudioButton } from "../common/AudioButton";
 import { useReferenceAudioV2 } from "@/libs/audio/useReferenceAudioV2";
 import { useAudioRecorderV2 } from "@/libs/audio/useAudioRecorderV2";
 import { useAudioScoreV2 } from "@/libs/audio/useAudioScoreV2";
-import { useCallback, useMemo } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import { VoiceLevelIndicator } from "./VoiceLevelIndicator";
 
 export interface StepPronunciationProps {
@@ -16,18 +16,28 @@ export interface StepPronunciationProps {
   onClick: () => void;
 }
 
+type Phases = "before-challenge" | "result";
+
 export function StepPronunciation({
   lessonEntry,
   lessonStep,
   show,
   onClick,
 }: StepPronunciationProps) {
+  const [challengePhase, setChallengePhase] =
+    useState<Phases>("before-challenge");
+  const [waitingRecord, setWaitingRecord] = useState(false);
   const { audioBufferReference, loading, error } = useReferenceAudioV2(
     lessonEntry.audio || ""
   );
 
-  const { recorderState, voiceLevel, audioRecordRef, startRecording } =
-    useAudioRecorderV2();
+  const {
+    recorderState,
+    voiceLevel,
+    audioRecordRef,
+    startRecording,
+    stopRecording,
+  } = useAudioRecorderV2();
 
   const { clearScore } = useAudioScoreV2({
     audioBufferReference,
@@ -40,7 +50,31 @@ export function StepPronunciation({
     [audioBufferReference, loading, error]
   );
 
-  const handleStartRecording = useCallback(() => {
+  const { icon, color, label } = useMemo(() => {
+    switch (challengePhase) {
+      case "before-challenge":
+        return {
+          icon: "⏭",
+          label: "SKIP",
+          color: "bg-[#976ED4] hover:bg-[#6700FF]",
+        };
+      default:
+        return {
+          icon: "►",
+          label: "NEXT",
+          color: "bg-[#B40F00] hover:bg-[#941729]",
+        };
+    }
+  }, [challengePhase]);
+
+  const handleRecording = useCallback(() => {
+    if (recorderState === "recording") {
+      stopRecording();
+      return;
+    }
+
+    setWaitingRecord(true);
+
     if (!canStart) return;
     clearScore();
     startRecording({
@@ -48,7 +82,13 @@ export function StepPronunciation({
       timesliceMs: 200,
       expectedDurationMs: 820,
     });
-  }, [canStart, clearScore, startRecording]);
+  }, [canStart, clearScore, recorderState, startRecording, stopRecording]);
+
+  useEffect(() => {
+    if (waitingRecord && recorderState === "recording") {
+      setWaitingRecord(false);
+    }
+  }, [recorderState, waitingRecord]);
 
   if (!show) return null;
 
@@ -64,11 +104,18 @@ export function StepPronunciation({
           <AudioButton
             stepType="pronunciation"
             isRecording={recorderState === "recording"}
-            onClick={handleStartRecording}
+            isLoading={recorderState === "starting"}
+            onClick={handleRecording}
           />
         </VoiceLevelIndicator>
+        {recorderState === "starting" && (
+          <p className="text-gray-600 font-mono">WAIT</p>
+        )}
+        {recorderState === "recording" && (
+          <p className="text-gray-600 font-mono">SPEAK!</p>
+        )}
       </LessonActionContainer>
-      <LessonCTA label="NEXT" icon="►" onClick={onClick} />
+      <LessonCTA label={label} icon={icon} color={color} onClick={onClick} />
       <audio ref={audioRecordRef} preload="metadata" className="hidden" />
     </>
   );
