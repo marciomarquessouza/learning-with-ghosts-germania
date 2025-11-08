@@ -1,23 +1,7 @@
-import {
-  getScoreFeedback,
-  SCORE_THRESHOLDS,
-} from "@/libs/audio/utils/renderScore/getScoreFeedback";
+import { getScoreFeedback } from "@/libs/audio/utils/renderScore/getScoreFeedback";
 
 export function ScoreFeedback({ score }: { score: number }) {
   const feedback = getScoreFeedback(score);
-
-  const getIcon = () => {
-    switch (feedback.status) {
-      case "excellent":
-        return "🎯";
-      case "good":
-        return "✅";
-      case "pass":
-        return "⚠️";
-      case "fail":
-        return "❌";
-    }
-  };
 
   const getBgColor = () => {
     switch (feedback.status) {

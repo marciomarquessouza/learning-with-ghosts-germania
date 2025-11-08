@@ -1,4 +1,4 @@
-import { RecorderState } from "@/libs/audio/useAudioRecorder";
+import { RecorderState } from "@/libs/audio/useAudioRecorderV2";
 import { formatTime } from "@/utils/formatTime";
 import { useEffect, useState } from "react";
 

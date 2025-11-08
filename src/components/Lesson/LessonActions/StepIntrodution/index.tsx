@@ -82,7 +82,7 @@ export function StepIntroduction({
           />
           {audio && (
             <AudioPlaybackContainer
-              stepType={lessonStep.type}
+              iconType="reference"
               showAudioButton={flags.showAudio}
               isPlaying={isPlaying}
               onClickAudio={handleOnPlay}

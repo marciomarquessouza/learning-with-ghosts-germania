@@ -36,3 +36,10 @@ export const DIALOGUE_MAP: {
     avatar: "/dialogue/dialogue_avatar_josef.png",
   },
 };
+
+export const PRONUNCIATION_FEEDBACK_THRESHOLDS = {
+  EXCELLENT: 90,
+  GOOD: 85,
+  PASS: 80,
+  FAIL: 79,
+} as const;

@@ -1,9 +1,12 @@
-import { LessonStepType } from "@/types";
+import { useMemo } from "react";
 import { IconMicWithCircle } from "@/components/Lesson/icons/IconMicWithCircle";
 import { IconAudioWithCircle } from "@/components/Lesson/icons/IconAudioWithCircle";
+import { IconReproduceWithCircle } from "../../icons/IconReproduceWithCircle";
+
+export type AudioButtonTypes = "reference" | "record" | "reproduce";
 
 export interface AudioButtonProps {
-  stepType: LessonStepType;
+  type: AudioButtonTypes;
   isPlaying?: boolean;
   isRecording?: boolean;
   isLoading?: boolean;
@@ -11,19 +14,28 @@ export interface AudioButtonProps {
 }
 
 export function AudioButton({
-  stepType,
+  type,
   isPlaying = false,
   isRecording = false,
   isLoading = false,
   onClick,
 }: AudioButtonProps) {
+  const ariaLabel = useMemo(() => {
+    switch (type) {
+      case "record":
+        return "Speak this word";
+      case "reference":
+        return "Play word audio";
+      case "reproduce":
+        return "Reproduce your audio";
+    }
+  }, [type]);
+
   return (
     <button
       type="button"
       onClick={onClick}
-      aria-label={
-        stepType === "pronunciation" ? "Speak this word" : "Play word audio"
-      }
+      aria-label={ariaLabel}
       className={[
         "absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 z-10",
         "h-10 w-10 rounded-full bg-white",
@@ -34,10 +46,12 @@ export function AudioButton({
         "focus-visible:ring-2 focus-visible:ring-[#C20013]/70",
       ].join(" ")}
     >
-      {stepType === "pronunciation" ? (
+      {type === "record" && (
         <IconMicWithCircle isRecording={isRecording} isLoading={isLoading} />
-      ) : (
-        <IconAudioWithCircle isPlaying={isPlaying} />
+      )}
+      {type === "reference" && <IconAudioWithCircle isPlaying={isPlaying} />}
+      {type === "reproduce" && (
+        <IconReproduceWithCircle isPlaying={isPlaying} />
       )}
     </button>
   );

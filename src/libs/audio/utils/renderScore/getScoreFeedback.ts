@@ -1,28 +1,23 @@
-export const SCORE_THRESHOLDS = {
-  EXCELLENT: 85,
-  GOOD: 75,
-  PASS: 65,
-  FAIL: 64,
-} as const;
+import { PRONUNCIATION_FEEDBACK_THRESHOLDS } from "@/constants/game";
 
 export function getScoreFeedback(score: number): {
   status: "excellent" | "good" | "pass" | "fail";
   message: string;
   color: string;
 } {
-  if (score >= SCORE_THRESHOLDS.EXCELLENT) {
+  if (score >= PRONUNCIATION_FEEDBACK_THRESHOLDS.EXCELLENT) {
     return {
       status: "excellent",
       message: "🎯 Pronúncia excelente! Parabéns!",
       color: "text-green-500",
     };
-  } else if (score >= SCORE_THRESHOLDS.GOOD) {
+  } else if (score >= PRONUNCIATION_FEEDBACK_THRESHOLDS.GOOD) {
     return {
       status: "good",
       message: "✅ Pronúncia muito boa! Continue assim!",
       color: "text-green-400",
     };
-  } else if (score >= SCORE_THRESHOLDS.PASS) {
+  } else if (score >= PRONUNCIATION_FEEDBACK_THRESHOLDS.PASS) {
     return {
       status: "pass",
       message: "⚠️ Pronúncia aceitável. Pode melhorar!",

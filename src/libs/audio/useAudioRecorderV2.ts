@@ -200,8 +200,17 @@ export function useAudioRecorderV2() {
 
   const playRecord = async () => {
     if (!audioUrl || !audioRecordRef.current) return;
+
+    const audioEl = audioRecordRef.current as HTMLAudioElement;
+
     try {
-      await audioRecordRef.current.play();
+      const handleEnded = () => {
+        setRecorderState("idle");
+      };
+      audioEl.removeEventListener("ended", handleEnded);
+      audioEl.addEventListener("ended", handleEnded);
+
+      await audioEl.play();
       setRecorderState("playing");
     } catch (e) {
       console.error(e);

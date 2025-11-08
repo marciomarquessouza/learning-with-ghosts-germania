@@ -1,16 +1,15 @@
-import { LessonStepType } from "@/types";
-import { AudioButton } from "./AudioButton";
+import { AudioButton, AudioButtonTypes } from "./AudioButton";
 import { popClass } from "../../../../utils/popClass";
 
 export interface AudioPlaybackContainerProps {
   showAudioButton: boolean;
-  stepType: LessonStepType;
+  iconType: AudioButtonTypes;
   isPlaying: boolean;
   onClickAudio: () => void;
 }
 export function AudioPlaybackContainer({
   showAudioButton,
-  stepType,
+  iconType,
   isPlaying,
   onClickAudio,
 }: AudioPlaybackContainerProps) {
@@ -22,7 +21,7 @@ export function AudioPlaybackContainer({
       ].join(" ")}
     >
       <AudioButton
-        stepType={stepType}
+        type={iconType}
         isPlaying={isPlaying}
         onClick={onClickAudio}
       />
