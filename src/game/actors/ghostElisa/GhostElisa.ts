@@ -7,6 +7,7 @@ import { ActorPayload } from "../types/Actor";
 import { createKeyMap } from "@/utils/createKeyMap";
 import { CHARACTERS } from "@/constants/game";
 import { HUD_ITEMS } from "@/game/scenes/hud";
+import { lessonEvents } from "@/events/lessonEvents";
 
 export const KEY_CODES = Phaser.Input.Keyboard.KeyCodes;
 
@@ -16,6 +17,7 @@ export interface ElisaPayload extends ActorPayload {
 }
 
 export class GhostElisa {
+  public lockInteractions = false;
   private elisaSprite: Phaser.Physics.Arcade.Sprite | null = null;
   private dayActions: DayActions | null = null;
   private cursors: Phaser.Types.Input.Keyboard.CursorKeys | null = null;
@@ -40,12 +42,22 @@ export class GhostElisa {
       this.showGameMessage,
       this.closeGameMessage
     );
-    this.keyMap = createKeyMap(scene, [KEY_CODES.E]);
+    this.keyMap = createKeyMap(scene, [KEY_CODES.K]);
 
     gameEvents.on("set-mood", ({ mood, character }) => {
       if (character === CHARACTERS.ELISA) {
         elisaAnimations.setAnimationByMood(mood);
       }
+    });
+
+    lessonEvents.on("show-lesson", () => {
+      this.keyMap = createKeyMap(scene, []);
+      this.lockInteractions = true;
+    });
+
+    lessonEvents.on("hide-lesson", () => {
+      this.keyMap = createKeyMap(scene, [KEY_CODES.E]);
+      this.lockInteractions = false;
     });
   }
 
@@ -70,6 +82,7 @@ export class GhostElisa {
     }
 
     if (
+      !this.lockInteractions &&
       elisaInteractionArea.isOverlapping &&
       (this.cursors?.space.isDown || this.keyMap?.E?.isDown)
     ) {

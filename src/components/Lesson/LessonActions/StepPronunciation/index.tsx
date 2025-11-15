@@ -5,7 +5,6 @@ import { useReferenceAudioV2 } from "@/libs/audio/useReferenceAudioV2";
 import { useAudioRecorderV2 } from "@/libs/audio/useAudioRecorderV2";
 import { useAudioScoreV2 } from "@/libs/audio/useAudioScoreV2";
 import { PronunciationDialog } from "./PronunciationDialog";
-import { LessonCTA } from "../common/LessonCTA";
 import { PronunciationFeedback } from "./PronunciationFeedback";
 import { Button } from "@/components/Button";
 

@@ -24,8 +24,8 @@ export const lesson: Lesson = {
         },
         {
           type: "writing",
-          text: `Type it exactly as you heard it: Hallo. (Capital H, then “allo”.)`,
-          instruction: "Escreva Hallo corretamente... ou será punido.",
+          text: `Vamos agora para um desafio de memória. Escute e escrevva`,
+          instruction: "Escreva o que você escutar neste {{audio|Audio}} .",
         },
       ],
       phase: "visible",
@@ -41,11 +41,6 @@ export const lesson: Lesson = {
           text: `“Guten Tag” is a polite daytime greeting (roughly late morning to late afternoon). Slightly more formal than “Hallo”.`,
           instruction:
             "Escute com atenção — imagine-se encontrando alguém importante.",
-        },
-        {
-          type: "listening",
-          text: `Pronunciation: GOO-ten tahk. “Guten” has a long “oo”; “Tag” ends with a hard “k” sound. I’ll say it 3 times. Listen for the crisp “k” at the end.`,
-          instruction: "Concentre-se no final forte de “Tag”.",
         },
         {
           type: "pronunciation",

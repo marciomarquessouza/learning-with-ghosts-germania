@@ -5,6 +5,7 @@ import { ghostShadow } from "./helpers/GhostShadow";
 import { CHARACTERS } from "@/constants/game";
 import { ActorPayload } from "../types/Actor";
 import { createKeyMap } from "@/utils/createKeyMap";
+import { lessonEvents } from "@/events/lessonEvents";
 
 export const KEY_CODES = Phaser.Input.Keyboard.KeyCodes;
 
@@ -36,6 +37,14 @@ export class GhostJosef {
     });
 
     gameEvents.on("hide-dialogue", () => {
+      this.lockMovement = false;
+    });
+
+    lessonEvents.on("show-lesson", () => {
+      this.lockMovement = true;
+    });
+
+    lessonEvents.on("hide-lesson", () => {
       this.lockMovement = false;
     });
 
