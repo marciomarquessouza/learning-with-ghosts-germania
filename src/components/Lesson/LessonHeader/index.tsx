@@ -42,7 +42,7 @@ export function LessonHeader({
 
   return (
     <>
-      <div className="fixed left-0 top-20 z-[60] w-screen -translate-y-1/2">
+      <div className="fixed left-0 top-20 w-screen -translate-y-1/2">
         <div
           className={`${isEntering ? "anim-slide-in" : "anim-slide-out"}`}
           onAnimationEnd={(e) => {

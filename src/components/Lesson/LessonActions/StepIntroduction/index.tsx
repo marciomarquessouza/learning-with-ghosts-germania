@@ -1,6 +1,6 @@
+import { useCallback, useState } from "react";
 import { LessonEntry, LessonEntryStep } from "@/types";
 import { LessonCTA } from "../common/LessonCTA";
-import { useCallback, useEffect, useState } from "react";
 import { useAudioPlayback } from "@/libs/audio/useAudioPlayback";
 import { useTimeline } from "@/hooks/useTimeline";
 import { LessonEntryInstruction } from "../common/LessonEntryInstruction";
@@ -8,19 +8,18 @@ import { LessonEntryLeft } from "../common/LessonEntryLeft";
 import { LessonEntryRight } from "../common/LessonEntryRight";
 import { AudioPlaybackContainer } from "../common/AudioPlaybackContainer";
 import { LessonActionContainer } from "../common/LessonActionContainer";
+import { DialogContainer } from "../common/DialogContainer";
 
 export interface StepIntroductionProps {
   lessonEntry: Omit<LessonEntry, "steps">;
   lessonStep: LessonEntryStep;
-  show: boolean;
-  onClick: () => void;
+  onClickNext: () => void;
 }
 
 export function StepIntroduction({
   lessonEntry,
   lessonStep,
-  show,
-  onClick,
+  onClickNext,
 }: StepIntroductionProps) {
   const [visible, setVisible] = useState(false);
   const { play, isPlaying } = useAudioPlayback();
@@ -54,16 +53,10 @@ export function StepIntroduction({
     play(audio);
   }, [audio, play]);
 
-  useEffect(() => {
-    if (show && !visible) setVisible(true);
-  }, [show, visible]);
-
   const isLong = reference.length > 12 || target.length > 12;
 
-  if (!visible) return null;
-
   return (
-    <>
+    <DialogContainer onAnimationComplete={() => setVisible(true)}>
       <LessonActionContainer title="Introduction">
         <LessonEntryInstruction
           audio={audio}
@@ -90,7 +83,7 @@ export function StepIntroduction({
           )}
         </div>
       </LessonActionContainer>
-      <LessonCTA label="NEXT" icon="►" onClick={onClick} />
-    </>
+      <LessonCTA label="NEXT" icon="►" onClick={onClickNext} />
+    </DialogContainer>
   );
 }

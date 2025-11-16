@@ -1,6 +1,7 @@
 interface ButtonProps {
   label: string;
   labelIcon?: string;
+  iconPosition?: "start" | "end";
   color?: string;
   onClick: () => void;
 }
@@ -8,6 +9,7 @@ interface ButtonProps {
 export function Button({
   label,
   labelIcon,
+  iconPosition = "end",
   color = "bg-[#B40F00] hover:bg-[#941729]",
   onClick,
 }: ButtonProps) {
@@ -19,9 +21,14 @@ export function Button({
       type="button"
       onClick={onClick}
     >
+      {labelIcon && iconPosition === "start" && (
+        <span aria-hidden> {labelIcon}</span>
+      )}
       {label}
       {"  "}
-      {labelIcon ?? <span aria-hidden> {labelIcon}</span>}
+      {labelIcon && iconPosition === "end" && (
+        <span aria-hidden> {labelIcon}</span>
+      )}
     </button>
   );
 }

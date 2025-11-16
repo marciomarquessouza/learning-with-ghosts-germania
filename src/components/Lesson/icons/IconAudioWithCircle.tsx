@@ -3,12 +3,16 @@ import * as React from "react";
 type Props = React.SVGProps<SVGSVGElement> & {
   isPlaying?: boolean;
   bars?: number;
+  circleColor?: string;
+  iconColor?: string;
 };
 
 export const IconAudioWithCircle: React.FC<Props> = ({
   isPlaying = false,
   bars = 5,
   className = "",
+  circleColor = "#fff",
+  iconColor = "#111",
   ...props
 }) => {
   const count = Math.min(Math.max(bars, 3), 9);
@@ -59,7 +63,7 @@ export const IconAudioWithCircle: React.FC<Props> = ({
         }
       `}</style>
 
-      <circle cx="20" cy="20" r="20" fill="#fff" />
+      <circle cx="20" cy="20" r="20" fill={circleColor} />
 
       {isPlaying ? (
         <g>
@@ -83,14 +87,14 @@ export const IconAudioWithCircle: React.FC<Props> = ({
       ) : (
         <g>
           <path
-            fill="#111"
-            stroke="#111"
+            fill={iconColor}
+            stroke={iconColor}
             strokeLinejoin="round"
             strokeWidth="1.934"
             d="M20.235 10.326 13.6 16.064H7.32v7.385h6.185l6.73 5.822z"
           ></path>{" "}
           <path
-            stroke="#111"
+            stroke={iconColor}
             strokeLinecap="round"
             strokeWidth="1.5"
             fill="none"

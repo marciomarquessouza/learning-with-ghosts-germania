@@ -7,12 +7,12 @@ import { useAudioScoreV2 } from "@/libs/audio/useAudioScoreV2";
 import { PronunciationDialog } from "./PronunciationDialog";
 import { PronunciationFeedback } from "./PronunciationFeedback";
 import { Button } from "@/components/Button";
+import { DialogContainer } from "../common/DialogContainer";
 
 export interface StepPronunciationProps {
   lessonEntry: Omit<LessonEntry, "steps">;
   lessonStep: LessonEntryStep;
-  show: boolean;
-  onClick: () => void;
+  onClickNext: () => void;
 }
 
 type Phases = "pronunciation" | "result";
@@ -20,9 +20,9 @@ type Phases = "pronunciation" | "result";
 export function StepPronunciation({
   lessonEntry,
   lessonStep,
-  show,
-  onClick,
+  onClickNext,
 }: StepPronunciationProps) {
+  const [visible, setVisible] = useState(false);
   const [phase, setPhase] = useState<Phases>("pronunciation");
   const [waitingRecord, setWaitingRecord] = useState(false);
   const { audioBufferReference, loading, error } = useReferenceAudioV2(
@@ -93,12 +93,10 @@ export function StepPronunciation({
     }
   }, [score]);
 
-  if (!show) return null;
-
   return (
-    <>
+    <DialogContainer onAnimationComplete={() => setVisible(true)}>
       <LessonActionContainer title="Pronunciation">
-        {phase === "pronunciation" && (
+        {visible && phase === "pronunciation" && (
           <PronunciationDialog
             lessonEntry={lessonEntry}
             lessonStep={lessonStep}
@@ -107,7 +105,7 @@ export function StepPronunciation({
             onRecord={handleRecording}
           />
         )}
-        {phase === "result" && !!score && (
+        {visible && phase === "result" && !!score && (
           <PronunciationFeedback
             scoreResult={score}
             lessonEntry={lessonEntry}
@@ -134,11 +132,11 @@ export function StepPronunciation({
                 ? "bg-[#976ED4] hover:bg-[#6700FF]"
                 : "bg-[#B40F00] hover:bg-[#941729]"
             }
-            onClick={onClick}
+            onClick={onClickNext}
           />
         </div>
       </div>
       <audio ref={audioRecordRef} preload="metadata" className="hidden" />
-    </>
+    </DialogContainer>
   );
 }
