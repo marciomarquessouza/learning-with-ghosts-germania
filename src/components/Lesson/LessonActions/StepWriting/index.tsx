@@ -70,7 +70,7 @@ export function StepWriting({
           exit={{ opacity: 0, scale: 0.95 }}
           transition={{ duration: 0.4, ease: "linear" }}
         >
-          <div className="absolute inset-0 bg-[#D9D9D9]/30 pointer-events-none" />
+          <div className="absolute inset-0 bg-[#D9D9D9]/55 pointer-events-none" />
           <div className="relative justify-center items-center px-6 py-4">
             <AudioPlayback audio={audio} />
             <AnswerContainer
