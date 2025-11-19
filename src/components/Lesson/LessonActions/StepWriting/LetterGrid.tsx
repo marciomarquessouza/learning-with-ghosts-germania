@@ -2,9 +2,11 @@ import { useMemo } from "react";
 import { createLetterGrid, LetterSlot } from "./utils/createLetterGrid";
 import { AnswerHighlightCircle } from "./AnswerHighlightCircle";
 import { motion } from "framer-motion";
+import { PreparedTarget } from "./utils/prepareTarget";
 
 export interface LetterGridProps {
   target: string;
+  preparedTarget: PreparedTarget;
   answerIndexes: number[];
   clearIndexes: () => void;
   onClickSlot: (slot: LetterSlot) => void;
@@ -13,6 +15,18 @@ export interface LetterGridProps {
 
 const CELL_SIZE = 96;
 const GAP = 8;
+
+const WORD_COLORS = [
+  "#FFB300",
+  "#1BA9F5",
+  "#D726FF",
+  "#9AF50F",
+  "#E92E2E",
+  "#FF8A00",
+  "#FFA733",
+  "#E69900",
+  "#D68A00",
+];
 
 type Point = { x: number; y: number };
 
@@ -25,13 +39,19 @@ function getCenter(row: number, col: number): Point {
 export function LetterGrid({
   target,
   answerIndexes,
+  preparedTarget,
   onClickSlot,
   clearIndexes,
   removeIndex,
 }: LetterGridProps) {
   const grid = useMemo(
-    () => createLetterGrid({ target, size: { h: 4, w: 4 } }),
-    [target]
+    () =>
+      createLetterGrid({
+        target,
+        preparedTarget,
+        size: { h: 4, w: 4 },
+      }),
+    [target, preparedTarget]
   );
 
   const handleOnClickSlot = (slot: LetterSlot) => {
@@ -53,29 +73,55 @@ export function LetterGrid({
   };
 
   const lineSegments = useMemo(() => {
-    const indexToPosition: Record<number, { row: number; col: number }> = {};
+    const indexToInfo: Record<
+      number,
+      { row: number; col: number; wordIndex: number }
+    > = {};
 
     grid.forEach((rowSlots, row) => {
       rowSlots.forEach((slot, col) => {
         if (slot.index !== null && slot.isAnswer) {
-          indexToPosition[slot.index] = { row, col };
+          indexToInfo[slot.index] = {
+            row,
+            col,
+            wordIndex: slot.wordIndex!,
+          };
         }
       });
     });
 
-    const points: Point[] = [];
+    const points: { point: Point; wordIndex: number }[] = [];
 
     answerIndexes.forEach((answerIndex) => {
-      const position = indexToPosition[answerIndex];
-      if (!position) return;
-      points.push(getCenter(position.row, position.col));
+      const info = indexToInfo[answerIndex];
+      if (!info) return;
+      points.push({
+        point: getCenter(info.row, info.col),
+        wordIndex: info.wordIndex,
+      });
     });
 
     if (points.length < 2) return [];
 
-    const segments: { from: Point; to: Point; key: number }[] = [];
-    for (let i = 0; i < points.length - 1; i += 1) {
-      segments.push({ from: points[i], to: points[i + 1], key: i });
+    const segments: {
+      from: Point;
+      to: Point;
+      key: number;
+      wordIndex: number;
+    }[] = [];
+
+    for (let i = 0; i < points.length - 1; i++) {
+      const curr = points[i];
+      const next = points[i + 1];
+
+      if (curr.wordIndex === next.wordIndex) {
+        segments.push({
+          from: curr.point,
+          to: next.point,
+          key: i,
+          wordIndex: curr.wordIndex,
+        });
+      }
     }
 
     return segments;
@@ -93,14 +139,14 @@ export function LetterGrid({
             width={svgWidth}
             height={svgHeight}
           >
-            {lineSegments.map(({ from, to, key }) => (
+            {lineSegments.map(({ from, to, key, wordIndex }) => (
               <motion.line
                 key={key}
                 x1={from.x}
                 y1={from.y}
                 x2={to.x}
                 y2={to.y}
-                stroke="#FFB300"
+                stroke={WORD_COLORS[wordIndex % WORD_COLORS.length]}
                 strokeWidth={40}
                 strokeLinecap="round"
                 opacity={0.5}
@@ -126,7 +172,9 @@ export function LetterGrid({
                 onClick={() => handleOnClickSlot(slot)}
               >
                 {slot.isAnswer && answerIndexes.includes(slot.index!) && (
-                  <AnswerHighlightCircle />
+                  <AnswerHighlightCircle
+                    color={WORD_COLORS[slot?.wordIndex || 0]}
+                  />
                 )}
                 <p className="font-primary text-4xl text-[#FFF3E4] relative z-30">
                   {slot.letter.toUpperCase()}

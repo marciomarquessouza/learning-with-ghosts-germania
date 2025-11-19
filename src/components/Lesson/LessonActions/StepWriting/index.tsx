@@ -1,11 +1,12 @@
 import { LessonEntry, LessonEntryStep } from "@/types";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { AudioPlayback } from "./AudioPlayback";
 import { AnswerContainer } from "./AnswerContainer";
 import { LetterGrid } from "./LetterGrid";
 import { LetterSlot } from "./utils/createLetterGrid";
 import { BoardControls } from "./BoardControls";
+import { prepareTarget } from "./utils/prepareTarget";
 
 export interface StepWritingProps {
   show?: boolean;
@@ -25,6 +26,7 @@ export function StepWriting({
   const boxRef = useRef<HTMLDivElement>(null);
   const { audio, target } = lessonEntry;
   const [phase, setPhase] = useState<Phases>("writing");
+  const preparedTarget = useMemo(() => prepareTarget(target), [target]);
 
   const handleBackspace = () => {
     const items = [...answerIndexes];
@@ -75,11 +77,12 @@ export function StepWriting({
             <AudioPlayback audio={audio} />
             <AnswerContainer
               answerIndexes={answerIndexes}
-              target={target}
+              preparedTarget={preparedTarget}
               onBackspace={handleBackspace}
             />
             <LetterGrid
               target={target}
+              preparedTarget={preparedTarget}
               answerIndexes={answerIndexes}
               clearIndexes={handleClearIndexes}
               removeIndex={handleRemoveIndex}

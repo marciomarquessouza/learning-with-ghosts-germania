@@ -1,5 +1,6 @@
 import { generateAnswerPath } from "./generateAnswerPath";
 import { generateFallbackPath } from "./generateFallbackPath";
+import { PreparedTarget } from "./prepareTarget";
 
 export type GridSize = {
   h: number;
@@ -10,11 +11,13 @@ export type LetterSlot = {
   letter: string;
   index: number | null; // position in the target word (ignoring spaces)
   isAnswer: boolean;
+  wordIndex?: number | null;
 };
 
-type UseLetterGridArgs = {
+type LetterGridArgs = {
   target: string;
   size: GridSize;
+  preparedTarget: PreparedTarget;
 };
 
 export type Coordinate = { row: number; col: number };
@@ -35,8 +38,10 @@ export const directions: Coordinate[] = [
 export function createLetterGrid({
   target,
   size,
-}: UseLetterGridArgs): LetterSlot[][] {
-  const sanitizedTarget = target.replace(/\s+/g, "").toUpperCase();
+  preparedTarget,
+}: LetterGridArgs): LetterSlot[][] {
+  const { sanitizedTarget, wordIndexes } = preparedTarget;
+
   const answerLength = sanitizedTarget.length;
 
   const totalCells = size.h * size.w;
@@ -66,6 +71,7 @@ export function createLetterGrid({
       letter: character,
       index: answerIndex,
       isAnswer: true,
+      wordIndex: wordIndexes[answerIndex],
     };
   });
 

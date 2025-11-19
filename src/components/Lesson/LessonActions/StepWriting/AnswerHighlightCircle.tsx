@@ -1,6 +1,10 @@
 import { useEffect, useState } from "react";
 
-export function AnswerHighlightCircle() {
+interface AnswerHighlightCircleProps {
+  color: string;
+}
+
+export function AnswerHighlightCircle({ color }: AnswerHighlightCircleProps) {
   const [isVisible, setIsVisible] = useState(false);
 
   useEffect(() => {
@@ -13,11 +17,11 @@ export function AnswerHighlightCircle() {
         "absolute",
         "h-16 w-16",
         "rounded-full",
-        "bg-[#FFB300]",
         "transition-transform duration-150 ease-out",
         isVisible ? "scale-100" : "scale-0",
         "z-20",
       ].join(" ")}
+      style={{ backgroundColor: color }}
     />
   );
 }
