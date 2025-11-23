@@ -38,7 +38,7 @@ export function AnswerContainer({
               "flex items-center justify-center",
               "h-7 mx-1 px-2 w-8",
               "border-2 border-dotted border-t-0 border-x-0 outline-white",
-              hasSpaceAfter ? "mr-6" : "",
+              hasSpaceAfter ? "mr-4" : "",
             ].join(" ")}
           >
             <p className="font-mono text-2xl">
