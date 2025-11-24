@@ -1,5 +1,8 @@
 import { Button } from "@/components/Button";
 import { Phases } from ".";
+import { useMemo } from "react";
+
+type BtnDetails = { label: string; color?: string; labelIcon?: string };
 
 export interface BoardControlsProps {
   phase: Phases;
@@ -16,28 +19,54 @@ export function BoardControls({
   onClickRetry,
   onClickPrevious,
 }: BoardControlsProps) {
+  const btnDetails = useMemo((): {
+    back: BtnDetails;
+    clear: BtnDetails;
+    next: BtnDetails;
+  } => {
+    switch (phase) {
+      case "result:correct":
+        return {
+          back: {
+            label: "BACK",
+            labelIcon: "◄",
+          },
+          clear: {
+            label: "RETRY",
+          },
+          next: {
+            label: "NEXT",
+            labelIcon: "►",
+            color: "bg-[#00A86B] hover:bg-[#009D46]",
+          },
+        };
+      case "writing":
+      default:
+        return {
+          back: {
+            label: "BACK",
+            labelIcon: "◄",
+          },
+          clear: {
+            label: "CLEAR",
+          },
+          next: {
+            label: "SKIP",
+            color: "bg-[#976ED4] hover:bg-[#6700FF]",
+            labelIcon: "⏭",
+          },
+        };
+    }
+  }, [phase]);
+
   return (
     <div className="w-full flex justify-between gap-2 my-2">
+      <Button {...btnDetails.back} onClick={onClickPrevious} />
       <Button
-        label="BACK"
-        labelIcon="◄"
-        iconPosition="start"
-        onClick={onClickPrevious}
-      />
-      <Button
-        label={phase === "result:correct" ? "RETRY" : "CLEAR"}
+        {...btnDetails.clear}
         onClick={phase === "result:correct" ? onClickRetry : onClickClear}
       />
-      <Button
-        label={phase === "writing" ? "SKIP" : "NEXT"}
-        labelIcon={phase === "writing" ? "⏭" : "►"}
-        color={
-          phase === "result:correct"
-            ? "bg-[#00A86B] hover:bg-[#00A86B]"
-            : "bg-[#B40F00] hover:bg-[#941729]"
-        }
-        onClick={onClickNext}
-      />
+      <Button {...btnDetails.next} onClick={onClickNext} />
     </div>
   );
 }
