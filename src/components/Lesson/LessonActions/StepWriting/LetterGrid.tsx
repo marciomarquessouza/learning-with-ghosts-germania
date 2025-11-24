@@ -3,43 +3,33 @@ import { createLetterGrid, LetterSlot } from "./utils/createLetterGrid";
 import { AnswerHighlightCircle } from "./AnswerHighlightCircle";
 import { motion } from "framer-motion";
 import { PreparedTarget } from "./utils/prepareTarget";
+import { getWordColor } from "./utils/getWordColor";
+import { getCenter } from "./utils/getCenter";
+import { DEFAULT_SLOT_QNT_H, DEFAULT_SLOT_QNT_W } from ".";
 
+export type Point = { x: number; y: number };
 export interface LetterGridProps {
   target: string;
   preparedTarget: PreparedTarget;
   answerIndexes: number[];
+  slotQntW?: number;
+  slotQntH?: number;
+  nextIndex: number;
   clearIndexes: () => void;
   onClickSlot: (slot: LetterSlot) => void;
   removeIndex: (index: number) => void;
 }
 
-const CELL_SIZE = 96;
-const GAP = 8;
-
-const WORD_COLORS = [
-  "#FFB300",
-  "#1BA9F5",
-  "#D726FF",
-  "#9AF50F",
-  "#E92E2E",
-  "#FF8A00",
-  "#FFA733",
-  "#E69900",
-  "#D68A00",
-];
-
-type Point = { x: number; y: number };
-
-function getCenter(row: number, col: number): Point {
-  const x = col * (CELL_SIZE + GAP) + CELL_SIZE / 2;
-  const y = row * (CELL_SIZE + GAP) + CELL_SIZE / 2;
-  return { x, y };
-}
+export const CELL_SIZE = 96;
+export const GAP = 8;
 
 export function LetterGrid({
   target,
   answerIndexes,
   preparedTarget,
+  nextIndex,
+  slotQntW = DEFAULT_SLOT_QNT_W,
+  slotQntH = DEFAULT_SLOT_QNT_H,
   onClickSlot,
   clearIndexes,
   removeIndex,
@@ -49,13 +39,17 @@ export function LetterGrid({
       createLetterGrid({
         target,
         preparedTarget,
-        size: { h: 4, w: 4 },
+        size: { h: slotQntH, w: slotQntW },
       }),
-    [target, preparedTarget]
+    [target, preparedTarget, slotQntH, slotQntW]
   );
 
   const handleOnClickSlot = (slot: LetterSlot) => {
     const { isAnswer, index } = slot;
+
+    if (index === 0) {
+      return;
+    }
 
     if (!isAnswer || index == null) {
       clearIndexes();
@@ -69,7 +63,19 @@ export function LetterGrid({
       return;
     }
 
-    onClickSlot(slot);
+    const isFirst = nextIndex === 0;
+
+    if (isFirst && index === 0) {
+      onClickSlot(slot);
+      return;
+    }
+
+    if (!isFirst && index === nextIndex) {
+      onClickSlot(slot);
+      return;
+    }
+
+    clearIndexes();
   };
 
   const lineSegments = useMemo(() => {
@@ -90,25 +96,28 @@ export function LetterGrid({
       });
     });
 
-    const points: { point: Point; wordIndex: number }[] = [];
+    const points: {
+      point: Point;
+      wordIndex: number;
+      answerIndex: number;
+    }[] = [];
 
     answerIndexes.forEach((answerIndex) => {
       const info = indexToInfo[answerIndex];
       if (!info) return;
+
       points.push({
         point: getCenter(info.row, info.col),
         wordIndex: info.wordIndex,
+        answerIndex,
       });
     });
 
     if (points.length < 2) return [];
 
-    const segments: {
-      from: Point;
-      to: Point;
-      key: number;
-      wordIndex: number;
-    }[] = [];
+    points.sort((a, b) => a.answerIndex - b.answerIndex);
+
+    const segments = [];
 
     for (let i = 0; i < points.length - 1; i++) {
       const curr = points[i];
@@ -127,8 +136,14 @@ export function LetterGrid({
     return segments;
   }, [grid, answerIndexes]);
 
-  const svgWidth = CELL_SIZE * 4 + GAP * 3;
-  const svgHeight = CELL_SIZE * 4 + GAP * 3;
+  const svgWidth = useMemo(
+    () => slotQntW * CELL_SIZE + (slotQntW - 1) * GAP,
+    [slotQntW]
+  );
+  const svgHeight = useMemo(
+    () => slotQntH * CELL_SIZE + (slotQntH - 1) * GAP,
+    [slotQntH]
+  );
 
   return (
     <div className="bg-black w-full p-4 flex flex-col justify-center items-center">
@@ -146,7 +161,7 @@ export function LetterGrid({
                 y1={from.y}
                 x2={to.x}
                 y2={to.y}
-                stroke={WORD_COLORS[wordIndex % WORD_COLORS.length]}
+                stroke={getWordColor(wordIndex)}
                 strokeWidth={40}
                 strokeLinecap="round"
                 opacity={0.5}
@@ -168,12 +183,13 @@ export function LetterGrid({
                   "bg-[#B40F00]",
                   "flex justify-center items-center",
                   "h-24 w-24 mx-1 cursor-pointer",
+                  "shrink-0",
                 ].join(" ")}
                 onClick={() => handleOnClickSlot(slot)}
               >
                 {slot.isAnswer && answerIndexes.includes(slot.index!) && (
                   <AnswerHighlightCircle
-                    color={WORD_COLORS[slot?.wordIndex || 0]}
+                    color={getWordColor(slot?.wordIndex || 0)}
                   />
                 )}
                 <p className="font-primary text-4xl text-[#FFF3E4] relative z-30">
