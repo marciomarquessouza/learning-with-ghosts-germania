@@ -50,9 +50,13 @@ export function StepWriting({
   };
 
   const handleClearIndexes = () => {
-    if (phase !== "writing") {
-      setPhase("writing");
-    }
+    if (phase !== "writing") return;
+    setNextIndex(1);
+    setAnswerIndexes([0]);
+  };
+
+  const handleRetry = () => {
+    setPhase("writing");
     setNextIndex(1);
     setAnswerIndexes([0]);
   };
@@ -121,6 +125,7 @@ export function StepWriting({
             <BoardControls
               phase={phase}
               onClickNext={onClickNext}
+              onClickRetry={handleRetry}
               onClickClear={handleClearIndexes}
               onClickPrevious={() => {}}
             />

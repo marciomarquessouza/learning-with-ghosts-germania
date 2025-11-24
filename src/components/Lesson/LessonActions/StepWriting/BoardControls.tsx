@@ -5,6 +5,7 @@ export interface BoardControlsProps {
   phase: Phases;
   onClickPrevious: () => void;
   onClickClear: () => void;
+  onClickRetry: () => void;
   onClickNext: () => void;
 }
 
@@ -12,6 +13,7 @@ export function BoardControls({
   phase,
   onClickNext,
   onClickClear,
+  onClickRetry,
   onClickPrevious,
 }: BoardControlsProps) {
   return (
@@ -24,7 +26,7 @@ export function BoardControls({
       />
       <Button
         label={phase === "result:correct" ? "RETRY" : "CLEAR"}
-        onClick={onClickClear}
+        onClick={phase === "result:correct" ? onClickRetry : onClickClear}
       />
       <Button
         label={phase === "writing" ? "SKIP" : "NEXT"}
