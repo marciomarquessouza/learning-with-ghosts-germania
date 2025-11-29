@@ -16,6 +16,7 @@ export interface LetterGridProps {
   slotQntH?: number;
   nextIndex: number;
   clearIndexes: () => void;
+  onError: () => void;
   onClickSlot: (slot: LetterSlot) => void;
   removeIndex: (index: number) => void;
 }
@@ -31,6 +32,7 @@ export function LetterGrid({
   slotQntW = DEFAULT_SLOT_QNT_W,
   slotQntH = DEFAULT_SLOT_QNT_H,
   onClickSlot,
+  onError,
   clearIndexes,
   removeIndex,
 }: LetterGridProps) {
@@ -52,7 +54,7 @@ export function LetterGrid({
     }
 
     if (!isAnswer || index == null) {
-      clearIndexes();
+      onError();
       return;
     }
 

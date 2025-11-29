@@ -1,23 +1,23 @@
 import { Button } from "@/components/Button";
 import { Phases } from ".";
-import { useMemo } from "react";
+import { useCallback, useMemo } from "react";
 
 type BtnDetails = { label: string; color?: string; labelIcon?: string };
 
 export interface BoardControlsProps {
   phase: Phases;
   onClickPrevious: () => void;
-  onClickClear: () => void;
   onClickRetry: () => void;
   onClickNext: () => void;
+  onClickTip: () => void;
 }
 
 export function BoardControls({
   phase,
   onClickNext,
-  onClickClear,
   onClickRetry,
   onClickPrevious,
+  onClickTip,
 }: BoardControlsProps) {
   const btnDetails = useMemo((): {
     back: BtnDetails;
@@ -40,6 +40,23 @@ export function BoardControls({
             color: "bg-[#00A86B] hover:bg-[#009D46]",
           },
         };
+      case "result:fail":
+        return {
+          back: {
+            label: "BACK",
+            labelIcon: "◄",
+          },
+          clear: {
+            label: "RETRY",
+            labelIcon: "↻ ",
+            color: "bg-[#976ED4] hover:bg-[#6700FF]",
+          },
+          next: {
+            label: "SKIP",
+            color: "bg-[#976ED4] hover:bg-[#6700FF]",
+            labelIcon: "⏭",
+          },
+        };
       case "writing":
       default:
         return {
@@ -48,7 +65,7 @@ export function BoardControls({
             labelIcon: "◄",
           },
           clear: {
-            label: "CLEAR",
+            label: "TIP",
           },
           next: {
             label: "SKIP",
@@ -59,13 +76,26 @@ export function BoardControls({
     }
   }, [phase]);
 
+  const handleOnClickMiddleButton = useCallback(() => {
+    switch (phase) {
+      case "result:fail":
+      case "result:correct":
+        onClickRetry();
+        break;
+      case "writing":
+        onClickTip();
+        break;
+    }
+  }, [phase, onClickRetry, onClickTip]);
+
   return (
     <div className="w-full flex justify-between gap-2 my-2">
-      <Button {...btnDetails.back} onClick={onClickPrevious} />
       <Button
-        {...btnDetails.clear}
-        onClick={phase === "result:correct" ? onClickRetry : onClickClear}
+        {...btnDetails.back}
+        onClick={onClickPrevious}
+        iconPosition="start"
       />
+      <Button {...btnDetails.clear} onClick={handleOnClickMiddleButton} />
       <Button {...btnDetails.next} onClick={onClickNext} />
     </div>
   );

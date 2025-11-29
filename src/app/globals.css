@@ -24,6 +24,16 @@
   font-style: normal;
 }
 
+@keyframes fadeOut {
+  0% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  100% {
+    opacity: 0;
+    transform: scale(0.85);
+  }
+}
 @keyframes scene-intro-slide-in {
   from {
     transform: translateX(-100vw);
@@ -84,4 +94,7 @@ body {
 }
 .anim-has-delay {
   animation-delay: var(--anim-delay);
+}
+.fade-out-500 {
+  animation: fadeOut 0.5s ease-in-out forwards;
 }

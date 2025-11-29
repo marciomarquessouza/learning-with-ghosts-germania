@@ -1,3 +1,4 @@
+import { useMemo } from "react";
 import { Phases } from ".";
 import { IconBackspace } from "../../icons/IconBackspace";
 import { isSpace } from "./utils/isSpace";
@@ -21,6 +22,18 @@ export function AnswerContainer({
   const letters = preparedTarget.sanitizedTarget.toUpperCase().split("");
   const answerIndexSet = new Set(answerIndexes);
 
+  const backgroundColor = useMemo(() => {
+    switch (phase) {
+      case "result:correct":
+        return "#00A86B";
+      case "result:fail":
+        return "#000";
+      case "writing":
+      default:
+        return "#000";
+    }
+  }, [phase]);
+
   return (
     <div
       className={[
@@ -30,7 +43,7 @@ export function AnswerContainer({
         "relative",
       ].join(" ")}
       style={{
-        backgroundColor: phase === "result:correct" ? "#00A86B" : "#000",
+        backgroundColor,
       }}
     >
       {letters.map((character, index) => {
@@ -45,6 +58,11 @@ export function AnswerContainer({
               "border-2 border-dotted border-t-0 border-x-0 outline-white",
               hasSpaceAfter ? "mr-4" : "",
             ].join(" ")}
+            style={{
+              color: phase === "result:fail" ? "#941729" : "#fff",
+              borderColor: "#fff",
+              fontWeight: phase === "result:fail" ? "bold" : "normal",
+            }}
           >
             <p className="font-mono text-2xl">
               {answerIndexSet.has(index) ? character : ""}

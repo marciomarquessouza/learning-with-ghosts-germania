@@ -1,5 +1,5 @@
 import { LessonEntry, LessonEntryStep } from "@/types";
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { AudioPlayback } from "./AudioPlayback";
 import { AnswerContainer } from "./AnswerContainer";
@@ -8,6 +8,8 @@ import { LetterSlot } from "./utils/createLetterGrid";
 import { BoardControls } from "./BoardControls";
 import { prepareTarget } from "./utils/prepareTarget";
 import { balanceGrind } from "./utils/balanceGrid";
+import { CornerLeft } from "./CornerLeft";
+import { CornerRight } from "./CornerRight";
 
 export interface StepWritingProps {
   show?: boolean;
@@ -18,6 +20,8 @@ export interface StepWritingProps {
 
 export type Phases = "writing" | "result:correct" | "result:fail";
 export const DEFAULT_SLOT_QNT_W = 4;
+export const DEFAULT_TOTAL_ERRORS = 5;
+export const DEFAULT_TOTAL_TIPS = 3;
 export const DEFAULT_SLOT_QNT_H = 4;
 
 export function StepWriting({
@@ -27,9 +31,11 @@ export function StepWriting({
 }: StepWritingProps) {
   const boxRef = useRef<HTMLDivElement>(null);
   const { audio, target } = lessonEntry;
-  const [phase, setPhase] = useState<Phases>("writing");
   const preparedTarget = useMemo(() => prepareTarget(target), [target]);
+  const [phase, setPhase] = useState<Phases>("writing");
   const [answerIndexes, setAnswerIndexes] = useState<number[]>([0]);
+  const [errors, setErrors] = useState(0);
+  const [tips, setTips] = useState(0);
   const nextIndex = useRef<number>(1);
   const { slotQntH, slotQntW } = useMemo(
     () => balanceGrind(preparedTarget),
@@ -58,6 +64,8 @@ export function StepWriting({
   const handleRetry = () => {
     setPhase("writing");
     setNextIndex(1);
+    setErrors(0);
+    setTips(0);
     setAnswerIndexes([0]);
   };
 
@@ -68,6 +76,25 @@ export function StepWriting({
     setNextIndex(newNextIndex);
     setAnswerIndexes(newIndexes);
   };
+
+  const handleOnError = useCallback(() => {
+    if (phase !== "writing") return;
+    setErrors((state) => state + 1);
+  }, [phase]);
+
+  const handleOnClickTip = useCallback(() => {
+    if (phase !== "writing") return;
+    if (tips < DEFAULT_TOTAL_TIPS) {
+      const lastIndex =
+        answerIndexes.length - 1 > 0
+          ? answerIndexes[answerIndexes.length - 1]
+          : 0;
+      const newIndex = lastIndex + 1;
+      setAnswerIndexes((state) => [...state, newIndex]);
+      setNextIndex(newIndex + 1);
+      setTips((state) => state + 1);
+    }
+  }, [phase, tips, answerIndexes]);
 
   useEffect(() => {
     if (show) {
@@ -85,6 +112,12 @@ export function StepWriting({
       setPhase("result:correct");
     }
   }, [answerIndexes, preparedTarget.sanitizedTarget.length]);
+
+  useEffect(() => {
+    if (errors >= DEFAULT_TOTAL_ERRORS) {
+      setPhase("result:fail");
+    }
+  }, [errors]);
 
   return (
     <AnimatePresence>
@@ -116,6 +149,7 @@ export function StepWriting({
               preparedTarget={preparedTarget}
               answerIndexes={answerIndexes}
               nextIndex={nextIndex.current}
+              onError={handleOnError}
               clearIndexes={handleClearIndexes}
               removeIndex={handleRemoveIndex}
               onClickSlot={handleOnClickSlot}
@@ -126,8 +160,13 @@ export function StepWriting({
               phase={phase}
               onClickNext={onClickNext}
               onClickRetry={handleRetry}
-              onClickClear={handleClearIndexes}
+              onClickTip={handleOnClickTip}
               onClickPrevious={() => {}}
+            />
+            <CornerLeft totalTips={DEFAULT_TOTAL_TIPS} currentTips={tips} />
+            <CornerRight
+              totalErrors={DEFAULT_TOTAL_ERRORS}
+              currentErrors={errors}
             />
           </div>
         </motion.div>
