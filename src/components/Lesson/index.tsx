@@ -6,6 +6,7 @@ import { LessonActions } from "./LessonActions";
 
 function LessonContainer() {
   const {
+    isFirst,
     lessonDetails,
     lessonEntry,
     lessonStep,
@@ -14,6 +15,7 @@ function LessonContainer() {
     visible,
     createLesson,
     nextStep,
+    previousStep,
   } = useLesson();
   const [showActions, setShowActions] = useState(false);
 
@@ -40,6 +42,11 @@ function LessonContainer() {
     nextStep();
   };
 
+  const handlePreviousStep = () => {
+    setShowActions(false);
+    previousStep();
+  };
+
   return (
     <>
       <LessonHeader
@@ -51,11 +58,13 @@ function LessonContainer() {
         onCompleteDescription={handleOnDescriptionComplete}
       />
       <LessonActions
+        isFirst={isFirst}
         show={showActions}
         characterDetails={characterDetails}
         lessonEntry={lessonEntry}
         lessonStep={lessonStep}
         nextStep={handleNextStep}
+        previousStep={handlePreviousStep}
       />
     </>
   );

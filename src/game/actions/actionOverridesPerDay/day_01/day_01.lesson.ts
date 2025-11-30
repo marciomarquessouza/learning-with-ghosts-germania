@@ -69,12 +69,6 @@ export const lesson: Lesson = {
             "Imagine-se chegando a um jantar elegante. Diga com calma.",
         },
         {
-          type: "listening",
-          text: `Pronunciation: GOO-ten AH-bent. The “A” in “Abend” is open (“AH”), and the final “d” is soft. I’ll say it 3 times. Focus on the open “AH”.`,
-          instruction:
-            "Escute e repita mentalmente antes de tentar em voz alta.",
-        },
-        {
           type: "pronunciation",
           text: `Your turn: “Guten Abend”. Keep the rhythm smooth: GOO-ten AH-bent.`,
           instruction: "Repita lentamente, sem engolir as vogais.",
@@ -97,13 +91,6 @@ export const lesson: Lesson = {
           type: "introduction",
           text: `“Gute Nacht” is said at night when parting or going to sleep. It’s a farewell at night, not a greeting to start a chat.`,
           instruction: "Use apenas ao se despedir — não para iniciar conversa.",
-        },
-        {
-          type: "listening",
-          text: `Pronunciation: GOO-tə nahkt. “Nacht” has the German “ch” (like in “Bach”), a harsh breathy sound.
-                 I’ll say it 3 times. Listen for the “ch” in Nacht.`,
-          instruction:
-            "Tente perceber o som do “ch” alemão — respire fundo e sopre.",
         },
         {
           type: "pronunciation",
@@ -130,12 +117,6 @@ export const lesson: Lesson = {
           instruction: "Use com amigos, nunca com seu chefe.",
         },
         {
-          type: "listening",
-          text: `Pronunciation: roughly “chooss”, but with German “ü” (rounded lips, like French “tu”): tʃyːs. I’ll say it 3 times. Try to keep your lips rounded on “ü”.`,
-          instruction:
-            "Observe o som do “ü”. Redonde os lábios sem fazer bico.",
-        },
-        {
           type: "pronunciation",
           text: `Say it into the mic: “Tschüss”. Keep the “ü” long and rounded: tʃyːs.`,
           instruction: "Diga claramente — e sorria ao terminar.",
@@ -158,11 +139,6 @@ export const lesson: Lesson = {
           type: "introduction",
           text: `“Auf Wiedersehen” is the standard polite “goodbye”. More formal than “Tschüss”; safe with strangers and in professional contexts.`,
           instruction: "Diga com respeito — imagine-se deixando uma reunião.",
-        },
-        {
-          type: "listening",
-          text: `Pronunciation: owf VEE-der-zay-en. Say it in four beats: Auf | Wie-der | se-hen. I’ll say it 3 times. Keep the flow steady.`,
-          instruction: "Conte os quatro tempos enquanto escuta.",
         },
         {
           type: "pronunciation",
@@ -189,11 +165,6 @@ export const lesson: Lesson = {
           instruction: "Pense em alguém querido — diga com leveza.",
         },
         {
-          type: "listening",
-          text: `Pronunciation: biss balt. Short, crisp consonants. I’ll say it 3 times. Keep both words short.`,
-          instruction: "Escute atentamente o som curto e seco das consoantes.",
-        },
-        {
           type: "pronunciation",
           text: `Mic on: “Bis bald”. Hit the final “d” clearly: bald.`,
           instruction: "Ative o microfone e fale sem hesitar.",
@@ -216,11 +187,6 @@ export const lesson: Lesson = {
           type: "introduction",
           text: `“Bis später” = “see you later (today)”. It implies later the same day. Use it when you’ll meet again soon-ish.`,
           instruction: "Use quando for rever alguém ainda hoje.",
-        },
-        {
-          type: "listening",
-          text: `Pronunciation: biss SHPAY-ter. “spä-” has “ä” like “eh” (long), and “t” is clear. I’ll say it 3 times. Focus on SHPAY.`,
-          instruction: "Escute o “ä” com atenção — prolongue o som levemente.",
         },
         {
           type: "pronunciation",

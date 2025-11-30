@@ -1,11 +1,11 @@
-import { useCallback, useEffect, useMemo, useReducer, useRef } from "react";
+import { useCallback, useMemo, useReducer, useRef } from "react";
 import {
   lessonReducer,
   defaultState,
   LessonActions,
   defaultLessonEntry,
   defaultLessonDetails,
-} from "./reducers/interactionReducer";
+} from "./reducers/lessonReducer";
 import { Lesson, LessonDetails, LessonEntry, LessonEntryStep } from "@/types";
 import { useCharacterDetails } from "@/hooks/useCharacterDetails";
 
@@ -13,6 +13,14 @@ export const useLesson = () => {
   const [state, dispatch] = useReducer(lessonReducer, defaultState);
   const onCompleteRef = useRef<() => void | null>(null);
   const characterDetails = useCharacterDetails(state.lesson?.character);
+  const isFirst = useMemo(
+    () => state.entryFlags.isFirstEntry && state.stepFlags.isFirstStep,
+    [state.entryFlags.isFirstEntry, state.stepFlags.isFirstStep]
+  );
+  const isLast = useMemo(
+    () => state.entryFlags.isLastEntry && state.stepFlags.isLastStep,
+    [state.entryFlags.isLastEntry, state.stepFlags.isLastStep]
+  );
 
   const createLesson = useCallback(
     (lesson: Lesson, onComplete?: () => void | null) => {
@@ -45,7 +53,7 @@ export const useLesson = () => {
   }, [getLessonEntry, state.stepFlags.stepIndex]);
 
   const nextStep = useCallback(() => {
-    if (state.entryFlags.isLastEntry) {
+    if (isLast) {
       dispatch({
         type: LessonActions.HIDE_LESSON,
       });
@@ -54,12 +62,13 @@ export const useLesson = () => {
       return;
     }
 
-    if (state.stepFlags.isLastStep) {
-      dispatch({ type: LessonActions.NEXT_LESSON_ENTRY });
-    }
-
     dispatch({ type: LessonActions.NEXT_LESSON_STEP });
-  }, [state.entryFlags.isLastEntry, state.stepFlags.isLastStep]);
+  }, [isLast]);
+
+  const previousStep = useCallback(() => {
+    if (isFirst) return;
+    dispatch({ type: LessonActions.PREVIOUS_LESSON_STEP });
+  }, [isFirst]);
 
   const hideInteraction = useCallback(() => {
     dispatch({ type: LessonActions.HIDE_LESSON });
@@ -69,18 +78,23 @@ export const useLesson = () => {
     const { steps, ...lessonEntry } = getLessonEntry();
     void steps;
     return {
+      isFirst,
+      isLast,
       characterDetails,
       lessonDetails: getLessonDetails(),
       lessonEntry,
-      entryFlags: state.entryFlags,
       lessonStep: getLessonStep(),
+      entryFlags: state.entryFlags,
       stepFlags: state.stepFlags,
       visible: state.visible,
       createLesson,
       nextStep,
+      previousStep,
       hideInteraction,
     };
   }, [
+    isFirst,
+    isLast,
     state.visible,
     state.entryFlags,
     state.stepFlags,
@@ -90,6 +104,7 @@ export const useLesson = () => {
     getLessonEntry,
     createLesson,
     nextStep,
+    previousStep,
     hideInteraction,
   ]);
 };

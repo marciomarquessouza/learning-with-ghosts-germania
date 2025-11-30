@@ -16,6 +16,7 @@ export interface StepWritingProps {
   lessonEntry: Omit<LessonEntry, "steps">;
   lessonStep: LessonEntryStep;
   onClickNext: () => void;
+  onClickPrevious: () => void;
 }
 
 export type Phases = "writing" | "result:correct" | "result:fail";
@@ -28,6 +29,7 @@ export function StepWriting({
   show = true,
   lessonEntry,
   onClickNext,
+  onClickPrevious,
 }: StepWritingProps) {
   const boxRef = useRef<HTMLDivElement>(null);
   const { audio, target } = lessonEntry;
@@ -158,10 +160,10 @@ export function StepWriting({
             />
             <BoardControls
               phase={phase}
-              onClickNext={onClickNext}
               onClickRetry={handleRetry}
               onClickTip={handleOnClickTip}
-              onClickPrevious={() => {}}
+              onClickNext={onClickNext}
+              onClickPrevious={onClickPrevious}
             />
             <CornerLeft totalTips={DEFAULT_TOTAL_TIPS} currentTips={tips} />
             <CornerRight

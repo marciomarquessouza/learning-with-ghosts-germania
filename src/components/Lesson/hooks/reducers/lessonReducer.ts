@@ -1,5 +1,12 @@
 import { CHARACTERS } from "@/constants/game";
 import { Lesson, LessonDetails, LessonEntry } from "@/types";
+import {
+  createLesson,
+  getNextEntry,
+  getNextStep,
+  getPreviousEntry,
+  getPreviousStep,
+} from "./lessonMutations";
 
 export interface EntryFlags {
   entryIndex: number;
@@ -16,7 +23,7 @@ export interface StepFlags {
 // Lesson: the top-level structure
 // Entry: a word or phrase to learn
 // Step: a part of the entry (introduction, listening, pronunciation, writing)
-interface State {
+export interface State {
   lesson: Lesson | null;
   entryFlags: EntryFlags;
   stepFlags: StepFlags;
@@ -58,7 +65,9 @@ export const defaultState: State = {
 export enum LessonActions {
   CREATE_LESSON = "CREATE_LESSON",
   NEXT_LESSON_ENTRY = "NEXT_LESSON_ENTRY",
+  PREVIOUS_LESSON_ENTRY = "PREVIOUS_LESSON_ENTRY",
   NEXT_LESSON_STEP = "NEXT_LESSON_STEP",
+  PREVIOUS_LESSON_STEP = "PREVIOUS_LESSON_STEP",
   SHOW_LESSON_STEP = "SHOW_LESSON_STEP",
   HIDE_LESSON = "HIDE_LESSON",
 }
@@ -66,7 +75,9 @@ export enum LessonActions {
 type LessonAction =
   | { type: LessonActions.CREATE_LESSON; payload: { lesson: Lesson } }
   | { type: LessonActions.NEXT_LESSON_ENTRY }
+  | { type: LessonActions.PREVIOUS_LESSON_ENTRY }
   | { type: LessonActions.NEXT_LESSON_STEP }
+  | { type: LessonActions.PREVIOUS_LESSON_STEP }
   | { type: LessonActions.SHOW_LESSON_STEP }
   | { type: LessonActions.HIDE_LESSON };
 
@@ -74,58 +85,34 @@ export function lessonReducer(state: State, action: LessonAction): State {
   switch (action.type) {
     case LessonActions.CREATE_LESSON:
       const { lesson } = action.payload;
-      return {
-        ...state,
-        lesson,
-        entryFlags: {
-          entryIndex: 0,
-          isFirstEntry: true,
-          isLastEntry: lesson.entries.length === 1,
-        },
-        stepFlags: {
-          stepIndex: 0,
-          isFirstStep: true,
-          isLastStep: false,
-        },
-        ready: true,
-        visible: true,
-      };
+      return createLesson(state, lesson);
     case LessonActions.SHOW_LESSON_STEP:
       return {
         ...state,
-        visible: true,
         ready: false,
       };
     case LessonActions.NEXT_LESSON_ENTRY:
-      if (!state.lesson) return defaultState;
-      const newEntryIndex = state.entryFlags.entryIndex + 1;
-      const lessonEntries = state.lesson.entries;
-
-      return {
-        ...state,
-        entryFlags: {
-          entryIndex: newEntryIndex,
-          isFirstEntry: false,
-          isLastEntry: newEntryIndex + 1 === lessonEntries.length,
-        },
-      };
+      return getNextEntry(state);
+    case LessonActions.PREVIOUS_LESSON_ENTRY:
+      return getPreviousEntry(state);
     case LessonActions.NEXT_LESSON_STEP:
-      if (!state.lesson) return defaultState;
-      const lessonEntryIndex = state.entryFlags.entryIndex;
-      const entrySteps = state.lesson.entries[lessonEntryIndex].steps;
-      const newStepIndex = state.stepFlags.stepIndex + 1;
-
+      if (state.stepFlags.isLastStep) {
+        if (state.entryFlags.isLastEntry) return state;
+        return getNextEntry(state);
+      }
+      return getNextStep(state);
+    case LessonActions.PREVIOUS_LESSON_STEP:
+      if (state.stepFlags.isFirstStep) {
+        if (state.entryFlags.isFirstEntry) return state;
+        return getPreviousEntry(state);
+      }
+      return getPreviousStep(state);
+    case LessonActions.HIDE_LESSON:
       return {
         ...state,
-        stepFlags: {
-          stepIndex: newStepIndex,
-          isFirstStep: false,
-          isLastStep: newStepIndex + 1 === entrySteps.length,
-        },
-        ready: true,
+        visible: false,
+        ready: false,
       };
-
-    case LessonActions.HIDE_LESSON:
     default:
       return state;
   }

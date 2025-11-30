@@ -8,18 +8,22 @@ import { StepWriting } from "./StepWriting";
 
 export interface LessonActionsProps {
   show: boolean;
+  isFirst: boolean;
   characterDetails: CharacterDetails | null;
   lessonEntry: Omit<LessonEntry, "steps">;
   lessonStep: LessonEntryStep;
   nextStep: () => void;
+  previousStep: () => void;
 }
 
 export function LessonActions({
+  isFirst,
   show,
   characterDetails,
   lessonEntry,
   lessonStep,
   nextStep,
+  previousStep,
 }: LessonActionsProps) {
   const [visible, setVisible] = useState(false);
   const { setInteractionDialogueOpen } = useUiStore();
@@ -39,14 +43,21 @@ export function LessonActions({
     setVisible(false);
   }, [nextStep]);
 
+  const handleOnClickPrevious = useCallback(() => {
+    previousStep();
+    setVisible(false);
+  }, [previousStep]);
+
   if (!characterDetails || !show || !lessonStep) return null;
 
   return (
     <>
       {lessonStep.type === "introduction" && (
         <StepIntroduction
+          isFirst={isFirst}
           lessonEntry={lessonEntry}
           lessonStep={lessonStep}
+          onClickPrevious={handleOnClickPrevious}
           onClickNext={handleOnClickNext}
         />
       )}
@@ -54,6 +65,7 @@ export function LessonActions({
         <StepPronunciation
           lessonEntry={lessonEntry}
           lessonStep={lessonStep}
+          onClickPrevious={handleOnClickPrevious}
           onClickNext={handleOnClickNext}
         />
       )}
@@ -62,6 +74,7 @@ export function LessonActions({
           lessonEntry={lessonEntry}
           lessonStep={lessonStep}
           onClickNext={handleOnClickNext}
+          onClickPrevious={handleOnClickPrevious}
         />
       )}
     </>

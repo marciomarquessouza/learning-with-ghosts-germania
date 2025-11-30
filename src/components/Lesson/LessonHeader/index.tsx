@@ -5,7 +5,7 @@ import { LessonTitle } from "./LessonTitle";
 import { LessonDetails, LessonEntryStep } from "@/types";
 import { LessonDescription } from "./LessonDescription";
 import { CharacterDetails } from "@/hooks/useCharacterDetails";
-import { StepFlags } from "../hooks/reducers/interactionReducer";
+import { StepFlags } from "../hooks/reducers/lessonReducer";
 
 interface LessonHeaderProps {
   show: boolean;

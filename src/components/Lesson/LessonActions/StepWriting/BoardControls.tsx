@@ -49,11 +49,9 @@ export function BoardControls({
           clear: {
             label: "RETRY",
             labelIcon: "↻ ",
-            color: "bg-[#976ED4] hover:bg-[#6700FF]",
           },
           next: {
             label: "SKIP",
-            color: "bg-[#976ED4] hover:bg-[#6700FF]",
             labelIcon: "⏭",
           },
         };
@@ -69,7 +67,6 @@ export function BoardControls({
           },
           next: {
             label: "SKIP",
-            color: "bg-[#976ED4] hover:bg-[#6700FF]",
             labelIcon: "⏭",
           },
         };

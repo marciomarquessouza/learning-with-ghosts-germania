@@ -6,20 +6,22 @@ import { useAudioRecorderV2 } from "@/libs/audio/useAudioRecorderV2";
 import { useAudioScoreV2 } from "@/libs/audio/useAudioScoreV2";
 import { PronunciationDialog } from "./PronunciationDialog";
 import { PronunciationFeedback } from "./PronunciationFeedback";
-import { Button } from "@/components/Button";
 import { DialogContainer } from "../common/DialogContainer";
+import { StepControls } from "./StepControls";
 
 export interface StepPronunciationProps {
   lessonEntry: Omit<LessonEntry, "steps">;
   lessonStep: LessonEntryStep;
+  onClickPrevious: () => void;
   onClickNext: () => void;
 }
 
-type Phases = "pronunciation" | "result";
+export type Phases = "pronunciation" | "result";
 
 export function StepPronunciation({
   lessonEntry,
   lessonStep,
+  onClickPrevious,
   onClickNext,
 }: StepPronunciationProps) {
   const [visible, setVisible] = useState(false);
@@ -114,28 +116,12 @@ export function StepPronunciation({
           />
         )}
       </LessonActionContainer>
-      <div className="absolute right-4 -bottom-6">
-        <div className="flex flex-row gap-4">
-          {phase === "result" && (
-            <Button
-              label="TRY AGAIN"
-              labelIcon="↻"
-              color="bg-[#976ED4] hover:bg-[#6700FF]"
-              onClick={handleTryAgain}
-            />
-          )}
-          <Button
-            label={phase === "pronunciation" ? "SKIP" : "NEXT"}
-            labelIcon={phase === "pronunciation" ? "⏭" : "►"}
-            color={
-              phase === "pronunciation"
-                ? "bg-[#976ED4] hover:bg-[#6700FF]"
-                : "bg-[#B40F00] hover:bg-[#941729]"
-            }
-            onClick={onClickNext}
-          />
-        </div>
-      </div>
+      <StepControls
+        phase={phase}
+        onClickPrevious={onClickPrevious}
+        onClickNext={onClickNext}
+        onClickRetry={handleTryAgain}
+      />
       <audio ref={audioRecordRef} preload="metadata" className="hidden" />
     </DialogContainer>
   );

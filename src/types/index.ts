@@ -1,11 +1,7 @@
 import { CHARACTERS, MOODS } from "@/constants/game";
 
 export type LessonEntryPhase = "hide" | "visible";
-export type LessonStepType =
-  | "introduction"
-  | "listening"
-  | "pronunciation"
-  | "writing";
+export type LessonStepType = "introduction" | "pronunciation" | "writing";
 
 export type LessonEntryStep = {
   type: LessonStepType;

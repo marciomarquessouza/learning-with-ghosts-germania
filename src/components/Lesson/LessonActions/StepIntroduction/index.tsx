@@ -9,17 +9,22 @@ import { LessonEntryRight } from "../common/LessonEntryRight";
 import { AudioPlaybackContainer } from "../common/AudioPlaybackContainer";
 import { LessonActionContainer } from "../common/LessonActionContainer";
 import { DialogContainer } from "../common/DialogContainer";
+import { StepControls } from "./StepControls";
 
 export interface StepIntroductionProps {
+  isFirst: boolean;
   lessonEntry: Omit<LessonEntry, "steps">;
   lessonStep: LessonEntryStep;
   onClickNext: () => void;
+  onClickPrevious: () => void;
 }
 
 export function StepIntroduction({
+  isFirst,
   lessonEntry,
   lessonStep,
   onClickNext,
+  onClickPrevious,
 }: StepIntroductionProps) {
   const [visible, setVisible] = useState(false);
   const { play, isPlaying } = useAudioPlayback();
@@ -83,7 +88,11 @@ export function StepIntroduction({
           )}
         </div>
       </LessonActionContainer>
-      <LessonCTA label="NEXT" icon="►" onClick={onClickNext} />
+      <StepControls
+        isFirst={isFirst}
+        onClickPrevious={onClickPrevious}
+        onClickNext={onClickNext}
+      />
     </DialogContainer>
   );
 }
