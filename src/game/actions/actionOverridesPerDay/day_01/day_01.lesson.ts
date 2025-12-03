@@ -15,7 +15,7 @@ export const lesson: Lesson = {
         {
           type: "introduction",
           text: `Our first word is “Hallo”. It’s the neutral, everyday way to start a conversation in German — friendly and safe in almost any context.`,
-          instruction: "Escute e repita (não tenha vergonha, fale alto mesmo!)",
+          instruction: "Listen and repeat (don’t be shy, say it out loud!)",
         },
         {
           type: "pronunciation",
@@ -24,13 +24,12 @@ export const lesson: Lesson = {
         },
         {
           type: "writing",
-          text: `Vamos agora para um desafio de memória. Escute e escrevva`,
-          instruction: "Escreva o que você escutar neste {{audio|Audio}} .",
+          text: `Let us move on. Listen to the audio and complete the word by clicking on the letters in the correct sequence.`,
+          instruction: "",
         },
       ],
       phase: "visible",
     },
-
     {
       id: "2",
       reference: "Good day",
@@ -38,25 +37,23 @@ export const lesson: Lesson = {
       steps: [
         {
           type: "introduction",
-          text: `“Guten Tag” is a polite daytime greeting (roughly late morning to late afternoon). Slightly more formal than “Hallo”.`,
-          instruction:
-            "Escute com atenção — imagine-se encontrando alguém importante.",
+          text: `“Guten Tag” is a polite daytime greeting — used from late morning to late afternoon. Slightly more formal than “Hallo”, but still very common.`,
+          instruction: "Listen and repeat (don’t be shy, say it out loud!)",
         },
         {
           type: "pronunciation",
-          text: `Mic on. Say: “Guten Tag”. Keep “Tag” short and firm: tahk.`,
-          instruction: "Ative o microfone e repita com firmeza.",
+          text: `Try it with me: “Guten Tag”. Keep “Tag” short, firm, and clean: tahk.`,
+          instruction:
+            "Your turn. Click the mic and say: “{{audio|Guten Tag}}”.",
         },
         {
           type: "writing",
-          text: `Type it: Guten Tag. (Both words capitalized.)`,
-          instruction:
-            "Digite exatamente como mostrado — sem preguiça com as maiúsculas.",
+          text: `All right. Now listen to the audio and build the word by selecting the letters in the correct order.`,
+          instruction: "",
         },
       ],
       phase: "hide",
     },
-
     {
       id: "3",
       reference: "Good evening",
@@ -64,24 +61,23 @@ export const lesson: Lesson = {
       steps: [
         {
           type: "introduction",
-          text: `“Guten Abend” is used in the evening (roughly after 6–7 pm). It’s polite and works in formal or casual settings.`,
-          instruction:
-            "Imagine-se chegando a um jantar elegante. Diga com calma.",
+          text: `“Guten Abend” is used in the evening — usually after 6 or 7 pm. It’s polite and works in both formal and casual situations.`,
+          instruction: "Listen and repeat (don’t be shy, say it out loud!)",
         },
         {
           type: "pronunciation",
-          text: `Your turn: “Guten Abend”. Keep the rhythm smooth: GOO-ten AH-bent.`,
-          instruction: "Repita lentamente, sem engolir as vogais.",
+          text: `Say it smoothly: “Guten Abend”. Keep the flow steady: GOO-ten AH-bent.`,
+          instruction:
+            "Your turn. Click the mic and say: “{{audio|Guten Abend}}”.",
         },
         {
           type: "writing",
-          text: `Type it: Guten Abend. (Both words capitalized.)`,
-          instruction: "Digite com atenção aos acentos e maiúsculas.",
+          text: `Let us continue. Listen to the audio and complete the word by choosing the letters in sequence.`,
+          instruction: "",
         },
       ],
       phase: "hide",
     },
-
     {
       id: "4",
       reference: "Good night",
@@ -89,23 +85,23 @@ export const lesson: Lesson = {
       steps: [
         {
           type: "introduction",
-          text: `“Gute Nacht” is said at night when parting or going to sleep. It’s a farewell at night, not a greeting to start a chat.`,
-          instruction: "Use apenas ao se despedir — não para iniciar conversa.",
+          text: `“Gute Nacht” is used when parting for the night or going to sleep. It’s not a greeting to start a conversation — it’s a nighttime farewell.`,
+          instruction: "Listen and repeat (don’t be shy, say it out loud!)",
         },
         {
           type: "pronunciation",
-          text: `Mic time: “Gute Nacht”. Aim for that throaty “ch”: nahkt.`,
-          instruction: "Repita — sem medo do som gutural.",
+          text: `Try it out: “Gute Nacht”. Aim for a clear, throaty “ch”: nahkt.`,
+          instruction:
+            "Your turn. Click the mic and say: “{{audio|Gute Nacht}}”.",
         },
         {
           type: "writing",
-          text: `Type it: Gute Nacht. (Both words capitalized.)`,
-          instruction: "Digite calmamente e revise antes de enviar.",
+          text: `Proceed. Listen to the audio and complete the word by selecting the letters in the right order.`,
+          instruction: "",
         },
       ],
       phase: "hide",
     },
-
     {
       id: "5",
       reference: "Bye",
@@ -113,23 +109,22 @@ export const lesson: Lesson = {
       steps: [
         {
           type: "introduction",
-          text: `“Tschüss” is informal “bye”. Great with friends and casual situations.`,
-          instruction: "Use com amigos, nunca com seu chefe.",
+          text: `“Tschüss” is an informal, friendly way to say “bye”. Great for casual situations and people you know well.`,
+          instruction: "Listen and repeat (don’t be shy, say it out loud!)",
         },
         {
           type: "pronunciation",
-          text: `Say it into the mic: “Tschüss”. Keep the “ü” long and rounded: tʃyːs.`,
-          instruction: "Diga claramente — e sorria ao terminar.",
+          text: `Say: “Tschüss”. Keep the “ü” long and rounded — close to the French “u”.`,
+          instruction: "Your turn. Click the mic and say: “{{audio|Tschüss}}”.",
         },
         {
           type: "writing",
-          text: `Type it: Tschüss. (Capital T, and note the “ü”. If you can’t type “ü”, you can use “Tschuess” as a fallback.)`,
-          instruction: "Digite com o “ü” correto — ou “ue” se preferir.",
+          text: `Let us move forward. Listen to the audio and complete the word by clicking the letters in the correct sequence.`,
+          instruction: "",
         },
       ],
       phase: "hide",
     },
-
     {
       id: "6",
       reference: "Goodbye",
@@ -137,23 +132,23 @@ export const lesson: Lesson = {
       steps: [
         {
           type: "introduction",
-          text: `“Auf Wiedersehen” is the standard polite “goodbye”. More formal than “Tschüss”; safe with strangers and in professional contexts.`,
-          instruction: "Diga com respeito — imagine-se deixando uma reunião.",
+          text: `“Auf Wiedersehen” is the polite, standard way to say “goodbye”. More formal than “Tschüss” — appropriate for strangers or professional settings.`,
+          instruction: "Listen and repeat (don’t be shy, say it out loud!)",
         },
         {
           type: "pronunciation",
-          text: `Your turn: “Auf Wiedersehen”. Don’t rush the middle: VEE-der.`,
-          instruction: "Repita pausadamente, mantendo o ritmo.",
+          text: `Say it clearly: “Auf Wiedersehen”. Don’t rush the middle: VEE-der-zay-en.`,
+          instruction:
+            "Your turn. Click the mic and say: “{{audio|Auf Wiedersehen}}”.",
         },
         {
           type: "writing",
-          text: `Type it: Auf Wiedersehen. (Capital A and W.)`,
-          instruction: "Digite com calma — é uma despedida elegante.",
+          text: `Next step. Listen to the audio and assemble the word by choosing the letters in the correct order.`,
+          instruction: "",
         },
       ],
       phase: "hide",
     },
-
     {
       id: "7",
       reference: "See you soon",
@@ -161,23 +156,23 @@ export const lesson: Lesson = {
       steps: [
         {
           type: "introduction",
-          text: `“Bis bald” means “see you soon”. Casual, warm, used when you expect to meet again in the near future.`,
-          instruction: "Pense em alguém querido — diga com leveza.",
+          text: `“Bis bald” means “see you soon”. Casual and warm — it suggests you expect to meet again in the near future.`,
+          instruction: "Listen and repeat (don’t be shy, say it out loud!)",
         },
         {
           type: "pronunciation",
-          text: `Mic on: “Bis bald”. Hit the final “d” clearly: bald.`,
-          instruction: "Ative o microfone e fale sem hesitar.",
+          text: `Try it: “Bis bald”. Give the final “d” a clean, crisp finish.`,
+          instruction:
+            "Your turn. Click the mic and say: “{{audio|Bis bald}}”.",
         },
         {
           type: "writing",
-          text: `Type it: Bis bald. (Only the B of “Bis” is capitalized.)`,
-          instruction: "Digite exatamente assim — simples e direto.",
+          text: `Let us continue. Listen to the audio and complete the word by selecting the letters in order.`,
+          instruction: "",
         },
       ],
       phase: "hide",
     },
-
     {
       id: "8",
       reference: "See you later",
@@ -185,18 +180,19 @@ export const lesson: Lesson = {
       steps: [
         {
           type: "introduction",
-          text: `“Bis später” = “see you later (today)”. It implies later the same day. Use it when you’ll meet again soon-ish.`,
-          instruction: "Use quando for rever alguém ainda hoje.",
+          text: `“Bis später” means “see you later (today)”. It usually implies that you’ll meet again later the same day.`,
+          instruction: "Listen and repeat (don’t be shy, say it out loud!)",
         },
         {
           type: "pronunciation",
-          text: `Your turn: “Bis später”. If you can’t say “ä”, aim for “eh”: SHPAY-ter.`,
-          instruction: "Repita tentando acertar o “ä”. Sem pressa.",
+          text: `Say: “Bis später”. If the “ä” is difficult, aim for a clean “eh”: SHPAY-ter.`,
+          instruction:
+            "Your turn. Click the mic and say: “{{audio|Bis später}}”.",
         },
         {
           type: "writing",
-          text: `Type it: Bis später. (Only the B of “Bis” is capitalized; “ä” can be written as “ae” → “Bis spaeter”.)`,
-          instruction: "Digite e pratique a alternativa com “ae”.",
+          text: `Final step. Listen to the audio and complete the word by clicking the letters in the correct sequence.`,
+          instruction: "",
         },
       ],
       phase: "hide",
