@@ -15,10 +15,8 @@ export interface LetterGridProps {
   slotQntW?: number;
   slotQntH?: number;
   nextIndex: number;
-  clearIndexes: () => void;
   onError: () => void;
   onClickSlot: (slot: LetterSlot) => void;
-  removeIndex: (index: number) => void;
 }
 
 export const CELL_SIZE = 96;
@@ -33,8 +31,6 @@ export function LetterGrid({
   slotQntH = DEFAULT_SLOT_QNT_H,
   onClickSlot,
   onError,
-  clearIndexes,
-  removeIndex,
 }: LetterGridProps) {
   const grid = useMemo(
     () =>
@@ -61,7 +57,11 @@ export function LetterGrid({
     const isAlreadySelected = answerIndexes.includes(index);
 
     if (isAlreadySelected) {
-      removeIndex(index);
+      return;
+    }
+
+    if (index !== nextIndex) {
+      onError();
       return;
     }
 
@@ -76,8 +76,6 @@ export function LetterGrid({
       onClickSlot(slot);
       return;
     }
-
-    clearIndexes();
   };
 
   const lineSegments = useMemo(() => {

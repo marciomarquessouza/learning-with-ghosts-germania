@@ -5,7 +5,7 @@ import { AudioPlayback } from "./AudioPlayback";
 import { AnswerContainer } from "./AnswerContainer";
 import { LetterGrid } from "./LetterGrid";
 import { LetterSlot } from "./utils/createLetterGrid";
-import { BoardControls } from "./BoardControls";
+import { StepControls } from "./StepControls";
 import { prepareTarget } from "./utils/prepareTarget";
 import { balanceGrind } from "./utils/balanceGrid";
 import { CornerLeft } from "./CornerLeft";
@@ -48,7 +48,7 @@ export function StepWriting({
     if (phase !== "writing") return;
     const { index, isAnswer } = slot;
     if (!isAnswer) return;
-    const sortedIndexes = [...answerIndexes, index!].sort();
+    const sortedIndexes = [...answerIndexes, index!].sort((a, b) => a - b);
     setNextIndex(index! + 1);
     setAnswerIndexes(sortedIndexes);
   };
@@ -57,26 +57,12 @@ export function StepWriting({
     nextIndex.current = newNextIndex;
   };
 
-  const handleClearIndexes = () => {
-    if (phase !== "writing") return;
-    setNextIndex(1);
-    setAnswerIndexes([0]);
-  };
-
   const handleRetry = () => {
     setPhase("writing");
     setNextIndex(1);
     setErrors(0);
     setTips(0);
     setAnswerIndexes([0]);
-  };
-
-  const handleRemoveIndex = (indexToRemove: number) => {
-    if (phase !== "writing") return;
-    const newIndexes = answerIndexes.filter((index) => index !== indexToRemove);
-    const newNextIndex = nextIndex.current <= 1 ? 1 : nextIndex.current - 1;
-    setNextIndex(newNextIndex);
-    setAnswerIndexes(newIndexes);
   };
 
   const handleOnError = useCallback(() => {
@@ -143,7 +129,6 @@ export function StepWriting({
             <AnswerContainer
               answerIndexes={answerIndexes}
               preparedTarget={preparedTarget}
-              showBackspace={false}
               phase={phase}
             />
             <LetterGrid
@@ -151,15 +136,14 @@ export function StepWriting({
               preparedTarget={preparedTarget}
               answerIndexes={answerIndexes}
               nextIndex={nextIndex.current}
-              onError={handleOnError}
-              clearIndexes={handleClearIndexes}
-              removeIndex={handleRemoveIndex}
-              onClickSlot={handleOnClickSlot}
               slotQntH={slotQntH}
               slotQntW={slotQntW}
+              onError={handleOnError}
+              onClickSlot={handleOnClickSlot}
             />
-            <BoardControls
+            <StepControls
               phase={phase}
+              tipsDisabled={tips === DEFAULT_TOTAL_TIPS}
               onClickRetry={handleRetry}
               onClickTip={handleOnClickTip}
               onClickNext={onClickNext}

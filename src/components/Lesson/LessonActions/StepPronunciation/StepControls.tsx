@@ -28,16 +28,17 @@ export function StepControls({
       <div className="absolute right-4 -bottom-6">
         <div className="flex flex-row gap-4">
           {phase === "result" && (
-            <Button label="TRY AGAIN" labelIcon="↻" onClick={onClickRetry} />
+            <Button
+              label="TRY AGAIN"
+              labelIcon="↻"
+              color="bg-[#E7841C] hover:bg-[#E7841C]"
+              onClick={onClickRetry}
+            />
           )}
           <Button
             label={phase === "pronunciation" ? "SKIP" : "NEXT"}
             labelIcon={phase === "pronunciation" ? "⏭" : "►"}
-            color={
-              phase === "pronunciation"
-                ? "bg-[#976ED4] hover:bg-[#6700FF]"
-                : "bg-[#B40F00] hover:bg-[#941729]"
-            }
+            color="bg-[#B40F00] hover:bg-[#941729]"
             onClick={onClickNext}
           />
         </div>
