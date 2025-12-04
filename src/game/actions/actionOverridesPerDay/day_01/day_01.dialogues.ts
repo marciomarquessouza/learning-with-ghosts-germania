@@ -82,99 +82,60 @@ export const dialogues = {
   lesson_preparation: () => [
     dialogue.josef.surprised`
       A confessional… with a nun?
-      Who the hell are you? What is happening?
+      Who are you? What is happening?
   `.reactions([{ mood: MOODS.TALKING, character: CHARACTERS.ELISA }]),
 
     dialogue.elisa.happy`
-      Hello, Josef. My name is Eliska. †  
-      Unlike you, I’m dead — a fucking ghost. ♦  
+      Hello, Josef… my name is Elisa. †  
+      And… yes. I’m dead.  
+      I’m just a little ghost inside your dream. ♦  
   `.reactions([{ mood: MOODS.SURPRISED, character: CHARACTERS.JOSEF }]),
 
     dialogue.josef.surprised`
       You… you’re really dead?  
-      How can you even talk to me?  
-      How did you crawl into my dream?  
+      Then how can you talk to me?  
+      How did you enter my dream?  
   `.reactions([{ mood: MOODS.SURPRISED, character: CHARACTERS.ELISA }]),
 
     dialogue.elisa.talking`
-      Oh, sweet Jesus… you’re slow as shit. ♦  
-      Fine, let me spell it out: I’m a ghost. †  
-      I sneak inside your dreams because I can. †  
+      The radio you were listening to before falling asleep… it calls me. ♦  
+      I can follow the sound and slip inside, very quietly. †   
   `.reactions([{ mood: MOODS.SURPRISED, character: CHARACTERS.JOSEF }]),
 
     dialogue.elisa.talking`
-      My name is Eliska. I was a nun once. †  
-      I rotted in this cell and starved to death. †  
-      And guess what? Heaven slammed its fucking gates. ♦  
-      So here I am — stuck talking to your ass. ♦  
+      I don’t know how to explain it better… I just know I can. 
+      And I can help you pass today’s test…  
+      and earn your meal as well. †  
   `.reactions([{ mood: MOODS.SURPRISED, character: CHARACTERS.JOSEF }]),
 
     dialogue.josef.surprised`
-      Eliska? You’re… Saint Virgin Eliska?
-      Patron of Expatriates?
-      The one who died teaching German to immigrants?
-  `.reactions([{ mood: MOODS.SURPRISED, character: CHARACTERS.ELISA }]),
+      Elisa… now I remember you.  
+      You were that nun from Poland…  
+      who taught German to foreigners in the church…  
+      and later on the radio too.
+  `.reactions([{ mood: MOODS.SAD, character: CHARACTERS.ELISA }]),
 
-    dialogue.elisa.talking`
-      They slapped “Virgin” on me — hell of a brand. †  
-      Sure, I died teaching, but not for free, dumbass. ♦  
-      And now it seems I’ll do the same for you. †  
+    dialogue.elisa.sad`
+      Yes… that was me. †  
+      And I… I met you when I was alive.  
+      But it’s alright if you don’t remember clearly…  
+      Dreams never show everything at once.  
+  `.reactions([{ mood: MOODS.SURPRISED, character: CHARACTERS.JOSEF }]),
+
+    dialogue.elisa.sad`
+      What matters is that you’re here now.  
+      I can teach you what you need for today’s exam. †  
   `.reactions([{ mood: MOODS.SURPRISED, character: CHARACTERS.JOSEF }]),
 
     dialogue.josef.sad`
-      Thank you, Saint Eliska… but I don’t want this.  
-      I’d rather die and be a ghost like you.  
+      Oh… okay.  
+      But I’m going to forget everything when I wake up, aren’t I?
   `.reactions([{ mood: MOODS.TALKING, character: CHARACTERS.ELISA }]),
 
     dialogue.elisa.talking`
-      Don’t call me saint — I was never holy. †  
-      But hell, maybe you need motivation. †  
+      Don’t be afraid of that. After the lesson is over…  
+      I will help you remember. I always will.  
+      Now… let’s begin, Josef. †  
   `.reactions([{ mood: MOODS.NEUTRAL, character: CHARACTERS.JOSEF }]),
-
-    dialogue.elisa.talking`
-      Here’s the deal: if you do today’s damn lesson, ♦  
-      I’ll throw you a reward. ♦  
-  `.reactions([{ mood: MOODS.NEUTRAL, character: CHARACTERS.JOSEF }]),
-
-    dialogue.elisa.flushed`
-      I could tell you a secret — filthy, private. ♦  
-      Something no living soul has ever known… †  
-      or maybe… ♦  
-  `.reactions([{ mood: MOODS.NEUTRAL, character: CHARACTERS.JOSEF }]),
-
-    dialogue.elisa.talking`
-      As a ghost I picked up some nasty powers. †  
-      I can see your future, Josef. ♦  
-      I could spill it, right here. ♦  
-  `.reactions([{ mood: MOODS.SURPRISED, character: CHARACTERS.JOSEF }]),
-
-    alternatives.josef.neutral`
-      What reward do you want from Eliska?
-  `.alternatives(
-      { text: "Eliska’s dirty secret", id: "eliska_secret" },
-      { text: "Know your future", id: "josef_future" },
-      { text: "Skip the lesson and wake up", id: "exit" }
-    ),
-  ],
-  post_introduction_eliska_secret: () => [
-    dialogue.elisa.flushed`
-      A secret, Josef? You’ll have to earn that sin. ♦  
-      First learn to greet me — say “Hallo” like a man. †  
-      Whisper it well, and maybe I’ll whisper back. ♦  
-    `.reactions([{ mood: MOODS.NEUTRAL, character: CHARACTERS.JOSEF }]),
-  ],
-  post_introduction_josef_future: () => [
-    dialogue.elisa.flushed`
-      Your future waits, but greetings come before graves. †  
-      Say “Guten Tag,” and face the world you dread. †  
-      Without a tongue for welcome, fate stays silent. ♦  
-    `.reactions([{ mood: MOODS.NEUTRAL, character: CHARACTERS.JOSEF }]),
-  ],
-  post_introduction_exit: () => [
-    dialogue.elisa.flushed`
-      Wake up? Idiot. The dead still need to greet. ♦  
-      Even ghosts say “Hallo” before they haunt. †  
-      Try it, or keep your rotten mouth shut tight. ♦ 
-    `.reactions([{ mood: MOODS.NEUTRAL, character: CHARACTERS.JOSEF }]),
   ],
 };
