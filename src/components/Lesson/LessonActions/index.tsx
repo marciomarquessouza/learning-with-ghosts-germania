@@ -9,6 +9,7 @@ import { StepWriting } from "./StepWriting";
 export interface LessonActionsProps {
   show: boolean;
   isFirst: boolean;
+  isLast: boolean;
   characterDetails: CharacterDetails | null;
   lessonEntry: Omit<LessonEntry, "steps">;
   lessonStep: LessonEntryStep;
@@ -18,6 +19,7 @@ export interface LessonActionsProps {
 
 export function LessonActions({
   isFirst,
+  isLast,
   show,
   characterDetails,
   lessonEntry,
@@ -71,6 +73,7 @@ export function LessonActions({
       )}
       {lessonStep.type === "writing" && (
         <StepWriting
+          isLast={isLast}
           lessonEntry={lessonEntry}
           lessonStep={lessonStep}
           onClickNext={handleOnClickNext}

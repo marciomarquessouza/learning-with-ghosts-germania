@@ -4,6 +4,7 @@ import { Phases } from ".";
 
 export interface BoardControlsProps {
   phase: Phases;
+  isLast: boolean;
   tipsDisabled: boolean;
   onClickPrevious: () => void;
   onClickRetry: () => void;
@@ -13,6 +14,7 @@ export interface BoardControlsProps {
 
 export function StepControls({
   phase,
+  isLast,
   tipsDisabled = false,
   onClickNext,
   onClickRetry,
@@ -65,8 +67,8 @@ export function StepControls({
         <Button label="RETRY" labelIcon="↻ " onClick={onClickRetry} />
       )}
       <Button
-        label={phase === "result:correct" ? "NEXT" : "SKIP"}
-        labelIcon={phase === "result:correct" ? "►" : "⏭"}
+        label={isLast ? "FINISH" : phase === "result:correct" ? "NEXT" : "SKIP"}
+        labelIcon={isLast ? undefined : phase === "result:correct" ? "►" : "⏭"}
         color={
           phase === "result:correct"
             ? "bg-[#00A86B] hover:bg-[#009D46]"

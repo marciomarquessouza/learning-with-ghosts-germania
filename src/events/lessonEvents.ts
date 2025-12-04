@@ -1,4 +1,4 @@
-import { LessonEntryPhase, Lesson } from "@/types";
+import { Lesson } from "@/types";
 import mitt from "mitt";
 
 export interface LessonEvent {
@@ -8,7 +8,7 @@ export interface LessonEvent {
 
 export interface LessonEntryNotebookEvents {
   ids: string[];
-  phase: LessonEntryPhase;
+  phase: string;
 }
 
 export interface ToggleNotebookEvents {

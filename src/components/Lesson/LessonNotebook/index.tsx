@@ -16,10 +16,7 @@ export function LessonNotebook() {
     previousPage,
     nextPage,
     hasPagination,
-  } = usePagination(
-    lesson.entries.filter(({ phase }) => phase === "visible"),
-    6
-  );
+  } = usePagination(lesson.entries, 6);
   const [visible, setVisible] = useState(false);
 
   useEffect(() => {

@@ -7,6 +7,7 @@ import { LessonActions } from "./LessonActions";
 function LessonContainer() {
   const {
     isFirst,
+    isLast,
     lessonDetails,
     lessonEntry,
     lessonStep,
@@ -59,6 +60,7 @@ function LessonContainer() {
       />
       <LessonActions
         isFirst={isFirst}
+        isLast={isLast}
         show={showActions}
         characterDetails={characterDetails}
         lessonEntry={lessonEntry}

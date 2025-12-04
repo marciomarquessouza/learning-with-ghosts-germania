@@ -1,5 +1,5 @@
 import { CHARACTERS } from "@/constants/game";
-import { LessonEntry, LessonEntryPhase, Lesson } from "@/types";
+import { LessonEntry, Lesson } from "@/types";
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
 
@@ -10,7 +10,7 @@ export interface LessonState {
   lesson: Lesson;
   update: (lesson: Lesson) => void;
   updateEntry: (id: string, entry: LessonEntry) => void;
-  updateEntriesPhase: (ids: string[], phase: LessonEntryPhase) => void;
+  updateEntriesPhase: (ids: string[], phase: string) => void;
 }
 
 export const useLessonStore = create<LessonState>()(
@@ -34,7 +34,7 @@ export const useLessonStore = create<LessonState>()(
             ),
           },
         })),
-      updateEntriesPhase: (ids: string[], phase: LessonEntryPhase) =>
+      updateEntriesPhase: (ids: string[], phase: string) =>
         set((state) => ({
           ...state,
           entries: state.lesson.entries.map((entry) =>

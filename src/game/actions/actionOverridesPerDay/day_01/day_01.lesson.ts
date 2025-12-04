@@ -28,7 +28,6 @@ export const lesson: Lesson = {
           instruction: "",
         },
       ],
-      phase: "visible",
     },
     {
       id: "2",
@@ -52,7 +51,6 @@ export const lesson: Lesson = {
           instruction: "",
         },
       ],
-      phase: "hide",
     },
     {
       id: "3",
@@ -76,7 +74,6 @@ export const lesson: Lesson = {
           instruction: "",
         },
       ],
-      phase: "hide",
     },
     {
       id: "4",
@@ -100,7 +97,6 @@ export const lesson: Lesson = {
           instruction: "",
         },
       ],
-      phase: "hide",
     },
     {
       id: "5",
@@ -123,7 +119,6 @@ export const lesson: Lesson = {
           instruction: "",
         },
       ],
-      phase: "hide",
     },
     {
       id: "6",
@@ -147,7 +142,6 @@ export const lesson: Lesson = {
           instruction: "",
         },
       ],
-      phase: "hide",
     },
     {
       id: "7",
@@ -171,7 +165,6 @@ export const lesson: Lesson = {
           instruction: "",
         },
       ],
-      phase: "hide",
     },
     {
       id: "8",
@@ -195,7 +188,6 @@ export const lesson: Lesson = {
           instruction: "",
         },
       ],
-      phase: "hide",
     },
   ],
 };

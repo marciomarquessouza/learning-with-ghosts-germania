@@ -1,6 +1,5 @@
 import { CHARACTERS, MOODS } from "@/constants/game";
 
-export type LessonEntryPhase = "hide" | "visible";
 export type LessonStepType = "introduction" | "pronunciation" | "writing";
 
 export type LessonEntryStep = {
@@ -15,7 +14,6 @@ export type LessonEntry = {
   target: string;
   audio?: string;
   steps: LessonEntryStep[];
-  phase: LessonEntryPhase;
 };
 
 export type Lesson = {

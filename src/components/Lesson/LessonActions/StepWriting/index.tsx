@@ -13,6 +13,7 @@ import { CornerRight } from "./CornerRight";
 
 export interface StepWritingProps {
   show?: boolean;
+  isLast: boolean;
   lessonEntry: Omit<LessonEntry, "steps">;
   lessonStep: LessonEntryStep;
   onClickNext: () => void;
@@ -27,6 +28,7 @@ export const DEFAULT_SLOT_QNT_H = 4;
 
 export function StepWriting({
   show = true,
+  isLast,
   lessonEntry,
   onClickNext,
   onClickPrevious,
@@ -142,6 +144,7 @@ export function StepWriting({
               onClickSlot={handleOnClickSlot}
             />
             <StepControls
+              isLast={isLast}
               phase={phase}
               tipsDisabled={tips === DEFAULT_TOTAL_TIPS}
               onClickRetry={handleRetry}
