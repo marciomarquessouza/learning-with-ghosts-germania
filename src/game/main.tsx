@@ -11,14 +11,13 @@ import { GAME_WORLDS } from "@/types";
 export default function MainGame() {
   const [fakeLoading, setFakeLoading] = useState(true);
   const [loading, setLoading] = useState(true);
-  const [world, setWorld] = useState<GAME_WORLDS>(GAME_WORLDS.DREAM);
-  const { day, setDay } = useGameStore();
+  const { day, setDay, gameWorld, setGameWorld } = useGameStore();
   const { setWeight } = useCellStore();
   const started = useRef(false);
   const currentGame = useRef<Phaser.Game | null>(null);
   const showLoading = useMemo(
-    () => loading && world === GAME_WORLDS.REAL,
-    [loading, world]
+    () => loading && gameWorld === GAME_WORLDS.REAL,
+    [loading, gameWorld]
   );
 
   const checkIfIsFirstDay = useCallback(() => {
@@ -36,7 +35,7 @@ export default function MainGame() {
 
     const handle = (payload: { targetWorld: GAME_WORLDS }) => {
       currentGame.current?.destroy(true);
-      setWorld(payload.targetWorld);
+      setGameWorld(payload.targetWorld);
       setLoading(true);
       started.current = false;
     };
@@ -46,13 +45,13 @@ export default function MainGame() {
     if (fakeLoading) {
       setTimeout(() => {
         setFakeLoading(false);
-      }, 2000);
+      }, 1000);
       return;
     }
 
     if (!fakeLoading && loading && !started.current) {
       started.current = true;
-      const gameConfig = getGameWorldConfig(world);
+      const gameConfig = getGameWorldConfig(gameWorld);
       initPhaser({ ...gameConfig, parent: "game-container" }).then((game) => {
         checkIfIsFirstDay();
         setLoading(false);
@@ -63,7 +62,7 @@ export default function MainGame() {
     return () => {
       gameEvents.off("change-world", handle);
     };
-  }, [loading, fakeLoading, world, checkIfIsFirstDay]);
+  }, [loading, fakeLoading, gameWorld, checkIfIsFirstDay, setGameWorld]);
 
   return showLoading ? <GhostLoading /> : null;
 }

@@ -7,6 +7,7 @@ import dynamic from "next/dynamic";
 import Lesson from "@/components/Lesson";
 import { GameMessage } from "@/components/GameMessage";
 import { LessonNotebook } from "@/components/Lesson/LessonNotebook";
+import { SideProgressContainer } from "@/components/SidePanel/SideProgressContainer";
 
 const GameRoot = dynamic(() => import("@/game/main"), {
   ssr: false,
@@ -14,7 +15,9 @@ const GameRoot = dynamic(() => import("@/game/main"), {
 
 export default function Game() {
   return (
-    <div className="bg-black text-white w-screen h-screen overflow-hidden">
+    <div className="bg-black text-white w-screen h-screen overflow-hidden flex">
+      <div id="game-container" className="flex-shrink-0" />
+      <SideProgressContainer />
       <RotateOverlay />
       <SceneIntroduction />
       <DreamIntroduction />
@@ -23,7 +26,6 @@ export default function Game() {
       <Lesson />
       <Dialogue />
       <GameRoot />
-      <div id="game-container" className="w-full h-full"></div>
     </div>
   );
 }

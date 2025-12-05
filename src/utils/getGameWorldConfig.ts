@@ -16,6 +16,11 @@ export function getGameWorldConfig(
       });
     case GAME_WORLDS.REAL:
     default:
-      return createConfig([cellScene]);
+      return createConfig([cellScene], {
+        scale: {
+          mode: Phaser.Scale.FIT,
+          autoCenter: Phaser.Scale.NO_CENTER,
+        },
+      });
   }
 }

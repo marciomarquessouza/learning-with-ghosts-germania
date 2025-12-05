@@ -24,6 +24,7 @@ export interface ZoomProps {
 }
 
 export type Events = {
+  "canvas-ready": undefined;
   "change-world": {
     targetWorld: GAME_WORLDS;
   };

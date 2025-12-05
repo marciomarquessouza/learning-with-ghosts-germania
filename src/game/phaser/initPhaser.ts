@@ -1,3 +1,4 @@
+import { gameEvents } from "@/events/gameEvents";
 import type PhaserType from "phaser";
 
 export function initPhaser(
@@ -5,7 +6,11 @@ export function initPhaser(
 ): Promise<PhaserType.Game> {
   return import("phaser")
     .then(({ default: Phaser }) => {
-      return new Phaser.Game(config);
+      const game = new Phaser.Game(config);
+      requestAnimationFrame(() => {
+        gameEvents.emit("canvas-ready");
+      });
+      return game;
     })
     .catch((err) => {
       console.error("Failed to initialize Phaser:", err);
