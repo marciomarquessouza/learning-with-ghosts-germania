@@ -1,4 +1,4 @@
-export function startDreamTransition(
+export function changeWorldTransition(
   scene: Phaser.Scene,
   afterClose?: () => void
 ) {

@@ -1,8 +1,8 @@
-import { cellEvents } from "../cellEvents";
+import { gameEvents } from "../gameEvents";
 
-export function showDreamTransition(): Promise<void> {
+export function changeWorldTransition(): Promise<void> {
   return new Promise((resolve) => {
-    cellEvents.emit("dream-transition", {
+    gameEvents.emit("change-world-transition", {
       afterClose: () => resolve(),
     });
   });

@@ -16,6 +16,9 @@ interface LessonHeaderProps {
   onCompleteDescription?: () => void;
 }
 
+const LEFT_W = 120;
+const RIGHT_W = 120;
+
 export function LessonHeader({
   show,
   lessonDetails,
@@ -34,11 +37,8 @@ export function LessonHeader({
     if (show && phase === "hidden") setPhase("entering");
   }, [show, phase]);
 
-  if (phase === "hidden") return null;
+  if (phase === "hidden" || !show) return null;
   const isEntering = phase === "entering";
-
-  const LEFT_W = 120;
-  const RIGHT_W = 120;
 
   return (
     <>

@@ -5,6 +5,8 @@ import { cemeteryScenario } from "./helpers/cemeteryScenario";
 import { getDayAction } from "@/game/actions/getAction";
 import { ghostElisa } from "@/game/actors/ghostElisa/GhostElisa";
 import { dreamCamera } from "@/game/cameras/DreamCamera";
+import { gameEvents } from "@/events/gameEvents";
+import { changeWorldTransition } from "@/game/utils/changeWorldTransition";
 
 export const GHOST_DREAM_SCENE = "GhostDreamScene";
 export const DEFAULT_POSITION_X = 510;
@@ -58,6 +60,10 @@ class GhostDreamScene extends Phaser.Scene {
       const hudContainer = hud.create(this, dayActions, [HUD_ITEMS.WEIGHT]);
       this.children.bringToTop(hudContainer);
       dreamCamera.fadeIn({ onComplete: () => dayActions.onStart() });
+    });
+
+    gameEvents.on("change-world-transition", ({ afterClose }) => {
+      changeWorldTransition(this, afterClose);
     });
   }
 

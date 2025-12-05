@@ -15,7 +15,6 @@ export type Events = {
   "hud-thermometer-to": { value: number; duration?: number };
   "hud-thermometer-level": { level: ThermoLevel; duration?: number };
   "noise-effect": { key: NoiseKeys; position?: Position; size?: Size };
-  "dream-transition": { afterClose?: () => void };
 };
 
 export const cellEvents = mitt<Events>();

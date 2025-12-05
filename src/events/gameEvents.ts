@@ -27,6 +27,9 @@ export type Events = {
   "change-world": {
     targetWorld: GAME_WORLDS;
   };
+  "change-world-transition": {
+    afterClose?: () => void;
+  };
   "change-scene": {
     targetScene: string;
     fade?: boolean;

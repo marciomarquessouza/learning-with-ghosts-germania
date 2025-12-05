@@ -8,7 +8,7 @@ import {
 } from "../helpers/showDayIntroduction";
 import { ChallengeEvent, setChallenge } from "../helpers/setChallenge";
 import { DialogueEvent } from "../gameEvents";
-import { showDreamTransition } from "../helpers/showDreamTransition";
+import { changeWorldTransition } from "../helpers/showDreamTransition";
 import {
   ShowDreamIntroduction,
   showDreamIntroduction,
@@ -47,8 +47,8 @@ export const stepSetChallenge = (
   options?: StepOptions
 ): Step => stepBase(() => setChallenge(payload), options);
 
-export const stepShowDreamTransition = (options?: StepOptions): Step =>
-  stepBase(() => showDreamTransition(), options);
+export const stepChangeWorldTransition = (options?: StepOptions): Step =>
+  stepBase(() => changeWorldTransition(), options);
 
 export const stepShowDreamIntroduction = (
   payload: ShowDreamIntroduction,

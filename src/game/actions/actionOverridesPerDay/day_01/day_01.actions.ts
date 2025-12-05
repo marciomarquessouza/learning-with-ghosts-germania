@@ -7,7 +7,7 @@ import {
   stepSetChallenge,
   stepSetGameWorld,
   stepShowDreamIntroduction,
-  stepShowDreamTransition,
+  stepChangeWorldTransition,
   stepShowDialogue,
   stepShowLesson,
 } from "@/events/steps";
@@ -81,7 +81,7 @@ class DayActions1 extends DayActions {
           stepShowDialogue({
             lines: dialogues.bed_alternatives(),
           }),
-          stepShowDreamTransition({
+          stepChangeWorldTransition({
             showWhenAlternativeIs: "sleeping_with_ghosts",
           }),
           stepShowDreamIntroduction(
@@ -109,10 +109,12 @@ class DayActions1 extends DayActions {
       [
         stepShowDialogue({ lines: dialogues.lesson_preparation() }),
         stepShowLesson({ lesson: this.lesson }),
+        stepShowDialogue({ lines: dialogues.lesson_finish() }),
+        // stepShowDreamTransition({}),
+        stepChangeWorldTransition(),
+        stepSetGameWorld({ targetWorld: GAME_WORLDS.REAL }),
       ],
-      {
-        alternativeId: undefined,
-      }
+      {}
     );
   }
 
