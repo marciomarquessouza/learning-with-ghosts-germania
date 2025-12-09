@@ -1,7 +1,6 @@
 "use client";
 import { useEffect, useRef, useState } from "react";
 import { FullProgressPanel } from "./FullProgressPanel";
-import { CompactProgressPanel } from "./CompactProgressPanel";
 import { gameEvents } from "@/events/gameEvents";
 
 export function SideProgressContainer() {
@@ -9,40 +8,37 @@ export function SideProgressContainer() {
   const [width, setWidth] = useState(0);
   const [canvasReady, setCanvasReady] = useState(false);
 
-  const FULL_PANEL_MIN = 350;
-  const COMPACT_PANEL_MIN = 120;
+  const MIN_PANEL = 100;
+  const IDEAL_PANEL = 400;
 
   useEffect(() => {
     if (!ref.current) return;
 
-    const observer = new ResizeObserver((entries) => {
-      const box = entries[0].contentRect;
-      setWidth(box.width);
+    const obs = new ResizeObserver((entries) => {
+      setWidth(entries[0].contentRect.width);
     });
 
-    observer.observe(ref.current);
-
-    return () => observer.disconnect();
+    obs.observe(ref.current);
+    return () => obs.disconnect();
   }, []);
 
   useEffect(() => {
-    const handle = () => {
-      setCanvasReady(true);
-    };
-
-    gameEvents.on("canvas-ready", handle);
-    return () => gameEvents.off("canvas-ready", handle);
+    gameEvents.on("canvas-ready", () => setCanvasReady(true));
+    return () => gameEvents.off("canvas-ready", () => setCanvasReady(true));
   }, []);
 
-  let mode: "hidden" | "compact" | "full" = "hidden";
-
-  if (canvasReady && width >= FULL_PANEL_MIN) mode = "full";
-  else if (canvasReady && width >= COMPACT_PANEL_MIN) mode = "compact";
+  const hidden = width < MIN_PANEL;
 
   return (
-    <div ref={ref} className="flex-grow h-full relative">
-      {mode === "full" && <FullProgressPanel />}
-      {mode === "compact" && <CompactProgressPanel />}
+    <div
+      ref={ref}
+      className="h-full flex-shrink transition-all duration-300 overflow-hidden"
+      style={{
+        width: IDEAL_PANEL,
+        minWidth: 0,
+      }}
+    >
+      {canvasReady && !hidden && <FullProgressPanel />}
     </div>
   );
 }

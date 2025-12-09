@@ -16,7 +16,7 @@ const GameRoot = dynamic(() => import("@/game/main"), {
 export default function Game() {
   return (
     <div className="bg-black text-white w-screen h-screen overflow-hidden flex">
-      <div id="game-container" className="flex-shrink-0" />
+      <div id="game-container" className="flex-grow h-full" />
       <SideProgressContainer />
       <RotateOverlay />
       <SceneIntroduction />
