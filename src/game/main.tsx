@@ -7,17 +7,25 @@ import { useGameStore } from "@/store/gameStore";
 import { useCellStore } from "@/store/cellStore";
 import { DEFAULT_INITIAL_WEIGHT } from "@/constants/game";
 import { GAME_WORLDS } from "@/types";
+import { useSearchParams } from "next/navigation";
+import { SCENE_NAME as CELL_SCENE } from "@/game/scenes/cell_scene";
+import { sceneWorldMap } from "./utils/sceneWorldMap";
+import { getSceneName } from "./utils/sceneNameMap";
 
 export default function MainGame() {
+  const searchParams = useSearchParams();
+  const searchParamsScene = searchParams.get("scene") || CELL_SCENE;
+  const { day, setDay, setGameWorld } = useGameStore();
+  const firstScene = getSceneName(searchParamsScene);
+  const world = sceneWorldMap[firstScene] as GAME_WORLDS;
   const [fakeLoading, setFakeLoading] = useState(true);
   const [loading, setLoading] = useState(true);
-  const { day, setDay, gameWorld, setGameWorld } = useGameStore();
   const { setWeight } = useCellStore();
   const started = useRef(false);
   const currentGame = useRef<Phaser.Game | null>(null);
   const showLoading = useMemo(
-    () => loading && gameWorld === GAME_WORLDS.REAL,
-    [loading, gameWorld]
+    () => loading && world === GAME_WORLDS.REAL,
+    [loading, world]
   );
 
   const checkIfIsFirstDay = useCallback(() => {
@@ -51,7 +59,7 @@ export default function MainGame() {
 
     if (!fakeLoading && loading && !started.current) {
       started.current = true;
-      const gameConfig = getGameWorldConfig(gameWorld);
+      const gameConfig = getGameWorldConfig(world, firstScene);
       initPhaser({ ...gameConfig, parent: "game-container" }).then((game) => {
         checkIfIsFirstDay();
         setLoading(false);
@@ -62,7 +70,14 @@ export default function MainGame() {
     return () => {
       gameEvents.off("change-world", handle);
     };
-  }, [loading, fakeLoading, gameWorld, checkIfIsFirstDay, setGameWorld]);
+  }, [
+    loading,
+    fakeLoading,
+    world,
+    checkIfIsFirstDay,
+    setGameWorld,
+    firstScene,
+  ]);
 
   return showLoading ? <GhostLoading /> : null;
 }

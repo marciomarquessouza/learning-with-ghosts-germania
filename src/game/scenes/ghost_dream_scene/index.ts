@@ -8,13 +8,13 @@ import { dreamCamera } from "@/game/cameras/DreamCamera";
 import { gameEvents } from "@/events/gameEvents";
 import { changeWorldTransition } from "@/game/utils/changeWorldTransition";
 
-export const GHOST_DREAM_SCENE = "GhostDreamScene";
+export const SCENE_NAME = "GhostDreamScene";
 export const DEFAULT_POSITION_X = 510;
 export const DEFAULT_POSITION_Y = 720;
 
 class GhostDreamScene extends Phaser.Scene {
   constructor() {
-    super({ key: GHOST_DREAM_SCENE });
+    super({ key: SCENE_NAME });
   }
 
   preload() {
