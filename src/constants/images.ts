@@ -68,3 +68,14 @@ export const CEMETERY_BACKGROUND_IMG =
 export const CEMETERY_ROAD_IMG = "/ghost_dream/cemetery/cemetery_road.png";
 export const CEMETERY_MOON_IMG = "/ghost_dream/cemetery/cemetery_moon.png";
 export const CEMETERY_CLOUDS_IMG = "/ghost_dream/cemetery/cemetery_clouds.png";
+
+// TRAIN IMAGES
+export const TRAIN_BACKGROUND_IMG = "/train/scenario/train_background.png";
+export const TRAIN_RAILROAD_IMG = "/train/scenario/train_railroad.png";
+export const LOCOMOTIVE_IMG = "/train/scenario/locomotive.png";
+
+// LOCOMOTIVE ATLAS
+export const LOCOMOTIVE_ATLAS_IMG =
+  "/train/locomotive/train_running_spritesheet.png";
+export const LOCOMOTIVE_ATLAS_JSON =
+  "/train/locomotive/train_running_spritesheet.json";
