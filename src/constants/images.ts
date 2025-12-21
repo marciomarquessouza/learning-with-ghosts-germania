@@ -85,8 +85,9 @@ export const LOCOMOTIVE_BELL_JSON =
 export const FAIRING_IMG = "/train/locomotive/fairing.png";
 
 // SPEEDOMETER
-export const INDICATOR_IMG = "/train/speedometer/indicator.png";
-export const SPEEDOMETER_IMG = "/train/speedometer/speedometer_base.png";
+export const SPEEDOMETER_POINTER_IMG =
+  "/train/speedometer/speedometer_pointer.png";
+export const SPEEDOMETER_BASE_IMG = "/train/speedometer/speedometer_base.png";
 export const SPEEDOMETER_ATLAS_IMG =
   "/train/speedometer/speedometer_spritesheet.png";
 export const SPEEDOMETER_ATLAS_JSON =

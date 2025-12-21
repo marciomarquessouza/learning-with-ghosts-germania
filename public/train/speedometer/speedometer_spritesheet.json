@@ -1,0 +1,232 @@
+{
+  "frames": {
+    "speedometer_0": {
+      "frame": {
+        "x": 0,
+        "y": 0,
+        "w": 334,
+        "h": 180
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 334,
+        "h": 180
+      },
+      "sourceSize": {
+        "w": 334,
+        "h": 180
+      }
+    },
+    "speedometer_1": {
+      "frame": {
+        "x": 334,
+        "y": 0,
+        "w": 334,
+        "h": 180
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 334,
+        "h": 180
+      },
+      "sourceSize": {
+        "w": 334,
+        "h": 180
+      }
+    },
+    "speedometer_2": {
+      "frame": {
+        "x": 668,
+        "y": 0,
+        "w": 334,
+        "h": 180
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 334,
+        "h": 180
+      },
+      "sourceSize": {
+        "w": 334,
+        "h": 180
+      }
+    },
+    "speedometer_3": {
+      "frame": {
+        "x": 0,
+        "y": 180,
+        "w": 334,
+        "h": 180
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 334,
+        "h": 180
+      },
+      "sourceSize": {
+        "w": 334,
+        "h": 180
+      }
+    },
+    "speedometer_4": {
+      "frame": {
+        "x": 334,
+        "y": 180,
+        "w": 334,
+        "h": 180
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 334,
+        "h": 180
+      },
+      "sourceSize": {
+        "w": 334,
+        "h": 180
+      }
+    },
+    "speedometer_5": {
+      "frame": {
+        "x": 668,
+        "y": 180,
+        "w": 334,
+        "h": 180
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 334,
+        "h": 180
+      },
+      "sourceSize": {
+        "w": 334,
+        "h": 180
+      }
+    },
+    "speedometer_6": {
+      "frame": {
+        "x": 0,
+        "y": 360,
+        "w": 334,
+        "h": 180
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 334,
+        "h": 180
+      },
+      "sourceSize": {
+        "w": 334,
+        "h": 180
+      }
+    },
+    "speedometer_7": {
+      "frame": {
+        "x": 334,
+        "y": 360,
+        "w": 334,
+        "h": 180
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 334,
+        "h": 180
+      },
+      "sourceSize": {
+        "w": 334,
+        "h": 180
+      }
+    },
+    "speedometer_8": {
+      "frame": {
+        "x": 668,
+        "y": 360,
+        "w": 334,
+        "h": 180
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 334,
+        "h": 180
+      },
+      "sourceSize": {
+        "w": 334,
+        "h": 180
+      }
+    },
+    "speedometer_9": {
+      "frame": {
+        "x": 0,
+        "y": 540,
+        "w": 334,
+        "h": 180
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 334,
+        "h": 180
+      },
+      "sourceSize": {
+        "w": 334,
+        "h": 180
+      }
+    },
+    "speedometer_10": {
+      "frame": {
+        "x": 334,
+        "y": 540,
+        "w": 334,
+        "h": 180
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 334,
+        "h": 180
+      },
+      "sourceSize": {
+        "w": 334,
+        "h": 180
+      }
+    }
+  },
+  "meta": {
+    "image": "speedometer_spritesheet.png",
+    "size": {
+      "w": 1002,
+      "h": 720
+    },
+    "scale": "1"
+  }
+}

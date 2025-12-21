@@ -1,5 +1,6 @@
 import { bellAnimations } from "./helpers/BellAnimation";
 import { fairingSprite } from "./helpers/Fairing";
+import { speedometer } from "./helpers/Speedometer";
 import { trainBouncing } from "./helpers/TrainBouncing";
 import { wheelsAnimations } from "./helpers/WheelsAnimation";
 
@@ -8,6 +9,7 @@ export class Locomotive {
     wheelsAnimations.preload(scene);
     fairingSprite.preload(scene);
     bellAnimations.preload(scene);
+    speedometer.preload(scene);
   }
 
   create(scene: Phaser.Scene, startX: number, startY: number) {
@@ -30,7 +32,11 @@ export class Locomotive {
 
     const wheelsSprite = wheelsAnimations.create(scene, 40, 92);
     wheelsSprite.play(wheelsAnimations.animations.WHEELS_RUNNING, true);
+
     locomotiveContainer.add(wheelsSprite);
+
+    const speedometerContainer = speedometer.create(scene, -135, -140);
+    locomotiveContainer.add(speedometerContainer);
 
     return locomotiveContainer;
   }
