@@ -1,0 +1,512 @@
+{
+  "frames": {
+    "train_wheels_0": {
+      "frame": {
+        "x": 0,
+        "y": 0,
+        "w": 557,
+        "h": 183
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 557,
+        "h": 183
+      },
+      "sourceSize": {
+        "w": 557,
+        "h": 183
+      }
+    },
+    "train_wheels_1": {
+      "frame": {
+        "x": 557,
+        "y": 0,
+        "w": 557,
+        "h": 183
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 557,
+        "h": 183
+      },
+      "sourceSize": {
+        "w": 557,
+        "h": 183
+      }
+    },
+    "train_wheels_2": {
+      "frame": {
+        "x": 1114,
+        "y": 0,
+        "w": 557,
+        "h": 183
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 557,
+        "h": 183
+      },
+      "sourceSize": {
+        "w": 557,
+        "h": 183
+      }
+    },
+    "train_wheels_3": {
+      "frame": {
+        "x": 0,
+        "y": 183,
+        "w": 557,
+        "h": 183
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 557,
+        "h": 183
+      },
+      "sourceSize": {
+        "w": 557,
+        "h": 183
+      }
+    },
+    "train_wheels_4": {
+      "frame": {
+        "x": 557,
+        "y": 183,
+        "w": 557,
+        "h": 183
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 557,
+        "h": 183
+      },
+      "sourceSize": {
+        "w": 557,
+        "h": 183
+      }
+    },
+    "train_wheels_5": {
+      "frame": {
+        "x": 1114,
+        "y": 183,
+        "w": 557,
+        "h": 183
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 557,
+        "h": 183
+      },
+      "sourceSize": {
+        "w": 557,
+        "h": 183
+      }
+    },
+    "train_wheels_6": {
+      "frame": {
+        "x": 0,
+        "y": 366,
+        "w": 557,
+        "h": 183
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 557,
+        "h": 183
+      },
+      "sourceSize": {
+        "w": 557,
+        "h": 183
+      }
+    },
+    "train_wheels_7": {
+      "frame": {
+        "x": 557,
+        "y": 366,
+        "w": 557,
+        "h": 183
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 557,
+        "h": 183
+      },
+      "sourceSize": {
+        "w": 557,
+        "h": 183
+      }
+    },
+    "train_wheels_8": {
+      "frame": {
+        "x": 1114,
+        "y": 366,
+        "w": 557,
+        "h": 183
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 557,
+        "h": 183
+      },
+      "sourceSize": {
+        "w": 557,
+        "h": 183
+      }
+    },
+    "train_wheels_9": {
+      "frame": {
+        "x": 0,
+        "y": 549,
+        "w": 557,
+        "h": 183
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 557,
+        "h": 183
+      },
+      "sourceSize": {
+        "w": 557,
+        "h": 183
+      }
+    },
+    "train_wheels_10": {
+      "frame": {
+        "x": 557,
+        "y": 549,
+        "w": 557,
+        "h": 183
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 557,
+        "h": 183
+      },
+      "sourceSize": {
+        "w": 557,
+        "h": 183
+      }
+    },
+    "train_wheels_11": {
+      "frame": {
+        "x": 1114,
+        "y": 549,
+        "w": 557,
+        "h": 183
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 557,
+        "h": 183
+      },
+      "sourceSize": {
+        "w": 557,
+        "h": 183
+      }
+    },
+    "train_wheels_12": {
+      "frame": {
+        "x": 0,
+        "y": 732,
+        "w": 557,
+        "h": 183
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 557,
+        "h": 183
+      },
+      "sourceSize": {
+        "w": 557,
+        "h": 183
+      }
+    },
+    "train_wheels_13": {
+      "frame": {
+        "x": 557,
+        "y": 732,
+        "w": 557,
+        "h": 183
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 557,
+        "h": 183
+      },
+      "sourceSize": {
+        "w": 557,
+        "h": 183
+      }
+    },
+    "train_wheels_14": {
+      "frame": {
+        "x": 1114,
+        "y": 732,
+        "w": 557,
+        "h": 183
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 557,
+        "h": 183
+      },
+      "sourceSize": {
+        "w": 557,
+        "h": 183
+      }
+    },
+    "train_wheels_15": {
+      "frame": {
+        "x": 0,
+        "y": 915,
+        "w": 557,
+        "h": 183
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 557,
+        "h": 183
+      },
+      "sourceSize": {
+        "w": 557,
+        "h": 183
+      }
+    },
+    "train_wheels_16": {
+      "frame": {
+        "x": 557,
+        "y": 915,
+        "w": 557,
+        "h": 183
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 557,
+        "h": 183
+      },
+      "sourceSize": {
+        "w": 557,
+        "h": 183
+      }
+    },
+    "train_wheels_17": {
+      "frame": {
+        "x": 1114,
+        "y": 915,
+        "w": 557,
+        "h": 183
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 557,
+        "h": 183
+      },
+      "sourceSize": {
+        "w": 557,
+        "h": 183
+      }
+    },
+    "train_wheels_18": {
+      "frame": {
+        "x": 0,
+        "y": 1098,
+        "w": 557,
+        "h": 183
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 557,
+        "h": 183
+      },
+      "sourceSize": {
+        "w": 557,
+        "h": 183
+      }
+    },
+    "train_wheels_19": {
+      "frame": {
+        "x": 557,
+        "y": 1098,
+        "w": 557,
+        "h": 183
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 557,
+        "h": 183
+      },
+      "sourceSize": {
+        "w": 557,
+        "h": 183
+      }
+    },
+    "train_wheels_20": {
+      "frame": {
+        "x": 1114,
+        "y": 1098,
+        "w": 557,
+        "h": 183
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 557,
+        "h": 183
+      },
+      "sourceSize": {
+        "w": 557,
+        "h": 183
+      }
+    },
+    "train_wheels_21": {
+      "frame": {
+        "x": 0,
+        "y": 1281,
+        "w": 557,
+        "h": 183
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 557,
+        "h": 183
+      },
+      "sourceSize": {
+        "w": 557,
+        "h": 183
+      }
+    },
+    "train_wheels_22": {
+      "frame": {
+        "x": 557,
+        "y": 1281,
+        "w": 557,
+        "h": 183
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 557,
+        "h": 183
+      },
+      "sourceSize": {
+        "w": 557,
+        "h": 183
+      }
+    },
+    "train_wheels_23": {
+      "frame": {
+        "x": 1114,
+        "y": 1281,
+        "w": 557,
+        "h": 183
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 557,
+        "h": 183
+      },
+      "sourceSize": {
+        "w": 557,
+        "h": 183
+      }
+    },
+    "train_wheels_24": {
+      "frame": {
+        "x": 0,
+        "y": 1464,
+        "w": 557,
+        "h": 183
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 557,
+        "h": 183
+      },
+      "sourceSize": {
+        "w": 557,
+        "h": 183
+      }
+    }
+  },
+  "meta": {
+    "image": "train_wheels_spritesheet.png",
+    "size": {
+      "w": 1671,
+      "h": 1647
+    },
+    "scale": "1"
+  }
+}

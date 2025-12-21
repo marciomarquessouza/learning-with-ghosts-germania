@@ -69,13 +69,25 @@ export const CEMETERY_ROAD_IMG = "/ghost_dream/cemetery/cemetery_road.png";
 export const CEMETERY_MOON_IMG = "/ghost_dream/cemetery/cemetery_moon.png";
 export const CEMETERY_CLOUDS_IMG = "/ghost_dream/cemetery/cemetery_clouds.png";
 
-// TRAIN IMAGES
+// TRAIN SCENARIO
 export const TRAIN_BACKGROUND_IMG = "/train/scenario/train_background.png";
 export const TRAIN_RAILROAD_IMG = "/train/scenario/train_railroad.png";
-export const LOCOMOTIVE_IMG = "/train/scenario/locomotive.png";
 
-// LOCOMOTIVE ATLAS
-export const LOCOMOTIVE_ATLAS_IMG =
-  "/train/locomotive/train_running_spritesheet.png";
-export const LOCOMOTIVE_ATLAS_JSON =
-  "/train/locomotive/train_running_spritesheet.json";
+// LOCOMOTIVE
+export const LOCOMOTIVE_WHEELS_IMG =
+  "/train/locomotive/train_wheels_spritesheet.png";
+export const LOCOMOTIVE_WHEELS_JSON =
+  "/train/locomotive/train_wheels_spritesheet.json";
+export const LOCOMOTIVE_BELL_IMG =
+  "/train/locomotive/train_bell_spritesheet.png";
+export const LOCOMOTIVE_BELL_JSON =
+  "/train/locomotive/train_bell_spritesheet.json";
+export const FAIRING_IMG = "/train/locomotive/fairing.png";
+
+// SPEEDOMETER
+export const INDICATOR_IMG = "/train/speedometer/indicator.png";
+export const SPEEDOMETER_IMG = "/train/speedometer/speedometer_base.png";
+export const SPEEDOMETER_ATLAS_IMG =
+  "/train/speedometer/speedometer_spritesheet.png";
+export const SPEEDOMETER_ATLAS_JSON =
+  "/train/speedometer/speedometer_spritesheet.json";

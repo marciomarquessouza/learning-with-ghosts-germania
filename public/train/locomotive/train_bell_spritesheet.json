@@ -1,511 +1,511 @@
 {
   "frames": {
-    "train_running_0": {
+    "train_bell_0": {
       "frame": {
         "x": 0,
         "y": 0,
-        "w": 844,
-        "h": 372
+        "w": 82,
+        "h": 65
       },
       "rotated": false,
       "trimmed": false,
       "spriteSourceSize": {
         "x": 0,
         "y": 0,
-        "w": 844,
-        "h": 372
+        "w": 82,
+        "h": 65
       },
       "sourceSize": {
-        "w": 844,
-        "h": 372
+        "w": 82,
+        "h": 65
       }
     },
-    "train_running_1": {
+    "train_bell_1": {
       "frame": {
-        "x": 844,
+        "x": 82,
         "y": 0,
-        "w": 844,
-        "h": 372
+        "w": 82,
+        "h": 65
       },
       "rotated": false,
       "trimmed": false,
       "spriteSourceSize": {
         "x": 0,
         "y": 0,
-        "w": 844,
-        "h": 372
+        "w": 82,
+        "h": 65
       },
       "sourceSize": {
-        "w": 844,
-        "h": 372
+        "w": 82,
+        "h": 65
       }
     },
-    "train_running_2": {
+    "train_bell_2": {
       "frame": {
-        "x": 1688,
+        "x": 164,
         "y": 0,
-        "w": 844,
-        "h": 372
+        "w": 82,
+        "h": 65
       },
       "rotated": false,
       "trimmed": false,
       "spriteSourceSize": {
         "x": 0,
         "y": 0,
-        "w": 844,
-        "h": 372
+        "w": 82,
+        "h": 65
       },
       "sourceSize": {
-        "w": 844,
-        "h": 372
+        "w": 82,
+        "h": 65
       }
     },
-    "train_running_3": {
+    "train_bell_3": {
       "frame": {
         "x": 0,
-        "y": 372,
-        "w": 844,
-        "h": 372
+        "y": 65,
+        "w": 82,
+        "h": 65
       },
       "rotated": false,
       "trimmed": false,
       "spriteSourceSize": {
         "x": 0,
         "y": 0,
-        "w": 844,
-        "h": 372
+        "w": 82,
+        "h": 65
       },
       "sourceSize": {
-        "w": 844,
-        "h": 372
+        "w": 82,
+        "h": 65
       }
     },
-    "train_running_4": {
+    "train_bell_4": {
       "frame": {
-        "x": 844,
-        "y": 372,
-        "w": 844,
-        "h": 372
+        "x": 82,
+        "y": 65,
+        "w": 82,
+        "h": 65
       },
       "rotated": false,
       "trimmed": false,
       "spriteSourceSize": {
         "x": 0,
         "y": 0,
-        "w": 844,
-        "h": 372
+        "w": 82,
+        "h": 65
       },
       "sourceSize": {
-        "w": 844,
-        "h": 372
+        "w": 82,
+        "h": 65
       }
     },
-    "train_running_5": {
+    "train_bell_5": {
       "frame": {
-        "x": 1688,
-        "y": 372,
-        "w": 844,
-        "h": 372
+        "x": 164,
+        "y": 65,
+        "w": 82,
+        "h": 65
       },
       "rotated": false,
       "trimmed": false,
       "spriteSourceSize": {
         "x": 0,
         "y": 0,
-        "w": 844,
-        "h": 372
+        "w": 82,
+        "h": 65
       },
       "sourceSize": {
-        "w": 844,
-        "h": 372
+        "w": 82,
+        "h": 65
       }
     },
-    "train_running_6": {
+    "train_bell_6": {
       "frame": {
         "x": 0,
-        "y": 744,
-        "w": 844,
-        "h": 372
+        "y": 130,
+        "w": 82,
+        "h": 65
       },
       "rotated": false,
       "trimmed": false,
       "spriteSourceSize": {
         "x": 0,
         "y": 0,
-        "w": 844,
-        "h": 372
+        "w": 82,
+        "h": 65
       },
       "sourceSize": {
-        "w": 844,
-        "h": 372
+        "w": 82,
+        "h": 65
       }
     },
-    "train_running_7": {
+    "train_bell_7": {
       "frame": {
-        "x": 844,
-        "y": 744,
-        "w": 844,
-        "h": 372
+        "x": 82,
+        "y": 130,
+        "w": 82,
+        "h": 65
       },
       "rotated": false,
       "trimmed": false,
       "spriteSourceSize": {
         "x": 0,
         "y": 0,
-        "w": 844,
-        "h": 372
+        "w": 82,
+        "h": 65
       },
       "sourceSize": {
-        "w": 844,
-        "h": 372
+        "w": 82,
+        "h": 65
       }
     },
-    "train_running_8": {
+    "train_bell_8": {
       "frame": {
-        "x": 1688,
-        "y": 744,
-        "w": 844,
-        "h": 372
+        "x": 164,
+        "y": 130,
+        "w": 82,
+        "h": 65
       },
       "rotated": false,
       "trimmed": false,
       "spriteSourceSize": {
         "x": 0,
         "y": 0,
-        "w": 844,
-        "h": 372
+        "w": 82,
+        "h": 65
       },
       "sourceSize": {
-        "w": 844,
-        "h": 372
+        "w": 82,
+        "h": 65
       }
     },
-    "train_running_9": {
+    "train_bell_9": {
       "frame": {
         "x": 0,
-        "y": 1116,
-        "w": 844,
-        "h": 372
+        "y": 195,
+        "w": 82,
+        "h": 65
       },
       "rotated": false,
       "trimmed": false,
       "spriteSourceSize": {
         "x": 0,
         "y": 0,
-        "w": 844,
-        "h": 372
+        "w": 82,
+        "h": 65
       },
       "sourceSize": {
-        "w": 844,
-        "h": 372
+        "w": 82,
+        "h": 65
       }
     },
-    "train_running_10": {
+    "train_bell_10": {
       "frame": {
-        "x": 844,
-        "y": 1116,
-        "w": 844,
-        "h": 372
+        "x": 82,
+        "y": 195,
+        "w": 82,
+        "h": 65
       },
       "rotated": false,
       "trimmed": false,
       "spriteSourceSize": {
         "x": 0,
         "y": 0,
-        "w": 844,
-        "h": 372
+        "w": 82,
+        "h": 65
       },
       "sourceSize": {
-        "w": 844,
-        "h": 372
+        "w": 82,
+        "h": 65
       }
     },
-    "train_running_11": {
+    "train_bell_11": {
       "frame": {
-        "x": 1688,
-        "y": 1116,
-        "w": 844,
-        "h": 372
+        "x": 164,
+        "y": 195,
+        "w": 82,
+        "h": 65
       },
       "rotated": false,
       "trimmed": false,
       "spriteSourceSize": {
         "x": 0,
         "y": 0,
-        "w": 844,
-        "h": 372
+        "w": 82,
+        "h": 65
       },
       "sourceSize": {
-        "w": 844,
-        "h": 372
+        "w": 82,
+        "h": 65
       }
     },
-    "train_running_12": {
+    "train_bell_12": {
       "frame": {
         "x": 0,
-        "y": 1488,
-        "w": 844,
-        "h": 372
+        "y": 260,
+        "w": 82,
+        "h": 65
       },
       "rotated": false,
       "trimmed": false,
       "spriteSourceSize": {
         "x": 0,
         "y": 0,
-        "w": 844,
-        "h": 372
+        "w": 82,
+        "h": 65
       },
       "sourceSize": {
-        "w": 844,
-        "h": 372
+        "w": 82,
+        "h": 65
       }
     },
-    "train_running_13": {
+    "train_bell_13": {
       "frame": {
-        "x": 844,
-        "y": 1488,
-        "w": 844,
-        "h": 372
+        "x": 82,
+        "y": 260,
+        "w": 82,
+        "h": 65
       },
       "rotated": false,
       "trimmed": false,
       "spriteSourceSize": {
         "x": 0,
         "y": 0,
-        "w": 844,
-        "h": 372
+        "w": 82,
+        "h": 65
       },
       "sourceSize": {
-        "w": 844,
-        "h": 372
+        "w": 82,
+        "h": 65
       }
     },
-    "train_running_14": {
+    "train_bell_14": {
       "frame": {
-        "x": 1688,
-        "y": 1488,
-        "w": 844,
-        "h": 372
+        "x": 164,
+        "y": 260,
+        "w": 82,
+        "h": 65
       },
       "rotated": false,
       "trimmed": false,
       "spriteSourceSize": {
         "x": 0,
         "y": 0,
-        "w": 844,
-        "h": 372
+        "w": 82,
+        "h": 65
       },
       "sourceSize": {
-        "w": 844,
-        "h": 372
+        "w": 82,
+        "h": 65
       }
     },
-    "train_running_15": {
+    "train_bell_15": {
       "frame": {
         "x": 0,
-        "y": 1860,
-        "w": 844,
-        "h": 372
+        "y": 325,
+        "w": 82,
+        "h": 65
       },
       "rotated": false,
       "trimmed": false,
       "spriteSourceSize": {
         "x": 0,
         "y": 0,
-        "w": 844,
-        "h": 372
+        "w": 82,
+        "h": 65
       },
       "sourceSize": {
-        "w": 844,
-        "h": 372
+        "w": 82,
+        "h": 65
       }
     },
-    "train_running_16": {
+    "train_bell_16": {
       "frame": {
-        "x": 844,
-        "y": 1860,
-        "w": 844,
-        "h": 372
+        "x": 82,
+        "y": 325,
+        "w": 82,
+        "h": 65
       },
       "rotated": false,
       "trimmed": false,
       "spriteSourceSize": {
         "x": 0,
         "y": 0,
-        "w": 844,
-        "h": 372
+        "w": 82,
+        "h": 65
       },
       "sourceSize": {
-        "w": 844,
-        "h": 372
+        "w": 82,
+        "h": 65
       }
     },
-    "train_running_17": {
+    "train_bell_17": {
       "frame": {
-        "x": 1688,
-        "y": 1860,
-        "w": 844,
-        "h": 372
+        "x": 164,
+        "y": 325,
+        "w": 82,
+        "h": 65
       },
       "rotated": false,
       "trimmed": false,
       "spriteSourceSize": {
         "x": 0,
         "y": 0,
-        "w": 844,
-        "h": 372
+        "w": 82,
+        "h": 65
       },
       "sourceSize": {
-        "w": 844,
-        "h": 372
+        "w": 82,
+        "h": 65
       }
     },
-    "train_running_18": {
+    "train_bell_18": {
       "frame": {
         "x": 0,
-        "y": 2232,
-        "w": 844,
-        "h": 372
+        "y": 390,
+        "w": 82,
+        "h": 65
       },
       "rotated": false,
       "trimmed": false,
       "spriteSourceSize": {
         "x": 0,
         "y": 0,
-        "w": 844,
-        "h": 372
+        "w": 82,
+        "h": 65
       },
       "sourceSize": {
-        "w": 844,
-        "h": 372
+        "w": 82,
+        "h": 65
       }
     },
-    "train_running_19": {
+    "train_bell_19": {
       "frame": {
-        "x": 844,
-        "y": 2232,
-        "w": 844,
-        "h": 372
+        "x": 82,
+        "y": 390,
+        "w": 82,
+        "h": 65
       },
       "rotated": false,
       "trimmed": false,
       "spriteSourceSize": {
         "x": 0,
         "y": 0,
-        "w": 844,
-        "h": 372
+        "w": 82,
+        "h": 65
       },
       "sourceSize": {
-        "w": 844,
-        "h": 372
+        "w": 82,
+        "h": 65
       }
     },
-    "train_running_20": {
+    "train_bell_20": {
       "frame": {
-        "x": 1688,
-        "y": 2232,
-        "w": 844,
-        "h": 372
+        "x": 164,
+        "y": 390,
+        "w": 82,
+        "h": 65
       },
       "rotated": false,
       "trimmed": false,
       "spriteSourceSize": {
         "x": 0,
         "y": 0,
-        "w": 844,
-        "h": 372
+        "w": 82,
+        "h": 65
       },
       "sourceSize": {
-        "w": 844,
-        "h": 372
+        "w": 82,
+        "h": 65
       }
     },
-    "train_running_21": {
+    "train_bell_21": {
       "frame": {
         "x": 0,
-        "y": 2604,
-        "w": 844,
-        "h": 372
+        "y": 455,
+        "w": 82,
+        "h": 65
       },
       "rotated": false,
       "trimmed": false,
       "spriteSourceSize": {
         "x": 0,
         "y": 0,
-        "w": 844,
-        "h": 372
+        "w": 82,
+        "h": 65
       },
       "sourceSize": {
-        "w": 844,
-        "h": 372
+        "w": 82,
+        "h": 65
       }
     },
-    "train_running_22": {
+    "train_bell_22": {
       "frame": {
-        "x": 844,
-        "y": 2604,
-        "w": 844,
-        "h": 372
+        "x": 82,
+        "y": 455,
+        "w": 82,
+        "h": 65
       },
       "rotated": false,
       "trimmed": false,
       "spriteSourceSize": {
         "x": 0,
         "y": 0,
-        "w": 844,
-        "h": 372
+        "w": 82,
+        "h": 65
       },
       "sourceSize": {
-        "w": 844,
-        "h": 372
+        "w": 82,
+        "h": 65
       }
     },
-    "train_running_23": {
+    "train_bell_23": {
       "frame": {
-        "x": 1688,
-        "y": 2604,
-        "w": 844,
-        "h": 372
+        "x": 164,
+        "y": 455,
+        "w": 82,
+        "h": 65
       },
       "rotated": false,
       "trimmed": false,
       "spriteSourceSize": {
         "x": 0,
         "y": 0,
-        "w": 844,
-        "h": 372
+        "w": 82,
+        "h": 65
       },
       "sourceSize": {
-        "w": 844,
-        "h": 372
+        "w": 82,
+        "h": 65
       }
     },
-    "train_running_24": {
+    "train_bell_24": {
       "frame": {
         "x": 0,
-        "y": 2976,
-        "w": 844,
-        "h": 372
+        "y": 520,
+        "w": 82,
+        "h": 65
       },
       "rotated": false,
       "trimmed": false,
       "spriteSourceSize": {
         "x": 0,
         "y": 0,
-        "w": 844,
-        "h": 372
+        "w": 82,
+        "h": 65
       },
       "sourceSize": {
-        "w": 844,
-        "h": 372
+        "w": 82,
+        "h": 65
       }
     }
   },
   "meta": {
-    "image": "train_running_spritesheet.png",
+    "image": "train_bell_spritesheet.png",
     "size": {
-      "w": 2532,
-      "h": 3348
+      "w": 246,
+      "h": 585
     },
     "scale": "1"
   }
