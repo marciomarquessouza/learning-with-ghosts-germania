@@ -12,7 +12,15 @@ export class Locomotive {
     speedometer.preload(scene);
   }
 
-  create(scene: Phaser.Scene, startX: number, startY: number) {
+  create(
+    scene: Phaser.Scene,
+    options: {
+      startX: number;
+      startY: number;
+      initialSpeed: number;
+    }
+  ) {
+    const { startX, startY, initialSpeed } = options;
     const locomotiveContainer = scene.add.container(startX, startY);
 
     const fairingContainer = scene.add.container(0, -16);
@@ -35,7 +43,12 @@ export class Locomotive {
 
     locomotiveContainer.add(wheelsSprite);
 
-    const speedometerContainer = speedometer.create(scene, -135, -140);
+    const speedometerContainer = speedometer.create(
+      scene,
+      -135,
+      -140,
+      initialSpeed
+    );
     locomotiveContainer.add(speedometerContainer);
 
     return locomotiveContainer;

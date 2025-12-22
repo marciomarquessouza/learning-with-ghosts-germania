@@ -55,6 +55,8 @@ export type Events = {
   "show-hud-items": HUD_ITEMS[];
   "hide-hud-items": HUD_ITEMS[];
   "camera-zoom-to": ZoomProps;
+  "train/speed": { speed: number };
+  "train/coal:add": { amount: number };
 };
 
 export const gameEvents = mitt<Events>();
