@@ -2,8 +2,16 @@ import {
   LOCOMOTIVE_WHEELS_IMG,
   LOCOMOTIVE_WHEELS_JSON,
 } from "@/constants/images";
+import { gameEvents } from "@/events/gameEvents";
 
 const WHEELS_ATLAS = "wheels";
+
+type SpeedSyncOptions = {
+  minSpeedToMove?: number;
+  minTimeScale?: number;
+  maxTimeScale?: number;
+  curvePow?: number;
+};
 
 class WheelsAnimations {
   public animations = {
@@ -31,6 +39,43 @@ class WheelsAnimations {
     }
 
     return scene.physics.add.sprite(startX, startY, WHEELS_ATLAS, 0);
+  }
+
+  attachSpeed(
+    _scene: Phaser.Scene,
+    sprite: Phaser.Physics.Arcade.Sprite,
+    options: SpeedSyncOptions = {}
+  ) {
+    const {
+      minSpeedToMove = 1,
+      minTimeScale = 0.08,
+      maxTimeScale = 1.6,
+      curvePow = 0.85,
+    } = options;
+
+    const onSpeed = ({ speed: newSpeed }: { speed: number }) => {
+      const speed = Phaser.Math.Clamp(newSpeed, 0, 100);
+
+      if (speed <= minSpeedToMove) {
+        sprite.anims?.pause();
+        sprite.anims.timeScale = 0;
+        return;
+      }
+
+      sprite.anims?.resume();
+
+      let time = speed / 100;
+      time = Math.pow(time, curvePow);
+
+      const timeScale = Phaser.Math.Linear(minTimeScale, maxTimeScale, time);
+      sprite.anims.timeScale = timeScale;
+    };
+
+    gameEvents.on("train/speed", onSpeed);
+
+    sprite.once(Phaser.GameObjects.Events.DESTROY, () => {
+      gameEvents.off("train/speed", onSpeed);
+    });
   }
 }
 

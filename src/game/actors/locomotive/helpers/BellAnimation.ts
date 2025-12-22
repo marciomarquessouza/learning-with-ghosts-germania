@@ -1,6 +1,16 @@
 import { LOCOMOTIVE_BELL_IMG, LOCOMOTIVE_BELL_JSON } from "@/constants/images";
+import { gameEvents } from "@/events/gameEvents";
 
 const BELL_ATLAS = "bell";
+
+type SpeedSyncOptions = {
+  minSpeedToMove?: number;
+  minTimeScale?: number;
+  maxTimeScale?: number;
+  curvePow?: number;
+};
+
+const FRAME_PREFIX = "train_bell_";
 
 class BellAnimations {
   public animations = {
@@ -18,7 +28,7 @@ class BellAnimations {
       scene.anims.create({
         key: this.animations.BELL_RINGING,
         frames: scene.anims.generateFrameNames(BELL_ATLAS, {
-          prefix: "train_bell_",
+          prefix: FRAME_PREFIX,
           start: 0,
           end: 24,
         }),
@@ -28,6 +38,53 @@ class BellAnimations {
     }
 
     return scene.physics.add.sprite(startX, startY, BELL_ATLAS, 0);
+  }
+
+  attachSpeedSync(
+    _scene: Phaser.Scene,
+    sprite: Phaser.Physics.Arcade.Sprite,
+    options: SpeedSyncOptions = {}
+  ) {
+    const {
+      minSpeedToMove = 20,
+      minTimeScale = 0.1,
+      maxTimeScale = 1.2,
+      curvePow = 0.9,
+    } = options;
+
+    const onSpeed = ({ speed: newSpeed }: { speed: number }) => {
+      const speed = Phaser.Math.Clamp(newSpeed, 0, 100);
+
+      if (speed > minSpeedToMove) {
+        sprite.anims?.resume();
+
+        let time = speed / 100;
+        time = Math.pow(time, curvePow);
+
+        sprite.anims.timeScale = Phaser.Math.Linear(
+          minTimeScale,
+          maxTimeScale,
+          time
+        );
+        return;
+      }
+
+      const currentFrameName = sprite.anims.currentFrame?.frame.name;
+
+      if (currentFrameName === `${FRAME_PREFIX}${0}`) {
+        sprite.anims.pause();
+        sprite.anims.timeScale = 0;
+      } else {
+        sprite.anims.resume();
+        sprite.anims.timeScale = minTimeScale;
+      }
+    };
+
+    gameEvents.on("train/speed", onSpeed);
+
+    sprite.once(Phaser.GameObjects.Events.DESTROY, () => {
+      gameEvents.off("train/speed", onSpeed);
+    });
   }
 }
 

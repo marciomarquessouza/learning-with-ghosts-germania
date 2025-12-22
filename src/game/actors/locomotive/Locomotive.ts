@@ -28,6 +28,7 @@ export class Locomotive {
     const baseFairingRotation = fairingContainer.rotation;
     const bellSprite = bellAnimations.create(scene, 65, -65);
     bellSprite.play(bellAnimations.animations.BELL_RINGING, true);
+    bellAnimations.attachSpeedSync(scene, bellSprite);
     fairingContainer.add(bellSprite);
     fairingContainer.add(fairingSprite.create(scene, 0, 0));
 
@@ -40,6 +41,7 @@ export class Locomotive {
 
     const wheelsSprite = wheelsAnimations.create(scene, 40, 92);
     wheelsSprite.play(wheelsAnimations.animations.WHEELS_RUNNING, true);
+    wheelsAnimations.attachSpeed(scene, wheelsSprite);
 
     locomotiveContainer.add(wheelsSprite);
 
