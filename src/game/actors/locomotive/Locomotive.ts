@@ -40,7 +40,7 @@ export class Locomotive {
 
     smoke.create(scene, smokeLayer, {
       x: 295,
-      y: -235,
+      y: -225,
       initialSpeed: 80,
     });
 
