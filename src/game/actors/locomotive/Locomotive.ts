@@ -49,6 +49,7 @@ export class Locomotive {
       -140,
       initialSpeed
     );
+
     locomotiveContainer.add(speedometerContainer);
 
     return locomotiveContainer;

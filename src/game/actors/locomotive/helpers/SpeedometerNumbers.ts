@@ -45,8 +45,9 @@ export class SpeedometerNumbers {
     });
 
     function convertNumberToSpeedFrame(number: number) {
-      const allowedNumber = Math.min(100, Math.max(0, number));
-      const frameId = Math.floor(allowedNumber / 10);
+      const allowed = Phaser.Math.Clamp(number, 0, 100);
+      const frameId = Phaser.Math.Clamp(Math.round(allowed / 10), 0, 10);
+
       return `${SPEEDOMETER_FRAME}${frameId}`;
     }
 
