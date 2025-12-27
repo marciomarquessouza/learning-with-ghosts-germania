@@ -6,6 +6,7 @@ import { getDayAction } from "@/game/actions/getAction";
 import { hud, HUD_ITEMS } from "../hud";
 import { TrainSpeedController } from "@/game/actors/locomotive/helpers/TrainSpeedController";
 import { gameEvents } from "@/events/gameEvents";
+import { krampus } from "@/game/actors/krampus/Krampus";
 
 export const SCENE_NAME = "TrainScene";
 const TRAIN_RAILROAD = "trainRailroad";
@@ -20,6 +21,7 @@ class TrainScene extends Phaser.Scene {
 
   preload() {
     trainScenario.preload(this);
+    krampus.preload(this);
     this.load.image(TRAIN_RAILROAD, TRAIN_RAILROAD_IMG);
     locomotive.preload(this);
     hud.preload(this);
@@ -36,7 +38,13 @@ class TrainScene extends Phaser.Scene {
     });
 
     locomotive.create(this, {
-      startX: 860,
+      startX: 1260,
+      startY: this.cameras.main.height - 280,
+      initialSpeed: 80,
+    });
+
+    krampus.create(this, {
+      startX: 280,
       startY: this.cameras.main.height - 280,
       initialSpeed: 80,
     });

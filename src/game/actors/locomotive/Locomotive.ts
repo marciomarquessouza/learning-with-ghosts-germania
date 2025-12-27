@@ -1,6 +1,8 @@
 import { bellAnimations } from "./helpers/BellAnimation";
+import { elisaTrain } from "./helpers/ElisaTrain";
 import { fairingSprite } from "./helpers/Fairing";
 import { headlight } from "./helpers/Headlight";
+import { josefTrain } from "./helpers/JosefTrain";
 import { smoke } from "./helpers/Smoke";
 import { speedometer } from "./helpers/Speedometer";
 import { trainBouncing } from "./helpers/TrainBouncing";
@@ -14,6 +16,8 @@ export class Locomotive {
     speedometer.preload(scene);
     headlight.preload(scene);
     smoke.preload(scene);
+    josefTrain.preload(scene);
+    elisaTrain.preload(scene);
   }
 
   create(
@@ -43,6 +47,9 @@ export class Locomotive {
       y: -225,
       initialSpeed: 80,
     });
+
+    fairingContainer.add(josefTrain.create(scene, -195, -50));
+    fairingContainer.add(elisaTrain.create(scene, -265, -20));
 
     fairingContainer.add(headlight.create(scene, 1260, -135));
     fairingContainer.add(fairingSprite.create(scene, 0, 0));

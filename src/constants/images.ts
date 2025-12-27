@@ -85,6 +85,8 @@ export const LOCOMOTIVE_BELL_JSON =
 export const FAIRING_IMG = "/train/locomotive/fairing.png";
 export const LOCOMOTIVE_HEADLIGHT_IMG = "/train/locomotive/headlight.png";
 export const LOCOMOTIVE_SMOKE_IMG = "/train/locomotive/smoke.png";
+export const JOSEF_TRAIN_IMG = "/train/josef/train_josef.png";
+export const ELISA_TRAIN_IMG = "/train/elisa/train_elisa.png";
 
 // SPEEDOMETER
 export const SPEEDOMETER_POINTER_IMG =
@@ -94,3 +96,13 @@ export const SPEEDOMETER_ATLAS_IMG =
   "/train/speedometer/speedometer_spritesheet.png";
 export const SPEEDOMETER_ATLAS_JSON =
   "/train/speedometer/speedometer_spritesheet.json";
+
+// KRAMPUS
+export const KRAMPUS_RUNNING_ATLAS_IMG =
+  "/actors/krampus/krampus_running_spritesheet.png";
+export const KRAMPUS_RUNNING_ATLAS_JSON =
+  "/actors/krampus/krampus_running_spritesheet.json";
+export const KRAMPUS_WALKING_ATLAS_IMG =
+  "/actors/krampus/krampus_walking_spritesheet.png";
+export const KRAMPUS_WALKING_ATLAS_JSON =
+  "/actors/krampus/krampus_walking_spritesheet.json";

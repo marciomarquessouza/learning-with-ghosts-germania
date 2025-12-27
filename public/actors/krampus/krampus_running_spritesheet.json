@@ -1,0 +1,512 @@
+{
+  "frames": {
+    "krampus_running_0": {
+      "frame": {
+        "x": 0,
+        "y": 0,
+        "w": 326,
+        "h": 315
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 326,
+        "h": 315
+      },
+      "sourceSize": {
+        "w": 326,
+        "h": 315
+      }
+    },
+    "krampus_running_1": {
+      "frame": {
+        "x": 326,
+        "y": 0,
+        "w": 326,
+        "h": 315
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 326,
+        "h": 315
+      },
+      "sourceSize": {
+        "w": 326,
+        "h": 315
+      }
+    },
+    "krampus_running_2": {
+      "frame": {
+        "x": 652,
+        "y": 0,
+        "w": 326,
+        "h": 315
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 326,
+        "h": 315
+      },
+      "sourceSize": {
+        "w": 326,
+        "h": 315
+      }
+    },
+    "krampus_running_3": {
+      "frame": {
+        "x": 0,
+        "y": 315,
+        "w": 326,
+        "h": 315
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 326,
+        "h": 315
+      },
+      "sourceSize": {
+        "w": 326,
+        "h": 315
+      }
+    },
+    "krampus_running_4": {
+      "frame": {
+        "x": 326,
+        "y": 315,
+        "w": 326,
+        "h": 315
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 326,
+        "h": 315
+      },
+      "sourceSize": {
+        "w": 326,
+        "h": 315
+      }
+    },
+    "krampus_running_5": {
+      "frame": {
+        "x": 652,
+        "y": 315,
+        "w": 326,
+        "h": 315
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 326,
+        "h": 315
+      },
+      "sourceSize": {
+        "w": 326,
+        "h": 315
+      }
+    },
+    "krampus_running_6": {
+      "frame": {
+        "x": 0,
+        "y": 630,
+        "w": 326,
+        "h": 315
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 326,
+        "h": 315
+      },
+      "sourceSize": {
+        "w": 326,
+        "h": 315
+      }
+    },
+    "krampus_running_7": {
+      "frame": {
+        "x": 326,
+        "y": 630,
+        "w": 326,
+        "h": 315
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 326,
+        "h": 315
+      },
+      "sourceSize": {
+        "w": 326,
+        "h": 315
+      }
+    },
+    "krampus_running_8": {
+      "frame": {
+        "x": 652,
+        "y": 630,
+        "w": 326,
+        "h": 315
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 326,
+        "h": 315
+      },
+      "sourceSize": {
+        "w": 326,
+        "h": 315
+      }
+    },
+    "krampus_running_9": {
+      "frame": {
+        "x": 0,
+        "y": 945,
+        "w": 326,
+        "h": 315
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 326,
+        "h": 315
+      },
+      "sourceSize": {
+        "w": 326,
+        "h": 315
+      }
+    },
+    "krampus_running_10": {
+      "frame": {
+        "x": 326,
+        "y": 945,
+        "w": 326,
+        "h": 315
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 326,
+        "h": 315
+      },
+      "sourceSize": {
+        "w": 326,
+        "h": 315
+      }
+    },
+    "krampus_running_11": {
+      "frame": {
+        "x": 652,
+        "y": 945,
+        "w": 326,
+        "h": 315
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 326,
+        "h": 315
+      },
+      "sourceSize": {
+        "w": 326,
+        "h": 315
+      }
+    },
+    "krampus_running_12": {
+      "frame": {
+        "x": 0,
+        "y": 1260,
+        "w": 326,
+        "h": 315
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 326,
+        "h": 315
+      },
+      "sourceSize": {
+        "w": 326,
+        "h": 315
+      }
+    },
+    "krampus_running_13": {
+      "frame": {
+        "x": 326,
+        "y": 1260,
+        "w": 326,
+        "h": 315
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 326,
+        "h": 315
+      },
+      "sourceSize": {
+        "w": 326,
+        "h": 315
+      }
+    },
+    "krampus_running_14": {
+      "frame": {
+        "x": 652,
+        "y": 1260,
+        "w": 326,
+        "h": 315
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 326,
+        "h": 315
+      },
+      "sourceSize": {
+        "w": 326,
+        "h": 315
+      }
+    },
+    "krampus_running_15": {
+      "frame": {
+        "x": 0,
+        "y": 1575,
+        "w": 326,
+        "h": 315
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 326,
+        "h": 315
+      },
+      "sourceSize": {
+        "w": 326,
+        "h": 315
+      }
+    },
+    "krampus_running_16": {
+      "frame": {
+        "x": 326,
+        "y": 1575,
+        "w": 326,
+        "h": 315
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 326,
+        "h": 315
+      },
+      "sourceSize": {
+        "w": 326,
+        "h": 315
+      }
+    },
+    "krampus_running_17": {
+      "frame": {
+        "x": 652,
+        "y": 1575,
+        "w": 326,
+        "h": 315
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 326,
+        "h": 315
+      },
+      "sourceSize": {
+        "w": 326,
+        "h": 315
+      }
+    },
+    "krampus_running_18": {
+      "frame": {
+        "x": 0,
+        "y": 1890,
+        "w": 326,
+        "h": 315
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 326,
+        "h": 315
+      },
+      "sourceSize": {
+        "w": 326,
+        "h": 315
+      }
+    },
+    "krampus_running_19": {
+      "frame": {
+        "x": 326,
+        "y": 1890,
+        "w": 326,
+        "h": 315
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 326,
+        "h": 315
+      },
+      "sourceSize": {
+        "w": 326,
+        "h": 315
+      }
+    },
+    "krampus_running_20": {
+      "frame": {
+        "x": 652,
+        "y": 1890,
+        "w": 326,
+        "h": 315
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 326,
+        "h": 315
+      },
+      "sourceSize": {
+        "w": 326,
+        "h": 315
+      }
+    },
+    "krampus_running_21": {
+      "frame": {
+        "x": 0,
+        "y": 2205,
+        "w": 326,
+        "h": 315
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 326,
+        "h": 315
+      },
+      "sourceSize": {
+        "w": 326,
+        "h": 315
+      }
+    },
+    "krampus_running_22": {
+      "frame": {
+        "x": 326,
+        "y": 2205,
+        "w": 326,
+        "h": 315
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 326,
+        "h": 315
+      },
+      "sourceSize": {
+        "w": 326,
+        "h": 315
+      }
+    },
+    "krampus_running_23": {
+      "frame": {
+        "x": 652,
+        "y": 2205,
+        "w": 326,
+        "h": 315
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 326,
+        "h": 315
+      },
+      "sourceSize": {
+        "w": 326,
+        "h": 315
+      }
+    },
+    "krampus_running_24": {
+      "frame": {
+        "x": 0,
+        "y": 2520,
+        "w": 326,
+        "h": 315
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 326,
+        "h": 315
+      },
+      "sourceSize": {
+        "w": 326,
+        "h": 315
+      }
+    }
+  },
+  "meta": {
+    "image": "krampus_running_spritesheet.png",
+    "size": {
+      "w": 978,
+      "h": 2835
+    },
+    "scale": "1"
+  }
+}
