@@ -106,3 +106,4 @@ export const KRAMPUS_WALKING_ATLAS_IMG =
   "/actors/krampus/krampus_walking_spritesheet.png";
 export const KRAMPUS_WALKING_ATLAS_JSON =
   "/actors/krampus/krampus_walking_spritesheet.json";
+export const KRAMPUS_LIGHT_IMG = "/actors/krampus/krampus_light.png";
