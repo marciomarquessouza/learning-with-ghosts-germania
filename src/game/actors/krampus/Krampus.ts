@@ -2,6 +2,9 @@ import { krampusAnimations } from "./helpers/KrampusAnimation";
 import { krampusLight } from "./helpers/KrampusLight";
 
 export class Krampus {
+  public container?: Phaser.GameObjects.Container;
+  private positionLerp = 0.12;
+
   preload(scene: Phaser.Scene) {
     krampusAnimations.preload(scene);
     krampusLight.preload(scene);
@@ -24,8 +27,19 @@ export class Krampus {
     const krampus = krampusAnimations.create(scene, 0, 0);
     krampus.play(krampusAnimations.animations.KRAMPUS_RUNNING);
     container.add(krampus);
+    this.container = container;
 
     return container;
+  }
+
+  setX(targetX: number) {
+    if (!this.container) return;
+
+    this.container.x = Phaser.Math.Linear(
+      this.container.x,
+      targetX,
+      this.positionLerp
+    );
   }
 }
 

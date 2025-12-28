@@ -9,6 +9,9 @@ import { trainBouncing } from "./helpers/TrainBouncing";
 import { wheelsAnimations } from "./helpers/WheelsAnimation";
 
 export class Locomotive {
+  public container?: Phaser.GameObjects.Container;
+  private positionLerp = 0.12;
+
   preload(scene: Phaser.Scene) {
     wheelsAnimations.preload(scene);
     fairingSprite.preload(scene);
@@ -72,7 +75,19 @@ export class Locomotive {
     );
     locomotiveContainer.add(speedometerContainer);
 
+    this.container = locomotiveContainer;
+
     return locomotiveContainer;
+  }
+
+  setX(targetX: number) {
+    if (!this.container) return;
+
+    this.container.x = Phaser.Math.Linear(
+      this.container.x,
+      targetX,
+      this.positionLerp
+    );
   }
 }
 

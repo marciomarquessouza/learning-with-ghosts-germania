@@ -43,3 +43,14 @@ export const PRONUNCIATION_FEEDBACK_THRESHOLDS = {
   PASS: 80,
   FAIL: 79,
 } as const;
+
+export const LOCOMOTIVE_START_POSITION = 750;
+export const LOCOMOTIVE_FINAL_POSITION = 1400;
+export const LOCOMOTIVE_MIN_SPEED = 20;
+export const LOCOMOTIVE_MAX_SPEED = 85;
+
+export const KRAMPUS_OFFSET_NEAR = 220;
+export const KRAMPUS_OFFSET_FAR = 950;
+
+export const LOCOMOTIVE_KRAMPUS_GAP_MIN = 180;
+export const LOCOMOTIVE_KRAMPUS_GAP_MAX = 900;

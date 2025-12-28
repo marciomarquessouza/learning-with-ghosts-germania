@@ -7,13 +7,25 @@ import { hud, HUD_ITEMS } from "../hud";
 import { TrainSpeedController } from "@/game/actors/locomotive/helpers/TrainSpeedController";
 import { gameEvents } from "@/events/gameEvents";
 import { krampus } from "@/game/actors/krampus/Krampus";
+import {
+  KRAMPUS_OFFSET_FAR,
+  KRAMPUS_OFFSET_NEAR,
+  LOCOMOTIVE_FINAL_POSITION,
+  LOCOMOTIVE_MAX_SPEED,
+  LOCOMOTIVE_MIN_SPEED,
+  LOCOMOTIVE_START_POSITION,
+} from "@/constants/game";
+import { ChaseDistanceController } from "./helpers/ChaseDistanceController";
 
 export const SCENE_NAME = "TrainScene";
 const TRAIN_RAILROAD = "trainRailroad";
+const GAP_MIN = 180;
+const GAP_MAX = 900;
 
 class TrainScene extends Phaser.Scene {
   private ground!: Phaser.GameObjects.TileSprite;
-  private speedController!: TrainSpeedController;
+  private trainSpeedController!: TrainSpeedController;
+  private chase!: ChaseDistanceController;
 
   constructor() {
     super({ key: SCENE_NAME });
@@ -30,17 +42,27 @@ class TrainScene extends Phaser.Scene {
   create() {
     trainScenario.create(this);
 
-    this.speedController = new TrainSpeedController({
+    this.trainSpeedController = new TrainSpeedController({
       initialSpeed: 80,
+      minSpeed: LOCOMOTIVE_MIN_SPEED,
+      maxSpeed: LOCOMOTIVE_MAX_SPEED,
       decayPerSecond: 0.02,
       coalToPressure: 0.05,
       lerpFactor: 0.1,
     });
 
     locomotive.create(this, {
-      startX: 1260,
+      startX: LOCOMOTIVE_FINAL_POSITION,
       startY: this.cameras.main.height - 280,
       initialSpeed: 80,
+    });
+
+    this.chase = new ChaseDistanceController({
+      initialGap: 600,
+      minGap: GAP_MIN,
+      maxGap: GAP_MAX,
+      gapScale: 8,
+      lerpFactor: 0.12,
     });
 
     krampus.create(this, {
@@ -73,12 +95,40 @@ class TrainScene extends Phaser.Scene {
   }
 
   update(_time: number, delta: number) {
-    this.speedController.update(delta);
+    this.trainSpeedController.update(delta);
 
-    const speed = this.speedController.getSpeed();
+    const trainSpeed = this.trainSpeedController.getSpeed();
 
-    trainScenario.background.tilePositionX += speed * 0.3;
-    this.ground.tilePositionX += speed;
+    // TODO: update with the real Krampus Speed coming from KrampusSpeedController
+    const krampusSpeed = 70;
+
+    this.chase.update(delta, trainSpeed, krampusSpeed);
+
+    trainScenario.background.tilePositionX += trainSpeed * 0.3;
+    this.ground.tilePositionX += trainSpeed;
+
+    const t = this.chase.getGapT();
+
+    const targetTrainX = Phaser.Math.Linear(
+      LOCOMOTIVE_START_POSITION,
+      LOCOMOTIVE_FINAL_POSITION,
+      t
+    );
+
+    const offset = Phaser.Math.Linear(
+      KRAMPUS_OFFSET_NEAR,
+      KRAMPUS_OFFSET_FAR,
+      t
+    );
+    const targetKrampusX = targetTrainX - offset;
+    locomotive.setX(targetTrainX);
+    krampus.setX(targetKrampusX);
+
+    if (this.chase.isTooClose()) {
+    }
+
+    if (this.chase.isTooFar()) {
+    }
   }
 }
 
