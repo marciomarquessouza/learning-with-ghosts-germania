@@ -16,6 +16,7 @@ import {
   LOCOMOTIVE_START_POSITION,
 } from "@/constants/game";
 import { ChaseDistanceController } from "./helpers/ChaseDistanceController";
+import { KrampusSpeedController } from "@/game/actors/krampus/helpers/KrampusSpeedController";
 
 export const SCENE_NAME = "TrainScene";
 const TRAIN_RAILROAD = "trainRailroad";
@@ -25,6 +26,7 @@ const GAP_MAX = 900;
 class TrainScene extends Phaser.Scene {
   private ground!: Phaser.GameObjects.TileSprite;
   private trainSpeedController!: TrainSpeedController;
+  private krampusSpeedController!: KrampusSpeedController;
   private chase!: ChaseDistanceController;
 
   constructor() {
@@ -65,6 +67,12 @@ class TrainScene extends Phaser.Scene {
       lerpFactor: 0.12,
     });
 
+    this.krampusSpeedController = new KrampusSpeedController({
+      initialSpeed: 65,
+      minSpeed: 20,
+      maxSpeed: 75,
+    });
+
     krampus.create(this, {
       startX: 280,
       startY: this.cameras.main.height - 280,
@@ -96,11 +104,10 @@ class TrainScene extends Phaser.Scene {
 
   update(_time: number, delta: number) {
     this.trainSpeedController.update(delta);
+    this.krampusSpeedController.update(delta);
 
     const trainSpeed = this.trainSpeedController.getSpeed();
-
-    // TODO: update with the real Krampus Speed coming from KrampusSpeedController
-    const krampusSpeed = 70;
+    const krampusSpeed = this.krampusSpeedController.getSpeed();
 
     this.chase.update(delta, trainSpeed, krampusSpeed);
 

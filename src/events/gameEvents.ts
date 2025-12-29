@@ -57,6 +57,8 @@ export type Events = {
   "camera-zoom-to": ZoomProps;
   "train/speed": { speed: number };
   "train/coal:add": { amount: number };
+  "krampus/damage": { amount: number };
+  "krampus/speed": { speed: number };
 };
 
 export const gameEvents = mitt<Events>();
