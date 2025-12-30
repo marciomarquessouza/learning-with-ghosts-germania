@@ -43,7 +43,6 @@ export const defaultLessonEntry: LessonEntry = {
   reference: "",
   target: "",
   steps: [],
-  phase: "hide",
 };
 
 export const defaultState: State = {
