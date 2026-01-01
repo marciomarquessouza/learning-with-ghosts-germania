@@ -1,10 +1,12 @@
 import Image from "next/image";
+import React from "react";
 
 interface BaseButtonProps {
   label: string;
   icon: "attack" | "coal";
   hotkey: string;
   disabled?: boolean;
+  active: boolean;
   onClick: () => void;
 }
 
@@ -16,6 +18,7 @@ export function TrainControlButton({
   icon,
   hotkey,
   disabled,
+  active,
   onClick,
 }: BaseButtonProps) {
   const base = icon === "attack" ? "attack" : "coal";
@@ -24,6 +27,7 @@ export function TrainControlButton({
     <button
       type="button"
       disabled={disabled}
+      data-active={active ? "true" : "false"}
       onClick={onClick}
       style={{ width: WIDTH, height: HEIGHT }}
       className={[
@@ -42,7 +46,13 @@ export function TrainControlButton({
           height={HEIGHT}
           alt=""
           priority
-          className="absolute opacity-100 group-hover:opacity-0 group-disabled:opacity-0 transition-opacity"
+          className={[
+            "absolute opacity-100",
+            "group-hover:opacity-0",
+            "group-data-[active=true]:opacity-0",
+            "group-disabled:opacity-0",
+            "transition-opacity",
+          ].join(" ")}
         />
         <Image
           src={`/train/ui/${base}_icon_hover.png`}
@@ -50,7 +60,12 @@ export function TrainControlButton({
           height={HEIGHT}
           alt=""
           priority
-          className="absolute opacity-0 group-hover:opacity-100 group-disabled:opacity-0 transition-opacity"
+          className={[
+            "absolute opacity-0",
+            "group-hover:opacity-100 group-disabled:opacity-0",
+            "group-data-[active=true]:opacity-100",
+            "transition-opacity",
+          ].join(" ")}
         />
         <Image
           src={`/train/ui/${base}_icon_disabled.png`}
@@ -67,6 +82,7 @@ export function TrainControlButton({
           "flex-1 flex items-center justify-start text-left pl-2 pr-3 pt-1",
           "font-primary text-xl",
           "group-hover:font-bold",
+          "group-data-[active=true]:font-bold",
           "text-[#3A3A3A] group-disabled:text-[#9B9B9B]",
         ].join(" ")}
       >
@@ -75,7 +91,14 @@ export function TrainControlButton({
 
       <div
         style={{ width: 54, height: HEIGHT }}
-        className="flex items-center justify-center shrink-0 bg-[#414141] group-hover:bg-[#FF161A] group-disabled:bg-[#BDBDBD] transition-colors"
+        className={[
+          "flex items-center justify-center shrink-0",
+          "bg-[#414141]",
+          "group-hover:bg-[#FF161A] ",
+          "group-data-[active=true]:bg-[#FF161A]",
+          "group-disabled:bg-[#BDBDBD]",
+          "transition-colors",
+        ].join(" ")}
       >
         <span className="text-white font-primary text-2xl font-bold">
           {hotkey}

@@ -95,9 +95,9 @@ class TrainScene extends Phaser.Scene {
       gameEvents.emit("train/controls:show");
     });
 
-    // TODO: REMOVE TEST
+    // Automatic Coal (maybe can be changed by level)
     this.time.addEvent({
-      delay: 3000,
+      delay: 3200,
       loop: true,
       callback: () => gameEvents.emit("train/coal:add", { amount: 1 }),
     });
