@@ -55,6 +55,7 @@ export type Events = {
   "show-hud-items": HUD_ITEMS[];
   "hide-hud-items": HUD_ITEMS[];
   "camera-zoom-to": ZoomProps;
+  "train/controls:show": undefined;
   "train/speed": { speed: number };
   "train/coal:add": { amount: number };
   "train/pressure": { pressure: number };

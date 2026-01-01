@@ -8,6 +8,7 @@ import Lesson from "@/components/Lesson";
 import { GameMessage } from "@/components/GameMessage";
 import { LessonNotebook } from "@/components/Lesson/LessonNotebook";
 import { SideProgressContainer } from "@/components/SidePanel/SideProgressContainer";
+import { TrainControllers } from "@/components/TrainControllers";
 
 const GameRoot = dynamic(() => import("@/game/main"), {
   ssr: false,
@@ -24,6 +25,7 @@ export default function Game() {
       <GameMessage />
       <LessonNotebook />
       <Lesson />
+      <TrainControllers />
       <Dialogue />
       <GameRoot />
     </div>

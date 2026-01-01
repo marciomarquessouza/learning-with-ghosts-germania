@@ -92,6 +92,7 @@ class TrainScene extends Phaser.Scene {
     getDayAction().then((dayActions) => {
       const hudContainer = hud.create(this, dayActions, [HUD_ITEMS.WEIGHT]);
       this.children.bringToTop(hudContainer);
+      gameEvents.emit("train/controls:show");
     });
 
     // TODO: REMOVE TEST
