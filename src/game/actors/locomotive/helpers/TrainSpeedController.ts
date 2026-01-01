@@ -57,6 +57,7 @@ export class TrainSpeedController {
       0,
       1
     );
+    gameEvents.emit("train/pressure", { pressure: this.pressure });
   }
 
   update(deltaMs: number) {

@@ -57,6 +57,7 @@ export type Events = {
   "camera-zoom-to": ZoomProps;
   "train/speed": { speed: number };
   "train/coal:add": { amount: number };
+  "train/pressure": { pressure: number };
   "krampus/damage": { amount: number };
   "krampus/speed": { speed: number };
 };

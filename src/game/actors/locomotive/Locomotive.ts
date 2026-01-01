@@ -3,8 +3,8 @@ import { elisaTrain } from "./helpers/ElisaTrain";
 import { fairingSprite } from "./helpers/Fairing";
 import { headlight } from "./helpers/Headlight";
 import { josefTrain } from "./helpers/JosefTrain";
+import { locomotiveIndicators } from "./helpers/LocomotiveIndicators";
 import { smoke } from "./helpers/Smoke";
-import { speedometer } from "./helpers/Speedometer";
 import { trainBouncing } from "./helpers/TrainBouncing";
 import { wheelsAnimations } from "./helpers/WheelsAnimation";
 
@@ -16,9 +16,9 @@ export class Locomotive {
     wheelsAnimations.preload(scene);
     fairingSprite.preload(scene);
     bellAnimations.preload(scene);
-    speedometer.preload(scene);
     headlight.preload(scene);
     smoke.preload(scene);
+    locomotiveIndicators.preload(scene);
     josefTrain.preload(scene);
     elisaTrain.preload(scene);
   }
@@ -67,13 +67,12 @@ export class Locomotive {
     wheelsAnimations.attachSpeed(scene, wheelsSprite);
     locomotiveContainer.add(wheelsSprite);
 
-    const speedometerContainer = speedometer.create(
-      scene,
-      -135,
-      -140,
-      initialSpeed
-    );
-    locomotiveContainer.add(speedometerContainer);
+    const locomotiveIndicatorsContainer = locomotiveIndicators.create(scene, {
+      startX: -275,
+      startY: -315,
+      initialSpeed,
+    });
+    locomotiveContainer.add(locomotiveIndicatorsContainer);
 
     this.container = locomotiveContainer;
 
