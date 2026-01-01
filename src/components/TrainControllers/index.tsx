@@ -1,43 +1,64 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { TrainControlButton } from "./TrainControlButton";
 import { gameEvents } from "@/events/gameEvents";
 
+type Phase = "hidden" | "entering" | "exiting";
+
+const ATTACK_THRESHOLD = 0.95;
+
 export function TrainControllers() {
-  const [phase, setPhase] = useState<"hidden" | "entering" | "exiting">(
-    "hidden"
-  );
+  const [phase, setPhase] = useState<Phase>("hidden");
+  const [attackEnabled, setAttackEnabled] = useState(false);
+
+  const addCoal = useCallback(() => {
+    gameEvents.emit("train/coal:add", { amount: 1 });
+  }, []);
 
   useEffect(() => {
-    const handler = () => {
-      setPhase("entering");
+    const showHandler = () => {
+      setPhase((prev) => (prev === "hidden" ? "entering" : prev));
     };
 
-    gameEvents.on("train/controls:show", handler);
-    return () => gameEvents.off("train/controls:show", handler);
+    const pressureHandler = ({ pressure }: { pressure: number }) => {
+      const shouldEnable = pressure >= ATTACK_THRESHOLD;
+      setAttackEnabled((prev) => (prev === shouldEnable ? prev : shouldEnable));
+    };
+
+    gameEvents.on("train/controls:show", showHandler);
+    gameEvents.on("train/pressure", pressureHandler);
+
+    return () => {
+      gameEvents.off("train/controls:show", showHandler);
+      gameEvents.off("train/pressure", pressureHandler);
+    };
   }, []);
+
+  useEffect(() => {
+    if (phase === "hidden") setAttackEnabled(false);
+  }, [phase]);
 
   if (phase === "hidden") return null;
 
   return (
-    <div className="fixed left-1/2 -translate-x-1/2">
-      <div className="flex flex-row mt-8">
-        <div className="mx-4">
-          <TrainControlButton
-            label="ADD COAL"
-            icon="coal"
-            hotkey="F"
-            onClick={() => {}}
-          />
-        </div>
-        <div className="mx-4">
-          <TrainControlButton
-            label="ATTACK!!!"
-            icon="attack"
-            hotkey="A"
-            disabled
-            onClick={() => {}}
-          />
-        </div>
+    <div
+      className="fixed left-1/2 -translate-x-1/2 top-6 z-50"
+      data-phase={phase}
+    >
+      <div className="flex flex-row gap-6">
+        <TrainControlButton
+          label="ADD COAL"
+          icon="coal"
+          hotkey="F"
+          onClick={addCoal}
+        />
+
+        <TrainControlButton
+          label="ATTACK!!!"
+          icon="attack"
+          hotkey="A"
+          disabled={!attackEnabled}
+          onClick={() => {}}
+        />
       </div>
     </div>
   );
