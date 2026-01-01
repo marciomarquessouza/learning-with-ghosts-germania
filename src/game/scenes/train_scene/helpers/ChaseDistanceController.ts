@@ -1,3 +1,5 @@
+import { gameEvents } from "@/events/gameEvents";
+
 type ChaseOptions = {
   initialGap: number;
   minGap: number;
@@ -8,23 +10,40 @@ type ChaseOptions = {
 
 export class ChaseDistanceController {
   private gap: number;
+  private wasTooFar = false;
 
   constructor(private options: ChaseOptions) {
     this.gap = options.initialGap;
   }
 
   update(deltaMs: number, trainSpeed: number, krampusSpeed: number) {
-    const delta = deltaMs / 1000;
+    const dt = deltaMs / 1000;
 
-    const deltaGap =
-      (trainSpeed - krampusSpeed) * delta * this.options.gapScale;
-    this.gap += deltaGap;
-
+    this.gap += (trainSpeed - krampusSpeed) * dt * this.options.gapScale;
     this.gap = Phaser.Math.Clamp(
       this.gap,
       this.options.minGap,
       this.options.maxGap
     );
+
+    const isTooFar = this.isTooFar();
+
+    if (isTooFar !== this.wasTooFar) {
+      this.wasTooFar = isTooFar;
+
+      gameEvents.emit("train/attack:availability", {
+        enabled: isTooFar,
+        gap: this.gap,
+      });
+    }
+  }
+
+  isTooFar(epsilon = 0.0001) {
+    return this.gap >= this.options.maxGap - epsilon;
+  }
+
+  isTooClose(epsilon = 0.0001) {
+    return this.gap <= this.options.minGap + epsilon;
   }
 
   getGap() {
@@ -33,14 +52,10 @@ export class ChaseDistanceController {
 
   getGapT() {
     const { minGap, maxGap } = this.options;
-    return Phaser.Math.Clamp((this.gap - minGap) / (maxGap - minGap), 0, 1);
-  }
 
-  isTooClose() {
-    return this.gap <= this.options.minGap + 0.0001;
-  }
+    const denom = maxGap - minGap;
+    if (denom <= 0) return 0;
 
-  isTooFar() {
-    return this.gap >= this.options.maxGap - 0.0001;
+    return Phaser.Math.Clamp((this.gap - minGap) / denom, 0, 1);
   }
 }

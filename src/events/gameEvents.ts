@@ -59,6 +59,7 @@ export type Events = {
   "train/speed": { speed: number };
   "train/coal:add": { amount: number };
   "train/pressure": { pressure: number };
+  "train/attack:availability": { enabled: boolean; gap?: number };
   "krampus/damage": { amount: number };
   "krampus/speed": { speed: number };
 };

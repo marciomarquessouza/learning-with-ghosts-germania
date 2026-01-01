@@ -4,7 +4,7 @@ import { gameEvents } from "@/events/gameEvents";
 
 type Phase = "hidden" | "entering" | "exiting";
 
-const ATTACK_THRESHOLD = 0.95;
+const ATTACK_THRESHOLD = 890;
 
 export function TrainControllers() {
   const [phase, setPhase] = useState<Phase>("hidden");
@@ -21,17 +21,16 @@ export function TrainControllers() {
       setPhase((prev) => (prev === "hidden" ? "entering" : prev));
     };
 
-    const pressureHandler = ({ pressure }: { pressure: number }) => {
-      const shouldEnable = pressure >= ATTACK_THRESHOLD;
-      setAttackEnabled((prev) => (prev === shouldEnable ? prev : shouldEnable));
+    const handlerAttackAvailability = ({ enabled }: { enabled: boolean }) => {
+      setAttackEnabled(enabled);
     };
 
     gameEvents.on("train/controls:show", showHandler);
-    gameEvents.on("train/pressure", pressureHandler);
+    gameEvents.on("train/attack:availability", handlerAttackAvailability);
 
     return () => {
       gameEvents.off("train/controls:show", showHandler);
-      gameEvents.off("train/pressure", pressureHandler);
+      gameEvents.on("train/attack:availability", handlerAttackAvailability);
     };
   }, []);
 
