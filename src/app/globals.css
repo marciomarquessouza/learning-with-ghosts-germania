@@ -24,6 +24,13 @@
   font-style: normal;
 }
 
+@font-face {
+  font-family: "JosefinSans";
+  src: url("/fonts/JosefinSans-Regular.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+}
+
 @keyframes fadeOut {
   0% {
     opacity: 1;

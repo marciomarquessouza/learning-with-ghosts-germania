@@ -34,7 +34,7 @@ class PressureIndicator {
   private borderWidth = 1;
 
   private label = "PRESSURE";
-  private fontFamily = "sans-serif";
+  private fontFamily = "JosefinSans";
   private fontSize = 18;
 
   private offFn?: () => void;
@@ -66,18 +66,20 @@ class PressureIndicator {
     const gfx = scene.add.graphics();
     container.add(gfx);
 
-    const text = scene.add.text(0, 0, "", {
-      fontFamily: this.fontFamily,
-      fontSize: `${this.fontSize}px`,
-      color: "#ffffff",
-      align: "center",
+    document.fonts.ready.then(() => {
+      const text = scene.add.text(0, 0, "", {
+        fontFamily: this.fontFamily,
+        fontSize: `${this.fontSize}px`,
+        color: "#ffffff",
+        align: "center",
+      });
+      text.setOrigin(0.5, 0.5);
+      container.add(text);
+      this.text = text;
     });
-    text.setOrigin(0.5, 0.5);
-    container.add(text);
 
     this.container = container;
     this.gfx = gfx;
-    this.text = text;
 
     this.redraw();
 
