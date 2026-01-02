@@ -1,12 +1,12 @@
 import { useMemo } from "react";
-import { Phases } from ".";
 import { isSpace } from "./utils/isSpace";
 import { PreparedTarget } from "./utils/prepareTarget";
+import { StepPhases } from "@/types";
 
 export interface AnswerContainerProps {
   answerIndexes: number[];
   preparedTarget: PreparedTarget;
-  phase: Phases;
+  phase: StepPhases;
   onBackspace?: () => void;
 }
 

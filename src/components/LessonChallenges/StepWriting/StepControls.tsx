@@ -1,9 +1,9 @@
 import Image from "next/image";
 import { Button } from "@/components/Button";
-import { Phases } from ".";
+import { StepPhases } from "@/types";
 
 export interface BoardControlsProps {
-  phase: Phases;
+  phase: StepPhases;
   isLast: boolean;
   tipsDisabled: boolean;
   onClickPrevious: () => void;

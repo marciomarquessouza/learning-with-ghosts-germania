@@ -1,5 +1,5 @@
+import { popClass } from "@/utils/popClass";
 import { RefObject } from "react";
-import { popClass } from "../../../../utils/popClass";
 
 export interface AudioRecorderContainerProps {
   audioRecordRef: RefObject<HTMLAudioElement | null>;
