@@ -1,25 +1,35 @@
 import { Footer } from "@/components/HomePage/Footer";
 import { Navbar } from "@/components/HomePage/Navbar";
-
-import Link from "next/link";
+import Image from "next/image";
 
 export default function Home() {
   return (
-    <div className="min-h-screen font-primary bg-[#FAF5E4] text-black flex flex-col ">
+    <div className="min-h-screen font-primary bg-[#FAF5E4] text-black flex flex-col">
       <Navbar />
+      <section className="relative w-full flex-1 min-h-0 overflow-hidden bg-[#FF161A]">
+        <Image
+          src="/ui/home_page/hero-image.png"
+          alt="Learning With Ghosts - Germania hero"
+          fill
+          priority
+          className="object-contain object-center"
+        />
 
-      {/* Hero Section */}
-      <main className="bg-red-600 text-white flex flex-1 items-center justify-center">
-        <div className="flex-col justify-center items-center">
-          <h1 className="my-6 text-center">Game in Development</h1>
-          <Link
-            href="/game"
-            className="px-8 py-4 text-lg font-medium text-center text-white bg-black rounded-md"
+        <div className="absolute inset-0 flex items-end justify-center m-20">
+          <button
+            type="button"
+            className={[
+              "rounded-xl border-2 border-black bg-[#F3B162]",
+              "px-10 py-4 font-primary text-xl font-bold tracking-wide text-black",
+              "transition-transform active:translate-y-[2px]",
+              "focus:outline-none focus-visible:ring-4 focus-visible:ring-black/30",
+            ].join(" ")}
           >
             LEARN/PLAY
-          </Link>
+          </button>
         </div>
-      </main>
+      </section>
+
       <Footer />
     </div>
   );
