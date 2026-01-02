@@ -1,6 +1,6 @@
 import { useCallback } from "react";
 import { useAudioPlayback } from "@/libs/audio/useAudioPlayback";
-import { IconAudioWithCircle } from "../../icons/IconAudioWithCircle";
+import { IconAudioWithCircle } from "../icons/IconAudioWithCircle";
 
 export interface AudioPlaybackProps {
   audio: string | undefined;

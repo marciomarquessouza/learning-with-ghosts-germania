@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useMemo, useState } from "react";
-import { LessonEntry, LessonEntryStep } from "@/types";
+import { LessonComponentProps, StepPhases } from "@/types";
 import { LessonActionContainer } from "../common/LessonActionContainer";
 import { useReferenceAudioV2 } from "@/libs/audio/useReferenceAudioV2";
 import { useAudioRecorderV2 } from "@/libs/audio/useAudioRecorderV2";
@@ -9,23 +9,15 @@ import { PronunciationFeedback } from "./PronunciationFeedback";
 import { DialogContainer } from "../common/DialogContainer";
 import { StepControls } from "./StepControls";
 
-export interface StepPronunciationProps {
-  lessonEntry: Omit<LessonEntry, "steps">;
-  lessonStep: LessonEntryStep;
-  onClickPrevious: () => void;
-  onClickNext: () => void;
-}
-
-export type Phases = "pronunciation" | "result";
-
 export function StepPronunciation({
   lessonEntry,
   lessonStep,
   onClickPrevious,
   onClickNext,
-}: StepPronunciationProps) {
+  onResult,
+}: LessonComponentProps) {
   const [visible, setVisible] = useState(false);
-  const [phase, setPhase] = useState<Phases>("pronunciation");
+  const [phase, setPhase] = useState<StepPhases>("pronunciation");
   const [waitingRecord, setWaitingRecord] = useState(false);
   const { audioBufferReference, loading, error } = useReferenceAudioV2(
     lessonEntry.audio || ""
@@ -91,7 +83,7 @@ export function StepPronunciation({
 
   useEffect(() => {
     if (score) {
-      setPhase("result");
+      setPhase("result:analysis");
     }
   }, [score]);
 
@@ -107,12 +99,13 @@ export function StepPronunciation({
             onRecord={handleRecording}
           />
         )}
-        {visible && phase === "result" && !!score && (
+        {visible && phase === "result:analysis" && !!score && (
           <PronunciationFeedback
             scoreResult={score}
             lessonEntry={lessonEntry}
             isPlaying={recorderState === "playing"}
             onClickReproduce={handlePlayback}
+            onResult={onResult}
           />
         )}
       </LessonActionContainer>

@@ -1,7 +1,7 @@
 import { ScoreResult } from "@/libs/audio/utils/audioScore";
 import { AudioPlaybackContainer } from "../common/AudioPlaybackContainer";
 import { PRONUNCIATION_FEEDBACK_THRESHOLDS } from "@/constants/game";
-import { useMemo } from "react";
+import { useCallback, useMemo } from "react";
 import { LessonEntry } from "@/types";
 
 export function getScoreFeedback(score: number): {
@@ -51,12 +51,14 @@ export interface PronunciationFeedbackProps {
   lessonEntry: Omit<LessonEntry, "steps">;
   isPlaying: boolean;
   onClickReproduce: () => void;
+  onResult?: (isCorrect: boolean) => void;
 }
 
 export function PronunciationFeedback({
   scoreResult,
   lessonEntry,
   isPlaying,
+  onResult,
   onClickReproduce,
 }: PronunciationFeedbackProps) {
   const rawScore = scoreResult.score ?? 0;
@@ -65,9 +67,19 @@ export function PronunciationFeedback({
 
   const { audio, target } = lessonEntry;
 
+  const getFeedback = useCallback(
+    (clampedScore: number) => {
+      const result = getScoreFeedback(clampedScore);
+      const isCorrect = result.status !== "fail";
+      onResult?.(isCorrect);
+      return result;
+    },
+    [onResult]
+  );
+
   const { headline, label, textColor, barColor } = useMemo(
-    () => getScoreFeedback(clampedScore),
-    [clampedScore]
+    () => getFeedback(clampedScore),
+    [clampedScore, getFeedback]
   );
 
   return (

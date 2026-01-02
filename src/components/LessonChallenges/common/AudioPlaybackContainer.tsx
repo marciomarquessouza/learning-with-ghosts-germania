@@ -1,5 +1,5 @@
+import { popClass } from "@/utils/popClass";
 import { AudioButton, AudioButtonTypes } from "./AudioButton";
-import { popClass } from "../../../../utils/popClass";
 
 export interface AudioPlaybackContainerProps {
   showAudioButton: boolean;

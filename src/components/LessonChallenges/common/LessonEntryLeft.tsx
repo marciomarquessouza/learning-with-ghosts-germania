@@ -1,5 +1,5 @@
-import { IconFlagUK } from "@/components/Lesson/icons/IconFlagUK";
-import { popClass } from "../../../../utils/popClass";
+import { popClass } from "@/utils/popClass";
+import { IconFlagUK } from "../icons/IconFlagUK";
 
 export interface LessonEntryLeftProps {
   isLong: boolean;

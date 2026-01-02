@@ -1,6 +1,5 @@
 import { useCallback, useState } from "react";
-import { LessonEntry, LessonEntryStep } from "@/types";
-import { LessonCTA } from "../common/LessonCTA";
+import { LessonComponentProps } from "@/types";
 import { useAudioPlayback } from "@/libs/audio/useAudioPlayback";
 import { useTimeline } from "@/hooks/useTimeline";
 import { LessonEntryInstruction } from "../common/LessonEntryInstruction";
@@ -11,21 +10,13 @@ import { LessonActionContainer } from "../common/LessonActionContainer";
 import { DialogContainer } from "../common/DialogContainer";
 import { StepControls } from "./StepControls";
 
-export interface StepIntroductionProps {
-  isFirst: boolean;
-  lessonEntry: Omit<LessonEntry, "steps">;
-  lessonStep: LessonEntryStep;
-  onClickNext: () => void;
-  onClickPrevious: () => void;
-}
-
 export function StepIntroduction({
-  isFirst,
+  isFirst = false,
   lessonEntry,
   lessonStep,
   onClickNext,
   onClickPrevious,
-}: StepIntroductionProps) {
+}: LessonComponentProps) {
   const [visible, setVisible] = useState(false);
   const { play, isPlaying } = useAudioPlayback();
   const { audio, reference, target } = lessonEntry;

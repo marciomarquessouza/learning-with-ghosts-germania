@@ -2,9 +2,9 @@ import { useCallback, useEffect, useState } from "react";
 import { useUiStore } from "@/store/uiStore";
 import { CharacterDetails } from "@/hooks/useCharacterDetails";
 import { LessonEntry, LessonEntryStep } from "@/types";
-import { StepIntroduction } from "./StepIntroduction";
-import { StepPronunciation } from "./StepPronunciation";
-import { StepWriting } from "./StepWriting";
+import { StepIntroduction } from "@/components/LessonChallenges/StepIntroduction";
+import { StepPronunciation } from "@/components/LessonChallenges/StepPronunciation";
+import { StepWriting } from "@/components/LessonChallenges/StepWriting";
 
 export interface LessonActionsProps {
   show: boolean;

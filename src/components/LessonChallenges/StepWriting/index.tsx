@@ -1,4 +1,4 @@
-import { LessonEntry, LessonEntryStep } from "@/types";
+import { LessonComponentProps, StepPhases } from "@/types";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { AudioPlayback } from "./AudioPlayback";
@@ -11,16 +11,6 @@ import { balanceGrind } from "./utils/balanceGrid";
 import { CornerLeft } from "./CornerLeft";
 import { CornerRight } from "./CornerRight";
 
-export interface StepWritingProps {
-  show?: boolean;
-  isLast: boolean;
-  lessonEntry: Omit<LessonEntry, "steps">;
-  lessonStep: LessonEntryStep;
-  onClickNext: () => void;
-  onClickPrevious: () => void;
-}
-
-export type Phases = "writing" | "result:correct" | "result:fail";
 export const DEFAULT_SLOT_QNT_W = 4;
 export const DEFAULT_TOTAL_ERRORS = 5;
 export const DEFAULT_TOTAL_TIPS = 3;
@@ -28,15 +18,16 @@ export const DEFAULT_SLOT_QNT_H = 4;
 
 export function StepWriting({
   show = true,
-  isLast,
+  isLast = false,
   lessonEntry,
   onClickNext,
   onClickPrevious,
-}: StepWritingProps) {
+  onResult,
+}: LessonComponentProps) {
   const boxRef = useRef<HTMLDivElement>(null);
   const { audio, target } = lessonEntry;
   const preparedTarget = useMemo(() => prepareTarget(target), [target]);
-  const [phase, setPhase] = useState<Phases>("writing");
+  const [phase, setPhase] = useState<StepPhases>("writing");
   const [answerIndexes, setAnswerIndexes] = useState<number[]>([0]);
   const [errors, setErrors] = useState(0);
   const [tips, setTips] = useState(0);
@@ -99,15 +90,17 @@ export function StepWriting({
     const isSequential = answerIndexes.every((idx, i) => idx === i);
 
     if (isLengthMatch && isSequential) {
+      onResult?.(true);
       setPhase("result:correct");
     }
-  }, [answerIndexes, preparedTarget.sanitizedTarget.length]);
+  }, [answerIndexes, preparedTarget.sanitizedTarget.length, onResult]);
 
   useEffect(() => {
     if (errors >= DEFAULT_TOTAL_ERRORS) {
+      onResult?.(false);
       setPhase("result:fail");
     }
-  }, [errors]);
+  }, [errors, onResult]);
 
   return (
     <AnimatePresence>

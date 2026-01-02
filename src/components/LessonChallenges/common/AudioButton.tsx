@@ -1,7 +1,7 @@
 import { useMemo } from "react";
-import { IconMicWithCircle } from "@/components/Lesson/icons/IconMicWithCircle";
-import { IconAudioWithCircle } from "@/components/Lesson/icons/IconAudioWithCircle";
-import { IconReproduceWithCircle } from "../../icons/IconReproduceWithCircle";
+import { IconMicWithCircle } from "../icons/IconMicWithCircle";
+import { IconAudioWithCircle } from "../icons/IconAudioWithCircle";
+import { IconReproduceWithCircle } from "../icons/IconReproduceWithCircle";
 
 export type AudioButtonTypes = "reference" | "record" | "reproduce";
 

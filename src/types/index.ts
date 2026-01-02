@@ -2,6 +2,13 @@ import { CHARACTERS, MOODS } from "@/constants/game";
 
 export type LessonStepType = "introduction" | "pronunciation" | "writing";
 
+export type StepPhases =
+  | "writing"
+  | "pronunciation"
+  | "result:analysis"
+  | "result:correct"
+  | "result:fail";
+
 export type LessonEntryStep = {
   type: LessonStepType;
   instruction: string;
@@ -25,6 +32,17 @@ export type Lesson = {
 };
 
 export type LessonDetails = Omit<Lesson, "entries">;
+
+export interface LessonComponentProps {
+  show?: boolean;
+  isFirst?: boolean;
+  isLast?: boolean;
+  lessonEntry: Omit<LessonEntry, "steps">;
+  lessonStep: LessonEntryStep;
+  onClickNext: () => void;
+  onClickPrevious: () => void;
+  onResult?: (isCorrect: boolean) => void;
+}
 
 export enum GAME_WORLDS {
   REAL = "REAL",

@@ -4,9 +4,7 @@ import { gameEvents } from "@/events/gameEvents";
 
 type Phase = "hidden" | "entering" | "exiting";
 
-const ATTACK_THRESHOLD = 890;
-
-export function TrainControllers() {
+export function TrainLessonChallenges() {
   const [phase, setPhase] = useState<Phase>("hidden");
   const [attackEnabled, setAttackEnabled] = useState(false);
   const [coalActive, setCoalActive] = useState(false);

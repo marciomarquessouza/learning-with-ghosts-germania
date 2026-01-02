@@ -4,11 +4,11 @@ import { Dialogue } from "@/components/Dialogues";
 import RotateOverlay from "@/components/HomePage/RotateOverlay";
 import { SceneIntroduction } from "@/components/Introduction/SceneIntroduction";
 import dynamic from "next/dynamic";
-import Lesson from "@/components/Lesson";
+import DreamLessonChallenges from "@/components/DreamLessonChallenges";
 import { GameMessage } from "@/components/GameMessage";
-import { LessonNotebook } from "@/components/Lesson/LessonNotebook";
+import { LessonNotebook } from "@/components/DreamLessonChallenges/LessonNotebook";
 import { SideProgressContainer } from "@/components/SidePanel/SideProgressContainer";
-import { TrainControllers } from "@/components/TrainControllers";
+import { TrainLessonChallenges } from "@/components/TrainLessonChallenges";
 
 const GameRoot = dynamic(() => import("@/game/main"), {
   ssr: false,
@@ -24,8 +24,8 @@ export default function Game() {
       <DreamIntroduction />
       <GameMessage />
       <LessonNotebook />
-      <Lesson />
-      <TrainControllers />
+      <DreamLessonChallenges />
+      <TrainLessonChallenges />
       <Dialogue />
       <GameRoot />
     </div>
