@@ -94,7 +94,7 @@ export function DreamIntroduction() {
     <>
       <div
         data-test-id="dream-introduction"
-        className="bg-black h-screen w-screen flex justify-center items-center"
+        className="fixed left-0 top-0 z-[60] bg-black h-screen w-screen flex justify-center items-center"
         style={
           phase === "exiting"
             ? {

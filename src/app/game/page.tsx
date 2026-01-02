@@ -7,7 +7,6 @@ import dynamic from "next/dynamic";
 import DreamLessonChallenges from "@/components/DreamLessonChallenges";
 import { GameMessage } from "@/components/GameMessage";
 import { LessonNotebook } from "@/components/DreamLessonChallenges/LessonNotebook";
-import { SideProgressContainer } from "@/components/SidePanel/SideProgressContainer";
 import { TrainLessonChallenges } from "@/components/TrainLessonChallenges";
 
 const GameRoot = dynamic(() => import("@/game/main"), {
@@ -18,7 +17,6 @@ export default function Game() {
   return (
     <div className="bg-black text-white w-screen h-screen overflow-hidden flex">
       <div id="game-container" className="flex-grow h-full" />
-      <SideProgressContainer />
       <RotateOverlay />
       <SceneIntroduction />
       <DreamIntroduction />

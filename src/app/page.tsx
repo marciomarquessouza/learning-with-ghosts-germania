@@ -1,6 +1,7 @@
 import { Footer } from "@/components/HomePage/Footer";
 import { Navbar } from "@/components/HomePage/Navbar";
 import Image from "next/image";
+import Link from "next/link";
 
 export default function Home() {
   return (
@@ -16,8 +17,8 @@ export default function Home() {
         />
 
         <div className="absolute inset-0 flex items-end justify-center m-20">
-          <button
-            type="button"
+          <Link
+            href="/game"
             className={[
               "rounded-xl border-2 border-black bg-[#F3B162]",
               "px-10 py-4 font-primary text-xl font-bold tracking-wide text-black",
@@ -26,7 +27,7 @@ export default function Home() {
             ].join(" ")}
           >
             LEARN/PLAY
-          </button>
+          </Link>
         </div>
       </section>
 
