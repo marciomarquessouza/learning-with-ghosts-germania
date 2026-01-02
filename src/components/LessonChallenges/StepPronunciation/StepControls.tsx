@@ -1,8 +1,8 @@
 import { Button } from "@/components/Button";
-import { Phases } from ".";
+import { StepPhases } from "@/types";
 
 export interface StepControlsProps {
-  phase: Phases;
+  phase: StepPhases;
   onClickPrevious: () => void;
   onClickNext: () => void;
   onClickRetry: () => void;
@@ -27,7 +27,7 @@ export function StepControls({
       </div>
       <div className="absolute right-4 -bottom-6">
         <div className="flex flex-row gap-4">
-          {phase === "result" && (
+          {phase.includes("result") && (
             <Button
               label="TRY AGAIN"
               labelIcon="↻"
