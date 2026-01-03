@@ -3,7 +3,7 @@ import { ACTIONS_ICONS } from "@/game/scenes/hud/helpers/actionIcons";
 import mitt from "mitt";
 import { ReactNode } from "react";
 import { HUD_ITEMS } from "@/game/scenes/hud";
-import { GAME_WORLDS, InteractionLine } from "@/types";
+import { GAME_WORLDS, InteractionLine, LessonChallengePhase } from "@/types";
 import { TransitionOptions } from "./cellEvents";
 
 export interface DialogueEvent {
@@ -60,6 +60,7 @@ export type Events = {
   "train/coal:add": { amount: number };
   "train/pressure": { pressure: number };
   "train/attack:availability": { enabled: boolean; gap?: number };
+  "train/challenge": { challengePhase: LessonChallengePhase };
   "krampus/damage": { amount: number };
   "krampus/speed": { speed: number };
 };

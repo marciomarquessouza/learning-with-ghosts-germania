@@ -1,6 +1,6 @@
 import { Coordinate, directions, GridSize } from "./createLetterGrid";
 import { createKey } from "./createKey";
-import { shuffleArray } from "./shuffleArray";
+import { shuffleArray } from "@/utils/shuffleArray";
 
 export function generateAnswerPath(
   answerLength: number,

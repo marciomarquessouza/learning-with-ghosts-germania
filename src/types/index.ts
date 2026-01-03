@@ -2,6 +2,8 @@ import { CHARACTERS, MOODS } from "@/constants/game";
 
 export type LessonStepType = "introduction" | "pronunciation" | "writing";
 
+export type LessonChallengePhase = "hide" | "pronunciation" | "writing";
+
 export type StepPhases =
   | "writing"
   | "pronunciation"
