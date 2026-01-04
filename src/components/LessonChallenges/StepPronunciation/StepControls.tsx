@@ -2,6 +2,8 @@ import { Button } from "@/components/Button";
 import { StepPhases } from "@/types";
 
 export interface StepControlsProps {
+  isFirst?: boolean;
+  isLast?: boolean;
   phase: StepPhases;
   onClickPrevious: () => void;
   onClickNext: () => void;
@@ -9,6 +11,8 @@ export interface StepControlsProps {
 }
 
 export function StepControls({
+  isFirst,
+  isLast,
   phase,
   onClickPrevious,
   onClickNext,
@@ -16,15 +20,17 @@ export function StepControls({
 }: StepControlsProps) {
   return (
     <>
-      <div className="absolute left-4 -bottom-6">
-        <Button
-          iconPosition="start"
-          label="BACK"
-          labelIcon="◄"
-          color="bg-[#B40F00] hover:bg-[#941729]"
-          onClick={onClickPrevious}
-        />
-      </div>
+      {!isFirst && (
+        <div className="absolute left-4 -bottom-6">
+          <Button
+            iconPosition="start"
+            label="BACK"
+            labelIcon="◄"
+            color="bg-[#B40F00] hover:bg-[#941729]"
+            onClick={onClickPrevious}
+          />
+        </div>
+      )}
       <div className="absolute right-4 -bottom-6">
         <div className="flex flex-row gap-4">
           {phase.includes("result") && (
@@ -36,8 +42,10 @@ export function StepControls({
             />
           )}
           <Button
-            label={phase === "pronunciation" ? "SKIP" : "NEXT"}
-            labelIcon={phase === "pronunciation" ? "⏭" : "►"}
+            label={
+              phase === "pronunciation" ? "SKIP" : isLast ? "FINISH" : "NEXT"
+            }
+            labelIcon={isLast ? "" : phase === "pronunciation" ? "⏭" : "►"}
             color="bg-[#B40F00] hover:bg-[#941729]"
             onClick={onClickNext}
           />

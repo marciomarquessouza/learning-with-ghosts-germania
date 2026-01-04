@@ -1,19 +1,20 @@
-import { useEffect, useState } from "react";
-import { useTrainLessonChallenges } from "../hooks/useTrainLesson";
-import { StepPronunciation } from "@/components/LessonChallenges/StepPronunciation";
-import { StepWriting } from "@/components/LessonChallenges/StepWriting";
+import { useCallback, useEffect, useRef, useState } from "react";
+import {
+  LessonChallenge,
+  useTrainLessonChallenges,
+} from "../hooks/useTrainLesson";
+import { StepPronunciation as Pronunciation } from "@/components/LessonChallenges/StepPronunciation";
+import { StepWriting as Writing } from "@/components/LessonChallenges/StepWriting";
 import { gameEvents } from "@/events/gameEvents";
-import { LessonChallengePhase, LessonEntry } from "@/types";
+import { LessonChallengePhase } from "@/types";
 
 export function LessonChallenges() {
   const [currentChallenge, setCurrentChallenge] =
     useState<LessonChallengePhase>("hide");
-  const { getLessonEntry, completeCurrentChallenge, finished } =
+  const { getChallenge, completeCurrentChallenge, finished } =
     useTrainLessonChallenges();
-  const [lessonEntry, setLessonEntry] = useState<Omit<
-    LessonEntry,
-    "steps"
-  > | null>(null);
+  const [challenge, setChallenge] = useState<LessonChallenge | null>(null);
+  const challengeScore = useRef(0);
 
   useEffect(() => {
     const handle = ({
@@ -22,7 +23,7 @@ export function LessonChallenges() {
       challengePhase: LessonChallengePhase;
     }) => {
       if (finished) return;
-      setLessonEntry(getLessonEntry());
+      setChallenge(getChallenge());
       setCurrentChallenge(challengePhase);
     };
     gameEvents.on("train/challenge", handle);
@@ -30,15 +31,22 @@ export function LessonChallenges() {
     return () => {
       gameEvents.off("train/challenge", handle);
     };
-  }, [getLessonEntry, finished]);
+  }, [getChallenge, finished]);
 
-  const handleCompleteChallenge = (isCorrect: boolean) => {
-    completeCurrentChallenge();
+  const handleChallengeScore = useCallback((isCorrect: boolean) => {
     if (isCorrect) {
-      gameEvents.emit("train/coal:add", { amount: 5 });
+      challengeScore.current = 5;
     }
+  }, []);
+
+  const handleCompleteChallenge = useCallback(() => {
+    completeCurrentChallenge();
     setCurrentChallenge("hide");
-  };
+    if (challengeScore.current > 0) {
+      gameEvents.emit("train/coal:add", { amount: challengeScore.current });
+      challengeScore.current = 0;
+    }
+  }, [challengeScore, completeCurrentChallenge]);
 
   if (currentChallenge === "hide") {
     return null;
@@ -46,31 +54,35 @@ export function LessonChallenges() {
 
   return (
     <>
-      {currentChallenge === "pronunciation" && lessonEntry && (
-        <StepPronunciation
-          lessonEntry={lessonEntry}
+      {challenge && challenge?.type === "pronunciation" && (
+        <Pronunciation
+          isFirst
+          isLast
+          lessonEntry={challenge.entry}
           lessonStep={{
             type: "pronunciation",
             text: ``,
-            instruction: "Click the mic and say: “{{audio|Hallo}}”.",
+            instruction: `Click the mic and say: “{{audio|${challenge.entry.target}}}”.`,
           }}
+          reproduceTargetAudioOnStart
+          onResult={handleChallengeScore}
           onClickPrevious={() => {}}
-          onClickNext={() => {}}
-          onResult={handleCompleteChallenge}
+          onClickNext={handleCompleteChallenge}
         />
       )}
-      {currentChallenge === "writing" && lessonEntry && (
-        <StepWriting
+      {challenge && challenge?.type === "writing" && (
+        <Writing
           isLast={true}
-          lessonEntry={lessonEntry}
+          lessonEntry={challenge.entry}
           lessonStep={{
             type: "writing",
             text: ``,
             instruction: "",
           }}
-          onClickNext={() => {}}
+          reproduceTargetAudioOnStart
+          onResult={handleChallengeScore}
           onClickPrevious={() => {}}
-          onResult={handleCompleteChallenge}
+          onClickNext={handleCompleteChallenge}
         />
       )}
     </>

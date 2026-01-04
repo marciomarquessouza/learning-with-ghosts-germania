@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { LessonComponentProps, StepPhases } from "@/types";
 import { LessonActionContainer } from "../common/LessonActionContainer";
 import { useReferenceAudioV2 } from "@/libs/audio/useReferenceAudioV2";
@@ -10,15 +10,22 @@ import { DialogContainer } from "../common/DialogContainer";
 import { StepControls } from "./StepControls";
 
 export function StepPronunciation({
+  isFirst,
+  isLast,
   lessonEntry,
   lessonStep,
   onClickPrevious,
   onClickNext,
   onResult,
+  reproduceTargetAudioOnStart,
 }: LessonComponentProps) {
   const [visible, setVisible] = useState(false);
   const [phase, setPhase] = useState<StepPhases>("pronunciation");
   const [waitingRecord, setWaitingRecord] = useState(false);
+
+  const didAutoStartOnOpenRef = useRef(false);
+  const [pendingAutoRecord, setPendingAutoRecord] = useState(false);
+
   const { audioBufferReference, loading, error } = useReferenceAudioV2(
     lessonEntry.audio || ""
   );
@@ -45,22 +52,28 @@ export function StepPronunciation({
     [audioBufferReference, loading, error]
   );
 
+  const isBusy = recorderState === "recording" || recorderState === "playing";
+
+  const startPronunciationRecording = useCallback(() => {
+    if (!canStart) return;
+
+    clearScore();
+    setWaitingRecord(true);
+
+    startRecording({
+      maxDurationMs: 5000,
+      timesliceMs: 200,
+      expectedDurationMs: 1200,
+    });
+  }, [canStart, clearScore, startRecording]);
+
   const handleRecording = useCallback(() => {
     if (recorderState === "recording") {
       stopRecording();
       return;
     }
-
-    setWaitingRecord(true);
-
-    if (!canStart) return;
-    clearScore();
-    startRecording({
-      maxDurationMs: 5000,
-      timesliceMs: 200,
-      expectedDurationMs: 820,
-    });
-  }, [canStart, clearScore, recorderState, startRecording, stopRecording]);
+    startPronunciationRecording();
+  }, [recorderState, stopRecording, startPronunciationRecording]);
 
   const handlePlayback = useCallback(() => {
     if (recorderState === "playing") {
@@ -70,10 +83,62 @@ export function StepPronunciation({
     playRecord();
   }, [recorderState, playRecord, stopPlayback]);
 
-  const handleTryAgain = () => {
-    clearScore();
-    setPhase("pronunciation");
-  };
+  useEffect(() => {
+    if (!reproduceTargetAudioOnStart) return;
+    if (!visible) return;
+    if (!canStart) return;
+
+    if (phase !== "pronunciation") return;
+    if (score) return;
+
+    if (isBusy) return;
+
+    if (didAutoStartOnOpenRef.current) return;
+    didAutoStartOnOpenRef.current = true;
+
+    setTimeout(() => {
+      startPronunciationRecording();
+    }, 1000);
+  }, [
+    reproduceTargetAudioOnStart,
+    visible,
+    canStart,
+    phase,
+    score,
+    isBusy,
+    startPronunciationRecording,
+  ]);
+
+  useEffect(() => {
+    if (!reproduceTargetAudioOnStart) return;
+    if (!pendingAutoRecord) return;
+
+    if (!visible) return;
+    if (!canStart) return;
+
+    if (phase !== "pronunciation") return;
+    if (score) return;
+
+    if (isBusy) return;
+
+    setPendingAutoRecord(false);
+    startPronunciationRecording();
+  }, [
+    reproduceTargetAudioOnStart,
+    pendingAutoRecord,
+    visible,
+    canStart,
+    phase,
+    score,
+    isBusy,
+    startPronunciationRecording,
+  ]);
+
+  useEffect(() => {
+    if (!score) return;
+    setPendingAutoRecord(false);
+    setPhase("result:analysis");
+  }, [score]);
 
   useEffect(() => {
     if (waitingRecord && recorderState === "recording") {
@@ -82,10 +147,35 @@ export function StepPronunciation({
   }, [recorderState, waitingRecord]);
 
   useEffect(() => {
-    if (score) {
-      setPhase("result:analysis");
+    didAutoStartOnOpenRef.current = false;
+    setPendingAutoRecord(false);
+    setWaitingRecord(false);
+    setPhase("pronunciation");
+    clearScore();
+
+    if (recorderState === "playing") stopPlayback();
+    if (recorderState === "recording") stopRecording();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [lessonEntry.id, lessonStep?.type]);
+
+  const handleTryAgain = useCallback(() => {
+    clearScore();
+
+    setPhase("pronunciation");
+
+    if (recorderState === "playing") stopPlayback();
+    if (recorderState === "recording") stopRecording();
+
+    if (reproduceTargetAudioOnStart) {
+      setPendingAutoRecord(true);
     }
-  }, [score]);
+  }, [
+    clearScore,
+    recorderState,
+    stopPlayback,
+    stopRecording,
+    reproduceTargetAudioOnStart,
+  ]);
 
   return (
     <DialogContainer onAnimationComplete={() => setVisible(true)}>
@@ -97,8 +187,10 @@ export function StepPronunciation({
             voiceLevel={voiceLevel}
             recorderState={recorderState}
             onRecord={handleRecording}
+            reproduceTargetAudioOnStart={reproduceTargetAudioOnStart}
           />
         )}
+
         {visible && phase === "result:analysis" && !!score && (
           <PronunciationFeedback
             scoreResult={score}
@@ -109,12 +201,16 @@ export function StepPronunciation({
           />
         )}
       </LessonActionContainer>
+
       <StepControls
+        isFirst={isFirst}
+        isLast={isLast}
         phase={phase}
         onClickPrevious={onClickPrevious}
         onClickNext={onClickNext}
         onClickRetry={handleTryAgain}
       />
+
       <audio ref={audioRecordRef} preload="metadata" className="hidden" />
     </DialogContainer>
   );

@@ -35,12 +35,15 @@ export type Lesson = {
 
 export type LessonDetails = Omit<Lesson, "entries">;
 
+export type Scenes = "cell" | "dream" | "train";
+
 export interface LessonComponentProps {
   show?: boolean;
   isFirst?: boolean;
   isLast?: boolean;
   lessonEntry: Omit<LessonEntry, "steps">;
   lessonStep: LessonEntryStep;
+  reproduceTargetAudioOnStart?: boolean;
   onClickNext: () => void;
   onClickPrevious: () => void;
   onResult?: (isCorrect: boolean) => void;

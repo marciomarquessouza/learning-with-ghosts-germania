@@ -20,6 +20,7 @@ export function StepWriting({
   show = true,
   isLast = false,
   lessonEntry,
+  reproduceTargetAudioOnStart,
   onClickNext,
   onClickPrevious,
   onResult,
@@ -36,6 +37,7 @@ export function StepWriting({
     () => balanceGrind(preparedTarget),
     [preparedTarget]
   );
+  const [introductionFinished, setIntroductionFinished] = useState(false);
 
   const handleOnClickSlot = (slot: LetterSlot) => {
     if (phase !== "writing") return;
@@ -117,10 +119,17 @@ export function StepWriting({
           animate={{ opacity: 1, scale: 1 }}
           exit={{ opacity: 0, scale: 0.95 }}
           transition={{ duration: 0.4, ease: "linear" }}
+          onAnimationComplete={() => {
+            setIntroductionFinished(true);
+          }}
         >
           <div className="absolute inset-0 bg-[#D9D9D9]/60 pointer-events-none" />
           <div className="relative flex flex-col justify-center items-center px-6 py-4">
-            <AudioPlayback audio={audio} />
+            <AudioPlayback
+              audio={audio}
+              reproduceTargetAudioOnStart={reproduceTargetAudioOnStart}
+              introductionFinished={introductionFinished}
+            />
             <AnswerContainer
               answerIndexes={answerIndexes}
               preparedTarget={preparedTarget}

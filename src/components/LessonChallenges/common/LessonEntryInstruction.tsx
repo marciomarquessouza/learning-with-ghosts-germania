@@ -1,15 +1,17 @@
-import { useMemo } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { useAudioPlayback } from "@/libs/audio/useAudioPlayback";
 import { IconAudio } from "../icons/IconAudio";
 
 export interface LessonEntryInstructionProps {
   audio: string | undefined;
   instruction: string;
+  reproduceTargetAudioOnStart?: boolean;
 }
 
 export function LessonEntryInstruction({
   instruction,
   audio,
+  reproduceTargetAudioOnStart,
 }: LessonEntryInstructionProps) {
   const { play } = useAudioPlayback();
 
@@ -79,6 +81,12 @@ export function LessonEntryInstruction({
 
     return nodes;
   }, [instruction, audio, play]);
+
+  useEffect(() => {
+    if (!!audio && reproduceTargetAudioOnStart) {
+      play(audio!);
+    }
+  }, [audio, play, reproduceTargetAudioOnStart]);
 
   return (
     <div className="w-full min-h-14 flex justify-center items-center">

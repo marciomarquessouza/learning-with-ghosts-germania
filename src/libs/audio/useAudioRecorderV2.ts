@@ -1,5 +1,4 @@
 "use client";
-
 import { useEffect, useRef, useState } from "react";
 import { useVoiceAnalysis } from "./useVoiceAnalysis";
 import { getSupportedOptions } from "./utils/getSupportedOptions";

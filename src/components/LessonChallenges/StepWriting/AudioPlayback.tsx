@@ -1,18 +1,30 @@
-import { useCallback } from "react";
+import { useCallback, useEffect } from "react";
 import { useAudioPlayback } from "@/libs/audio/useAudioPlayback";
 import { IconAudioWithCircle } from "../icons/IconAudioWithCircle";
 
 export interface AudioPlaybackProps {
   audio: string | undefined;
+  reproduceTargetAudioOnStart?: boolean;
+  introductionFinished?: boolean;
 }
 
-export function AudioPlayback({ audio }: AudioPlaybackProps) {
+export function AudioPlayback({
+  audio,
+  reproduceTargetAudioOnStart,
+  introductionFinished,
+}: AudioPlaybackProps) {
   const { play, isPlaying } = useAudioPlayback();
 
   const handleOnPlay = useCallback(async () => {
     if (!audio) return;
     play(audio);
   }, [audio, play]);
+
+  useEffect(() => {
+    if (introductionFinished && !!audio && reproduceTargetAudioOnStart) {
+      play(audio);
+    }
+  }, [reproduceTargetAudioOnStart, audio, play, introductionFinished]);
 
   return (
     <>

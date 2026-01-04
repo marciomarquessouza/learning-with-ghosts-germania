@@ -9,6 +9,7 @@ export interface PronunciationDialogProps {
   lessonStep: LessonEntryStep;
   recorderState: RecorderState;
   voiceLevel: number;
+  reproduceTargetAudioOnStart?: boolean;
   onRecord: () => void;
 }
 
@@ -17,6 +18,7 @@ export function PronunciationDialog({
   lessonStep,
   voiceLevel,
   recorderState,
+  reproduceTargetAudioOnStart,
   onRecord,
 }: PronunciationDialogProps) {
   return (
@@ -24,6 +26,7 @@ export function PronunciationDialog({
       <LessonEntryInstruction
         audio={lessonEntry.audio}
         instruction={lessonStep.instruction}
+        reproduceTargetAudioOnStart={reproduceTargetAudioOnStart}
       />
 
       <VoiceLevelIndicator voiceLevel={voiceLevel}>
