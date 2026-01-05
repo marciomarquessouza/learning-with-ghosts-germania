@@ -6,7 +6,8 @@ import {
 import { StepPronunciation as Pronunciation } from "@/components/LessonChallenges/StepPronunciation";
 import { StepWriting as Writing } from "@/components/LessonChallenges/StepWriting";
 import { gameEvents } from "@/events/gameEvents";
-import { LessonChallengePhase } from "@/types";
+import { ChallengeResult, LessonChallengePhase } from "@/types";
+import { getChallengeScore } from "../helpers/getChallengeScore";
 
 export function LessonChallenges() {
   const [currentChallenge, setCurrentChallenge] =
@@ -33,10 +34,12 @@ export function LessonChallenges() {
     };
   }, [getChallenge, finished]);
 
-  const handleChallengeScore = useCallback((isCorrect: boolean) => {
-    if (isCorrect) {
-      challengeScore.current = 5;
-    }
+  const handleChallengeScore = useCallback((challengeResult: ChallengeResult) => {
+    const scoreResult = getChallengeScore(challengeResult);
+
+    if (!scoreResult) return
+
+    
   }, []);
 
   const handleCompleteChallenge = useCallback(() => {
@@ -58,6 +61,7 @@ export function LessonChallenges() {
         <Pronunciation
           isFirst
           isLast
+          useCustomFeedback
           lessonEntry={challenge.entry}
           lessonStep={{
             type: "pronunciation",

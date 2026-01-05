@@ -16,6 +16,13 @@ export const DEFAULT_TOTAL_ERRORS = 5;
 export const DEFAULT_TOTAL_TIPS = 3;
 export const DEFAULT_SLOT_QNT_H = 4;
 
+export interface WritingScore {
+  success: boolean
+  size: number
+  errors: number
+  tips: number
+}
+
 export function StepWriting({
   show = true,
   isLast = false,
@@ -92,17 +99,40 @@ export function StepWriting({
     const isSequential = answerIndexes.every((idx, i) => idx === i);
 
     if (isLengthMatch && isSequential) {
-      onResult?.(true);
+      onResult?.({
+        totalTime: 0,
+        result: {
+          type: "writing",
+          scoreResult: {
+            success: true,
+            size: preparedTarget.sanitizedTarget.length,
+            errors,
+            tips,
+          },
+        },
+
+      });
       setPhase("result:correct");
     }
-  }, [answerIndexes, preparedTarget.sanitizedTarget.length, onResult]);
+  }, [answerIndexes, preparedTarget.sanitizedTarget.length, onResult, errors, tips]);
 
   useEffect(() => {
     if (errors >= DEFAULT_TOTAL_ERRORS) {
-      onResult?.(false);
+      onResult?.({
+        totalTime: 0,
+        result: {
+          type: "writing",
+          scoreResult: {
+            success: false,
+            size: preparedTarget.sanitizedTarget.length,
+            errors,
+            tips,
+          },
+        },
+      });
       setPhase("result:fail");
     }
-  }, [errors, onResult]);
+  }, [errors, onResult, preparedTarget.sanitizedTarget.length, tips]);
 
   return (
     <AnimatePresence>

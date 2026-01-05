@@ -1,4 +1,6 @@
+import { WritingScore } from "@/components/LessonChallenges/StepWriting";
 import { CHARACTERS, MOODS } from "@/constants/game";
+import { AudioScore } from "@/libs/audio/useAudioScoreV2";
 
 export type LessonStepType = "introduction" | "pronunciation" | "writing";
 
@@ -37,6 +39,21 @@ export type LessonDetails = Omit<Lesson, "entries">;
 
 export type Scenes = "cell" | "dream" | "train";
 
+export type PronunciationResult = {
+  type: "pronunciation"
+  scoreResult: AudioScore;
+}
+
+export type WritingResult = {
+  type: "writing"
+  scoreResult: WritingScore;
+}
+
+export type ChallengeResult = {
+  totalTime: number
+  result: PronunciationResult | WritingResult;
+}
+
 export interface LessonComponentProps {
   show?: boolean;
   isFirst?: boolean;
@@ -44,9 +61,10 @@ export interface LessonComponentProps {
   lessonEntry: Omit<LessonEntry, "steps">;
   lessonStep: LessonEntryStep;
   reproduceTargetAudioOnStart?: boolean;
+  useCustomFeedback?: boolean;
   onClickNext: () => void;
   onClickPrevious: () => void;
-  onResult?: (isCorrect: boolean) => void;
+  onResult?: (challengeResult: ChallengeResult) => void;
 }
 
 export enum GAME_WORLDS {

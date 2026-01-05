@@ -14,6 +14,7 @@ export function StepPronunciation({
   isLast,
   lessonEntry,
   lessonStep,
+  useCustomFeedback,
   onClickPrevious,
   onClickNext,
   onResult,
@@ -177,6 +178,10 @@ export function StepPronunciation({
     reproduceTargetAudioOnStart,
   ]);
 
+  if (phase === "result:analysis" && useCustomFeedback) {
+    return null
+  }
+
   return (
     <DialogContainer onAnimationComplete={() => setVisible(true)}>
       <LessonActionContainer title="Pronunciation">
@@ -191,7 +196,7 @@ export function StepPronunciation({
           />
         )}
 
-        {visible && phase === "result:analysis" && !!score && (
+        {visible && !useCustomFeedback && phase === "result:analysis" && !!score && (
           <PronunciationFeedback
             scoreResult={score}
             lessonEntry={lessonEntry}
