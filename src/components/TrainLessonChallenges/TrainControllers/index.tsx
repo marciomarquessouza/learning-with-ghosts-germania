@@ -15,7 +15,7 @@ export function TrainControllers() {
   }, []);
 
   useEffect(() => {
-    const showHandler = () => {
+    const handlerShowControls = () => {
       setPhase((prev) => (prev === "hidden" ? "entering" : prev));
     };
 
@@ -23,11 +23,11 @@ export function TrainControllers() {
       setAttackEnabled(enabled);
     };
 
-    gameEvents.on("train/controls:show", showHandler);
+    gameEvents.on("train/controls:show", handlerShowControls);
     gameEvents.on("train/attack:availability", handlerAttackAvailability);
 
     return () => {
-      gameEvents.off("train/controls:show", showHandler);
+      gameEvents.off("train/controls:show", handlerShowControls);
       gameEvents.on("train/attack:availability", handlerAttackAvailability);
     };
   }, []);

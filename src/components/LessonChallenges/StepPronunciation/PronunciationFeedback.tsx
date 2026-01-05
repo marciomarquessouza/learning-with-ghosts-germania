@@ -1,64 +1,21 @@
 import { ScoreResult } from "@/libs/audio/utils/audioScore";
 import { AudioPlaybackContainer } from "../common/AudioPlaybackContainer";
-import { PRONUNCIATION_FEEDBACK_THRESHOLDS } from "@/constants/game";
-import { useCallback, useMemo } from "react";
 import { LessonEntry } from "@/types";
-
-export function getScoreFeedback(score: number): {
-  status: "excellent" | "good" | "pass" | "fail";
-  headline: string;
-  label: string;
-  textColor: string;
-  barColor: string;
-} {
-  if (score >= PRONUNCIATION_FEEDBACK_THRESHOLDS.EXCELLENT) {
-    return {
-      status: "excellent",
-      headline: "That sounded natural and clear.",
-      label: "NATURAL",
-      textColor: "text-emerald-600",
-      barColor: "bg-emerald-500",
-    };
-  } else if (score >= PRONUNCIATION_FEEDBACK_THRESHOLDS.GOOD) {
-    return {
-      status: "good",
-      headline: "Very close — just a few small details.",
-      label: "ALMOST THERE",
-      textColor: "text-lime-600",
-      barColor: "bg-lime-500",
-    };
-  } else if (score >= PRONUNCIATION_FEEDBACK_THRESHOLDS.PASS) {
-    return {
-      status: "pass",
-      headline: "I can understand you. Let’s smooth it out a bit.",
-      label: "UNDERSTANDABLE",
-      textColor: "text-amber-600",
-      barColor: "bg-amber-500",
-    };
-  } else {
-    return {
-      status: "fail",
-      headline: "Not quite there yet. Listen once more and try again.",
-      label: "TRY AGAIN",
-      textColor: "text-red-700",
-      barColor: "bg-red-600/80",
-    };
-  }
-}
+import { AudioScoreSummary } from "@/libs/audio/useAudioScoreV2";
 
 export interface PronunciationFeedbackProps {
   scoreResult: ScoreResult;
+  audioScoreSummary: AudioScoreSummary | null;
   lessonEntry: Omit<LessonEntry, "steps">;
   isPlaying: boolean;
   onClickReproduce: () => void;
-  onResult?: (isCorrect: boolean) => void;
 }
 
 export function PronunciationFeedback({
   scoreResult,
+  audioScoreSummary,
   lessonEntry,
   isPlaying,
-  onResult,
   onClickReproduce,
 }: PronunciationFeedbackProps) {
   const rawScore = scoreResult.score ?? 0;
@@ -67,20 +24,15 @@ export function PronunciationFeedback({
 
   const { audio, target } = lessonEntry;
 
-  const getFeedback = useCallback(
-    (clampedScore: number) => {
-      const result = getScoreFeedback(clampedScore);
-      const isCorrect = result.status !== "fail";
-      onResult?.(isCorrect);
-      return result;
-    },
-    [onResult]
-  );
 
-  const { headline, label, textColor, barColor } = useMemo(
-    () => getFeedback(clampedScore),
-    [clampedScore, getFeedback]
-  );
+  const headline = audioScoreSummary?.headline ?? "";
+  const label = audioScoreSummary?.label ?? "";
+  const textColor = audioScoreSummary?.textColor ?? "";
+  const barColor = audioScoreSummary?.barColor ?? "";
+
+  if (!audioScoreSummary) {
+    return null;
+  }
 
   return (
     <div>

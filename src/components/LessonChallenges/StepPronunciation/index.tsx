@@ -41,7 +41,7 @@ export function StepPronunciation({
     stopPlayback,
   } = useAudioRecorderV2();
 
-  const { score, clearScore } = useAudioScoreV2({
+  const { score, clearScore, scoreSummary } = useAudioScoreV2({
     audioBufferReference,
     audioBufferUserRecord,
     recorderState,
@@ -196,8 +196,8 @@ export function StepPronunciation({
             scoreResult={score}
             lessonEntry={lessonEntry}
             isPlaying={recorderState === "playing"}
+            audioScoreSummary={scoreSummary}
             onClickReproduce={handlePlayback}
-            onResult={onResult}
           />
         )}
       </LessonActionContainer>

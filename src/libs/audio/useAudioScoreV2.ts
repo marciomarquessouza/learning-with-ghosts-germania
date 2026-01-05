@@ -2,6 +2,7 @@ import { useEffect, useMemo, useState } from "react";
 import { ScoreResult } from "./utils/scoreRecording";
 import { RecorderState } from "./useAudioRecorderV2";
 import { audioScore } from "./utils/audioScore";
+import { getScoreFeedback } from "./helpers/getScoreFeedback";
 
 export interface AudioScoreProps {
   audioBufferReference: AudioBuffer | null;
@@ -23,11 +24,25 @@ const SCORING_SETTINGS = {
   maxCostForPerfect: 0.21, // <== Adjust here to calibrate the score
 } as const;
 
+export interface AudioScoreSummary {
+  status: "excellent" | "good" | "pass" | "fail";
+  headline: string;
+  label: string;
+  textColor: string;
+  barColor: string;
+}
+
+export interface AudioScore {
+  score: ScoreResult | null;
+  clearScore: () => void;
+  scoreSummary: AudioScoreSummary | null;
+}
+
 export function useAudioScoreV2({
   audioBufferReference,
   audioBufferUserRecord,
   recorderState,
-}: AudioScoreProps) {
+}: AudioScoreProps): AudioScore {
   const [score, setScore] = useState<ScoreResult | null>(null);
 
   useEffect(() => {
@@ -53,11 +68,14 @@ export function useAudioScoreV2({
     setScore(null);
   };
 
-  return useMemo(
-    () => ({
+  return useMemo(() => {
+    const rawScore = score?.score ?? 0;
+    const clampedScore = Math.max(0, Math.min(100, Math.round(rawScore)));
+
+    return {
       score,
       clearScore,
-    }),
-    [score]
-  );
+      scoreSummary: getScoreFeedback(clampedScore),
+    };
+  }, [score]);
 }
