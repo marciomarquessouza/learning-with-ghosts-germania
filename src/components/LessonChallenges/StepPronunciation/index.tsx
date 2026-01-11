@@ -136,10 +136,18 @@ export function StepPronunciation({
   ]);
 
   useEffect(() => {
-    if (!score) return;
+    if (!score || !scoreSummary) return;
     setPendingAutoRecord(false);
     setPhase("result:analysis");
-  }, [score]);
+    onResult?.({
+      totalTime: 0,
+      result: {
+        type: "pronunciation",
+        scoreResult: scoreSummary,
+      },
+    });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [score, scoreSummary]);
 
   useEffect(() => {
     if (waitingRecord && recorderState === "recording") {
@@ -178,8 +186,8 @@ export function StepPronunciation({
     reproduceTargetAudioOnStart,
   ]);
 
-  if (phase === "result:analysis" && useCustomFeedback) {
-    return null
+  if (useCustomFeedback && phase === "result:analysis") {
+    return null;
   }
 
   return (
@@ -196,15 +204,18 @@ export function StepPronunciation({
           />
         )}
 
-        {visible && !useCustomFeedback && phase === "result:analysis" && !!score && (
-          <PronunciationFeedback
-            scoreResult={score}
-            lessonEntry={lessonEntry}
-            isPlaying={recorderState === "playing"}
-            audioScoreSummary={scoreSummary}
-            onClickReproduce={handlePlayback}
-          />
-        )}
+        {visible &&
+          !useCustomFeedback &&
+          phase === "result:analysis" &&
+          !!score && (
+            <PronunciationFeedback
+              scoreResult={score}
+              lessonEntry={lessonEntry}
+              isPlaying={recorderState === "playing"}
+              audioScoreSummary={scoreSummary}
+              onClickReproduce={handlePlayback}
+            />
+          )}
       </LessonActionContainer>
 
       <StepControls

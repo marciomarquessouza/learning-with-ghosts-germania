@@ -1,17 +1,17 @@
 import { WritingScore } from "@/components/LessonChallenges/StepWriting";
 import { CHARACTERS, MOODS } from "@/constants/game";
-import { AudioScore } from "@/libs/audio/useAudioScoreV2";
+import { AudioScoreSummary } from "@/libs/audio/useAudioScoreV2";
 
 export type LessonStepType = "introduction" | "pronunciation" | "writing";
 
-export type LessonChallengePhase = "hide" | "pronunciation" | "writing";
-
 export type StepPhases =
+  | "show"
   | "writing"
   | "pronunciation"
   | "result:analysis"
   | "result:correct"
-  | "result:fail";
+  | "result:fail"
+  | "hide";
 
 export type LessonEntryStep = {
   type: LessonStepType;
@@ -40,19 +40,19 @@ export type LessonDetails = Omit<Lesson, "entries">;
 export type Scenes = "cell" | "dream" | "train";
 
 export type PronunciationResult = {
-  type: "pronunciation"
-  scoreResult: AudioScore;
-}
+  type: "pronunciation";
+  scoreResult: AudioScoreSummary;
+};
 
 export type WritingResult = {
-  type: "writing"
+  type: "writing";
   scoreResult: WritingScore;
-}
+};
 
 export type ChallengeResult = {
-  totalTime: number
+  totalTime: number;
   result: PronunciationResult | WritingResult;
-}
+};
 
 export interface LessonComponentProps {
   show?: boolean;

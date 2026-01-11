@@ -6,26 +6,23 @@ import {
 import { StepPronunciation as Pronunciation } from "@/components/LessonChallenges/StepPronunciation";
 import { StepWriting as Writing } from "@/components/LessonChallenges/StepWriting";
 import { gameEvents } from "@/events/gameEvents";
-import { ChallengeResult, LessonChallengePhase } from "@/types";
+import { ChallengeResult, StepPhases } from "@/types";
 import { getChallengeScore } from "../helpers/getChallengeScore";
 
 export function LessonChallenges() {
-  const [currentChallenge, setCurrentChallenge] =
-    useState<LessonChallengePhase>("hide");
+  const [currentChallenge, setCurrentChallenge] = useState<StepPhases>("hide");
   const { getChallenge, completeCurrentChallenge, finished } =
     useTrainLessonChallenges();
-  const [challenge, setChallenge] = useState<LessonChallenge | null>(null);
+  const challenge = useRef<LessonChallenge | null>(null);
   const challengeScore = useRef(0);
 
   useEffect(() => {
-    const handle = ({
-      challengePhase,
-    }: {
-      challengePhase: LessonChallengePhase;
-    }) => {
+    const handle = () => {
       if (finished) return;
-      setChallenge(getChallenge());
-      setCurrentChallenge(challengePhase);
+      challenge.current = getChallenge();
+      setCurrentChallenge(
+        challenge.current?.type === "writing" ? "writing" : "pronunciation"
+      );
     };
     gameEvents.on("train/challenge", handle);
 
@@ -34,13 +31,17 @@ export function LessonChallenges() {
     };
   }, [getChallenge, finished]);
 
-  const handleChallengeScore = useCallback((challengeResult: ChallengeResult) => {
-    const scoreResult = getChallengeScore(challengeResult);
+  const handleChallengeScore = useCallback(
+    (challengeResult: ChallengeResult) => {
+      setCurrentChallenge("result:analysis");
+      const scoreResult = getChallengeScore(challengeResult);
 
-    if (!scoreResult) return
+      if (!scoreResult) return;
 
-    
-  }, []);
+      console.log("#HERE scoreResult", scoreResult);
+    },
+    []
+  );
 
   const handleCompleteChallenge = useCallback(() => {
     completeCurrentChallenge();
@@ -57,16 +58,16 @@ export function LessonChallenges() {
 
   return (
     <>
-      {challenge && challenge?.type === "pronunciation" && (
+      {challenge.current && currentChallenge === "pronunciation" && (
         <Pronunciation
           isFirst
           isLast
           useCustomFeedback
-          lessonEntry={challenge.entry}
+          lessonEntry={challenge.current.entry}
           lessonStep={{
             type: "pronunciation",
             text: ``,
-            instruction: `Click the mic and say: “{{audio|${challenge.entry.target}}}”.`,
+            instruction: `Click the mic and say: “{{audio|${challenge.current.entry.target}}}”.`,
           }}
           reproduceTargetAudioOnStart
           onResult={handleChallengeScore}
@@ -74,10 +75,11 @@ export function LessonChallenges() {
           onClickNext={handleCompleteChallenge}
         />
       )}
-      {challenge && challenge?.type === "writing" && (
+      {challenge.current && (
         <Writing
           isLast={true}
-          lessonEntry={challenge.entry}
+          show={currentChallenge === "writing"}
+          lessonEntry={challenge.current.entry}
           lessonStep={{
             type: "writing",
             text: ``,

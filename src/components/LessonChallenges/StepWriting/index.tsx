@@ -17,10 +17,10 @@ export const DEFAULT_TOTAL_TIPS = 3;
 export const DEFAULT_SLOT_QNT_H = 4;
 
 export interface WritingScore {
-  success: boolean
-  size: number
-  errors: number
-  tips: number
+  success: boolean;
+  size: number;
+  errors: number;
+  tips: number;
 }
 
 export function StepWriting({
@@ -99,40 +99,39 @@ export function StepWriting({
     const isSequential = answerIndexes.every((idx, i) => idx === i);
 
     if (isLengthMatch && isSequential) {
-      onResult?.({
-        totalTime: 0,
-        result: {
-          type: "writing",
-          scoreResult: {
-            success: true,
-            size: preparedTarget.sanitizedTarget.length,
-            errors,
-            tips,
-          },
-        },
-
-      });
       setPhase("result:correct");
     }
-  }, [answerIndexes, preparedTarget.sanitizedTarget.length, onResult, errors, tips]);
+  }, [
+    answerIndexes,
+    preparedTarget.sanitizedTarget.length,
+    onResult,
+    errors,
+    tips,
+  ]);
 
   useEffect(() => {
     if (errors >= DEFAULT_TOTAL_ERRORS) {
+      setPhase("result:fail");
+    }
+  }, [errors, onResult, preparedTarget.sanitizedTarget.length, tips]);
+
+  useEffect(() => {
+    if (phase === "result:correct" || phase === "result:fail") {
       onResult?.({
         totalTime: 0,
         result: {
           type: "writing",
           scoreResult: {
-            success: false,
+            success: phase === "result:correct",
             size: preparedTarget.sanitizedTarget.length,
             errors,
             tips,
           },
         },
       });
-      setPhase("result:fail");
     }
-  }, [errors, onResult, preparedTarget.sanitizedTarget.length, tips]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [phase]);
 
   return (
     <AnimatePresence>
