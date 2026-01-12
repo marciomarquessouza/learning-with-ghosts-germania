@@ -107,3 +107,15 @@ export const KRAMPUS_WALKING_ATLAS_IMG =
 export const KRAMPUS_WALKING_ATLAS_JSON =
   "/actors/krampus/krampus_walking_spritesheet.json";
 export const KRAMPUS_LIGHT_IMG = "/actors/krampus/krampus_light.png";
+
+// CHALLENGE FEEDBACK
+export const CHALLENGE_FEEDBACK_BACKGROUND =
+  "/train/feedback/challenge_feedback_background.png";
+export const COAL_BACKGROUND = "/train/feedback/coal_background.png";
+export const COAL_MAIN_TITLE = "/train/feedback/coal_main_title.png";
+export const FEEDBACK_MESSAGE_BOX_RECTANGLE =
+  "/train/feedback/feedback_message_box_rectangle.png";
+export const FRANCE_CABRINI = "/train/feedback/france_cabrini.png";
+export const OLD_PAPER_BACKGROUND = "/train/feedback/old_paper_background.png";
+export const STRIPE_BACK = "/train/feedback/stripe_back.png";
+export const STRIPE_FRONT = "/train/feedback/stripe_front.png";

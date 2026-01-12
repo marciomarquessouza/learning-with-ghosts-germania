@@ -5,6 +5,7 @@ import {
 } from "../hooks/useTrainLesson";
 import { StepPronunciation as Pronunciation } from "@/components/LessonChallenges/StepPronunciation";
 import { StepWriting as Writing } from "@/components/LessonChallenges/StepWriting";
+import { StepFeedback as Feedback } from "../../LessonChallenges/StepFeedback";
 import { gameEvents } from "@/events/gameEvents";
 import { ChallengeResult, StepPhases } from "@/types";
 import { getChallengeScore } from "../helpers/getChallengeScore";
@@ -37,8 +38,6 @@ export function LessonChallenges() {
       const scoreResult = getChallengeScore(challengeResult);
 
       if (!scoreResult) return;
-
-      console.log("#HERE scoreResult", scoreResult);
     },
     []
   );
@@ -91,6 +90,12 @@ export function LessonChallenges() {
           onClickNext={handleCompleteChallenge}
         />
       )}
+      <Feedback
+        show={currentChallenge.includes("result")}
+        onFinish={() => {
+          // handleCompleteChallenge();
+        }}
+      />
     </>
   );
 }
