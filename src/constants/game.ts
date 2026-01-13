@@ -54,3 +54,11 @@ export const KRAMPUS_OFFSET_FAR = 950;
 
 export const LOCOMOTIVE_KRAMPUS_GAP_MIN = 180;
 export const LOCOMOTIVE_KRAMPUS_GAP_MAX = 900;
+
+export const MAX_COAL_REWARD = 8;
+export const MIN_COAL_REWARD = 2;
+
+export const MAX_ATTACK_REWARD = 10;
+export const MIN_ATTACK_REWARD = 2;
+
+export const HATE_PENALTY = 10;

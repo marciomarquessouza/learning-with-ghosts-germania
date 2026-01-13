@@ -12,6 +12,7 @@ import { StepControls } from "./StepControls";
 export function StepPronunciation({
   isFirst,
   isLast,
+  show,
   lessonEntry,
   lessonStep,
   useCustomFeedback,
@@ -187,6 +188,10 @@ export function StepPronunciation({
   ]);
 
   if (useCustomFeedback && phase === "result:analysis") {
+    return null;
+  }
+
+  if (!show) {
     return null;
   }
 

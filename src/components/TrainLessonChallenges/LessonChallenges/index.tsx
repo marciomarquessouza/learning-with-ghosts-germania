@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import {
   LessonChallenge,
   useTrainLessonChallenges,
@@ -7,94 +7,148 @@ import { StepPronunciation as Pronunciation } from "@/components/LessonChallenge
 import { StepWriting as Writing } from "@/components/LessonChallenges/StepWriting";
 import { StepFeedback as Feedback } from "../../LessonChallenges/StepFeedback";
 import { gameEvents } from "@/events/gameEvents";
-import { ChallengeResult, StepPhases } from "@/types";
-import { getChallengeScore } from "../helpers/getChallengeScore";
+import { ChallengeCommand, ChallengeResult, StepPhases } from "@/types";
+import {
+  ChallengeScoreResult,
+  getChallengeScore,
+} from "../helpers/getChallengeScore";
+
+type ActiveChallengeState = {
+  phase: StepPhases;
+  challenge: LessonChallenge | null;
+  command: ChallengeCommand | null;
+  score: ChallengeScoreResult | null;
+};
+
+const initialState: ActiveChallengeState = {
+  phase: "hide",
+  challenge: null,
+  command: null,
+  score: null,
+};
 
 export function LessonChallenges() {
-  const [currentChallenge, setCurrentChallenge] = useState<StepPhases>("hide");
   const { getChallenge, completeCurrentChallenge, finished } =
     useTrainLessonChallenges();
-  const challenge = useRef<LessonChallenge | null>(null);
-  const challengeScore = useRef(0);
+
+  const [state, setState] = useState<ActiveChallengeState>(initialState);
+
+  const pronunciationStep = useMemo(() => {
+    if (!state.challenge) return null;
+    return {
+      type: "pronunciation" as const,
+      text: "",
+      instruction: `Click the mic and say: “{{audio|${state.challenge.entry.target}}}”.`,
+    };
+  }, [state.challenge]);
+
+  const writingStep = useMemo(() => {
+    if (!state.challenge) return null;
+    return {
+      type: "writing" as const,
+      text: "",
+      instruction: "",
+    };
+  }, [state.challenge]);
 
   useEffect(() => {
-    const handle = () => {
+    const handle = ({ command }: { command: ChallengeCommand }) => {
       if (finished) return;
-      challenge.current = getChallenge();
-      setCurrentChallenge(
-        challenge.current?.type === "writing" ? "writing" : "pronunciation"
-      );
-    };
-    gameEvents.on("train/challenge", handle);
 
-    return () => {
-      gameEvents.off("train/challenge", handle);
+      const next = getChallenge();
+      if (!next) return;
+
+      setState({
+        phase: next.type === "writing" ? "writing" : "pronunciation",
+        challenge: next,
+        command,
+        score: null,
+      });
     };
-  }, [getChallenge, finished]);
+
+    gameEvents.on("train/challenge", handle);
+    return () => gameEvents.off("train/challenge", handle);
+  }, [finished, getChallenge]);
 
   const handleChallengeScore = useCallback(
     (challengeResult: ChallengeResult) => {
-      setCurrentChallenge("result:analysis");
-      const scoreResult = getChallengeScore(challengeResult);
+      setState((prev) => {
+        if (!prev.command) return prev;
 
-      if (!scoreResult) return;
+        return {
+          ...prev,
+          score: getChallengeScore(prev.command, challengeResult),
+          phase: "result:feedback",
+        };
+      });
     },
     []
   );
 
   const handleCompleteChallenge = useCallback(() => {
-    completeCurrentChallenge();
-    setCurrentChallenge("hide");
-    if (challengeScore.current > 0) {
-      gameEvents.emit("train/coal:add", { amount: challengeScore.current });
-      challengeScore.current = 0;
+    switch (state.score?.type) {
+      case "hate":
+        gameEvents.emit("krampus/hate", { hate: state.score.value });
+        break;
+      case "coal":
+        gameEvents.emit("train/coal:add", { amount: state.score.value });
+        break;
+      case "attack":
+        gameEvents.emit("train/attack:arrow", { power: state.score.value });
+        break;
     }
-  }, [challengeScore, completeCurrentChallenge]);
+    completeCurrentChallenge();
+    setState(initialState);
+  }, [completeCurrentChallenge, state.score?.type, state.score?.value]);
 
-  if (currentChallenge === "hide") {
+  const showPronunciation = state.phase === "pronunciation";
+  const showWriting = state.phase === "writing";
+  const showFeedback = state.phase === "result:feedback";
+
+  const hasChallenge = Boolean(state.challenge);
+
+  if (!state.challenge?.entry) {
     return null;
   }
 
   return (
     <>
-      {challenge.current && currentChallenge === "pronunciation" && (
-        <Pronunciation
-          isFirst
-          isLast
-          useCustomFeedback
-          lessonEntry={challenge.current.entry}
-          lessonStep={{
+      <Pronunciation
+        show={hasChallenge && showPronunciation}
+        isFirst
+        isLast
+        useCustomFeedback
+        lessonEntry={state.challenge?.entry}
+        lessonStep={
+          pronunciationStep ?? {
             type: "pronunciation",
-            text: ``,
-            instruction: `Click the mic and say: “{{audio|${challenge.current.entry.target}}}”.`,
-          }}
-          reproduceTargetAudioOnStart
-          onResult={handleChallengeScore}
-          onClickPrevious={() => {}}
-          onClickNext={handleCompleteChallenge}
-        />
-      )}
-      {challenge.current && (
-        <Writing
-          isLast={true}
-          show={currentChallenge === "writing"}
-          lessonEntry={challenge.current.entry}
-          lessonStep={{
-            type: "writing",
-            text: ``,
+            text: "",
             instruction: "",
-          }}
-          reproduceTargetAudioOnStart
-          onResult={handleChallengeScore}
-          onClickPrevious={() => {}}
-          onClickNext={handleCompleteChallenge}
-        />
-      )}
+          }
+        }
+        reproduceTargetAudioOnStart={hasChallenge && showPronunciation}
+        onResult={handleChallengeScore}
+        onClickPrevious={() => {}}
+        onClickNext={handleCompleteChallenge}
+      />
+
+      <Writing
+        isLast
+        show={hasChallenge && showWriting}
+        lessonEntry={state.challenge?.entry}
+        lessonStep={
+          writingStep ?? { type: "writing", text: "", instruction: "" }
+        }
+        reproduceTargetAudioOnStart={hasChallenge && showWriting}
+        onResult={handleChallengeScore}
+        onClickPrevious={() => {}}
+        onClickNext={handleCompleteChallenge}
+      />
+
       <Feedback
-        show={currentChallenge.includes("result")}
-        onFinish={() => {
-          // handleCompleteChallenge();
-        }}
+        show={showFeedback}
+        score={state.score}
+        onFinish={handleCompleteChallenge}
       />
     </>
   );

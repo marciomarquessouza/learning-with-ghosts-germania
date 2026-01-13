@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useState } from "react";
 import { TrainControlButton } from "./TrainControlButton";
 import { gameEvents } from "@/events/gameEvents";
+import { ChallengeCommand } from "@/types";
 
 type Phase = "hidden" | "entering" | "exiting";
 
@@ -10,8 +11,8 @@ export function TrainControllers() {
   const [coalActive, setCoalActive] = useState(false);
   const [attackActive, setAttackActive] = useState(false);
 
-  const addCoal = useCallback(() => {
-    gameEvents.emit("train/challenge", { challengePhase: "writing" });
+  const challengeCommand = useCallback((command: ChallengeCommand) => {
+    gameEvents.emit("train/challenge", { command });
   }, []);
 
   useEffect(() => {
@@ -45,13 +46,13 @@ export function TrainControllers() {
 
       if (key === "F") {
         setCoalActive(true);
-        addCoal();
+        challengeCommand("coal");
         setTimeout(() => setCoalActive(false), 200);
       }
 
       if (key === "A") {
         setAttackActive(true);
-        // TODO: Add Attack Command
+        challengeCommand("attack");
         setTimeout(() => setAttackActive(false), 200);
       }
     };
@@ -78,7 +79,7 @@ export function TrainControllers() {
           icon="coal"
           hotkey="F"
           active={coalActive}
-          onClick={addCoal}
+          onClick={() => challengeCommand("coal")}
         />
 
         <TrainControlButton
@@ -87,7 +88,7 @@ export function TrainControllers() {
           hotkey="A"
           active={attackActive && attackEnabled}
           disabled={!attackEnabled}
-          onClick={() => {}}
+          onClick={() => challengeCommand("attack")}
         />
       </div>
     </div>

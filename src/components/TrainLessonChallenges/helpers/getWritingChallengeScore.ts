@@ -1,38 +1,56 @@
 import { WritingScore } from "@/components/LessonChallenges/StepWriting";
 import { ChallengeScoreResult } from "./getChallengeScore";
+import {
+  HATE_PENALTY,
+  MIN_COAL_REWARD,
+  MAX_COAL_REWARD,
+  MIN_ATTACK_REWARD,
+  MAX_ATTACK_REWARD,
+} from "@/constants/game";
+
+type Command = "attack" | "coal";
+
+const lerp = (min: number, max: number, t: number) => min + (max - min) * t;
+
+const getRewardRange = (command: Command) => {
+  return command === "attack"
+    ? { min: MIN_ATTACK_REWARD, max: MAX_ATTACK_REWARD }
+    : { min: MIN_COAL_REWARD, max: MAX_COAL_REWARD };
+};
 
 export function getWritingChallengeScore(
+  command: Command,
   score: WritingScore
 ): ChallengeScoreResult {
   const { success, size, errors, tips } = score;
 
   if (!success || size === 0) {
     return {
-      score: 0,
       isCorrect: false,
-      coalEarned: 0,
-      attackPower: 0,
-      hate: 1,
+      type: "hate",
+      value: HATE_PENALTY,
     };
   }
 
   const accuracy = Math.max(0, (size - errors) / size);
-
   const tipPenalty = Math.min(0.5, tips * 0.1);
-
   const finalScore = Math.max(0, accuracy - tipPenalty);
-
-  const isPerfect = errors === 0 && tips === 0;
   const isCorrect = finalScore >= 0.7;
 
-  const coalEarned = isCorrect ? Math.ceil(finalScore) : 0;
-  const attackPower = isCorrect ? Math.round(finalScore * 2) : 0;
+  if (!isCorrect) {
+    return {
+      isCorrect: false,
+      type: "hate",
+      value: HATE_PENALTY,
+    };
+  }
+
+  const { min, max } = getRewardRange(command);
+  const reward = Math.round(lerp(min, max, finalScore));
 
   return {
-    score: isPerfect ? 1 : Number(finalScore.toFixed(2)),
-    isCorrect,
-    coalEarned,
-    attackPower,
-    hate: isCorrect ? 0 : 1,
+    isCorrect: true,
+    type: command,
+    value: reward,
   };
 }

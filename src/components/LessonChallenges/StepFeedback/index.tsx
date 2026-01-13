@@ -9,17 +9,20 @@ import {
 import Image from "next/image";
 import { useEffect, useMemo } from "react";
 import { AnimatePresence, motion } from "framer-motion";
+import { ChallengeScoreResult } from "@/components/TrainLessonChallenges/helpers/getChallengeScore";
 
 interface StepFeedbackProps {
   show: boolean;
+  score: ChallengeScoreResult | null;
   onFinish: () => void;
   durationMs?: number;
 }
 
 export function StepFeedback({
   show = false,
+  score,
   onFinish,
-  durationMs = 2200,
+  durationMs = 4000,
 }: StepFeedbackProps) {
   const layout = useMemo(
     () => ({

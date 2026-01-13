@@ -11,6 +11,7 @@ export type StepPhases =
   | "result:analysis"
   | "result:correct"
   | "result:fail"
+  | "result:feedback"
   | "hide";
 
 export type LessonEntryStep = {
@@ -66,6 +67,8 @@ export interface LessonComponentProps {
   onClickPrevious: () => void;
   onResult?: (challengeResult: ChallengeResult) => void;
 }
+
+export type ChallengeCommand = "attack" | "coal";
 
 export enum GAME_WORLDS {
   REAL = "REAL",

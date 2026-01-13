@@ -3,22 +3,21 @@ import { getPronunciationChallengeScore } from "./getPronunciationChallengeScore
 import { getWritingChallengeScore } from "./getWritingChallengeScore";
 
 export interface ChallengeScoreResult {
-  score: number;
   isCorrect: boolean;
-  coalEarned: number;
-  attackPower: number;
-  hate: number;
+  type: "coal" | "attack" | "hate";
+  value: number;
 }
 
 export function getChallengeScore(
+  command: "attack" | "coal",
   challengeResult: ChallengeResult
 ): ChallengeScoreResult | null {
   const { result } = challengeResult;
 
   if (result.type === "pronunciation") {
-    return getPronunciationChallengeScore(result.scoreResult);
+    return getPronunciationChallengeScore(command, result.scoreResult);
   } else if (result.type === "writing") {
-    return getWritingChallengeScore(result.scoreResult);
+    return getWritingChallengeScore(command, result.scoreResult);
   }
 
   return null;
