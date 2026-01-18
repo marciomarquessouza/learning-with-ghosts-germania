@@ -108,14 +108,34 @@ export const KRAMPUS_WALKING_ATLAS_JSON =
   "/actors/krampus/krampus_walking_spritesheet.json";
 export const KRAMPUS_LIGHT_IMG = "/actors/krampus/krampus_light.png";
 
-// CHALLENGE FEEDBACK
-export const CHALLENGE_FEEDBACK_BACKGROUND =
-  "/train/feedback/challenge_feedback_background.png";
-export const COAL_BACKGROUND = "/train/feedback/coal_background.png";
-export const COAL_MAIN_TITLE = "/train/feedback/coal_main_title.png";
-export const FEEDBACK_MESSAGE_BOX_RECTANGLE =
-  "/train/feedback/feedback_message_box_rectangle.png";
-export const FRANCE_CABRINI = "/train/feedback/france_cabrini.png";
+// FEEDBACK
 export const OLD_PAPER_BACKGROUND = "/train/feedback/old_paper_background.png";
 export const STRIPE_BACK = "/train/feedback/stripe_back.png";
-export const STRIPE_FRONT = "/train/feedback/stripe_front.png";
+
+// CHALLENGE REWARD FEEDBACK
+export const REWARD_CHALLENGE_FEEDBACK_BACKGROUND =
+  "/train/feedback/reward/challenge_feedback_background.png";
+export const REWARD_COAL_BACKGROUND =
+  "/train/feedback/reward/coal_background.png";
+export const REWARD_COAL_MAIN_TITLE =
+  "/train/feedback/reward/coal_main_title.png";
+export const REWARD_FEEDBACK_MESSAGE_BOX_RECTANGLE =
+  "/train/feedback/reward/feedback_message_box_rectangle.png";
+export const REWARD_FRANCE_CABRINI =
+  "/train/feedback/reward/france_cabrini.png";
+export const REWARD_STRIPE_FRONT = "/train/feedback/reward/stripe_front.png";
+
+// CHALLENGE PENALTY FEEDBACK
+export const PENALTY_CHALLENGE_FEEDBACK_BACKGROUND =
+  "/train/feedback/penalty/challenge_feedback_background.png";
+export const PENALTY_HATE_MAIN_TITLE =
+  "/train/feedback/penalty/hate_main_title.png";
+export const PENALTY_KRAMPUS = "/train/feedback/penalty/krampus.png";
+export const PENALTY_STRIPE_FRONT = "/train/feedback/penalty/stripe_front.png";
+
+// CHALLENGE ATTACK FEEDBACK
+export const ATTACK_MAIN_TITLE = "/train/feedback/attack/attack.png";
+export const ATTACK_ST_URSULA = "/train/feedback/attack/st_ursula.png";
+export const ATTACK_STRIPE_FRONT = "/train/feedback/attack/stripe_front.png";
+export const ATTACK_FEEDBACK_BACKGROUND =
+  "/train/feedback/reward/challenge_feedback_background.png";
