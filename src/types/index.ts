@@ -2,6 +2,8 @@ import { WritingScore } from "@/components/LessonChallenges/StepWriting";
 import { CHARACTERS, MOODS } from "@/constants/game";
 import { AudioScoreSummary } from "@/libs/audio/useAudioScoreV2";
 
+export type GameScenes = "CellScene" | "GhostDreamScene" | "TrainScene";
+
 export type LessonStepType = "introduction" | "pronunciation" | "writing";
 
 export type StepPhases =

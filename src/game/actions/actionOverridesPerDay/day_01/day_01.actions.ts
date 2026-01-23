@@ -36,7 +36,7 @@ class DayActions1 extends DayActions {
             text: 'Click on "Bars" in the actions menu.',
           }),
         ],
-        {}
+        {},
       );
     }
 
@@ -49,7 +49,7 @@ class DayActions1 extends DayActions {
             text: "Use the arrow keys or the A and D keys",
           }),
         ],
-        {}
+        {},
       );
     }
   }
@@ -64,7 +64,7 @@ class DayActions1 extends DayActions {
           stepShowDialogue({ lines: dialogues.marlene_first_interaction() }),
           stepSetChallenge({ countdown: 600, onFinish: () => {} }),
         ],
-        {}
+        {},
       );
     } else {
       showGameMessage({
@@ -86,14 +86,14 @@ class DayActions1 extends DayActions {
           }),
           stepShowDreamIntroduction(
             { lesson: "Greetings" },
-            { showWhenAlternativeIs: "sleeping_with_ghosts" }
+            { showWhenAlternativeIs: "sleeping_with_ghosts" },
           ),
           stepSetGameWorld(
-            { targetWorld: GAME_WORLDS.DREAM },
-            { showWhenAlternativeIs: "sleeping_with_ghosts" }
+            { targetWorld: GAME_WORLDS.DREAM, targetScene: "GhostDreamScene" },
+            { showWhenAlternativeIs: "sleeping_with_ghosts" },
           ),
         ],
-        { alternativeId: undefined }
+        { alternativeId: undefined },
       );
     } else {
       showDialogue({ lines: defaultDialogues.before_sleep() });
@@ -112,9 +112,12 @@ class DayActions1 extends DayActions {
         stepShowDialogue({ lines: dialogues.lesson_finish() }),
         // stepShowDreamTransition({}),
         stepChangeWorldTransition(),
-        stepSetGameWorld({ targetWorld: GAME_WORLDS.REAL }),
+        stepSetGameWorld({
+          targetWorld: GAME_WORLDS.REAL,
+          targetScene: "CellScene",
+        }),
       ],
-      {}
+      {},
     );
   }
 

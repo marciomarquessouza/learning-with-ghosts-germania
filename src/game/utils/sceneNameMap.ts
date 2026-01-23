@@ -1,8 +1,9 @@
 import { SCENE_NAME as CELL_SCENE } from "@/game/scenes/cell_scene";
 import { SCENE_NAME as DREAM_SCENE } from "@/game/scenes/ghost_dream_scene";
 import { SCENE_NAME as TRAIN_SCENE } from "@/game/scenes/train_scene";
+import { GameScenes } from "@/types";
 
-export function getSceneName(name: string) {
+export function getSceneName(name: string): GameScenes {
   switch (name) {
     case "cell":
     case "CellScene":

@@ -3,7 +3,12 @@ import { ACTIONS_ICONS } from "@/game/scenes/hud/helpers/actionIcons";
 import mitt from "mitt";
 import { ReactNode } from "react";
 import { HUD_ITEMS } from "@/game/scenes/hud";
-import { ChallengeCommand, GAME_WORLDS, InteractionLine } from "@/types";
+import {
+  ChallengeCommand,
+  GAME_WORLDS,
+  GameScenes,
+  InteractionLine,
+} from "@/types";
 import { TransitionOptions } from "./cellEvents";
 
 export interface DialogueEvent {
@@ -27,6 +32,7 @@ export type Events = {
   "canvas-ready": undefined;
   "change-world": {
     targetWorld: GAME_WORLDS;
+    targetScene: GameScenes;
   };
   "change-world-transition": {
     afterClose?: () => void;
