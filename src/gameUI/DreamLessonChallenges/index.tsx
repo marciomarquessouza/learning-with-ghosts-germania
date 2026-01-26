@@ -4,7 +4,7 @@ import { useLesson } from "./hooks/useLesson";
 import { LessonHeader } from "./LessonHeader";
 import { LessonActions } from "./LessonActions";
 
-function DreamLessonChallenges() {
+export function DreamLessonChallenges() {
   const {
     isFirst,
     isLast,
@@ -71,5 +71,3 @@ function DreamLessonChallenges() {
     </>
   );
 }
-
-export default DreamLessonChallenges;

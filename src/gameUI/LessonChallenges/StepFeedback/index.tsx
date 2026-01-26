@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { AnimatePresence, motion } from "framer-motion";
-import { ChallengeScoreResult } from "@/components/TrainLessonChallenges/helpers/getChallengeScore";
+import { ChallengeScoreResult } from "@/gameUI/TrainLessonChallenges/helpers/getChallengeScore";
 import { CoalFeedback } from "./CoalFeedback";
 import { HateFeedback } from "./HateFeedback";
 import { AttackFeedback } from "./AttackFeedback";

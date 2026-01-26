@@ -1,7 +1,7 @@
 import { ReactNode, useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { gameEvents } from "@/events/gameEvents";
-import { Button } from "../Button";
+import { Button } from "@/components/Button";
 
 export function GameMessage() {
   const [title, setTitle] = useState("");

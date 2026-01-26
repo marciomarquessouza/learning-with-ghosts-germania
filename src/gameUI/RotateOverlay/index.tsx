@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 
-export default function RotateOverlay() {
+export function RotateOverlay() {
   const [show, setShow] = useState(false);
 
   useEffect(() => {

@@ -1,4 +1,4 @@
-import { WritingScore } from "@/components/LessonChallenges/StepWriting";
+import { WritingScore } from "@/gameUI/LessonChallenges/StepWriting";
 import { CHARACTERS, MOODS } from "@/constants/game";
 import { AudioScoreSummary } from "@/libs/audio/useAudioScoreV2";
 

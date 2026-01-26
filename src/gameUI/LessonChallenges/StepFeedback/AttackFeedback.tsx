@@ -1,27 +1,27 @@
 import { useMemo } from "react";
 import { motion } from "framer-motion";
+import Image from "next/image";
+import { ChallengeScoreResult } from "@/gameUI/TrainLessonChallenges/helpers/getChallengeScore";
 import {
-  PENALTY_CHALLENGE_FEEDBACK_BACKGROUND,
-  PENALTY_HATE_MAIN_TITLE,
-  PENALTY_KRAMPUS,
-  PENALTY_STRIPE_FRONT,
+  ATTACK_FEEDBACK_BACKGROUND,
+  ATTACK_MAIN_TITLE,
+  ATTACK_ST_URSULA,
+  ATTACK_STRIPE_FRONT,
   STRIPE_BACK,
 } from "@/constants/images";
-import Image from "next/image";
-import { ChallengeScoreResult } from "@/components/TrainLessonChallenges/helpers/getChallengeScore";
 
-interface HateFeedbackProps {
+interface AttackFeedbackProps {
   score: ChallengeScoreResult | null;
 }
 
-export function HateFeedback({ score }: HateFeedbackProps) {
+export function AttackFeedback({ score }: AttackFeedbackProps) {
   const layout = useMemo(
     () => ({
       title: {
-        w: 226,
+        w: 262,
         h: 136,
-        top: -80,
-        left: "54%" as const,
+        top: -70,
+        left: "51%" as const,
         x: "-50%" as const,
       },
       bg: {
@@ -35,21 +35,28 @@ export function HateFeedback({ score }: HateFeedbackProps) {
       stripeBack: {
         w: 238,
         h: 114,
-        top: 240,
-        left: "70%" as const,
+        top: 215,
+        left: "80%" as const,
         x: "-50%" as const,
       },
-      krampus: {
+      saint: {
         w: 412,
-        h: 448,
-        top: 30,
-        left: "47.5%" as const,
+        h: 449,
+        top: 70,
+        left: "50%" as const,
         x: "-50%" as const,
       },
       stripeFront: {
         w: 398,
         h: 402,
-        top: 210,
+        top: 230,
+        left: "49%" as const,
+        x: "-50%" as const,
+      },
+      coalBackground: {
+        w: 509,
+        h: 311,
+        top: 240,
         left: "50%" as const,
         x: "-50%" as const,
       },
@@ -91,7 +98,7 @@ export function HateFeedback({ score }: HateFeedbackProps) {
         }}
       >
         <Image
-          src={PENALTY_HATE_MAIN_TITLE}
+          src={ATTACK_MAIN_TITLE}
           alt="main title"
           width={layout.title.w}
           height={layout.title.h}
@@ -125,7 +132,7 @@ export function HateFeedback({ score }: HateFeedbackProps) {
         }}
       >
         <Image
-          src={PENALTY_CHALLENGE_FEEDBACK_BACKGROUND}
+          src={ATTACK_FEEDBACK_BACKGROUND}
           alt="feedback background"
           width={layout.bg.w}
           height={layout.bg.h}
@@ -176,13 +183,13 @@ export function HateFeedback({ score }: HateFeedbackProps) {
         />
       </motion.div>
 
-      {/* Krampus */}
+      {/* Saint */}
       <motion.div
         className="absolute"
         style={{
-          top: layout.krampus.top,
-          left: layout.krampus.left,
-          transform: `translate(${layout.krampus.x}, 0)`,
+          top: layout.saint.top,
+          left: layout.saint.left,
+          transform: `translate(${layout.saint.x}, 0)`,
         }}
         initial={{ opacity: 0, scale: 0.92, y: 18 }}
         animate="enter"
@@ -213,10 +220,10 @@ export function HateFeedback({ score }: HateFeedbackProps) {
           }}
         >
           <Image
-            src={PENALTY_KRAMPUS}
-            alt="krampus"
-            width={layout.krampus.w}
-            height={layout.krampus.h}
+            src={ATTACK_ST_URSULA}
+            alt="st frances cabrini"
+            width={layout.saint.w}
+            height={layout.saint.h}
             draggable={false}
             className="select-none"
             priority
@@ -257,7 +264,7 @@ export function HateFeedback({ score }: HateFeedbackProps) {
         }}
       >
         <Image
-          src={PENALTY_STRIPE_FRONT}
+          src={ATTACK_STRIPE_FRONT}
           alt="stripe front"
           width={layout.stripeFront.w}
           height={layout.stripeFront.h}

@@ -1,20 +1,21 @@
 import { useMemo } from "react";
 import { motion } from "framer-motion";
-import Image from "next/image";
-import { ChallengeScoreResult } from "@/components/TrainLessonChallenges/helpers/getChallengeScore";
 import {
-  ATTACK_FEEDBACK_BACKGROUND,
-  ATTACK_MAIN_TITLE,
-  ATTACK_ST_URSULA,
-  ATTACK_STRIPE_FRONT,
+  REWARD_CHALLENGE_FEEDBACK_BACKGROUND,
+  REWARD_COAL_MAIN_TITLE,
+  REWARD_COAL_BACKGROUND,
+  REWARD_FRANCE_CABRINI,
   STRIPE_BACK,
+  REWARD_STRIPE_FRONT,
 } from "@/constants/images";
+import Image from "next/image";
+import { ChallengeScoreResult } from "@/gameUI/TrainLessonChallenges/helpers/getChallengeScore";
 
-interface AttackFeedbackProps {
+interface CoalFeedbackProps {
   score: ChallengeScoreResult | null;
 }
 
-export function AttackFeedback({ score }: AttackFeedbackProps) {
+export function CoalFeedback({ score }: CoalFeedbackProps) {
   const layout = useMemo(
     () => ({
       title: {
@@ -50,7 +51,7 @@ export function AttackFeedback({ score }: AttackFeedbackProps) {
         w: 398,
         h: 402,
         top: 230,
-        left: "49%" as const,
+        left: "50%" as const,
         x: "-50%" as const,
       },
       coalBackground: {
@@ -98,10 +99,44 @@ export function AttackFeedback({ score }: AttackFeedbackProps) {
         }}
       >
         <Image
-          src={ATTACK_MAIN_TITLE}
+          src={REWARD_COAL_MAIN_TITLE}
           alt="main title"
           width={layout.title.w}
           height={layout.title.h}
+          draggable={false}
+          className="select-none"
+        />
+      </motion.div>
+
+      {/* Coal Background (breath) */}
+      <motion.div
+        className="absolute"
+        style={{
+          top: layout.coalBackground.top,
+          left: layout.coalBackground.left,
+          transform: `translate(${layout.coalBackground.x}, 0)`,
+        }}
+        initial={{ opacity: 0, scale: 0.98 }}
+        animate={{
+          opacity: 1,
+          scale: [1, 1.005, 1],
+        }}
+        transition={{
+          opacity: { delay: 0.08, duration: 0.25, ease: "easeOut" },
+          scale: {
+            duration: 1.9,
+            ease: "easeInOut",
+            repeat: Infinity,
+            repeatType: "mirror",
+            delay: 0.4,
+          },
+        }}
+      >
+        <Image
+          src={REWARD_COAL_BACKGROUND}
+          alt="feedback background"
+          width={layout.coalBackground.w}
+          height={layout.coalBackground.h}
           draggable={false}
           className="select-none"
         />
@@ -132,7 +167,7 @@ export function AttackFeedback({ score }: AttackFeedbackProps) {
         }}
       >
         <Image
-          src={ATTACK_FEEDBACK_BACKGROUND}
+          src={REWARD_CHALLENGE_FEEDBACK_BACKGROUND}
           alt="feedback background"
           width={layout.bg.w}
           height={layout.bg.h}
@@ -220,7 +255,7 @@ export function AttackFeedback({ score }: AttackFeedbackProps) {
           }}
         >
           <Image
-            src={ATTACK_ST_URSULA}
+            src={REWARD_FRANCE_CABRINI}
             alt="st frances cabrini"
             width={layout.saint.w}
             height={layout.saint.h}
@@ -264,7 +299,7 @@ export function AttackFeedback({ score }: AttackFeedbackProps) {
         }}
       >
         <Image
-          src={ATTACK_STRIPE_FRONT}
+          src={REWARD_STRIPE_FRONT}
           alt="stripe front"
           width={layout.stripeFront.w}
           height={layout.stripeFront.h}

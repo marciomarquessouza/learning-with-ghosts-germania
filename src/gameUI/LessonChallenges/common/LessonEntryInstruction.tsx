@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo } from "react";
 import { useAudioPlayback } from "@/libs/audio/useAudioPlayback";
 import { IconAudio } from "../icons/IconAudio";
 

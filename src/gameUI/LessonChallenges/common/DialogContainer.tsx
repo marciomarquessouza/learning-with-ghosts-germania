@@ -1,5 +1,5 @@
 import { PropsWithChildren, useEffect, useMemo, useRef } from "react";
-import { getDialogueDimension } from "@/components/Dialogues/helpers/getDialgueDimension";
+import { getDialogueDimension } from "@/gameUI/Dialogues/helpers/getDialgueDimension";
 import { useDeviceType } from "@/hooks/useDeviceType";
 import { motion, AnimatePresence } from "framer-motion";
 

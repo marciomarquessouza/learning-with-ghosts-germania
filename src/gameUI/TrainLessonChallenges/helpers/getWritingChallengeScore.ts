@@ -1,4 +1,4 @@
-import { WritingScore } from "@/components/LessonChallenges/StepWriting";
+import { WritingScore } from "@/gameUI/LessonChallenges/StepWriting";
 import { ChallengeScoreResult } from "./getChallengeScore";
 import {
   HATE_PENALTY,

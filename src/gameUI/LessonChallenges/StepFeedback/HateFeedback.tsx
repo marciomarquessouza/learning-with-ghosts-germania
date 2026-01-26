@@ -1,28 +1,27 @@
 import { useMemo } from "react";
 import { motion } from "framer-motion";
 import {
-  REWARD_CHALLENGE_FEEDBACK_BACKGROUND,
-  REWARD_COAL_MAIN_TITLE,
-  REWARD_COAL_BACKGROUND,
-  REWARD_FRANCE_CABRINI,
+  PENALTY_CHALLENGE_FEEDBACK_BACKGROUND,
+  PENALTY_HATE_MAIN_TITLE,
+  PENALTY_KRAMPUS,
+  PENALTY_STRIPE_FRONT,
   STRIPE_BACK,
-  REWARD_STRIPE_FRONT,
 } from "@/constants/images";
 import Image from "next/image";
-import { ChallengeScoreResult } from "@/components/TrainLessonChallenges/helpers/getChallengeScore";
+import { ChallengeScoreResult } from "@/gameUI/TrainLessonChallenges/helpers/getChallengeScore";
 
-interface CoalFeedbackProps {
+interface HateFeedbackProps {
   score: ChallengeScoreResult | null;
 }
 
-export function CoalFeedback({ score }: CoalFeedbackProps) {
+export function HateFeedback({ score }: HateFeedbackProps) {
   const layout = useMemo(
     () => ({
       title: {
-        w: 262,
+        w: 226,
         h: 136,
-        top: -70,
-        left: "51%" as const,
+        top: -80,
+        left: "54%" as const,
         x: "-50%" as const,
       },
       bg: {
@@ -36,28 +35,21 @@ export function CoalFeedback({ score }: CoalFeedbackProps) {
       stripeBack: {
         w: 238,
         h: 114,
-        top: 215,
-        left: "80%" as const,
+        top: 240,
+        left: "70%" as const,
         x: "-50%" as const,
       },
-      saint: {
+      krampus: {
         w: 412,
-        h: 449,
-        top: 70,
-        left: "50%" as const,
+        h: 448,
+        top: 30,
+        left: "47.5%" as const,
         x: "-50%" as const,
       },
       stripeFront: {
         w: 398,
         h: 402,
-        top: 230,
-        left: "50%" as const,
-        x: "-50%" as const,
-      },
-      coalBackground: {
-        w: 509,
-        h: 311,
-        top: 240,
+        top: 210,
         left: "50%" as const,
         x: "-50%" as const,
       },
@@ -99,44 +91,10 @@ export function CoalFeedback({ score }: CoalFeedbackProps) {
         }}
       >
         <Image
-          src={REWARD_COAL_MAIN_TITLE}
+          src={PENALTY_HATE_MAIN_TITLE}
           alt="main title"
           width={layout.title.w}
           height={layout.title.h}
-          draggable={false}
-          className="select-none"
-        />
-      </motion.div>
-
-      {/* Coal Background (breath) */}
-      <motion.div
-        className="absolute"
-        style={{
-          top: layout.coalBackground.top,
-          left: layout.coalBackground.left,
-          transform: `translate(${layout.coalBackground.x}, 0)`,
-        }}
-        initial={{ opacity: 0, scale: 0.98 }}
-        animate={{
-          opacity: 1,
-          scale: [1, 1.005, 1],
-        }}
-        transition={{
-          opacity: { delay: 0.08, duration: 0.25, ease: "easeOut" },
-          scale: {
-            duration: 1.9,
-            ease: "easeInOut",
-            repeat: Infinity,
-            repeatType: "mirror",
-            delay: 0.4,
-          },
-        }}
-      >
-        <Image
-          src={REWARD_COAL_BACKGROUND}
-          alt="feedback background"
-          width={layout.coalBackground.w}
-          height={layout.coalBackground.h}
           draggable={false}
           className="select-none"
         />
@@ -167,7 +125,7 @@ export function CoalFeedback({ score }: CoalFeedbackProps) {
         }}
       >
         <Image
-          src={REWARD_CHALLENGE_FEEDBACK_BACKGROUND}
+          src={PENALTY_CHALLENGE_FEEDBACK_BACKGROUND}
           alt="feedback background"
           width={layout.bg.w}
           height={layout.bg.h}
@@ -218,13 +176,13 @@ export function CoalFeedback({ score }: CoalFeedbackProps) {
         />
       </motion.div>
 
-      {/* Saint */}
+      {/* Krampus */}
       <motion.div
         className="absolute"
         style={{
-          top: layout.saint.top,
-          left: layout.saint.left,
-          transform: `translate(${layout.saint.x}, 0)`,
+          top: layout.krampus.top,
+          left: layout.krampus.left,
+          transform: `translate(${layout.krampus.x}, 0)`,
         }}
         initial={{ opacity: 0, scale: 0.92, y: 18 }}
         animate="enter"
@@ -255,10 +213,10 @@ export function CoalFeedback({ score }: CoalFeedbackProps) {
           }}
         >
           <Image
-            src={REWARD_FRANCE_CABRINI}
-            alt="st frances cabrini"
-            width={layout.saint.w}
-            height={layout.saint.h}
+            src={PENALTY_KRAMPUS}
+            alt="krampus"
+            width={layout.krampus.w}
+            height={layout.krampus.h}
             draggable={false}
             className="select-none"
             priority
@@ -299,7 +257,7 @@ export function CoalFeedback({ score }: CoalFeedbackProps) {
         }}
       >
         <Image
-          src={REWARD_STRIPE_FRONT}
+          src={PENALTY_STRIPE_FRONT}
           alt="stripe front"
           width={layout.stripeFront.w}
           height={layout.stripeFront.h}
