@@ -1,133 +1,142 @@
 # Learning With Ghosts – GERMANIA
 
-**Learning With Ghosts – GERMANIA** is a narrative-driven language learning game set in an alternate authoritarian Europe.
+**Learning With Ghosts – GERMANIA** is a modular TypeScript-based learning application exploring AI-mediated feedback loops, dual-layer frontend architecture, and system-driven UX.
+
+It is both a real game and a real learning platform — built as a technical and product-focused portfolio project.
 
 ![](https://learning-with-ghosts-germania.vercel.app/ui/home_page/hero-image.png)
 
-It is both a real game and a real learning platform.
+---
 
-It removes the guilt of playing when you should be studying — and removes the boredom of studying when you wish you were playing.
+# Technical Overview
 
-This project is built as a technical and creative portfolio piece, exploring the intersection of:
+## Stack
 
-- Game design
-- AI-mediated learning
-- Narrative systems
-- Modern web architecture
-- Minimalist visual direction
+- **TypeScript (frontend & backend)**
+- **Next.js (App Router)**
+- **React**
+- **Phaser.js (rendering layer)**
+- **Prisma ORM**
+- **Supabase (PostgreSQL)**
+- **OpenAI SDK**
 
 ---
 
-## Is This a Game or a Learning Platform?
+## Frontend Architecture
 
-It is both.
+The application uses a **dual-layer rendering model** to clearly separate immersive rendering from structured UI logic.
 
-Learning With Ghosts delivers:
+### 1. Canvas Layer (Phaser.js)
 
-- A structured language curriculum
-- Reinforcement challenges
-- Daily high-pressure evaluations
-- Character progression
-
-But it does so through:
-
-- A fully built game world
-- Mechanical consequences
+- Scene-based architecture
+- Sprite systems and mechanical logic
 - Audio-driven immersion
-- Narrative stakes
+- Isolated rendering responsibility
+
+### 2. UI Layer (React + TypeScript)
+
+- Structured lessons and exercises
+- DOM-based interactions
+- Typed state management
+- Web Audio API for pronunciation feedback
+
+### Layer Communication
+
+- `mitt` for event-driven communication between Canvas and UI
+- `zustand` for global lesson and progression state
+- `howler.js` for sound control
+
+This separation allows rendering complexity and learning logic to evolve independently while maintaining strict boundaries.
+
+---
+
+## Backend Architecture
+
+- **Next.js API Routes**
+- **Prisma ORM (typed data layer)**
+- **Supabase (PostgreSQL)**
+- **OpenAI SDK**
+
+AI is responsible for:
+
+- Validating user responses
+- Mediating character interactions
+- Suggesting review content
+- Determining daily survival consequences
+
+The backend acts as a decision engine rather than a simple persistence layer.
+
+---
+
+# Core Product Structure
+
+Each in-game day is divided into two realities:
+
+## The Real World – The Cell
+
+![Josef's Cell](https://learning-with-ghosts-germania.vercel.app/screenshots/cell.png)
+
+The player is evaluated under constrained conditions.  
+Performance directly affects in-game survival.
+
+## The Dream World – The Cemetery
+
+![Cemetery Phase](https://learning-with-ghosts-germania.vercel.app/screenshots/dream_01.png)
+
+New vocabulary is introduced and reinforced through structured challenges.
+
+![Cemetery Phase 2](https://learning-with-ghosts-germania.vercel.app/screenshots/dream_02.png)
+
+## The Train Phase – Reinforcement Under Pressure
+
+![Train Phase](https://learning-with-ghosts-germania.vercel.app/screenshots/train_01.png)
+
+- Pronunciation challenges fuel progression
+- Mistakes weaken mechanical stability
+- Pressure builds dynamically
+
+![Train Phase 2](https://learning-with-ghosts-germania.vercel.app/screenshots/train_02.png)
+![Train Phase 3](https://learning-with-ghosts-germania.vercel.app/screenshots/train_03.png)
+
+Learning is reinforced mechanically rather than abstractly.
+
+---
+
+# Product Philosophy
+
+Learning With Ghosts removes the guilt of playing when you should be studying —  
+and removes the boredom of studying when you wish you were playing.
 
 Learning is not an overlay.  
 It is survival.
 
 ---
 
-## Core Experience
+# Lore (Narrative Context)
 
-Each in-game day is divided into two realities:
-
-### The Real World – The Cell
-
-![Josef's Cell](https://learning-with-ghosts-germania.vercel.app/screenshots/cell.png)
-
-You are **Josef G.**, an Armenian worker imprisoned in the capital city of GERMANIA — the same city you once helped build.
-
-Each day ends with an interrogation.
-
-Your German is tested.
-
-If you fail, you do not eat.
-
-The evaluator is **Frau Marlene Weiss**, an AI-controlled authority figure. Beautiful. Cold. Unforgiving.
-
----
-
-### The Dream World – The Cemetery
-
-![Josef's Cell](https://learning-with-ghosts-germania.vercel.app/screenshots/dream_01.png)
-
-At night, Josef is visited by **Elisa**, a ghost determined to teach him everything he needs to survive.
-
-Here the player:
-
-- Learns new vocabulary
-- Practices pronunciation
-- Completes writing challenges
-- Builds daily mastery
-
-The dream world is where knowledge grows.
-![Josef's Cell](https://learning-with-ghosts-germania.vercel.app/screenshots/dream_02.png)
-
----
-
-### The Train Phase – Reinforcement Under Pressure
-
-![Josef's Cell](https://learning-with-ghosts-germania.vercel.app/screenshots/train_01.png)
-
-After learning, Josef and Elisa enter a symbolic train sequence.
-
-- Pronunciation challenges fuel momentum
-- Mistakes weaken progress
-- Pressure builds
-
-![Josef's Cell](https://learning-with-ghosts-germania.vercel.app/screenshots/train_02.png)
-![Josef's Cell](https://learning-with-ghosts-germania.vercel.app/screenshots/train_03.png)
-Learning is reinforced mechanically.
-
----
-
-## Lore
-
-### Alternate Timeline
+## Alternate Timeline
 
 In 1939, Adolf Hitler is assassinated.
 
-A new regime rises — more strategic, more patient, more cynical.
-
+A new regime rises — more strategic, more patient, more cynical.  
 A false peace settles across Europe.
 
-Germany becomes the uncontested center of power.
-
+Germany becomes the uncontested center of power.  
 Its new capital, **GERMANIA**, stands as a monument to dominance.
 
-For years, foreign labor is used to build the city.
-
+For years, foreign labor is used to build the city.  
 Then policy shifts.
 
----
-
-### The Native Language Law
+## The Native Language Law
 
 A new law is enacted:
 
-Adults who do not speak German become criminals.
-
+Adults who do not speak German become criminals.  
 Teaching German to foreigners becomes a punishable offense.
 
 Language becomes control.
 
----
-
-### The Player
+## The Player
 
 You are Josef G.
 
@@ -139,66 +148,11 @@ Your only path to survival is learning.
 
 ---
 
-## Technology
+# Getting Started
 
-### Frontend Architecture
-
-The game uses a **dual-layer rendering model**:
-
-#### 1. Canvas Layer (Phaser.js)
-
-- Immersive worlds rendered via Phaser
-- Sprite systems, mechanics, audio cues
-- Scene-based architecture
-
-#### 2. UI Layer (HTML + CSS + TypeScript)
-
-- Structured language lessons
-- DOM-based exercises
-- Web Audio API for pronunciation feedback
-
-#### Layer Communication
-
-- `mitt` for event-driven communication between Phaser and UI
-- `zustand` for global lesson and progression state
-- `howler.js` for immersive sound control
-
-Built with:
-
-- **Next.js**
-- **TypeScript**
-- Modular scene architecture
-
----
-
-### Backend Architecture
-
-- **Next.js API Routes**
-- **Prisma ORM**
-- **Supabase (PostgreSQL)**
-- **OpenAI SDK**
-
-AI is responsible for:
-
-- Validating user responses
-- Mediating character interactions
-- Suggesting review content
-- Determining daily survival consequences
-
-## Getting Started
-
-First, run the development server:
+Install dependencies:
 
 ```bash
+npm install
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
-
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
-
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
