@@ -13,10 +13,10 @@ export default function Home() {
           alt="Learning With Ghosts - Germania hero"
           fill
           priority
-          className="object-contain object-center"
+          className="object-cover sm:object-contain object-center"
         />
 
-        <div className="absolute inset-0 flex items-end justify-center m-20">
+        <div className="absolute inset-0 flex items-end justify-center p-6 sm:p-20">
           <Link
             href="/game"
             className={[
