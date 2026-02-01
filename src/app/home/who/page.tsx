@@ -25,12 +25,6 @@ export default function WhoPage() {
 
           <p className="mt-4 text-xs font-semibold uppercase leading-6 tracking-[0.24em]">
             This is a fictional work.
-            <br />
-            Not affiliated with any government or military institution.
-            <br />
-            Not political propaganda.
-            <br />
-            Not an extremist project.
             <br />A game about learning German.
           </p>
         </div>

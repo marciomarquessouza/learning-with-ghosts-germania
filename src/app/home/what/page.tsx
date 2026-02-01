@@ -33,7 +33,7 @@ export default function WhatPage() {
         </div>
 
         <p className="mt-10 max-w-2xl text-xs font-semibold uppercase tracking-[0.28em] opacity-80">
-          Fictional dystopia. Language-learning game. Not a language app.
+          Fictional dystopia. Language-learning game.
         </p>
       </section>
 
