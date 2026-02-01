@@ -8,6 +8,7 @@ import {
   UnifrakturMaguntia,
 } from "next/font/google";
 import "./globals.css";
+import { Analytics } from "@vercel/analytics/next";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -59,6 +60,7 @@ export default function RootLayout({
         className={`${geistMono.variable} ${geistSans.variable} ${josefinSans.variable} ${russoOne.variable} ${specialElite.variable} ${unifrakturMaguntia.variable} antialiased`}
       >
         {children}
+        <Analytics />
       </body>
     </html>
   );
