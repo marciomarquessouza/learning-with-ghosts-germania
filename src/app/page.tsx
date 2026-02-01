@@ -7,7 +7,7 @@ export default function Home() {
   return (
     <div className="min-h-screen font-primary bg-[#FAF5E4] text-black flex flex-col">
       <Navbar />
-      <section className="relative w-full flex-1 min-h-0 overflow-hidden bg-black">
+      <section className="relative w-full flex-1 min-h-0 overflow-hidden bg-[#FF161A]">
         {/* Desktop/Tablet */}
         <Image
           src="/ui/home_page/hero-image.png"
