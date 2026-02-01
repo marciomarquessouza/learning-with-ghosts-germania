@@ -1,10 +1,6 @@
-import { Navbar } from "@/components/HomePage/Navbar";
-
 export default function WhoPage() {
   return (
-    <div className="min-h-screen font-primary bg-[#FAF5E4] text-black flex flex-col">
-      <Navbar />
-
+    <div className="p-2">
       <section className="flex flex-1 flex-col justify-center mx-auto">
         <div className="mb-6 h-1 w-16 bg-red-600" />
 
@@ -34,10 +30,6 @@ export default function WhoPage() {
           like structure, pressure, and control.
         </p>
       </section>
-
-      <footer className="text-[10px] font-semibold uppercase tracking-[0.32em] opacity-60">
-        © {new Date().getFullYear()} — LWG GERMANIA
-      </footer>
     </div>
   );
 }
