@@ -16,15 +16,15 @@ export function Navbar() {
         />
       </Link>
       <nav className="flex flex-wrap justify-center gap-4 md:gap-6 font-semibold text-lg md:text-2xl">
-        <a href="/what" className="hover:text-red-600">
+        <Link href="/what" className="hover:text-red-600">
           WHAT?
-        </a>
-        <a href="/who" className="hover:text-red-600">
+        </Link>
+        <Link href="/who" className="hover:text-red-600">
           WHO?
-        </a>
-        <a href="/how-much" className="hover:text-red-600">
+        </Link>
+        <Link href="/how-much" className="hover:text-red-600">
           HOW MUCH?
-        </a>
+        </Link>
         <button className="bg-red-600 text-white px-4 py-1 rounded hover:bg-red-700 text-sm md:text-base">
           LOGIN
         </button>
