@@ -49,7 +49,7 @@ export const stepSetChallenge = (
 ): Step => stepBase(() => setChallenge(payload), options);
 
 export const stepChangeWorldTransition = (
-  _payload?: unknown,
+  _payload?: null,
   options?: StepOptions,
 ): Step => stepBase(() => changeWorldTransition(), options);
 

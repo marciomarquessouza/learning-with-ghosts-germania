@@ -86,11 +86,11 @@ class DayActions1 extends DayActions {
           stepShowDialogue({
             lines: dialogues.bed_alternatives(),
           }),
-          stepChangeWorldTransition({
+          stepChangeWorldTransition(null, {
             showWhenAlternativeIs: "sleeping_with_ghosts",
           }),
           stepShowDreamIntroduction(
-            { lesson: "Greetings" },
+            { lesson: lesson.title },
             { showWhenAlternativeIs: "sleeping_with_ghosts" },
           ),
           stepSetGameWorld(
@@ -127,7 +127,7 @@ class DayActions1 extends DayActions {
           { lines: dialogues.return_to_cell() },
           { showWhenAlternativeIs: "return" },
         ),
-        stepChangeWorldTransition({}, { showWhenAlternativeIs: "return" }),
+        stepChangeWorldTransition(null, { showWhenAlternativeIs: "return" }),
         stepSetGameWorld(
           {
             targetWorld: GAME_WORLDS.REAL,
