@@ -95,16 +95,17 @@ export function LessonDescription({
               startTyping();
             }
           }}
-          className="pointer-events-none flex h-full w-full items-center justify-center px-12 text-white"
+          className="pointer-events-none flex h-full w-full items-center px-12 text-white"
         >
-          <div className="flex flex-col items-center mx-auto">
+          <div className="flex flex-col items-center w-full">
             <div className="bg-[#FFF3E4] px-4 py-0 mb-4">
-              <p className="text-lg font-primary font-semibold tracking-wide text-center text-black">
+              <p className="text-lg font-primary font-semibold tracking-wide text-black text-left">
                 {`${hasHonorific ? honorific + " " : ""}${characterName}`}:
               </p>
             </div>
-            <div className="flex items-start px-4">
-              <p className="font-mono text-xl text-center min-h-20 text-[#FFF3E4]">
+
+            <div className="w-3xl px-4">
+              <p className="font-mono text-xl text-[#FFF3E4] min-h-20 text-left leading-relaxed">
                 {displayedText}
               </p>
             </div>
