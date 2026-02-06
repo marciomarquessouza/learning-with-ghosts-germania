@@ -10,6 +10,7 @@ import {
   stepChangeWorldTransition,
   stepShowDialogue,
   stepShowLesson,
+  stepChangeScene,
 } from "@/events/steps";
 import { dialogues } from "./day_01.dialogues";
 import { showDialogue } from "@/events/helpers/showDialogue";
@@ -114,8 +115,8 @@ class DayActions1 extends DayActions {
           { lines: dialogues.challenge_accepted() },
           { showWhenAlternativeIs: "train_challenge" },
         ),
-        stepSetGameWorld(
-          { targetWorld: GAME_WORLDS.DREAM, targetScene: "TrainScene" },
+        stepChangeScene(
+          { targetScene: "TrainScene", fade: true },
           { showWhenAlternativeIs: "train_challenge" },
         ),
         stepShowDialogue(

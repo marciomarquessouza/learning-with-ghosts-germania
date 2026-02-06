@@ -16,6 +16,7 @@ import {
 import { GameWorld, setGameWorld } from "../helpers/setGameWorld";
 import { LessonEvent } from "../lessonEvents";
 import { showLesson } from "../helpers/showLesson";
+import { changeScene, ChangeScene } from "../helpers/changeScene";
 
 export const stepShowDialogue = (
   payload: DialogueEvent,
@@ -67,4 +68,11 @@ export const stepShowLesson = (
   options?: StepOptions,
 ): Step => {
   return stepBase(() => showLesson(payload), options);
+};
+
+export const stepChangeScene = (
+  payload: ChangeScene,
+  options?: StepOptions,
+): Step => {
+  return stepBase(() => changeScene(payload), options);
 };

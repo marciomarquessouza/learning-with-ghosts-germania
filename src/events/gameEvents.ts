@@ -38,7 +38,7 @@ export type Events = {
     afterClose?: () => void;
   };
   "change-scene": {
-    targetScene: string;
+    targetScene: GameScenes;
     fade?: boolean;
     options?: TransitionOptions;
   };
