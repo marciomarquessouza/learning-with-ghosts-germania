@@ -85,7 +85,7 @@ class DayActions1 extends DayActions {
           stepShowDialogue({
             lines: dialogues.bed_alternatives(),
           }),
-          stepChangeWorldTransition({
+          stepChangeWorldTransition(null, {
             showWhenAlternativeIs: "sleeping_with_ghosts",
           }),
           stepShowDreamIntroduction(
