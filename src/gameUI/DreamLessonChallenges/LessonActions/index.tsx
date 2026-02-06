@@ -65,6 +65,7 @@ export function LessonActions({
       )}
       {lessonStep.type === "pronunciation" && (
         <StepPronunciation
+          show
           lessonEntry={lessonEntry}
           lessonStep={lessonStep}
           onClickPrevious={handleOnClickPrevious}
