@@ -64,6 +64,10 @@ class DayActions1 extends DayActions {
           stepBarsCount({ count: 0 }),
           stepShowDialogue({ lines: dialogues.marlene_first_interaction() }),
           stepSetChallenge({ countdown: 600, onFinish: () => {} }),
+          stepGameMessage({
+            title: "Dreaming with Ghosts",
+            text: 'Click on the "Bed" to sleep… and see what waits for you.',
+          }),
         ],
         {},
       );
