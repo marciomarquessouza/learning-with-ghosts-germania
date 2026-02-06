@@ -47,7 +47,7 @@ export const dialogues = {
       {
         id: "nothing",
         text: "Do nothing",
-      }
+      },
     ),
   ],
   dream_introduction: () => [
@@ -81,82 +81,82 @@ export const dialogues = {
 
   lesson_preparation: () => [
     dialogue.josef.surprised`
-      A confessional… with a nun?
-      Who are you? What is happening?
-    `.reactions([{ mood: MOODS.TALKING, character: CHARACTERS.ELISA }]),
-
-    dialogue.elisa.happy`
-      Hello, Josef… my name is Elisa. †  
-      And… yes. I’m dead.  
-      I’m just a little ghost inside your dream. ♦  
-    `.reactions([{ mood: MOODS.SURPRISED, character: CHARACTERS.JOSEF }]),
-
-    dialogue.josef.surprised`
-      You… you’re really dead?  
-      Then how can you talk to me?  
-      How did you enter my dream?  
-    `.reactions([{ mood: MOODS.SURPRISED, character: CHARACTERS.ELISA }]),
+    A confessional… with a nun?
+    Who are you?
+    What is happening?
+  `.reactions([{ mood: MOODS.TALKING, character: CHARACTERS.ELISA }]),
 
     dialogue.elisa.talking`
-      The radio you were listening to before falling asleep… it calls me. ♦  
-      I can follow the sound and slip inside, very quietly. †   
-    `.reactions([{ mood: MOODS.SURPRISED, character: CHARACTERS.JOSEF }]),
-
-    dialogue.elisa.talking`
-      I don’t know how to explain it better… I just know I can. 
-      And I can help you pass today’s test…  
-      and earn your meal as well. †  
-    `.reactions([{ mood: MOODS.SURPRISED, character: CHARACTERS.JOSEF }]),
-
-    dialogue.josef.surprised`
-      Elisa… now I remember you.  
-      You were that nun from Poland…  
-      who taught German to foreigners in the church…  
-      and later on the radio too.
-    `.reactions([{ mood: MOODS.SAD, character: CHARACTERS.ELISA }]),
-
-    dialogue.elisa.sad`
-      Yes… that was me. †  
-      And I… I met you when I was alive.  
-      But it’s alright if you don’t remember clearly…  
-      Dreams never show everything at once.  
-    `.reactions([{ mood: MOODS.SURPRISED, character: CHARACTERS.JOSEF }]),
-
-    dialogue.elisa.sad`
-      What matters is that you’re here now.  
-      I can teach you what you need for today’s exam. †  
-    `.reactions([{ mood: MOODS.SURPRISED, character: CHARACTERS.JOSEF }]),
+    Don’t overthink it, Josef.
+    That’s not your strength.
+    You’re dreaming.
+  `.reactions([{ mood: MOODS.SURPRISED, character: CHARACTERS.JOSEF }]),
 
     dialogue.josef.sad`
-      Oh… okay.  
-      But I’m going to forget everything when I wake up, aren’t I?
-    `.reactions([{ mood: MOODS.TALKING, character: CHARACTERS.ELISA }]),
+    I… I don’t understand.
+    Why am I here?
+    Why are you here?
+  `.reactions([{ mood: MOODS.TALKING, character: CHARACTERS.ELISA }]),
 
     dialogue.elisa.talking`
-      Don’t be afraid of that. After the lesson is over…  
-      I will help you remember. I always will.  
-      Now… let’s begin, Josef. †  
-    `.reactions([{ mood: MOODS.NEUTRAL, character: CHARACTERS.JOSEF }]),
+    My name is Elisa.
+    The “why” comes later.
+    Now: you need to learn German.
+  `.reactions([{ mood: MOODS.SURPRISED, character: CHARACTERS.JOSEF }]),
+
+    dialogue.josef.surprised`
+    Learn… in a dream?
+    And if I wake up…
+    I’ll forget everything.
+  `.reactions([{ mood: MOODS.TALKING, character: CHARACTERS.ELISA }]),
+
+    dialogue.elisa.talking`
+    You won’t forget what matters.
+    Pass today’s test and you eat.
+    Fail it… and you don’t.
+    Now… let’s begin, Josef. †
+  `.reactions([{ mood: MOODS.NEUTRAL, character: CHARACTERS.JOSEF }]),
   ],
 
   lesson_finish: () => [
     dialogue.elisa.talking`
-      There… that’s all for today, Josef. You did very well… †  
-      even if it might not feel like it right now.  
-      In dreams everything gets a little tangled, you know?  
-      But… it’s all inside you.  
-    `.reactions([{ mood: MOODS.SAD, character: CHARACTERS.JOSEF }]),
+    There… that is enough for today, Josef.
+    You did well.
+    Better than I expected. †
+  `.reactions([{ mood: MOODS.SURPRISED, character: CHARACTERS.JOSEF }]),
 
     dialogue.elisa.talking`
-      When you wake up… you might forget a little,  
-      but that’s alright.  
-      I’ll guide you again — every time you come back. †  
-    `.reactions([{ mood: MOODS.SAD, character: CHARACTERS.JOSEF }]),
+    But learning fades quickly.
+    So I offer you one more challenge —
+    to seal it inside that restless head of yours. †
+  `.reactions([{ mood: MOODS.SURPRISED, character: CHARACTERS.JOSEF }]),
 
+    alternatives.josef.neutral`
+    What kind of challenge?
+  `.alternatives(
+      {
+        id: "train_challenge",
+        text: "Accept the nun’s challenge.",
+      },
+      {
+        id: "return",
+        text: "Wake up and face the final test.",
+      },
+    ),
+  ],
+  challenge_accepted: () => [
     dialogue.elisa.talking`
-      Now… rest.  
-      The dream is getting weak…  
-      and I have to let you go.  
-    `.reactions([{ mood: MOODS.SAD, character: CHARACTERS.JOSEF }]),
+    Oh?
+    Braver than you look.
+    Come, then.
+    Let us see what remains in that head. †
+  `.reactions([{ mood: MOODS.SURPRISED, character: CHARACTERS.JOSEF }]),
+  ],
+  return_to_cell: () => [
+    dialogue.elisa.talking`
+    Very well.
+    May your memory serve you better than your fear.
+    We shall see soon enough. †
+  `.reactions([{ mood: MOODS.NEUTRAL, character: CHARACTERS.JOSEF }]),
   ],
 };

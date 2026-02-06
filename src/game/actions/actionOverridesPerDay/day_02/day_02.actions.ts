@@ -1,3 +1,7 @@
+/**
+ * This is the complete Lesson 01
+ * TODO: replace by the real Lesson 02
+ */
 import { DayActions } from "../../actionDefaultPerDay/default.actions";
 import { runSteps } from "@/events/steps/runSteps";
 import {
@@ -11,13 +15,13 @@ import {
   stepShowDialogue,
   stepShowLesson,
 } from "@/events/steps";
-import { dialogues } from "./day_01.dialogues";
+import { dialogues } from "./day_02.dialogues";
 import { showDialogue } from "@/events/helpers/showDialogue";
 import { defaultDialogues } from "../../actionDefaultPerDay/default.dialogues";
 import { showGameMessage } from "@/events/helpers/showGameMessage";
 import { AudioManifest, GAME_WORLDS, Lesson } from "@/types";
-import { lesson } from "./day_01.lesson";
-import audioManifest from "./day_01.audio.json";
+import { lesson } from "./day_02.lesson";
+import audioManifest from "./day_02.audio.json";
 
 class DayActions1 extends DayActions {
   constructor(lesson: Lesson, audioManifest?: AudioManifest) {
@@ -43,7 +47,7 @@ class DayActions1 extends DayActions {
     if (this.stage === "learning") {
       runSteps(
         [
-          stepShowDialogue({ lines: dialogues.dream_introduction() }),
+          // stepShowDialogue({ lines: dialogues.dream_introduction() }),
           stepGameMessage({
             title: "Go to Eliska",
             text: "Use the arrow keys or the A and D keys",
@@ -110,28 +114,14 @@ class DayActions1 extends DayActions {
         stepShowDialogue({ lines: dialogues.lesson_preparation() }),
         stepShowLesson({ lesson: this.lesson }),
         stepShowDialogue({ lines: dialogues.lesson_finish() }),
-        stepShowDialogue(
-          { lines: dialogues.challenge_accepted() },
-          { showWhenAlternativeIs: "train_challenge" },
-        ),
-        stepSetGameWorld(
-          { targetWorld: GAME_WORLDS.DREAM, targetScene: "TrainScene" },
-          { showWhenAlternativeIs: "train_challenge" },
-        ),
-        stepShowDialogue(
-          { lines: dialogues.return_to_cell() },
-          { showWhenAlternativeIs: "return" },
-        ),
-        stepChangeWorldTransition({}, { showWhenAlternativeIs: "return" }),
-        stepSetGameWorld(
-          {
-            targetWorld: GAME_WORLDS.REAL,
-            targetScene: "CellScene",
-          },
-          { showWhenAlternativeIs: "return" },
-        ),
+        // stepShowDreamTransition({}),
+        stepChangeWorldTransition(),
+        stepSetGameWorld({
+          targetWorld: GAME_WORLDS.REAL,
+          targetScene: "CellScene",
+        }),
       ],
-      { alternativeId: undefined },
+      {},
     );
   }
 
