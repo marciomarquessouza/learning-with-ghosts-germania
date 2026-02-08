@@ -30,17 +30,28 @@ export class GhostElisa {
     elisaAnimations.preload(scene);
   }
 
-  create({ scene, startX, startY, player, dayActions, cursors }: ElisaPayload) {
+  create({
+    scene,
+    startX,
+    startY,
+    scale,
+    flipX,
+    player,
+    dayActions,
+    cursors,
+  }: ElisaPayload) {
     this.dayActions = dayActions || null;
     this.cursors = cursors;
-    this.elisaSprite = elisaAnimations.create(scene, 130, 0);
+    this.elisaSprite = elisaAnimations.create(scene, 150, -15);
+    this.elisaSprite.flipX = !!flipX;
+    this.elisaSprite.scale = scale || 1;
     confessional.create(scene, this.elisaSprite, startX, startY);
     elisaInteractionArea.create(
       scene,
       player,
       this.elisaSprite,
       this.showGameMessage,
-      this.closeGameMessage
+      this.closeGameMessage,
     );
     this.keyMap = createKeyMap(scene, [KEY_CODES.K]);
 

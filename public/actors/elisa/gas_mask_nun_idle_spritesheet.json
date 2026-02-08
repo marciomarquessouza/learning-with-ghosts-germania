@@ -1,0 +1,752 @@
+{
+  "frames": {
+    "gas_mask_nun_idle_0": {
+      "frame": {
+        "x": 0,
+        "y": 0,
+        "w": 220,
+        "h": 566
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 220,
+        "h": 566
+      },
+      "sourceSize": {
+        "w": 220,
+        "h": 566
+      }
+    },
+    "gas_mask_nun_idle_1": {
+      "frame": {
+        "x": 220,
+        "y": 0,
+        "w": 220,
+        "h": 566
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 220,
+        "h": 566
+      },
+      "sourceSize": {
+        "w": 220,
+        "h": 566
+      }
+    },
+    "gas_mask_nun_idle_2": {
+      "frame": {
+        "x": 440,
+        "y": 0,
+        "w": 220,
+        "h": 566
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 220,
+        "h": 566
+      },
+      "sourceSize": {
+        "w": 220,
+        "h": 566
+      }
+    },
+    "gas_mask_nun_idle_3": {
+      "frame": {
+        "x": 660,
+        "y": 0,
+        "w": 220,
+        "h": 566
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 220,
+        "h": 566
+      },
+      "sourceSize": {
+        "w": 220,
+        "h": 566
+      }
+    },
+    "gas_mask_nun_idle_4": {
+      "frame": {
+        "x": 880,
+        "y": 0,
+        "w": 220,
+        "h": 566
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 220,
+        "h": 566
+      },
+      "sourceSize": {
+        "w": 220,
+        "h": 566
+      }
+    },
+    "gas_mask_nun_idle_5": {
+      "frame": {
+        "x": 1100,
+        "y": 0,
+        "w": 220,
+        "h": 566
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 220,
+        "h": 566
+      },
+      "sourceSize": {
+        "w": 220,
+        "h": 566
+      }
+    },
+    "gas_mask_nun_idle_6": {
+      "frame": {
+        "x": 0,
+        "y": 566,
+        "w": 220,
+        "h": 566
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 220,
+        "h": 566
+      },
+      "sourceSize": {
+        "w": 220,
+        "h": 566
+      }
+    },
+    "gas_mask_nun_idle_7": {
+      "frame": {
+        "x": 220,
+        "y": 566,
+        "w": 220,
+        "h": 566
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 220,
+        "h": 566
+      },
+      "sourceSize": {
+        "w": 220,
+        "h": 566
+      }
+    },
+    "gas_mask_nun_idle_8": {
+      "frame": {
+        "x": 440,
+        "y": 566,
+        "w": 220,
+        "h": 566
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 220,
+        "h": 566
+      },
+      "sourceSize": {
+        "w": 220,
+        "h": 566
+      }
+    },
+    "gas_mask_nun_idle_9": {
+      "frame": {
+        "x": 660,
+        "y": 566,
+        "w": 220,
+        "h": 566
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 220,
+        "h": 566
+      },
+      "sourceSize": {
+        "w": 220,
+        "h": 566
+      }
+    },
+    "gas_mask_nun_idle_10": {
+      "frame": {
+        "x": 880,
+        "y": 566,
+        "w": 220,
+        "h": 566
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 220,
+        "h": 566
+      },
+      "sourceSize": {
+        "w": 220,
+        "h": 566
+      }
+    },
+    "gas_mask_nun_idle_11": {
+      "frame": {
+        "x": 1100,
+        "y": 566,
+        "w": 220,
+        "h": 566
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 220,
+        "h": 566
+      },
+      "sourceSize": {
+        "w": 220,
+        "h": 566
+      }
+    },
+    "gas_mask_nun_idle_12": {
+      "frame": {
+        "x": 0,
+        "y": 1132,
+        "w": 220,
+        "h": 566
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 220,
+        "h": 566
+      },
+      "sourceSize": {
+        "w": 220,
+        "h": 566
+      }
+    },
+    "gas_mask_nun_idle_13": {
+      "frame": {
+        "x": 220,
+        "y": 1132,
+        "w": 220,
+        "h": 566
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 220,
+        "h": 566
+      },
+      "sourceSize": {
+        "w": 220,
+        "h": 566
+      }
+    },
+    "gas_mask_nun_idle_14": {
+      "frame": {
+        "x": 440,
+        "y": 1132,
+        "w": 220,
+        "h": 566
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 220,
+        "h": 566
+      },
+      "sourceSize": {
+        "w": 220,
+        "h": 566
+      }
+    },
+    "gas_mask_nun_idle_15": {
+      "frame": {
+        "x": 660,
+        "y": 1132,
+        "w": 220,
+        "h": 566
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 220,
+        "h": 566
+      },
+      "sourceSize": {
+        "w": 220,
+        "h": 566
+      }
+    },
+    "gas_mask_nun_idle_16": {
+      "frame": {
+        "x": 880,
+        "y": 1132,
+        "w": 220,
+        "h": 566
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 220,
+        "h": 566
+      },
+      "sourceSize": {
+        "w": 220,
+        "h": 566
+      }
+    },
+    "gas_mask_nun_idle_17": {
+      "frame": {
+        "x": 1100,
+        "y": 1132,
+        "w": 220,
+        "h": 566
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 220,
+        "h": 566
+      },
+      "sourceSize": {
+        "w": 220,
+        "h": 566
+      }
+    },
+    "gas_mask_nun_idle_18": {
+      "frame": {
+        "x": 0,
+        "y": 1698,
+        "w": 220,
+        "h": 566
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 220,
+        "h": 566
+      },
+      "sourceSize": {
+        "w": 220,
+        "h": 566
+      }
+    },
+    "gas_mask_nun_idle_19": {
+      "frame": {
+        "x": 220,
+        "y": 1698,
+        "w": 220,
+        "h": 566
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 220,
+        "h": 566
+      },
+      "sourceSize": {
+        "w": 220,
+        "h": 566
+      }
+    },
+    "gas_mask_nun_idle_20": {
+      "frame": {
+        "x": 440,
+        "y": 1698,
+        "w": 220,
+        "h": 566
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 220,
+        "h": 566
+      },
+      "sourceSize": {
+        "w": 220,
+        "h": 566
+      }
+    },
+    "gas_mask_nun_idle_21": {
+      "frame": {
+        "x": 660,
+        "y": 1698,
+        "w": 220,
+        "h": 566
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 220,
+        "h": 566
+      },
+      "sourceSize": {
+        "w": 220,
+        "h": 566
+      }
+    },
+    "gas_mask_nun_idle_22": {
+      "frame": {
+        "x": 880,
+        "y": 1698,
+        "w": 220,
+        "h": 566
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 220,
+        "h": 566
+      },
+      "sourceSize": {
+        "w": 220,
+        "h": 566
+      }
+    },
+    "gas_mask_nun_idle_23": {
+      "frame": {
+        "x": 1100,
+        "y": 1698,
+        "w": 220,
+        "h": 566
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 220,
+        "h": 566
+      },
+      "sourceSize": {
+        "w": 220,
+        "h": 566
+      }
+    },
+    "gas_mask_nun_idle_24": {
+      "frame": {
+        "x": 0,
+        "y": 2264,
+        "w": 220,
+        "h": 566
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 220,
+        "h": 566
+      },
+      "sourceSize": {
+        "w": 220,
+        "h": 566
+      }
+    },
+    "gas_mask_nun_idle_25": {
+      "frame": {
+        "x": 220,
+        "y": 2264,
+        "w": 220,
+        "h": 566
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 220,
+        "h": 566
+      },
+      "sourceSize": {
+        "w": 220,
+        "h": 566
+      }
+    },
+    "gas_mask_nun_idle_26": {
+      "frame": {
+        "x": 440,
+        "y": 2264,
+        "w": 220,
+        "h": 566
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 220,
+        "h": 566
+      },
+      "sourceSize": {
+        "w": 220,
+        "h": 566
+      }
+    },
+    "gas_mask_nun_idle_27": {
+      "frame": {
+        "x": 660,
+        "y": 2264,
+        "w": 220,
+        "h": 566
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 220,
+        "h": 566
+      },
+      "sourceSize": {
+        "w": 220,
+        "h": 566
+      }
+    },
+    "gas_mask_nun_idle_28": {
+      "frame": {
+        "x": 880,
+        "y": 2264,
+        "w": 220,
+        "h": 566
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 220,
+        "h": 566
+      },
+      "sourceSize": {
+        "w": 220,
+        "h": 566
+      }
+    },
+    "gas_mask_nun_idle_29": {
+      "frame": {
+        "x": 1100,
+        "y": 2264,
+        "w": 220,
+        "h": 566
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 220,
+        "h": 566
+      },
+      "sourceSize": {
+        "w": 220,
+        "h": 566
+      }
+    },
+    "gas_mask_nun_idle_30": {
+      "frame": {
+        "x": 0,
+        "y": 2830,
+        "w": 220,
+        "h": 566
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 220,
+        "h": 566
+      },
+      "sourceSize": {
+        "w": 220,
+        "h": 566
+      }
+    },
+    "gas_mask_nun_idle_31": {
+      "frame": {
+        "x": 220,
+        "y": 2830,
+        "w": 220,
+        "h": 566
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 220,
+        "h": 566
+      },
+      "sourceSize": {
+        "w": 220,
+        "h": 566
+      }
+    },
+    "gas_mask_nun_idle_32": {
+      "frame": {
+        "x": 440,
+        "y": 2830,
+        "w": 220,
+        "h": 566
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 220,
+        "h": 566
+      },
+      "sourceSize": {
+        "w": 220,
+        "h": 566
+      }
+    },
+    "gas_mask_nun_idle_33": {
+      "frame": {
+        "x": 660,
+        "y": 2830,
+        "w": 220,
+        "h": 566
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 220,
+        "h": 566
+      },
+      "sourceSize": {
+        "w": 220,
+        "h": 566
+      }
+    },
+    "gas_mask_nun_idle_34": {
+      "frame": {
+        "x": 880,
+        "y": 2830,
+        "w": 220,
+        "h": 566
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 220,
+        "h": 566
+      },
+      "sourceSize": {
+        "w": 220,
+        "h": 566
+      }
+    },
+    "gas_mask_nun_idle_35": {
+      "frame": {
+        "x": 1100,
+        "y": 2830,
+        "w": 220,
+        "h": 566
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 220,
+        "h": 566
+      },
+      "sourceSize": {
+        "w": 220,
+        "h": 566
+      }
+    },
+    "gas_mask_nun_idle_36": {
+      "frame": {
+        "x": 0,
+        "y": 3396,
+        "w": 220,
+        "h": 566
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 220,
+        "h": 566
+      },
+      "sourceSize": {
+        "w": 220,
+        "h": 566
+      }
+    }
+  },
+  "meta": {
+    "image": "gas_mask_nun_idle_spritesheet.png",
+    "size": {
+      "w": 1320,
+      "h": 3962
+    },
+    "scale": "0.8"
+  }
+}

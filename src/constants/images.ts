@@ -56,6 +56,10 @@ export const GHOST_ATLAS_JSON = "/actors/josef_ghost/ghost_spritesheet.json";
 export const CONFESSIONAL_IMG = "/actors/elisa/confessional.png";
 export const ELISA_ATLAS_IMG = "/actors/elisa/elisa_spritesheet.png";
 export const ELISA_ATLAS_JSON = "/actors/elisa/elisa_spritesheet.json";
+export const GAS_MASK_NUN_IDLE_ATLAS_IMG =
+  "/actors/elisa/gas_mask_nun_idle_spritesheet.png";
+export const GAS_MASK_NUN_IDLE_ATLAS_JSON =
+  "/actors/elisa/gas_mask_nun_idle_spritesheet.json";
 
 // GHOST DREAM IMAGES
 export const GHOSTS_TITLE = "/ghost_dream/introduction/ghosts_title.png";

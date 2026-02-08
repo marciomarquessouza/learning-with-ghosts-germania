@@ -52,6 +52,8 @@ class GhostDreamScene extends Phaser.Scene {
         scene: this,
         startX: scenario.width - 800,
         startY: DEFAULT_POSITION_Y - 55,
+        scale: 0.65,
+        flipX: true,
         player: ghostSprite,
         dayActions,
         cursors,

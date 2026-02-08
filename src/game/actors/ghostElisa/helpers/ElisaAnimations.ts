@@ -1,7 +1,13 @@
 import { MOODS } from "@/constants/game";
-import { ELISA_ATLAS_IMG, ELISA_ATLAS_JSON } from "@/constants/images";
+import {
+  ELISA_ATLAS_IMG,
+  ELISA_ATLAS_JSON,
+  GAS_MASK_NUN_IDLE_ATLAS_IMG,
+  GAS_MASK_NUN_IDLE_ATLAS_JSON,
+} from "@/constants/images";
 
 const ELISA_ATLAS = "elisaAtlas";
+const GAS_MASK_NUN_ATLAS = "gasMaskNunAtlas";
 
 class ElisaAnimations {
   public animations = {
@@ -12,13 +18,19 @@ class ElisaAnimations {
     ELISA_HAPPY_ANIM: "elisaHappyAnim",
     ELISA_SURPRISED_ANIM: "elisaSurprisedAnim",
     ELISA_FLUSHED_ANIM: "elisaFlushedAnim",
+    GAS_MASK_NUN_IDLE_ANIM: "gasMaskNunIdleAnim",
   };
-  public currentAnimation = this.animations.ELISA_IDLE_ANIM;
+  public currentAnimation = this.animations.GAS_MASK_NUN_IDLE_ANIM;
   public previousAnimation: string | null = null;
 
   preload(scene: Phaser.Scene) {
     const load = scene.load;
     load.atlas(ELISA_ATLAS, ELISA_ATLAS_IMG, ELISA_ATLAS_JSON);
+    load.atlas(
+      GAS_MASK_NUN_ATLAS,
+      GAS_MASK_NUN_IDLE_ATLAS_IMG,
+      GAS_MASK_NUN_IDLE_ATLAS_JSON,
+    );
   }
 
   create(scene: Phaser.Scene, startX: number, startY: number) {
@@ -32,6 +44,19 @@ class ElisaAnimations {
           { key: ELISA_ATLAS, frame: "elisa_0", duration: 1000 },
         ],
         frameRate: 20,
+        repeat: -1,
+      });
+    }
+
+    if (!scene.anims.exists(this.animations.GAS_MASK_NUN_IDLE_ANIM)) {
+      scene.anims.create({
+        key: this.animations.GAS_MASK_NUN_IDLE_ANIM,
+        frames: scene.anims.generateFrameNames(GAS_MASK_NUN_ATLAS, {
+          prefix: "gas_mask_nun_idle_",
+          start: 0,
+          end: 36,
+        }),
+        frameRate: 14,
         repeat: -1,
       });
     }
@@ -95,34 +120,40 @@ class ElisaAnimations {
       });
     }
 
-    return scene.physics.add.sprite(startX, startY, ELISA_ATLAS, "elisa_0");
+    return scene.physics.add.sprite(
+      startX,
+      startY,
+      GAS_MASK_NUN_ATLAS,
+      "gas_mask_nun_idle_0",
+    );
   }
 
   setAnimationByMood(mood: MOODS) {
-    switch (mood) {
-      case MOODS.HAPPY:
-        this.currentAnimation = this.animations.ELISA_HAPPY_ANIM;
-        break;
-      case MOODS.SAD:
-        this.currentAnimation = this.animations.ELISA_SAD_ANIM;
-        break;
-      case MOODS.ANGRY:
-        this.currentAnimation = this.animations.ELISA_ANGRY_ANIM;
-        break;
-      case MOODS.SURPRISED:
-        this.currentAnimation = this.animations.ELISA_SURPRISED_ANIM;
-        break;
-      case MOODS.FLUSHED:
-        this.currentAnimation = this.animations.ELISA_FLUSHED_ANIM;
-        break;
-      case MOODS.TALKING:
-        this.currentAnimation = this.animations.ELISA_TALKING;
-        break;
-      case MOODS.NEUTRAL:
-      default:
-        this.currentAnimation = this.animations.ELISA_IDLE_ANIM;
-        break;
-    }
+    this.currentAnimation = this.animations.GAS_MASK_NUN_IDLE_ANIM;
+    // switch (mood) {
+    //   case MOODS.HAPPY:
+    //     this.currentAnimation = this.animations.ELISA_HAPPY_ANIM;
+    //     break;
+    //   case MOODS.SAD:
+    //     this.currentAnimation = this.animations.ELISA_SAD_ANIM;
+    //     break;
+    //   case MOODS.ANGRY:
+    //     this.currentAnimation = this.animations.ELISA_ANGRY_ANIM;
+    //     break;
+    //   case MOODS.SURPRISED:
+    //     this.currentAnimation = this.animations.ELISA_SURPRISED_ANIM;
+    //     break;
+    //   case MOODS.FLUSHED:
+    //     this.currentAnimation = this.animations.ELISA_FLUSHED_ANIM;
+    //     break;
+    //   case MOODS.TALKING:
+    //     this.currentAnimation = this.animations.ELISA_TALKING;
+    //     break;
+    //   case MOODS.NEUTRAL:
+    //   default:
+    //     this.currentAnimation = this.animations.ELISA_IDLE_ANIM;
+    //     break;
+    // }
   }
 }
 
