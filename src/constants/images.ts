@@ -72,6 +72,8 @@ export const CEMETERY_BACKGROUND_IMG =
 export const CEMETERY_ROAD_IMG = "/ghost_dream/cemetery/cemetery_road.png";
 export const CEMETERY_MOON_IMG = "/ghost_dream/cemetery/cemetery_moon.png";
 export const CEMETERY_CLOUDS_IMG = "/ghost_dream/cemetery/cemetery_clouds.png";
+export const CEMETERY_DANGER_LAYER_IMG =
+  "/ghost_dream/cemetery/color_layer_red.png";
 
 // TRAIN SCENARIO
 export const TRAIN_BACKGROUND_IMG = "/train/scenario/train_background.png";

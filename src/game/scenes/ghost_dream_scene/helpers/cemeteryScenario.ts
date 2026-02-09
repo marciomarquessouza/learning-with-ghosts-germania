@@ -5,7 +5,14 @@ import {
   CEMETERY_ROAD_IMG,
   CEMETERY_MOON_IMG,
   CEMETERY_CLOUDS_IMG,
+  CEMETERY_DANGER_LAYER_IMG,
 } from "@/constants/images";
+import { gameEvents } from "@/events/gameEvents";
+
+type KrampusDangerPayload = {
+  amount?: number;
+  onFinish?: () => void;
+};
 
 const CEMETERY_SKY = "cemeterySky";
 const CEMETERY_BLACK = "cemeteryBlack";
@@ -13,10 +20,21 @@ const CEMETERY_BACKGROUND = "cemeteryBackground";
 const CEMETERY_ROAD = "cemeteryRoad";
 const CEMETERY_MOON = "cemeteryMoon";
 const CEMETERY_CLOUDS = "cemeteryClouds";
+const DANGER_LAYER = "dangerLayer";
 
 class CemeteryScenario {
   private clouds?: Phaser.GameObjects.TileSprite;
   private cloudsSpeedPxPerSec = 8;
+  private cemeteryDangerLayer: Phaser.GameObjects.Image | null = null;
+  private dangerTween?: Phaser.Tweens.Tween;
+  private krampusDangerAmount = 0;
+  private onDangerTransitionFinish: null | (() => void) = null;
+  private onKrampusDanger = ({
+    amount = 0,
+    onFinish,
+  }: KrampusDangerPayload) => {
+    this.setDanger(amount, onFinish);
+  };
 
   preload(scene: Phaser.Scene) {
     const load: Phaser.Loader.LoaderPlugin = scene.load;
@@ -27,6 +45,7 @@ class CemeteryScenario {
     load.image(CEMETERY_ROAD, CEMETERY_ROAD_IMG);
     load.image(CEMETERY_MOON, CEMETERY_MOON_IMG);
     load.image(CEMETERY_CLOUDS, CEMETERY_CLOUDS_IMG);
+    load.image(DANGER_LAYER, CEMETERY_DANGER_LAYER_IMG);
   }
 
   create(scene: Phaser.Scene) {
@@ -68,6 +87,16 @@ class CemeteryScenario {
       .setDepth(-50);
     container.add(cemeteryRoad);
 
+    this.cemeteryDangerLayer = scene.add
+      .image(0, 0, DANGER_LAYER)
+      .setOrigin(0, 0)
+      .setDepth(-45)
+      .setBlendMode(Phaser.BlendModes.MULTIPLY)
+      .setAlpha(0);
+    container.add(this.cemeteryDangerLayer);
+
+    gameEvents.on("krampus/danger", this.onKrampusDanger);
+
     return {
       container,
       width: background.width,
@@ -75,9 +104,49 @@ class CemeteryScenario {
     };
   }
 
+  private cloudsAnimation(delta: number) {
+    if (this.clouds) {
+      this.clouds.tilePositionX += (this.cloudsSpeedPxPerSec * delta) / 1000;
+    }
+  }
+
+  private setDanger(amount: number, onFinish?: () => void) {
+    this.krampusDangerAmount = Phaser.Math.Clamp(amount, 0, 1);
+    this.onDangerTransitionFinish = onFinish ?? null;
+
+    const layer = this.cemeteryDangerLayer;
+    if (!layer) return;
+
+    this.dangerTween?.stop();
+    this.dangerTween = undefined;
+
+    if (Math.abs(layer.alpha - this.krampusDangerAmount) < 0.001) {
+      layer.setAlpha(this.krampusDangerAmount);
+      this.onDangerTransitionFinish?.();
+      this.onDangerTransitionFinish = null;
+      return;
+    }
+
+    this.dangerTween = layer.scene.tweens.add({
+      targets: layer,
+      alpha: this.krampusDangerAmount,
+      duration: 1500,
+      ease: "Linear",
+      onComplete: () => {
+        this.onDangerTransitionFinish?.();
+        this.onDangerTransitionFinish = null;
+      },
+    });
+  }
+
   update(delta: number) {
-    if (!this.clouds) return;
-    this.clouds.tilePositionX += (this.cloudsSpeedPxPerSec * delta) / 1000;
+    this.cloudsAnimation(delta);
+  }
+
+  destroy() {
+    this.dangerTween?.stop();
+    this.dangerTween = undefined;
+    gameEvents.off("krampus/danger", this.onKrampusDanger);
   }
 }
 

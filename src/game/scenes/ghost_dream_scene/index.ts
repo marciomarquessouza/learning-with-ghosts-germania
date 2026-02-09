@@ -74,6 +74,10 @@ class GhostDreamScene extends Phaser.Scene {
     ghostJosef.update(time, delta);
     ghostElisa.update(this);
   }
+
+  destroy() {
+    cemeteryScenario.destroy();
+  }
 }
 
 export const ghostDreamScene = createScene(GhostDreamScene);
