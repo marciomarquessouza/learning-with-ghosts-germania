@@ -25,6 +25,9 @@ export const sceneWorldMap: Record<GameScenes, GameWorlds> = {
 export const DEFAULT_WIDTH = 1920;
 export const DEFAULT_HEIGHT = 1080;
 export const DEFAULT_INITIAL_WEIGHT = 75;
+export const DEFAULT_INITIAL_SOUL_WEIGHT = 21;
+export const TWENTY_ONE_GRAMS_EXPERIMENT_URL =
+  "https://en.wikipedia.org/wiki/21_grams_experiment";
 
 export enum CHARACTERS {
   MARLENE = "marlene",

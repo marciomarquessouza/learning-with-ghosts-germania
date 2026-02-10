@@ -59,6 +59,10 @@ class CellScene extends Phaser.Scene {
   }
 
   update(): void {}
+
+  destroy() {
+    hud.destroy();
+  }
 }
 
 export const cellScene = createScene(CellScene);

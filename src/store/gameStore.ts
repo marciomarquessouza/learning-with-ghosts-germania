@@ -1,4 +1,9 @@
-import { GAME_SCENES, GAME_WORLDS } from "@/constants/game";
+import {
+  DEFAULT_INITIAL_SOUL_WEIGHT,
+  DEFAULT_INITIAL_WEIGHT,
+  GAME_SCENES,
+  GAME_WORLDS,
+} from "@/constants/game";
 import { GameScenes, GameWorlds } from "@/types";
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
@@ -8,25 +13,55 @@ import { persist } from "zustand/middleware";
  */
 export interface GameState {
   day: number;
-  debugMode: boolean;
+  weight: number;
+  soulWeight: number;
   gameWorld: GameWorlds;
   currentScene: GameScenes;
+  debugMode: boolean;
+
   setDay: (day: number) => void;
   increaseDay: () => void;
   setGameScene: (gameWorld: GameWorlds, scene: GameScenes) => void;
+
+  // Real weight
+  setWeight: (amount: number) => void;
+  increaseWeight: (amount: number) => void;
+  decreaseWeight: (amount: number) => void;
+
+  // Soul weight
+  setSoulWeight: (amount: number) => void;
+  increaseSoulWeight: (amount: number) => void;
+  decreaseSoulWeight: (amount: number) => void;
 }
+
+const clamp0 = (n: number) => Math.max(0, n);
 
 export const useGameStore = create<GameState>()(
   persist(
-    (set) => ({
+    (set, get) => ({
       day: 0,
       debugMode: false,
       gameWorld: GAME_WORLDS.REAL,
-      setDay: (day: number) => set((state) => ({ ...state, day })),
-      increaseDay: () => set((state) => ({ ...state, day: state.day + 1 })),
       currentScene: GAME_SCENES.CELL_SCENE,
-      setGameScene: (gameWorld: GameWorlds, currentScene: GameScenes) =>
-        set((state) => ({ ...state, gameWorld, currentScene })),
+      weight: DEFAULT_INITIAL_WEIGHT,
+      soulWeight: DEFAULT_INITIAL_SOUL_WEIGHT,
+
+      setDay: (day) => set({ day }),
+      increaseDay: () => set({ day: get().day + 1 }),
+      setGameScene: (gameWorld, currentScene) =>
+        set({ gameWorld, currentScene }),
+
+      setWeight: (amount) => set({ weight: clamp0(amount) }),
+      increaseWeight: (amount) =>
+        set({ weight: clamp0(get().weight + amount) }),
+      decreaseWeight: (amount) =>
+        set({ weight: clamp0(get().weight - amount) }),
+
+      setSoulWeight: (amount) => set({ soulWeight: clamp0(amount) }),
+      increaseSoulWeight: (amount) =>
+        set({ soulWeight: clamp0(get().soulWeight + amount) }),
+      decreaseSoulWeight: (amount) =>
+        set({ soulWeight: clamp0(get().soulWeight - amount) }),
     }),
     { name: "game-storage" },
   ),

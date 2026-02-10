@@ -139,6 +139,10 @@ class TrainScene extends Phaser.Scene {
     if (this.chase.isTooFar()) {
     }
   }
+
+  destroy() {
+    hud.destroy();
+  }
 }
 
 export const trainScene = createScene(TrainScene);

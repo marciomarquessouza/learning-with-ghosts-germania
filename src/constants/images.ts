@@ -28,6 +28,7 @@ export const HUD_THERMOMETER_IMG_HEIGHT = 1080;
 
 // HUD WEIGHT IMAGE
 export const HUD_WEIGHT_IMG = "/hud/hud_weight.png";
+export const HUD_SOUL_WEIGHT_IMG = "/hud/hud_soul_weight.png";
 export const HUD_WEIGHT_IMG_WIDTH = 380;
 export const HUD_WEIGHT_IMG_HEIGHT = 380;
 export const HUD_WEIGHT_POINTER_IMG = "/hud/pointer.png";

@@ -4,7 +4,7 @@ import {
   HUD_WEIGHT_POINTER_IMG,
 } from "@/constants/images";
 
-type WeightNumberContainer = Phaser.GameObjects.Container & {
+export type WeightPointerContainer = Phaser.GameObjects.Container & {
   updateWeight: (value: number, duration?: number) => void;
 };
 
@@ -15,7 +15,7 @@ class WeightPointer {
     scene.load.image(POINTER_KEY, HUD_WEIGHT_POINTER_IMG);
   }
 
-  create(scene: Phaser.Scene, initialWeight = 0): WeightNumberContainer {
+  create(scene: Phaser.Scene, initialWeight = 0): WeightPointerContainer {
     const container = scene.add.container(0, 0);
     const pointer = scene.add.image(0, 80, POINTER_KEY);
     pointer.setAlpha(0.8);
@@ -54,7 +54,7 @@ class WeightPointer {
 
     (container as any).updateWeight = updateWeight;
 
-    return container as WeightNumberContainer;
+    return container as WeightPointerContainer;
   }
 }
 

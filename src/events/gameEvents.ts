@@ -61,6 +61,7 @@ export type Events = {
   "show-hud-items": HUD_ITEMS[];
   "hide-hud-items": HUD_ITEMS[];
   "camera-zoom-to": ZoomProps;
+  "josef/damage:dream": { amount: number };
   "train/controls:show": undefined;
   "train/speed": { speed: number };
   "train/coal:add": { amount: number };

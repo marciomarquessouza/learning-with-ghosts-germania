@@ -88,6 +88,7 @@ class GhostDreamScene extends Phaser.Scene {
 
   destroy() {
     cemeteryScenario.destroy();
+    hud.destroy();
   }
 }
 

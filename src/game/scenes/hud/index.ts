@@ -24,7 +24,7 @@ class Hud {
       HUD_ITEMS.WEIGHT,
       HUD_ITEMS.THERMOMETER,
       HUD_ITEMS.ACTIONS,
-    ]
+    ],
   ): Phaser.GameObjects.Container {
     const container = scene.add.container(0, 0);
     container.name = "hud";
@@ -51,7 +51,7 @@ class Hud {
 
     const toggleItem = (item: HUD_ITEMS, option: "show" | "hide" = "show") => {
       const hudObject = container.getByName(
-        item
+        item,
       ) as Phaser.GameObjects.Container;
       if (hudObject) hudObject.setVisible(option === "show");
     };
@@ -65,6 +65,10 @@ class Hud {
     });
 
     return container;
+  }
+
+  destroy() {
+    hudWeight.destroy();
   }
 }
 

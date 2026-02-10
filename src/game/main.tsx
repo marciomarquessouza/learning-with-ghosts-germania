@@ -4,7 +4,6 @@ import { initPhaser } from "./phaser/initPhaser";
 import { gameEvents } from "@/events/gameEvents";
 import { gameWorldConfig } from "@/game/config/gameWorldConfig";
 import { useGameStore } from "@/store/gameStore";
-import { useCellStore } from "@/store/cellStore";
 import {
   DEFAULT_INITIAL_WEIGHT,
   GAME_SCENES,
@@ -23,8 +22,8 @@ export default function MainGame() {
   const urlScene = getSceneName(rawSceneParam);
   const urlWorld = sceneWorldMap[urlScene];
 
-  const { day, setDay, gameWorld, currentScene, setGameScene } = useGameStore();
-  const { setWeight } = useCellStore();
+  const { day, setDay, gameWorld, currentScene, setGameScene, setWeight } =
+    useGameStore();
 
   const [fakeLoading, setFakeLoading] = useState(true);
   const [loading, setLoading] = useState(true);
