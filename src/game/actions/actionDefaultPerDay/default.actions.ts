@@ -1,19 +1,19 @@
-import { CHARACTERS, MOODS } from "@/constants/game";
+import { CHARACTERS, GAME_SCENES, MOODS } from "@/constants/game";
 import { gameEvents } from "@/events/gameEvents";
 import { showDialogue } from "@/events/helpers/showDialogue";
 import { stepDayIntroduction } from "@/events/steps";
 import { runSteps } from "@/events/steps/runSteps";
 import { defaultDialogues } from "./default.dialogues";
-import { AudioManifest, Lesson } from "@/types";
+import { AudioManifest, GameScenes, Lesson } from "@/types";
 import { defaultLesson } from "./default.lessons";
 import { useLessonStore } from "@/store/lessonStore";
 import { useGameStore } from "@/store/gameStore";
 import { mergeLessonWithAudioManifest } from "@/utils/mergeLessonWithAudioManifest";
 
-export type Stage = "introduction" | "lesson" | "learning" | "challenge";
+const DEFAULT_SCENE = GAME_SCENES.CELL_SCENE;
 
 export class DayActions {
-  public stage: Stage = "introduction";
+  private currentScene: GameScenes | null = null;
   clicked = {
     desk: 0,
     ratHole: 0,
@@ -30,6 +30,22 @@ export class DayActions {
 
   set lesson(lesson: Lesson) {
     useLessonStore.getState().update(lesson);
+  }
+
+  get scene(): GameScenes {
+    if (!this.currentScene) {
+      console.error(
+        "The Action Scene was not defined. Returning the default scene: ",
+        DEFAULT_SCENE,
+      );
+      return DEFAULT_SCENE;
+    }
+    return this.currentScene;
+  }
+
+  set scene(scene: GameScenes) {
+    console.log("#Action Scene Defined: ", scene);
+    this.currentScene = scene;
   }
 
   constructor(dayLesson: Lesson, audioManifest?: AudioManifest) {
@@ -53,13 +69,9 @@ export class DayActions {
     }
   }
 
-  setStage(stage: Stage) {
-    this.stage = stage;
-  }
-
   onStart() {
-    switch (this.stage) {
-      case "introduction":
+    switch (this.currentScene) {
+      case GAME_SCENES.CELL_SCENE:
       default:
         runSteps(
           [

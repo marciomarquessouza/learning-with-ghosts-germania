@@ -8,6 +8,7 @@ import { getDayAction } from "@/game/actions/getAction";
 import { gameEvents } from "@/events/gameEvents";
 import { changeWorldTransition } from "@/game/utils/changeWorldTransition";
 import { GAME_SCENES } from "@/constants/game";
+import { GameScenes } from "@/types";
 
 const CELL = "cell";
 
@@ -41,7 +42,7 @@ class CellScene extends Phaser.Scene {
 
     noiseEffect.create(this);
 
-    getDayAction().then((dayActions) => {
+    getDayAction(this.scene.key as GameScenes).then((dayActions) => {
       dayActions.onStart();
       selectableAreas.create(this, dayActions);
       const hudContainer = hud.create(this, dayActions, [

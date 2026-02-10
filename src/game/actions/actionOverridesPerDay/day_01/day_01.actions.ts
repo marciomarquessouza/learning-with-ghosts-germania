@@ -19,7 +19,7 @@ import { showGameMessage } from "@/events/helpers/showGameMessage";
 import { AudioManifest, Lesson } from "@/types";
 import { lesson } from "./day_01.lesson";
 import audioManifest from "./day_01.audio.json";
-import { GAME_WORLDS } from "@/constants/game";
+import { GAME_SCENES, GAME_WORLDS } from "@/constants/game";
 
 class DayActions1 extends DayActions {
   constructor(lesson: Lesson, audioManifest?: AudioManifest) {
@@ -27,32 +27,33 @@ class DayActions1 extends DayActions {
   }
 
   onStart(): void {
-    if (this.stage === "introduction") {
-      runSteps(
-        [
-          stepDayIntroduction({ title: "Welcome to the Prison" }),
-          stepShowDialogue({ lines: dialogues.welcome() }),
-          stepBarsCount({ count: 1 }),
-          stepGameMessage({
-            title: "A voice calls you through the bars",
-            text: 'Click on "Bars" in the actions menu.',
-          }),
-        ],
-        {},
-      );
-    }
-
-    if (this.stage === "learning") {
-      runSteps(
-        [
-          stepShowDialogue({ lines: dialogues.dream_introduction() }),
-          stepGameMessage({
-            title: "Go to Eliska",
-            text: "Use the arrow keys or the A and D keys",
-          }),
-        ],
-        {},
-      );
+    switch (this.scene) {
+      case GAME_SCENES.DREAM_SCENE:
+        runSteps(
+          [
+            stepShowDialogue({ lines: dialogues.dream_introduction() }),
+            stepGameMessage({
+              title: "Go to Eliska",
+              text: "Use the arrow keys or the A and D keys",
+            }),
+          ],
+          {},
+        );
+        break;
+      case GAME_SCENES.CELL_SCENE:
+        runSteps(
+          [
+            stepDayIntroduction({ title: "Welcome to the Prison" }),
+            stepShowDialogue({ lines: dialogues.welcome() }),
+            stepBarsCount({ count: 1 }),
+            stepGameMessage({
+              title: "A voice calls you through the bars",
+              text: 'Click on "Bars" in the actions menu.',
+            }),
+          ],
+          {},
+        );
+        break;
     }
   }
 

@@ -18,6 +18,7 @@ import {
 } from "@/constants/game";
 import { ChaseDistanceController } from "./helpers/ChaseDistanceController";
 import { KrampusSpeedController } from "@/game/actors/krampus/helpers/KrampusSpeedController";
+import { GameScenes } from "@/types";
 
 const TRAIN_RAILROAD = "trainRailroad";
 const GAP_MIN = 180;
@@ -89,7 +90,7 @@ class TrainScene extends Phaser.Scene {
       )
       .setOrigin(0, 0);
 
-    getDayAction().then((dayActions) => {
+    getDayAction(this.scene.key as GameScenes).then((dayActions) => {
       const hudContainer = hud.create(this, dayActions, [HUD_ITEMS.WEIGHT]);
       this.children.bringToTop(hudContainer);
       gameEvents.emit("train/controls:show");

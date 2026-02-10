@@ -10,6 +10,7 @@ import { changeWorldTransition } from "@/game/utils/changeWorldTransition";
 import { krampus } from "@/game/actors/krampus/Krampus";
 import { krampusAnimations } from "@/game/actors/krampus/helpers/KrampusAnimation";
 import { GAME_SCENES } from "@/constants/game";
+import { GameScenes } from "@/types";
 
 export const DEFAULT_POSITION_X = 510;
 export const DEFAULT_POSITION_Y = 720;
@@ -49,8 +50,7 @@ class GhostDreamScene extends Phaser.Scene {
       height: scenario.height,
     });
 
-    getDayAction().then((dayActions) => {
-      dayActions.setStage("learning");
+    getDayAction(this.scene.key as GameScenes).then((dayActions) => {
       ghostElisa.create({
         scene: this,
         startX: scenario.width - 800,
