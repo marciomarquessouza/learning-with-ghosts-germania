@@ -7,6 +7,8 @@ import { ghostElisa } from "@/game/actors/ghostElisa/GhostElisa";
 import { dreamCamera } from "@/game/cameras/DreamCamera";
 import { gameEvents } from "@/events/gameEvents";
 import { changeWorldTransition } from "@/game/utils/changeWorldTransition";
+import { krampus } from "@/game/actors/krampus/Krampus";
+import { krampusAnimations } from "@/game/actors/krampus/helpers/KrampusAnimation";
 
 export const SCENE_NAME = "GhostDreamScene";
 export const DEFAULT_POSITION_X = 510;
@@ -21,6 +23,7 @@ class GhostDreamScene extends Phaser.Scene {
     cemeteryScenario.preload(this);
     ghostJosef.preload(this);
     ghostElisa.preload(this);
+    krampus.preload(this);
 
     this.physics.world.setBounds(0, 0, 2000, 1200);
     hud.preload(this);
@@ -61,6 +64,14 @@ class GhostDreamScene extends Phaser.Scene {
       });
       const hudContainer = hud.create(this, dayActions, [HUD_ITEMS.WEIGHT]);
       this.children.bringToTop(hudContainer);
+      krampus.create(this, {
+        // Off screen
+        startX: -250,
+        startY: DEFAULT_POSITION_Y - 25,
+        initialSpeed: 0,
+        scale: 1.5,
+        initialAnimation: krampusAnimations.animations.KRAMPUS_WALKING,
+      });
       dreamCamera.fadeIn({ onComplete: () => dayActions.onStart() });
     });
 

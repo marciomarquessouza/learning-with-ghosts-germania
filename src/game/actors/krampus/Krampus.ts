@@ -1,5 +1,8 @@
 import { gameEvents } from "@/events/gameEvents";
-import { krampusAnimations } from "./helpers/KrampusAnimation";
+import {
+  kRAMPUS_ANIMATIONS,
+  krampusAnimations,
+} from "./helpers/KrampusAnimation";
 import { krampusLight } from "./helpers/KrampusLight";
 
 type SpeedSyncOptions = {
@@ -34,22 +37,32 @@ export class Krampus {
       startX: number;
       startY: number;
       initialSpeed: number;
-    }
+      initialAnimation?: kRAMPUS_ANIMATIONS;
+      scale?: number;
+    },
   ) {
-    const { startX, startY } = options;
+    const {
+      startX,
+      startY,
+      initialAnimation = krampusAnimations.animations.KRAMPUS_RUNNING,
+      scale = 1,
+    } = options;
     const container = scene.add.container(startX, startY);
 
     const light = krampusLight.create(scene, 0, 10);
     container.add(light);
 
     const krampus = krampusAnimations.create(scene, 0, 0);
-    krampus.play(krampusAnimations.animations.KRAMPUS_RUNNING);
+    krampus.scale = scale;
+    krampus.play(initialAnimation);
 
-    this.attachSpeed(krampus, {
-      hateToSpeed: 0.6,
-      maxHateBonus: 35,
-      hateDecayPerSec: 0,
-    });
+    if (initialAnimation === krampusAnimations.animations.KRAMPUS_RUNNING) {
+      this.attachSpeed(krampus, {
+        hateToSpeed: 0.6,
+        maxHateBonus: 35,
+        hateDecayPerSec: 0,
+      });
+    }
 
     container.add(krampus);
     this.container = container;
@@ -68,7 +81,7 @@ export class Krampus {
     this.container.x = Phaser.Math.Linear(
       this.container.x,
       targetX,
-      this.positionLerp
+      this.positionLerp,
     );
   }
 
@@ -79,7 +92,7 @@ export class Krampus {
 
   attachSpeed(
     sprite: Phaser.Physics.Arcade.Sprite,
-    options: SpeedSyncOptions = {}
+    options: SpeedSyncOptions = {},
   ) {
     const {
       minSpeedToMove = 1,
@@ -122,7 +135,7 @@ export class Krampus {
       this.hateSpeedBonus = Phaser.Math.Clamp(
         this.hateSpeedBonus,
         0,
-        maxHateBonus
+        maxHateBonus,
       );
     };
 
@@ -139,7 +152,7 @@ export class Krampus {
           const dt = 0.1; // 100ms
           this.hateSpeedBonus = Math.max(
             0,
-            this.hateSpeedBonus - hateDecayPerSec * dt
+            this.hateSpeedBonus - hateDecayPerSec * dt,
           );
         },
       });
