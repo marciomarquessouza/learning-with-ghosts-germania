@@ -13,7 +13,7 @@ import {
   ShowDreamIntroduction,
   showDreamIntroduction,
 } from "../helpers/showDreamIntroduction";
-import { GameWorld, setGameWorld } from "../helpers/setGameWorld";
+import { SetGameWorld, setGameWorld } from "../helpers/setGameWorld";
 import { LessonEvent } from "../lessonEvents";
 import { showLesson } from "../helpers/showLesson";
 import { changeScene, ChangeScene } from "../helpers/changeScene";
@@ -60,7 +60,7 @@ export const stepShowDreamIntroduction = (
 ): Step => stepBase(() => showDreamIntroduction(payload), options);
 
 export const stepSetGameWorld = (
-  payload: GameWorld,
+  payload: SetGameWorld,
   options?: StepOptions,
 ): Step => stepBase(() => setGameWorld(payload), options);
 

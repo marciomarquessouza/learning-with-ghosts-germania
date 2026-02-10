@@ -1,15 +1,15 @@
-import { GAME_WORLDS, GameScenes } from "@/types";
+import { GameScenes, GameWorlds } from "@/types";
 import { gameEvents } from "../gameEvents";
 
-export interface GameWorld {
-  targetWorld: GAME_WORLDS;
+export interface SetGameWorld {
+  targetWorld: GameWorlds;
   targetScene: GameScenes;
 }
 
 export function setGameWorld({
   targetWorld,
   targetScene,
-}: GameWorld): Promise<void> {
+}: SetGameWorld): Promise<void> {
   return new Promise((resolve) => {
     gameEvents.emit("change-world", {
       targetWorld,

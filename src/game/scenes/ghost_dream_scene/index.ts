@@ -9,14 +9,14 @@ import { gameEvents } from "@/events/gameEvents";
 import { changeWorldTransition } from "@/game/utils/changeWorldTransition";
 import { krampus } from "@/game/actors/krampus/Krampus";
 import { krampusAnimations } from "@/game/actors/krampus/helpers/KrampusAnimation";
+import { GAME_SCENES } from "@/constants/game";
 
-export const SCENE_NAME = "GhostDreamScene";
 export const DEFAULT_POSITION_X = 510;
 export const DEFAULT_POSITION_Y = 720;
 
 class GhostDreamScene extends Phaser.Scene {
   constructor() {
-    super({ key: SCENE_NAME });
+    super({ key: GAME_SCENES.DREAM_SCENE });
   }
 
   preload() {

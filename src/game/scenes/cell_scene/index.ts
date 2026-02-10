@@ -7,8 +7,8 @@ import { selectableAreas } from "./selectableAreas";
 import { getDayAction } from "@/game/actions/getAction";
 import { gameEvents } from "@/events/gameEvents";
 import { changeWorldTransition } from "@/game/utils/changeWorldTransition";
+import { GAME_SCENES } from "@/constants/game";
 
-export const SCENE_NAME = "CellScene";
 const CELL = "cell";
 
 class CellScene extends Phaser.Scene {
@@ -16,7 +16,7 @@ class CellScene extends Phaser.Scene {
   target: { x: number; y: number } | null = null;
 
   constructor() {
-    super({ key: SCENE_NAME });
+    super({ key: GAME_SCENES.CELL_SCENE });
   }
 
   preload() {

@@ -2,23 +2,26 @@ import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { GhostLoading } from "@/components/HomePage/GhostLoading";
 import { initPhaser } from "./phaser/initPhaser";
 import { gameEvents } from "@/events/gameEvents";
-import { getGameWorldConfig } from "@/utils/getGameWorldConfig";
+import { gameWorldConfig } from "@/game/config/gameWorldConfig";
 import { useGameStore } from "@/store/gameStore";
 import { useCellStore } from "@/store/cellStore";
-import { DEFAULT_INITIAL_WEIGHT } from "@/constants/game";
-import { GAME_WORLDS, GameScenes } from "@/types";
+import {
+  DEFAULT_INITIAL_WEIGHT,
+  GAME_SCENES,
+  GAME_WORLDS,
+} from "@/constants/game";
 import { useRouter, useSearchParams } from "next/navigation";
-import { SCENE_NAME as CELL_SCENE } from "@/game/scenes/cell_scene";
 import { sceneWorldMap } from "./utils/sceneWorldMap";
 import { getSceneName } from "./utils/sceneNameMap";
+import { GameScenes, GameWorlds } from "@/types";
 
 export default function MainGame() {
   const router = useRouter();
   const searchParams = useSearchParams();
 
-  const rawSceneParam = searchParams.get("scene") || CELL_SCENE;
+  const rawSceneParam = searchParams.get("scene") || GAME_SCENES.CELL_SCENE;
   const urlScene = getSceneName(rawSceneParam);
-  const urlWorld = sceneWorldMap[urlScene] as GAME_WORLDS;
+  const urlWorld = sceneWorldMap[urlScene] as GameWorlds;
 
   const { day, setDay, gameWorld, currentScene, setGameScene } = useGameStore();
   const { setWeight } = useCellStore();
@@ -65,7 +68,7 @@ export default function MainGame() {
     }
 
     const handle = (payload: {
-      targetWorld: GAME_WORLDS;
+      targetWorld: GameWorlds;
       targetScene: GameScenes;
     }) => {
       const params = new URLSearchParams(searchParams.toString());
@@ -91,7 +94,7 @@ export default function MainGame() {
 
     if (!fakeLoading && loading && !started.current) {
       started.current = true;
-      const gameConfig = getGameWorldConfig(gameWorld, currentScene);
+      const gameConfig = gameWorldConfig(gameWorld, currentScene);
       initPhaser({ ...gameConfig, parent: "game-container" }).then((game) => {
         checkIfIsFirstDay();
         setLoading(false);

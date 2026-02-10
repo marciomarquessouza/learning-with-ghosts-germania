@@ -8,6 +8,7 @@ import { TrainSpeedController } from "@/game/actors/locomotive/helpers/TrainSpee
 import { gameEvents } from "@/events/gameEvents";
 import { krampus } from "@/game/actors/krampus/Krampus";
 import {
+  GAME_SCENES,
   KRAMPUS_OFFSET_FAR,
   KRAMPUS_OFFSET_NEAR,
   LOCOMOTIVE_FINAL_POSITION,
@@ -18,7 +19,6 @@ import {
 import { ChaseDistanceController } from "./helpers/ChaseDistanceController";
 import { KrampusSpeedController } from "@/game/actors/krampus/helpers/KrampusSpeedController";
 
-export const SCENE_NAME = "TrainScene";
 const TRAIN_RAILROAD = "trainRailroad";
 const GAP_MIN = 180;
 const GAP_MAX = 900;
@@ -30,7 +30,7 @@ class TrainScene extends Phaser.Scene {
   private chase!: ChaseDistanceController;
 
   constructor() {
-    super({ key: SCENE_NAME });
+    super({ key: GAME_SCENES.TRAIN_SCENE });
   }
 
   preload() {
@@ -85,7 +85,7 @@ class TrainScene extends Phaser.Scene {
         0,
         this.cameras.main.width,
         this.cameras.main.height,
-        TRAIN_RAILROAD
+        TRAIN_RAILROAD,
       )
       .setOrigin(0, 0);
 
@@ -120,13 +120,13 @@ class TrainScene extends Phaser.Scene {
     const targetTrainX = Phaser.Math.Linear(
       LOCOMOTIVE_START_POSITION,
       LOCOMOTIVE_FINAL_POSITION,
-      t
+      t,
     );
 
     const offset = Phaser.Math.Linear(
       KRAMPUS_OFFSET_NEAR,
       KRAMPUS_OFFSET_FAR,
-      t
+      t,
     );
     const targetKrampusX = targetTrainX - offset;
     locomotive.setX(targetTrainX);

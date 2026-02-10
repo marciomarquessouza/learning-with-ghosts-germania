@@ -1,8 +1,9 @@
 import { WritingScore } from "@/gameUI/LessonChallenges/StepWriting";
-import { CHARACTERS, MOODS } from "@/constants/game";
+import { CHARACTERS, GAME_SCENES, GAME_WORLDS, MOODS } from "@/constants/game";
 import { AudioScoreSummary } from "@/libs/audio/useAudioScoreV2";
 
-export type GameScenes = "CellScene" | "GhostDreamScene" | "TrainScene";
+export type GameScenes = (typeof GAME_SCENES)[keyof typeof GAME_SCENES];
+export type GameWorlds = (typeof GAME_WORLDS)[keyof typeof GAME_WORLDS];
 
 export type LessonStepType = "introduction" | "pronunciation" | "writing";
 
@@ -40,8 +41,6 @@ export type Lesson = {
 
 export type LessonDetails = Omit<Lesson, "entries">;
 
-export type Scenes = "cell" | "dream" | "train";
-
 export type PronunciationResult = {
   type: "pronunciation";
   scoreResult: AudioScoreSummary;
@@ -71,11 +70,6 @@ export interface LessonComponentProps {
 }
 
 export type ChallengeCommand = "attack" | "coal";
-
-export enum GAME_WORLDS {
-  REAL = "REAL",
-  DREAM = "DREAM",
-}
 
 export type TransitionOptions = Omit<
   Phaser.Types.Scenes.SceneTransitionConfig,

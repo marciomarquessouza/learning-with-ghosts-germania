@@ -5,8 +5,8 @@ import { ReactNode } from "react";
 import { HUD_ITEMS } from "@/game/scenes/hud";
 import {
   ChallengeCommand,
-  GAME_WORLDS,
   GameScenes,
+  GameWorlds,
   InteractionLine,
 } from "@/types";
 import { TransitionOptions } from "./cellEvents";
@@ -31,7 +31,7 @@ export interface ZoomProps {
 export type Events = {
   "canvas-ready": undefined;
   "change-world": {
-    targetWorld: GAME_WORLDS;
+    targetWorld: GameWorlds;
     targetScene: GameScenes;
   };
   "change-world-transition": {

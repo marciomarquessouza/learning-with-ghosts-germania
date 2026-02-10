@@ -1,24 +1,22 @@
-import { SCENE_NAME as CELL_SCENE } from "@/game/scenes/cell_scene";
-import { SCENE_NAME as DREAM_SCENE } from "@/game/scenes/ghost_dream_scene";
-import { SCENE_NAME as TRAIN_SCENE } from "@/game/scenes/train_scene";
+import { GAME_SCENES } from "@/constants/game";
 import { GameScenes } from "@/types";
 
 export function getSceneName(name: string): GameScenes {
   switch (name) {
     case "cell":
     case "CellScene":
-    case CELL_SCENE:
-      return CELL_SCENE;
+    case GAME_SCENES.CELL_SCENE:
+      return GAME_SCENES.CELL_SCENE;
     case "dream":
     case "dreamScene":
     case "GhostDreamScene":
-    case DREAM_SCENE:
-      return DREAM_SCENE;
+    case GAME_SCENES.DREAM_SCENE:
+      return GAME_SCENES.DREAM_SCENE;
     case "train":
     case "trainScene":
-    case TRAIN_SCENE:
-      return TRAIN_SCENE;
+    case GAME_SCENES.TRAIN_SCENE:
+      return GAME_SCENES.TRAIN_SCENE;
     default:
-      return CELL_SCENE;
+      return GAME_SCENES.CELL_SCENE;
   }
 }

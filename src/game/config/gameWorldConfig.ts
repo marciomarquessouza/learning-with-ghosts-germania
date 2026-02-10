@@ -1,21 +1,31 @@
+import { GAME_SCENES, GAME_WORLDS } from "@/constants/game";
 import { createConfig } from "@/game/phaser/createConfig";
 import { cellScene } from "@/game/scenes/cell_scene";
 import { ghostDreamScene } from "@/game/scenes/ghost_dream_scene";
 import { trainScene } from "@/game/scenes/train_scene";
-import { GAME_WORLDS } from "@/types";
-import { SCENE_NAME as CELL_SCENE } from "@/game/scenes/cell_scene";
-import { SCENE_NAME as DREAM_SCENE } from "@/game/scenes/ghost_dream_scene";
-import { SCENE_NAME as TRAIN_SCENE } from "@/game/scenes/train_scene";
+import { GameWorlds } from "@/types";
 
 const scenesMap = [
-  { name: CELL_SCENE, world: GAME_WORLDS.REAL, phaserScene: cellScene },
-  { name: DREAM_SCENE, world: GAME_WORLDS.DREAM, phaserScene: ghostDreamScene },
-  { name: TRAIN_SCENE, world: GAME_WORLDS.DREAM, phaserScene: trainScene },
+  {
+    name: GAME_SCENES.CELL_SCENE,
+    world: GAME_WORLDS.REAL,
+    phaserScene: cellScene,
+  },
+  {
+    name: GAME_SCENES.DREAM_SCENE,
+    world: GAME_WORLDS.DREAM,
+    phaserScene: ghostDreamScene,
+  },
+  {
+    name: GAME_SCENES.TRAIN_SCENE,
+    world: GAME_WORLDS.DREAM,
+    phaserScene: trainScene,
+  },
 ];
 
-export function getGameWorldConfig(
-  world: GAME_WORLDS,
-  firstScene?: string
+export function gameWorldConfig(
+  world: GameWorlds,
+  firstScene?: string,
 ): Phaser.Types.Core.GameConfig {
   const worldScenes = scenesMap.filter((scene) => scene.world === world);
   if (firstScene) {

@@ -1,4 +1,5 @@
-import { GAME_WORLDS, GameScenes } from "@/types";
+import { GAME_SCENES, GAME_WORLDS } from "@/constants/game";
+import { GameScenes, GameWorlds } from "@/types";
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
 
@@ -8,11 +9,11 @@ import { persist } from "zustand/middleware";
 export interface GameState {
   day: number;
   debugMode: boolean;
-  gameWorld: GAME_WORLDS;
+  gameWorld: GameWorlds;
   currentScene: GameScenes;
   setDay: (day: number) => void;
   increaseDay: () => void;
-  setGameScene: (gameWorld: GAME_WORLDS, scene: GameScenes) => void;
+  setGameScene: (gameWorld: GameWorlds, scene: GameScenes) => void;
 }
 
 export const useGameStore = create<GameState>()(
@@ -21,10 +22,10 @@ export const useGameStore = create<GameState>()(
       day: 0,
       debugMode: false,
       gameWorld: GAME_WORLDS.REAL,
-      currentScene: "CellScene",
       setDay: (day: number) => set((state) => ({ ...state, day })),
       increaseDay: () => set((state) => ({ ...state, day: state.day + 1 })),
-      setGameScene: (gameWorld: GAME_WORLDS, currentScene: GameScenes) =>
+      currentScene: GAME_SCENES.CELL_SCENE,
+      setGameScene: (gameWorld: GameWorlds, currentScene: GameScenes) =>
         set((state) => ({ ...state, gameWorld, currentScene })),
     }),
     { name: "game-storage" },

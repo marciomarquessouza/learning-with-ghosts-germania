@@ -35,7 +35,7 @@ export class DayActions {
   constructor(dayLesson: Lesson, audioManifest?: AudioManifest) {
     const lessonWithAudio = mergeLessonWithAudioManifest(
       dayLesson,
-      audioManifest
+      audioManifest,
     );
     this.createDayLesson(lessonWithAudio);
   }
@@ -67,7 +67,7 @@ export class DayActions {
               title: "More one day...",
             }),
           ],
-          {}
+          {},
         );
     }
   }

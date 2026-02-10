@@ -16,9 +16,10 @@ import { dialogues } from "./day_01.dialogues";
 import { showDialogue } from "@/events/helpers/showDialogue";
 import { defaultDialogues } from "../../actionDefaultPerDay/default.dialogues";
 import { showGameMessage } from "@/events/helpers/showGameMessage";
-import { AudioManifest, GAME_WORLDS, Lesson } from "@/types";
+import { AudioManifest, Lesson } from "@/types";
 import { lesson } from "./day_01.lesson";
 import audioManifest from "./day_01.audio.json";
+import { GAME_WORLDS } from "@/constants/game";
 
 class DayActions1 extends DayActions {
   constructor(lesson: Lesson, audioManifest?: AudioManifest) {

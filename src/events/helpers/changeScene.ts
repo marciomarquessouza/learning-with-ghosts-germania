@@ -1,6 +1,6 @@
-import { GameScenes } from "@/types";
 import { gameEvents } from "../gameEvents";
 import { TransitionOptions } from "../cellEvents";
+import { GameScenes } from "@/types";
 
 export interface ChangeScene {
   targetScene: GameScenes;

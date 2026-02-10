@@ -54,6 +54,6 @@ export const useCellStore = create<CellState>()(
     }),
     {
       name: "cell-storage",
-    }
-  )
+    },
+  ),
 );

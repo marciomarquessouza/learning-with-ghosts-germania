@@ -1,3 +1,19 @@
+// IMPORTANT: Avoid importing game scenes here.
+// This will cause a runtime error
+
+// Please, in case of a new Scene/World
+// also update the Scene Maps in src/game/config/gameWorldConfig.ts
+export const GAME_SCENES = {
+  CELL_SCENE: "CellScene",
+  DREAM_SCENE: "GhostDreamScene",
+  TRAIN_SCENE: "TrainScene",
+} as const;
+
+export const GAME_WORLDS = {
+  REAL: "REAL",
+  DREAM: "DREAM",
+} as const;
+
 export const DEFAULT_WIDTH = 1920;
 export const DEFAULT_HEIGHT = 1080;
 export const DEFAULT_INITIAL_WEIGHT = 75;
