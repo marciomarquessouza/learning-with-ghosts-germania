@@ -1,6 +1,8 @@
 // IMPORTANT: Avoid importing game scenes here.
 // This will cause a runtime error
 
+import { GameScenes, GameWorlds } from "@/types";
+
 // Please, in case of a new Scene/World
 // also update the Scene Maps in src/game/config/gameWorldConfig.ts
 export const GAME_SCENES = {
@@ -13,6 +15,12 @@ export const GAME_WORLDS = {
   REAL: "REAL",
   DREAM: "DREAM",
 } as const;
+
+export const sceneWorldMap: Record<GameScenes, GameWorlds> = {
+  [GAME_SCENES.CELL_SCENE]: GAME_WORLDS.REAL,
+  [GAME_SCENES.DREAM_SCENE]: GAME_WORLDS.DREAM,
+  [GAME_SCENES.TRAIN_SCENE]: GAME_WORLDS.DREAM,
+};
 
 export const DEFAULT_WIDTH = 1920;
 export const DEFAULT_HEIGHT = 1080;

@@ -9,9 +9,9 @@ import {
   DEFAULT_INITIAL_WEIGHT,
   GAME_SCENES,
   GAME_WORLDS,
+  sceneWorldMap,
 } from "@/constants/game";
 import { useRouter, useSearchParams } from "next/navigation";
-import { sceneWorldMap } from "./utils/sceneWorldMap";
 import { getSceneName } from "./utils/sceneNameMap";
 import { GameScenes, GameWorlds } from "@/types";
 
@@ -21,7 +21,7 @@ export default function MainGame() {
 
   const rawSceneParam = searchParams.get("scene") || GAME_SCENES.CELL_SCENE;
   const urlScene = getSceneName(rawSceneParam);
-  const urlWorld = sceneWorldMap[urlScene] as GameWorlds;
+  const urlWorld = sceneWorldMap[urlScene];
 
   const { day, setDay, gameWorld, currentScene, setGameScene } = useGameStore();
   const { setWeight } = useCellStore();
