@@ -1,13 +1,15 @@
 import { DayActions } from "@/game/actions/actionDefaultPerDay/default.actions";
 import { confessional } from "./helpers/Confessional";
 import { elisaAnimations } from "./helpers/ElisaAnimations";
-import { elisaInteractionArea } from "./helpers/ElisaInteractionArea";
+// TODO: Remove this code after the tests
+// import { elisaInteractionArea } from "./helpers/ElisaInteractionArea";
 import { gameEvents } from "@/events/gameEvents";
 import { ActorPayload } from "../types/Actor";
 import { createKeyMap } from "@/utils/createKeyMap";
 import { CHARACTERS } from "@/constants/game";
 import { HUD_ITEMS } from "@/game/scenes/hud";
 import { lessonEvents } from "@/events/lessonEvents";
+import { InteractionArea } from "@/libs/game/InteractionArea";
 
 export const KEY_CODES = Phaser.Input.Keyboard.KeyCodes;
 
@@ -19,6 +21,7 @@ export interface ElisaPayload extends ActorPayload {
 export class GhostElisa {
   public lockInteractions = false;
   private elisaSprite: Phaser.Physics.Arcade.Sprite | null = null;
+  private elisaInteractionArea!: InteractionArea;
   private dayActions: DayActions | null = null;
   private cursors: Phaser.Types.Input.Keyboard.CursorKeys | null = null;
   private keyMap: Partial<
@@ -46,13 +49,26 @@ export class GhostElisa {
     this.elisaSprite.flipX = !!flipX;
     this.elisaSprite.scale = scale || 1;
     confessional.create(scene, this.elisaSprite, startX, startY);
-    elisaInteractionArea.create(
-      scene,
+    // TODO: Remove this comment after the tests
+    // elisaInteractionArea.create(
+    //   scene,
+    //   player,
+    //   this.elisaSprite,
+    //   this.showGameMessage,
+    //   this.closeGameMessage,
+    // );
+    this.elisaInteractionArea = new InteractionArea();
+    this.elisaInteractionArea.create(scene, {
       player,
-      this.elisaSprite,
-      this.showGameMessage,
-      this.closeGameMessage,
-    );
+      target: this.elisaSprite,
+      width: 500,
+      height: 400,
+      // Shadow compensation
+      offsetX: -180,
+      onEnter: this.showGameMessage,
+      onLeave: this.closeGameMessage,
+    });
+
     this.keyMap = createKeyMap(scene, [KEY_CODES.K]);
 
     gameEvents.on("set-mood", ({ mood, character }) => {
@@ -84,7 +100,9 @@ export class GhostElisa {
   }
 
   update(scene: Phaser.Scene) {
-    elisaInteractionArea.update(scene);
+    // TODO: Remove this code after the tests
+    // elisaInteractionArea.update(scene);
+    this.elisaInteractionArea.update(scene);
     const { currentAnimation, previousAnimation } = elisaAnimations;
 
     if (this.elisaSprite && currentAnimation !== previousAnimation) {
@@ -94,7 +112,9 @@ export class GhostElisa {
 
     if (
       !this.lockInteractions &&
-      elisaInteractionArea.isOverlapping &&
+      // TODO: Remove this code after the tests
+      // elisaInteractionArea.isOverlapping &&
+      this.elisaInteractionArea.isOverlapping &&
       (this.cursors?.space.isDown || this.keyMap?.E?.isDown)
     ) {
       gameEvents.emit("hide-hud-items", [
