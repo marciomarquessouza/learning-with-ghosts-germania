@@ -76,7 +76,7 @@ class GhostDreamScene extends Phaser.Scene {
         initialAnimation: krampusAnimations.animations.KRAMPUS_WALKING,
       });
       dangerZone.create(this, {
-        startX: 1300,
+        startX: 1400,
         startY: 570,
         player: ghostSprite,
         onEnter: () => console.log("#INSIDE"),
