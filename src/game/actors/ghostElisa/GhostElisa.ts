@@ -1,8 +1,6 @@
 import { DayActions } from "@/game/actions/actionDefaultPerDay/default.actions";
 import { confessional } from "./helpers/Confessional";
 import { elisaAnimations } from "./helpers/ElisaAnimations";
-// TODO: Remove this code after the tests
-// import { elisaInteractionArea } from "./helpers/ElisaInteractionArea";
 import { gameEvents } from "@/events/gameEvents";
 import { ActorPayload } from "../types/Actor";
 import { createKeyMap } from "@/utils/createKeyMap";
@@ -21,7 +19,7 @@ export interface ElisaPayload extends ActorPayload {
 export class GhostElisa {
   public lockInteractions = false;
   private elisaSprite: Phaser.Physics.Arcade.Sprite | null = null;
-  private elisaInteractionArea!: InteractionArea;
+  private elisaInteractionArea: InteractionArea | null = null;
   private dayActions: DayActions | null = null;
   private cursors: Phaser.Types.Input.Keyboard.CursorKeys | null = null;
   private keyMap: Partial<
@@ -49,14 +47,7 @@ export class GhostElisa {
     this.elisaSprite.flipX = !!flipX;
     this.elisaSprite.scale = scale || 1;
     confessional.create(scene, this.elisaSprite, startX, startY);
-    // TODO: Remove this comment after the tests
-    // elisaInteractionArea.create(
-    //   scene,
-    //   player,
-    //   this.elisaSprite,
-    //   this.showGameMessage,
-    //   this.closeGameMessage,
-    // );
+
     this.elisaInteractionArea = new InteractionArea();
     this.elisaInteractionArea.create(scene, {
       player,
@@ -99,10 +90,8 @@ export class GhostElisa {
     gameEvents.emit("hide-game-message", {});
   }
 
-  update(scene: Phaser.Scene) {
-    // TODO: Remove this code after the tests
-    // elisaInteractionArea.update(scene);
-    this.elisaInteractionArea.update(scene);
+  update() {
+    this.elisaInteractionArea?.update();
     const { currentAnimation, previousAnimation } = elisaAnimations;
 
     if (this.elisaSprite && currentAnimation !== previousAnimation) {
@@ -112,9 +101,7 @@ export class GhostElisa {
 
     if (
       !this.lockInteractions &&
-      // TODO: Remove this code after the tests
-      // elisaInteractionArea.isOverlapping &&
-      this.elisaInteractionArea.isOverlapping &&
+      this.elisaInteractionArea?.isOverlapping &&
       (this.cursors?.space.isDown || this.keyMap?.E?.isDown)
     ) {
       gameEvents.emit("hide-hud-items", [

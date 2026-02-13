@@ -11,6 +11,7 @@ import { krampus } from "@/game/actors/krampus/Krampus";
 import { krampusAnimations } from "@/game/actors/krampus/helpers/KrampusAnimation";
 import { GAME_SCENES } from "@/constants/game";
 import { GameScenes } from "@/types";
+import { dangerZone } from "./helpers/dangerZone";
 
 export const DEFAULT_POSITION_X = 510;
 export const DEFAULT_POSITION_Y = 720;
@@ -21,6 +22,7 @@ class GhostDreamScene extends Phaser.Scene {
   }
 
   preload() {
+    dangerZone.preload(this);
     cemeteryScenario.preload(this);
     ghostJosef.preload(this);
     ghostElisa.preload(this);
@@ -64,6 +66,7 @@ class GhostDreamScene extends Phaser.Scene {
       });
       const hudContainer = hud.create(this, dayActions, [HUD_ITEMS.WEIGHT]);
       this.children.bringToTop(hudContainer);
+
       krampus.create(this, {
         // Off screen
         startX: -250,
@@ -71,6 +74,13 @@ class GhostDreamScene extends Phaser.Scene {
         initialSpeed: 0,
         scale: 1.5,
         initialAnimation: krampusAnimations.animations.KRAMPUS_WALKING,
+      });
+      dangerZone.create(this, {
+        startX: 1300,
+        startY: 570,
+        player: ghostSprite,
+        onEnter: () => console.log("#INSIDE"),
+        onLeave: () => console.log("#OUTSIDE"),
       });
       dreamCamera.fadeIn({ onComplete: () => dayActions.onStart() });
     });
@@ -83,7 +93,8 @@ class GhostDreamScene extends Phaser.Scene {
   update(time: number, delta: number) {
     cemeteryScenario.update(delta);
     ghostJosef.update(time, delta);
-    ghostElisa.update(this);
+    dangerZone.update();
+    ghostElisa.update();
   }
 
   destroy() {

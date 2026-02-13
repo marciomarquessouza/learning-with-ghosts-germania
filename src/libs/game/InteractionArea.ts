@@ -1,6 +1,6 @@
 interface Options {
   player: Phaser.Types.Physics.Arcade.ArcadeColliderType;
-  target: Phaser.Physics.Arcade.Sprite;
+  target: Phaser.Physics.Arcade.Sprite | Phaser.GameObjects.Image;
   offsetX?: number;
   offsetY?: number;
   width: number;
@@ -11,7 +11,8 @@ interface Options {
 
 export class InteractionArea {
   interactionArea!: Phaser.GameObjects.Zone;
-  target!: Phaser.Physics.Arcade.Sprite;
+  target!: Phaser.Physics.Arcade.Sprite | Phaser.GameObjects.Image;
+  private scene: Phaser.Scene | null = null;
   public isOverlapping = false;
   private player!: Phaser.Types.Physics.Arcade.ArcadeColliderType;
   private onEnter?: () => void;
@@ -30,6 +31,7 @@ export class InteractionArea {
       onLeave,
     }: Options,
   ) {
+    this.scene = scene;
     this.target = target;
     this.player = player;
     this.onEnter = onEnter;
@@ -67,10 +69,10 @@ export class InteractionArea {
     body.updateFromGameObject();
   }
 
-  update(scene: Phaser.Scene) {
-    if (!this.isOverlapping) return;
+  update() {
+    if (!this.scene || !this.isOverlapping) return;
 
-    const stillOverlapping = scene.physics.overlap(
+    const stillOverlapping = this.scene.physics.overlap(
       this.player,
       this.interactionArea,
     );
@@ -80,5 +82,4 @@ export class InteractionArea {
       this.onLeave?.();
     }
   }
-  
 }
