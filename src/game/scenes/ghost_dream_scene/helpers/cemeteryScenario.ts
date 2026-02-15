@@ -9,8 +9,8 @@ import {
 } from "@/constants/images";
 import { gameEvents } from "@/events/gameEvents";
 
-type KrampusDangerPayload = {
-  amount?: number;
+type KrampusReleasedPayload = {
+  skyEffectAmount?: number;
   onFinish?: () => void;
 };
 
@@ -29,11 +29,11 @@ class CemeteryScenario {
   private dangerTween?: Phaser.Tweens.Tween;
   private krampusDangerAmount = 0;
   private onDangerTransitionFinish: null | (() => void) = null;
-  private onKrampusDanger = ({
-    amount = 0,
+  private onKrampusReleased = ({
+    skyEffectAmount = 1,
     onFinish,
-  }: KrampusDangerPayload) => {
-    this.setDanger(amount, onFinish);
+  }: KrampusReleasedPayload) => {
+    this.setDanger(skyEffectAmount, onFinish);
   };
 
   preload(scene: Phaser.Scene) {
@@ -95,7 +95,7 @@ class CemeteryScenario {
       .setAlpha(0);
     container.add(this.cemeteryDangerLayer);
 
-    gameEvents.on("krampus/danger", this.onKrampusDanger);
+    gameEvents.on("krampus/released", this.onKrampusReleased);
 
     return {
       container,
@@ -110,8 +110,8 @@ class CemeteryScenario {
     }
   }
 
-  private setDanger(amount: number, onFinish?: () => void) {
-    this.krampusDangerAmount = Phaser.Math.Clamp(amount, 0, 1);
+  private setDanger(skyEffectAmount: number = 1, onFinish?: () => void) {
+    this.krampusDangerAmount = Phaser.Math.Clamp(skyEffectAmount, 0, 1);
     this.onDangerTransitionFinish = onFinish ?? null;
 
     const layer = this.cemeteryDangerLayer;
@@ -146,7 +146,7 @@ class CemeteryScenario {
   destroy() {
     this.dangerTween?.stop();
     this.dangerTween = undefined;
-    gameEvents.off("krampus/danger", this.onKrampusDanger);
+    gameEvents.off("krampus/released", this.onKrampusReleased);
   }
 }
 

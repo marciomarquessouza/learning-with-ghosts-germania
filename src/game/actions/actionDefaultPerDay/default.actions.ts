@@ -109,7 +109,7 @@ export class DayActions {
         {
           type: "dialogue",
           character: CHARACTERS.ELISA,
-          text: "Olá Josef",
+          text: "Hello Josef",
           moods: [
             { mood: MOODS.HAPPY, character: CHARACTERS.ELISA },
             { mood: MOODS.SURPRISED, character: CHARACTERS.JOSEF },

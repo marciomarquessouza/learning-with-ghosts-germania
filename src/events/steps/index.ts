@@ -17,7 +17,7 @@ import { SetGameWorld, setGameWorld } from "../helpers/setGameWorld";
 import { LessonEvent } from "../lessonEvents";
 import { showLesson } from "../helpers/showLesson";
 import { changeScene, ChangeScene } from "../helpers/changeScene";
-import { showDangerZone, ShowDangerZone } from "../helpers/showDangerZone";
+import { releaseKrampus, ReleaseKrampus } from "../helpers/showDangerZone";
 
 export const stepShowDialogue = (
   payload: DialogueEvent,
@@ -78,9 +78,9 @@ export const stepChangeScene = (
   return stepBase(() => changeScene(payload), options);
 };
 
-export const stepShowDangerZone = (
-  payload: ShowDangerZone,
+export const stepReleaseKrampus = (
+  payload: ReleaseKrampus,
   options?: StepOptions,
 ): Step => {
-  return stepBase(() => showDangerZone(payload), options);
+  return stepBase(() => releaseKrampus(payload), options);
 };

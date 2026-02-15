@@ -75,9 +75,10 @@ class GhostDreamScene extends Phaser.Scene {
         scale: 1.5,
         initialAnimation: krampusAnimations.animations.KRAMPUS_WALKING,
       });
+
       dangerZone.create(this, {
         startX: 1400,
-        startY: 570,
+        startY: 470,
         player: ghostSprite,
         onEnter: () => console.log("#INSIDE"),
         onLeave: () => console.log("#OUTSIDE"),
@@ -85,10 +86,16 @@ class GhostDreamScene extends Phaser.Scene {
       dreamCamera.fadeIn({ onComplete: () => dayActions.onStart() });
     });
 
+    gameEvents.on("krampus/released", () => {
+      krampus.setX(1500);
+    });
+
     gameEvents.on("change-world-transition", ({ afterClose }) => {
       changeWorldTransition(this, afterClose);
     });
   }
+
+  onKrampusReleased() {}
 
   update(time: number, delta: number) {
     cemeteryScenario.update(delta);

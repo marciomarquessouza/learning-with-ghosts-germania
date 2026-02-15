@@ -72,7 +72,7 @@ export type Events = {
   "krampus/damage": { amount: number };
   "krampus/speed": { speed: number };
   "krampus/hate": { hate: number };
-  "krampus/danger": { amount: number; onFinish: () => void };
+  "krampus/released": { skyEffectAmount?: number; onFinish: () => void };
 };
 
 export const gameEvents = mitt<Events>();
