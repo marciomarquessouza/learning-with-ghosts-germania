@@ -18,6 +18,14 @@ export const DEFAULT_POSITION_X = 510;
 export const DEFAULT_POSITION_Y = 720;
 
 class GhostDreamScene extends Phaser.Scene {
+  private onChangeWorldTransition = ({
+    afterClose,
+  }: {
+    afterClose?: () => void;
+  }) => {
+    changeWorldTransition(this, afterClose);
+  };
+  
   constructor() {
     super({ key: GAME_SCENES.DREAM_SCENE });
   }
@@ -91,16 +99,8 @@ class GhostDreamScene extends Phaser.Scene {
       dreamCamera.fadeIn({ onComplete: () => dayActions.onStart() });
     });
 
-    gameEvents.on("krampus/released", () => {
-      krampus.setX(1500);
-    });
-
-    gameEvents.on("change-world-transition", ({ afterClose }) => {
-      changeWorldTransition(this, afterClose);
-    });
+    gameEvents.on("change-world-transition", this.onChangeWorldTransition);
   }
-
-  onKrampusReleased() {}
 
   update(time: number, delta: number) {
     cemeteryScenario.update(delta);
@@ -113,6 +113,7 @@ class GhostDreamScene extends Phaser.Scene {
     cemeteryScenario.destroy();
     hud.destroy();
     crackAnimation.destroy();
+    gameEvents.off("change-world-transition", this.onChangeWorldTransition);
   }
 }
 
