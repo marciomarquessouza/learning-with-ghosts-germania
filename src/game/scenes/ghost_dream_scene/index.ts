@@ -12,6 +12,7 @@ import { krampusAnimations } from "@/game/actors/krampus/helpers/KrampusAnimatio
 import { GAME_SCENES } from "@/constants/game";
 import { GameScenes } from "@/types";
 import { dangerZone } from "./helpers/dangerZone";
+import { crackAnimation } from "./helpers/crackAnimation";
 
 export const DEFAULT_POSITION_X = 510;
 export const DEFAULT_POSITION_Y = 720;
@@ -27,6 +28,7 @@ class GhostDreamScene extends Phaser.Scene {
     ghostJosef.preload(this);
     ghostElisa.preload(this);
     krampus.preload(this);
+    crackAnimation.preload(this);
 
     this.physics.world.setBounds(0, 0, 2000, 1200);
     hud.preload(this);
@@ -52,6 +54,25 @@ class GhostDreamScene extends Phaser.Scene {
       height: scenario.height,
     });
 
+    krampus.create(this, {
+      // Off screen
+      startX: -250,
+      startY: DEFAULT_POSITION_Y - 25,
+      initialSpeed: 0,
+      scale: 1.5,
+      initialAnimation: krampusAnimations.animations.KRAMPUS_WALKING,
+    });
+
+    dangerZone.create(this, {
+      startX: 1400,
+      startY: 470,
+      player: ghostSprite,
+      onEnter: () => console.log("#INSIDE"),
+      onLeave: () => console.log("#OUTSIDE"),
+    });
+
+    crackAnimation.create(this, scenario.width - 790, 900);
+
     getDayAction(this.scene.key as GameScenes).then((dayActions) => {
       ghostElisa.create({
         scene: this,
@@ -67,22 +88,6 @@ class GhostDreamScene extends Phaser.Scene {
       const hudContainer = hud.create(this, dayActions, [HUD_ITEMS.WEIGHT]);
       this.children.bringToTop(hudContainer);
 
-      krampus.create(this, {
-        // Off screen
-        startX: -250,
-        startY: DEFAULT_POSITION_Y - 25,
-        initialSpeed: 0,
-        scale: 1.5,
-        initialAnimation: krampusAnimations.animations.KRAMPUS_WALKING,
-      });
-
-      dangerZone.create(this, {
-        startX: 1400,
-        startY: 470,
-        player: ghostSprite,
-        onEnter: () => console.log("#INSIDE"),
-        onLeave: () => console.log("#OUTSIDE"),
-      });
       dreamCamera.fadeIn({ onComplete: () => dayActions.onStart() });
     });
 
@@ -107,6 +112,7 @@ class GhostDreamScene extends Phaser.Scene {
   destroy() {
     cemeteryScenario.destroy();
     hud.destroy();
+    crackAnimation.destroy();
   }
 }
 

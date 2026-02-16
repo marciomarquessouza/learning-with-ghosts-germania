@@ -76,6 +76,8 @@ export const CEMETERY_CLOUDS_IMG = "/ghost_dream/cemetery/cemetery_clouds.png";
 export const CEMETERY_DANGER_LAYER_IMG =
   "/ghost_dream/cemetery/color_layer_red.png";
 export const ACHTUNG_SIGN_IMG = "/ghost_dream/cemetery/achtung.png";
+export const CRACK_ATLAS_IMG = "/ghost_dream/crack/crack_spritesheet.png";
+export const CRACK_ATLAS_JSON = "/ghost_dream/crack/crack_spritesheet.json";
 
 // TRAIN SCENARIO
 export const TRAIN_BACKGROUND_IMG = "/train/scenario/train_background.png";

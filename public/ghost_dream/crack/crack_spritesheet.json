@@ -1,0 +1,92 @@
+{
+  "frames": {
+    "crack_0": {
+      "frame": {
+        "x": 0,
+        "y": 0,
+        "w": 202,
+        "h": 130
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 202,
+        "h": 130
+      },
+      "sourceSize": {
+        "w": 202,
+        "h": 130
+      }
+    },
+    "crack_1": {
+      "frame": {
+        "x": 202,
+        "y": 0,
+        "w": 202,
+        "h": 130
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 202,
+        "h": 130
+      },
+      "sourceSize": {
+        "w": 202,
+        "h": 130
+      }
+    },
+    "crack_2": {
+      "frame": {
+        "x": 404,
+        "y": 0,
+        "w": 202,
+        "h": 130
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 202,
+        "h": 130
+      },
+      "sourceSize": {
+        "w": 202,
+        "h": 130
+      }
+    },
+    "crack_3": {
+      "frame": {
+        "x": 0,
+        "y": 130,
+        "w": 202,
+        "h": 130
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 202,
+        "h": 130
+      },
+      "sourceSize": {
+        "w": 202,
+        "h": 130
+      }
+    }
+  },
+  "meta": {
+    "image": "crack_spritesheet.png",
+    "size": {
+      "w": 606,
+      "h": 260
+    },
+    "scale": "1.0"
+  }
+}

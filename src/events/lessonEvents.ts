@@ -20,6 +20,8 @@ export type Events = {
   "lesson-entry-notebook-phase": LessonEntryNotebookEvents;
   "show-lesson": LessonEvent;
   "hide-lesson": { lessonId: string };
+  "pumpkin-kid/open-crack": undefined;
+  "pumpkin-kid/close-crack": undefined;
 };
 
 export const lessonEvents = mitt<Events>();
