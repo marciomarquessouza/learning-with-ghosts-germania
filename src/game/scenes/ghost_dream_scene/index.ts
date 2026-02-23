@@ -7,11 +7,8 @@ import { ghostElisa } from "@/game/actors/ghostElisa/GhostElisa";
 import { dreamCamera } from "@/game/cameras/DreamCamera";
 import { gameEvents } from "@/events/gameEvents";
 import { changeWorldTransition } from "@/game/utils/changeWorldTransition";
-import { krampus } from "@/game/actors/krampus/Krampus";
-import { krampusAnimations } from "@/game/actors/krampus/helpers/KrampusAnimation";
 import { GAME_SCENES } from "@/constants/game";
 import { GameScenes } from "@/types";
-import { dangerZone } from "./helpers/dangerZone";
 import { crackAnimation } from "./helpers/crackAnimation";
 
 export const DEFAULT_POSITION_X = 510;
@@ -25,17 +22,15 @@ class GhostDreamScene extends Phaser.Scene {
   }) => {
     changeWorldTransition(this, afterClose);
   };
-  
+
   constructor() {
     super({ key: GAME_SCENES.DREAM_SCENE });
   }
 
   preload() {
-    dangerZone.preload(this);
     cemeteryScenario.preload(this);
     ghostJosef.preload(this);
     ghostElisa.preload(this);
-    krampus.preload(this);
     crackAnimation.preload(this);
 
     this.physics.world.setBounds(0, 0, 2000, 1200);
@@ -60,23 +55,6 @@ class GhostDreamScene extends Phaser.Scene {
       y: 0,
       width: scenario.width,
       height: scenario.height,
-    });
-
-    krampus.create(this, {
-      // Off screen
-      startX: -250,
-      startY: DEFAULT_POSITION_Y - 25,
-      initialSpeed: 0,
-      scale: 1.5,
-      initialAnimation: krampusAnimations.animations.KRAMPUS_WALKING,
-    });
-
-    dangerZone.create(this, {
-      startX: 1400,
-      startY: 470,
-      player: ghostSprite,
-      onEnter: () => console.log("#INSIDE"),
-      onLeave: () => console.log("#OUTSIDE"),
     });
 
     crackAnimation.create(this, scenario.width - 790, 900);
@@ -105,7 +83,6 @@ class GhostDreamScene extends Phaser.Scene {
   update(time: number, delta: number) {
     cemeteryScenario.update(delta);
     ghostJosef.update(time, delta);
-    dangerZone.update();
     ghostElisa.update();
   }
 
