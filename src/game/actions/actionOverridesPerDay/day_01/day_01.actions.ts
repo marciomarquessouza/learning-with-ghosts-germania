@@ -11,6 +11,7 @@ import {
   stepShowDialogue,
   stepShowLesson,
   stepChangeScene,
+  stepPlantingPumpkinKid,
 } from "@/events/steps";
 import { dialogues } from "./day_01.dialogues";
 import { showDialogue } from "@/events/helpers/showDialogue";
@@ -31,7 +32,7 @@ class DayActions1 extends DayActions {
       case GAME_SCENES.DREAM_SCENE:
         runSteps(
           [
-            stepShowDialogue({ lines: dialogues.dream_introduction() }),
+            // stepShowDialogue({ lines: dialogues.dream_introduction() }),
             stepGameMessage({
               title: "Go to Eliska",
               text: "Use the arrow keys or the A and D keys",
@@ -114,29 +115,31 @@ class DayActions1 extends DayActions {
 
     runSteps(
       [
-        stepShowDialogue({ lines: dialogues.lesson_preparation() }),
+        // stepShowDialogue({ lines: dialogues.lesson_preparation() }),
+        stepPlantingPumpkinKid(),
+
         stepShowLesson({ lesson: this.lesson }),
-        stepShowDialogue({ lines: dialogues.lesson_finish() }),
-        stepShowDialogue(
-          { lines: dialogues.challenge_accepted() },
-          { showWhenAlternativeIs: "train_challenge" },
-        ),
-        stepChangeScene(
-          { targetScene: "TrainScene", fade: true },
-          { showWhenAlternativeIs: "train_challenge" },
-        ),
-        stepShowDialogue(
-          { lines: dialogues.return_to_cell() },
-          { showWhenAlternativeIs: "return" },
-        ),
-        stepChangeWorldTransition(null, { showWhenAlternativeIs: "return" }),
-        stepSetGameWorld(
-          {
-            targetWorld: GAME_WORLDS.REAL,
-            targetScene: "CellScene",
-          },
-          { showWhenAlternativeIs: "return" },
-        ),
+        // stepShowDialogue({ lines: dialogues.lesson_finish() }),
+        // stepShowDialogue(
+        //   { lines: dialogues.challenge_accepted() },
+        //   { showWhenAlternativeIs: "train_challenge" },
+        // ),
+        // stepChangeScene(
+        //   { targetScene: "TrainScene", fade: true },
+        //   { showWhenAlternativeIs: "train_challenge" },
+        // ),
+        // stepShowDialogue(
+        //   { lines: dialogues.return_to_cell() },
+        //   { showWhenAlternativeIs: "return" },
+        // ),
+        // stepChangeWorldTransition(null, { showWhenAlternativeIs: "return" }),
+        // stepSetGameWorld(
+        //   {
+        //     targetWorld: GAME_WORLDS.REAL,
+        //     targetScene: "CellScene",
+        //   },
+        //   { showWhenAlternativeIs: "return" },
+        // ),
       ],
       { alternativeId: undefined },
     );

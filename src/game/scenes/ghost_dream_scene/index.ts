@@ -9,7 +9,7 @@ import { gameEvents } from "@/events/gameEvents";
 import { changeWorldTransition } from "@/game/utils/changeWorldTransition";
 import { GAME_SCENES } from "@/constants/game";
 import { GameScenes } from "@/types";
-import { crackAnimation } from "./helpers/crackAnimation";
+import { pumpkinKids } from "@/game/actors/pumpkinKids/PumpkingKids";
 
 export const DEFAULT_POSITION_X = 510;
 export const DEFAULT_POSITION_Y = 720;
@@ -31,10 +31,9 @@ class GhostDreamScene extends Phaser.Scene {
     cemeteryScenario.preload(this);
     ghostJosef.preload(this);
     ghostElisa.preload(this);
-    crackAnimation.preload(this);
-
-    this.physics.world.setBounds(0, 0, 2000, 1200);
+    pumpkinKids.preload(this);
     hud.preload(this);
+    this.physics.world.setBounds(0, 0, 2000, 1200);
   }
 
   create() {
@@ -57,14 +56,14 @@ class GhostDreamScene extends Phaser.Scene {
       height: scenario.height,
     });
 
-    crackAnimation.create(this, scenario.width - 790, 900);
+    pumpkinKids.create(this, { scenarioWidth: scenario.width });
 
     getDayAction(this.scene.key as GameScenes).then((dayActions) => {
       ghostElisa.create({
         scene: this,
         startX: scenario.width - 800,
-        startY: DEFAULT_POSITION_Y - 55,
-        scale: 0.65,
+        startY: DEFAULT_POSITION_Y - 100,
+        scale: 0.8,
         flipX: true,
         player: ghostSprite,
         dayActions,
@@ -89,7 +88,7 @@ class GhostDreamScene extends Phaser.Scene {
   destroy() {
     cemeteryScenario.destroy();
     hud.destroy();
-    crackAnimation.destroy();
+    pumpkinKids.destroy();
     gameEvents.off("change-world-transition", this.onChangeWorldTransition);
   }
 }

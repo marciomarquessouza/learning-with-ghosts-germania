@@ -1,13 +1,13 @@
 import { DayActions } from "@/game/actions/actionDefaultPerDay/default.actions";
-import { confessional } from "./helpers/Confessional";
 import { elisaAnimations } from "./helpers/ElisaAnimations";
 import { gameEvents } from "@/events/gameEvents";
 import { ActorPayload } from "../types/Actor";
 import { createKeyMap } from "@/utils/createKeyMap";
 import { CHARACTERS } from "@/constants/game";
 import { HUD_ITEMS } from "@/game/scenes/hud";
-import { lessonEvents } from "@/events/lessonEvents";
+import { lessonEvents, SowingEvent } from "@/events/lessonEvents";
 import { InteractionArea } from "@/libs/game/InteractionArea";
+import { onAnimationFrame } from "@/utils/animations/onAnimationFrame";
 
 export const KEY_CODES = Phaser.Input.Keyboard.KeyCodes;
 
@@ -18,7 +18,8 @@ export interface ElisaPayload extends ActorPayload {
 
 export class GhostElisa {
   public lockInteractions = false;
-  private elisaSprite: Phaser.Physics.Arcade.Sprite | null = null;
+  private elisaSprite: Phaser.Types.Physics.Arcade.SpriteWithDynamicBody | null =
+    null;
   private elisaInteractionArea: InteractionArea | null = null;
   private dayActions: DayActions | null = null;
   private cursors: Phaser.Types.Input.Keyboard.CursorKeys | null = null;
@@ -27,7 +28,6 @@ export class GhostElisa {
   > | null = null;
 
   preload(scene: Phaser.Scene) {
-    confessional.preload(scene);
     elisaAnimations.preload(scene);
   }
 
@@ -43,10 +43,9 @@ export class GhostElisa {
   }: ElisaPayload) {
     this.dayActions = dayActions || null;
     this.cursors = cursors;
-    this.elisaSprite = elisaAnimations.create(scene, 150, -15);
+    this.elisaSprite = elisaAnimations.create(scene, startX, startY);
     this.elisaSprite.flipX = !!flipX;
     this.elisaSprite.scale = scale || 1;
-    confessional.create(scene, this.elisaSprite, startX, startY);
 
     this.elisaInteractionArea = new InteractionArea();
     this.elisaInteractionArea.create(scene, {
@@ -68,6 +67,18 @@ export class GhostElisa {
       }
     });
 
+    const handleSowing = ({ onFinish }: SowingEvent) => {
+      if (this.elisaSprite) {
+        const animation = elisaAnimations.animations.GAS_MASK_NUN_SOWING_ANIM;
+        this.elisaSprite.play(animation);
+        onAnimationFrame(this.elisaSprite, animation, 20, () => onFinish());
+      } else {
+        console.error("elisaSprite is not available");
+      }
+    };
+
+    lessonEvents.on("eliza/lesson:sowing", handleSowing);
+
     lessonEvents.on("show-lesson", () => {
       this.keyMap = createKeyMap(scene, []);
       this.lockInteractions = true;
@@ -76,6 +87,10 @@ export class GhostElisa {
     lessonEvents.on("hide-lesson", () => {
       this.keyMap = createKeyMap(scene, [KEY_CODES.E]);
       this.lockInteractions = false;
+    });
+
+    this.elisaSprite.once(Phaser.GameObjects.Events.DESTROY, () => {
+      lessonEvents.off("eliza/lesson:sowing", handleSowing);
     });
   }
 

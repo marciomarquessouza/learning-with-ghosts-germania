@@ -4,10 +4,13 @@ import {
   ELISA_ATLAS_JSON,
   GAS_MASK_NUN_IDLE_ATLAS_IMG,
   GAS_MASK_NUN_IDLE_ATLAS_JSON,
+  GAS_MASK_NUN_SOWING_ATLAS_IMG,
+  GAS_MASK_NUN_SOWING_ATLAS_JSON,
 } from "@/constants/images";
 
 const ELISA_ATLAS = "elisaAtlas";
-const GAS_MASK_NUN_ATLAS = "gasMaskNunAtlas";
+const GAS_MASK_NUN_IDLE_ATLAS = "gasMaskNunIdleAtlas";
+const GAS_MASK_NUN_SOWING_ATLAS = "gasMaskNunSowingAtlas";
 
 class ElisaAnimations {
   public animations = {
@@ -19,6 +22,7 @@ class ElisaAnimations {
     ELISA_SURPRISED_ANIM: "elisaSurprisedAnim",
     ELISA_FLUSHED_ANIM: "elisaFlushedAnim",
     GAS_MASK_NUN_IDLE_ANIM: "gasMaskNunIdleAnim",
+    GAS_MASK_NUN_SOWING_ANIM: "gasMaskNunSowingAnim",
   };
   public currentAnimation = this.animations.GAS_MASK_NUN_IDLE_ANIM;
   public previousAnimation: string | null = null;
@@ -27,9 +31,14 @@ class ElisaAnimations {
     const load = scene.load;
     load.atlas(ELISA_ATLAS, ELISA_ATLAS_IMG, ELISA_ATLAS_JSON);
     load.atlas(
-      GAS_MASK_NUN_ATLAS,
+      GAS_MASK_NUN_IDLE_ATLAS,
       GAS_MASK_NUN_IDLE_ATLAS_IMG,
       GAS_MASK_NUN_IDLE_ATLAS_JSON,
+    );
+    load.atlas(
+      GAS_MASK_NUN_SOWING_ATLAS,
+      GAS_MASK_NUN_SOWING_ATLAS_IMG,
+      GAS_MASK_NUN_SOWING_ATLAS_JSON,
     );
   }
 
@@ -51,13 +60,26 @@ class ElisaAnimations {
     if (!scene.anims.exists(this.animations.GAS_MASK_NUN_IDLE_ANIM)) {
       scene.anims.create({
         key: this.animations.GAS_MASK_NUN_IDLE_ANIM,
-        frames: scene.anims.generateFrameNames(GAS_MASK_NUN_ATLAS, {
+        frames: scene.anims.generateFrameNames(GAS_MASK_NUN_IDLE_ATLAS, {
           prefix: "gas_mask_nun_idle_",
           start: 0,
           end: 36,
         }),
         frameRate: 14,
         repeat: -1,
+      });
+    }
+
+    if (!scene.anims.exists(this.animations.GAS_MASK_NUN_SOWING_ANIM)) {
+      scene.anims.create({
+        key: this.animations.GAS_MASK_NUN_SOWING_ANIM,
+        frames: scene.anims.generateFrameNames(GAS_MASK_NUN_SOWING_ATLAS, {
+          prefix: "gas_mask_nun_sowing_",
+          start: 0,
+          end: 28,
+        }),
+        frameRate: 14,
+        repeat: 0,
       });
     }
 
@@ -120,12 +142,7 @@ class ElisaAnimations {
       });
     }
 
-    return scene.physics.add.sprite(
-      startX,
-      startY,
-      GAS_MASK_NUN_ATLAS,
-      "gas_mask_nun_idle_0",
-    );
+    return scene.physics.add.sprite(startX, startY, "", "");
   }
 
   setAnimationByMood(mood: MOODS) {

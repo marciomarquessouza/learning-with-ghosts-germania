@@ -1,5 +1,4 @@
 import { CRACK_ATLAS_IMG, CRACK_ATLAS_JSON } from "@/constants/images";
-import { lessonEvents, OpenCrackEvent } from "@/events/lessonEvents";
 
 export const CRACK_ANIMATION_ATLAS = "crackAnimationAtlas";
 
@@ -13,19 +12,6 @@ class CrackAnimation {
   } as const;
   private sprite: Phaser.Types.Physics.Arcade.SpriteWithDynamicBody | null =
     null;
-
-  private playCrackAnimation = ({ animation }: OpenCrackEvent) => {
-    if (!this.sprite) return;
-
-    switch (animation) {
-      case "open":
-        this.sprite.play(this.animations.CRACK_OPENING);
-        break;
-      case "close":
-        this.sprite.playReverse(this.animations.CRACK_OPENING);
-        break;
-    }
-  };
 
   preload(scene: Phaser.Scene) {
     const load = scene.load;
@@ -53,14 +39,21 @@ class CrackAnimation {
       "crack_0",
     );
 
-    lessonEvents.on("pumpkin-kid/crack-ground", this.playCrackAnimation);
-
-    this.sprite.once(Phaser.GameObjects.Events.DESTROY, () => {
-      lessonEvents.off("pumpkin-kid/crack-ground", this.playCrackAnimation);
-    });
-
     return this.sprite;
   }
+
+  public play = (animation: "open" | "close") => {
+    if (!this.sprite) return;
+
+    switch (animation) {
+      case "open":
+        this.sprite.play(this.animations.CRACK_OPENING);
+        break;
+      case "close":
+        this.sprite.playReverse(this.animations.CRACK_OPENING);
+        break;
+    }
+  };
 
   destroy() {
     if (!this.sprite) return;

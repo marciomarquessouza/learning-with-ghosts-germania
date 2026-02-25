@@ -15,8 +15,16 @@ export interface ToggleNotebookEvents {
   delay?: number;
 }
 
-export interface OpenCrackEvent {
+export interface CrackEvent {
   animation: "open" | "close";
+}
+
+export interface SowingEvent {
+  onFinish: () => void;
+}
+
+export interface DropSeedEvent {
+  onFinish: () => void;
 }
 
 export type Events = {
@@ -24,7 +32,9 @@ export type Events = {
   "lesson-entry-notebook-phase": LessonEntryNotebookEvents;
   "show-lesson": LessonEvent;
   "hide-lesson": { lessonId: string };
-  "pumpkin-kid/crack-ground": OpenCrackEvent;
+  "eliza/lesson:sowing": SowingEvent;
+  "pumpkin-kid/lesson:drop-seed": DropSeedEvent;
+  "pumpkin-kid/lesson:crack-ground": CrackEvent;
 };
 
 export const lessonEvents = mitt<Events>();

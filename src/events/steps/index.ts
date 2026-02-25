@@ -17,7 +17,7 @@ import { SetGameWorld, setGameWorld } from "../helpers/setGameWorld";
 import { LessonEvent } from "../lessonEvents";
 import { showLesson } from "../helpers/showLesson";
 import { changeScene, ChangeScene } from "../helpers/changeScene";
-import { releaseKrampus, ReleaseKrampus } from "../helpers/showDangerZone";
+import { plantingPumpkinKid } from "../helpers/plantingPumpkinKid";
 
 export const stepShowDialogue = (
   payload: DialogueEvent,
@@ -78,9 +78,9 @@ export const stepChangeScene = (
   return stepBase(() => changeScene(payload), options);
 };
 
-export const stepReleaseKrampus = (
-  payload: ReleaseKrampus,
+export const stepPlantingPumpkinKid = (
+  _payload?: null,
   options?: StepOptions,
 ): Step => {
-  return stepBase(() => releaseKrampus(payload), options);
+  return stepBase(() => plantingPumpkinKid(), options);
 };
