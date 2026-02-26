@@ -1,5 +1,5 @@
 import { GHOSTS_TITLE } from "@/constants/images";
-import { dreamEvents } from "@/events/dreamEvents";
+import { dreamEvents, dreamEventsAsync } from "@/events/dreamEvents";
 import { useTypewriter } from "@/hooks/useTypewriter";
 import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
@@ -9,7 +9,7 @@ const TYPEWRITER_SPEED = 45;
 
 export function DreamIntroduction() {
   const [phase, setPhase] = useState<"hidden" | "entering" | "exiting">(
-    "hidden"
+    "hidden",
   );
   const [currentLine, setCurrentLine] = useState(0);
   const [line1, setLine1] = useState("");
@@ -22,11 +22,14 @@ export function DreamIntroduction() {
   const exitTimer = useRef<number | undefined>(undefined);
 
   useEffect(() => {
-    const handler = (payload: {
-      lesson: string;
-      hideAfter?: number;
-      afterClose?: () => void;
-    }) => {
+    const handler = (
+      payload: {
+        lesson: string;
+        hideAfter?: number;
+        afterClose?: () => void;
+      },
+      done: () => void,
+    ) => {
       setLesson(payload.lesson);
       setPhase("entering");
 
@@ -37,6 +40,7 @@ export function DreamIntroduction() {
         exitTimer.current = window.setTimeout(() => {
           setPhase("hidden");
           payload.afterClose?.();
+          done();
 
           setCurrentLine(0);
           setLine1("");
@@ -45,9 +49,9 @@ export function DreamIntroduction() {
       }, visibleTime);
     };
 
-    dreamEvents.on("show-introduction", handler);
+    dreamEventsAsync.on("dream/show-introduction", handler);
     return () => {
-      dreamEvents.off("show-introduction", handler);
+      dreamEventsAsync.off("dream/show-introduction", handler);
       if (showTimer.current !== undefined) clearTimeout(showTimer.current);
       if (exitTimer.current !== undefined) clearTimeout(exitTimer.current);
     };

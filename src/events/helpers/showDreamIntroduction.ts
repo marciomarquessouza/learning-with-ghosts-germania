@@ -1,4 +1,4 @@
-import { dreamEvents } from "../dreamEvents";
+import { dreamEventsAsync } from "../dreamEvents";
 
 export interface ShowDreamIntroduction {
   lesson: string;
@@ -7,10 +7,7 @@ export interface ShowDreamIntroduction {
 export function showDreamIntroduction({
   lesson,
 }: ShowDreamIntroduction): Promise<void> {
-  return new Promise((resolve) => {
-    dreamEvents.emit("show-introduction", {
-      lesson,
-      afterClose: () => resolve(),
-    });
+  return dreamEventsAsync.emitAsync("dream/show-introduction", {
+    lesson,
   });
 }
