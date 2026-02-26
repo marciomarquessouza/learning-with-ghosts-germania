@@ -7,7 +7,7 @@ import { CHARACTERS } from "@/constants/game";
 import { HUD_ITEMS } from "@/game/scenes/hud";
 import { lessonEvents, SowingEvent } from "@/events/lessonEvents";
 import { InteractionArea } from "@/libs/game/InteractionArea";
-import { onAnimationFrame } from "@/utils/animations/onAnimationFrame";
+import { onAnimationFrame } from "@/libs/animation/onAnimationFrame";
 
 export const KEY_CODES = Phaser.Input.Keyboard.KeyCodes;
 

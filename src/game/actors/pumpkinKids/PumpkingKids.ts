@@ -1,7 +1,7 @@
 import { DropSeedEvent, lessonEvents } from "@/events/lessonEvents";
 import { crackAnimation } from "./helpers/crackAnimation";
 import { seed } from "./helpers/seed";
-import { onAnimationComplete } from "@/utils/animations/onAnimationComplete";
+import { onAnimationComplete } from "@/libs/animation/onAnimationComplete";
 
 interface CreateOptions {
   scenarioWidth: number;
