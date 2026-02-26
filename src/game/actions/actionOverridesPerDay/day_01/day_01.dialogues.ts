@@ -1,5 +1,5 @@
 import { CHARACTERS, MOODS } from "@/constants/game";
-import { alternatives, dialogue } from "@/utils/dialogues";
+import { alternatives, dialogue } from "@/libs/dialogues";
 
 export const dialogues = {
   welcome: () => [

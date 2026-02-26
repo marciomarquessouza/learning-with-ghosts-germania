@@ -1,4 +1,4 @@
-import { dialogue } from "@/utils/dialogues";
+import { dialogue } from "@/libs/dialogues";
 
 export const defaultDialogues = {
   before_sleep: () => [

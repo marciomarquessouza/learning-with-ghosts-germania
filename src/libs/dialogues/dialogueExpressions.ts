@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { CHARACTERS, MOODS } from "@/constants/game";
-import { dedent } from "../dedent";
+import { dedent } from "../../utils/dedent";
 import { CharacterMood, DialogueLine } from "@/types";
 
 interface DialogueTag extends DialogueLine {

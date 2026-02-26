@@ -15,7 +15,7 @@ import { getDialogueDimension } from "./helpers/getDialgueDimension";
 import { InputText } from "./InputText";
 import { getUUID } from "@/utils/getUUID";
 import { setCharactersMood } from "@/events/helpers/setCharactersMood";
-import { handleAlternativeKeyDown } from "@/utils/dialogues/handleAlternativeKeyDown";
+import { handleAlternativeKeyDown } from "@/libs/dialogues/handleAlternativeKeyDown";
 import { InteractionLine } from "@/types";
 
 export function Dialogue() {
