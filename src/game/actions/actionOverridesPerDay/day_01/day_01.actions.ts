@@ -108,6 +108,22 @@ class DayActions1 extends DayActions {
     }
   }
 
+  onDailyChallengeClick(): void {
+    showDialogue({ lines: defaultDialogues.default_challenge_dialogue() });
+  }
+
+  onDeskClick(): void {
+    showDialogue({ lines: defaultDialogues.default_desk_dialogue() });
+  }
+
+  onFoodClick(): void {
+    showDialogue({ lines: defaultDialogues.default_food_dialogue() });
+  }
+
+  onRatClick(): void {
+    showDialogue({ lines: defaultDialogues.default_rat_dialogue() });
+  }
+
   onConfessionalInteraction() {
     if (!this.lesson) {
       throw new Error("no lesson available");
@@ -142,22 +158,6 @@ class DayActions1 extends DayActions {
       ],
       { alternativeId: undefined },
     );
-  }
-
-  onChallengeClick(): void {
-    showDialogue({ lines: defaultDialogues.default_challenge_dialogue() });
-  }
-
-  onDeskClick(): void {
-    showDialogue({ lines: defaultDialogues.default_desk_dialogue() });
-  }
-
-  onFoodClick(): void {
-    showDialogue({ lines: defaultDialogues.default_food_dialogue() });
-  }
-
-  onRatClick(): void {
-    showDialogue({ lines: defaultDialogues.default_rat_dialogue() });
   }
 }
 

@@ -55,8 +55,8 @@ export class GhostElisa {
       height: 400,
       // Shadow compensation
       offsetX: -180,
-      onEnter: this.showGameMessage,
-      onLeave: this.closeGameMessage,
+      onEnter: dayActions?.onEnterElizaArea,
+      onLeave: () => gameEvents.emit("hide-game-message", {}),
     });
 
     this.keyMap = createKeyMap(scene, [KEY_CODES.K]);
@@ -94,17 +94,6 @@ export class GhostElisa {
     });
   }
 
-  showGameMessage() {
-    gameEvents.emit("show-game-message", {
-      title: "Talk to Eliska",
-      text: 'Press the "SPACE" or "E" key on your keyboard to interact with Eliska',
-    });
-  }
-
-  closeGameMessage() {
-    gameEvents.emit("hide-game-message", {});
-  }
-
   update() {
     this.elisaInteractionArea?.update();
     const { currentAnimation, previousAnimation } = elisaAnimations;
@@ -123,7 +112,7 @@ export class GhostElisa {
         HUD_ITEMS.WEIGHT,
         HUD_ITEMS.THERMOMETER,
       ]);
-      this.closeGameMessage();
+      gameEvents.emit("hide-game-message", {});
       gameEvents.emit("camera-zoom-to", { zoom: 1.2, duration: 200 });
       this.dayActions?.onConfessionalInteraction();
     }

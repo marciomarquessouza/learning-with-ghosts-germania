@@ -1,7 +1,7 @@
 import { CHARACTERS, GAME_SCENES, MOODS } from "@/constants/game";
 import { gameEvents } from "@/events/gameEvents";
 import { showDialogue } from "@/events/helpers/showDialogue";
-import { stepDayIntroduction } from "@/events/steps";
+import { stepDayIntroduction, stepGameMessage } from "@/events/steps";
 import { runSteps } from "@/events/steps/runSteps";
 import { defaultDialogues } from "./default.dialogues";
 import { AudioManifest, GameScenes, Lesson } from "@/types";
@@ -103,24 +103,6 @@ export class DayActions {
     this.clicked.desk += 1;
   }
 
-  onConfessionalInteraction() {
-    gameEvents.emit("show-dialogue", {
-      lines: [
-        {
-          type: "dialogue",
-          character: CHARACTERS.ELISA,
-          text: "Hello Josef",
-          moods: [
-            { mood: MOODS.HAPPY, character: CHARACTERS.ELISA },
-            { mood: MOODS.SURPRISED, character: CHARACTERS.JOSEF },
-          ],
-        },
-      ],
-    });
-  }
-
-  onLessonStart() {}
-
   onFoodClick() {
     gameEvents.emit("show-dialogue", {
       lines: [
@@ -161,7 +143,7 @@ export class DayActions {
     });
   }
 
-  onChallengeClick() {
+  onDailyChallengeClick() {
     gameEvents.emit("show-dialogue", {
       lines: [
         {
@@ -185,6 +167,36 @@ export class DayActions {
       ],
     });
   }
+
+  onEnterElizaArea() {
+    runSteps(
+      [
+        stepGameMessage({
+          title: "Go to Eliska",
+          text: "Use the arrow keys or the A and D keys",
+        }),
+      ],
+      {},
+    );
+  }
+
+  onConfessionalInteraction() {
+    gameEvents.emit("show-dialogue", {
+      lines: [
+        {
+          type: "dialogue",
+          character: CHARACTERS.ELISA,
+          text: "Hello Josef",
+          moods: [
+            { mood: MOODS.HAPPY, character: CHARACTERS.ELISA },
+            { mood: MOODS.SURPRISED, character: CHARACTERS.JOSEF },
+          ],
+        },
+      ],
+    });
+  }
+
+  onLessonStart() {}
 }
 
 export const defaultDayActions = new DayActions(defaultLesson);

@@ -13,7 +13,7 @@ class HUdActions {
 
   create(
     scene: Phaser.Scene,
-    dayActions: DayActions
+    dayActions: DayActions,
   ): Phaser.GameObjects.Container {
     const positionX = HUD_WEIGHT_IMG_WIDTH / 2;
     const positionY = scene.cameras.main.centerY + 200;
@@ -26,7 +26,7 @@ class HUdActions {
       { name: ACTIONS_ICONS.SOLITARY, action: () => console.log("#SOLITARY") },
       {
         name: ACTIONS_ICONS.CHALLENGE,
-        action: () => dayActions.onChallengeClick(),
+        action: () => dayActions.onDailyChallengeClick(),
       },
       { name: ACTIONS_ICONS.EXIT, action: () => console.log("#EXIT") },
     ]);
