@@ -45,7 +45,7 @@ class Seed {
   ) {
     const seed = scene.add.image(x, startY, "seed");
     seed.setOrigin(0.5);
-    seed.setScale(0.5);
+    seed.setScale(1.4);
     seed.setDepth(10);
 
     scene.tweens.add({

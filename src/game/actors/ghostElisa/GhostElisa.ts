@@ -71,7 +71,7 @@ export class GhostElisa {
       if (this.elisaSprite) {
         const animation = elisaAnimations.animations.GAS_MASK_NUN_SOWING_ANIM;
         this.elisaSprite.play(animation);
-        onAnimationFrame(this.elisaSprite, animation, 20, () => onFinish());
+        onAnimationFrame(this.elisaSprite, animation, 21, () => onFinish());
       } else {
         console.error("elisaSprite is not available");
       }

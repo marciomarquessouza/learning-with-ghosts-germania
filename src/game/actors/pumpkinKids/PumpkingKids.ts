@@ -19,7 +19,7 @@ class PumpkinKids {
   create(scene: Phaser.Scene, { startX, startY, flipX }: CreatePayload) {
     seed.create(scene);
     const groundPositionY = startY;
-    const handPositionY = groundPositionY - 510;
+    const handPositionY = groundPositionY - 360;
     const sproutSprite = sprout.create(scene, startX, groundPositionY);
     sproutSprite.flipX = !!flipX;
 
