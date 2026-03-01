@@ -1,39 +1,43 @@
 import { DropSeedEvent, lessonEvents } from "@/events/lessonEvents";
-import { crackAnimation } from "./helpers/crackAnimation";
 import { seed } from "./helpers/seed";
 import { onAnimationComplete } from "@/libs/animation/onAnimationComplete";
+import { sprout, SPROUT_ANIMATIONS } from "./helpers/sprout";
 
-interface CreateOptions {
-  scenarioWidth: number;
+interface CreatePayload {
+  startX: number;
+  startY: number;
+  flipX: boolean;
 }
 
 class PumpkinKids {
   private onDropSeed: (({ onFinish }: DropSeedEvent) => void) | null = null;
 
   preload(scene: Phaser.Scene) {
-    crackAnimation.preload(scene);
+    sprout.preload(scene);
   }
 
-  create(scene: Phaser.Scene, { scenarioWidth }: CreateOptions) {
+  create(scene: Phaser.Scene, { startX, startY, flipX }: CreatePayload) {
     seed.create(scene);
-    const positionX = scenarioWidth - 760;
-    const handPositionY = 510;
-    const groundPositionY = handPositionY + 410;
-    const crackSprite = crackAnimation.create(
-      scene,
-      positionX,
-      groundPositionY,
-    );
+    const groundPositionY = startY;
+    const handPositionY = groundPositionY - 510;
+    const sproutSprite = sprout.create(scene, startX, groundPositionY);
+    sproutSprite.flipX = !!flipX;
+
+    const afterSprouting = (onFinish: () => void) => {
+      sproutSprite.play(SPROUT_ANIMATIONS.IDLE);
+      onFinish();
+    };
 
     this.onDropSeed = ({ onFinish }: DropSeedEvent) => {
       seed.dropSeed(scene, {
-        x: positionX,
+        x: startX,
         startY: handPositionY,
         groundY: groundPositionY,
         onImpact: () => {
-          const animation = "open";
-          crackAnimation.play(animation);
-          onAnimationComplete(crackSprite, animation, onFinish);
+          sproutSprite.play(SPROUT_ANIMATIONS.SPROUTING);
+          onAnimationComplete(sproutSprite, SPROUT_ANIMATIONS.SPROUTING, () =>
+            afterSprouting(onFinish),
+          );
         },
       });
     };
@@ -42,7 +46,7 @@ class PumpkinKids {
   }
 
   destroy() {
-    crackAnimation.destroy();
+    sprout.destroy();
     if (this.onDropSeed) {
       lessonEvents.off("pumpkin-kid/lesson:drop-seed", this.onDropSeed);
       this.onDropSeed = null;

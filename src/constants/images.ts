@@ -65,6 +65,27 @@ export const GAS_MASK_NUN_SOWING_ATLAS_IMG =
 export const GAS_MASK_NUN_SOWING_ATLAS_JSON =
   "/actors/elisa/gas_mask_nun_sowing_spritesheet.json";
 
+// PUMPKIN_KIDS
+export const PUMPKIN_KID_SPROUTING_ATLAS_IMG =
+  "/actors/pumpkin_kids/pumpkin_kid_stage_0_sprouting_spritesheet.png";
+export const PUMPKIN_KID_SPROUTING_ATLAS_JSON =
+  "/actors/pumpkin_kids/pumpkin_kid_stage_0_sprouting_spritesheet.json";
+export const PUMPKIN_KID_SPROUT_IDLE_ATLAS_IMG =
+  "/actors/pumpkin_kids/pumpkin_kid_stage_0_idle_spritesheet.png";
+export const PUMPKIN_KID_SPROUT_IDLE_ATLAS_JSON =
+  "/actors/pumpkin_kids/pumpkin_kid_stage_0_idle_spritesheet.json";
+
+// KRAMPUS
+export const KRAMPUS_RUNNING_ATLAS_IMG =
+  "/actors/krampus/krampus_running_spritesheet.png";
+export const KRAMPUS_RUNNING_ATLAS_JSON =
+  "/actors/krampus/krampus_running_spritesheet.json";
+export const KRAMPUS_WALKING_ATLAS_IMG =
+  "/actors/krampus/krampus_walking_spritesheet.png";
+export const KRAMPUS_WALKING_ATLAS_JSON =
+  "/actors/krampus/krampus_walking_spritesheet.json";
+export const KRAMPUS_LIGHT_IMG = "/actors/krampus/krampus_light.png";
+
 // GHOST DREAM IMAGES
 export const GHOSTS_TITLE = "/ghost_dream/introduction/ghosts_title.png";
 export const CEMETERY_IMAGE = "/ghost_dream/cemetery.png";
@@ -78,8 +99,6 @@ export const CEMETERY_MOON_IMG = "/ghost_dream/cemetery/cemetery_moon.png";
 export const CEMETERY_CLOUDS_IMG = "/ghost_dream/cemetery/cemetery_clouds.png";
 export const CEMETERY_DANGER_LAYER_IMG =
   "/ghost_dream/cemetery/color_layer_red.png";
-export const CRACK_ATLAS_IMG = "/ghost_dream/crack/crack_spritesheet.png";
-export const CRACK_ATLAS_JSON = "/ghost_dream/crack/crack_spritesheet.json";
 
 // TRAIN SCENARIO
 export const TRAIN_BACKGROUND_IMG = "/train/scenario/train_background.png";
@@ -108,17 +127,6 @@ export const SPEEDOMETER_ATLAS_IMG =
   "/train/speedometer/speedometer_spritesheet.png";
 export const SPEEDOMETER_ATLAS_JSON =
   "/train/speedometer/speedometer_spritesheet.json";
-
-// KRAMPUS
-export const KRAMPUS_RUNNING_ATLAS_IMG =
-  "/actors/krampus/krampus_running_spritesheet.png";
-export const KRAMPUS_RUNNING_ATLAS_JSON =
-  "/actors/krampus/krampus_running_spritesheet.json";
-export const KRAMPUS_WALKING_ATLAS_IMG =
-  "/actors/krampus/krampus_walking_spritesheet.png";
-export const KRAMPUS_WALKING_ATLAS_JSON =
-  "/actors/krampus/krampus_walking_spritesheet.json";
-export const KRAMPUS_LIGHT_IMG = "/actors/krampus/krampus_light.png";
 
 // FEEDBACK
 export const OLD_PAPER_BACKGROUND = "/train/feedback/old_paper_background.png";

@@ -1,0 +1,192 @@
+{
+  "frames": {
+    "pumpkin_kid_stage_0_idle_0": {
+      "frame": {
+        "x": 0,
+        "y": 0,
+        "w": 101,
+        "h": 107
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 101,
+        "h": 107
+      },
+      "sourceSize": {
+        "w": 101,
+        "h": 107
+      }
+    },
+    "pumpkin_kid_stage_0_idle_1": {
+      "frame": {
+        "x": 101,
+        "y": 0,
+        "w": 101,
+        "h": 107
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 101,
+        "h": 107
+      },
+      "sourceSize": {
+        "w": 101,
+        "h": 107
+      }
+    },
+    "pumpkin_kid_stage_0_idle_2": {
+      "frame": {
+        "x": 202,
+        "y": 0,
+        "w": 101,
+        "h": 107
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 101,
+        "h": 107
+      },
+      "sourceSize": {
+        "w": 101,
+        "h": 107
+      }
+    },
+    "pumpkin_kid_stage_0_idle_3": {
+      "frame": {
+        "x": 303,
+        "y": 0,
+        "w": 101,
+        "h": 107
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 101,
+        "h": 107
+      },
+      "sourceSize": {
+        "w": 101,
+        "h": 107
+      }
+    },
+    "pumpkin_kid_stage_0_idle_4": {
+      "frame": {
+        "x": 404,
+        "y": 0,
+        "w": 101,
+        "h": 107
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 101,
+        "h": 107
+      },
+      "sourceSize": {
+        "w": 101,
+        "h": 107
+      }
+    },
+    "pumpkin_kid_stage_0_idle_5": {
+      "frame": {
+        "x": 505,
+        "y": 0,
+        "w": 101,
+        "h": 107
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 101,
+        "h": 107
+      },
+      "sourceSize": {
+        "w": 101,
+        "h": 107
+      }
+    },
+    "pumpkin_kid_stage_0_idle_6": {
+      "frame": {
+        "x": 0,
+        "y": 107,
+        "w": 101,
+        "h": 107
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 101,
+        "h": 107
+      },
+      "sourceSize": {
+        "w": 101,
+        "h": 107
+      }
+    },
+    "pumpkin_kid_stage_0_idle_7": {
+      "frame": {
+        "x": 101,
+        "y": 107,
+        "w": 101,
+        "h": 107
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 101,
+        "h": 107
+      },
+      "sourceSize": {
+        "w": 101,
+        "h": 107
+      }
+    },
+    "pumpkin_kid_stage_0_idle_8": {
+      "frame": {
+        "x": 202,
+        "y": 107,
+        "w": 101,
+        "h": 107
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 101,
+        "h": 107
+      },
+      "sourceSize": {
+        "w": 101,
+        "h": 107
+      }
+    }
+  },
+  "meta": {
+    "image": "pumpkin_kid_stage_0_idle_spritesheet.png",
+    "size": {
+      "w": 606,
+      "h": 214
+    },
+    "scale": "0.5"
+  }
+}

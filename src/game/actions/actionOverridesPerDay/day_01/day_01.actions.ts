@@ -117,8 +117,7 @@ class DayActions1 extends DayActions {
       [
         // stepShowDialogue({ lines: dialogues.lesson_preparation() }),
         stepPlantingPumpkinKid(),
-
-        stepShowLesson({ lesson: this.lesson }),
+        // stepShowLesson({ lesson: this.lesson }),
         // stepShowDialogue({ lines: dialogues.lesson_finish() }),
         // stepShowDialogue(
         //   { lines: dialogues.challenge_accepted() },

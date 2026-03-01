@@ -56,8 +56,6 @@ class GhostDreamScene extends Phaser.Scene {
       height: scenario.height,
     });
 
-    pumpkinKids.create(this, { scenarioWidth: scenario.width });
-
     getDayAction(this.scene.key as GameScenes).then((dayActions) => {
       ghostElisa.create({
         scene: this,
@@ -69,6 +67,11 @@ class GhostDreamScene extends Phaser.Scene {
         dayActions,
         cursors,
         camera: dreamCamera.mainCamera,
+      });
+      pumpkinKids.create(this, {
+        startX: scenario.width - 760,
+        startY: 890,
+        flipX: true,
       });
       const hudContainer = hud.create(this, dayActions, [HUD_ITEMS.WEIGHT]);
       this.children.bringToTop(hudContainer);
