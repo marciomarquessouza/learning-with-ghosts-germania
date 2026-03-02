@@ -3,7 +3,7 @@ import { createScene } from "@/game/core/CreateScene";
 import { hud, HUD_ITEMS } from "../hud";
 import { cemeteryScenario } from "./helpers/cemeteryScenario";
 import { getDayAction } from "@/game/actions/getAction";
-import { ghostElisa } from "@/game/actors/ghostElisa/GhostElisa";
+import { eliza } from "@/game/actors/eliza/Eliza";
 import { dreamCamera } from "@/game/cameras/DreamCamera";
 import { gameEvents } from "@/events/gameEvents";
 import { changeWorldTransition } from "@/game/utils/changeWorldTransition";
@@ -30,7 +30,7 @@ class GhostDreamScene extends Phaser.Scene {
   preload() {
     cemeteryScenario.preload(this);
     ghostJosef.preload(this);
-    ghostElisa.preload(this);
+    eliza.preload(this);
     pumpkinKids.preload(this);
     hud.preload(this);
     this.physics.world.setBounds(0, 0, 2000, 1200);
@@ -57,7 +57,7 @@ class GhostDreamScene extends Phaser.Scene {
     });
 
     getDayAction(this.scene.key as GameScenes).then((dayActions) => {
-      ghostElisa.create({
+      eliza.create({
         scene: this,
         startX: scenario.width - 800,
         startY: DEFAULT_POSITION_Y - 100,
@@ -85,10 +85,11 @@ class GhostDreamScene extends Phaser.Scene {
   update(time: number, delta: number) {
     cemeteryScenario.update(delta);
     ghostJosef.update(time, delta);
-    ghostElisa.update();
+    eliza.update();
   }
 
   destroy() {
+    eliza.destroy();
     cemeteryScenario.destroy();
     hud.destroy();
     pumpkinKids.destroy();

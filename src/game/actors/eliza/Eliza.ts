@@ -16,9 +16,9 @@ export interface ElisaPayload extends ActorPayload {
   camera: Phaser.Cameras.Scene2D.Camera;
 }
 
-export class GhostElisa {
+export class Eliza {
   public lockInteractions = false;
-  private elisaSprite: Phaser.Types.Physics.Arcade.SpriteWithDynamicBody | null =
+  public sprite: Phaser.Types.Physics.Arcade.SpriteWithDynamicBody | null =
     null;
   private elisaInteractionArea: InteractionArea | null = null;
   private dayActions: DayActions | null = null;
@@ -43,14 +43,14 @@ export class GhostElisa {
   }: ElisaPayload) {
     this.dayActions = dayActions || null;
     this.cursors = cursors;
-    this.elisaSprite = elisaAnimations.create(scene, startX, startY);
-    this.elisaSprite.flipX = !!flipX;
-    this.elisaSprite.scale = scale || 1;
+    this.sprite = elisaAnimations.create(scene, startX, startY);
+    this.sprite.flipX = !!flipX;
+    this.sprite.scale = scale || 1;
 
     this.elisaInteractionArea = new InteractionArea();
     this.elisaInteractionArea.create(scene, {
       player,
-      target: this.elisaSprite,
+      target: this.sprite,
       width: 500,
       height: 400,
       // Shadow compensation
@@ -68,10 +68,10 @@ export class GhostElisa {
     });
 
     const handleSowing = ({ onFinish }: SowingEvent) => {
-      if (this.elisaSprite) {
+      if (this.sprite) {
         const animation = elisaAnimations.animations.GAS_MASK_NUN_SOWING_ANIM;
-        this.elisaSprite.play(animation);
-        onAnimationFrame(this.elisaSprite, animation, 21, () => onFinish());
+        this.sprite.play(animation);
+        onAnimationFrame(this.sprite, animation, 21, () => onFinish());
       } else {
         console.error("elisaSprite is not available");
       }
@@ -89,7 +89,7 @@ export class GhostElisa {
       this.lockInteractions = false;
     });
 
-    this.elisaSprite.once(Phaser.GameObjects.Events.DESTROY, () => {
+    this.sprite.once(Phaser.GameObjects.Events.DESTROY, () => {
       lessonEvents.off("eliza/lesson:sowing", handleSowing);
     });
   }
@@ -98,8 +98,8 @@ export class GhostElisa {
     this.elisaInteractionArea?.update();
     const { currentAnimation, previousAnimation } = elisaAnimations;
 
-    if (this.elisaSprite && currentAnimation !== previousAnimation) {
-      this.elisaSprite.play(currentAnimation, true);
+    if (this.sprite && currentAnimation !== previousAnimation) {
+      this.sprite.play(currentAnimation, true);
       elisaAnimations.previousAnimation = currentAnimation;
     }
 
@@ -117,6 +117,8 @@ export class GhostElisa {
       this.dayActions?.onConfessionalInteraction();
     }
   }
+
+  destroy() {}
 }
 
-export const ghostElisa = new GhostElisa();
+export const eliza = new Eliza();
