@@ -1,13 +1,15 @@
 import { DayActions } from "@/game/actions/actionDefaultPerDay/default.actions";
-import { elisaAnimations } from "./helpers/ElisaAnimations";
+import { elizaAnimations } from "./helpers/ElizaAnimations";
 import { gameEvents } from "@/events/gameEvents";
 import { ActorPayload } from "../types/Actor";
-import { createKeyMap } from "@/utils/createKeyMap";
-import { CHARACTERS } from "@/constants/game";
-import { HUD_ITEMS } from "@/game/scenes/hud";
-import { lessonEvents, SowingEvent } from "@/events/lessonEvents";
+import { createKeyMap, KeyMap } from "@/utils/createKeyMap";
 import { InteractionArea } from "@/libs/game/InteractionArea";
-import { onAnimationFrame } from "@/libs/animation/onAnimationFrame";
+import { IdleState } from "./states/IdleState";
+import { WaitingState } from "./states/WaitingState";
+import { DialogueState } from "./states/DialogueState";
+import { SowingState } from "./states/SowingState";
+import { StateMachine } from "@/libs/game/state-machine/StateMachine";
+import { ELIZA_STATES } from "./states/constants";
 
 export const KEY_CODES = Phaser.Input.Keyboard.KeyCodes;
 
@@ -17,18 +19,15 @@ export interface ElisaPayload extends ActorPayload {
 }
 
 export class Eliza {
-  public lockInteractions = false;
-  public sprite: Phaser.Types.Physics.Arcade.SpriteWithDynamicBody | null =
-    null;
-  private elisaInteractionArea: InteractionArea | null = null;
-  private dayActions: DayActions | null = null;
-  private cursors: Phaser.Types.Input.Keyboard.CursorKeys | null = null;
-  private keyMap: Partial<
-    Record<keyof typeof KEY_CODES, Phaser.Input.Keyboard.Key>
-  > | null = null;
+  public sprite!: Phaser.Types.Physics.Arcade.SpriteWithDynamicBody;
+  public interactionArea!: InteractionArea;
+  public dayActions: DayActions | null = null;
+  public cursors!: Phaser.Types.Input.Keyboard.CursorKeys;
+  public keyMap!: KeyMap;
+  private stateMachine!: StateMachine;
 
   preload(scene: Phaser.Scene) {
-    elisaAnimations.preload(scene);
+    elizaAnimations.preload(scene);
   }
 
   create({
@@ -41,84 +40,41 @@ export class Eliza {
     dayActions,
     cursors,
   }: ElisaPayload) {
-    this.dayActions = dayActions || null;
+    this.dayActions = dayActions ?? null;
     this.cursors = cursors;
-    this.sprite = elisaAnimations.create(scene, startX, startY);
-    this.sprite.flipX = !!flipX;
-    this.sprite.scale = scale || 1;
+    this.sprite = elizaAnimations.create(scene, startX, startY, flipX, scale);
+    this.keyMap = createKeyMap(scene, [KEY_CODES.K]);
 
-    this.elisaInteractionArea = new InteractionArea();
-    this.elisaInteractionArea.create(scene, {
+    this.interactionArea = new InteractionArea();
+    this.interactionArea.create(scene, {
       player,
       target: this.sprite,
       width: 500,
       height: 400,
-      // Shadow compensation
       offsetX: -180,
       onEnter: dayActions?.onEnterElizaArea,
       onLeave: () => gameEvents.emit("hide-game-message", {}),
     });
 
-    this.keyMap = createKeyMap(scene, [KEY_CODES.K]);
+    this.stateMachine = new StateMachine(scene);
+    this.stateMachine
+      .addState(ELIZA_STATES.WAITING, WaitingState, this)
+      .addState(ELIZA_STATES.IDLE, IdleState, this)
+      .addState(ELIZA_STATES.DIALOGUE, DialogueState, this)
+      .addState(ELIZA_STATES.SOWING, SowingState, this);
 
-    gameEvents.on("set-mood", ({ mood, character }) => {
-      if (character === CHARACTERS.ELISA) {
-        elisaAnimations.setAnimationByMood(mood);
-      }
-    });
-
-    const handleSowing = ({ onFinish }: SowingEvent) => {
-      if (this.sprite) {
-        const animation = elisaAnimations.animations.GAS_MASK_NUN_SOWING_ANIM;
-        this.sprite.play(animation);
-        onAnimationFrame(this.sprite, animation, 21, () => onFinish());
-      } else {
-        console.error("elisaSprite is not available");
-      }
-    };
-
-    lessonEvents.on("eliza/lesson:sowing", handleSowing);
-
-    lessonEvents.on("show-lesson", () => {
-      this.keyMap = createKeyMap(scene, []);
-      this.lockInteractions = true;
-    });
-
-    lessonEvents.on("hide-lesson", () => {
-      this.keyMap = createKeyMap(scene, [KEY_CODES.E]);
-      this.lockInteractions = false;
-    });
-
-    this.sprite.once(Phaser.GameObjects.Events.DESTROY, () => {
-      lessonEvents.off("eliza/lesson:sowing", handleSowing);
-    });
+    this.stateMachine.changeTo(ELIZA_STATES.WAITING);
   }
 
-  update() {
-    this.elisaInteractionArea?.update();
-    const { currentAnimation, previousAnimation } = elisaAnimations;
-
-    if (this.sprite && currentAnimation !== previousAnimation) {
-      this.sprite.play(currentAnimation, true);
-      elisaAnimations.previousAnimation = currentAnimation;
-    }
-
-    if (
-      !this.lockInteractions &&
-      this.elisaInteractionArea?.isOverlapping &&
-      (this.cursors?.space.isDown || this.keyMap?.E?.isDown)
-    ) {
-      gameEvents.emit("hide-hud-items", [
-        HUD_ITEMS.WEIGHT,
-        HUD_ITEMS.THERMOMETER,
-      ]);
-      gameEvents.emit("hide-game-message", {});
-      gameEvents.emit("camera-zoom-to", { zoom: 1.2, duration: 200 });
-      this.dayActions?.onConfessionalInteraction();
+  update(delta: number) {
+    if (this.stateMachine) {
+      this.stateMachine.updateAndHandleInput(delta);
     }
   }
 
-  destroy() {}
+  destroy() {
+    this.stateMachine.clear();
+  }
 }
 
 export const eliza = new Eliza();

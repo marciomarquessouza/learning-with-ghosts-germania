@@ -1,4 +1,7 @@
 export const KEY_CODES = Phaser.Input.Keyboard.KeyCodes;
+export type KeyMap = Partial<
+  Record<keyof typeof KEY_CODES, Phaser.Input.Keyboard.Key>
+>;
 type KeyCodeNames = keyof typeof Phaser.Input.Keyboard.KeyCodes;
 
 /**
@@ -9,10 +12,7 @@ type KeyCodeNames = keyof typeof Phaser.Input.Keyboard.KeyCodes;
  * @param keys - Array of keyCodes of Phaser.Input.Keyboard.KeyCodes
  * @returns Key Maps
  */
-export function createKeyMap(
-  scene: Phaser.Scene,
-  codes: number[]
-): Partial<Record<keyof typeof KEY_CODES, Phaser.Input.Keyboard.Key>> {
+export function createKeyMap(scene: Phaser.Scene, codes: number[]): KeyMap {
   if (!scene.input.keyboard) {
     throw new Error("Mobile/Tablet version not implemented");
   }
@@ -21,11 +21,11 @@ export function createKeyMap(
 
   const entries = Object.entries(Phaser.Input.Keyboard.KeyCodes) as [
     KeyCodeNames,
-    number
+    number,
   ][];
 
   const codeToName = new Map<number, KeyCodeNames>(
-    entries.map(([name, code]) => [code, name])
+    entries.map(([name, code]) => [code, name]),
   );
 
   codes.forEach((code) => {

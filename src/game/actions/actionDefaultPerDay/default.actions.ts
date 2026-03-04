@@ -180,7 +180,7 @@ export class DayActions {
     );
   }
 
-  onConfessionalInteraction() {
+  onElizaInteraction() {
     gameEvents.emit("show-dialogue", {
       lines: [
         {

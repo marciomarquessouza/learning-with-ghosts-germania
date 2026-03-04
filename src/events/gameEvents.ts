@@ -28,7 +28,7 @@ export interface ZoomProps {
   duration?: number;
 }
 
-export type Events = {
+export type GameEvents = {
   "canvas-ready": undefined;
   "change-world": {
     targetWorld: GameWorlds;
@@ -75,4 +75,4 @@ export type Events = {
   "krampus/released": { skyEffectAmount?: number; onFinish: () => void };
 };
 
-export const gameEvents = mitt<Events>();
+export const gameEvents = mitt<GameEvents>();

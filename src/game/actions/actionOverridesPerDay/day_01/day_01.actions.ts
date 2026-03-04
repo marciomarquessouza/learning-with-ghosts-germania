@@ -124,7 +124,7 @@ class DayActions1 extends DayActions {
     showDialogue({ lines: defaultDialogues.default_rat_dialogue() });
   }
 
-  onConfessionalInteraction() {
+  onElizaInteraction() {
     if (!this.lesson) {
       throw new Error("no lesson available");
     }
