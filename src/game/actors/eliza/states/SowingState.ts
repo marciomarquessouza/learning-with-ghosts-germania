@@ -7,10 +7,10 @@ const FRAME_ELIZA_OPENING_HAND = 21;
 
 export class SowingState extends BaseState {
   constructor(
-    private scene: Phaser.Scene,
+    scene: Phaser.Scene,
     private eliza: Eliza,
   ) {
-    super();
+    super(scene);
   }
 
   enter(): void {

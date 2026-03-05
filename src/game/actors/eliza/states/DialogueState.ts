@@ -3,10 +3,10 @@ import { Eliza } from "../Eliza";
 
 export class DialogueState extends BaseState {
   constructor(
-    private scene: Phaser.Scene,
+    scene: Phaser.Scene,
     private eliza: Eliza,
   ) {
-    super();
+    super(scene);
   }
 
   enter(): void {}

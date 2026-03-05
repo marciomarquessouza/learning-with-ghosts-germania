@@ -1,19 +1,24 @@
-import { CHARACTERS, GAME_SCENES, MOODS } from "@/constants/game";
+import { CHARACTERS, GAME_SCENES } from "@/constants/game";
 import { gameEvents } from "@/events/gameEvents";
 import { showDialogue } from "@/events/helpers/showDialogue";
-import { stepDayIntroduction, stepGameMessage } from "@/events/steps";
+import {
+  stepDayIntroduction,
+  stepGameMessage,
+  stepShowDialogue,
+} from "@/events/steps";
 import { runSteps } from "@/events/steps/runSteps";
-import { defaultDialogues } from "./default.dialogues";
+import { dialogues } from "./default.dialogues";
 import { AudioManifest, GameScenes, Lesson } from "@/types";
 import { defaultLesson } from "./default.lessons";
 import { useLessonStore } from "@/store/lessonStore";
 import { useGameStore } from "@/store/gameStore";
 import { mergeLessonWithAudioManifest } from "@/utils/mergeLessonWithAudioManifest";
+import { lessonActions } from "../lessonActions/LessonActions";
 
 const DEFAULT_SCENE = GAME_SCENES.CELL_SCENE;
 
 export class DayActions {
-  private currentScene: GameScenes | null = null;
+  private currentGameScene: GameScenes | null = null;
   clicked = {
     desk: 0,
     ratHole: 0,
@@ -24,7 +29,7 @@ export class DayActions {
     bars: 0,
   };
 
-  get lesson(): Lesson | null {
+  get lesson(): Lesson {
     return useLessonStore.getState().lesson;
   }
 
@@ -32,20 +37,20 @@ export class DayActions {
     useLessonStore.getState().update(lesson);
   }
 
-  get scene(): GameScenes {
-    if (!this.currentScene) {
+  get gameScene(): GameScenes {
+    if (!this.currentGameScene) {
       console.error(
         "The Action Scene was not defined. Returning the default scene: ",
         DEFAULT_SCENE,
       );
       return DEFAULT_SCENE;
     }
-    return this.currentScene;
+    return this.currentGameScene;
   }
 
-  set scene(scene: GameScenes) {
+  set gameScene(scene: GameScenes) {
     console.log("#Action Scene Defined: ", scene);
-    this.currentScene = scene;
+    this.currentGameScene = scene;
   }
 
   constructor(dayLesson: Lesson, audioManifest?: AudioManifest) {
@@ -53,24 +58,32 @@ export class DayActions {
       dayLesson,
       audioManifest,
     );
-    this.createDayLesson(lessonWithAudio);
-  }
-
-  private createDayLesson(dayLesson: Lesson) {
     if (!this.lesson) {
-      this.lesson = dayLesson;
+      this.lesson = lessonWithAudio;
       return;
     }
     const currentDay = useGameStore.getState().day;
     const lessonDay = this.lesson.day;
 
     if (currentDay > lessonDay) {
-      this.lesson = dayLesson;
+      this.lesson = lessonWithAudio;
     }
   }
 
+  create(scene: Phaser.Scene) {
+    lessonActions.create(scene, this.lesson);
+  }
+
+  update(delta: number) {
+    lessonActions.update(delta);
+  }
+
+  destroy() {
+    lessonActions.destroy();
+  }
+
   onStart() {
-    switch (this.currentScene) {
+    switch (this.currentGameScene) {
       case GAME_SCENES.CELL_SCENE:
       default:
         runSteps(
@@ -85,7 +98,7 @@ export class DayActions {
   }
 
   onDeskClick() {
-    showDialogue({ lines: defaultDialogues.default_desk_dialogue() });
+    showDialogue({ lines: dialogues.default_desk_dialogue() });
     this.clicked.desk += 1;
   }
 
@@ -172,8 +185,8 @@ export class DayActions {
     runSteps(
       [
         stepGameMessage({
-          title: "Go to Eliska",
-          text: "Use the arrow keys or the A and D keys",
+          title: "Talk with ELiza",
+          text: "Press the Space key or the “E” key on your keyboard.",
         }),
       ],
       {},
@@ -181,22 +194,23 @@ export class DayActions {
   }
 
   onElizaInteraction() {
-    gameEvents.emit("show-dialogue", {
-      lines: [
-        {
-          type: "dialogue",
-          character: CHARACTERS.ELISA,
-          text: "Hello Josef",
-          moods: [
-            { mood: MOODS.HAPPY, character: CHARACTERS.ELISA },
-            { mood: MOODS.SURPRISED, character: CHARACTERS.JOSEF },
-          ],
-        },
-      ],
+    runSteps(
+      [stepShowDialogue({ lines: dialogues.default_lesson_preparation() })],
+      {
+        alternativeId: undefined,
+      },
+    ).then(() => {
+      this.onLesson();
     });
   }
 
-  onLessonStart() {}
+  onLesson() {
+    lessonActions.startLesson();
+  }
+
+  lessonNextAction() {
+    lessonActions.next();
+  }
 }
 
 export const defaultDayActions = new DayActions(defaultLesson);

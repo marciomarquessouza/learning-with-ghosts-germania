@@ -4,10 +4,10 @@ import { elizaAnimations } from "../helpers/ElizaAnimations";
 
 export class IdleState extends BaseState {
   constructor(
-    private scene: Phaser.Scene,
+    scene: Phaser.Scene,
     private eliza: Eliza,
   ) {
-    super();
+    super(scene);
   }
 
   enter(): void {

@@ -1,6 +1,6 @@
 import { dialogue } from "@/libs/dialogues";
 
-export const defaultDialogues = {
+export const dialogues = {
   before_sleep: () => [
     dialogue.josef.neutral`
 		Talk to the general at the bars.
@@ -29,6 +29,18 @@ export const defaultDialogues = {
     dialogue.josef.neutral`
 		It looks like I need to be careful with my food.
 		There’s a rat here
+	`,
+  ],
+  default_lesson_preparation: () => [
+    dialogue.elisa.neutral`
+		Bem vindo para mais um dia de aula Josef.
+		Vamos plantas mais algumas palavras no seu cu.
+	`,
+    dialogue.josef.surprised`
+		O que?
+	`,
+    dialogue.elisa.neutral`
+		Digo... na sua cabeça
 	`,
   ],
 };

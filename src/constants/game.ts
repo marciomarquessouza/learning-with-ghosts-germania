@@ -22,6 +22,8 @@ export const sceneWorldMap: Record<GameScenes, GameWorlds> = {
   [GAME_SCENES.TRAIN_SCENE]: GAME_WORLDS.DREAM,
 };
 
+export const LESSON_MIN_SCORE_DEFAULT = 0.75;
+
 export const DEFAULT_WIDTH = 1920;
 export const DEFAULT_HEIGHT = 1080;
 export const DEFAULT_INITIAL_WEIGHT = 75;

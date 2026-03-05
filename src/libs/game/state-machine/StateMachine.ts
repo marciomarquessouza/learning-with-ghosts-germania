@@ -7,17 +7,22 @@ export interface IState {
   setStateMachine(stateMachine: StateMachine): void;
 }
 
-export type StateConstructor<T extends IState> = new (...args: any[]) => T;
+export type StateConstructor<T extends IState> = new (
+  scene: Phaser.Scene,
+  ...args: any[]
+) => T;
 
-export class StateMachine extends Phaser.Events.EventEmitter {
+export class StateMachine {
   private states: Map<string, IState> = new Map();
   private currentState: IState | null = null;
   private currentStateName: string = "";
   private previousStateName: string = "";
   private scene: Phaser.Scene;
+  private events: {
+    remove: () => Phaser.Events.EventEmitter;
+  }[] = [];
 
   constructor(scene: Phaser.Scene) {
-    super();
     this.scene = scene;
   }
 
@@ -38,7 +43,7 @@ export class StateMachine extends Phaser.Events.EventEmitter {
       return false;
     }
 
-    const fromState = this.currentState;
+    const fromState = this.currentStateName;
     const toState = stateName;
 
     if (this.currentState) {
@@ -50,16 +55,12 @@ export class StateMachine extends Phaser.Events.EventEmitter {
     this.currentStateName = stateName;
     this.currentState.enter(...args);
 
-    this.emit("stateChanged", {
+    this.scene.events.emit("stateChanged", {
       from: fromState,
       to: toState,
+      toState: this.currentState,
       timestamp: this.scene.time.now,
       args: args,
-    });
-
-    this.emit(`state:${toState}`, {
-      from: fromState,
-      args,
     });
 
     return true;
@@ -78,6 +79,12 @@ export class StateMachine extends Phaser.Events.EventEmitter {
     }
   }
 
+  handleInput(...args: any[]) {
+    if (this.currentState) {
+      this.currentState.handleInput(...args);
+    }
+  }
+
   updateAndHandleInput(delta: number, ...inputArgs: any[]) {
     if (this.currentState) {
       this.currentState.update(delta);
@@ -85,10 +92,20 @@ export class StateMachine extends Phaser.Events.EventEmitter {
     }
   }
 
-  handleInput(...args: any[]) {
-    if (this.currentState) {
-      this.currentState.handleInput(...args);
-    }
+  onStateChange(
+    callback: (data: {
+      from: string;
+      to: string;
+      fromState?: IState | null;
+      toState?: IState;
+      timestamp: number;
+      args: any[];
+    }) => void,
+  ) {
+    this.scene.events.on("stateChanged", callback);
+    this.events.push({
+      remove: () => this.scene.events.off("stateChanged", callback),
+    });
   }
 
   isIn(stateName: string): boolean {
@@ -112,6 +129,7 @@ export class StateMachine extends Phaser.Events.EventEmitter {
       this.currentState.exit();
     }
     this.states.clear();
+    this.events.forEach((event) => event.remove());
     this.currentState = null;
     this.currentStateName = "";
     this.previousStateName = "";

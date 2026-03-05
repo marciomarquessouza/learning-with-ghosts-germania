@@ -10,11 +10,13 @@ import { changeWorldTransition } from "@/game/utils/changeWorldTransition";
 import { GAME_SCENES } from "@/constants/game";
 import { GameScenes } from "@/types";
 import { pumpkinKids } from "@/game/actors/pumpkinKids/PumpkingKids";
+import { DayActions } from "@/game/actions/actionDefaultPerDay/default.actions";
 
 export const DEFAULT_POSITION_X = 510;
 export const DEFAULT_POSITION_Y = 720;
 
 class GhostDreamScene extends Phaser.Scene {
+  private dayActions: DayActions | null = null;
   private onChangeWorldTransition = ({
     afterClose,
   }: {
@@ -42,14 +44,13 @@ class GhostDreamScene extends Phaser.Scene {
       throw new Error("Mobile/Tablet version not implemented");
     const cursors = this.input.keyboard?.createCursorKeys();
     this.physics.world.setBounds(0, 0, scenario.width - 200, scenario.height);
-    const ghostSprite = ghostJosef.create({
-      scene: this,
+    const josefSprite = ghostJosef.create(this, {
       startX: DEFAULT_POSITION_X,
       startY: DEFAULT_POSITION_Y,
       cursors,
     });
 
-    dreamCamera.create(this, ghostSprite, {
+    dreamCamera.create(this, josefSprite, {
       x: 0,
       y: 0,
       width: scenario.width,
@@ -57,13 +58,14 @@ class GhostDreamScene extends Phaser.Scene {
     });
 
     getDayAction(this.scene.key as GameScenes).then((dayActions) => {
-      eliza.create({
-        scene: this,
+      this.dayActions = dayActions;
+      this.dayActions.create(this);
+      eliza.create(this, {
         startX: scenario.width - 800,
         startY: DEFAULT_POSITION_Y - 100,
         scale: 0.8,
         flipX: true,
-        player: ghostSprite,
+        player: josefSprite,
         dayActions,
         cursors,
         camera: dreamCamera.mainCamera,
@@ -86,6 +88,9 @@ class GhostDreamScene extends Phaser.Scene {
     cemeteryScenario.update(delta);
     ghostJosef.update(time, delta);
     eliza.update(delta);
+    if (this.dayActions) {
+      this.dayActions.update(delta);
+    }
   }
 
   destroy() {
@@ -94,6 +99,9 @@ class GhostDreamScene extends Phaser.Scene {
     hud.destroy();
     pumpkinKids.destroy();
     gameEvents.off("change-world-transition", this.onChangeWorldTransition);
+    if (this.dayActions) {
+      this.dayActions.destroy();
+    }
   }
 }
 

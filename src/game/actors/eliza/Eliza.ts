@@ -1,6 +1,5 @@
 import { DayActions } from "@/game/actions/actionDefaultPerDay/default.actions";
 import { elizaAnimations } from "./helpers/ElizaAnimations";
-import { gameEvents } from "@/events/gameEvents";
 import { ActorPayload } from "../types/Actor";
 import { createKeyMap, KeyMap } from "@/utils/createKeyMap";
 import { InteractionArea } from "@/libs/game/InteractionArea";
@@ -10,6 +9,8 @@ import { DialogueState } from "./states/DialogueState";
 import { SowingState } from "./states/SowingState";
 import { StateMachine } from "@/libs/game/state-machine/StateMachine";
 import { ELIZA_STATES } from "./states/constants";
+import { createElizaInteractionArea } from "./helpers/createElizaInteractionArea";
+import { gameEvents } from "@/events/gameEvents";
 
 export const KEY_CODES = Phaser.Input.Keyboard.KeyCodes;
 
@@ -30,29 +31,16 @@ export class Eliza {
     elizaAnimations.preload(scene);
   }
 
-  create({
-    scene,
-    startX,
-    startY,
-    scale,
-    flipX,
-    player,
-    dayActions,
-    cursors,
-  }: ElisaPayload) {
+  create(scene: Phaser.Scene, payload: ElisaPayload) {
+    const { dayActions, player } = payload;
     this.dayActions = dayActions ?? null;
-    this.cursors = cursors;
-    this.sprite = elizaAnimations.create(scene, startX, startY, flipX, scale);
+    this.cursors = payload.cursors;
+    this.sprite = elizaAnimations.create(scene, payload);
     this.keyMap = createKeyMap(scene, [KEY_CODES.K]);
-
-    this.interactionArea = new InteractionArea();
-    this.interactionArea.create(scene, {
+    this.interactionArea = createElizaInteractionArea(scene, {
+      eliza,
       player,
-      target: this.sprite,
-      width: 500,
-      height: 400,
-      offsetX: -180,
-      onEnter: dayActions?.onEnterElizaArea,
+      onEnter: eliza.dayActions?.onEnterElizaArea,
       onLeave: () => gameEvents.emit("hide-game-message", {}),
     });
 
@@ -63,6 +51,7 @@ export class Eliza {
       .addState(ELIZA_STATES.DIALOGUE, DialogueState, this)
       .addState(ELIZA_STATES.SOWING, SowingState, this);
 
+    // Initial State
     this.stateMachine.changeTo(ELIZA_STATES.WAITING);
   }
 

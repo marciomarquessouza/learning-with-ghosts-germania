@@ -2,7 +2,13 @@
 import { IState, StateMachine } from "./StateMachine";
 
 export abstract class BaseState implements IState {
+  protected scene: Phaser.Scene;
   protected stateMachine!: StateMachine;
+
+  // Scene is injected by the State Machine
+  constructor(scene: Phaser.Scene) {
+    this.scene = scene;
+  }
 
   setStateMachine(stateMachine: StateMachine): void {
     this.stateMachine = stateMachine;

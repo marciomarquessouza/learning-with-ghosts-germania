@@ -1,11 +1,9 @@
-import { CHARACTERS } from "@/constants/game";
 import { Lesson } from "@/types";
 
 export const lesson: Lesson = {
   id: "greetings",
   day: 1,
   title: "Greetings",
-  character: CHARACTERS.ELISA,
   entries: [
     {
       id: "1",
@@ -16,6 +14,11 @@ export const lesson: Lesson = {
           type: "introduction",
           text: `Our first word is “Hallo”. It’s the neutral, everyday way to start a conversation in German — friendly and safe in almost any context.`,
           instruction: "Listen and repeat (don’t be shy, say it out loud!)",
+        },
+        {
+          type: "listening",
+          text: `Listening Text Placeholder`,
+          instruction: "",
         },
         {
           type: "pronunciation",
@@ -40,6 +43,11 @@ export const lesson: Lesson = {
           instruction: "Listen and repeat (don’t be shy, say it out loud!)",
         },
         {
+          type: "listening",
+          text: `Listening Text Placeholder`,
+          instruction: "",
+        },
+        {
           type: "pronunciation",
           text: `Try it with me: “Guten Tag”. Keep “Tag” short, firm, and clean: tahk.`,
           instruction:
@@ -61,6 +69,11 @@ export const lesson: Lesson = {
           type: "introduction",
           text: `“Guten Abend” is used in the evening — usually after 6 or 7 pm. It’s polite and works in both formal and casual situations.`,
           instruction: "Listen and repeat (don’t be shy, say it out loud!)",
+        },
+        {
+          type: "listening",
+          text: `Listening Text Placeholder`,
+          instruction: "",
         },
         {
           type: "pronunciation",

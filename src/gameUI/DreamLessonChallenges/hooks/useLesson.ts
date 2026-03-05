@@ -7,19 +7,17 @@ import {
   defaultLessonDetails,
 } from "./reducers/lessonReducer";
 import { Lesson, LessonDetails, LessonEntry, LessonEntryStep } from "@/types";
-import { useCharacterDetails } from "@/hooks/useCharacterDetails";
 
 export const useLesson = () => {
   const [state, dispatch] = useReducer(lessonReducer, defaultState);
   const onCompleteRef = useRef<() => void | null>(null);
-  const characterDetails = useCharacterDetails(state.lesson?.character);
   const isFirst = useMemo(
     () => state.entryFlags.isFirstEntry && state.stepFlags.isFirstStep,
-    [state.entryFlags.isFirstEntry, state.stepFlags.isFirstStep]
+    [state.entryFlags.isFirstEntry, state.stepFlags.isFirstStep],
   );
   const isLast = useMemo(
     () => state.entryFlags.isLastEntry && state.stepFlags.isLastStep,
-    [state.entryFlags.isLastEntry, state.stepFlags.isLastStep]
+    [state.entryFlags.isLastEntry, state.stepFlags.isLastStep],
   );
 
   const createLesson = useCallback(
@@ -30,7 +28,7 @@ export const useLesson = () => {
         payload: { lesson },
       });
     },
-    []
+    [],
   );
 
   const getLessonDetails = useCallback((): LessonDetails => {
@@ -80,7 +78,6 @@ export const useLesson = () => {
     return {
       isFirst,
       isLast,
-      characterDetails,
       lessonDetails: getLessonDetails(),
       lessonEntry,
       lessonStep: getLessonStep(),
@@ -98,7 +95,6 @@ export const useLesson = () => {
     state.visible,
     state.entryFlags,
     state.stepFlags,
-    characterDetails,
     getLessonDetails,
     getLessonStep,
     getLessonEntry,

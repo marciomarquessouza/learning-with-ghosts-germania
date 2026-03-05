@@ -5,7 +5,11 @@ import { AudioScoreSummary } from "@/libs/audio/useAudioScoreV2";
 export type GameScenes = (typeof GAME_SCENES)[keyof typeof GAME_SCENES];
 export type GameWorlds = (typeof GAME_WORLDS)[keyof typeof GAME_WORLDS];
 
-export type LessonStepType = "introduction" | "pronunciation" | "writing";
+export type LessonStepType =
+  | "introduction"
+  | "listening"
+  | "pronunciation"
+  | "writing";
 
 export type StepPhases =
   | "show"
@@ -35,7 +39,6 @@ export type Lesson = {
   id: string;
   day: number;
   title: string;
-  character: CHARACTERS;
   entries: LessonEntry[];
 };
 

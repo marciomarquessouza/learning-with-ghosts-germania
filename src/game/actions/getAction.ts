@@ -9,7 +9,7 @@ import { GameScenes } from "@/types";
 const cache = new Map<number, DayActions>();
 
 function withScene(actions: DayActions, scene: GameScenes): DayActions {
-  actions.scene = scene;
+  actions.gameScene = scene;
   return actions;
 }
 

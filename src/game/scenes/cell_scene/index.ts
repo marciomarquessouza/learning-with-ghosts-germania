@@ -9,12 +9,14 @@ import { gameEvents } from "@/events/gameEvents";
 import { changeWorldTransition } from "@/game/utils/changeWorldTransition";
 import { GAME_SCENES } from "@/constants/game";
 import { GameScenes } from "@/types";
+import { DayActions } from "@/game/actions/actionDefaultPerDay/default.actions";
 
 const CELL = "cell";
 
 class CellScene extends Phaser.Scene {
   player: Phaser.Types.Physics.Arcade.SpriteWithDynamicBody | null = null;
   target: { x: number; y: number } | null = null;
+  private dayActions: DayActions | null = null;
 
   constructor() {
     super({ key: GAME_SCENES.CELL_SCENE });
@@ -43,6 +45,8 @@ class CellScene extends Phaser.Scene {
     noiseEffect.create(this);
 
     getDayAction(this.scene.key as GameScenes).then((dayActions) => {
+      this.dayActions = dayActions;
+      dayActions.create(this);
       dayActions.onStart();
       selectableAreas.create(this, dayActions);
       const hudContainer = hud.create(this, dayActions, [
@@ -58,10 +62,17 @@ class CellScene extends Phaser.Scene {
     });
   }
 
-  update(): void {}
+  update(_time: number, delta: number): void {
+    if (this.dayActions) {
+      this.dayActions.update(delta);
+    }
+  }
 
   destroy() {
     hud.destroy();
+    if (this.dayActions) {
+      this.dayActions.destroy();
+    }
   }
 }
 

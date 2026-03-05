@@ -15,7 +15,7 @@ import {
 } from "@/events/steps";
 import { dialogues } from "./day_01.dialogues";
 import { showDialogue } from "@/events/helpers/showDialogue";
-import { defaultDialogues } from "../../actionDefaultPerDay/default.dialogues";
+import { dialogues as defaultDialogues } from "../../actionDefaultPerDay/default.dialogues";
 import { showGameMessage } from "@/events/helpers/showGameMessage";
 import { AudioManifest, Lesson } from "@/types";
 import { lesson } from "./day_01.lesson";
@@ -28,7 +28,7 @@ class DayActions1 extends DayActions {
   }
 
   onStart(): void {
-    switch (this.scene) {
+    switch (this.gameScene) {
       case GAME_SCENES.DREAM_SCENE:
         runSteps(
           [
@@ -120,45 +120,11 @@ class DayActions1 extends DayActions {
     showDialogue({ lines: defaultDialogues.default_food_dialogue() });
   }
 
-  onRatClick(): void {
-    showDialogue({ lines: defaultDialogues.default_rat_dialogue() });
-  }
-
-  onElizaInteraction() {
-    if (!this.lesson) {
-      throw new Error("no lesson available");
-    }
-
-    runSteps(
-      [
-        // stepShowDialogue({ lines: dialogues.lesson_preparation() }),
-        stepPlantingPumpkinKid(),
-        // stepShowLesson({ lesson: this.lesson }),
-        // stepShowDialogue({ lines: dialogues.lesson_finish() }),
-        // stepShowDialogue(
-        //   { lines: dialogues.challenge_accepted() },
-        //   { showWhenAlternativeIs: "train_challenge" },
-        // ),
-        // stepChangeScene(
-        //   { targetScene: "TrainScene", fade: true },
-        //   { showWhenAlternativeIs: "train_challenge" },
-        // ),
-        // stepShowDialogue(
-        //   { lines: dialogues.return_to_cell() },
-        //   { showWhenAlternativeIs: "return" },
-        // ),
-        // stepChangeWorldTransition(null, { showWhenAlternativeIs: "return" }),
-        // stepSetGameWorld(
-        //   {
-        //     targetWorld: GAME_WORLDS.REAL,
-        //     targetScene: "CellScene",
-        //   },
-        //   { showWhenAlternativeIs: "return" },
-        // ),
-      ],
-      { alternativeId: undefined },
-    );
-  }
+  // onElizaInteraction() {
+  //   runSteps([stepShowDialogue({ lines: dialogues.lesson_preparation() })], {
+  //     alternativeId: undefined,
+  //   });
+  // }
 }
 
 export const dayAction = new DayActions1(lesson, audioManifest);

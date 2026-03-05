@@ -3,6 +3,8 @@ import { LessonEvent, lessonEvents } from "@/events/lessonEvents";
 import { useLesson } from "./hooks/useLesson";
 import { LessonHeader } from "./LessonHeader";
 import { LessonActions } from "./LessonActions";
+import { useCharacterDetails } from "@/hooks/useCharacterDetails";
+import { CHARACTERS } from "@/constants/game";
 
 export function DreamLessonChallenges() {
   const {
@@ -12,13 +14,13 @@ export function DreamLessonChallenges() {
     lessonEntry,
     lessonStep,
     stepFlags,
-    characterDetails,
     visible,
     createLesson,
     nextStep,
     previousStep,
   } = useLesson();
   const [showActions, setShowActions] = useState(false);
+  const characterDetails = useCharacterDetails(CHARACTERS.ELISA);
 
   useEffect(() => {
     const handler = (payload: LessonEvent) => {

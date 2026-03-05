@@ -22,7 +22,7 @@ export class GhostJosef {
     ghostAnimations.preload(scene);
   }
 
-  create({ scene, startX, startY, cursors }: ActorPayload) {
+  create(scene: Phaser.Scene, { startX, startY, cursors }: ActorPayload) {
     this.sprite = ghostAnimations.create(scene, startX, startY);
     this.sprite.setDepth(10).setCollideWorldBounds(true);
     this.sprite.play(ghostAnimations.animations.GHOST_IDLE_ANIM, true);
@@ -78,13 +78,13 @@ export class GhostJosef {
       moving
         ? ghostAnimations.animations.GHOST_MOVE_ANIM
         : ghostAnimations.currentAnimation,
-      true
+      true,
     );
 
     const { offset } = ghostLevitation.levitationUpdate(
       delta,
       this.sprite,
-      ghostShadow
+      ghostShadow,
     )!;
 
     this.sprite.setVelocityX(vx);

@@ -1,4 +1,3 @@
-import { CHARACTERS } from "@/constants/game";
 import { Lesson, LessonDetails, LessonEntry } from "@/types";
 import {
   createLesson,
@@ -35,7 +34,6 @@ export const defaultLessonDetails: LessonDetails = {
   id: "",
   day: 0,
   title: "",
-  character: CHARACTERS.ELISA,
 };
 
 export const defaultLessonEntry: LessonEntry = {
