@@ -1,10 +1,10 @@
 import { useEffect, useState } from "react";
 import { LessonEvent, lessonEvents } from "@/events/lessonEvents";
 import { useLesson } from "./hooks/useLesson";
-import { LessonHeader } from "./LessonHeader";
 import { LessonActions } from "./LessonActions";
 import { useCharacterDetails } from "@/hooks/useCharacterDetails";
 import { CHARACTERS } from "@/constants/game";
+import { LessonHeader } from "../LessonHeader";
 
 export function DreamLessonChallenges() {
   const {

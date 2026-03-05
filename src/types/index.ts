@@ -72,6 +72,12 @@ export interface LessonComponentProps {
   onResult?: (challengeResult: ChallengeResult) => void;
 }
 
+export interface StepFlags {
+  stepIndex: number;
+  isFirstStep: boolean;
+  isLastStep: boolean;
+}
+
 export type ChallengeCommand = "attack" | "coal";
 
 export type TransitionOptions = Omit<

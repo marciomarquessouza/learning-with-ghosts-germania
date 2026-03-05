@@ -2,10 +2,9 @@ import { useEffect, useRef, useState } from "react";
 import { NotebookToggleButton } from "./NotebookToggleButton";
 import { LessonExit } from "./LessonExit";
 import { LessonTitle } from "./LessonTitle";
-import { LessonDetails, LessonEntryStep } from "@/types";
+import { LessonDetails, LessonEntryStep, StepFlags } from "@/types";
 import { LessonDescription } from "./LessonDescription";
 import { CharacterDetails } from "@/hooks/useCharacterDetails";
-import { StepFlags } from "../hooks/reducers/lessonReducer";
 
 interface LessonHeaderProps {
   show: boolean;

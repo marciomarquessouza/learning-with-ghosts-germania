@@ -1,8 +1,7 @@
 import { CharacterDetails } from "@/hooks/useCharacterDetails";
 import { useTypewriter } from "@/hooks/useTypewriter";
-import { LessonEntryStep } from "@/types";
+import { LessonEntryStep, StepFlags } from "@/types";
 import { useEffect, useRef, useState } from "react";
-import { StepFlags } from "../hooks/reducers/lessonReducer";
 import { AnimatePresence, motion } from "framer-motion";
 
 export interface LessonDescriptionProps {

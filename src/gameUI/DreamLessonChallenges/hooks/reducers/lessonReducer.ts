@@ -1,4 +1,4 @@
-import { Lesson, LessonDetails, LessonEntry } from "@/types";
+import { Lesson, LessonDetails, LessonEntry, StepFlags } from "@/types";
 import {
   createLesson,
   getNextEntry,
@@ -11,12 +11,6 @@ export interface EntryFlags {
   entryIndex: number;
   isFirstEntry: boolean;
   isLastEntry: boolean;
-}
-
-export interface StepFlags {
-  stepIndex: number;
-  isFirstStep: boolean;
-  isLastStep: boolean;
 }
 
 // Lesson: the top-level structure
