@@ -3,7 +3,7 @@ import { BaseState } from "@/libs/game/state-machine/BaseState";
 import { LESSON_STATES } from "../lessonStates";
 
 export class SproutingState extends BaseState {
-  public stateName = LESSON_STATES.GROWTH.SPROUTING;
+  public stateName = LESSON_STATES.FARMING.SPROUTING;
 
   constructor(
     scene: Phaser.Scene,

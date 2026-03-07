@@ -3,7 +3,7 @@ import { BaseState } from "@/libs/game/state-machine/BaseState";
 import { LESSON_STATES } from "../lessonStates";
 
 export class EntryResultState extends BaseState {
-  public stateName = LESSON_STATES.ENTRY.RESULT;
+  public stateName = LESSON_STATES.RESULT.ENTRY_RESULT;
 
   constructor(
     scene: Phaser.Scene,

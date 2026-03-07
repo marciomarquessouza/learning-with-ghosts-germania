@@ -1,10 +1,14 @@
-import { StateMachine } from "@/libs/game/state-machine/StateMachine";
-import { LESSON_STATES } from "./lessonStates";
-import { LessonStartState } from "./lesson/LessonStartState";
-import { LessonIntroductionState } from "./lesson/LessonIntroductionState";
-import { SowingState } from "./growth/SowingState";
-import { SeedState } from "./growth/SeedState";
-import { SproutingState } from "./growth/SproutingState";
+import {
+  IState,
+  StateConstructor,
+  StateMachine,
+} from "@/libs/game/state-machine/StateMachine";
+import { LESSON_STATES as STATES, LessonStateNames } from "./lessonStates";
+import { LessonStartState } from "./beginning/LessonStartState";
+import { LessonIntroductionState } from "./beginning/LessonIntroductionState";
+import { SowingState } from "./farming/SowingState";
+import { SeedState } from "./farming/SeedState";
+import { SproutingState } from "./farming/SproutingState";
 import { ListeningIntroState } from "./listening/ListeningIntroState";
 import { ListeningChallengeState } from "./listening/ListeningChallengeState";
 import { ListeningResultState } from "./listening/ListeningResultState";
@@ -14,7 +18,7 @@ import { PronunciationResultState } from "./pronunciation/PronunciationResultSta
 import { WritingIntroState } from "./writing/WritingIntroState";
 import { WritingChallengeState } from "./pronunciation/PronunciationChallengeState";
 import { WritingResultState } from "./writing/WritingResultState";
-import { EntryResultState } from "./entry/WritingChallengeState";
+import { EntryResultState } from "./result/EntryResultState";
 import { RewardRunningState } from "./reward/RewardRunningState";
 import { RewardMergingState } from "./reward/RewardMergingState";
 import { PunishmentAppearState } from "./punishment/PunishmentAppearState";
@@ -27,67 +31,32 @@ export function createLessonStateMachine(
   lessonActions: LessonActions,
 ): StateMachine {
   const stateMachine = new StateMachine(scene);
-  stateMachine
-    .addState(LESSON_STATES.LESSON.START, LessonStartState, lessonActions)
-    .addState(
-      LESSON_STATES.LESSON.INTRODUCTION,
-      LessonIntroductionState,
-      lessonActions,
-    )
-    .addState(LESSON_STATES.GROWTH.SOWING, SowingState, lessonActions)
-    .addState(LESSON_STATES.GROWTH.SEED_FALLING, SeedState, lessonActions)
-    .addState(LESSON_STATES.GROWTH.SPROUTING, SproutingState, lessonActions)
-    .addState(LESSON_STATES.LISTENING.INTRO, ListeningIntroState, lessonActions)
-    .addState(
-      LESSON_STATES.LISTENING.CHALLENGE,
-      ListeningChallengeState,
-      lessonActions,
-    )
-    .addState(
-      LESSON_STATES.LISTENING.RESULT,
-      ListeningResultState,
-      lessonActions,
-    )
-    .addState(
-      LESSON_STATES.PRONUNCIATION.INTRO,
-      PronunciationIntroState,
-      lessonActions,
-    )
-    .addState(
-      LESSON_STATES.PRONUNCIATION.CHALLENGE,
-      PronunciationChallengeState,
-      lessonActions,
-    )
-    .addState(
-      LESSON_STATES.PRONUNCIATION.RESULT,
-      PronunciationResultState,
-      lessonActions,
-    )
-    .addState(LESSON_STATES.WRITING.INTRO, WritingIntroState, lessonActions)
-    .addState(
-      LESSON_STATES.WRITING.CHALLENGE,
-      WritingChallengeState,
-      lessonActions,
-    )
-    .addState(LESSON_STATES.WRITING.RESULT, WritingResultState, lessonActions)
-    .addState(LESSON_STATES.ENTRY.RESULT, EntryResultState, lessonActions)
-    .addState(LESSON_STATES.REWARD.RUNNING, RewardRunningState, lessonActions)
-    .addState(LESSON_STATES.REWARD.MERGING, RewardMergingState, lessonActions)
-    .addState(
-      LESSON_STATES.PUNISHMENT.APPEAR,
-      PunishmentAppearState,
-      lessonActions,
-    )
-    .addState(
-      LESSON_STATES.PUNISHMENT.CAPTURE,
-      PunishmentCaptureState,
-      lessonActions,
-    )
-    .addState(
-      LESSON_STATES.PUNISHMENT.FLEEING,
-      PunishmentFleeingState,
-      lessonActions,
-    );
+  const states: [LessonStateNames, StateConstructor<IState>][] = [
+    [STATES.BEGINNING.LESSON_START, LessonStartState],
+    [STATES.BEGINNING.LESSON_INTRODUCTION, LessonIntroductionState],
+    [STATES.FARMING.SOWING, SowingState],
+    [STATES.FARMING.SEED_FALLING, SeedState],
+    [STATES.FARMING.SPROUTING, SproutingState],
+    [STATES.LISTENING.INTRO, ListeningIntroState],
+    [STATES.LISTENING.CHALLENGE, ListeningChallengeState],
+    [STATES.LISTENING.RESULT, ListeningResultState],
+    [STATES.PRONUNCIATION.INTRO, PronunciationIntroState],
+    [STATES.PRONUNCIATION.CHALLENGE, PronunciationChallengeState],
+    [STATES.PRONUNCIATION.RESULT, PronunciationResultState],
+    [STATES.WRITING.INTRO, WritingIntroState],
+    [STATES.WRITING.CHALLENGE, WritingChallengeState],
+    [STATES.WRITING.RESULT, WritingResultState],
+    [STATES.RESULT.ENTRY_RESULT, EntryResultState],
+    [STATES.REWARD.RUNNING, RewardRunningState],
+    [STATES.REWARD.MERGING, RewardMergingState],
+    [STATES.PUNISHMENT.APPEAR, PunishmentAppearState],
+    [STATES.PUNISHMENT.CAPTURE, PunishmentCaptureState],
+    [STATES.PUNISHMENT.FLEEING, PunishmentFleeingState],
+  ];
+
+  states.forEach(([name, state]) => {
+    stateMachine.addState(name, state, lessonActions);
+  });
 
   return stateMachine;
 }

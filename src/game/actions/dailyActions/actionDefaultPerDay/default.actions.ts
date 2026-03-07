@@ -167,10 +167,6 @@ export class DayActions {
   onLesson() {
     lessonActions.startLesson();
   }
-
-  lessonNextAction() {
-    lessonActions.next();
-  }
 }
 
 export const defaultDayActions = new DayActions(defaultLesson);

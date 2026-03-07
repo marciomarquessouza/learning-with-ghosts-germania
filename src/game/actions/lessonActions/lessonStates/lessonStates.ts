@@ -1,11 +1,10 @@
 export const LESSON_STATES = {
-  TRANSITION: "TRANSITION",
-  LESSON: {
-    START: "LESSON_START",
-    INTRODUCTION: "LESSON_INTRODUCTION",
+  BEGINNING: {
+    LESSON_START: "LESSON_START",
+    LESSON_INTRODUCTION: "LESSON_INTRODUCTION",
   },
 
-  GROWTH: {
+  FARMING: {
     SOWING: "SOWING",
     SEED_FALLING: "SEED_FALLING",
     SPROUTING: "SPROUTING",
@@ -29,8 +28,8 @@ export const LESSON_STATES = {
     RESULT: "WRITING_RESULT",
   },
 
-  ENTRY: {
-    RESULT: "ENTRY_RESULT",
+  RESULT: {
+    ENTRY_RESULT: "ENTRY_RESULT",
   },
 
   REWARD: {
@@ -44,3 +43,7 @@ export const LESSON_STATES = {
     FLEEING: "PUNISHMENT_FLEEING",
   },
 } as const;
+
+export type LessonStateNames = {
+  [K in keyof typeof LESSON_STATES]: (typeof LESSON_STATES)[K][keyof (typeof LESSON_STATES)[K]];
+}[keyof typeof LESSON_STATES];
