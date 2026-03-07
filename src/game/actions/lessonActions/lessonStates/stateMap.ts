@@ -1,5 +1,5 @@
 import { LESSON_MIN_SCORE_DEFAULT } from "@/constants/game";
-import { LESSON_STATES } from "../states/lessonStates";
+import { LESSON_STATES } from "./lessonStates";
 
 type Ctx = {
   score: number;

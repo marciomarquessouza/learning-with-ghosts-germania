@@ -1,8 +1,8 @@
 import { StateMachine } from "@/libs/game/state-machine/StateMachine";
 import { Lesson } from "@/types";
-import { LESSON_STATES } from "./states/lessonStates";
-import { getNextState } from "./statesMap/getNexState";
-import { createLessonStateMachine } from "./stateMachine/createLessonStateMachine";
+import { LESSON_STATES } from "./lessonStates/lessonStates";
+import { getNextState } from "./lessonStates/stateMap";
+import { createLessonStateMachine } from "./lessonStates/createLessonStateMachine";
 
 export class LessonActions {
   public lesson!: Lesson;

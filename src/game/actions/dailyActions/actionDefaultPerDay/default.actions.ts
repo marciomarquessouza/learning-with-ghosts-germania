@@ -6,12 +6,12 @@ import { defaultLesson } from "./default.lessons";
 import { useLessonStore } from "@/store/lessonStore";
 import { useGameStore } from "@/store/gameStore";
 import { mergeLessonWithAudioManifest } from "@/utils/mergeLessonWithAudioManifest";
-import { lessonActions } from "../lessonActions/LessonActions";
+import { lessonActions } from "../../lessonActions/LessonActions";
 import {
   stepDayIntroduction,
   stepGameMessage,
   stepShowDialogue,
-} from "../steps";
+} from "../../steps";
 
 const DEFAULT_SCENE = GAME_SCENES.CELL_SCENE;
 

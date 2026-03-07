@@ -1,4 +1,4 @@
-import { DayActions } from "@/game/actions/actionDefaultPerDay/default.actions";
+import { DayActions } from "@/game/actions/dailyActions/actionDefaultPerDay/default.actions";
 import { hudActions } from "./hudActions";
 import { hudWeight } from "./hudWeight";
 import { events } from "@/events/events";

@@ -15,7 +15,7 @@ import {
   stepSetGameWorld,
   stepShowDialogue,
   stepShowDreamIntroduction,
-} from "../../steps";
+} from "@/game/actions/steps";
 
 class DayActions1 extends DayActions {
   constructor(lesson: Lesson, audioManifest?: AudioManifest) {

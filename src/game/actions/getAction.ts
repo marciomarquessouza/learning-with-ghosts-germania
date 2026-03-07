@@ -1,10 +1,10 @@
 import { useGameStore } from "@/store/gameStore";
+import { dayImporters } from "./registry";
+import { GameScenes } from "@/types";
 import {
   DayActions,
   defaultDayActions,
-} from "./actionDefaultPerDay/default.actions";
-import { dayImporters } from "./registry";
-import { GameScenes } from "@/types";
+} from "./dailyActions/actionDefaultPerDay/default.actions";
 
 const cache = new Map<number, DayActions>();
 

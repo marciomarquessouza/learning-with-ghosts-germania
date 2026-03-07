@@ -1,4 +1,3 @@
-import { DayActions } from "@/game/actions/actionDefaultPerDay/default.actions";
 import { elizaAnimations } from "./helpers/ElizaAnimations";
 import { ActorPayload } from "../types/Actor";
 import { createKeyMap, KeyMap } from "@/utils/createKeyMap";
@@ -11,6 +10,7 @@ import { StateMachine } from "@/libs/game/state-machine/StateMachine";
 import { ELIZA_STATES } from "./states/constants";
 import { createElizaInteractionArea } from "./helpers/createElizaInteractionArea";
 import { events } from "@/events/events";
+import { DayActions } from "@/game/actions/dailyActions/actionDefaultPerDay/default.actions";
 
 export const KEY_CODES = Phaser.Input.Keyboard.KeyCodes;
 

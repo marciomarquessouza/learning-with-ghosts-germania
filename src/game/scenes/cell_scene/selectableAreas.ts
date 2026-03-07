@@ -1,5 +1,5 @@
+import { DayActions } from "@/game/actions/dailyActions/actionDefaultPerDay/default.actions";
 import { createSelectableArea } from "./helper/createSelectableArea";
-import { DayActions } from "@/game/actions/actionDefaultPerDay/default.actions";
 
 class SelectableAreas {
   create(scene: Phaser.Scene, dayActions: DayActions) {
@@ -11,7 +11,7 @@ class SelectableAreas {
       deskPosition,
       deskSize,
       "selectable",
-      handleDeskClick
+      handleDeskClick,
     );
 
     const bedPosition = { x: 320, y: 575 };
@@ -22,7 +22,7 @@ class SelectableAreas {
       bedPosition,
       bedSize,
       "selectable",
-      handleBedClick
+      handleBedClick,
     );
 
     const foodPosition = { x: 430, y: 59 };
@@ -33,7 +33,7 @@ class SelectableAreas {
       foodPosition,
       foodSize,
       "selectable",
-      handleFoodClick
+      handleFoodClick,
     );
 
     const sisyphusPosition = { x: 928, y: 615 };
@@ -44,7 +44,7 @@ class SelectableAreas {
       sisyphusPosition,
       sisyphusSize,
       "selectable",
-      handleSisyphusClick
+      handleSisyphusClick,
     );
   }
 }

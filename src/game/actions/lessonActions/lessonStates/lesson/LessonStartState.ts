@@ -14,6 +14,13 @@ export class LessonStartState extends BaseState {
 
   enter(): void {
     console.log(`#STATE-ENTER: ${this.stateName}`);
+    // TODO: Lesson Controller: setCurrentLessonEntry
+    // TODO: Lesson Header: Show Title
+    // TODO: Lesson Challenges: state: idle
+    // TODO: Eliza: state: idle
+    // TODO: Josef: state: idle
+    // TODO: Krampus: state: idle
+    // TODO: Pumpkin Kid: state: destroyed
   }
 
   exit(): void {

@@ -8,8 +8,8 @@ import { getDayAction } from "@/game/actions/getAction";
 import { changeWorldTransition } from "@/game/utils/changeWorldTransition";
 import { GAME_SCENES } from "@/constants/game";
 import { GameScenes } from "@/types";
-import { DayActions } from "@/game/actions/actionDefaultPerDay/default.actions";
 import { events } from "@/events/events";
+import { DayActions } from "@/game/actions/dailyActions/actionDefaultPerDay/default.actions";
 
 const CELL = "cell";
 
