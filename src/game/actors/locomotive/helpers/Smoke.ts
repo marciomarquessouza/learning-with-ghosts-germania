@@ -1,5 +1,5 @@
 import { LOCOMOTIVE_SMOKE_IMG } from "@/constants/images";
-import { gameEvents } from "@/events/gameEvents";
+import { events } from "@/events/events";
 
 const SMOKE_PUFF = "smokePuff";
 
@@ -32,7 +32,7 @@ class Smoke {
   create(
     scene: Phaser.Scene,
     parent: Phaser.GameObjects.Container,
-    options: Options
+    options: Options,
   ) {
     const {
       x,
@@ -107,12 +107,12 @@ class Smoke {
       schedule(currentSpeed);
     };
 
-    gameEvents.on("train/speed", onSpeed);
+    events.scenes.train.sync.on("train/speed", onSpeed);
 
     schedule(initialSpeed);
 
     parent.once(Phaser.GameObjects.Events.DESTROY, () => {
-      gameEvents.off("train/speed", onSpeed);
+      events.scenes.train.sync.off("train/speed", onSpeed);
       timer?.remove(false);
     });
   }

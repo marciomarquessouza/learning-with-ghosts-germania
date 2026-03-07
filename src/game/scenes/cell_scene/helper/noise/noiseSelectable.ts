@@ -4,7 +4,7 @@ import {
   NOISE_WHITE_ATLAS_JSON,
 } from "@/constants/images";
 import { Noise } from "./Noise";
-import { Position, Size } from "@/events/cellEvents";
+import { Position, Size } from "@/types";
 
 export const WHITE_BASE = "whiteBase";
 export const NOISE_WHITE_ATLAS = "noiseWhiteAtlas";
@@ -18,7 +18,7 @@ class NoiseSelectable extends Noise {
     scene.load.atlas(
       NOISE_WHITE_ATLAS,
       NOISE_WHITE_ATLAS_IMG,
-      NOISE_WHITE_ATLAS_JSON
+      NOISE_WHITE_ATLAS_JSON,
     );
     scene.load.image(WHITE_BASE, CELL_WHITE_BASE);
   }
@@ -26,7 +26,7 @@ class NoiseSelectable extends Noise {
   create(
     scene: Phaser.Scene,
     position?: Position,
-    size?: Size
+    size?: Size,
   ): Phaser.GameObjects.Sprite {
     if (this.noise) {
       return this.noise;

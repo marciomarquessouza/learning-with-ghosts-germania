@@ -1,4 +1,4 @@
-import { Position, Size } from "@/events/cellEvents";
+import { Position, Size } from "@/types";
 
 export abstract class Noise {
   abstract preload(scene: Phaser.Scene): void;
@@ -6,7 +6,7 @@ export abstract class Noise {
   abstract create(
     scene: Phaser.Scene,
     position?: Position,
-    size?: Size
+    size?: Size,
   ): Phaser.GameObjects.Sprite;
 
   abstract destroy(): void;

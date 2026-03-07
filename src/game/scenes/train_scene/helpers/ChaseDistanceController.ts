@@ -1,4 +1,4 @@
-import { gameEvents } from "@/events/gameEvents";
+import { events } from "@/events/events";
 
 type ChaseOptions = {
   initialGap: number;
@@ -23,7 +23,7 @@ export class ChaseDistanceController {
     this.gap = Phaser.Math.Clamp(
       this.gap,
       this.options.minGap,
-      this.options.maxGap
+      this.options.maxGap,
     );
 
     const isTooFar = this.isTooFar();
@@ -31,7 +31,7 @@ export class ChaseDistanceController {
     if (isTooFar !== this.wasTooFar) {
       this.wasTooFar = isTooFar;
 
-      gameEvents.emit("train/attack:availability", {
+      events.scenes.train.sync.emit("train/attack:availability", {
         enabled: isTooFar,
         gap: this.gap,
       });

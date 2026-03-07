@@ -5,6 +5,7 @@ import {
 } from "./helpers/KrampusAnimation";
 import { KrampusChasing } from "./helpers/KrampusChasing";
 import { krampusLight } from "./helpers/KrampusLight";
+import { events } from "@/events/events";
 
 export class Krampus {
   public container?: Phaser.GameObjects.Container;
@@ -63,6 +64,11 @@ export class Krampus {
       targetX,
       this.positionLerp,
     );
+  }
+
+  destroy() {
+    events.actors.krampus.sync.clear();
+    events.actors.krampus.async.clear();
   }
 }
 

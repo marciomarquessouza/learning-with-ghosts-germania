@@ -31,7 +31,7 @@ export async function scoreRecording(
     windowRatioMin?: number;
     windowRatioMax?: number;
     maxCostForPerfect?: number;
-  }
+  },
 ): Promise<ScoreResult> {
   const sampleRate = opts?.sampleRate ?? 16000;
   const frameSize = opts?.frameSize ?? 1024;
@@ -64,6 +64,7 @@ export async function scoreRecording(
 
     if (usrMono.length < frameSize * 2) {
       let usrMono = downmix(userBuf);
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
       usrMono = normalizePeak(usrMono);
     }
 
@@ -83,7 +84,7 @@ export async function scoreRecording(
       refM,
       usrM,
       opts?.windowRatioMin ?? 0.6,
-      opts?.windowRatioMax ?? 2.0
+      opts?.windowRatioMax ?? 2.0,
     );
 
     let score = costToScore(cost, opts?.maxCostForPerfect ?? 0.4);

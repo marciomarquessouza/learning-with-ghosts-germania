@@ -10,7 +10,7 @@ import { SowingState } from "./states/SowingState";
 import { StateMachine } from "@/libs/game/state-machine/StateMachine";
 import { ELIZA_STATES } from "./states/constants";
 import { createElizaInteractionArea } from "./helpers/createElizaInteractionArea";
-import { gameEvents } from "@/events/gameEvents";
+import { events } from "@/events/events";
 
 export const KEY_CODES = Phaser.Input.Keyboard.KeyCodes;
 
@@ -41,7 +41,7 @@ export class Eliza {
       eliza,
       player,
       onEnter: eliza.dayActions?.onEnterElizaArea,
-      onLeave: () => gameEvents.emit("hide-game-message", {}),
+      onLeave: () => events.game.sync.emit("hide-game-message", {}),
     });
 
     this.stateMachine = new StateMachine(scene);
@@ -63,6 +63,7 @@ export class Eliza {
 
   destroy() {
     this.stateMachine.clear();
+    events.actors.eliza.sync.clear();
   }
 }
 

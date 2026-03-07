@@ -1,7 +1,8 @@
-import { DropSeedEvent, lessonEvents } from "@/events/lessonEvents";
 import { seed } from "./helpers/seed";
 import { onAnimationComplete } from "@/libs/animation/onAnimationComplete";
 import { sprout, SPROUT_ANIMATIONS } from "./helpers/sprout";
+import { DropSeedEvent } from "@/events/actors/pumpkin-kid/types";
+import { events } from "@/events/events";
 
 interface CreatePayload {
   startX: number;
@@ -42,13 +43,16 @@ class PumpkinKids {
       });
     };
 
-    lessonEvents.on("pumpkin-kid/lesson:drop-seed", this.onDropSeed);
+    events.actors.pumpkinKid.sync.on(
+      "pumpkin-kid/lesson:drop-seed",
+      this.onDropSeed,
+    );
   }
 
   destroy() {
     sprout.destroy();
     if (this.onDropSeed) {
-      lessonEvents.off("pumpkin-kid/lesson:drop-seed", this.onDropSeed);
+      events.actors.pumpkinKid.sync.clear();
       this.onDropSeed = null;
     }
   }

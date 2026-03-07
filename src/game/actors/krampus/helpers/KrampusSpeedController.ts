@@ -1,4 +1,4 @@
-import { gameEvents } from "@/events/gameEvents";
+import { events } from "@/events/events";
 
 type Options = {
   initialSpeed: number;
@@ -33,23 +33,19 @@ export class KrampusSpeedController {
     this.speed = Phaser.Math.Clamp(
       options.initialSpeed,
       this.minSpeed,
-      this.maxSpeed
+      this.maxSpeed,
     );
 
     this.stamina = Phaser.Math.Clamp(
       (this.speed - this.minSpeed) / (this.maxSpeed - this.minSpeed),
       0,
-      1
+      1,
     );
 
     this.targetSpeed = this.speed;
 
-    gameEvents.on("krampus/damage", this.onDamage);
-    gameEvents.emit("krampus/speed", { speed: this.speed });
-  }
-
-  destroy() {
-    gameEvents.off("krampus/damage", this.onDamage);
+    events.actors.krampus.sync.on("krampus/damage", this.onDamage);
+    events.actors.krampus.sync.emit("krampus/speed", { speed: this.speed });
   }
 
   damage(amount: number) {
@@ -58,7 +54,7 @@ export class KrampusSpeedController {
     this.stamina = Phaser.Math.Clamp(
       this.stamina - amount * this.damageToStamina,
       0,
-      1
+      1,
     );
   }
 
@@ -71,7 +67,7 @@ export class KrampusSpeedController {
     this.stamina = Phaser.Math.Clamp(
       this.stamina + this.increaseHatePerSecond * hpFactor * delta,
       0,
-      1
+      1,
     );
 
     const curve = Phaser.Math.Easing.Cubic.Out(this.stamina);
@@ -83,7 +79,7 @@ export class KrampusSpeedController {
     this.speed = Phaser.Math.Linear(this.speed, this.targetSpeed, lerp);
 
     if (Math.abs(prev - this.speed) >= 0.15) {
-      gameEvents.emit("krampus/speed", { speed: this.speed });
+      events.actors.krampus.sync.emit("krampus/speed", { speed: this.speed });
     }
   }
 
@@ -98,4 +94,6 @@ export class KrampusSpeedController {
   getHP() {
     return this.hp;
   }
+
+  destroy() {}
 }

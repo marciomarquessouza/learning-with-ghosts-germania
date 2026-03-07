@@ -1,7 +1,6 @@
 import { useState, useEffect, useCallback, useRef, useMemo } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useTypewriter } from "@/hooks/useTypewriter";
-import { DialogueEvent, gameEvents } from "@/events/gameEvents";
 import { CHARACTERS, MOODS } from "@/constants/game";
 import { useDeviceType } from "@/hooks/useDeviceType";
 import Image from "next/image";
@@ -14,9 +13,11 @@ import { DialogueCTA } from "./DialogueCTA";
 import { getDialogueDimension } from "./helpers/getDialgueDimension";
 import { InputText } from "./InputText";
 import { getUUID } from "@/utils/getUUID";
-import { setCharactersMood } from "@/events/helpers/setCharactersMood";
 import { handleAlternativeKeyDown } from "@/libs/dialogues/handleAlternativeKeyDown";
 import { InteractionLine } from "@/types";
+import { events } from "@/events/events";
+import { DialogueEvent } from "@/events/game/types";
+import { setCharactersMood } from "@/game/actions/steps/actions/setCharactersMood";
 
 export function Dialogue() {
   const device = useDeviceType();
@@ -28,14 +29,14 @@ export function Dialogue() {
   const [lines, setLines] = useState<InteractionLine[]>([]);
   const [isLastLine, setLastLine] = useState(false);
   const [selectedAlternative, setSelectedAlternative] = useState<string | null>(
-    null
+    null,
   );
   const [answer, setAnswer] = useState<string>("");
   const characterDetails = useCharacterDetails(character);
   const { setInteractionDialogueOpen } = useUiStore();
   const { heightClass, widthClass } = useMemo(
     () => getDialogueDimension(device),
-    [device]
+    [device],
   );
   const onCompleteRef = useRef<() => void | null>(null);
   const boxRef = useRef<HTMLDivElement>(null);
@@ -61,8 +62,8 @@ export function Dialogue() {
       setVisible(true);
     };
 
-    gameEvents.on("show-dialogue", handler);
-    return () => gameEvents.off("show-dialogue", handler);
+    events.game.sync.on("show-dialogue", handler);
+    return () => events.game.sync.off("show-dialogue", handler);
   }, [setTextToType]);
 
   const advanceLine = useCallback(() => {
@@ -80,14 +81,16 @@ export function Dialogue() {
     const newLine = lines[newIndex];
 
     if (!newLine) {
-      gameEvents.emit("hide-dialogue", { dialogueId: dialogueId.current });
+      events.game.sync.emit("hide-dialogue", {
+        dialogueId: dialogueId.current,
+      });
       setVisible(false);
       setLastLine(false);
       setCharactersMood(
         Object.values(CHARACTERS).map((character) => ({
           mood: MOODS.NEUTRAL,
           character,
-        }))
+        })),
       );
       if (onCompleteRef.current) {
         onCompleteRef.current?.();

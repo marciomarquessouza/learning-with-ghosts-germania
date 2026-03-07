@@ -3,8 +3,8 @@ import { BaseState } from "@/libs/game/state-machine/BaseState";
 import { createKeyMap } from "@/utils/createKeyMap";
 import { ELIZA_STATES } from "./constants";
 import { elizaAnimations } from "../helpers/ElizaAnimations";
-import { gameEvents } from "@/events/gameEvents";
 import { HUD_ITEMS } from "@/game/scenes/hud";
+import { events } from "@/events/events";
 
 export class WaitingState extends BaseState {
   constructor(
@@ -18,9 +18,9 @@ export class WaitingState extends BaseState {
     console.log("Eliza - Entering Waiting State");
     this.eliza.sprite?.play(elizaAnimations.animations.GAS_MASK_NUN_IDLE_ANIM);
     this.eliza.keyMap = createKeyMap(this.scene, [KEY_CODES.E]);
-    gameEvents.emit("show-hud-items", [HUD_ITEMS.WEIGHT]);
-    gameEvents.emit("hide-game-message", {});
-    gameEvents.emit("camera-zoom-to", { zoom: 1, duration: 200 });
+    events.game.sync.emit("show-hud-items", [HUD_ITEMS.WEIGHT]);
+    events.game.sync.emit("hide-game-message", {});
+    events.game.sync.emit("camera-zoom-to", { zoom: 1, duration: 200 });
   }
 
   update(): void {
@@ -33,9 +33,9 @@ export class WaitingState extends BaseState {
       (this.eliza.cursors?.space.isDown || this.eliza.keyMap?.E?.isDown)
     ) {
       this.eliza.dayActions?.onElizaInteraction();
-      gameEvents.emit("hide-hud-items", [HUD_ITEMS.WEIGHT]);
-      gameEvents.emit("hide-game-message", {});
-      gameEvents.emit("camera-zoom-to", { zoom: 1.2, duration: 200 });
+      events.game.sync.emit("hide-hud-items", [HUD_ITEMS.WEIGHT]);
+      events.game.sync.emit("hide-game-message", {});
+      events.game.sync.emit("camera-zoom-to", { zoom: 1.2, duration: 200 });
       this.changeTo(ELIZA_STATES.IDLE);
     }
   }

@@ -1,5 +1,5 @@
 import { GHOSTS_TITLE } from "@/constants/images";
-import { dreamEvents, dreamEventsAsync } from "@/events/dreamEvents";
+import { events } from "@/events/events";
 import { useTypewriter } from "@/hooks/useTypewriter";
 import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
@@ -49,9 +49,9 @@ export function DreamIntroduction() {
       }, visibleTime);
     };
 
-    dreamEventsAsync.on("dream/show-introduction", handler);
+    events.scenes.dream.async.on("dream/show-introduction", handler);
     return () => {
-      dreamEventsAsync.off("dream/show-introduction", handler);
+      events.scenes.dream.async.off("dream/show-introduction", handler);
       if (showTimer.current !== undefined) clearTimeout(showTimer.current);
       if (exitTimer.current !== undefined) clearTimeout(exitTimer.current);
     };

@@ -80,11 +80,6 @@ export interface StepFlags {
 
 export type ChallengeCommand = "attack" | "coal";
 
-export type TransitionOptions = Omit<
-  Phaser.Types.Scenes.SceneTransitionConfig,
-  "target"
->;
-
 export type InteractionTypes = "dialogue" | "alternatives" | "input" | "lesson";
 
 export interface Alternative {
@@ -128,3 +123,6 @@ export interface AudioManifest {
     target: string;
   };
 }
+
+export type Position = { x: number; y: number };
+export type Size = { width: number; height: number };

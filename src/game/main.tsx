@@ -1,7 +1,6 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { GhostLoading } from "@/components/HomePage/GhostLoading";
 import { initPhaser } from "./phaser/initPhaser";
-import { gameEvents } from "@/events/gameEvents";
 import { gameWorldConfig } from "@/game/config/gameWorldConfig";
 import { useGameStore } from "@/store/gameStore";
 import {
@@ -13,6 +12,7 @@ import {
 import { useRouter, useSearchParams } from "next/navigation";
 import { getSceneName } from "./utils/sceneNameMap";
 import { GameScenes, GameWorlds } from "@/types";
+import { events } from "@/events/events";
 
 export default function MainGame() {
   const router = useRouter();
@@ -80,14 +80,14 @@ export default function MainGame() {
       started.current = false;
     };
 
-    gameEvents.on("change-world", handle);
+    events.game.sync.on("change-world", handle);
 
     if (fakeLoading) {
       setTimeout(() => {
         setFakeLoading(false);
       }, 1000);
       return () => {
-        gameEvents.off("change-world", handle);
+        events.game.sync.off("change-world", handle);
       };
     }
 
@@ -102,7 +102,7 @@ export default function MainGame() {
     }
 
     return () => {
-      gameEvents.off("change-world", handle);
+      events.game.sync.off("change-world", handle);
     };
   }, [
     router,

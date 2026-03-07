@@ -57,13 +57,6 @@ export function LessonDescription({
   ]);
 
   useEffect(() => {
-    if (phase === "typing" && isComplete) {
-      onCompleteDescription?.();
-      setPhase("ready");
-    }
-  }, [phase, isComplete, onCompleteDescription]);
-
-  useEffect(() => {
     if (!visible) return;
     if (phase === "ready" && stepFlags.stepIndex !== currentStep.current) {
       setTextToType(lessonStep.text);
@@ -79,6 +72,13 @@ export function LessonDescription({
     setTextToType,
     startTyping,
   ]);
+
+  useEffect(() => {
+    if (phase === "typing" && isComplete) {
+      onCompleteDescription?.();
+      setPhase("ready");
+    }
+  }, [phase, isComplete, onCompleteDescription]);
 
   return (
     <AnimatePresence mode="wait" onExitComplete={() => setPhase("hide")}>

@@ -1,4 +1,4 @@
-import { gameEvents } from "@/events/gameEvents";
+import { events } from "@/events/events";
 import { speedometerNumbers } from "./SpeedometerNumbers";
 import { speedometerPointer } from "./SpeedometerPointer";
 
@@ -14,7 +14,7 @@ class Speedometer {
     scene: Phaser.Scene,
     startX: number,
     startY: number,
-    initialSpeed: number
+    initialSpeed: number,
   ) {
     const container = scene.add.container(startX, startY);
     const defaultData = {
@@ -54,10 +54,10 @@ class Speedometer {
       }
     };
 
-    gameEvents.on("train/speed", onSpeed);
+    events.scenes.train.sync.on("train/speed", onSpeed);
 
     container.once(Phaser.GameObjects.Events.DESTROY, () => {
-      gameEvents.off("train/speed", onSpeed);
+      events.scenes.train.sync.off("train/speed", onSpeed);
     });
 
     return container;

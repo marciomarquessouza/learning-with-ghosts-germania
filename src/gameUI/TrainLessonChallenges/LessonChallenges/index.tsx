@@ -6,12 +6,12 @@ import {
 import { StepPronunciation as Pronunciation } from "@/gameUI/LessonChallenges/StepPronunciation";
 import { StepWriting as Writing } from "@/gameUI/LessonChallenges/StepWriting";
 import { StepFeedback as Feedback } from "../../LessonChallenges/StepFeedback";
-import { gameEvents } from "@/events/gameEvents";
 import { ChallengeCommand, ChallengeResult, StepPhases } from "@/types";
 import {
   ChallengeScoreResult,
   getChallengeScore,
 } from "../helpers/getChallengeScore";
+import { events } from "@/events/events";
 
 type ActiveChallengeState = {
   phase: StepPhases;
@@ -66,8 +66,8 @@ export function LessonChallenges() {
       });
     };
 
-    gameEvents.on("train/challenge", handle);
-    return () => gameEvents.off("train/challenge", handle);
+    events.scenes.train.sync.on("train/challenge", handle);
+    return () => events.scenes.train.sync.off("train/challenge", handle);
   }, [finished, getChallenge]);
 
   const handleChallengeScore = useCallback(
@@ -82,19 +82,25 @@ export function LessonChallenges() {
         };
       });
     },
-    []
+    [],
   );
 
   const handleCompleteChallenge = useCallback(() => {
     switch (state.score?.type) {
       case "hate":
-        gameEvents.emit("krampus/hate", { hate: state.score.value });
+        events.actors.krampus.sync.emit("krampus/hate", {
+          hate: state.score.value,
+        });
         break;
       case "coal":
-        gameEvents.emit("train/coal:add", { amount: state.score.value });
+        events.scenes.train.sync.emit("train/coal:add", {
+          amount: state.score.value,
+        });
         break;
       case "attack":
-        gameEvents.emit("train/attack:arrow", { power: state.score.value });
+        events.scenes.train.sync.emit("train/attack:arrow", {
+          power: state.score.value,
+        });
         break;
     }
     completeCurrentChallenge();

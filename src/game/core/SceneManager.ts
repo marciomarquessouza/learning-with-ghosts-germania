@@ -1,5 +1,10 @@
-import { TransitionOptions } from "@/types";
-import { gameEvents } from "../../events/gameEvents";
+import { GameScenes } from "@/types";
+import { events } from "@/events/events";
+
+export type TransitionOptions = Omit<
+  Phaser.Types.Scenes.SceneTransitionConfig,
+  "target"
+>;
 
 /**
  * SceneManager is a singleton class that manages the current scene.
@@ -12,8 +17,9 @@ class SceneManager {
   }
 
   private initSceneEvents() {
-    gameEvents.on("change-scene", ({ targetScene, fade, options }) => {
-      this.changeScene(targetScene, fade, options);
+    events.game.async.on("change-scene", (payload, done) => {
+      this.changeScene(payload);
+      done();
     });
   }
 
@@ -21,11 +27,12 @@ class SceneManager {
     this.currentScene = scene;
   }
 
-  public changeScene(
-    targetScene: string,
-    fade = false,
-    transition: TransitionOptions = {}
-  ): void {
+  public changeScene(payload: {
+    targetScene: GameScenes;
+    fade?: boolean;
+    transition?: TransitionOptions;
+  }): void {
+    const { targetScene, transition = {}, fade = false } = payload;
     if (!this.currentScene) {
       console.warn("No current scene to change from.");
       return;

@@ -2,10 +2,11 @@ import { useState, useEffect } from "react";
 import { useLessonStore } from "@/store/lessonStore";
 import { LessonEntryContainer } from "./LessonEntryContainer";
 import { usePagination } from "@/hooks/usePagination";
-import { LessonEntryNotebookEvents, lessonEvents } from "@/events/lessonEvents";
 import { AnimatePresence, motion } from "framer-motion";
 import { ButtonTransparent } from "@/components/Button/ButtonTransparent";
 import { PaginationControls } from "@/components/Pagination/PaginationControl";
+import { LessonEntryNotebookEvent } from "@/events/lesson/types";
+import { events } from "@/events/events";
 
 export function LessonNotebook() {
   const { lesson, updateEntriesPhase } = useLessonStore();
@@ -20,12 +21,12 @@ export function LessonNotebook() {
   const [visible, setVisible] = useState(false);
 
   useEffect(() => {
-    const handle = ({ ids, phase }: LessonEntryNotebookEvents) => {
+    const handle = ({ ids, phase }: LessonEntryNotebookEvent) => {
       updateEntriesPhase(ids, phase);
     };
-    lessonEvents.on("lesson-entry-notebook-phase", handle);
+    events.lesson.sync.on("lesson-entry-notebook-phase", handle);
 
-    return () => lessonEvents.off("lesson-entry-notebook-phase", handle);
+    return () => events.lesson.sync.off("lesson-entry-notebook-phase", handle);
   }, [updateEntriesPhase]);
 
   useEffect(() => {
@@ -40,8 +41,8 @@ export function LessonNotebook() {
       }, payload.delay);
     };
 
-    lessonEvents.on("toggle-notebook", handler);
-    return () => lessonEvents.off("toggle-notebook", handler);
+    events.lesson.sync.on("toggle-notebook", handler);
+    return () => events.lesson.sync.off("toggle-notebook", handler);
   }, []);
 
   const handleCloseClick = () => {

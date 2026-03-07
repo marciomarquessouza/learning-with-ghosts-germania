@@ -5,25 +5,18 @@ import { cemeteryScenario } from "./helpers/cemeteryScenario";
 import { getDayAction } from "@/game/actions/getAction";
 import { eliza } from "@/game/actors/eliza/Eliza";
 import { dreamCamera } from "@/game/cameras/DreamCamera";
-import { gameEvents } from "@/events/gameEvents";
 import { changeWorldTransition } from "@/game/utils/changeWorldTransition";
 import { GAME_SCENES } from "@/constants/game";
 import { GameScenes } from "@/types";
 import { pumpkinKids } from "@/game/actors/pumpkinKids/PumpkingKids";
 import { DayActions } from "@/game/actions/actionDefaultPerDay/default.actions";
+import { events } from "@/events/events";
 
 export const DEFAULT_POSITION_X = 510;
 export const DEFAULT_POSITION_Y = 720;
 
 class GhostDreamScene extends Phaser.Scene {
   private dayActions: DayActions | null = null;
-  private onChangeWorldTransition = ({
-    afterClose,
-  }: {
-    afterClose?: () => void;
-  }) => {
-    changeWorldTransition(this, afterClose);
-  };
 
   constructor() {
     super({ key: GAME_SCENES.DREAM_SCENE });
@@ -81,7 +74,9 @@ class GhostDreamScene extends Phaser.Scene {
       dreamCamera.fadeIn({ onComplete: () => dayActions.onStart() });
     });
 
-    gameEvents.on("change-world-transition", this.onChangeWorldTransition);
+    events.game.async.on("change-world-transition", (_, done) => {
+      changeWorldTransition(this, done);
+    });
   }
 
   update(time: number, delta: number) {
@@ -98,7 +93,7 @@ class GhostDreamScene extends Phaser.Scene {
     cemeteryScenario.destroy();
     hud.destroy();
     pumpkinKids.destroy();
-    gameEvents.off("change-world-transition", this.onChangeWorldTransition);
+    events.game.async.clear("change-world-transition");
     if (this.dayActions) {
       this.dayActions.destroy();
     }

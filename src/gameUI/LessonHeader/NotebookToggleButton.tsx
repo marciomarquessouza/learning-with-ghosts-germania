@@ -1,9 +1,9 @@
-import { lessonEvents } from "@/events/lessonEvents";
+import { events } from "@/events/events";
 import Image from "next/image";
 
 export function NotebookToggleButton() {
   const handleOnClick = () => {
-    lessonEvents.emit("toggle-notebook", {});
+    events.lesson.sync.emit("toggle-notebook", {});
   };
 
   return (

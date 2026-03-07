@@ -5,7 +5,6 @@ import { locomotive } from "@/game/actors/locomotive/Locomotive";
 import { getDayAction } from "@/game/actions/getAction";
 import { hud, HUD_ITEMS } from "../hud";
 import { TrainSpeedController } from "@/game/actors/locomotive/helpers/TrainSpeedController";
-import { gameEvents } from "@/events/gameEvents";
 import { krampus } from "@/game/actors/krampus/Krampus";
 import {
   GAME_SCENES,
@@ -19,6 +18,7 @@ import {
 import { ChaseDistanceController } from "./helpers/ChaseDistanceController";
 import { KrampusSpeedController } from "@/game/actors/krampus/helpers/KrampusSpeedController";
 import { GameScenes } from "@/types";
+import { events } from "@/events/events";
 
 const TRAIN_RAILROAD = "trainRailroad";
 const GAP_MIN = 180;
@@ -93,14 +93,15 @@ class TrainScene extends Phaser.Scene {
     getDayAction(this.scene.key as GameScenes).then((dayActions) => {
       const hudContainer = hud.create(this, dayActions, [HUD_ITEMS.WEIGHT]);
       this.children.bringToTop(hudContainer);
-      gameEvents.emit("train/controls:show");
+      events.scenes.train.sync.emit("train/controls:show", undefined);
     });
 
     // Automatic Coal (maybe can be changed by level)
     this.time.addEvent({
       delay: 3200,
       loop: true,
-      callback: () => gameEvents.emit("train/coal:add", { amount: 1 }),
+      callback: () =>
+        events.scenes.train.sync.emit("train/coal:add", { amount: 1 }),
     });
   }
 

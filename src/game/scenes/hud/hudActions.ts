@@ -1,7 +1,7 @@
 import { HUD_ACTIONS_IMG, HUD_WEIGHT_IMG_WIDTH } from "@/constants/images";
 import { actionIcons, ACTIONS_ICONS } from "./helpers/actionIcons";
-import { gameEvents } from "@/events/gameEvents";
 import { DayActions } from "@/game/actions/actionDefaultPerDay/default.actions";
+import { events } from "@/events/events";
 
 const HUD_ACTIONS_BACKGROUND = "hudActionsBackground";
 
@@ -31,13 +31,18 @@ class HUdActions {
       { name: ACTIONS_ICONS.EXIT, action: () => console.log("#EXIT") },
     ]);
 
-    gameEvents.on("hud-actions-badge", ({ icon, count }) => {
+    events.game.async.on("hud-actions-badge", ({ icon, count }, done) => {
       actionIcons.setBadgeCount(icon, count);
+      done();
     });
 
-    gameEvents.on("hud-actions-timer", ({ icon, timeInSeconds, onFinish }) => {
-      actionIcons.attachTimer(scene, icon, timeInSeconds, onFinish);
-    });
+    events.game.async.on(
+      "hud-actions-timer",
+      ({ icon, timeInSeconds, onFinish }, done) => {
+        actionIcons.attachTimer(scene, icon, timeInSeconds, onFinish);
+        done();
+      },
+    );
 
     container.add(iconsList);
 

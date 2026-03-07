@@ -1,7 +1,7 @@
+import { events } from "@/events/events";
 import { Noise } from "./helper/noise/Noise";
 import { noiseDefault } from "./helper/noise/noiseDefault";
 import { noiseSelectable } from "./helper/noise/noiseSelectable";
-import { cellEvents } from "@/events/cellEvents";
 
 class NoiseEffect {
   private currentNoise: Noise | null = null;
@@ -12,7 +12,7 @@ class NoiseEffect {
   }
 
   create(scene: Phaser.Scene) {
-    cellEvents.on("noise-effect", (payload) => {
+    events.scenes.cell.sync.on("noise-effect", (payload) => {
       if (this.currentNoise) {
         this.currentNoise.destroy();
         this.currentNoise = null;

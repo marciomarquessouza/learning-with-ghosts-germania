@@ -1,21 +1,22 @@
 import { useEffect, useState } from "react";
 import Image from "next/image";
-import { gameEvents, IntroductionEvent } from "@/events/gameEvents";
 import { useLessonStore } from "@/store/lessonStore";
 import { useGameStore } from "@/store/gameStore";
+import { IntroductionEvent } from "@/events/scenes/cell/types";
+import { events } from "@/events/events";
 
 const DEFAULT_HIDE_AFTER = 2800;
 
 export function SceneIntroduction() {
   const [phase, setPhase] = useState<"hidden" | "entering" | "exiting">(
-    "hidden"
+    "hidden",
   );
   const { lesson } = useLessonStore();
   const { title } = lesson;
   const { day } = useGameStore();
 
   useEffect(() => {
-    const handler = (payload: IntroductionEvent) => {
+    const handler = (payload: IntroductionEvent, done: () => void) => {
       setPhase("entering");
 
       const visibleTime = payload.hideAfter || DEFAULT_HIDE_AFTER;
@@ -25,12 +26,13 @@ export function SceneIntroduction() {
         setTimeout(() => {
           setPhase("hidden");
           payload.afterClose?.();
+          done();
         }, 700);
       }, visibleTime);
     };
 
-    gameEvents.on("show-introduction", handler);
-    return () => gameEvents.off("show-introduction", handler);
+    events.scenes.cell.async.on("show-introduction", handler);
+    return () => events.scenes.cell.async.off("show-introduction", handler);
   }, []);
 
   if (phase === "hidden") return null;

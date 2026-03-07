@@ -15,7 +15,7 @@ export function useVoiceAnalysis() {
     stream: MediaStream,
     mediaRecorder: MediaRecorder,
     audioContext: AudioContext,
-    opts?: VoiceAnalysisOptions
+    opts?: VoiceAnalysisOptions,
   ) => {
     if (!audioContext) {
       throw new Error("No Audio Context");
@@ -135,8 +135,8 @@ export function useVoiceAnalysis() {
       try {
         analyser.disconnect();
         streamSource.disconnect();
-      } catch (e) {
-        // Ignore disconnect errors
+      } catch (error) {
+        console.error(error);
       }
     };
 

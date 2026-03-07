@@ -7,7 +7,7 @@ import {
   CEMETERY_CLOUDS_IMG,
   CEMETERY_DANGER_LAYER_IMG,
 } from "@/constants/images";
-import { gameEvents } from "@/events/gameEvents";
+import { events } from "@/events/events";
 
 type KrampusReleasedPayload = {
   skyEffectAmount?: number;
@@ -95,7 +95,7 @@ class CemeteryScenario {
       .setAlpha(0);
     container.add(this.cemeteryDangerLayer);
 
-    gameEvents.on("krampus/released", this.onKrampusReleased);
+    events.actors.krampus.sync.on("krampus/released", this.onKrampusReleased);
 
     return {
       container,
@@ -146,7 +146,7 @@ class CemeteryScenario {
   destroy() {
     this.dangerTween?.stop();
     this.dangerTween = undefined;
-    gameEvents.off("krampus/released", this.onKrampusReleased);
+    events.actors.krampus.sync.off("krampus/released", this.onKrampusReleased);
   }
 }
 

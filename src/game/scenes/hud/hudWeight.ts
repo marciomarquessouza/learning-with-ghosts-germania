@@ -8,9 +8,9 @@ import { WeightNumberContainer, weightNumbers } from "./helpers/weightNumbers";
 import { weightPointer, WeightPointerContainer } from "./helpers/weightPointer";
 import { useGameStore } from "@/store/gameStore";
 import { getWorldsFlags } from "@/utils/getWorldsFlags";
-import { gameEvents } from "@/events/gameEvents";
 import { TWENTY_ONE_GRAMS_EXPERIMENT_URL } from "@/constants/game";
 import { attachInteractiveContainer } from "./helpers/attachInteractiveContainer";
+import { events } from "@/events/events";
 
 export const DEFAULT_DELAY_BETWEEN_UPDATES = 15;
 export const SLOW_DELAY_BETWEEN_UPDATES = 80;
@@ -90,10 +90,10 @@ class HudWeight {
       });
     }
 
-    gameEvents.on("josef/damage:dream", weightDecrease);
+    events.actors.josef.sync.on("josef/damage:dream", weightDecrease);
 
     container.once(Phaser.GameObjects.Events.DESTROY, () => {
-      gameEvents.off("josef/damage:dream", weightDecrease);
+      events.actors.josef.sync.off("josef/damage:dream", weightDecrease);
     });
 
     return container;

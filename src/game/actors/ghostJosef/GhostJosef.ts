@@ -1,11 +1,10 @@
-import { gameEvents } from "@/events/gameEvents";
 import { ghostAnimations } from "./helpers/GhostAnimations";
 import { ghostLevitation } from "./helpers/GhostLevitation";
 import { ghostShadow } from "./helpers/GhostShadow";
 import { CHARACTERS } from "@/constants/game";
 import { ActorPayload } from "../types/Actor";
 import { createKeyMap } from "@/utils/createKeyMap";
-import { lessonEvents } from "@/events/lessonEvents";
+import { events } from "@/events/events";
 
 export const KEY_CODES = Phaser.Input.Keyboard.KeyCodes;
 
@@ -32,23 +31,15 @@ export class GhostJosef {
 
     this.keyMap = createKeyMap(scene, [KEY_CODES.A, KEY_CODES.D]);
 
-    gameEvents.on("show-dialogue", () => {
+    events.game.sync.on("show-dialogue", () => {
       this.lockMovement = true;
     });
 
-    gameEvents.on("hide-dialogue", () => {
+    events.game.sync.on("hide-dialogue", () => {
       this.lockMovement = false;
     });
 
-    lessonEvents.on("show-lesson", () => {
-      this.lockMovement = true;
-    });
-
-    lessonEvents.on("hide-lesson", () => {
-      this.lockMovement = false;
-    });
-
-    gameEvents.on("set-mood", ({ mood, character }) => {
+    events.game.sync.on("set-mood", ({ mood, character }) => {
       if (character === CHARACTERS.JOSEF) {
         ghostAnimations.setAnimationByMood(mood);
       }

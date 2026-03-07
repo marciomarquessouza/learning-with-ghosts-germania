@@ -1,14 +1,14 @@
-import { gameEvents } from "@/events/gameEvents";
+import { events } from "@/events/events";
 import type PhaserType from "phaser";
 
 export function initPhaser(
-  config: PhaserType.Types.Core.GameConfig
+  config: PhaserType.Types.Core.GameConfig,
 ): Promise<PhaserType.Game> {
   return import("phaser")
     .then(({ default: Phaser }) => {
       const game = new Phaser.Game(config);
       requestAnimationFrame(() => {
-        gameEvents.emit("canvas-ready");
+        events.game.sync.emit("canvas-ready", undefined);
       });
       return game;
     })

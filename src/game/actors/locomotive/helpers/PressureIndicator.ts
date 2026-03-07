@@ -1,4 +1,4 @@
-import { gameEvents } from "@/events/gameEvents";
+import { events } from "@/events/events";
 
 type Options = {
   x: number;
@@ -83,7 +83,7 @@ class PressureIndicator {
 
     this.redraw();
 
-    gameEvents.on("train/pressure", this.onPressure);
+    events.scenes.train.sync.on("train/pressure", this.onPressure);
 
     return container;
   }

@@ -1,7 +1,7 @@
 import { ReactNode, useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { gameEvents } from "@/events/gameEvents";
 import { Button } from "@/components/Button";
+import { events } from "@/events/events";
 
 export function GameMessage() {
   const [title, setTitle] = useState("");
@@ -23,8 +23,8 @@ export function GameMessage() {
       }, payload.closeAfter || 7_000);
     };
 
-    gameEvents.on("show-game-message", handler);
-    return () => gameEvents.off("show-game-message", handler);
+    events.game.sync.on("show-game-message", handler);
+    return () => events.game.sync.off("show-game-message", handler);
   }, []);
 
   useEffect(() => {
@@ -39,8 +39,8 @@ export function GameMessage() {
       }, payload.delay);
     };
 
-    gameEvents.on("hide-game-message", handler);
-    return () => gameEvents.off("hide-game-message", handler);
+    events.game.sync.on("hide-game-message", handler);
+    return () => events.game.sync.off("hide-game-message", handler);
   }, []);
 
   const handleCloseClick = () => {

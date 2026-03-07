@@ -5,11 +5,11 @@ import { hud, HUD_ITEMS } from "../hud";
 import { calendar } from "./calendar";
 import { selectableAreas } from "./selectableAreas";
 import { getDayAction } from "@/game/actions/getAction";
-import { gameEvents } from "@/events/gameEvents";
 import { changeWorldTransition } from "@/game/utils/changeWorldTransition";
 import { GAME_SCENES } from "@/constants/game";
 import { GameScenes } from "@/types";
 import { DayActions } from "@/game/actions/actionDefaultPerDay/default.actions";
+import { events } from "@/events/events";
 
 const CELL = "cell";
 
@@ -57,8 +57,8 @@ class CellScene extends Phaser.Scene {
       this.children.bringToTop(calendarContainer);
     });
 
-    gameEvents.on("change-world-transition", ({ afterClose }) => {
-      changeWorldTransition(this, afterClose);
+    events.game.async.on("change-world-transition", (_, done) => {
+      changeWorldTransition(this, done);
     });
   }
 
@@ -73,6 +73,7 @@ class CellScene extends Phaser.Scene {
     if (this.dayActions) {
       this.dayActions.destroy();
     }
+    events.game.async.clear("change-world-transition");
   }
 }
 

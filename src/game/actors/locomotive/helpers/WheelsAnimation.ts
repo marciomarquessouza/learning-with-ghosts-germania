@@ -2,7 +2,7 @@ import {
   LOCOMOTIVE_WHEELS_IMG,
   LOCOMOTIVE_WHEELS_JSON,
 } from "@/constants/images";
-import { gameEvents } from "@/events/gameEvents";
+import { events } from "@/events/events";
 
 const WHEELS_ATLAS = "wheels";
 
@@ -44,7 +44,7 @@ class WheelsAnimations {
   attachSpeed(
     _scene: Phaser.Scene,
     sprite: Phaser.Physics.Arcade.Sprite,
-    options: SpeedSyncOptions = {}
+    options: SpeedSyncOptions = {},
   ) {
     const {
       minSpeedToMove = 1,
@@ -71,10 +71,10 @@ class WheelsAnimations {
       sprite.anims.timeScale = timeScale;
     };
 
-    gameEvents.on("train/speed", onSpeed);
+    events.scenes.train.sync.on("train/speed", onSpeed);
 
     sprite.once(Phaser.GameObjects.Events.DESTROY, () => {
-      gameEvents.off("train/speed", onSpeed);
+      events.scenes.train.sync.off("train/speed", onSpeed);
     });
   }
 }

@@ -1,12 +1,5 @@
-import { CHARACTERS, GAME_SCENES } from "@/constants/game";
-import { gameEvents } from "@/events/gameEvents";
-import { showDialogue } from "@/events/helpers/showDialogue";
-import {
-  stepDayIntroduction,
-  stepGameMessage,
-  stepShowDialogue,
-} from "@/events/steps";
-import { runSteps } from "@/events/steps/runSteps";
+import { GAME_SCENES } from "@/constants/game";
+import { runSteps } from "@/libs/game/runSteps";
 import { dialogues } from "./default.dialogues";
 import { AudioManifest, GameScenes, Lesson } from "@/types";
 import { defaultLesson } from "./default.lessons";
@@ -14,6 +7,11 @@ import { useLessonStore } from "@/store/lessonStore";
 import { useGameStore } from "@/store/gameStore";
 import { mergeLessonWithAudioManifest } from "@/utils/mergeLessonWithAudioManifest";
 import { lessonActions } from "../lessonActions/LessonActions";
+import {
+  stepDayIntroduction,
+  stepGameMessage,
+  stepShowDialogue,
+} from "../steps";
 
 const DEFAULT_SCENE = GAME_SCENES.CELL_SCENE;
 
@@ -98,87 +96,49 @@ export class DayActions {
   }
 
   onDeskClick() {
-    showDialogue({ lines: dialogues.default_desk_dialogue() });
+    runSteps(
+      [stepShowDialogue({ lines: dialogues.default_desk_dialogue() })],
+      {},
+    );
     this.clicked.desk += 1;
   }
 
   onBedClick() {
-    gameEvents.emit("show-dialogue", {
-      lines: [
-        {
-          type: "dialogue",
-          character: CHARACTERS.JOSEF,
-          text: "I don't want to do anything in bed right now",
-        },
-      ],
-    });
-
+    runSteps(
+      [stepShowDialogue({ lines: dialogues.default_bed_dialogue() })],
+      {},
+    );
     this.clicked.desk += 1;
   }
 
   onFoodClick() {
-    gameEvents.emit("show-dialogue", {
-      lines: [
-        {
-          type: "dialogue",
-          character: CHARACTERS.JOSEF,
-          text: "Food",
-        },
-      ],
-    });
-
-    this.clicked.desk += 1;
+    runSteps(
+      [stepShowDialogue({ lines: dialogues.default_food_dialogue() })],
+      {},
+    );
+    this.clicked.food += 1;
   }
 
   onRatClick() {
-    gameEvents.emit("show-dialogue", {
-      lines: [
-        {
-          type: "dialogue",
-          character: CHARACTERS.JOSEF,
-          text: "Food",
-        },
-      ],
-    });
-
-    this.clicked.desk += 1;
+    runSteps(
+      [stepShowDialogue({ lines: dialogues.default_rat_dialogue() })],
+      {},
+    );
+    this.clicked.ratHole += 1;
   }
 
   onBarsClick() {
-    gameEvents.emit("show-dialogue", {
-      lines: [
-        {
-          type: "dialogue",
-          character: CHARACTERS.MARLENE,
-          text: "I Hate You!",
-        },
-      ],
-    });
+    runSteps(
+      [stepShowDialogue({ lines: dialogues.default_marlene_first_dialogue() })],
+      {},
+    );
   }
 
   onDailyChallengeClick() {
-    gameEvents.emit("show-dialogue", {
-      lines: [
-        {
-          type: "alternatives",
-          character: CHARACTERS.MARLENE,
-          text: "Você realmente quer iniciar o desafio do dia agora?",
-          alternatives: [
-            {
-              id: "skip",
-              text: "NÃO - eu quero me preparar mais",
-            },
-            {
-              id: "challenge",
-              text: "SIM - eu quero fayer o desafio agora!",
-            },
-          ],
-          onSubmitted: (id) => {
-            console.log("#CHALLENGE AINDA NÃO IMPLEMENTADO", id);
-          },
-        },
-      ],
-    });
+    runSteps(
+      [stepShowDialogue({ lines: dialogues.daily_challenge_alternatives() })],
+      { alternativeId: undefined },
+    );
   }
 
   onEnterElizaArea() {

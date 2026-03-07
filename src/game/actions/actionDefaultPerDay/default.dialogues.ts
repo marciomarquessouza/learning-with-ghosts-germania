@@ -1,4 +1,4 @@
-import { dialogue } from "@/libs/dialogues";
+import { alternatives, dialogue } from "@/libs/dialogues";
 
 export const dialogues = {
   before_sleep: () => [
@@ -42,5 +42,29 @@ export const dialogues = {
     dialogue.elisa.neutral`
 		Digo... na sua cabeça
 	`,
+  ],
+  default_bed_dialogue: () => [
+    dialogue.josef.neutral`
+		"I don't want to do anything in bed right now"
+	`,
+  ],
+  default_marlene_first_dialogue: () => [
+    dialogue.marlene.angry`
+		"I hate you Josef"
+	`,
+  ],
+  daily_challenge_alternatives: () => [
+    alternatives.marlene.neutral`
+		Você realmente quer iniciar o desafio do dia agora?
+	`.alternatives(
+      {
+        id: "skip",
+        text: "NÃO - eu quero me preparar mais",
+      },
+      {
+        id: "challenge",
+        text: "SIM - eu quero fayer o desafio agora!",
+      },
+    ),
   ],
 };

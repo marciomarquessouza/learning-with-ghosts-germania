@@ -1,4 +1,4 @@
-import { gameEvents } from "@/events/gameEvents";
+import { events } from "@/events/events";
 
 type Options = {
   initialSpeed: number;
@@ -32,32 +32,34 @@ export class TrainSpeedController {
     this.speed = Phaser.Math.Clamp(
       options.initialSpeed,
       this.minSpeed,
-      this.maxSpeed
+      this.maxSpeed,
     );
 
     this.pressure = Phaser.Math.Clamp(
       (this.speed - this.minSpeed) / (this.maxSpeed - this.minSpeed),
       0,
-      1
+      1,
     );
 
     this.targetSpeed = this.speed;
 
-    gameEvents.on("train/coal:add", this.onCoalAdd);
-    gameEvents.emit("train/speed", { speed: this.speed });
+    events.scenes.train.sync.on("train/coal:add", this.onCoalAdd);
+    events.scenes.train.sync.emit("train/speed", { speed: this.speed });
   }
 
   destroy() {
-    gameEvents.off("train/coal:add", this.onCoalAdd);
+    events.scenes.train.sync.off("train/coal:add", this.onCoalAdd);
   }
 
   addCoal(amount: number) {
     this.pressure = Phaser.Math.Clamp(
       this.pressure + amount * this.coalToPressure,
       0,
-      1
+      1,
     );
-    gameEvents.emit("train/pressure", { pressure: this.pressure });
+    events.scenes.train.sync.emit("train/pressure", {
+      pressure: this.pressure,
+    });
   }
 
   update(deltaMs: number) {
@@ -67,24 +69,24 @@ export class TrainSpeedController {
     this.pressure = Phaser.Math.Clamp(
       this.pressure - this.decayPerSecond * delta,
       0,
-      1
+      1,
     );
 
     this.targetSpeed = Phaser.Math.Linear(
       this.minSpeed,
       this.maxSpeed,
-      this.pressure
+      this.pressure,
     );
 
     const prev = this.speed;
     this.speed = Phaser.Math.Linear(
       this.speed,
       this.targetSpeed,
-      this.lerpFactor
+      this.lerpFactor,
     );
 
     if (Math.abs(this.speed - prev) >= 0.15) {
-      gameEvents.emit("train/speed", { speed: this.speed });
+      events.scenes.train.sync.emit("train/speed", { speed: this.speed });
     }
   }
 

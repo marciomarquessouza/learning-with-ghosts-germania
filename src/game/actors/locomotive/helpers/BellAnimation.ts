@@ -1,5 +1,5 @@
 import { LOCOMOTIVE_BELL_IMG, LOCOMOTIVE_BELL_JSON } from "@/constants/images";
-import { gameEvents } from "@/events/gameEvents";
+import { events } from "@/events/events";
 
 const BELL_ATLAS = "bell";
 
@@ -43,7 +43,7 @@ class BellAnimations {
   attachSpeedSync(
     _scene: Phaser.Scene,
     sprite: Phaser.Physics.Arcade.Sprite,
-    options: SpeedSyncOptions = {}
+    options: SpeedSyncOptions = {},
   ) {
     const {
       minSpeedToMove = 20,
@@ -64,7 +64,7 @@ class BellAnimations {
         sprite.anims.timeScale = Phaser.Math.Linear(
           minTimeScale,
           maxTimeScale,
-          time
+          time,
         );
         return;
       }
@@ -80,10 +80,10 @@ class BellAnimations {
       }
     };
 
-    gameEvents.on("train/speed", onSpeed);
+    events.scenes.train.sync.on("train/speed", onSpeed);
 
     sprite.once(Phaser.GameObjects.Events.DESTROY, () => {
-      gameEvents.off("train/speed", onSpeed);
+      events.scenes.train.sync.off("train/speed", onSpeed);
     });
   }
 }

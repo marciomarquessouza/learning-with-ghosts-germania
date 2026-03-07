@@ -1,75 +1,41 @@
-import { useEffect, useState } from "react";
-import { LessonEvent, lessonEvents } from "@/events/lessonEvents";
-import { useLesson } from "./hooks/useLesson";
+import { useState } from "react";
 import { LessonActions } from "./LessonActions";
 import { useCharacterDetails } from "@/hooks/useCharacterDetails";
 import { CHARACTERS } from "@/constants/game";
 import { LessonHeader } from "../LessonHeader";
 
+// TODO: DreamLessonChallenges refactor
 export function DreamLessonChallenges() {
-  const {
-    isFirst,
-    isLast,
-    lessonDetails,
-    lessonEntry,
-    lessonStep,
-    stepFlags,
-    visible,
-    createLesson,
-    nextStep,
-    previousStep,
-  } = useLesson();
-  const [showActions, setShowActions] = useState(false);
-  const characterDetails = useCharacterDetails(CHARACTERS.ELISA);
+  return null;
+  // const [showActions, setShowActions] = useState(false);
+  // const characterDetails = useCharacterDetails(CHARACTERS.ELISA);
 
-  useEffect(() => {
-    const handler = (payload: LessonEvent) => {
-      const { lesson } = payload;
-      const onComplete = () => {
-        payload?.onComplete?.();
-        lessonEvents.emit("hide-lesson", { lessonId: lesson.id });
-      };
-      createLesson(lesson, onComplete);
-    };
+  // const handleOnDescriptionComplete = () => {};
 
-    lessonEvents.on("show-lesson", handler);
-    return () => lessonEvents.off("show-lesson", handler);
-  }, [createLesson]);
+  // const handleNextStep = () => {};
 
-  const handleOnDescriptionComplete = () => {
-    setShowActions(true);
-  };
+  // const handlePreviousStep = () => {};
 
-  const handleNextStep = () => {
-    setShowActions(false);
-    nextStep();
-  };
-
-  const handlePreviousStep = () => {
-    setShowActions(false);
-    previousStep();
-  };
-
-  return (
-    <>
-      <LessonHeader
-        show={visible}
-        lessonDetails={lessonDetails}
-        lessonStep={lessonStep}
-        stepFlags={stepFlags}
-        characterDetails={characterDetails}
-        onCompleteDescription={handleOnDescriptionComplete}
-      />
-      <LessonActions
-        isFirst={isFirst}
-        isLast={isLast}
-        show={showActions}
-        characterDetails={characterDetails}
-        lessonEntry={lessonEntry}
-        lessonStep={lessonStep}
-        nextStep={handleNextStep}
-        previousStep={handlePreviousStep}
-      />
-    </>
-  );
+  // return (
+  //   <>
+  //     <LessonHeader
+  //       show={visible}
+  //       lessonDetails={lessonDetails}
+  //       lessonStep={lessonStep}
+  //       stepFlags={stepFlags}
+  //       characterDetails={characterDetails}
+  //       onCompleteDescription={handleOnDescriptionComplete}
+  //     />
+  //     <LessonActions
+  //       isFirst={true}
+  //       isLast={false}
+  //       show={showActions}
+  //       characterDetails={characterDetails}
+  //       lessonEntry={lessonEntry}
+  //       lessonStep={lessonStep}
+  //       nextStep={handleNextStep}
+  //       previousStep={handlePreviousStep}
+  //     />
+  //   </>
+  // );
 }

@@ -1,4 +1,4 @@
-import { gameEvents } from "@/events/gameEvents";
+import { events } from "@/events/events";
 
 type SpeedSyncOptions = {
   minSpeedToMove?: number;
@@ -69,8 +69,8 @@ export class KrampusChasing {
       );
     };
 
-    gameEvents.on("krampus/speed", onSpeed);
-    gameEvents.on("krampus/hate", onHate);
+    events.actors.krampus.sync.on("krampus/speed", onSpeed);
+    events.actors.krampus.sync.on("krampus/hate", onHate);
 
     let decayTimer: Phaser.Time.TimerEvent | null = null;
 
@@ -89,8 +89,8 @@ export class KrampusChasing {
     }
 
     sprite.once(Phaser.GameObjects.Events.DESTROY, () => {
-      gameEvents.off("krampus/speed", onSpeed);
-      gameEvents.off("krampus/hate", onHate);
+      events.actors.krampus.sync.off("krampus/speed", onSpeed);
+      events.actors.krampus.sync.off("krampus/hate", onHate);
       decayTimer?.remove(false);
     });
 

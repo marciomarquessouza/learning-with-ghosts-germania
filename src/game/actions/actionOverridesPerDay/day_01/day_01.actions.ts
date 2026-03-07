@@ -1,26 +1,21 @@
 import { DayActions } from "../../actionDefaultPerDay/default.actions";
-import { runSteps } from "@/events/steps/runSteps";
-import {
-  stepBarsCount,
-  stepDayIntroduction,
-  stepGameMessage,
-  stepSetChallenge,
-  stepSetGameWorld,
-  stepShowDreamIntroduction,
-  stepChangeWorldTransition,
-  stepShowDialogue,
-  stepShowLesson,
-  stepChangeScene,
-  stepPlantingPumpkinKid,
-} from "@/events/steps";
+import { runSteps } from "@/libs/game/runSteps";
 import { dialogues } from "./day_01.dialogues";
-import { showDialogue } from "@/events/helpers/showDialogue";
 import { dialogues as defaultDialogues } from "../../actionDefaultPerDay/default.dialogues";
-import { showGameMessage } from "@/events/helpers/showGameMessage";
 import { AudioManifest, Lesson } from "@/types";
 import { lesson } from "./day_01.lesson";
 import audioManifest from "./day_01.audio.json";
 import { GAME_SCENES, GAME_WORLDS } from "@/constants/game";
+import {
+  stepBarsCount,
+  stepChangeWorldTransition,
+  stepDayIntroduction,
+  stepGameMessage,
+  stepSetChallenge,
+  stepSetGameWorld,
+  stepShowDialogue,
+  stepShowDreamIntroduction,
+} from "../../steps";
 
 class DayActions1 extends DayActions {
   constructor(lesson: Lesson, audioManifest?: AudioManifest) {
@@ -32,7 +27,7 @@ class DayActions1 extends DayActions {
       case GAME_SCENES.DREAM_SCENE:
         runSteps(
           [
-            // stepShowDialogue({ lines: dialogues.dream_introduction() }),
+            stepShowDialogue({ lines: dialogues.dream_introduction() }),
             stepGameMessage({
               title: "Go to Eliska",
               text: "Use the arrow keys or the A and D keys",
@@ -75,10 +70,15 @@ class DayActions1 extends DayActions {
         {},
       );
     } else {
-      showGameMessage({
-        title: "Message",
-        text: "There is no one in the bars at the moment",
-      });
+      runSteps(
+        [
+          stepGameMessage({
+            title: "Message",
+            text: "There is no one in the bars at the moment",
+          }),
+        ],
+        {},
+      );
     }
   }
 
@@ -104,20 +104,44 @@ class DayActions1 extends DayActions {
         { alternativeId: undefined },
       );
     } else {
-      showDialogue({ lines: defaultDialogues.before_sleep() });
+      runSteps(
+        [stepShowDialogue({ lines: defaultDialogues.before_sleep() })],
+        {},
+      );
     }
   }
 
   onDailyChallengeClick(): void {
-    showDialogue({ lines: defaultDialogues.default_challenge_dialogue() });
+    runSteps(
+      [
+        stepShowDialogue({
+          lines: defaultDialogues.default_challenge_dialogue(),
+        }),
+      ],
+      {},
+    );
   }
 
   onDeskClick(): void {
-    showDialogue({ lines: defaultDialogues.default_desk_dialogue() });
+    runSteps(
+      [
+        stepShowDialogue({
+          lines: defaultDialogues.default_desk_dialogue(),
+        }),
+      ],
+      {},
+    );
   }
 
   onFoodClick(): void {
-    showDialogue({ lines: defaultDialogues.default_food_dialogue() });
+    runSteps(
+      [
+        stepShowDialogue({
+          lines: defaultDialogues.default_food_dialogue(),
+        }),
+      ],
+      {},
+    );
   }
 
   // onElizaInteraction() {

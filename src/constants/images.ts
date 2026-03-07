@@ -21,11 +21,6 @@ export const CALENDAR_IMG = "/cell/calendar.png";
 export const CALENDAR_IMG_WIDTH = 123;
 export const CALENDAR_IMG_HEIGHT = 175;
 
-// HUD THERMOMETER IMAGES
-export const HUD_THERMOMETER_IMG = "/hud/hud_thermometer.png";
-export const HUD_THERMOMETER_IMG_WIDTH = 207;
-export const HUD_THERMOMETER_IMG_HEIGHT = 1080;
-
 // HUD WEIGHT IMAGE
 export const HUD_WEIGHT_IMG = "/hud/hud_weight.png";
 export const HUD_SOUL_WEIGHT_IMG = "/hud/hud_soul_weight.png";

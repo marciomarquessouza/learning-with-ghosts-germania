@@ -15,7 +15,7 @@ export type StartOpts = {
 export function useAudioRecorder() {
   const [recorderState, setRecorderState] = useState<RecorderState>("idle");
   const [mediaRecorder, setMediaRecorder] = useState<MediaRecorder | null>(
-    null
+    null,
   );
   const [lastBlob, setLastBlob] = useState<Blob | null>(null);
   const [audioUrl, setAudioUrl] = useState<string | null>(null);
@@ -66,8 +66,8 @@ export function useAudioRecorder() {
     if (analyserRef.current) {
       try {
         analyserRef.current.disconnect();
-      } catch (e) {
-        // Ignore disconnect errors
+      } catch (error) {
+        console.error(error);
       }
       analyserRef.current = null;
     }
@@ -77,8 +77,8 @@ export function useAudioRecorder() {
         if (audioContextRef.current.state !== "closed") {
           audioContextRef.current.close();
         }
-      } catch (e) {
-        console.error("AudioContext already closed");
+      } catch (error) {
+        console.error("AudioContext already closed", error);
       }
       audioContextRef.current = null;
     }
@@ -171,11 +171,13 @@ export function useAudioRecorder() {
   const startVoiceAnalysis = (
     stream: MediaStream,
     mr: MediaRecorder,
-    opts?: StartOpts
+    opts?: StartOpts,
   ) => {
-    const ctx = new (window.AudioContext ||
+    const ctx = new (
+      window.AudioContext ||
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      (window as any).webkitAudioContext)();
+      (window as any).webkitAudioContext
+    )();
     const src = ctx.createMediaStreamSource(stream);
     const analyser = ctx.createAnalyser();
     analyser.fftSize = 1024;

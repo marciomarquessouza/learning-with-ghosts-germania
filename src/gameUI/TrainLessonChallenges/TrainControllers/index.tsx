@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useState } from "react";
 import { TrainControlButton } from "./TrainControlButton";
-import { gameEvents } from "@/events/gameEvents";
 import { ChallengeCommand } from "@/types";
+import { events } from "@/events/events";
 
 type Phase = "hidden" | "entering" | "exiting";
 
@@ -12,7 +12,7 @@ export function TrainControllers() {
   const [attackActive, setAttackActive] = useState(false);
 
   const challengeCommand = useCallback((command: ChallengeCommand) => {
-    gameEvents.emit("train/challenge", { command });
+    events.scenes.train.sync.emit("train/challenge", { command });
   }, []);
 
   useEffect(() => {
@@ -24,12 +24,18 @@ export function TrainControllers() {
       setAttackEnabled(enabled);
     };
 
-    gameEvents.on("train/controls:show", handlerShowControls);
-    gameEvents.on("train/attack:availability", handlerAttackAvailability);
+    events.scenes.train.sync.on("train/controls:show", handlerShowControls);
+    events.scenes.train.sync.on(
+      "train/attack:availability",
+      handlerAttackAvailability,
+    );
 
     return () => {
-      gameEvents.off("train/controls:show", handlerShowControls);
-      gameEvents.on("train/attack:availability", handlerAttackAvailability);
+      events.scenes.train.sync.off("train/controls:show", handlerShowControls);
+      events.scenes.train.sync.off(
+        "train/attack:availability",
+        handlerAttackAvailability,
+      );
     };
   }, []);
 
