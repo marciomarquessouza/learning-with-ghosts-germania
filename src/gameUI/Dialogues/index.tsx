@@ -17,7 +17,7 @@ import { handleAlternativeKeyDown } from "@/libs/dialogues/handleAlternativeKeyD
 import { InteractionLine } from "@/types";
 import { events } from "@/events/events";
 import { DialogueEvent } from "@/events/game/types";
-import { setCharactersMood } from "@/game/actions/steps/actions/setCharactersMood";
+import { setCharactersMood } from "@/game/actions/stepActions/actions/setCharactersMood";
 
 export function Dialogue() {
   const device = useDeviceType();

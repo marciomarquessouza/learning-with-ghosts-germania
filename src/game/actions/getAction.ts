@@ -1,5 +1,5 @@
 import { useGameStore } from "@/store/gameStore";
-import { dayImporters } from "./registry";
+import { dayActionImporters } from "./dayActionImporters";
 import { GameScenes } from "@/types";
 import {
   DayActions,
@@ -19,7 +19,7 @@ export async function getDayAction(scene: GameScenes): Promise<DayActions> {
   const cached = cache.get(day);
   if (cached) return withScene(cached, scene);
 
-  const importer = dayImporters[day];
+  const importer = dayActionImporters[day];
   if (!importer) {
     cache.set(day, defaultDayActions);
     return withScene(defaultDayActions, scene);

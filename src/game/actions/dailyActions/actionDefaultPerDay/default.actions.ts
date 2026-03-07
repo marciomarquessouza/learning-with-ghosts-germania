@@ -11,7 +11,7 @@ import {
   stepDayIntroduction,
   stepGameMessage,
   stepShowDialogue,
-} from "../../steps";
+} from "../../stepActions";
 
 const DEFAULT_SCENE = GAME_SCENES.CELL_SCENE;
 

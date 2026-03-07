@@ -1,6 +1,6 @@
 import { DayActions } from "./dailyActions/actionDefaultPerDay/default.actions";
 
-export const dayImporters: Record<
+export const dayActionImporters: Record<
   number,
   () => Promise<{ dayAction: DayActions }>
 > = {
