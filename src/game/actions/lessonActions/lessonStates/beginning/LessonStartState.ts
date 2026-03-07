@@ -1,10 +1,7 @@
 import { LessonActions } from "@/gameUI/DreamLessonChallenges/hooks/reducers/lessonReducer";
 import { BaseState } from "@/libs/game/state-machine/BaseState";
-import { LESSON_STATES } from "../lessonStates";
 
 export class LessonStartState extends BaseState {
-  public stateName = LESSON_STATES.BEGINNING.LESSON_START;
-
   constructor(
     scene: Phaser.Scene,
     private lessonActions: LessonActions,
@@ -13,7 +10,6 @@ export class LessonStartState extends BaseState {
   }
 
   enter(): void {
-    console.log(`#STATE-ENTER: ${this.stateName}`);
     // TODO: Lesson Controller: setCurrentLessonEntry
     // TODO: Lesson Challenges: state: idle
     // TODO: Eliza: state: idle
@@ -23,9 +19,7 @@ export class LessonStartState extends BaseState {
     // TODO: Lesson Header: Show Title
   }
 
-  exit(): void {
-    console.log(`#STATE-EXIT: ${this.stateName}`);
-  }
+  exit(): void {}
 
   update(): void {}
 

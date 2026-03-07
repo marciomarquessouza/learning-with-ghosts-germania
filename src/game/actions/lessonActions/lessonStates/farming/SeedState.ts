@@ -1,9 +1,7 @@
 import { LessonActions } from "@/gameUI/DreamLessonChallenges/hooks/reducers/lessonReducer";
 import { BaseState } from "@/libs/game/state-machine/BaseState";
-import { LESSON_STATES } from "../lessonStates";
 
 export class SeedState extends BaseState {
-  public stateName = LESSON_STATES.FARMING.SEED_FALLING;
   constructor(
     scene: Phaser.Scene,
     private lessonActions: LessonActions,
@@ -11,13 +9,9 @@ export class SeedState extends BaseState {
     super(scene);
   }
 
-  enter(): void {
-    console.log(`#STATE-ENTER: ${this.stateName}`);
-  }
+  enter(): void {}
 
-  exit(): void {
-    console.log(`#STATE-EXIT: ${this.stateName}`);
-  }
+  exit(): void {}
 
   update(): void {}
 
