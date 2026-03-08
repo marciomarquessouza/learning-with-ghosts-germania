@@ -3,7 +3,7 @@ import { LessonActions } from "../../LessonActions";
 import { runSteps, stepBase } from "@/libs/game/runSteps";
 import { BaseState } from "@/libs/game/state-machine/BaseState";
 
-export class LessonIntroductionState extends BaseState {
+export class EntryIntroductionState extends BaseState {
   constructor(
     scene: Phaser.Scene,
     private lessonActions: LessonActions,
@@ -20,6 +20,7 @@ export class LessonIntroductionState extends BaseState {
             description: introductionStep.text,
           }),
         ),
+        // TODO: State: Eliza teaching
         stepBase(() => events.actors.eliza.async.emitAsync("sowing")),
       ],
       {},

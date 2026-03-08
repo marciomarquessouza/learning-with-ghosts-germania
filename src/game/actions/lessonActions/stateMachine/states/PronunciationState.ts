@@ -1,7 +1,7 @@
 import { LessonActions } from "../../LessonActions";
 import { BaseState } from "@/libs/game/state-machine/BaseState";
 
-export class ListeningIntroState extends BaseState {
+export class PronunciationState extends BaseState {
   constructor(
     scene: Phaser.Scene,
     private lessonActions: LessonActions,

@@ -1,7 +1,7 @@
 import { StateMachine } from "@/libs/game/state-machine/StateMachine";
 import { Lesson, LessonEntry, LessonStepType } from "@/types";
-import { LESSON_STATES } from "./lessonStates/lessonStates";
-import { createLessonStateMachine } from "./lessonStates/createLessonStateMachine";
+import { LESSON_STATES } from "./stateMachine/lessonStates";
+import { createLessonStateMachine } from "./stateMachine/createLessonStateMachine";
 
 export class LessonActions {
   public lesson!: Lesson;
@@ -22,7 +22,7 @@ export class LessonActions {
   }
 
   startLesson() {
-    this.stateMachine.changeTo(LESSON_STATES.BEGINNING.LESSON_START);
+    this.stateMachine.changeTo(LESSON_STATES.LESSON_START);
   }
 
   public setCurrentLessonEntry() {

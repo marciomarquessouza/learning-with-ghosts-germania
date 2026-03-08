@@ -36,7 +36,7 @@ export class LessonStartState extends BaseState {
       {},
     )
       .then(() => {
-        this.changeTo(LESSON_STATES.BEGINNING.LESSON_INTRODUCTION);
+        this.changeTo(LESSON_STATES.ENTRY_INTRODUCTION);
       })
       .catch((error) => {
         this.stateMachine.log(`LessonStartState failed ${error}`, "error");
