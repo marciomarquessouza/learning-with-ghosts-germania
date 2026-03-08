@@ -1,6 +1,6 @@
 import { createEventManagers } from "@/libs/events/createEventManagers";
 
-type Events = {
+export type ElizaEvents = {
   idle: undefined;
   sowing: undefined;
   teaching: undefined;
@@ -8,4 +8,4 @@ type Events = {
   swearing: undefined;
 };
 
-export const elizaEvents = createEventManagers<Events>();
+export const elizaEvents = createEventManagers<ElizaEvents>();

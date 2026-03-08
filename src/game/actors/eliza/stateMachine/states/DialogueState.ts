@@ -1,5 +1,5 @@
 import { BaseState } from "@/libs/game/state-machine/BaseState";
-import { Eliza } from "../Eliza";
+import { Eliza } from "../../Eliza";
 
 export class DialogueState extends BaseState {
   constructor(

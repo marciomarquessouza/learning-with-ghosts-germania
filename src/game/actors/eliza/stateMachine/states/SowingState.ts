@@ -1,6 +1,6 @@
 import { BaseState } from "@/libs/game/state-machine/BaseState";
-import { Eliza } from "../Eliza";
-import { elizaAnimations } from "../helpers/ElizaAnimations";
+import { Eliza } from "../../Eliza";
+import { elizaAnimations } from "../../helpers/ElizaAnimations";
 import { onAnimationFrame } from "@/libs/animation/onAnimationFrame";
 
 const FRAME_ELIZA_OPENING_HAND = 21;
@@ -20,7 +20,7 @@ export class SowingState extends BaseState {
       this.eliza.sprite,
       animation,
       FRAME_ELIZA_OPENING_HAND,
-      () => console.log("#Sowing Seed"),
+      () => this.eliza.closeAsyncEvent("sowing"),
     );
   }
 

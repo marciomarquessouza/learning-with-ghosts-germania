@@ -1,0 +1,10 @@
+export const ELIZA_STATES = {
+  WAITING: "ELIZA_WAITING",
+  IDLE: "ELIZA_IDLE",
+  DIALOGUE: "ELIZA_DIALOGUE",
+  PRAISING: "ELIZA_PRAISING",
+  SOWING: "ELIZA_SOWING",
+  SWEARING: "ELIZA_SWEARING",
+} as const;
+
+export type ElizaStateNames = (typeof ELIZA_STATES)[keyof typeof ELIZA_STATES];

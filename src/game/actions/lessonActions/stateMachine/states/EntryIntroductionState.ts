@@ -24,7 +24,11 @@ export class EntryIntroductionState extends BaseState {
         stepBase(() => events.actors.eliza.async.emitAsync("sowing")),
       ],
       {},
-    );
+    )
+      .then(() => {
+        console.log("#After Sowing");
+      })
+      .catch(() => {});
   }
 
   exit(): void {}

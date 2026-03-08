@@ -1,6 +1,6 @@
 import { BaseState } from "@/libs/game/state-machine/BaseState";
-import { Eliza } from "../Eliza";
-import { elizaAnimations } from "../helpers/ElizaAnimations";
+import { Eliza } from "../../Eliza";
+import { elizaAnimations } from "../../helpers/ElizaAnimations";
 
 export class IdleState extends BaseState {
   constructor(
@@ -11,13 +11,10 @@ export class IdleState extends BaseState {
   }
 
   enter(): void {
-    console.log("Eliza - Entering Idle State");
     this.eliza.sprite.play(elizaAnimations.animations.GAS_MASK_NUN_IDLE_ANIM);
   }
 
-  exit(): void {
-    console.log("Eliza - Exiting Idle State");
-  }
+  exit(): void {}
 
   update(): void {}
 

@@ -1,8 +1,8 @@
-import { Eliza, KEY_CODES } from "../Eliza";
+import { Eliza, KEY_CODES } from "../../Eliza";
 import { BaseState } from "@/libs/game/state-machine/BaseState";
 import { createKeyMap } from "@/utils/createKeyMap";
-import { ELIZA_STATES } from "./constants";
-import { elizaAnimations } from "../helpers/ElizaAnimations";
+import { ELIZA_STATES } from "../elizaStates";
+import { elizaAnimations } from "../../helpers/ElizaAnimations";
 import { HUD_ITEMS } from "@/game/scenes/hud";
 import { events } from "@/events/events";
 
