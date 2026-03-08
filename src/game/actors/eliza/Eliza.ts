@@ -8,8 +8,11 @@ import { createElizaInteractionArea } from "./helpers/createElizaInteractionArea
 import { events } from "@/events/events";
 import { DayActions } from "@/game/actions/dailyActions/actionDefaultPerDay/default.actions";
 import { createElizaStateMachine } from "./stateMachine/createElizaStateMachine";
-import { ElizaEvents } from "@/events/actors/eliza/events";
-import { addElizaAsyncEvent } from "./helpers/addElizaAsyncEvent";
+import {
+  ElizaAsyncEvents,
+  ElizaSyncEvents,
+} from "@/events/actors/eliza/events";
+import { EventController } from "@/libs/events/EventController";
 
 export const KEY_CODES = Phaser.Input.Keyboard.KeyCodes;
 
@@ -24,7 +27,7 @@ export class Eliza {
   public dayActions: DayActions | null = null;
   public cursors!: Phaser.Types.Input.Keyboard.CursorKeys;
   public keyMap!: KeyMap;
-  private asyncEventsMap = new Map<keyof ElizaEvents, () => void>();
+  public eventController!: EventController<ElizaSyncEvents, ElizaAsyncEvents>;
   private stateMachine!: StateMachine;
 
   preload(scene: Phaser.Scene) {
@@ -40,9 +43,14 @@ export class Eliza {
     this.interactionArea = createElizaInteractionArea(scene, {
       eliza: this,
       player,
-      onEnter: eliza.dayActions?.onEnterElizaArea,
-      onLeave: () => events.game.sync.emit("hide-game-message", {}),
+      onEnter: this.dayActions?.onEnterElizaArea,
+      onLeave: () => events.game.sync.emit("hide-game-message"),
     });
+
+    this.eventController = new EventController(
+      events.actors.eliza.sync,
+      events.actors.eliza.async,
+    );
 
     this.stateMachine = createElizaStateMachine(scene, this);
 
@@ -52,25 +60,17 @@ export class Eliza {
   }
 
   private attachEvents() {
-    events.actors.eliza.sync.on("idle", () => {
+    this.eventController.addSyncEvent("idle", () => {
       this.stateMachine.changeTo(ELIZA_STATES.IDLE);
     });
-    events.actors.eliza.sync.on("teaching", () => {
+
+    this.eventController.addSyncEvent("teaching", () => {
       throw new Error("State was not implemented");
     });
-    addElizaAsyncEvent("sowing", this.asyncEventsMap, () =>
-      this.stateMachine.changeTo(ELIZA_STATES.SOWING),
-    );
-  }
 
-  closeAsyncEvent(event: keyof ElizaEvents) {
-    if (!this.asyncEventsMap.has(event)) {
-      console.error(`It was not possible to close the event ${event}`);
-      return;
-    }
-    const done = this.asyncEventsMap.get(event);
-    this.asyncEventsMap.delete(event);
-    done?.();
+    this.eventController.addAsyncEvent("sowing", () => {
+      this.stateMachine.changeTo(ELIZA_STATES.SOWING);
+    });
   }
 
   update(delta: number) {

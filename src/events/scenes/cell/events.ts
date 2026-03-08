@@ -1,9 +1,15 @@
 import { IntroductionEvent, NoiseEffectEvent } from "./types";
 import { createEventManagers } from "@/libs/events/createEventManagers";
 
-export type Events = {
-  "show-introduction": IntroductionEvent;
+export type CellSyncEvents = {
   "noise-effect": NoiseEffectEvent;
 };
 
-export const cellEvents = createEventManagers<Events>();
+export type CellAsyncEvents = {
+  "show-introduction": IntroductionEvent;
+};
+
+export const cellEvents = createEventManagers<
+  CellSyncEvents,
+  CellAsyncEvents
+>();

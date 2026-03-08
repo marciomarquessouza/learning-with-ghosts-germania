@@ -9,3 +9,5 @@ export const actorsEvents = {
   krampus: krampusEvents,
   pumpkinKid: pumpkinKidEvents,
 };
+
+export type ActorsEvents = typeof actorsEvents;

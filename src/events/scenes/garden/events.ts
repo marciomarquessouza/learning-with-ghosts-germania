@@ -1,7 +1,14 @@
 import { createEventManagers } from "@/libs/events/createEventManagers";
 
-type Events = {
-  "garden/placeholder": undefined;
+export type GardenSyncEvents = {
+  placeholder: undefined;
 };
 
-export const gardenEvents = createEventManagers<Events>();
+export type GardenAsyncEvents = {
+  placeholder: undefined;
+};
+
+export const gardenEvents = createEventManagers<
+  GardenSyncEvents,
+  GardenAsyncEvents
+>();

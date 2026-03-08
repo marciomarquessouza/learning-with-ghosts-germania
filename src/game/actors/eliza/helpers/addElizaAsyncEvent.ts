@@ -1,10 +1,10 @@
-import { ElizaEvents } from "@/events/actors/eliza/events";
+import { ElizaAsyncEvents } from "@/events/actors/eliza/events";
 import { events } from "@/events/events";
 
-export function addElizaAsyncEvent<E extends keyof ElizaEvents>(
+export function addElizaAsyncEvent<E extends keyof ElizaAsyncEvents>(
   event: E,
-  asyncEventsMap: Map<keyof ElizaEvents, () => void>,
-  callback: (payload: ElizaEvents[E]) => void,
+  asyncEventsMap: Map<keyof ElizaAsyncEvents, () => void>,
+  callback: (payload: ElizaAsyncEvents[E]) => void,
 ) {
   events.actors.eliza.async.on(event, (payload, done) => {
     if (asyncEventsMap.has(event)) {

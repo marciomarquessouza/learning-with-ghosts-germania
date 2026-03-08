@@ -1,7 +1,6 @@
 import Image from "next/image";
 import { Button } from "@/components/Button";
 import { StepPhases } from "@/types";
-import { useCallback } from "react";
 
 export interface BoardControlsProps {
   phase: StepPhases;
@@ -72,10 +71,10 @@ export function StepControls({
           isLast
             ? "FINISH"
             : phase === "writing"
-            ? "SKIP"
-            : phase === "result:correct"
-            ? "NEXT"
-            : "SKIP"
+              ? "SKIP"
+              : phase === "result:correct"
+                ? "NEXT"
+                : "SKIP"
         }
         labelIcon={isLast ? undefined : phase === "result:correct" ? "►" : "⏭"}
         color={

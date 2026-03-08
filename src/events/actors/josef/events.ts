@@ -1,8 +1,15 @@
 import { JosefDamageEvent } from "./types";
 import { createEventManagers } from "@/libs/events/createEventManagers";
 
-type Events = {
+export type JosefSyncEvents = {
   "josef/damage:dream": JosefDamageEvent;
 };
 
-export const josefEvents = createEventManagers<Events>();
+export type JosefAsyncEvents = {
+  placeholder: undefined;
+};
+
+export const josefEvents = createEventManagers<
+  JosefSyncEvents,
+  JosefAsyncEvents
+>();

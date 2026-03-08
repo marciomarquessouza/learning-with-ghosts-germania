@@ -1,7 +1,7 @@
 import { createEventManagers } from "@/libs/events/createEventManagers";
 import { ChallengeCommand } from "@/types";
 
-type Events = {
+export type TrainSyncEvents = {
   "train/controls:show": undefined;
   "train/speed": { speed: number };
   "train/coal:add": { amount: number };
@@ -11,4 +11,11 @@ type Events = {
   "train/challenge": { command: ChallengeCommand };
 };
 
-export const trainEvents = createEventManagers<Events>();
+export type TrainAsyncEvents = {
+  placeholder: undefined;
+};
+
+export const trainEvents = createEventManagers<
+  TrainSyncEvents,
+  TrainAsyncEvents
+>();

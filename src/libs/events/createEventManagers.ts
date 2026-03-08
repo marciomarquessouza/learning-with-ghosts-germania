@@ -1,16 +1,20 @@
 import AsyncEventManager from "./AsyncEventManager";
 import EventManager from "./EventsManager";
 
-export type EventModule<Events extends Record<string, unknown>> = {
-  sync: EventManager<Events>;
-  async: AsyncEventManager<Events>;
+export type EventModule<
+  SyncEvents extends Record<string, unknown>,
+  AsyncEvents extends Record<string, unknown>,
+> = {
+  sync: EventManager<SyncEvents>;
+  async: AsyncEventManager<AsyncEvents>;
 };
 
 export function createEventManagers<
-  Events extends Record<string, unknown>,
->(): EventModule<Events> {
+  SyncEvents extends Record<string, unknown>,
+  AsyncEvents extends Record<string, unknown>,
+>(): EventModule<SyncEvents, AsyncEvents> {
   return {
-    sync: new EventManager<Events>(),
-    async: new AsyncEventManager<Events>(),
+    sync: new EventManager<SyncEvents>(),
+    async: new AsyncEventManager<AsyncEvents>(),
   };
 }

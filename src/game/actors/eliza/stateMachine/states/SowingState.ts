@@ -20,7 +20,7 @@ export class SowingState extends BaseState {
       this.eliza.sprite,
       animation,
       FRAME_ELIZA_OPENING_HAND,
-      () => this.eliza.closeAsyncEvent("sowing"),
+      () => this.eliza.eventController.closeAsyncEvent("sowing"),
     );
   }
 
