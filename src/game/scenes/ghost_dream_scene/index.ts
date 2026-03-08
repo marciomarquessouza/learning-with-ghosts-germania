@@ -83,6 +83,7 @@ class GhostDreamScene extends Phaser.Scene {
     cemeteryScenario.update(delta);
     ghostJosef.update(time, delta);
     eliza.update(delta);
+    pumpkinKids.update(delta);
     if (this.dayActions) {
       this.dayActions.update(delta);
     }

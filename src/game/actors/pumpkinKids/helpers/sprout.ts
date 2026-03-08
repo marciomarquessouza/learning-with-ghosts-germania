@@ -4,6 +4,7 @@ import {
   PUMPKIN_KID_SPROUT_IDLE_ATLAS_IMG,
   PUMPKIN_KID_SPROUT_IDLE_ATLAS_JSON,
 } from "@/constants/images";
+import { onAnimationComplete } from "@/libs/animation/onAnimationComplete";
 
 export const SPROUTING_ANIMATION_ATLAS = "sproutAnimationAtlas";
 export const IDLE_ANIMATION_ATLAS = "idleAnimationAtlas";
@@ -35,7 +36,15 @@ export class Sprout {
     );
   }
 
-  create(scene: Phaser.Scene, startX: number, startY: number) {
+  create(
+    scene: Phaser.Scene,
+    payload: {
+      startX: number;
+      startY: number;
+      flipX: boolean;
+    },
+  ) {
+    const { startX, startY, flipX } = payload;
     if (!scene.anims.exists(this.animations.SPROUTING)) {
       scene.anims.create({
         key: this.animations.SPROUTING,
@@ -69,7 +78,23 @@ export class Sprout {
       0,
     );
 
-    return this.sprite;
+    this.sprite.flipX = !!flipX;
+    return this;
+  }
+
+  sprouting(): Promise<void> {
+    return new Promise((resolve) => {
+      if (!this.sprite) {
+        console.error(`The Sprout Sprite is not available`);
+        return;
+      }
+      this.sprite?.play(this.animations.SPROUTING);
+      onAnimationComplete(this.sprite, this.animations.SPROUTING, resolve);
+    });
+  }
+
+  idle() {
+    this.sprite?.play(this.animations.IDLE);
   }
 
   destroy() {

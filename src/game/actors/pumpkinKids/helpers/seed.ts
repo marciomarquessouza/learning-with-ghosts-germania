@@ -1,14 +1,20 @@
 import { Vector2 } from "@/utils/vectors";
 
-interface DropSeedOptions {
+export interface SeedPosition {
   x: number;
   startY: number;
   groundY: number;
-  onImpact: (position: Vector2) => void;
 }
 
-class Seed {
-  create(scene: Phaser.Scene) {
+export class Seed {
+  constructor(
+    private scene: Phaser.Scene,
+    private seePosition: SeedPosition,
+  ) {
+    this.create(scene);
+  }
+
+  private create(scene: Phaser.Scene) {
     if (scene.textures.exists("seed")) return;
     const graphics = scene.make.graphics({ x: 0, y: 0 }, false);
 
@@ -39,28 +45,26 @@ class Seed {
     });
   }
 
-  dropSeed(
-    scene: Phaser.Scene,
-    { x, startY, groundY, onImpact }: DropSeedOptions,
-  ) {
-    const seed = scene.add.image(x, startY, "seed");
-    seed.setOrigin(0.5);
-    seed.setScale(1.4);
-    seed.setDepth(10);
+  dropSeed(): Promise<void> {
+    return new Promise((resolve) => {
+      const { x, startY, groundY } = this.seePosition;
+      const seed = this.scene.add.image(x, startY, "seed");
+      seed.setOrigin(0.5);
+      seed.setScale(1.4);
+      seed.setDepth(10);
 
-    scene.tweens.add({
-      targets: seed,
-      y: groundY,
-      angle: "+=180",
-      duration: 600,
-      ease: "Cubic.easeIn",
-      onComplete: () => {
-        seed.destroy();
-        this.impactParticles(scene, { x, y: groundY });
-        onImpact({ x, y: groundY });
-      },
+      this.scene.tweens.add({
+        targets: seed,
+        y: groundY,
+        angle: "+=180",
+        duration: 600,
+        ease: "Cubic.easeIn",
+        onComplete: () => {
+          seed.destroy();
+          this.impactParticles(this.scene, { x, y: groundY });
+          resolve();
+        },
+      });
     });
   }
 }
-
-export const seed = new Seed();

@@ -1,8 +1,13 @@
-import { seed } from "./helpers/seed";
-import { onAnimationComplete } from "@/libs/animation/onAnimationComplete";
-import { sprout, SPROUT_ANIMATIONS } from "./helpers/sprout";
-import { DropSeedEvent } from "@/events/actors/pumpkin-kid/types";
+import { Sprout, sprout } from "./helpers/sprout";
 import { events } from "@/events/events";
+import { StateMachine } from "@/libs/game/state-machine/StateMachine";
+import { createPumpkinStateMachine } from "./stateMachine/createPumpkinStateMachine";
+import { EventController } from "@/libs/events/EventController";
+import {
+  PumpkinAsyncEvents,
+  PumpkinSyncEvents,
+} from "@/events/actors/pumpkin/events";
+import { PUMPKIN_STATES } from "./stateMachine/pumpkinStates";
 
 interface CreatePayload {
   startX: number;
@@ -10,51 +15,65 @@ interface CreatePayload {
   flipX: boolean;
 }
 
-class PumpkinKids {
-  private onDropSeed: (({ onFinish }: DropSeedEvent) => void) | null = null;
+export class PumpkinKids {
+  public sprout!: Sprout;
+  public references: {
+    groundPositionY: number;
+    handPositionX: number;
+    handPositionY: number;
+  } | null = null;
+  public stateMachine!: StateMachine;
+  public eventController!: EventController<
+    PumpkinSyncEvents,
+    PumpkinAsyncEvents
+  >;
 
   preload(scene: Phaser.Scene) {
     sprout.preload(scene);
   }
 
   create(scene: Phaser.Scene, { startX, startY, flipX }: CreatePayload) {
-    seed.create(scene);
     const groundPositionY = startY;
     const handPositionY = groundPositionY - 360;
-    const sproutSprite = sprout.create(scene, startX, groundPositionY);
-    sproutSprite.flipX = !!flipX;
-
-    const afterSprouting = (onFinish: () => void) => {
-      sproutSprite.play(SPROUT_ANIMATIONS.IDLE);
-      onFinish();
+    this.references = {
+      handPositionX: startX,
+      groundPositionY,
+      handPositionY,
     };
 
-    this.onDropSeed = ({ onFinish }: DropSeedEvent) => {
-      seed.dropSeed(scene, {
-        x: startX,
-        startY: handPositionY,
-        groundY: groundPositionY,
-        onImpact: () => {
-          sproutSprite.play(SPROUT_ANIMATIONS.SPROUTING);
-          onAnimationComplete(sproutSprite, SPROUT_ANIMATIONS.SPROUTING, () =>
-            afterSprouting(onFinish),
-          );
-        },
-      });
-    };
+    this.sprout = sprout.create(scene, {
+      startX,
+      startY: groundPositionY,
+      flipX,
+    });
 
-    events.actors.pumpkinKid.sync.on(
-      "pumpkin-kid/lesson:drop-seed",
-      this.onDropSeed,
+    this.eventController = new EventController(
+      events.actors.pumpkinKid.sync,
+      events.actors.pumpkinKid.async,
     );
+
+    this.stateMachine = createPumpkinStateMachine(scene, this);
+
+    this.attachEvents();
+  }
+
+  private attachEvents() {
+    this.eventController.addAsyncEvent("plant-pumpkin", () => {
+      this.stateMachine.changeTo(PUMPKIN_STATES.PLANT_PUMPKIN);
+    });
+  }
+
+  update(delta: number) {
+    if (this.stateMachine) {
+      this.stateMachine.updateAndHandleInput(delta);
+    }
   }
 
   destroy() {
     sprout.destroy();
-    if (this.onDropSeed) {
-      events.actors.pumpkinKid.sync.clear();
-      this.onDropSeed = null;
-    }
+    this.stateMachine.clear();
+    events.actors.pumpkinKid.sync.clear();
+    events.actors.pumpkinKid.async.clear();
   }
 }
 
