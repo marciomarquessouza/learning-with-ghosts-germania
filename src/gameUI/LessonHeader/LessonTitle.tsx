@@ -1,13 +1,12 @@
-import { LessonDetails } from "@/types";
 import { useEffect, useState } from "react";
 import Image from "next/image";
 import { AnimatePresence, motion } from "framer-motion";
 
 export interface LessonTitleProps {
-  lessonDetails: LessonDetails;
-  isEntering: boolean;
-  closeAfter?: number;
-  onClose: () => void;
+  title: string;
+  day: number;
+  isVisible: boolean;
+  onClose?: () => void;
 }
 
 const variants = {
@@ -25,24 +24,22 @@ const variants = {
 };
 
 export function LessonTitle({
-  lessonDetails,
-  isEntering,
-  closeAfter = 3_000,
+  title,
+  day,
+  isVisible,
   onClose,
 }: LessonTitleProps) {
-  const { day, title } = lessonDetails;
   const [show, setShow] = useState(false);
 
   useEffect(() => {
-    let timeout: NodeJS.Timeout | undefined;
-    if (isEntering) {
+    if (isVisible && !show) {
       setShow(true);
-      timeout = setTimeout(() => setShow(false), closeAfter);
     }
-    return () => {
-      if (timeout) clearTimeout(timeout);
-    };
-  }, [isEntering, closeAfter]);
+
+    if (!isVisible && show) {
+      setShow(false);
+    }
+  }, [isVisible, show]);
 
   return (
     <AnimatePresence onExitComplete={onClose} mode="wait">

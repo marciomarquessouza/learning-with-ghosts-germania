@@ -1,5 +1,10 @@
-import { LessonActions } from "@/gameUI/DreamLessonChallenges/hooks/reducers/lessonReducer";
 import { BaseState } from "@/libs/game/state-machine/BaseState";
+import { LessonActions } from "../../LessonActions";
+import { events } from "@/events/events";
+import { LESSON_STATES } from "../lessonStates";
+import { runSteps, stepBase } from "@/libs/game/runSteps";
+
+const CLOSE_TITLE_AFTER = 2_000;
 
 export class LessonStartState extends BaseState {
   constructor(
@@ -10,13 +15,32 @@ export class LessonStartState extends BaseState {
   }
 
   enter(): void {
-    // TODO: Lesson Controller: setCurrentLessonEntry
-    // TODO: Lesson Challenges: state: idle
-    // TODO: Eliza: state: idle
-    // TODO: Josef: state: idle
-    // TODO: Krampus: state: idle
-    // TODO: Pumpkin Kid: state: destroyed
-    // TODO: Lesson Header: Show Title
+    runSteps(
+      [
+        stepBase(() => {
+          this.lessonActions.setCurrentLessonEntry();
+          events.actors.eliza.sync.emit("idle");
+          // TODO: Josef: state: idle
+          // TODO: Krampus: state: idle
+          // TODO: Pumpkin Kid: state: destroyed
+          return events.lesson.async.emitAsync("show-header");
+        }),
+        stepBase(() =>
+          events.lesson.async.emitAsync("show-lesson-title", {
+            title: this.lessonActions.lesson.title,
+            day: this.lessonActions.lesson.day,
+            closeAfter: CLOSE_TITLE_AFTER,
+          }),
+        ),
+      ],
+      {},
+    )
+      .then(() => {
+        this.changeTo(LESSON_STATES.BEGINNING.LESSON_INTRODUCTION);
+      })
+      .catch((error) => {
+        this.stateMachine.log(`LessonStartState failed ${error}`, "error");
+      });
   }
 
   exit(): void {}

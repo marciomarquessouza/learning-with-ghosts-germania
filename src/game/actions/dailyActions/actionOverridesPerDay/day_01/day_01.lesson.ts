@@ -12,7 +12,7 @@ export const lesson: Lesson = {
       steps: [
         {
           type: "introduction",
-          text: `Our first word is “Hallo”. It’s the neutral, everyday way to start a conversation in German — friendly and safe in almost any context.`,
+          text: `Primeiro eu vou jogar a semente que vai gerar a sua nova palavra`,
           instruction: "Listen and repeat (don’t be shy, say it out loud!)",
         },
         {

@@ -127,7 +127,7 @@ export class StateMachine {
     return this.states.delete(stateName);
   }
 
-  private log(
+  log(
     message: string,
     type: "info" | "enter" | "exit" | "init" | "error" | "warn",
   ): void {

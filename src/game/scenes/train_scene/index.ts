@@ -93,7 +93,7 @@ class TrainScene extends Phaser.Scene {
     getDayAction(this.scene.key as GameScenes).then((dayActions) => {
       const hudContainer = hud.create(this, dayActions, [HUD_ITEMS.WEIGHT]);
       this.children.bringToTop(hudContainer);
-      events.scenes.train.sync.emit("train/controls:show", undefined);
+      events.scenes.train.sync.emit("train/controls:show");
     });
 
     // Automatic Coal (maybe can be changed by level)

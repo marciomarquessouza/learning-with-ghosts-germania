@@ -47,7 +47,7 @@ class AsyncEventManager<Events extends Record<string, unknown>> {
 
   async emitAsync<K extends keyof Events>(
     event: K,
-    data: Events[K],
+    data?: Events[K],
   ): Promise<void> {
     return new Promise((resolve) => {
       const eventHandlers = this.handlers.get(event);

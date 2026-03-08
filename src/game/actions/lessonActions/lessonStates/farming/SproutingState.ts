@@ -1,4 +1,4 @@
-import { LessonActions } from "@/gameUI/DreamLessonChallenges/hooks/reducers/lessonReducer";
+import { LessonActions } from "../../LessonActions";
 import { BaseState } from "@/libs/game/state-machine/BaseState";
 
 export class SproutingState extends BaseState {

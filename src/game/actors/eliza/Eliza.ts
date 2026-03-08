@@ -53,6 +53,19 @@ export class Eliza {
 
     // Initial State
     this.stateMachine.changeTo(ELIZA_STATES.WAITING);
+    this.attachEvents();
+  }
+
+  attachEvents() {
+    events.actors.eliza.sync.on("idle", () => {
+      this.stateMachine.changeTo(ELIZA_STATES.IDLE);
+    });
+    events.actors.eliza.sync.on("teaching", () => {
+      throw new Error("State was not implemented");
+    });
+    events.actors.eliza.async.on("sowing", () => {
+      this.stateMachine.changeTo(ELIZA_STATES.SOWING);
+    });
   }
 
   update(delta: number) {
@@ -64,6 +77,7 @@ export class Eliza {
   destroy() {
     this.stateMachine.clear();
     events.actors.eliza.sync.clear();
+    events.actors.eliza.async.clear();
   }
 }
 

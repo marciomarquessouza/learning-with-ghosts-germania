@@ -1,18 +1,21 @@
 import { CharacterDetails } from "@/hooks/useCharacterDetails";
 import { useTypewriter } from "@/hooks/useTypewriter";
-import { LessonEntryStep, StepFlags } from "@/types";
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 
-export interface LessonDescriptionProps {
-  visible: boolean;
-  lessonStep: LessonEntryStep;
-  stepFlags: StepFlags;
-  characterDetails: CharacterDetails;
-  onCompleteDescription?: () => void;
-}
+export type DescriptionPhases =
+  | "hidden"
+  | "entering"
+  | "typing"
+  | "ready"
+  | "exiting";
 
-type Phases = "hide" | "entering" | "typing" | "ready";
+export interface LessonDescriptionProps {
+  isVisible: boolean;
+  description: string;
+  characterDetails: CharacterDetails;
+  onPhaseChange: (phase: DescriptionPhases) => void;
+}
 
 const variants = {
   hidden: { opacity: 0, y: 8 },
@@ -29,60 +32,65 @@ const variants = {
 };
 
 export function LessonDescription({
-  visible,
-  lessonStep,
-  stepFlags,
+  isVisible,
+  description,
   characterDetails,
-  onCompleteDescription,
+  onPhaseChange,
 }: LessonDescriptionProps) {
-  const [phase, setPhase] = useState<Phases>("hide");
+  const [phase, setPhase] = useState<DescriptionPhases>("hidden");
   const { displayedText, setTextToType, startTyping, isComplete } =
     useTypewriter();
   const { characterName, honorific, hasHonorific } = characterDetails;
-  const currentStep = useRef<number | null>(null);
+  const lastDescription = useRef("");
+
+  const changePhase = useCallback(
+    (nextPhase: DescriptionPhases) => {
+      setPhase(nextPhase);
+      onPhaseChange(nextPhase);
+    },
+    [onPhaseChange],
+  );
 
   useEffect(() => {
-    if (visible && currentStep.current !== stepFlags.stepIndex) {
-      setTextToType(lessonStep.text);
+    if (isVisible && phase === "hidden") {
+      changePhase("entering");
+      return;
+    }
+
+    if (!isVisible && phase !== "hidden" && phase !== "exiting") {
+      changePhase("exiting");
+    }
+  }, [isVisible, phase, changePhase]);
+
+  useEffect(() => {
+    if (isComplete && phase === "typing") {
+      changePhase("ready");
+    }
+  }, [isComplete, phase, changePhase]);
+
+  useEffect(() => {
+    if (
+      description &&
+      description !== lastDescription.current &&
+      phase === "ready"
+    ) {
+      lastDescription.current = description;
+      setTextToType(description);
+      changePhase("typing");
       startTyping();
-      setPhase("typing");
-      currentStep.current = stepFlags.stepIndex;
     }
-  }, [
-    visible,
-    lessonStep.text,
-    stepFlags.stepIndex,
-    setTextToType,
-    startTyping,
-  ]);
+  }, [description, phase, setTextToType, startTyping, changePhase]);
 
-  useEffect(() => {
-    if (!visible) return;
-    if (phase === "ready" && stepFlags.stepIndex !== currentStep.current) {
-      setTextToType(lessonStep.text);
-      setPhase("typing");
-      startTyping();
-      currentStep.current = stepFlags.stepIndex;
-    }
-  }, [
-    visible,
-    phase,
-    stepFlags.stepIndex,
-    lessonStep.text,
-    setTextToType,
-    startTyping,
-  ]);
+  const handleOnExit = () => {
+    setPhase("hidden");
+    onPhaseChange("hidden");
+  };
 
-  useEffect(() => {
-    if (phase === "typing" && isComplete) {
-      onCompleteDescription?.();
-      setPhase("ready");
-    }
-  }, [phase, isComplete, onCompleteDescription]);
+  if (phase === "hidden") return null;
 
   return (
-    <AnimatePresence mode="wait" onExitComplete={() => setPhase("hide")}>
-      {visible && (
+    <AnimatePresence mode="wait" onExitComplete={handleOnExit}>
+      {isVisible && (
         <motion.div
           initial="hidden"
           animate="visible"
@@ -90,21 +98,23 @@ export function LessonDescription({
           variants={variants}
           onAnimationComplete={() => {
             if (phase === "entering") {
-              setPhase("typing");
+              lastDescription.current = description;
+              setTextToType(description);
+              changePhase("typing");
               startTyping();
             }
           }}
           className="pointer-events-none flex h-full w-full items-center px-12 text-white"
         >
-          <div className="flex flex-col items-center w-full">
-            <div className="bg-[#FFF3E4] px-4 py-0 mb-4">
-              <p className="text-lg font-primary font-semibold tracking-wide text-black text-left">
-                {`${hasHonorific ? honorific + " " : ""}${characterName}`}:
+          <div className="flex w-full flex-col items-center">
+            <div className="mb-4 bg-[#FFF3E4] px-4 py-0">
+              <p className="font-primary text-left text-lg font-semibold tracking-wide text-black">
+                {`${hasHonorific ? `${honorific} ` : ""}${characterName}:`}
               </p>
             </div>
 
             <div className="w-3xl px-4">
-              <p className="font-mono text-xl text-[#FFF3E4] min-h-20 text-left leading-relaxed">
+              <p className="min-h-20 text-left font-mono text-xl leading-relaxed text-[#FFF3E4]">
                 {displayedText}
               </p>
             </div>

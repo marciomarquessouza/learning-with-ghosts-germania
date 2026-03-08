@@ -8,7 +8,7 @@ import { dreamCamera } from "@/game/cameras/DreamCamera";
 import { changeWorldTransition } from "@/game/utils/changeWorldTransition";
 import { GAME_SCENES } from "@/constants/game";
 import { GameScenes } from "@/types";
-import { pumpkinKids } from "@/game/actors/pumpkinKids/PumpkingKids";
+import { pumpkinKids } from "@/game/actors/pumpkinKids/PumpkinKids";
 import { events } from "@/events/events";
 import { DayActions } from "@/game/actions/dailyActions/actionDefaultPerDay/default.actions";
 

@@ -1,41 +1,47 @@
-import { useState } from "react";
-import { LessonActions } from "./LessonActions";
+import { LessonTitle } from "../LessonHeader/LessonTitle";
+import { useLessonHeader } from "./hooks/useLessonHeader";
+import { LessonHeaderWrapper } from "../LessonHeader/LessonHeaderWrapper";
+import { NotebookToggleButton } from "../LessonHeader/NotebookToggleButton";
+import { LessonExit } from "../LessonHeader/LessonExit";
+import { LessonDescription } from "../LessonHeader/LessonDescription";
 import { useCharacterDetails } from "@/hooks/useCharacterDetails";
-import { CHARACTERS } from "@/constants/game";
-import { LessonHeader } from "../LessonHeader";
 
-// TODO: DreamLessonChallenges refactor
 export function DreamLessonChallenges() {
-  return null;
-  // const [showActions, setShowActions] = useState(false);
-  // const characterDetails = useCharacterDetails(CHARACTERS.ELISA);
+  const {
+    headerState,
+    clearTitle,
+    onHeaderPhaseChange,
+    onDescriptionPhaseChange,
+  } = useLessonHeader();
 
-  // const handleOnDescriptionComplete = () => {};
+  const handleOnTitleClose = () => {
+    clearTitle();
+  };
 
-  // const handleNextStep = () => {};
+  const teacher = useCharacterDetails(headerState.teacher);
 
-  // const handlePreviousStep = () => {};
-
-  // return (
-  //   <>
-  //     <LessonHeader
-  //       show={visible}
-  //       lessonDetails={lessonDetails}
-  //       lessonStep={lessonStep}
-  //       stepFlags={stepFlags}
-  //       characterDetails={characterDetails}
-  //       onCompleteDescription={handleOnDescriptionComplete}
-  //     />
-  //     <LessonActions
-  //       isFirst={true}
-  //       isLast={false}
-  //       show={showActions}
-  //       characterDetails={characterDetails}
-  //       lessonEntry={lessonEntry}
-  //       lessonStep={lessonStep}
-  //       nextStep={handleNextStep}
-  //       previousStep={handlePreviousStep}
-  //     />
-  //   </>
-  // );
+  return (
+    <>
+      <LessonHeaderWrapper
+        isVisible={headerState.showHeader}
+        leftIcon={<NotebookToggleButton />}
+        rightIcon={<LessonExit />}
+        onPhaseChange={onHeaderPhaseChange}
+      >
+        <LessonTitle
+          isVisible={headerState.showTitle}
+          title={headerState.title}
+          day={headerState.day}
+          onClose={handleOnTitleClose}
+        />
+        <LessonDescription
+          isVisible={headerState.showDescription}
+          description={headerState.description}
+          characterDetails={teacher}
+          onPhaseChange={onDescriptionPhaseChange}
+        />
+      </LessonHeaderWrapper>
+      {/* TODO: LEsson Challenges */}
+    </>
+  );
 }

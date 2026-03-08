@@ -26,7 +26,7 @@ class EventManager<Events extends Record<string, unknown>> {
     }
   }
 
-  emit<K extends keyof Events>(event: K, payload: Events[K]): void {
+  emit<K extends keyof Events>(event: K, payload?: Events[K]): void {
     const handlers = this.handlers.get(event);
     if (handlers) {
       handlers.forEach((handler) => handler(payload));

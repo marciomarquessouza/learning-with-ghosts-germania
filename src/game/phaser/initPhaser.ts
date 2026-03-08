@@ -8,7 +8,7 @@ export function initPhaser(
     .then(({ default: Phaser }) => {
       const game = new Phaser.Game(config);
       requestAnimationFrame(() => {
-        events.game.sync.emit("canvas-ready", undefined);
+        events.game.sync.emit("canvas-ready");
       });
       return game;
     })
