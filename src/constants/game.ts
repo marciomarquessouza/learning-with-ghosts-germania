@@ -7,7 +7,7 @@ import { GameScenes, GameWorlds } from "@/types";
 // also update the Scene Maps in src/game/config/gameWorldConfig.ts
 export const GAME_SCENES = {
   CELL_SCENE: "CellScene",
-  DREAM_SCENE: "GhostDreamScene",
+  DREAM_SCENE: "DreamScene",
   TRAIN_SCENE: "TrainScene",
 } as const;
 

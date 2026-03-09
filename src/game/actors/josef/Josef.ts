@@ -8,7 +8,7 @@ import { events } from "@/events/events";
 
 export const KEY_CODES = Phaser.Input.Keyboard.KeyCodes;
 
-export class GhostJosef {
+export class Josef {
   public lockMovement = false;
   public speed = 200;
   private sprite: Phaser.Physics.Arcade.Sprite | null = null;
@@ -83,4 +83,4 @@ export class GhostJosef {
   }
 }
 
-export const ghostJosef = new GhostJosef();
+export const josef = new Josef();

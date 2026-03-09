@@ -1,7 +1,7 @@
 import { GAME_SCENES, GAME_WORLDS } from "@/constants/game";
 import { createConfig } from "@/game/phaser/createConfig";
 import { cellScene } from "@/game/scenes/cell_scene";
-import { ghostDreamScene } from "@/game/scenes/ghost_dream_scene";
+import { dreamScene } from "@/game/scenes/dream_scene";
 import { trainScene } from "@/game/scenes/train_scene";
 import { GameWorlds } from "@/types";
 
@@ -14,7 +14,7 @@ const scenesMap = [
   {
     name: GAME_SCENES.DREAM_SCENE,
     world: GAME_WORLDS.DREAM,
-    phaserScene: ghostDreamScene,
+    phaserScene: dreamScene,
   },
   {
     name: GAME_SCENES.TRAIN_SCENE,

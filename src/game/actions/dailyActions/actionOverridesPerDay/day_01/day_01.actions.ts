@@ -97,7 +97,7 @@ class DayActions1 extends DayActions {
             { showWhenAlternativeIs: "sleeping_with_ghosts" },
           ),
           stepSetGameWorld(
-            { targetWorld: GAME_WORLDS.DREAM, targetScene: "GhostDreamScene" },
+            { targetWorld: GAME_WORLDS.DREAM, targetScene: GAME_SCENES.DREAM_SCENE },
             { showWhenAlternativeIs: "sleeping_with_ghosts" },
           ),
         ],

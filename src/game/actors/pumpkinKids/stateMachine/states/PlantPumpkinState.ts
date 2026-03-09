@@ -1,8 +1,8 @@
 import { BaseState } from "@/libs/game/state-machine/BaseState";
 import { PumpkinKids } from "../../PumpkinKids";
 import { runSteps, stepBase } from "@/libs/game/runSteps";
-import { Seed } from "../../helpers/Seed";
 import { PUMPKIN_STATES } from "../pumpkinStates";
+import { Seed } from "../../helpers/seed";
 
 export class PlantPumpkinState extends BaseState {
   constructor(

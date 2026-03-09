@@ -1,4 +1,3 @@
-import { ghostJosef } from "../../actors/ghostJosef/GhostJosef";
 import { createScene } from "@/game/core/CreateScene";
 import { hud, HUD_ITEMS } from "../hud";
 import { cemeteryScenario } from "./helpers/cemeteryScenario";
@@ -11,11 +10,12 @@ import { GameScenes } from "@/types";
 import { pumpkinKids } from "@/game/actors/pumpkinKids/PumpkinKids";
 import { events } from "@/events/events";
 import { DayActions } from "@/game/actions/dailyActions/actionDefaultPerDay/default.actions";
+import { josef } from "@/game/actors/josef/Josef";
 
 export const DEFAULT_POSITION_X = 510;
 export const DEFAULT_POSITION_Y = 720;
 
-class GhostDreamScene extends Phaser.Scene {
+class DreamScene extends Phaser.Scene {
   private dayActions: DayActions | null = null;
 
   constructor() {
@@ -24,7 +24,7 @@ class GhostDreamScene extends Phaser.Scene {
 
   preload() {
     cemeteryScenario.preload(this);
-    ghostJosef.preload(this);
+    josef.preload(this);
     eliza.preload(this);
     pumpkinKids.preload(this);
     hud.preload(this);
@@ -37,7 +37,7 @@ class GhostDreamScene extends Phaser.Scene {
       throw new Error("Mobile/Tablet version not implemented");
     const cursors = this.input.keyboard?.createCursorKeys();
     this.physics.world.setBounds(0, 0, scenario.width - 200, scenario.height);
-    const josefSprite = ghostJosef.create(this, {
+    const josefSprite = josef.create(this, {
       startX: DEFAULT_POSITION_X,
       startY: DEFAULT_POSITION_Y,
       cursors,
@@ -81,7 +81,7 @@ class GhostDreamScene extends Phaser.Scene {
 
   update(time: number, delta: number) {
     cemeteryScenario.update(delta);
-    ghostJosef.update(time, delta);
+    josef.update(time, delta);
     eliza.update(delta);
     pumpkinKids.update(delta);
     if (this.dayActions) {
@@ -101,4 +101,4 @@ class GhostDreamScene extends Phaser.Scene {
   }
 }
 
-export const ghostDreamScene = createScene(GhostDreamScene);
+export const dreamScene = createScene(DreamScene);
