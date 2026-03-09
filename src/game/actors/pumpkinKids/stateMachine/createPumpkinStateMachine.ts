@@ -6,6 +6,7 @@ import {
 import { PumpkinKids } from "../PumpkinKids";
 import { PUMPKIN_STATES as STATES, PumpkinStateNames } from "./pumpkinStates";
 import { PlantPumpkinState } from "./states/PlantPumpkinState";
+import { SproutIdleState } from "./states/SproutIdleState";
 
 export function createPumpkinStateMachine(
   scene: Phaser.Scene,
@@ -14,6 +15,7 @@ export function createPumpkinStateMachine(
   const stateMachine = new StateMachine(scene);
   const states: [PumpkinStateNames, StateConstructor<IState>][] = [
     [STATES.PLANT_PUMPKIN, PlantPumpkinState],
+    [STATES.SPROUT_IDLE, SproutIdleState],
   ];
 
   states.forEach(([name, state]) => {

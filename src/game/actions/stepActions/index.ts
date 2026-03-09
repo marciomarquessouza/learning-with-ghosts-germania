@@ -13,6 +13,14 @@ import {
 } from "./actions/showDreamIntroduction";
 import { setGameWorld, SetGameWorld } from "./actions/setGameWorld";
 
+/**
+ * These steps are used in different places and more than once within the game
+ * with the same expected behavior.
+ * For custom steps, please, use stepBase
+ * Example:
+ * stepBase(() => { your logic returning a Promise})
+ */
+
 export const stepShowDialogue = (
   payload: DialogueEvent,
   options?: StepOptions,
