@@ -94,6 +94,7 @@ class DreamScene extends Phaser.Scene {
     cemeteryScenario.destroy();
     hud.destroy();
     pumpkinKids.destroy();
+    josef.destroy();
     events.game.async.clear("change-world-transition");
     if (this.dayActions) {
       this.dayActions.destroy();

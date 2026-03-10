@@ -19,6 +19,7 @@ export class EventController<
   AsyncEvents extends EventMap,
 > {
   private asyncEventsMap = new Map<keyof AsyncEvents, () => void>();
+  private removeEvents: Array<() => void> = [];
 
   constructor(
     private syncBus: SyncEventBus<SyncEvents>,
@@ -29,14 +30,20 @@ export class EventController<
     event: E,
     callback: (payload: SyncEvents[E]) => void,
   ) {
-    this.syncBus.on(event, callback);
+    const remove = this.syncBus.on(event, callback) as unknown as
+      | (() => void)
+      | undefined;
+
+    if (remove) {
+      this.removeEvents.push(remove);
+    }
   }
 
   addAsyncEvent<E extends keyof AsyncEvents>(
     event: E,
     callback: (payload: AsyncEvents[E]) => void,
   ) {
-    this.asyncBus.on(event, (payload, done) => {
+    const clearEvent = this.asyncBus.on(event, (payload, done) => {
       if (this.asyncEventsMap.has(event)) {
         console.error(`The event "${String(event)}" is currently running`);
         done();
@@ -45,7 +52,11 @@ export class EventController<
 
       this.asyncEventsMap.set(event, done);
       callback(payload);
-    });
+    }) as unknown as { remove: () => void } | undefined;
+
+    if (clearEvent?.remove) {
+      this.removeEvents.push(() => clearEvent.remove());
+    }
   }
 
   closeAsyncEvent<E extends keyof AsyncEvents>(event: E) {
@@ -60,5 +71,11 @@ export class EventController<
 
     this.asyncEventsMap.delete(event);
     done();
+  }
+
+  offAllEvents() {
+    this.removeEvents.forEach((removeEvent) => removeEvent());
+    this.removeEvents = [];
+    this.asyncEventsMap.clear();
   }
 }

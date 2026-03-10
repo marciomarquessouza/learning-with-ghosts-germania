@@ -6,7 +6,7 @@ export interface BarsCount {
 }
 
 export function setBarsCount({ count }: BarsCount): Promise<void> {
-  return events.game.async.emitAsync("hud-actions-badge", {
+  return events.game.async.emitAsync("hud/actions-badge", {
     icon: ACTIONS_ICONS.BARS,
     count,
   });

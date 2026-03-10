@@ -16,7 +16,7 @@ export class DreamCamera {
     this.mainCamera.setBounds(bounds.x, bounds.y, bounds.width, bounds.height);
     this.mainCamera.startFollow(target, true, 0.12, 0.12);
     this.mainCamera.setBackgroundColor(0x000000);
-    events.game.sync.on("camera-zoom-to", ({ zoom, duration = 0 }) => {
+    events.game.sync.on("camera/zoom-to", ({ zoom, duration = 0 }) => {
       this.mainCamera.zoomTo(zoom, duration);
     });
   }

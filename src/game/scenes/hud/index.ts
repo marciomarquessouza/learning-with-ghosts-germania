@@ -42,11 +42,11 @@ class Hud {
       if (hudObject) hudObject.setVisible(option === "show");
     };
 
-    events.game.sync.on("show-hud-items", (items) => {
+    events.game.sync.on("hud/show-items", (items) => {
       items.forEach((item) => toggleItem(item, "show"));
     });
 
-    events.game.sync.on("hide-hud-items", (items) => {
+    events.game.sync.on("hud/hide-items", (items) => {
       items.forEach((item) => toggleItem(item, "hide"));
     });
 

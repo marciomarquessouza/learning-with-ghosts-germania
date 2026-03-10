@@ -44,7 +44,7 @@ export class Eliza {
       eliza: this,
       player,
       onEnter: this.dayActions?.onEnterElizaArea,
-      onLeave: () => events.game.sync.emit("hide-game-message"),
+      onLeave: () => events.game.sync.emit("game-message/hide"),
     });
 
     this.eventController = new EventController(

@@ -11,6 +11,7 @@ import { getWorldsFlags } from "@/utils/getWorldsFlags";
 import { TWENTY_ONE_GRAMS_EXPERIMENT_URL } from "@/constants/game";
 import { attachInteractiveContainer } from "./helpers/attachInteractiveContainer";
 import { events } from "@/events/events";
+import { UpdateWeightEvent } from "@/events/game/types";
 
 export const DEFAULT_DELAY_BETWEEN_UPDATES = 15;
 export const SLOW_DELAY_BETWEEN_UPDATES = 80;
@@ -71,14 +72,16 @@ class HudWeight {
         : SLOW_DELAY_BETWEEN_UPDATES,
     );
 
-    const weightDecrease = ({ amount }: { amount: number }) => {
+    const updateWeight = ({ operation, amount }: UpdateWeightEvent) => {
+      const operationSign = operation === "increase" ? amount : -amount;
+      const targetWeight = this.currentWeight + amount * operationSign;
       this.numbers?.updateWeight({
         currentWeight: this.currentWeight,
-        targetWeight: this.currentWeight - amount,
+        targetWeight,
         hasPulse: true,
         delayBetweenUpdates: SLOW_DELAY_BETWEEN_UPDATES + 40,
       });
-      this.pointer?.updateWeight(this.currentWeight - amount);
+      this.pointer?.updateWeight(targetWeight);
     };
 
     if (!isRealWorld) {
@@ -90,10 +93,10 @@ class HudWeight {
       });
     }
 
-    events.actors.josef.sync.on("josef/damage:dream", weightDecrease);
+    events.game.sync.on("hud/weight-decrease", updateWeight);
 
     container.once(Phaser.GameObjects.Events.DESTROY, () => {
-      events.actors.josef.sync.off("josef/damage:dream", weightDecrease);
+      events.game.sync.off("hud/weight-decrease", updateWeight);
     });
 
     return container;

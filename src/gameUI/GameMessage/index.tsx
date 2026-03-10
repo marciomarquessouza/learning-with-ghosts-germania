@@ -23,8 +23,8 @@ export function GameMessage() {
       }, payload.closeAfter || 7_000);
     };
 
-    events.game.sync.on("show-game-message", handler);
-    return () => events.game.sync.off("show-game-message", handler);
+    events.game.sync.on("game-message/show", handler);
+    return () => events.game.sync.off("game-message/show", handler);
   }, []);
 
   useEffect(() => {
@@ -39,8 +39,8 @@ export function GameMessage() {
       }, payload.delay);
     };
 
-    events.game.sync.on("hide-game-message", handler);
-    return () => events.game.sync.off("hide-game-message", handler);
+    events.game.sync.on("game-message/hide", handler);
+    return () => events.game.sync.off("game-message/hide", handler);
   }, []);
 
   const handleCloseClick = () => {

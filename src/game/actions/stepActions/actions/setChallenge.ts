@@ -10,7 +10,7 @@ export function setChallenge({
   countdown,
   onFinish,
 }: ChallengeEvent): Promise<void> {
-  return events.game.async.emitAsync("hud-actions-timer", {
+  return events.game.async.emitAsync("hud/actions-timer", {
     icon: ACTIONS_ICONS.CHALLENGE,
     timeInSeconds: countdown,
     onFinish,

@@ -31,13 +31,13 @@ class HUdActions {
       { name: ACTIONS_ICONS.EXIT, action: () => console.log("#EXIT") },
     ]);
 
-    events.game.async.on("hud-actions-badge", ({ icon, count }, done) => {
+    events.game.async.on("hud/actions-badge", ({ icon, count }, done) => {
       actionIcons.setBadgeCount(icon, count);
       done();
     });
 
     events.game.async.on(
-      "hud-actions-timer",
+      "hud/actions-timer",
       ({ icon, timeInSeconds, onFinish }, done) => {
         actionIcons.attachTimer(scene, icon, timeInSeconds, onFinish);
         done();

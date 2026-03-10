@@ -17,3 +17,8 @@ export type ChangeSceneEvent = {
   fade?: boolean;
   transition?: TransitionOptions;
 };
+
+export type UpdateWeightEvent = {
+  operation: "increase" | "decrease";
+  amount: number;
+};

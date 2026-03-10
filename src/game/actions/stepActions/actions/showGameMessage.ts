@@ -15,9 +15,9 @@ export function showGameMessage({
 }: GameMessage): Promise<void> {
   return new Promise((resolve) => {
     if (hide) {
-      events.game.sync.emit("hide-game-message", {});
+      events.game.sync.emit("game-message/hide", {});
     } else {
-      events.game.sync.emit("show-game-message", {
+      events.game.sync.emit("game-message/show", {
         title: title || "",
         text: text || "",
         closeAfter,

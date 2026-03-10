@@ -1,5 +1,10 @@
 import { GameScenes, GameWorlds } from "@/types";
-import { ChangeSceneEvent, DialogueEvent, ZoomPropsEvent } from "./types";
+import {
+  ChangeSceneEvent,
+  DialogueEvent,
+  UpdateWeightEvent,
+  ZoomPropsEvent,
+} from "./types";
 import { ReactNode } from "react";
 import { CHARACTERS, MOODS } from "@/constants/game";
 import { ACTIONS_ICONS } from "@/game/scenes/hud/helpers/actionIcons";
@@ -12,29 +17,30 @@ export type GameSyncEvents = {
     targetWorld: GameWorlds;
     targetScene: GameScenes;
   };
-  "show-game-message": {
+  "set-mood": { mood: MOODS; character: CHARACTERS };
+  "camera/zoom-to": ZoomPropsEvent;
+  "game-message/show": {
     title: string;
     text: ReactNode;
     closeAfter?: number;
   };
-  "hide-game-message": { delay?: number };
-  "show-dialogue": DialogueEvent;
-  "hide-dialogue": { dialogueId?: string };
-  "set-mood": { mood: MOODS; character: CHARACTERS };
-  "show-hud-items": HUD_ITEMS[];
-  "hide-hud-items": HUD_ITEMS[];
-  "camera-zoom-to": ZoomPropsEvent;
+  "game-message/hide": { delay?: number };
+  "dialogue/show": DialogueEvent;
+  "dialogue/hide": { dialogueId?: string };
+  "hud/weight-decrease": UpdateWeightEvent;
+  "hud/show-items": HUD_ITEMS[];
+  "hud/hide-items": HUD_ITEMS[];
 };
 
 export type GameAsyncEvents = {
   "change-world-transition": undefined;
   "change-scene": ChangeSceneEvent;
-  "hud-actions-timer": {
+  "hud/actions-timer": {
     icon: ACTIONS_ICONS;
     timeInSeconds: number;
     onFinish: () => void;
   };
-  "hud-actions-badge": { icon: ACTIONS_ICONS; count: number };
+  "hud/actions-badge": { icon: ACTIONS_ICONS; count: number };
 };
 
 export const gameEvents = createEventManagers<

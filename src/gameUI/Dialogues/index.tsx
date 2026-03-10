@@ -62,8 +62,8 @@ export function Dialogue() {
       setVisible(true);
     };
 
-    events.game.sync.on("show-dialogue", handler);
-    return () => events.game.sync.off("show-dialogue", handler);
+    events.game.sync.on("dialogue/show", handler);
+    return () => events.game.sync.off("dialogue/show", handler);
   }, [setTextToType]);
 
   const advanceLine = useCallback(() => {
@@ -81,7 +81,7 @@ export function Dialogue() {
     const newLine = lines[newIndex];
 
     if (!newLine) {
-      events.game.sync.emit("hide-dialogue", {
+      events.game.sync.emit("dialogue/hide", {
         dialogueId: dialogueId.current,
       });
       setVisible(false);

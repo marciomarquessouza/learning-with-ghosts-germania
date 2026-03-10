@@ -11,7 +11,7 @@ export function showDialogue(
         line.onSubmitted = setAlternative;
       }
     });
-    events.game.sync.emit("show-dialogue", {
+    events.game.sync.emit("dialogue/show", {
       lines,
       onComplete: () => {
         onComplete?.();
