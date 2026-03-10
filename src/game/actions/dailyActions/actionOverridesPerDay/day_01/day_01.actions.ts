@@ -27,7 +27,7 @@ class DayActions1 extends DayActions {
       case GAME_SCENES.DREAM_SCENE:
         runSteps(
           [
-            // stepShowDialogue({ lines: dialogues.dream_introduction() }),
+            stepShowDialogue({ lines: dialogues.dream_introduction() }),
             stepGameMessage({
               title: "Go to Eliska",
               text: "Use the arrow keys or the A and D keys",
@@ -97,7 +97,10 @@ class DayActions1 extends DayActions {
             { showWhenAlternativeIs: "sleeping_with_ghosts" },
           ),
           stepSetGameWorld(
-            { targetWorld: GAME_WORLDS.DREAM, targetScene: GAME_SCENES.DREAM_SCENE },
+            {
+              targetWorld: GAME_WORLDS.DREAM,
+              targetScene: GAME_SCENES.DREAM_SCENE,
+            },
             { showWhenAlternativeIs: "sleeping_with_ghosts" },
           ),
         ],

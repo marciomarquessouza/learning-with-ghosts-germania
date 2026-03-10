@@ -5,7 +5,7 @@ import {
 } from "@/libs/game/state-machine/StateMachine";
 import { JOSEF_STATES as STATES, JosefStateNames } from "./josefStates";
 import { IdleState } from "./states/IdleState";
-import { WalkingState } from "./states/WalkingState";
+import { MovingState } from "./states/MovingState";
 import { ListeningState } from "./states/ListeningState";
 import { SpeakingState } from "./states/SpeakingState";
 import { Josef } from "../Josef";
@@ -17,7 +17,7 @@ export function createJosefStateMachine(
   const stateMachine = new StateMachine(scene);
   const states: [JosefStateNames, StateConstructor<IState>][] = [
     [STATES.IDLE, IdleState],
-    [STATES.WALKING, WalkingState],
+    [STATES.MOVING, MovingState],
     [STATES.LISTENING, ListeningState],
     [STATES.SPEAKING, SpeakingState],
   ];

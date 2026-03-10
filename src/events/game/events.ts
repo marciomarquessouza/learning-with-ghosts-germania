@@ -17,7 +17,6 @@ export type GameSyncEvents = {
     targetWorld: GameWorlds;
     targetScene: GameScenes;
   };
-  "set-mood": { mood: MOODS; character: CHARACTERS };
   "camera/zoom-to": ZoomPropsEvent;
   "game-message/show": {
     title: string;
@@ -27,6 +26,7 @@ export type GameSyncEvents = {
   "game-message/hide": { delay?: number };
   "dialogue/show": DialogueEvent;
   "dialogue/hide": { dialogueId?: string };
+  "dialogue/set-mood": { mood: MOODS; character: CHARACTERS };
   "hud/weight-decrease": UpdateWeightEvent;
   "hud/show-items": HUD_ITEMS[];
   "hud/hide-items": HUD_ITEMS[];

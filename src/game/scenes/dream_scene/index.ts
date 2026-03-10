@@ -1,77 +1,89 @@
 import { createScene } from "@/game/core/CreateScene";
-import { hud, HUD_ITEMS } from "../hud";
-import { cemeteryScenario } from "./helpers/cemeteryScenario";
+import { Hud, HUD_ITEMS } from "../hud";
+import { CemeteryScenario } from "./helpers/cemeteryScenario";
 import { getDayAction } from "@/game/actions/getAction";
-import { eliza } from "@/game/actors/eliza/Eliza";
-import { dreamCamera } from "@/game/cameras/DreamCamera";
+import { Eliza } from "@/game/actors/eliza/Eliza";
+import { DreamCamera } from "@/game/cameras/DreamCamera";
 import { changeWorldTransition } from "@/game/utils/changeWorldTransition";
 import { GAME_SCENES } from "@/constants/game";
 import { GameScenes } from "@/types";
-import { pumpkinKids } from "@/game/actors/pumpkinKids/PumpkinKids";
+import { PumpkinKids } from "@/game/actors/pumpkinKids/PumpkinKids";
 import { events } from "@/events/events";
 import { DayActions } from "@/game/actions/dailyActions/actionDefaultPerDay/default.actions";
-import { josef } from "@/game/actors/josef/Josef";
+import { Josef } from "@/game/actors/josef/Josef";
 
 export const DEFAULT_POSITION_X = 510;
 export const DEFAULT_POSITION_Y = 720;
 
 class DreamScene extends Phaser.Scene {
   private dayActions: DayActions | null = null;
+  private scenario = new CemeteryScenario();
+  private josef = new Josef();
+  private eliza = new Eliza();
+  private pumpkinKids = new PumpkinKids();
+  private dreamCamera = new DreamCamera();
+  private hud = new Hud();
 
   constructor() {
     super({ key: GAME_SCENES.DREAM_SCENE });
   }
 
   preload() {
-    cemeteryScenario.preload(this);
-    josef.preload(this);
-    eliza.preload(this);
-    pumpkinKids.preload(this);
-    hud.preload(this);
+    this.scenario.preload(this);
+    this.josef.preload(this);
+    this.eliza.preload(this);
+    this.pumpkinKids.preload(this);
+    this.hud.preload(this);
     this.physics.world.setBounds(0, 0, 2000, 1200);
   }
 
   create() {
-    const scenario = cemeteryScenario.create(this);
+    this.scenario.create(this);
     if (!this.input.keyboard)
       throw new Error("Mobile/Tablet version not implemented");
     const cursors = this.input.keyboard?.createCursorKeys();
-    this.physics.world.setBounds(0, 0, scenario.width - 200, scenario.height);
-    const josefSprite = josef.create(this, {
+    this.physics.world.setBounds(
+      0,
+      0,
+      this.scenario.width - 200,
+      this.scenario.height,
+    );
+    const josefSprite = this.josef.create(this, {
       startX: DEFAULT_POSITION_X,
       startY: DEFAULT_POSITION_Y,
       cursors,
     });
-
-    dreamCamera.create(this, josefSprite, {
+    this.dreamCamera.create(this, josefSprite, {
       x: 0,
       y: 0,
-      width: scenario.width,
-      height: scenario.height,
+      width: this.scenario.width,
+      height: this.scenario.height,
     });
 
     getDayAction(this.scene.key as GameScenes).then((dayActions) => {
       this.dayActions = dayActions;
       this.dayActions.create(this);
-      eliza.create(this, {
-        startX: scenario.width - 800,
+      this.eliza.create(this, {
+        startX: this.scenario.width - 800,
         startY: DEFAULT_POSITION_Y - 100,
         scale: 0.8,
         flipX: true,
         player: josefSprite,
         dayActions,
         cursors,
-        camera: dreamCamera.mainCamera,
+        camera: this.dreamCamera.mainCamera,
       });
-      pumpkinKids.create(this, {
-        startX: scenario.width - 760,
+      this.pumpkinKids.create(this, {
+        startX: this.scenario.width - 760,
         startY: 890,
         flipX: true,
       });
-      const hudContainer = hud.create(this, dayActions, [HUD_ITEMS.WEIGHT]);
+      const hudContainer = this.hud.create(this, dayActions, [
+        HUD_ITEMS.WEIGHT,
+      ]);
       this.children.bringToTop(hudContainer);
 
-      dreamCamera.fadeIn({ onComplete: () => dayActions.onStart() });
+      this.dreamCamera.fadeIn({ onComplete: () => dayActions.onStart() });
     });
 
     events.game.async.on("change-world-transition", (_, done) => {
@@ -80,21 +92,21 @@ class DreamScene extends Phaser.Scene {
   }
 
   update(time: number, delta: number) {
-    cemeteryScenario.update(delta);
-    josef.update(time, delta);
-    eliza.update(delta);
-    pumpkinKids.update(delta);
+    this.scenario.update(delta);
+    this.josef.update(time, delta);
+    this.eliza.update(delta);
+    this.pumpkinKids.update(delta);
     if (this.dayActions) {
       this.dayActions.update(delta);
     }
   }
 
   destroy() {
-    eliza.destroy();
-    cemeteryScenario.destroy();
-    hud.destroy();
-    pumpkinKids.destroy();
-    josef.destroy();
+    this.eliza.destroy();
+    this.scenario.destroy();
+    this.hud.destroy();
+    this.pumpkinKids.destroy();
+    this.josef.destroy();
     events.game.async.clear("change-world-transition");
     if (this.dayActions) {
       this.dayActions.destroy();

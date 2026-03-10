@@ -8,7 +8,7 @@ export enum HUD_ITEMS {
   ACTIONS = "ACTIONS",
 }
 
-class Hud {
+export class Hud {
   preload(scene: Phaser.Scene): void {
     hudWeight.preload(scene);
     hudActions.preload(scene);
@@ -57,5 +57,3 @@ class Hud {
     hudWeight.destroy();
   }
 }
-
-export const hud = new Hud();

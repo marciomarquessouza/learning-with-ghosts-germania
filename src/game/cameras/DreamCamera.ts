@@ -33,5 +33,3 @@ export class DreamCamera {
     });
   }
 }
-
-export const dreamCamera = new DreamCamera();

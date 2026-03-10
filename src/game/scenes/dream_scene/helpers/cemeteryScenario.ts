@@ -22,7 +22,7 @@ const CEMETERY_MOON = "cemeteryMoon";
 const CEMETERY_CLOUDS = "cemeteryClouds";
 const DANGER_LAYER = "dangerLayer";
 
-class CemeteryScenario {
+export class CemeteryScenario {
   private clouds?: Phaser.GameObjects.TileSprite;
   private cloudsSpeedPxPerSec = 8;
   private cemeteryDangerLayer: Phaser.GameObjects.Image | null = null;
@@ -35,6 +35,9 @@ class CemeteryScenario {
   }: KrampusReleasedPayload) => {
     this.setDanger(skyEffectAmount, onFinish);
   };
+  public width = 0;
+  public height = 0;
+  public container!: Phaser.GameObjects.Container;
 
   preload(scene: Phaser.Scene) {
     const load: Phaser.Loader.LoaderPlugin = scene.load;
@@ -49,43 +52,43 @@ class CemeteryScenario {
   }
 
   create(scene: Phaser.Scene) {
-    const container = scene.add.container(0, 0);
+    this.container = scene.add.container(0, 0);
     const background = scene.add
       .image(0, 0, CEMETERY_BLACK)
       .setOrigin(0, 0)
       .setDepth(-100);
-    container.add(background);
+    this.container.add(background);
 
     const cemeterySky = scene.add
       .image(0, 0, CEMETERY_SKY)
       .setOrigin(0, 0)
       .setDepth(-90);
-    container.add(cemeterySky);
+    this.container.add(cemeterySky);
 
     const cemeteryClouds = scene.add
       .tileSprite(0, 0, background.width, background.height, CEMETERY_CLOUDS)
       .setOrigin(0, 0)
       .setDepth(-80);
-    container.add(cemeteryClouds);
+    this.container.add(cemeteryClouds);
     this.clouds = cemeteryClouds;
 
     const cemeteryMoon = scene.add
       .image(0, 0, CEMETERY_MOON)
       .setOrigin(0, 0)
       .setDepth(-70);
-    container.add(cemeteryMoon);
+    this.container.add(cemeteryMoon);
 
     const cemeteryBackground = scene.add
       .image(0, 0, CEMETERY_BACKGROUND)
       .setOrigin(0, 0)
       .setDepth(-60);
-    container.add(cemeteryBackground);
+    this.container.add(cemeteryBackground);
 
     const cemeteryRoad = scene.add
       .image(0, 0, CEMETERY_ROAD)
       .setOrigin(0, 0)
       .setDepth(-50);
-    container.add(cemeteryRoad);
+    this.container.add(cemeteryRoad);
 
     this.cemeteryDangerLayer = scene.add
       .image(0, 0, DANGER_LAYER)
@@ -93,15 +96,12 @@ class CemeteryScenario {
       .setDepth(-45)
       .setBlendMode(Phaser.BlendModes.MULTIPLY)
       .setAlpha(0);
-    container.add(this.cemeteryDangerLayer);
+    this.container.add(this.cemeteryDangerLayer);
 
     events.actors.krampus.sync.on("krampus/released", this.onKrampusReleased);
 
-    return {
-      container,
-      width: background.width,
-      height: background.height,
-    };
+    this.width = background.width;
+    this.height = background.height;
   }
 
   private cloudsAnimation(delta: number) {
@@ -149,5 +149,3 @@ class CemeteryScenario {
     events.actors.krampus.sync.off("krampus/released", this.onKrampusReleased);
   }
 }
-
-export const cemeteryScenario = new CemeteryScenario();

@@ -76,5 +76,3 @@ export class PumpkinKids {
     events.actors.pumpkinKid.async.clear();
   }
 }
-
-export const pumpkinKids = new PumpkinKids();

@@ -7,7 +7,7 @@ export function setCharactersMood(
   return new Promise((resolve) => {
     if (!charactersMood) return resolve();
     charactersMood.forEach(({ mood, character }) => {
-      events.game.sync.emit("set-mood", {
+      events.game.sync.emit("dialogue/set-mood", {
         mood,
         character,
       });

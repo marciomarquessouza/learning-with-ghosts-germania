@@ -28,6 +28,7 @@ export class Josef {
   private shadow = new Shadow();
   private levitation = new Levitation();
   private stateMachine!: StateMachine;
+  private gameEventsToRemove: (() => void)[] = [];
 
   preload(scene: Phaser.Scene) {
     this.animations.preload(scene);
@@ -50,10 +51,16 @@ export class Josef {
     // Initial State
     this.stateMachine.changeTo(JOSEF_STATES.IDLE);
 
+    this.attachEvents();
+
     return this.sprite;
   }
 
   attachEvents() {
+    this.eventController.addSyncEvent("idle", () => {
+      this.stateMachine.changeTo(JOSEF_STATES.IDLE);
+    });
+
     this.eventController.addSyncEvent("listening", () => {
       this.stateMachine.changeTo(JOSEF_STATES.LISTENING);
     });
@@ -61,46 +68,56 @@ export class Josef {
     this.eventController.addSyncEvent("speaking", () => {
       this.stateMachine.changeTo(JOSEF_STATES.SPEAKING);
     });
+
+    this.gameEventsToRemove.push(
+      events.game.sync.on("dialogue/show", () => {
+        this.stateMachine.changeTo(JOSEF_STATES.LISTENING);
+      }),
+    );
+
+    this.gameEventsToRemove.push(
+      events.game.sync.on("dialogue/hide", () => {
+        this.stateMachine.changeTo(this.stateMachine.getPreviousStateName());
+      }),
+    );
   }
 
-  update(_time: number, delta: number) {
-    if (!this.sprite) return;
-
-    if (this.stateMachine) {
-      this.stateMachine.updateAndHandleInput(delta);
+  public getHorizontalInput() {
+    if (!this.sprite) {
+      return {
+        left: false,
+        right: false,
+        velocityX: 0,
+      };
     }
 
     const left = this.cursors?.left.isDown || this.keyMap?.A?.isDown;
     const right = this.cursors?.right.isDown || this.keyMap?.D?.isDown;
 
-    let vx = 0;
+    let velocityX = 0;
+
     if (left) {
-      vx -= this.speed;
+      velocityX -= this.speed;
       this.sprite.flipX = true;
     }
+
     if (right) {
-      vx += this.speed;
+      velocityX += this.speed;
       this.sprite.flipX = false;
     }
 
-    const moving = vx !== 0;
+    return { left, right, velocityX };
+  }
 
-    // remove after test
-    if (moving) {
-      this.animations.playMoving();
-    } else {
-      this.animations.playIdle();
-    }
-
-    this.sprite.setVelocityX(vx);
-
+  update(_time: number, delta: number) {
+    if (!this.sprite) return;
+    this.stateMachine?.updateAndHandleInput(delta);
     this.levitation.update(delta);
   }
 
   destroy() {
     this.stateMachine.clear();
     this.eventController.offAllEvents();
+    this.gameEventsToRemove.forEach((remove) => remove());
   }
 }
-
-export const josef = new Josef();

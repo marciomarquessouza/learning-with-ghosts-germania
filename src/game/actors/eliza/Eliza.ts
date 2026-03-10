@@ -85,5 +85,3 @@ export class Eliza {
     events.actors.eliza.async.clear();
   }
 }
-
-export const eliza = new Eliza();

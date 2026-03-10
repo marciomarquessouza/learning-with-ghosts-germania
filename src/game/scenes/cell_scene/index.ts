@@ -1,7 +1,7 @@
 import { CELL_IMAGE } from "@/constants/images";
 import { createScene } from "@/game/core/CreateScene";
 import { noiseEffect } from "./noiseEffect";
-import { hud, HUD_ITEMS } from "../hud";
+import { Hud, HUD_ITEMS } from "../hud";
 import { calendar } from "./calendar";
 import { selectableAreas } from "./selectableAreas";
 import { getDayAction } from "@/game/actions/getAction";
@@ -17,6 +17,7 @@ class CellScene extends Phaser.Scene {
   player: Phaser.Types.Physics.Arcade.SpriteWithDynamicBody | null = null;
   target: { x: number; y: number } | null = null;
   private dayActions: DayActions | null = null;
+  private hud = new Hud();
 
   constructor() {
     super({ key: GAME_SCENES.CELL_SCENE });
@@ -27,7 +28,7 @@ class CellScene extends Phaser.Scene {
     load.image(CELL, CELL_IMAGE);
     noiseEffect.preload(this);
     calendar.preload(this);
-    hud.preload(this);
+    this.hud.preload(this);
   }
 
   create() {
@@ -49,7 +50,7 @@ class CellScene extends Phaser.Scene {
       dayActions.create(this);
       dayActions.onStart();
       selectableAreas.create(this, dayActions);
-      const hudContainer = hud.create(this, dayActions, [
+      const hudContainer = this.hud.create(this, dayActions, [
         HUD_ITEMS.WEIGHT,
         HUD_ITEMS.ACTIONS,
       ]);
@@ -69,7 +70,7 @@ class CellScene extends Phaser.Scene {
   }
 
   destroy() {
-    hud.destroy();
+    this.hud.destroy();
     if (this.dayActions) {
       this.dayActions.destroy();
     }
