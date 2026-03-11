@@ -26,7 +26,7 @@ const defaultState: State = {
   title: "",
   description: "",
   day: 1,
-  teacher: CHARACTERS.ELISA,
+  teacher: CHARACTERS.ELIZA,
   closeAfter: 2_000,
 };
 

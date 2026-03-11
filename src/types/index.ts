@@ -1,6 +1,10 @@
 import { WritingScore } from "@/gameUI/LessonChallenges/StepWriting";
 import { CHARACTERS, GAME_SCENES, GAME_WORLDS, MOODS } from "@/constants/game";
 import { AudioScoreSummary } from "@/libs/audio/useAudioScoreV2";
+import { Josef } from "@/game/actors/josef/Josef";
+import { Eliza } from "@/game/actors/eliza/Eliza";
+import { PumpkinKids } from "@/game/actors/pumpkinKids/PumpkinKids";
+import { Krampus } from "@/game/actors/krampus/Krampus";
 
 export type GameScenes = (typeof GAME_SCENES)[keyof typeof GAME_SCENES];
 export type GameWorlds = (typeof GAME_WORLDS)[keyof typeof GAME_WORLDS];
@@ -85,6 +89,13 @@ export type InteractionTypes = "dialogue" | "alternatives" | "input" | "lesson";
 export interface Alternative {
   id: string;
   text: string;
+}
+
+export type GameActors = {
+  [CHARACTERS.JOSEF]: Josef,
+  [CHARACTERS.ELIZA]: Eliza,
+  [CHARACTERS.PUMPKIN_KID]: PumpkinKids
+  [CHARACTERS.KRAMPUS]: Krampus
 }
 
 export type CharacterMood = {

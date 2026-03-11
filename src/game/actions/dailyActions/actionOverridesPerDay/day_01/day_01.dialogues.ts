@@ -60,7 +60,7 @@ export const dialogues = {
       Does that mean I don’t need
       to go back to that prison anymore?
     `,
-    dialogue.elisa.neutral`
+    dialogue.eliza.neutral`
       You didn’t die, Josef — don’t get so smug. ♦  
       You’re only dreaming that you’re dead, a ghost. †  
     `.reactions([
@@ -73,7 +73,7 @@ export const dialogues = {
       Whose voice is this?  
       Who are you?
     `,
-    dialogue.elisa.surprised`
+    dialogue.eliza.surprised`
       Walk a bit further, and open your eyes. †
       Then you will see me, darling — lucky you. ♦
     `,
@@ -84,9 +84,9 @@ export const dialogues = {
     A confessional… with a nun?
     Who are you?
     What is happening?
-  `.reactions([{ mood: MOODS.TALKING, character: CHARACTERS.ELISA }]),
+  `.reactions([{ mood: MOODS.TALKING, character: CHARACTERS.ELIZA }]),
 
-    dialogue.elisa.talking`
+    dialogue.eliza.talking`
     Don’t overthink it, Josef.
     That’s not your strength.
     You’re dreaming.
@@ -96,10 +96,10 @@ export const dialogues = {
     I… I don’t understand.
     Why am I here?
     Why are you here?
-  `.reactions([{ mood: MOODS.TALKING, character: CHARACTERS.ELISA }]),
+  `.reactions([{ mood: MOODS.TALKING, character: CHARACTERS.ELIZA }]),
 
-    dialogue.elisa.talking`
-    My name is Elisa.
+    dialogue.eliza.talking`
+    My name is eliza.
     The “why” comes later.
     Now: you need to learn German.
   `.reactions([{ mood: MOODS.SURPRISED, character: CHARACTERS.JOSEF }]),
@@ -108,9 +108,9 @@ export const dialogues = {
     Learn… in a dream?
     And if I wake up…
     I’ll forget everything.
-  `.reactions([{ mood: MOODS.TALKING, character: CHARACTERS.ELISA }]),
+  `.reactions([{ mood: MOODS.TALKING, character: CHARACTERS.ELIZA }]),
 
-    dialogue.elisa.talking`
+    dialogue.eliza.talking`
     You won’t forget what matters.
     Pass today’s test and you eat.
     Fail it… and you don’t.
@@ -119,13 +119,13 @@ export const dialogues = {
   ],
 
   lesson_finish: () => [
-    dialogue.elisa.talking`
+    dialogue.eliza.talking`
     There… that is enough for today, Josef.
     You did well.
     Better than I expected. †
   `.reactions([{ mood: MOODS.SURPRISED, character: CHARACTERS.JOSEF }]),
 
-    dialogue.elisa.talking`
+    dialogue.eliza.talking`
     But learning fades quickly.
     So I offer you one more challenge —
     to seal it inside that restless head of yours. †
@@ -145,7 +145,7 @@ export const dialogues = {
     ),
   ],
   challenge_accepted: () => [
-    dialogue.elisa.talking`
+    dialogue.eliza.talking`
     Oh?
     Braver than you look.
     Come, then.
@@ -153,7 +153,7 @@ export const dialogues = {
   `.reactions([{ mood: MOODS.SURPRISED, character: CHARACTERS.JOSEF }]),
   ],
   return_to_cell: () => [
-    dialogue.elisa.talking`
+    dialogue.eliza.talking`
     Very well.
     May your memory serve you better than your fear.
     We shall see soon enough. †
