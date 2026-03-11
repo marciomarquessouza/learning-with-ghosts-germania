@@ -109,6 +109,11 @@ export class Josef {
     return { left, right, velocityX };
   }
 
+  faceTarget(target: Phaser.GameObjects.Sprite) {
+    if (!this.sprite) return;
+    this.sprite.setFlipX(target.x < this.sprite.x);
+  }
+
   update(_time: number, delta: number) {
     if (!this.sprite) return;
     this.stateMachine?.updateAndHandleInput(delta);

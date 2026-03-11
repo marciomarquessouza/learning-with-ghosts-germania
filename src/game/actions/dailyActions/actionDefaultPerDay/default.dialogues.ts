@@ -32,14 +32,14 @@ export const dialogues = {
 	`,
   ],
   default_lesson_preparation: () => [
-    dialogue.elisa.neutral`
+    dialogue.eliza.neutral`
 		Bem vindo para mais um dia de aula Josef.
 		Vamos plantas mais algumas palavras no seu cu.
 	`,
     dialogue.josef.surprised`
 		O que?
 	`,
-    dialogue.elisa.neutral`
+    dialogue.eliza.neutral`
 		Digo... na sua cabeça
 	`,
   ],

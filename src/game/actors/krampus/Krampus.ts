@@ -10,6 +10,7 @@ import { events } from "@/events/events";
 export class Krampus {
   public container?: Phaser.GameObjects.Container;
   private positionLerp = 0.12;
+  public sprite!: Phaser.Physics.Arcade.Sprite;
 
   preload(scene: Phaser.Scene) {
     krampusAnimations.preload(scene);
@@ -37,20 +38,20 @@ export class Krampus {
     const light = krampusLight.create(scene, 0, 10);
     container.add(light);
 
-    const krampus = krampusAnimations.create(scene, 0, 0);
-    krampus.scale = scale;
-    krampus.play(initialAnimation);
+    this.sprite = krampusAnimations.create(scene, 0, 0);
+    this.sprite.scale = scale;
+    this.sprite.play(initialAnimation);
 
     if (scene.scene.key === GAME_SCENES.TRAIN_SCENE) {
       const krampusChasingTrain = new KrampusChasing(container);
-      krampusChasingTrain.attachSpeed(krampus, {
+      krampusChasingTrain.attachSpeed(this.sprite, {
         hateToSpeed: 0.6,
         maxHateBonus: 35,
         hateDecayPerSec: 0,
       });
     }
 
-    container.add(krampus);
+    container.add(this.sprite);
     this.container = container;
 
     return container;

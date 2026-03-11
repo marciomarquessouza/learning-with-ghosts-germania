@@ -5,31 +5,31 @@ import { getDayAction } from "@/game/actions/getAction";
 import { Eliza } from "@/game/actors/eliza/Eliza";
 import { DreamCamera } from "@/game/cameras/DreamCamera";
 import { changeWorldTransition } from "@/game/utils/changeWorldTransition";
-import { GAME_SCENES } from "@/constants/game";
-import { GameActors, GameScenes } from "@/types";
+import { CHARACTERS, GAME_SCENES } from "@/constants/game";
+import { GameScenes } from "@/types";
 import { PumpkinKids } from "@/game/actors/pumpkinKids/PumpkinKids";
 import { events } from "@/events/events";
 import { DayActions } from "@/game/actions/dailyActions/actionDefaultPerDay/default.actions";
 import { Josef } from "@/game/actors/josef/Josef";
-import { ActorRegistry } from "@/libs/game/actor-registry/ActorRegistry";
+import { GameScene } from "../GameScene";
 
 export const DEFAULT_POSITION_X = 510;
 export const DEFAULT_POSITION_Y = 720;
 
-class DreamScene extends Phaser.Scene {
+export class DreamScene extends GameScene {
   private dayActions: DayActions | null = null;
   private scenario = new CemeteryScenario();
   private dreamCamera = new DreamCamera();
   private hud = new Hud();
-  public actors = new ActorRegistry<GameActors>()
   private josef = new Josef();
-
   private eliza = new Eliza();
   private pumpkinKids = new PumpkinKids();
-  
 
   constructor() {
     super({ key: GAME_SCENES.DREAM_SCENE });
+    this.actors.register(CHARACTERS.JOSEF, this.josef);
+    this.actors.register(CHARACTERS.ELIZA, this.eliza);
+    this.actors.register(CHARACTERS.PUMPKIN_KID, this.pumpkinKids);
   }
 
   preload() {

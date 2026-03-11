@@ -2,6 +2,7 @@ import { BaseState } from "@/libs/game/state-machine/BaseState";
 import { Josef } from "../../Josef";
 import { events } from "@/events/events";
 import { CHARACTERS } from "@/constants/game";
+import { GameScene } from "@/game/scenes/GameScene";
 
 export class ListeningState extends BaseState {
   private removeListeners: (() => void)[] = [];
@@ -15,10 +16,14 @@ export class ListeningState extends BaseState {
 
   enter(): void {
     this.josef.animations.playIdle();
+
     this.removeListeners.push(
       events.game.sync.on("dialogue/set-mood", ({ character, mood }) => {
         if (character === CHARACTERS.JOSEF) {
           this.josef.animations.playAnimationByMood(mood);
+        } else {
+          const target = (this.scene as GameScene).actors.get(character);
+          this.josef.faceTarget(target.sprite);
         }
       }),
     );

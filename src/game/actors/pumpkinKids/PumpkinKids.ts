@@ -1,4 +1,4 @@
-import { Sprout, sprout } from "./helpers/sprout";
+import { Sprout } from "./helpers/sprout";
 import { events } from "@/events/events";
 import { StateMachine } from "@/libs/game/state-machine/StateMachine";
 import { createPumpkinStateMachine } from "./stateMachine/createPumpkinStateMachine";
@@ -16,7 +16,7 @@ interface CreatePayload {
 }
 
 export class PumpkinKids {
-  public sprout!: Sprout;
+  public sprout = new Sprout();
   public references: {
     groundPositionY: number;
     handPositionX: number;
@@ -27,9 +27,10 @@ export class PumpkinKids {
     PumpkinSyncEvents,
     PumpkinAsyncEvents
   >;
+  public sprite!: Phaser.Physics.Arcade.Sprite;
 
   preload(scene: Phaser.Scene) {
-    sprout.preload(scene);
+    this.sprout.preload(scene);
   }
 
   create(scene: Phaser.Scene, { startX, startY, flipX }: CreatePayload) {
@@ -41,7 +42,7 @@ export class PumpkinKids {
       handPositionY,
     };
 
-    this.sprout = sprout.create(scene, {
+    this.sprite = this.sprout.create(scene, {
       startX,
       startY: groundPositionY,
       flipX,
@@ -70,7 +71,7 @@ export class PumpkinKids {
   }
 
   destroy() {
-    sprout.destroy();
+    this.sprout.destroy();
     this.stateMachine.clear();
     events.actors.pumpkinKid.sync.clear();
     events.actors.pumpkinKid.async.clear();

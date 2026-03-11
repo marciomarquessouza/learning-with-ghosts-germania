@@ -79,7 +79,7 @@ export class Sprout {
     );
 
     this.sprite.flipX = !!flipX;
-    return this;
+    return this.sprite;
   }
 
   sprouting(): Promise<void> {
@@ -104,5 +104,3 @@ export class Sprout {
     }
   }
 }
-
-export const sprout = new Sprout();

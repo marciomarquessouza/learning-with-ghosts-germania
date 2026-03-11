@@ -5,6 +5,7 @@ import { Josef } from "@/game/actors/josef/Josef";
 import { Eliza } from "@/game/actors/eliza/Eliza";
 import { PumpkinKids } from "@/game/actors/pumpkinKids/PumpkinKids";
 import { Krampus } from "@/game/actors/krampus/Krampus";
+import { Marlene } from "@/game/actors/marlene/Marlene";
 
 export type GameScenes = (typeof GAME_SCENES)[keyof typeof GAME_SCENES];
 export type GameWorlds = (typeof GAME_WORLDS)[keyof typeof GAME_WORLDS];
@@ -92,11 +93,12 @@ export interface Alternative {
 }
 
 export type GameActors = {
-  [CHARACTERS.JOSEF]: Josef,
-  [CHARACTERS.ELIZA]: Eliza,
-  [CHARACTERS.PUMPKIN_KID]: PumpkinKids
-  [CHARACTERS.KRAMPUS]: Krampus
-}
+  [CHARACTERS.JOSEF]: Josef;
+  [CHARACTERS.ELIZA]: Eliza;
+  [CHARACTERS.PUMPKIN_KID]: PumpkinKids;
+  [CHARACTERS.KRAMPUS]: Krampus;
+  [CHARACTERS.MARLENE]: Marlene;
+};
 
 export type CharacterMood = {
   character: CHARACTERS;
