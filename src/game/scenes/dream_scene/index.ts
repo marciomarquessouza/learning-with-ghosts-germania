@@ -6,11 +6,12 @@ import { Eliza } from "@/game/actors/eliza/Eliza";
 import { DreamCamera } from "@/game/cameras/DreamCamera";
 import { changeWorldTransition } from "@/game/utils/changeWorldTransition";
 import { GAME_SCENES } from "@/constants/game";
-import { GameScenes } from "@/types";
+import { GameActors, GameScenes } from "@/types";
 import { PumpkinKids } from "@/game/actors/pumpkinKids/PumpkinKids";
 import { events } from "@/events/events";
 import { DayActions } from "@/game/actions/dailyActions/actionDefaultPerDay/default.actions";
 import { Josef } from "@/game/actors/josef/Josef";
+import { ActorRegistry } from "@/libs/game/actor-registry/ActorRegistry";
 
 export const DEFAULT_POSITION_X = 510;
 export const DEFAULT_POSITION_Y = 720;
@@ -18,11 +19,14 @@ export const DEFAULT_POSITION_Y = 720;
 class DreamScene extends Phaser.Scene {
   private dayActions: DayActions | null = null;
   private scenario = new CemeteryScenario();
-  private josef = new Josef();
-  private eliza = new Eliza();
-  private pumpkinKids = new PumpkinKids();
   private dreamCamera = new DreamCamera();
   private hud = new Hud();
+  public actors = new ActorRegistry<GameActors>()
+  private josef = new Josef();
+
+  private eliza = new Eliza();
+  private pumpkinKids = new PumpkinKids();
+  
 
   constructor() {
     super({ key: GAME_SCENES.DREAM_SCENE });
