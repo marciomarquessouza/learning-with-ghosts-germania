@@ -23,7 +23,7 @@ export class ListeningState extends BaseState {
           this.josef.animations.playAnimationByMood(mood);
         } else {
           const target = (this.scene as GameScene).actors.get(character);
-          this.josef.faceTarget(target.sprite);
+          this.josef.faceTarget(target?.sprite);
         }
       }),
     );

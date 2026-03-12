@@ -5,10 +5,8 @@ export class ActorRegistry<T extends Record<string, unknown>> {
     this.actors.set(name, actor)
   }
 
-  get<K extends keyof T>(name: K): T[K] {
-    if (!this.actors.has(name)) {
-        throw new Error(`Actor ${String(name)} was not registered`)
-    }
+  get<K extends keyof T>(name: K): T[K] | null {
+    if (!this.actors.has(name)) return null
 
     return this.actors.get(name) as T[K]
   }
