@@ -18,18 +18,20 @@ export interface LessonDescriptionProps {
 }
 
 const variants = {
-  hidden: { opacity: 0, y: 8 },
+  hidden: {
+    opacity: 0,
+  },
   visible: {
     opacity: 1,
-    y: 0,
     transition: { duration: 0.9, delay: 0.2 },
   },
   exit: {
     opacity: 0,
-    y: -8,
     transition: { duration: 0.5 },
   },
 };
+
+const MAXIMUM_SIZE_FOR_CENTERED_TEXT = 48;
 
 export function LessonDescription({
   isVisible,
@@ -113,8 +115,16 @@ export function LessonDescription({
               </p>
             </div>
 
-            <div className="w-3xl px-4">
-              <p className="min-h-20 text-left font-mono text-xl leading-relaxed text-[#FFF3E4]">
+            <div className="w-3xl px-4 items-center">
+              <p
+                style={{
+                  textAlign:
+                    description.length < MAXIMUM_SIZE_FOR_CENTERED_TEXT
+                      ? "center"
+                      : "left",
+                }}
+                className="min-h-20 font-mono text-xl leading-relaxed text-[#FFF3E4]"
+              >
                 {displayedText}
               </p>
             </div>
