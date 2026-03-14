@@ -2,11 +2,14 @@ import { CharacterDetails } from "@/hooks/useCharacterDetails";
 import { useTypewriter } from "@/hooks/useTypewriter";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
+import { PressContinue } from "./PressContinue";
+import { useDialogueKeyDown } from "@/hooks/useDialogueKeyDown";
 
 export type DescriptionPhases =
   | "hidden"
   | "entering"
   | "typing"
+  | "waiting"
   | "ready"
   | "exiting";
 
@@ -40,10 +43,11 @@ export function LessonDescription({
   onPhaseChange,
 }: LessonDescriptionProps) {
   const [phase, setPhase] = useState<DescriptionPhases>("hidden");
-  const { displayedText, setTextToType, startTyping, isComplete } =
+  const { displayedText, setTextToType, startTyping, resumeText, isComplete } =
     useTypewriter();
   const { characterName, honorific, hasHonorific } = characterDetails;
   const lastDescription = useRef("");
+  const boxRef = useRef<HTMLDivElement>(null);
 
   const changePhase = useCallback(
     (nextPhase: DescriptionPhases) => {
@@ -66,7 +70,7 @@ export function LessonDescription({
 
   useEffect(() => {
     if (isComplete && phase === "typing") {
-      changePhase("ready");
+      changePhase("waiting");
     }
   }, [isComplete, phase, changePhase]);
 
@@ -88,16 +92,36 @@ export function LessonDescription({
     onPhaseChange("hidden");
   };
 
+  useEffect(() => {
+    if (isVisible) {
+      requestAnimationFrame(() => boxRef.current?.focus());
+    }
+  }, [isVisible]);
+
+  const handleKeyDown = useDialogueKeyDown({
+    keyAction: () => {
+      if (phase === "typing") {
+        return resumeText();
+      }
+      if (phase === "waiting") {
+        return changePhase("ready");
+      }
+    },
+  });
+
   if (phase === "hidden") return null;
 
   return (
     <AnimatePresence mode="wait" onExitComplete={handleOnExit}>
       {isVisible && (
         <motion.div
+          ref={boxRef}
+          tabIndex={0}
           initial="hidden"
           animate="visible"
           exit="exit"
           variants={variants}
+          onKeyDown={handleKeyDown}
           onAnimationComplete={() => {
             if (phase === "entering") {
               lastDescription.current = description;
@@ -106,10 +130,12 @@ export function LessonDescription({
               startTyping();
             }
           }}
-          className="pointer-events-none flex h-full w-full items-center px-12 text-white"
+          className="pointer-events-none flex h-full w-full items-center px-12 text-white outline-none"
+          role="dialog"
+          aria-live="polite"
         >
           <div className="flex w-full flex-col items-center">
-            <div className="mb-4 bg-[#FFF3E4] px-4 py-0">
+            <div className="my-2 bg-[#FFF3E4] px-4 py-0">
               <p className="font-primary text-left text-lg font-semibold tracking-wide text-black">
                 {`${hasHonorific ? `${honorific} ` : ""}${characterName}:`}
               </p>
@@ -127,6 +153,9 @@ export function LessonDescription({
               >
                 {displayedText}
               </p>
+              <div className="flex w-full h-8 justify-end items-end -my-2">
+                <PressContinue isVisible={phase === "waiting"} />
+              </div>
             </div>
           </div>
         </motion.div>

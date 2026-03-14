@@ -27,7 +27,12 @@ export const useDialogueKeyDown =
     const key = e.key.toLowerCase();
     const code = e.code;
 
-    if (key === "enter" || key === " " || key === "spacebar") {
+    if (
+      key === "enter" ||
+      key === " " ||
+      key === "space" ||
+      key === "spacebar"
+    ) {
       e.preventDefault();
       handlers.keyAction?.();
       return;
