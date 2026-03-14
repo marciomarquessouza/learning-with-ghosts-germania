@@ -7,8 +7,8 @@ import { Eliza } from "../Eliza";
 import { ELIZA_STATES as STATES, ElizaStateNames } from "./elizaStates";
 import { WaitingState } from "./states/WaitingState";
 import { IdleState } from "./states/IdleState";
-import { DialogueState } from "./states/DialogueState";
 import { SowingState } from "./states/SowingState";
+import { TeachingState } from "./states/TeachingState";
 
 export function createElizaStateMachine(
   scene: Phaser.Scene,
@@ -18,7 +18,7 @@ export function createElizaStateMachine(
   const states: [ElizaStateNames, StateConstructor<IState>][] = [
     [STATES.WAITING, WaitingState],
     [STATES.IDLE, IdleState],
-    [STATES.DIALOGUE, DialogueState],
+    [STATES.TEACHING, TeachingState],
     [STATES.SOWING, SowingState],
   ];
 

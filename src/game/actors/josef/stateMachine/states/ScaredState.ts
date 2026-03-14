@@ -1,16 +1,18 @@
 import { BaseState } from "@/libs/game/state-machine/BaseState";
-import { Eliza } from "../../Eliza";
+import { Josef } from "../../Josef";
 
-export class IdleState extends BaseState {
+export class ScaredState extends BaseState {
+  private removeListeners: (() => void)[] = [];
+
   constructor(
     scene: Phaser.Scene,
-    private eliza: Eliza,
+    private josef: Josef,
   ) {
     super(scene);
   }
 
   enter(): void {
-    this.eliza.animations.playIdle();
+    this.josef.animations.playScared();
   }
 
   exit(): void {}

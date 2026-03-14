@@ -1,7 +1,5 @@
 import { MOODS } from "@/constants/game";
 import {
-  ELISA_ATLAS_IMG,
-  ELISA_ATLAS_JSON,
   GAS_MASK_NUN_IDLE_ATLAS_IMG,
   GAS_MASK_NUN_IDLE_ATLAS_JSON,
   GAS_MASK_NUN_SOWING_ATLAS_IMG,
@@ -9,21 +7,18 @@ import {
 } from "@/constants/images";
 import { ElisaPayload } from "../Eliza";
 
-const ELISA_ATLAS = "elisaAtlas";
 const GAS_MASK_NUN_IDLE_ATLAS = "gasMaskNunIdleAtlas";
 const GAS_MASK_NUN_SOWING_ATLAS = "gasMaskNunSowingAtlas";
+export const ELIZA_ANIMATIONS = {
+  GAS_MASK_NUN_IDLE_ANIM: "gasMaskNunIdleAnim",
+  GAS_MASK_NUN_SOWING_ANIM: "gasMaskNunSowingAnim",
+};
 
-class ElizaAnimations {
-  public animations = {
-    GAS_MASK_NUN_IDLE_ANIM: "gasMaskNunIdleAnim",
-    GAS_MASK_NUN_SOWING_ANIM: "gasMaskNunSowingAnim",
-  };
-  public currentAnimation = this.animations.GAS_MASK_NUN_IDLE_ANIM;
-  public previousAnimation: string | null = null;
+export class ElizaAnimations {
+  private sprite!: Phaser.GameObjects.Sprite;
 
   preload(scene: Phaser.Scene) {
     const load = scene.load;
-    load.atlas(ELISA_ATLAS, ELISA_ATLAS_IMG, ELISA_ATLAS_JSON);
     load.atlas(
       GAS_MASK_NUN_IDLE_ATLAS,
       GAS_MASK_NUN_IDLE_ATLAS_IMG,
@@ -37,9 +32,9 @@ class ElizaAnimations {
   }
 
   create(scene: Phaser.Scene, { startX, startY, flipX, scale }: ElisaPayload) {
-    if (!scene.anims.exists(this.animations.GAS_MASK_NUN_IDLE_ANIM)) {
+    if (!scene.anims.exists(ELIZA_ANIMATIONS.GAS_MASK_NUN_IDLE_ANIM)) {
       scene.anims.create({
-        key: this.animations.GAS_MASK_NUN_IDLE_ANIM,
+        key: ELIZA_ANIMATIONS.GAS_MASK_NUN_IDLE_ANIM,
         frames: scene.anims.generateFrameNames(GAS_MASK_NUN_IDLE_ATLAS, {
           prefix: "gas_mask_nun_idle_",
           start: 0,
@@ -50,9 +45,9 @@ class ElizaAnimations {
       });
     }
 
-    if (!scene.anims.exists(this.animations.GAS_MASK_NUN_SOWING_ANIM)) {
+    if (!scene.anims.exists(ELIZA_ANIMATIONS.GAS_MASK_NUN_SOWING_ANIM)) {
       scene.anims.create({
-        key: this.animations.GAS_MASK_NUN_SOWING_ANIM,
+        key: ELIZA_ANIMATIONS.GAS_MASK_NUN_SOWING_ANIM,
         frames: scene.anims.generateFrameNames(GAS_MASK_NUN_SOWING_ATLAS, {
           prefix: "gas_mask_nun_sowing_",
           start: 0,
@@ -67,12 +62,25 @@ class ElizaAnimations {
     sprite.flipX = !!flipX;
     sprite.scale = scale || 1;
 
+    this.sprite = sprite;
+
     return sprite;
   }
 
+  playIdle() {
+    this.sprite.play(ELIZA_ANIMATIONS.GAS_MASK_NUN_IDLE_ANIM);
+  }
+
+  playTeaching() {
+    // TODO: replace with teaching animation
+    this.sprite.play(ELIZA_ANIMATIONS.GAS_MASK_NUN_IDLE_ANIM);
+  }
+
   setAnimationByMood(mood: MOODS) {
-    this.currentAnimation = this.animations.GAS_MASK_NUN_IDLE_ANIM;
+    switch (mood) {
+      case MOODS.TALKING:
+      default:
+        this.sprite.play(ELIZA_ANIMATIONS.GAS_MASK_NUN_IDLE_ANIM);
+    }
   }
 }
-
-export const elizaAnimations = new ElizaAnimations();

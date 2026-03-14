@@ -37,6 +37,7 @@ export function DreamLessonChallenges() {
         <LessonDescription
           isVisible={headerState.showDescription}
           description={headerState.description}
+          skipWaitingPhase={headerState.skipPressSpace}
           characterDetails={teacher}
           onPhaseChange={onDescriptionPhaseChange}
         />

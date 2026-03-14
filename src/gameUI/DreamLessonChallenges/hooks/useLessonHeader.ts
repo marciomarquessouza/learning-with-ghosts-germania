@@ -14,6 +14,7 @@ export interface State {
   showDescription: boolean;
   title: string;
   description: string;
+  skipPressSpace?: boolean;
   teacher: CHARACTERS;
   day: number;
   closeAfter?: number;
@@ -23,8 +24,10 @@ const defaultState: State = {
   showHeader: false,
   showTitle: false,
   showDescription: false,
+  skipPressSpace: false,
   title: "",
   description: "",
+
   day: 1,
   teacher: CHARACTERS.ELIZA,
   closeAfter: 2_000,
@@ -147,7 +150,11 @@ export function useLessonHeader() {
 
   useEffect(() => {
     const handle = (payload: WriteLessonDescriptionEvent, done: () => void) => {
-      dispatch({ type: "write-description", payload });
+      const skipPressSpace = payload.skipPressSpace ?? false;
+      dispatch({
+        type: "write-description",
+        payload: { ...payload, skipPressSpace },
+      });
       onDescriptionReady.current = done;
     };
     events.lesson.async.on("write-lesson-description", handle);

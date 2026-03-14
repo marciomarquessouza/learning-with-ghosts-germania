@@ -3,6 +3,7 @@ export const JOSEF_STATES = {
   MOVING: "JOSEF_MOVING",
   SPEAKING: "JOSEF_SPEAKING",
   LISTENING: "JOSEF_LISTENING",
+  SCARED: "JOSEF_SCARED",
 } as const;
 
 export type JosefStateNames = (typeof JOSEF_STATES)[keyof typeof JOSEF_STATES];

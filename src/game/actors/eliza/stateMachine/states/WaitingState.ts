@@ -2,7 +2,6 @@ import { Eliza, KEY_CODES } from "../../Eliza";
 import { BaseState } from "@/libs/game/state-machine/BaseState";
 import { createKeyMap } from "@/utils/createKeyMap";
 import { ELIZA_STATES } from "../elizaStates";
-import { elizaAnimations } from "../../helpers/ElizaAnimations";
 import { HUD_ITEMS } from "@/game/scenes/hud";
 import { events } from "@/events/events";
 
@@ -15,7 +14,7 @@ export class WaitingState extends BaseState {
   }
 
   enter(): void {
-    this.eliza.sprite?.play(elizaAnimations.animations.GAS_MASK_NUN_IDLE_ANIM);
+    this.eliza.animations.playIdle();
     this.eliza.keyMap = createKeyMap(this.scene, [KEY_CODES.E]);
     events.game.sync.emit("hud/show-items", [HUD_ITEMS.WEIGHT]);
     events.game.sync.emit("game-message/hide", {});

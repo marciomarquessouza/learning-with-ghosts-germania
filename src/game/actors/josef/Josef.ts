@@ -69,6 +69,10 @@ export class Josef {
       this.stateMachine.changeTo(JOSEF_STATES.SPEAKING);
     });
 
+    this.eventController.addSyncEvent("scared", () => {
+      this.stateMachine.changeTo(JOSEF_STATES.SCARED);
+    });
+
     this.gameEventsToRemove.push(
       events.game.sync.on("dialogue/show", () => {
         this.stateMachine.changeTo(JOSEF_STATES.LISTENING);

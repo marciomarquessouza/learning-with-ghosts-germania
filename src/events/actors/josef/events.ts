@@ -4,6 +4,7 @@ export type JosefSyncEvents = {
   idle: undefined;
   listening: undefined;
   speaking: undefined;
+  scared: undefined;
 };
 
 export type JosefAsyncEvents = {

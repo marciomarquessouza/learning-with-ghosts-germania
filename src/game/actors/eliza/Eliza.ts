@@ -1,4 +1,4 @@
-import { elizaAnimations } from "./helpers/ElizaAnimations";
+import { ElizaAnimations } from "./helpers/ElizaAnimations";
 import { ActorPayload } from "../types/Actor";
 import { createKeyMap, KeyMap } from "@/utils/createKeyMap";
 import { InteractionArea } from "@/libs/game/InteractionArea";
@@ -25,20 +25,21 @@ export class Eliza {
   public sprite!: Phaser.Types.Physics.Arcade.SpriteWithDynamicBody;
   public interactionArea!: InteractionArea;
   public dayActions: DayActions | null = null;
+  public animations = new ElizaAnimations();
   public cursors!: Phaser.Types.Input.Keyboard.CursorKeys;
   public keyMap!: KeyMap;
   public eventController!: EventController<ElizaSyncEvents, ElizaAsyncEvents>;
   private stateMachine!: StateMachine;
 
   preload(scene: Phaser.Scene) {
-    elizaAnimations.preload(scene);
+    this.animations.preload(scene);
   }
 
   create(scene: Phaser.Scene, payload: ElisaPayload) {
     const { dayActions, player } = payload;
     this.dayActions = dayActions ?? null;
     this.cursors = payload.cursors;
-    this.sprite = elizaAnimations.create(scene, payload);
+    this.sprite = this.animations.create(scene, payload);
     this.keyMap = createKeyMap(scene, [KEY_CODES.K]);
     this.interactionArea = createElizaInteractionArea(scene, {
       eliza: this,
@@ -65,7 +66,7 @@ export class Eliza {
     });
 
     this.eventController.addSyncEvent("teaching", () => {
-      throw new Error("State was not implemented");
+      this.stateMachine.changeTo(ELIZA_STATES.TEACHING);
     });
 
     this.eventController.addAsyncEvent("sowing", () => {

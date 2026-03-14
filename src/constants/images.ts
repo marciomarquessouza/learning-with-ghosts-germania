@@ -48,17 +48,15 @@ export const HUD_ACTION_EXIT_IMG = "/hud/action_icons/exit_icon.png";
 export const GHOST_SHADOW_IMG = "/actors/josef_ghost/ghost_shadow.png";
 export const GHOST_ATLAS_IMG = "/actors/josef_ghost/ghost_spritesheet.png";
 export const GHOST_ATLAS_JSON = "/actors/josef_ghost/ghost_spritesheet.json";
-// ELISA
-export const ELISA_ATLAS_IMG = "/actors/elisa/elisa_spritesheet.png";
-export const ELISA_ATLAS_JSON = "/actors/elisa/elisa_spritesheet.json";
+// ELIZA
 export const GAS_MASK_NUN_IDLE_ATLAS_IMG =
-  "/actors/elisa/gas_mask_nun_idle_spritesheet.png";
+  "/actors/eliza/gas_mask_nun_idle_spritesheet.png";
 export const GAS_MASK_NUN_IDLE_ATLAS_JSON =
-  "/actors/elisa/gas_mask_nun_idle_spritesheet.json";
+  "/actors/eliza/gas_mask_nun_idle_spritesheet.json";
 export const GAS_MASK_NUN_SOWING_ATLAS_IMG =
-  "/actors/elisa/gas_mask_nun_sowing_spritesheet.png";
+  "/actors/eliza/gas_mask_nun_sowing_spritesheet.png";
 export const GAS_MASK_NUN_SOWING_ATLAS_JSON =
-  "/actors/elisa/gas_mask_nun_sowing_spritesheet.json";
+  "/actors/eliza/gas_mask_nun_sowing_spritesheet.json";
 
 // PUMPKIN_KIDS
 export const PUMPKIN_KID_SPROUTING_ATLAS_IMG =

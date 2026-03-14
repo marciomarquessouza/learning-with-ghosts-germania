@@ -1,7 +1,7 @@
 import { BaseState } from "@/libs/game/state-machine/BaseState";
 import { Eliza } from "../../Eliza";
 
-export class DialogueState extends BaseState {
+export class TeachingState extends BaseState {
   constructor(
     scene: Phaser.Scene,
     private eliza: Eliza,
@@ -9,7 +9,9 @@ export class DialogueState extends BaseState {
     super(scene);
   }
 
-  enter(): void {}
+  enter(): void {
+    this.eliza.animations.playTeaching();
+  }
 
   exit(): void {}
 

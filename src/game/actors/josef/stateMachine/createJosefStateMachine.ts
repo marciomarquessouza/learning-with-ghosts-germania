@@ -9,6 +9,7 @@ import { MovingState } from "./states/MovingState";
 import { ListeningState } from "./states/ListeningState";
 import { SpeakingState } from "./states/SpeakingState";
 import { Josef } from "../Josef";
+import { ScaredState } from "./states/ScaredState";
 
 export function createJosefStateMachine(
   scene: Phaser.Scene,
@@ -20,6 +21,7 @@ export function createJosefStateMachine(
     [STATES.MOVING, MovingState],
     [STATES.LISTENING, ListeningState],
     [STATES.SPEAKING, SpeakingState],
+    [STATES.SCARED, ScaredState],
   ];
 
   states.forEach(([name, state]) => {

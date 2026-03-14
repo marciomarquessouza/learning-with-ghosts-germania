@@ -13,19 +13,23 @@ export class EntryIntroductionState extends BaseState {
   }
 
   enter(): void {
-    const introductionStep = this.lessonActions.getStepByType("introduction");
+    const step = this.lessonActions.getStepByType("introduction");
     runSteps(
       [
-        stepBase(() =>
-          events.lesson.async.emitAsync("write-lesson-description", {
-            description: introductionStep.text,
-          }),
-        ),
-        // TODO: State: Eliza teaching
-        stepBase(() => events.actors.eliza.async.emitAsync("sowing")),
-        stepBase(() =>
-          events.actors.pumpkinKid.async.emitAsync("plant-pumpkin"),
-        ),
+        stepBase(() => {
+          events.actors.eliza.sync.emit("teaching");
+          events.actors.josef.sync.emit("listening");
+          return events.lesson.async.emitAsync("write-lesson-description", {
+            description: step.text,
+          });
+        }),
+        stepBase(() => {
+          events.actors.josef.sync.emit("scared");
+          return events.actors.eliza.async.emitAsync("sowing");
+        }),
+        stepBase(() => {
+          return events.actors.pumpkinKid.async.emitAsync("plant-pumpkin");
+        }),
       ],
       {},
     )

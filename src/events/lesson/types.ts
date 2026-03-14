@@ -17,5 +17,6 @@ export interface ShowLessonTitleEvent {
 
 export interface WriteLessonDescriptionEvent {
   description: string;
+  skipPressSpace?: boolean;
   teacher?: CHARACTERS;
 }

@@ -17,6 +17,7 @@ export interface LessonDescriptionProps {
   isVisible: boolean;
   description: string;
   characterDetails: CharacterDetails;
+  skipWaitingPhase?: boolean;
   onPhaseChange: (phase: DescriptionPhases) => void;
 }
 
@@ -40,6 +41,7 @@ export function LessonDescription({
   isVisible,
   description,
   characterDetails,
+  skipWaitingPhase = false,
   onPhaseChange,
 }: LessonDescriptionProps) {
   const [phase, setPhase] = useState<DescriptionPhases>("hidden");
@@ -70,9 +72,13 @@ export function LessonDescription({
 
   useEffect(() => {
     if (isComplete && phase === "typing") {
+      if (skipWaitingPhase) {
+        changePhase("ready");
+        return;
+      }
       changePhase("waiting");
     }
-  }, [isComplete, phase, changePhase]);
+  }, [isComplete, phase, changePhase, skipWaitingPhase]);
 
   useEffect(() => {
     if (

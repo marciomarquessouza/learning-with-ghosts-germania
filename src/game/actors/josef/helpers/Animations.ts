@@ -106,6 +106,10 @@ export class GhostAnimations {
     this.sprite.play(this.GHOST_ANIMATIONS.GHOST_MOVE_ANIM);
   }
 
+  playScared() {
+    this.sprite.play(this.GHOST_ANIMATIONS.GHOST_SURPRISED_ANIM);
+  }
+
   playAnimationByMood(mood: MOODS) {
     switch (mood) {
       case MOODS.HAPPY:
