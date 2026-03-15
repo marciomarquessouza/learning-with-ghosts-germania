@@ -156,3 +156,103 @@ Install dependencies:
 npm install
 npm run dev
 ```
+
+## Spritesheet Generation
+
+Spritesheets for animations are generated automatically from the raw frames exported from DragonBones.
+
+### Source directory
+
+Export the animation frames to the following directory structure:
+
+```
+asset-sources/dragonbones/actors/<actor>/<animation>/
+```
+
+Example:
+
+```
+asset-sources/dragonbones/actors/eliza/teaching/
+```
+
+Frames must follow this naming convention:
+
+```
+<actor>_<animation>_1.png
+<actor>_<animation>_2.png
+<actor>_<animation>_3.png
+...
+```
+
+Example:
+
+```
+eliza_teaching_1.png
+eliza_teaching_2.png
+eliza_teaching_3.png
+```
+
+### Generate the spritesheet
+
+Run the sprite build script:
+
+```
+yarn sprite -- <actor> <animation> [options]
+```
+
+Example:
+
+```
+yarn sprite -- eliza teaching --columns 6 --scale 0.8
+```
+
+This will:
+
+1. Read the source frames from
+
+```
+asset-sources/dragonbones/actors/<actor>/<animation>
+```
+
+2. Generate the spritesheet and atlas in
+
+```
+public/actors/<actor>/<animation>/
+```
+
+Output files:
+
+```
+spritesheet.png
+spritesheet.json
+```
+
+3. Automatically update the spritesheet registry in
+
+```
+src/constants/spritesheets.ts
+```
+
+### Available options
+
+```
+--columns <number>   Number of columns in the spritesheet
+--scale <number>     Scale factor applied to each frame
+--count <number>     Limit the number of frames used
+```
+
+### Example workflow
+
+1. Export frames from DragonBones
+
+```
+asset-sources/dragonbones/actors/eliza/teaching/
+```
+
+2. Run the build command
+
+```
+yarn sprite -- eliza teaching --columns 6 --scale 0.8
+```
+
+3. The spritesheet and constants will be generated automatically.

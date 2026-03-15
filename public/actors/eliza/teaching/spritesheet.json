@@ -1,6 +1,6 @@
 {
   "frames": {
-    "gas_mask_nun_teaching_0": {
+    "eliza_teaching_0": {
       "frame": {
         "x": 0,
         "y": 0,
@@ -20,7 +20,7 @@
         "h": 950
       }
     },
-    "gas_mask_nun_teaching_1": {
+    "eliza_teaching_1": {
       "frame": {
         "x": 1018,
         "y": 0,
@@ -40,7 +40,7 @@
         "h": 950
       }
     },
-    "gas_mask_nun_teaching_2": {
+    "eliza_teaching_2": {
       "frame": {
         "x": 2036,
         "y": 0,
@@ -60,7 +60,7 @@
         "h": 950
       }
     },
-    "gas_mask_nun_teaching_3": {
+    "eliza_teaching_3": {
       "frame": {
         "x": 3054,
         "y": 0,
@@ -80,7 +80,7 @@
         "h": 950
       }
     },
-    "gas_mask_nun_teaching_4": {
+    "eliza_teaching_4": {
       "frame": {
         "x": 4072,
         "y": 0,
@@ -100,7 +100,7 @@
         "h": 950
       }
     },
-    "gas_mask_nun_teaching_5": {
+    "eliza_teaching_5": {
       "frame": {
         "x": 5090,
         "y": 0,
@@ -120,7 +120,7 @@
         "h": 950
       }
     },
-    "gas_mask_nun_teaching_6": {
+    "eliza_teaching_6": {
       "frame": {
         "x": 0,
         "y": 950,
@@ -140,7 +140,7 @@
         "h": 950
       }
     },
-    "gas_mask_nun_teaching_7": {
+    "eliza_teaching_7": {
       "frame": {
         "x": 1018,
         "y": 950,
@@ -160,7 +160,7 @@
         "h": 950
       }
     },
-    "gas_mask_nun_teaching_8": {
+    "eliza_teaching_8": {
       "frame": {
         "x": 2036,
         "y": 950,
@@ -180,7 +180,7 @@
         "h": 950
       }
     },
-    "gas_mask_nun_teaching_9": {
+    "eliza_teaching_9": {
       "frame": {
         "x": 3054,
         "y": 950,
@@ -200,7 +200,7 @@
         "h": 950
       }
     },
-    "gas_mask_nun_teaching_10": {
+    "eliza_teaching_10": {
       "frame": {
         "x": 4072,
         "y": 950,
@@ -220,7 +220,7 @@
         "h": 950
       }
     },
-    "gas_mask_nun_teaching_11": {
+    "eliza_teaching_11": {
       "frame": {
         "x": 5090,
         "y": 950,
@@ -240,7 +240,7 @@
         "h": 950
       }
     },
-    "gas_mask_nun_teaching_12": {
+    "eliza_teaching_12": {
       "frame": {
         "x": 0,
         "y": 1900,
@@ -262,7 +262,7 @@
     }
   },
   "meta": {
-    "image": "gas_mask_nun_teaching_spritesheet.png",
+    "image": "spritesheet.png",
     "size": {
       "w": 6108,
       "h": 2850

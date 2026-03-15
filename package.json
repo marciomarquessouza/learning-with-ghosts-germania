@@ -7,7 +7,9 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "gen:audio": "tsx src/scripts/audio/generate-audio.ts"
+    "gen:audio": "tsx /scripts/audio/generate-audio.ts",
+    "sprite": "node scripts/animations/build-spritesheet.mjs",
+    "update-spritesheets-constants": "node scripts/animations/update-spritesheets-constants.mjs"
   },
   "dependencies": {
     "@vercel/analytics": "^1.6.1",

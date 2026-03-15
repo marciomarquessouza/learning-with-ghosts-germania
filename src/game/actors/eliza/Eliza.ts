@@ -36,10 +36,14 @@ export class Eliza {
   }
 
   create(scene: Phaser.Scene, payload: ElisaPayload) {
-    const { dayActions, player } = payload;
+    const { dayActions, player, startX, startY, scale, flipX } = payload;
+    this.sprite = scene.physics.add
+      .sprite(startX, startY, "", "")
+      .setFlipX(!!flipX)
+      .setScale(scale || 1);
     this.dayActions = dayActions ?? null;
     this.cursors = payload.cursors;
-    this.sprite = this.animations.create(scene, payload);
+    this.animations.create(scene, this.sprite);
     this.keyMap = createKeyMap(scene, [KEY_CODES.K]);
     this.interactionArea = createElizaInteractionArea(scene, {
       eliza: this,
@@ -75,14 +79,11 @@ export class Eliza {
   }
 
   update(delta: number) {
-    if (this.stateMachine) {
-      this.stateMachine.updateAndHandleInput(delta);
-    }
+    this.stateMachine?.updateAndHandleInput(delta);
   }
 
   destroy() {
     this.stateMachine.clear();
-    events.actors.eliza.sync.clear();
-    events.actors.eliza.async.clear();
+    this.eventController.offAllEvents();
   }
 }
