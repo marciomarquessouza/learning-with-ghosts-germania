@@ -1,7 +1,6 @@
 import { BaseState } from "@/libs/game/state-machine/BaseState";
 import { runSteps, stepBase } from "@/libs/game/runSteps";
-import { Eliza } from "../../Eliza";
-import { ELIZA_STATES } from "../elizaStates";
+import { Eliza } from "../Eliza";
 
 export class SowingState extends BaseState {
   constructor(
@@ -24,7 +23,7 @@ export class SowingState extends BaseState {
       {},
     )
       .then(() => {
-        this.changeTo(ELIZA_STATES.IDLE);
+        this.changeTo(Eliza.STATES.IDLE);
       })
       .catch((error) => {
         this.stateMachine.log(error, "error");

@@ -1,7 +1,6 @@
-import { Eliza, KEY_CODES } from "../../Eliza";
+import { Eliza, KEY_CODES } from "../Eliza";
 import { BaseState } from "@/libs/game/state-machine/BaseState";
 import { createKeyMap } from "@/utils/createKeyMap";
-import { ELIZA_STATES } from "../elizaStates";
 import { HUD_ITEMS } from "@/game/scenes/hud";
 import { events } from "@/events/events";
 
@@ -34,7 +33,7 @@ export class WaitingState extends BaseState {
       events.game.sync.emit("hud/hide-items", [HUD_ITEMS.WEIGHT]);
       events.game.sync.emit("game-message/hide", {});
       events.game.sync.emit("camera/zoom-to", { zoom: 1.2, duration: 200 });
-      this.changeTo(ELIZA_STATES.IDLE);
+      this.changeTo(Eliza.STATES.IDLE);
     }
   }
 

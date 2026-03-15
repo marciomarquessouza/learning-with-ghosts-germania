@@ -1,7 +1,6 @@
 import { BaseState } from "@/libs/game/state-machine/BaseState";
-import { LessonActions } from "../../LessonActions";
+import { LessonActions } from "../LessonActions";
 import { events } from "@/events/events";
-import { LESSON_STATES } from "../lessonStates";
 import { runSteps, stepBase } from "@/libs/game/runSteps";
 
 const CLOSE_TITLE_AFTER = 2_000;
@@ -36,7 +35,7 @@ export class LessonStartState extends BaseState {
       {},
     )
       .then(() => {
-        this.changeTo(LESSON_STATES.ENTRY_INTRODUCTION);
+        this.changeTo(LessonActions.STATES.ENTRY_INTRODUCTION);
       })
       .catch((error) => {
         this.stateMachine.log(`LessonStartState failed ${error}`, "error");

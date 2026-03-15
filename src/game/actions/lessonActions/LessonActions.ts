@@ -1,9 +1,11 @@
 import { StateMachine } from "@/libs/game/state-machine/StateMachine";
 import { Lesson, LessonEntry, LessonStepType } from "@/types";
-import { LESSON_STATES } from "./stateMachine/lessonStates";
-import { createLessonStateMachine } from "./stateMachine/createLessonStateMachine";
+import { LESSON_STATES } from "./constants/states";
+import { createLessonStateMachine } from "./helpers/createLessonStateMachine";
 
 export class LessonActions {
+  public static readonly STATES = LESSON_STATES;
+
   public lesson!: Lesson;
   private stateMachine!: StateMachine;
   public currentLessonEntry: LessonEntry | null = null;
@@ -16,13 +18,11 @@ export class LessonActions {
   }
 
   update(delta: number) {
-    if (this.stateMachine) {
-      this.stateMachine.update(delta);
-    }
+    this.stateMachine?.update(delta);
   }
 
   startLesson() {
-    this.stateMachine.changeTo(LESSON_STATES.LESSON_START);
+    this.stateMachine.changeTo(LessonActions.STATES.LESSON_START);
   }
 
   public setCurrentLessonEntry() {

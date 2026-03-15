@@ -36,7 +36,7 @@ export class ElizaAnimations {
 
     this.animationManager.createAnimation(scene, "teaching", {
       frameRate: 8,
-      repeat: 0,
+      repeat: -1,
     });
   }
 
@@ -57,6 +57,8 @@ export class ElizaAnimations {
   }
 
   playTeaching() {
-    this.animationManager.playAnimation(this.getSprite(), "teaching");
+    this.animationManager
+      .playAnimation(this.getSprite(), "teaching")
+      .holdAnimationAt([1, 6], 4_200);
   }
 }

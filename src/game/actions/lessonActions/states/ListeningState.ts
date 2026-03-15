@@ -1,5 +1,5 @@
 import { runSteps, stepBase } from "@/libs/game/runSteps";
-import { LessonActions } from "../../LessonActions";
+import { LessonActions } from "../LessonActions";
 import { BaseState } from "@/libs/game/state-machine/BaseState";
 import { events } from "@/events/events";
 

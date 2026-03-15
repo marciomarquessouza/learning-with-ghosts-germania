@@ -1,15 +1,17 @@
-import { LessonActions } from "../../LessonActions";
 import { BaseState } from "@/libs/game/state-machine/BaseState";
+import { Eliza } from "../Eliza";
 
-export class EntryResultState extends BaseState {
+export class IdleState extends BaseState {
   constructor(
     scene: Phaser.Scene,
-    private lessonActions: LessonActions,
+    private eliza: Eliza,
   ) {
     super(scene);
   }
 
-  enter(): void {}
+  enter(): void {
+    this.eliza.animations.playIdle();
+  }
 
   exit(): void {}
 

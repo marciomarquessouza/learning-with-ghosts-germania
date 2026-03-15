@@ -1,7 +1,7 @@
-import { LessonActions } from "../../LessonActions";
+import { LessonActions } from "../LessonActions";
 import { BaseState } from "@/libs/game/state-machine/BaseState";
 
-export class EntrySummaryState extends BaseState {
+export class EntryResultState extends BaseState {
   constructor(
     scene: Phaser.Scene,
     private lessonActions: LessonActions,
