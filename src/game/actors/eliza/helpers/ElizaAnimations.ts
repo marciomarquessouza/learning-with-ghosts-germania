@@ -4,14 +4,19 @@ import {
   GAS_MASK_NUN_IDLE_ATLAS_JSON,
   GAS_MASK_NUN_SOWING_ATLAS_IMG,
   GAS_MASK_NUN_SOWING_ATLAS_JSON,
+  GAS_MASK_NUN_TEACHING_ATLAS_IMG,
+  GAS_MASK_NUN_TEACHING_ATLAS_JSON,
 } from "@/constants/images";
 import { ElisaPayload } from "../Eliza";
 
 const GAS_MASK_NUN_IDLE_ATLAS = "gasMaskNunIdleAtlas";
 const GAS_MASK_NUN_SOWING_ATLAS = "gasMaskNunSowingAtlas";
+const GAS_MASK_NUN_TEACHING_ATLAS = "gasMaskNunTeachingAtlas";
+
 export const ELIZA_ANIMATIONS = {
   GAS_MASK_NUN_IDLE_ANIM: "gasMaskNunIdleAnim",
   GAS_MASK_NUN_SOWING_ANIM: "gasMaskNunSowingAnim",
+  GAS_MASK_NUN_TEACHING_ANIM: "gasMaskNunTeachingAnim",
 };
 
 export class ElizaAnimations {
@@ -28,6 +33,11 @@ export class ElizaAnimations {
       GAS_MASK_NUN_SOWING_ATLAS,
       GAS_MASK_NUN_SOWING_ATLAS_IMG,
       GAS_MASK_NUN_SOWING_ATLAS_JSON,
+    );
+    load.atlas(
+      GAS_MASK_NUN_TEACHING_ATLAS,
+      GAS_MASK_NUN_TEACHING_ATLAS_IMG,
+      GAS_MASK_NUN_TEACHING_ATLAS_JSON,
     );
   }
 
@@ -58,6 +68,19 @@ export class ElizaAnimations {
       });
     }
 
+    if (!scene.anims.exists(ELIZA_ANIMATIONS.GAS_MASK_NUN_TEACHING_ANIM)) {
+      scene.anims.create({
+        key: ELIZA_ANIMATIONS.GAS_MASK_NUN_TEACHING_ANIM,
+        frames: scene.anims.generateFrameNames(GAS_MASK_NUN_TEACHING_ATLAS, {
+          prefix: "gas_mask_nun_teaching_",
+          start: 0,
+          end: 12,
+        }),
+        frameRate: 8,
+        repeat: 0,
+      });
+    }
+
     const sprite = scene.physics.add.sprite(startX, startY, "", "");
     sprite.flipX = !!flipX;
     sprite.scale = scale || 1;
@@ -72,8 +95,7 @@ export class ElizaAnimations {
   }
 
   playTeaching() {
-    // TODO: replace with teaching animation
-    this.sprite.play(ELIZA_ANIMATIONS.GAS_MASK_NUN_IDLE_ANIM);
+    this.sprite.play(ELIZA_ANIMATIONS.GAS_MASK_NUN_TEACHING_ANIM);
   }
 
   setAnimationByMood(mood: MOODS) {
