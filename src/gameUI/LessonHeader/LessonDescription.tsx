@@ -9,7 +9,6 @@ export type DescriptionPhases =
   | "hidden"
   | "entering"
   | "typing"
-  | "waiting"
   | "ready"
   | "exiting";
 
@@ -17,7 +16,7 @@ export interface LessonDescriptionProps {
   isVisible: boolean;
   description: string;
   characterDetails: CharacterDetails;
-  skipWaitingPhase?: boolean;
+  hidePressContinue?: boolean;
   onPhaseChange: (phase: DescriptionPhases) => void;
 }
 
@@ -41,7 +40,7 @@ export function LessonDescription({
   isVisible,
   description,
   characterDetails,
-  skipWaitingPhase = false,
+  hidePressContinue = false,
   onPhaseChange,
 }: LessonDescriptionProps) {
   const [phase, setPhase] = useState<DescriptionPhases>("hidden");
@@ -72,13 +71,9 @@ export function LessonDescription({
 
   useEffect(() => {
     if (isComplete && phase === "typing") {
-      if (skipWaitingPhase) {
-        changePhase("ready");
-        return;
-      }
-      changePhase("waiting");
+      changePhase("ready");
     }
-  }, [isComplete, phase, changePhase, skipWaitingPhase]);
+  }, [isComplete, phase, changePhase]);
 
   useEffect(() => {
     if (
@@ -108,9 +103,6 @@ export function LessonDescription({
     keyAction: () => {
       if (phase === "typing") {
         return resumeText();
-      }
-      if (phase === "waiting") {
-        return changePhase("ready");
       }
     },
   });
@@ -160,7 +152,9 @@ export function LessonDescription({
                 {displayedText}
               </p>
               <div className="flex w-full h-8 justify-end items-end -my-2">
-                <PressContinue isVisible={phase === "waiting"} />
+                <PressContinue
+                  isVisible={phase === "ready" && !hidePressContinue}
+                />
               </div>
             </div>
           </div>

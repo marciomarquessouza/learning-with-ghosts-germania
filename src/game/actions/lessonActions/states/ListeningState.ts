@@ -19,7 +19,7 @@ export class ListeningState extends BaseState {
           events.actors.josef.sync.emit("listening");
           return events.lesson.async.emitAsync("write-lesson-description", {
             description: step.text,
-            skipPressSpace: true,
+            skipPressContinue: true,
           });
         }),
       ],

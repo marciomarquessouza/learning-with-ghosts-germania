@@ -6,16 +6,17 @@ import { defaultLesson } from "./default.lessons";
 import { useLessonStore } from "@/store/lessonStore";
 import { useGameStore } from "@/store/gameStore";
 import { mergeLessonWithAudioManifest } from "@/utils/mergeLessonWithAudioManifest";
-import { lessonActions } from "../../lessonActions/LessonActions";
 import {
   stepDayIntroduction,
   stepGameMessage,
   stepShowDialogue,
 } from "../../stepActions";
+import { LessonActions } from "../../lessonActions/LessonActions";
 
 const DEFAULT_SCENE = GAME_SCENES.CELL_SCENE;
 
 export class DayActions {
+  public lessonActions = new LessonActions()
   private currentGameScene: GameScenes | null = null;
   clicked = {
     desk: 0,
@@ -27,11 +28,11 @@ export class DayActions {
     bars: 0,
   };
 
-  get lesson(): Lesson {
+  protected get lesson(): Lesson {
     return useLessonStore.getState().lesson;
   }
 
-  set lesson(lesson: Lesson) {
+  protected set lesson(lesson: Lesson) {
     useLessonStore.getState().update(lesson);
   }
 
@@ -69,15 +70,15 @@ export class DayActions {
   }
 
   create(scene: Phaser.Scene) {
-    lessonActions.create(scene, this.lesson);
+    this.lessonActions.create(scene, this.lesson);
   }
 
   update(delta: number) {
-    lessonActions.update(delta);
+    this.lessonActions.update(delta);
   }
 
   destroy() {
-    lessonActions.destroy();
+    this.lessonActions.destroy();
   }
 
   onStart() {
@@ -165,7 +166,7 @@ export class DayActions {
   }
 
   onLesson() {
-    lessonActions.startLesson();
+    this.lessonActions.startLesson();
   }
 }
 

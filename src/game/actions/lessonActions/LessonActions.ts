@@ -8,8 +8,8 @@ export class LessonActions {
 
   public lesson!: Lesson;
   private stateMachine!: StateMachine;
-  public currentLessonEntry: LessonEntry | null = null;
   private nextEntries: LessonEntry[] = [];
+  public currentLessonEntry: LessonEntry | null = null;
 
   create(scene: Phaser.Scene, lesson: Lesson) {
     this.lesson = lesson;
@@ -57,5 +57,3 @@ export class LessonActions {
     }
   }
 }
-
-export const lessonActions = new LessonActions();
