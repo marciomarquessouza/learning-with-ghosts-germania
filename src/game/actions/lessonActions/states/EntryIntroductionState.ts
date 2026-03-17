@@ -21,8 +21,8 @@ export class EntryIntroductionState extends BaseState {
     runSteps(
       [
         stepBase(() => {
-          events.actors.eliza.sync.emit("teaching");
-          events.actors.josef.sync.emit("listening");
+          events.actors.tutor.sync.emit("teaching");
+          events.actors.player.sync.emit("listening");
           return events.lesson.async.emitAsync("write-lesson-description", {
             description: step.text,
           });

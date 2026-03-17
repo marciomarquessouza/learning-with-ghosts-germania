@@ -20,7 +20,7 @@ export const useLessonStore = create<LessonState>()(
         id: "",
         title: "",
         day: 0,
-        character: CHARACTERS.JOSEF,
+        character: CHARACTERS.PLAYER,
         entries: [] as LessonEntry[],
       },
       update: (lesson: Lesson) => set((state) => ({ ...state, lesson })),
@@ -30,7 +30,7 @@ export const useLessonStore = create<LessonState>()(
           lesson: {
             ...state.lesson,
             entries: state.lesson.entries.map((entry) =>
-              entry.id === id ? updatedEntry : entry
+              entry.id === id ? updatedEntry : entry,
             ),
           },
         })),
@@ -38,12 +38,12 @@ export const useLessonStore = create<LessonState>()(
         set((state) => ({
           ...state,
           entries: state.lesson.entries.map((entry) =>
-            ids.includes(entry.id) ? { ...entry, phase } : entry
+            ids.includes(entry.id) ? { ...entry, phase } : entry,
           ),
         })),
     }),
     {
       name: "lesson-storage",
-    }
-  )
+    },
+  ),
 );

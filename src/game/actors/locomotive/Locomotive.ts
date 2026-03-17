@@ -1,15 +1,17 @@
 import { bellAnimations } from "./helpers/BellAnimation";
-import { elisaTrain } from "./helpers/ElisaTrain";
 import { fairingSprite } from "./helpers/Fairing";
 import { headlight } from "./helpers/Headlight";
-import { josefTrain } from "./helpers/JosefTrain";
+import { PlayerTrain } from "./helpers/PlayerTrain";
 import { locomotiveIndicators } from "./helpers/LocomotiveIndicators";
 import { smoke } from "./helpers/Smoke";
 import { trainBouncing } from "./helpers/TrainBouncing";
+import { TutorTrain } from "./helpers/TutorTrain";
 import { wheelsAnimations } from "./helpers/WheelsAnimation";
 
 export class Locomotive {
   public container?: Phaser.GameObjects.Container;
+  private playerTrain = new PlayerTrain();
+  private tutorTrain = new TutorTrain();
   private positionLerp = 0.12;
 
   preload(scene: Phaser.Scene) {
@@ -19,8 +21,8 @@ export class Locomotive {
     headlight.preload(scene);
     smoke.preload(scene);
     locomotiveIndicators.preload(scene);
-    josefTrain.preload(scene);
-    elisaTrain.preload(scene);
+    this.playerTrain.preload(scene);
+    this.tutorTrain.preload(scene);
   }
 
   create(
@@ -29,7 +31,7 @@ export class Locomotive {
       startX: number;
       startY: number;
       initialSpeed: number;
-    }
+    },
   ) {
     const { startX, startY, initialSpeed } = options;
     const locomotiveContainer = scene.add.container(startX, startY);
@@ -51,8 +53,8 @@ export class Locomotive {
       initialSpeed: 80,
     });
 
-    fairingContainer.add(josefTrain.create(scene, -195, -50));
-    fairingContainer.add(elisaTrain.create(scene, -265, -20));
+    fairingContainer.add(this.playerTrain.create(scene, -195, -50));
+    fairingContainer.add(this.tutorTrain.create(scene, -265, -20));
 
     fairingContainer.add(headlight.create(scene, 1260, -135));
     fairingContainer.add(fairingSprite.create(scene, 0, 0));
@@ -85,9 +87,7 @@ export class Locomotive {
     this.container.x = Phaser.Math.Linear(
       this.container.x,
       targetX,
-      this.positionLerp
+      this.positionLerp,
     );
   }
 }
-
-export const locomotive = new Locomotive();

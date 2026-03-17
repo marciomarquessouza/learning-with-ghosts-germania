@@ -8,23 +8,23 @@ export type SpritesheetEntry = {
 };
 
 export const SPRITESHEETS = {
-  eliza: {
+  tutor: {
     idle: {
-      key: 'eliza-idle',
-      image: '/actors/eliza/idle/spritesheet.png',
-      atlas: '/actors/eliza/idle/spritesheet.json'
+      key: "tutor-idle",
+      image: "/actors/tutor/idle/spritesheet.png",
+      atlas: "/actors/tutor/idle/spritesheet.json",
     },
     sowing: {
-      key: 'eliza-sowing',
-      image: '/actors/eliza/sowing/spritesheet.png',
-      atlas: '/actors/eliza/sowing/spritesheet.json'
+      key: "tutor-sowing",
+      image: "/actors/tutor/sowing/spritesheet.png",
+      atlas: "/actors/tutor/sowing/spritesheet.json",
     },
     teaching: {
-      key: 'eliza-teaching',
-      image: '/actors/eliza/teaching/spritesheet.png',
-      atlas: '/actors/eliza/teaching/spritesheet.json'
-    }
-  }
+      key: "tutor-teaching",
+      image: "/actors/tutor/teaching/spritesheet.png",
+      atlas: "/actors/tutor/teaching/spritesheet.json",
+    },
+  },
 } as const;
 
 export type SpriteActor = keyof typeof SPRITESHEETS;

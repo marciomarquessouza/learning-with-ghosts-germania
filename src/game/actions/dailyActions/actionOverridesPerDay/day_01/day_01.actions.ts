@@ -29,7 +29,7 @@ class DayActions1 extends DayActions {
           [
             // stepShowDialogue({ lines: dialogues.dream_introduction() }),
             stepGameMessage({
-              title: "Go to Eliska",
+              title: "Go to Eliza",
               text: "Use the arrow keys or the A and D keys",
             }),
           ],
@@ -147,7 +147,7 @@ class DayActions1 extends DayActions {
     );
   }
 
-  // onElizaInteraction() {
+  // onTutorInteraction() {
   //   runSteps([stepShowDialogue({ lines: dialogues.lesson_preparation() })], {
   //     alternativeId: undefined,
   //   });

@@ -16,7 +16,7 @@ import { LessonActions } from "../../lessonActions/LessonActions";
 const DEFAULT_SCENE = GAME_SCENES.CELL_SCENE;
 
 export class DayActions {
-  public lessonActions = new LessonActions()
+  public lessonActions = new LessonActions();
   private currentGameScene: GameScenes | null = null;
   clicked = {
     desk: 0,
@@ -142,7 +142,7 @@ export class DayActions {
     );
   }
 
-  onEnterElizaArea() {
+  onEnterTutorArea() {
     runSteps(
       [
         stepGameMessage({
@@ -154,7 +154,7 @@ export class DayActions {
     );
   }
 
-  onElizaInteraction() {
+  onTutorInteraction() {
     runSteps(
       [stepShowDialogue({ lines: dialogues.default_lesson_preparation() })],
       {

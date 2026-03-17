@@ -18,8 +18,8 @@ export class LessonStartState extends BaseState {
       [
         stepBase(() => {
           this.lessonActions.setCurrentLessonEntry();
-          events.actors.eliza.sync.emit("idle");
-          events.actors.josef.sync.emit("listening");
+          events.actors.tutor.sync.emit("idle");
+          events.actors.player.sync.emit("listening");
           // TODO: Krampus: state: idle
           // TODO: Pumpkin Kid: state: destroyed
           return events.lesson.async.emitAsync("show-header");

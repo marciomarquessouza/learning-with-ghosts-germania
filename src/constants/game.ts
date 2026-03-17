@@ -33,10 +33,10 @@ export const TWENTY_ONE_GRAMS_EXPERIMENT_URL =
 
 export enum CHARACTERS {
   MARLENE = "marlene",
-  ELIZA = "eliza",
-  JOSEF = "josef",
+  TUTOR = "tutor",
+  PLAYER = "player",
   KRAMPUS = "krampus",
-  PUMPKIN_KID = "pumpkinKid"
+  PUMPKIN_KID = "pumpkinKid",
 }
 
 export enum MOODS {
@@ -57,12 +57,12 @@ export const DIALOGUE_MAP: {
     honorific: "Fau",
     avatar: "/dialogue/dialogue_avatar_marlene.png",
   },
-  [CHARACTERS.ELIZA]: {
+  [CHARACTERS.TUTOR]: {
     displayName: "Nun",
     honorific: "Masked",
     avatar: "/dialogue/dialogue_avatar_masked_nun.png",
   },
-  [CHARACTERS.JOSEF]: {
+  [CHARACTERS.PLAYER]: {
     displayName: "Josef G.",
     avatar: "/dialogue/dialogue_avatar_josef.png",
   },

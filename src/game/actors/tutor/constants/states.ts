@@ -1,0 +1,10 @@
+export const TUTOR_STATES = {
+  WAITING: "TUTOR_WAITING",
+  IDLE: "TUTOR_IDLE",
+  TEACHING: "TUTOR_TEACHING",
+  PRAISING: "TUTOR_PRAISING",
+  SOWING: "TUTOR_SOWING",
+  SWEARING: "TUTOR_SWEARING",
+} as const;
+
+export type TutorStateNames = (typeof TUTOR_STATES)[keyof typeof TUTOR_STATES];

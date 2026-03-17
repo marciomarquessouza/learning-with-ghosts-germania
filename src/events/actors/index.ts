@@ -1,11 +1,11 @@
-import { elizaEvents } from "./eliza/events";
-import { josefEvents } from "./josef/events";
+import { tutorEvents } from "./tutor/events";
+import { playerEvents } from "./player/events";
 import { krampusEvents } from "./krampus/events";
 import { pumpkinKidEvents } from "./pumpkin/events";
 
 export const actorsEvents = {
-  eliza: elizaEvents,
-  josef: josefEvents,
+  tutor: tutorEvents,
+  player: playerEvents,
   krampus: krampusEvents,
   pumpkinKid: pumpkinKidEvents,
 };

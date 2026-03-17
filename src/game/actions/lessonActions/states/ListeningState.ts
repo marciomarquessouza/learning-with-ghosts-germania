@@ -16,14 +16,14 @@ export class ListeningState extends BaseState {
     runSteps(
       [
         stepBase(() => {
-          events.actors.josef.sync.emit("scared");
-          return events.actors.eliza.async.emitAsync("sowing");
+          events.actors.player.sync.emit("scared");
+          return events.actors.tutor.async.emitAsync("sowing");
         }),
         stepBase(() => {
           return events.actors.pumpkinKid.async.emitAsync("plant-pumpkin");
         }),
         stepBase(() => {
-          events.actors.josef.sync.emit("listening");
+          events.actors.player.sync.emit("listening");
           return events.lesson.async.emitAsync("write-lesson-description", {
             description: step.text,
             skipPressContinue: true,

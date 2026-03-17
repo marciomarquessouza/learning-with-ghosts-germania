@@ -32,13 +32,13 @@ export default function ChatStream() {
 
   function updateMessage(id: string, patch: Partial<Message>) {
     setMessages((messages) =>
-      messages.map((msg) => (msg.id === id ? { ...msg, ...patch } : msg))
+      messages.map((msg) => (msg.id === id ? { ...msg, ...patch } : msg)),
     );
   }
 
   function parseMoodFromStart(text: string): MoodMessage {
     const messageWithMood = text.match(
-      /^\[(happy|sad|embarrassed|angry)\]\s*(.*)$/i
+      /^\[(happy|sad|embarrassed|angry)\]\s*(.*)$/i,
     );
     if (!messageWithMood) {
       return { mood: "neutral", text, moodReady: false };
@@ -75,7 +75,7 @@ export default function ChatStream() {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ userMessage: `Josef: ${content}` }),
+        body: JSON.stringify({ userMessage: `Player: ${content}` }),
         signal: controller.signal,
       });
 
@@ -146,7 +146,7 @@ export default function ChatStream() {
     <div className="min-h-screen bg-gray-100 p-4 flex items-center justify-center">
       <div className="w-full max-w-lg bg-white rounded-xl shadow-lg p-4 flex flex-col">
         <div className="flex items-center justify-between mb-3">
-          <h1 className="text-lg font-semibold">Elisa — Live (Streaming)</h1>
+          <h1 className="text-lg font-semibold">Tutor — Live (Streaming)</h1>
           <div className="flex gap-2">
             <button
               onClick={clearAll}
@@ -170,7 +170,7 @@ export default function ChatStream() {
               }`}
             >
               <div className="text-xs opacity-70 mb-0.5">
-                <strong>{m.role === "user" ? "Josef" : "Elisa"}</strong>{" "}
+                <strong>{m.role === "user" ? "Josef" : "Tutor"}</strong>{" "}
                 {m.role === "assistant" && <span>{moodBadge(m.mood)}</span>}
               </div>
               <div className="whitespace-pre-wrap">{m.content}</div>
@@ -178,7 +178,7 @@ export default function ChatStream() {
           ))}
           {loading && (
             <div className="text-sm text-gray-500 animate-pulse">
-              Elisa is typing…
+              Tutor is typing…
             </div>
           )}
         </div>

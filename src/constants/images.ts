@@ -44,10 +44,10 @@ export const HUD_ACTION_CHALLENGE_IMG = "/hud/action_icons/challenge_icon.png";
 export const HUD_ACTION_EXIT_IMG = "/hud/action_icons/exit_icon.png";
 
 // ACTORS
-// JOSEF
-export const GHOST_SHADOW_IMG = "/actors/josef/ghost_shadow.png";
-export const GHOST_ATLAS_IMG = "/actors/josef/ghost_spritesheet.png";
-export const GHOST_ATLAS_JSON = "/actors/josef/ghost_spritesheet.json";
+// PLAYER
+export const GHOST_SHADOW_IMG = "/actors/player/ghost_shadow.png";
+export const GHOST_ATLAS_IMG = "/actors/player/ghost_spritesheet.png";
+export const GHOST_ATLAS_JSON = "/actors/player/ghost_spritesheet.json";
 
 // PUMPKIN_KIDS
 export const PUMPKIN_KID_SPROUTING_ATLAS_IMG =
@@ -100,8 +100,8 @@ export const LOCOMOTIVE_BELL_JSON =
 export const FAIRING_IMG = "/train/locomotive/fairing.png";
 export const LOCOMOTIVE_HEADLIGHT_IMG = "/train/locomotive/headlight.png";
 export const LOCOMOTIVE_SMOKE_IMG = "/train/locomotive/smoke.png";
-export const JOSEF_TRAIN_IMG = "/train/josef/train_josef.png";
-export const ELISA_TRAIN_IMG = "/train/elisa/train_elisa.png";
+export const PLAYER_TRAIN_IMG = "/train/player/player_josef.png";
+export const TUTOR_TRAIN_IMG = "/train/tutor/train_tutor.png";
 
 // SPEEDOMETER
 export const SPEEDOMETER_POINTER_IMG =

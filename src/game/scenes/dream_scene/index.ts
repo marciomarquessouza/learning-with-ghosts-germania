@@ -2,7 +2,6 @@ import { createScene } from "@/game/core/CreateScene";
 import { Hud, HUD_ITEMS } from "../hud";
 import { CemeteryScenario } from "./helpers/cemeteryScenario";
 import { getDayAction } from "@/game/actions/getAction";
-import { Eliza } from "@/game/actors/eliza/Eliza";
 import { DreamCamera } from "@/game/cameras/DreamCamera";
 import { changeWorldTransition } from "@/game/utils/changeWorldTransition";
 import { CHARACTERS, GAME_SCENES } from "@/constants/game";
@@ -10,8 +9,9 @@ import { GameScenes } from "@/types";
 import { PumpkinKids } from "@/game/actors/pumpkinKids/PumpkinKids";
 import { events } from "@/events/events";
 import { DayActions } from "@/game/actions/dailyActions/actionDefaultPerDay/default.actions";
-import { Josef } from "@/game/actors/josef/Josef";
 import { GameScene } from "../GameScene";
+import { Player } from "@/game/actors/player/Player";
+import { Tutor } from "@/game/actors/tutor/Tutor";
 
 export const DEFAULT_POSITION_X = 510;
 export const DEFAULT_POSITION_Y = 720;
@@ -21,21 +21,21 @@ export class DreamScene extends GameScene {
   private scenario = new CemeteryScenario();
   private dreamCamera = new DreamCamera();
   private hud = new Hud();
-  private josef = new Josef();
-  private eliza = new Eliza();
+  private player = new Player();
+  private tutor = new Tutor();
   private pumpkinKids = new PumpkinKids();
 
   constructor() {
     super({ key: GAME_SCENES.DREAM_SCENE });
-    this.actors.register(CHARACTERS.JOSEF, this.josef);
-    this.actors.register(CHARACTERS.ELIZA, this.eliza);
+    this.actors.register(CHARACTERS.PLAYER, this.player);
+    this.actors.register(CHARACTERS.TUTOR, this.tutor);
     this.actors.register(CHARACTERS.PUMPKIN_KID, this.pumpkinKids);
   }
 
   preload() {
     this.scenario.preload(this);
-    this.josef.preload(this);
-    this.eliza.preload(this);
+    this.player.preload(this);
+    this.tutor.preload(this);
     this.pumpkinKids.preload(this);
     this.hud.preload(this);
     this.physics.world.setBounds(0, 0, 2000, 1200);
@@ -52,12 +52,12 @@ export class DreamScene extends GameScene {
       this.scenario.width - 200,
       this.scenario.height,
     );
-    const josefSprite = this.josef.create(this, {
+    const playerSprite = this.player.create(this, {
       startX: DEFAULT_POSITION_X,
       startY: DEFAULT_POSITION_Y,
       cursors,
     });
-    this.dreamCamera.create(this, josefSprite, {
+    this.dreamCamera.create(this, playerSprite, {
       x: 0,
       y: 0,
       width: this.scenario.width,
@@ -67,12 +67,12 @@ export class DreamScene extends GameScene {
     getDayAction(this.scene.key as GameScenes).then((dayActions) => {
       this.dayActions = dayActions;
       this.dayActions.create(this);
-      this.eliza.create(this, {
+      this.tutor.create(this, {
         startX: this.scenario.width - 800,
         startY: DEFAULT_POSITION_Y - 100,
         scale: 0.8,
         flipX: true,
-        player: josefSprite,
+        player: playerSprite,
         dayActions,
         cursors,
         camera: this.dreamCamera.mainCamera,
@@ -97,8 +97,8 @@ export class DreamScene extends GameScene {
 
   update(time: number, delta: number) {
     this.scenario.update(delta);
-    this.josef.update(time, delta);
-    this.eliza.update(delta);
+    this.player.update(time, delta);
+    this.tutor.update(delta);
     this.pumpkinKids.update(delta);
     if (this.dayActions) {
       this.dayActions.update(delta);
@@ -106,11 +106,11 @@ export class DreamScene extends GameScene {
   }
 
   destroy() {
-    this.eliza.destroy();
+    this.tutor.destroy();
     this.scenario.destroy();
     this.hud.destroy();
     this.pumpkinKids.destroy();
-    this.josef.destroy();
+    this.player.destroy();
     events.game.async.clear("change-world-transition");
     if (this.dayActions) {
       this.dayActions.destroy();

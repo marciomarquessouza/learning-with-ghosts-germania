@@ -25,7 +25,7 @@ export default function ChatPage() {
       const res = await fetch("/api/examples/dialogue", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ userMessage: `Josef: ${text}` }),
+        body: JSON.stringify({ userMessage: `Player: ${text}` }),
       });
       const data = await res.json();
       setMessages([...next, { role: "assistant", content: data.reply }]);
@@ -62,7 +62,7 @@ export default function ChatPage() {
                   : "bg-pink-100 text-pink-900 self-start"
               }`}
             >
-              <strong>{msg.role === "user" ? "Josef" : "Elisa"}:</strong>{" "}
+              <strong>{msg.role === "user" ? "Player" : "Tutor"}:</strong>{" "}
               {msg.content}
             </div>
           ))}
