@@ -6,10 +6,14 @@ interface DialogueKeyHandlers {
   keyRight?: () => void;
 }
 
-export const useDialogueKeyDown =
-  (handlers: DialogueKeyHandlers) =>
+interface Options {
+  enabled?: boolean
+}
+
+export const createDialogueKeyDownHandler =
+  (handlers: DialogueKeyHandlers, { enabled = true }: Options = {}) =>
   (e: React.KeyboardEvent<HTMLDivElement>) => {
-    if (e.repeat) return;
+    if (!enabled || e.repeat) return;
 
     const el = e.target as HTMLElement;
     const tag = el.tagName;

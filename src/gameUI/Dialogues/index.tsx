@@ -6,7 +6,7 @@ import { useDeviceType } from "@/hooks/useDeviceType";
 import Image from "next/image";
 import { useCharacterDetails } from "@/hooks/useCharacterDetails";
 import { useUiStore } from "@/store/uiStore";
-import { useDialogueKeyDown } from "@/hooks/useDialogueKeyDown";
+import { createDialogueKeyDownHandler } from "@/libs/game/createDialogueKeyDownHandler";
 import { DialogueLines } from "./DialogueLines";
 import { Alternatives } from "./Alternatives";
 import { DialogueCTA } from "./DialogueCTA";
@@ -131,7 +131,7 @@ export function Dialogue() {
     resumeText(() => advanceLine());
   }, [resumeText, advanceLine, lineIndex, lines]);
 
-  const handleKeyDown = useDialogueKeyDown({
+  const handleKeyDown = createDialogueKeyDownHandler({
     keyUp: () => {
       if (lines[lineIndex].type === "alternatives") {
         handleAlternativeKeyDown({

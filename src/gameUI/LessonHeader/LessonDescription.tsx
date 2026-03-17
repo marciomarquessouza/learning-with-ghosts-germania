@@ -1,9 +1,9 @@
 import { CharacterDetails } from "@/hooks/useCharacterDetails";
 import { useTypewriter } from "@/hooks/useTypewriter";
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { PressContinue } from "./PressContinue";
-import { useDialogueKeyDown } from "@/hooks/useDialogueKeyDown";
+import { createDialogueKeyDownHandler } from "@/libs/game/createDialogueKeyDownHandler";
 
 export type DescriptionPhases =
   | "hidden"
@@ -89,8 +89,7 @@ export function LessonDescription({
   }, [description, phase, setTextToType, startTyping, changePhase]);
 
   const handleOnExit = () => {
-    setPhase("hidden");
-    onPhaseChange("hidden");
+    changePhase("hidden")
   };
 
   useEffect(() => {
@@ -99,13 +98,20 @@ export function LessonDescription({
     }
   }, [isVisible]);
 
-  const handleKeyDown = useDialogueKeyDown({
-    keyAction: () => {
-      if (phase === "typing") {
-        return resumeText();
-      }
-    },
-  });
+  const handleKeyAction = useCallback(() => {
+    if (phase === "typing") {
+      resumeText();
+    }
+  }, [phase, resumeText]);
+
+  const handleKeyDown = useMemo(
+    () =>
+      createDialogueKeyDownHandler(
+        { keyAction: handleKeyAction },
+        { enabled: phase === "typing" },
+      ),
+    [handleKeyAction, phase],
+  );
 
   if (phase === "hidden") return null;
 

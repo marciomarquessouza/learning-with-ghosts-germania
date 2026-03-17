@@ -2,13 +2,18 @@ import { events } from "@/events/events";
 import { LessonActions } from "../LessonActions";
 import { runSteps, stepBase } from "@/libs/game/runSteps";
 import { BaseState } from "@/libs/game/state-machine/BaseState";
+import { createKeyMap, KEY_CODES, KeyMap } from "@/utils/createKeyMap";
 
 export class EntryIntroductionState extends BaseState {
+  private isWaitingForContinue = false;
+  private keyMap: KeyMap;
+
   constructor(
     scene: Phaser.Scene,
     private lessonActions: LessonActions,
   ) {
     super(scene);
+    this.keyMap = createKeyMap(scene, [KEY_CODES.SPACE, KEY_CODES.ENTER]);
   }
 
   enter(): void {
@@ -22,27 +27,38 @@ export class EntryIntroductionState extends BaseState {
             description: step.text,
           });
         }),
-        stepBase(() => {
-          events.actors.josef.sync.emit("scared");
-          return events.actors.eliza.async.emitAsync("sowing");
-        }),
-        stepBase(() => {
-          return events.actors.pumpkinKid.async.emitAsync("plant-pumpkin");
-        }),
       ],
       {},
     )
       .then(() => {
-        this.changeTo(LessonActions.STATES.LISTENING);
+        this.isWaitingForContinue = true;
       })
       .catch((error) => {
         this.stateMachine.log(error, "error");
       });
   }
 
-  exit(): void {}
+  handleInput(): void {
+    if (
+      !this.isWaitingForContinue ||
+      !this.keyMap?.SPACE ||
+      !this.keyMap?.ENTER
+    ) {
+      return;
+    }
+
+    if (
+      Phaser.Input.Keyboard.JustDown(this.keyMap.SPACE) ||
+      Phaser.Input.Keyboard.JustDown(this.keyMap.ENTER)
+    ) {
+      this.isWaitingForContinue = false;
+      this.changeTo(LessonActions.STATES.LISTENING);
+    }
+  }
+
+  exit(): void {
+    this.isWaitingForContinue = false;
+  }
 
   update(): void {}
-
-  handleInput(): void {}
 }
