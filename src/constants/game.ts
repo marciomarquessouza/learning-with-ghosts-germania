@@ -35,7 +35,7 @@ export enum CHARACTERS {
   MARLENE = "marlene",
   TUTOR = "tutor",
   PLAYER = "player",
-  KRAMPUS = "krampus",
+  PUNISHER = "punisher",
   PUMPKIN_KID = "pumpkinKid",
 }
 
@@ -80,11 +80,11 @@ export const LOCOMOTIVE_FINAL_POSITION = 1400;
 export const LOCOMOTIVE_MIN_SPEED = 20;
 export const LOCOMOTIVE_MAX_SPEED = 85;
 
-export const KRAMPUS_OFFSET_NEAR = 220;
-export const KRAMPUS_OFFSET_FAR = 950;
+export const PUNISHER_OFFSET_NEAR = 220;
+export const PUNISHER_OFFSET_FAR = 950;
 
-export const LOCOMOTIVE_KRAMPUS_GAP_MIN = 180;
-export const LOCOMOTIVE_KRAMPUS_GAP_MAX = 900;
+export const LOCOMOTIVE_PUNISHER_GAP_MIN = 180;
+export const LOCOMOTIVE_PUNISHER_GAP_MAX = 900;
 
 export const MAX_COAL_REWARD = 8;
 export const MIN_COAL_REWARD = 2;

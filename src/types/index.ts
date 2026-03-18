@@ -2,10 +2,10 @@ import { WritingScore } from "@/gameUI/LessonChallenges/StepWriting";
 import { CHARACTERS, GAME_SCENES, GAME_WORLDS, MOODS } from "@/constants/game";
 import { AudioScoreSummary } from "@/libs/audio/useAudioScoreV2";
 import { PumpkinKids } from "@/game/actors/pumpkinKids/PumpkinKids";
-import { Krampus } from "@/game/actors/krampus/Krampus";
 import { Marlene } from "@/game/actors/marlene/Marlene";
 import { Tutor } from "@/game/actors/tutor/Tutor";
 import { Player } from "@/game/actors/player/Player";
+import { Punisher } from "@/game/actors/punisher/Punisher";
 
 export type GameScenes = (typeof GAME_SCENES)[keyof typeof GAME_SCENES];
 export type GameWorlds = (typeof GAME_WORLDS)[keyof typeof GAME_WORLDS];
@@ -96,7 +96,7 @@ export type GameActors = {
   [CHARACTERS.PLAYER]: Player;
   [CHARACTERS.TUTOR]: Tutor;
   [CHARACTERS.PUMPKIN_KID]: PumpkinKids;
-  [CHARACTERS.KRAMPUS]: Krampus;
+  [CHARACTERS.PUNISHER]: Punisher;
   [CHARACTERS.MARLENE]: Marlene;
 };
 

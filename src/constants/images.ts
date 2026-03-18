@@ -59,16 +59,8 @@ export const PUMPKIN_KID_SPROUT_IDLE_ATLAS_IMG =
 export const PUMPKIN_KID_SPROUT_IDLE_ATLAS_JSON =
   "/actors/pumpkin_kids/pumpkin_kid_stage_0_idle_spritesheet.json";
 
-// KRAMPUS
-export const KRAMPUS_RUNNING_ATLAS_IMG =
-  "/actors/krampus/krampus_running_spritesheet.png";
-export const KRAMPUS_RUNNING_ATLAS_JSON =
-  "/actors/krampus/krampus_running_spritesheet.json";
-export const KRAMPUS_WALKING_ATLAS_IMG =
-  "/actors/krampus/krampus_walking_spritesheet.png";
-export const KRAMPUS_WALKING_ATLAS_JSON =
-  "/actors/krampus/krampus_walking_spritesheet.json";
-export const KRAMPUS_LIGHT_IMG = "/actors/krampus/krampus_light.png";
+// PUNISHER
+export const PUNISHER_LIGHT_IMG = "/actors/punisher/punisher_light.png";
 
 // GHOST DREAM IMAGES
 export const GHOSTS_TITLE = "/ghost_dream/introduction/ghosts_title.png";
@@ -134,7 +126,7 @@ export const PENALTY_CHALLENGE_FEEDBACK_BACKGROUND =
   "/train/feedback/penalty/challenge_feedback_background.png";
 export const PENALTY_HATE_MAIN_TITLE =
   "/train/feedback/penalty/hate_main_title.png";
-export const PENALTY_KRAMPUS = "/train/feedback/penalty/krampus.png";
+export const PENALTY_PUNISHER = "/train/feedback/penalty/punisher.png";
 export const PENALTY_STRIPE_FRONT = "/train/feedback/penalty/stripe_front.png";
 
 // CHALLENGE ATTACK FEEDBACK

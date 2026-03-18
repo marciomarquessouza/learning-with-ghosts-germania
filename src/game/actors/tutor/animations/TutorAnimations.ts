@@ -2,7 +2,7 @@ import { SPRITESHEETS } from "@/constants/spritesheets";
 import { AnimationManager } from "@/libs/animation/AnimationManager";
 
 export class TutorAnimations {
-  private animationManager = new AnimationManager(SPRITESHEETS.tutor);
+  private animationManager = new AnimationManager<"tutor">(SPRITESHEETS.tutor);
   private sprite?: Phaser.Types.Physics.Arcade.SpriteWithDynamicBody;
   private static readonly FRAME_OPENING_HAND = 21;
 

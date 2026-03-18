@@ -16,10 +16,10 @@ export class ChaseDistanceController {
     this.gap = options.initialGap;
   }
 
-  update(deltaMs: number, trainSpeed: number, krampusSpeed: number) {
+  update(deltaMs: number, trainSpeed: number, punisherSpeed: number) {
     const dt = deltaMs / 1000;
 
-    this.gap += (trainSpeed - krampusSpeed) * dt * this.options.gapScale;
+    this.gap += (trainSpeed - punisherSpeed) * dt * this.options.gapScale;
     this.gap = Phaser.Math.Clamp(
       this.gap,
       this.options.minGap,

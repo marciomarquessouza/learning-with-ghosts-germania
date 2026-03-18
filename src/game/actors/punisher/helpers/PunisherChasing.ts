@@ -14,7 +14,7 @@ type SpeedSyncOptions = {
 
 type HatePayload = number | { hate?: number; value?: number };
 
-export class KrampusChasing {
+export class PunisherChasing {
   private lastBaseSpeed = 0;
   private hateSpeedBonus = 0;
 
@@ -69,8 +69,8 @@ export class KrampusChasing {
       );
     };
 
-    events.actors.krampus.sync.on("krampus/speed", onSpeed);
-    events.actors.krampus.sync.on("krampus/hate", onHate);
+    events.actors.punisher.sync.on("punisher/speed", onSpeed);
+    events.actors.punisher.sync.on("punisher/hate", onHate);
 
     let decayTimer: Phaser.Time.TimerEvent | null = null;
 
@@ -89,8 +89,8 @@ export class KrampusChasing {
     }
 
     sprite.once(Phaser.GameObjects.Events.DESTROY, () => {
-      events.actors.krampus.sync.off("krampus/speed", onSpeed);
-      events.actors.krampus.sync.off("krampus/hate", onHate);
+      events.actors.punisher.sync.off("punisher/speed", onSpeed);
+      events.actors.punisher.sync.off("punisher/hate", onHate);
       decayTimer?.remove(false);
     });
 

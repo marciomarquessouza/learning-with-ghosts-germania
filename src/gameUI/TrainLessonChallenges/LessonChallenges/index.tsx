@@ -88,7 +88,7 @@ export function LessonChallenges() {
   const handleCompleteChallenge = useCallback(() => {
     switch (state.score?.type) {
       case "hate":
-        events.actors.krampus.sync.emit("krampus/hate", {
+        events.actors.punisher.sync.emit("punisher/hate", {
           hate: state.score.value,
         });
         break;

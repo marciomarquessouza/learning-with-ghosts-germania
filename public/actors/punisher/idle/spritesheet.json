@@ -1,0 +1,152 @@
+{
+  "frames": {
+    "punisher_idle_0": {
+      "frame": {
+        "x": 0,
+        "y": 0,
+        "w": 248,
+        "h": 287
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 248,
+        "h": 287
+      },
+      "sourceSize": {
+        "w": 248,
+        "h": 287
+      }
+    },
+    "punisher_idle_1": {
+      "frame": {
+        "x": 248,
+        "y": 0,
+        "w": 248,
+        "h": 287
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 248,
+        "h": 287
+      },
+      "sourceSize": {
+        "w": 248,
+        "h": 287
+      }
+    },
+    "punisher_idle_2": {
+      "frame": {
+        "x": 496,
+        "y": 0,
+        "w": 248,
+        "h": 287
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 248,
+        "h": 287
+      },
+      "sourceSize": {
+        "w": 248,
+        "h": 287
+      }
+    },
+    "punisher_idle_3": {
+      "frame": {
+        "x": 0,
+        "y": 287,
+        "w": 248,
+        "h": 287
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 248,
+        "h": 287
+      },
+      "sourceSize": {
+        "w": 248,
+        "h": 287
+      }
+    },
+    "punisher_idle_4": {
+      "frame": {
+        "x": 248,
+        "y": 287,
+        "w": 248,
+        "h": 287
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 248,
+        "h": 287
+      },
+      "sourceSize": {
+        "w": 248,
+        "h": 287
+      }
+    },
+    "punisher_idle_5": {
+      "frame": {
+        "x": 496,
+        "y": 287,
+        "w": 248,
+        "h": 287
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 248,
+        "h": 287
+      },
+      "sourceSize": {
+        "w": 248,
+        "h": 287
+      }
+    },
+    "punisher_idle_6": {
+      "frame": {
+        "x": 0,
+        "y": 574,
+        "w": 248,
+        "h": 287
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 248,
+        "h": 287
+      },
+      "sourceSize": {
+        "w": 248,
+        "h": 287
+      }
+    }
+  },
+  "meta": {
+    "image": "spritesheet.png",
+    "size": {
+      "w": 744,
+      "h": 861
+    },
+    "scale": "1.0"
+  }
+}

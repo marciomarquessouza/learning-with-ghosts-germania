@@ -9,7 +9,7 @@ type Options = {
   lerpFactor?: number;
 };
 
-export class KrampusSpeedController {
+export class PunisherSpeedController {
   private hp = 100;
   private minSpeed: number;
   private maxSpeed: number;
@@ -44,8 +44,8 @@ export class KrampusSpeedController {
 
     this.targetSpeed = this.speed;
 
-    events.actors.krampus.sync.on("krampus/damage", this.onDamage);
-    events.actors.krampus.sync.emit("krampus/speed", { speed: this.speed });
+    events.actors.punisher.sync.on("punisher/damage", this.onDamage);
+    events.actors.punisher.sync.emit("punisher/speed", { speed: this.speed });
   }
 
   damage(amount: number) {
@@ -79,7 +79,7 @@ export class KrampusSpeedController {
     this.speed = Phaser.Math.Linear(this.speed, this.targetSpeed, lerp);
 
     if (Math.abs(prev - this.speed) >= 0.15) {
-      events.actors.krampus.sync.emit("krampus/speed", { speed: this.speed });
+      events.actors.punisher.sync.emit("punisher/speed", { speed: this.speed });
     }
   }
 

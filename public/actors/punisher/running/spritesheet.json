@@ -1,512 +1,512 @@
 {
   "frames": {
-    "krampus_walking_0": {
+    "punisher_running_0": {
       "frame": {
         "x": 0,
         "y": 0,
-        "w": 254,
-        "h": 305
+        "w": 326,
+        "h": 315
       },
       "rotated": false,
       "trimmed": false,
       "spriteSourceSize": {
         "x": 0,
         "y": 0,
-        "w": 254,
-        "h": 305
+        "w": 326,
+        "h": 315
       },
       "sourceSize": {
-        "w": 254,
-        "h": 305
+        "w": 326,
+        "h": 315
       }
     },
-    "krampus_walking_1": {
+    "punisher_running_1": {
       "frame": {
-        "x": 254,
+        "x": 326,
         "y": 0,
-        "w": 254,
-        "h": 305
+        "w": 326,
+        "h": 315
       },
       "rotated": false,
       "trimmed": false,
       "spriteSourceSize": {
         "x": 0,
         "y": 0,
-        "w": 254,
-        "h": 305
+        "w": 326,
+        "h": 315
       },
       "sourceSize": {
-        "w": 254,
-        "h": 305
+        "w": 326,
+        "h": 315
       }
     },
-    "krampus_walking_2": {
+    "punisher_running_2": {
       "frame": {
-        "x": 508,
+        "x": 652,
         "y": 0,
-        "w": 254,
-        "h": 305
+        "w": 326,
+        "h": 315
       },
       "rotated": false,
       "trimmed": false,
       "spriteSourceSize": {
         "x": 0,
         "y": 0,
-        "w": 254,
-        "h": 305
+        "w": 326,
+        "h": 315
       },
       "sourceSize": {
-        "w": 254,
-        "h": 305
+        "w": 326,
+        "h": 315
       }
     },
-    "krampus_walking_3": {
+    "punisher_running_3": {
       "frame": {
         "x": 0,
-        "y": 305,
-        "w": 254,
-        "h": 305
+        "y": 315,
+        "w": 326,
+        "h": 315
       },
       "rotated": false,
       "trimmed": false,
       "spriteSourceSize": {
         "x": 0,
         "y": 0,
-        "w": 254,
-        "h": 305
+        "w": 326,
+        "h": 315
       },
       "sourceSize": {
-        "w": 254,
-        "h": 305
+        "w": 326,
+        "h": 315
       }
     },
-    "krampus_walking_4": {
+    "punisher_running_4": {
       "frame": {
-        "x": 254,
-        "y": 305,
-        "w": 254,
-        "h": 305
+        "x": 326,
+        "y": 315,
+        "w": 326,
+        "h": 315
       },
       "rotated": false,
       "trimmed": false,
       "spriteSourceSize": {
         "x": 0,
         "y": 0,
-        "w": 254,
-        "h": 305
+        "w": 326,
+        "h": 315
       },
       "sourceSize": {
-        "w": 254,
-        "h": 305
+        "w": 326,
+        "h": 315
       }
     },
-    "krampus_walking_5": {
+    "punisher_running_5": {
       "frame": {
-        "x": 508,
-        "y": 305,
-        "w": 254,
-        "h": 305
+        "x": 652,
+        "y": 315,
+        "w": 326,
+        "h": 315
       },
       "rotated": false,
       "trimmed": false,
       "spriteSourceSize": {
         "x": 0,
         "y": 0,
-        "w": 254,
-        "h": 305
+        "w": 326,
+        "h": 315
       },
       "sourceSize": {
-        "w": 254,
-        "h": 305
+        "w": 326,
+        "h": 315
       }
     },
-    "krampus_walking_6": {
+    "punisher_running_6": {
       "frame": {
         "x": 0,
-        "y": 610,
-        "w": 254,
-        "h": 305
+        "y": 630,
+        "w": 326,
+        "h": 315
       },
       "rotated": false,
       "trimmed": false,
       "spriteSourceSize": {
         "x": 0,
         "y": 0,
-        "w": 254,
-        "h": 305
+        "w": 326,
+        "h": 315
       },
       "sourceSize": {
-        "w": 254,
-        "h": 305
+        "w": 326,
+        "h": 315
       }
     },
-    "krampus_walking_7": {
+    "punisher_running_7": {
       "frame": {
-        "x": 254,
-        "y": 610,
-        "w": 254,
-        "h": 305
+        "x": 326,
+        "y": 630,
+        "w": 326,
+        "h": 315
       },
       "rotated": false,
       "trimmed": false,
       "spriteSourceSize": {
         "x": 0,
         "y": 0,
-        "w": 254,
-        "h": 305
+        "w": 326,
+        "h": 315
       },
       "sourceSize": {
-        "w": 254,
-        "h": 305
+        "w": 326,
+        "h": 315
       }
     },
-    "krampus_walking_8": {
+    "punisher_running_8": {
       "frame": {
-        "x": 508,
-        "y": 610,
-        "w": 254,
-        "h": 305
+        "x": 652,
+        "y": 630,
+        "w": 326,
+        "h": 315
       },
       "rotated": false,
       "trimmed": false,
       "spriteSourceSize": {
         "x": 0,
         "y": 0,
-        "w": 254,
-        "h": 305
+        "w": 326,
+        "h": 315
       },
       "sourceSize": {
-        "w": 254,
-        "h": 305
+        "w": 326,
+        "h": 315
       }
     },
-    "krampus_walking_9": {
+    "punisher_running_9": {
       "frame": {
         "x": 0,
-        "y": 915,
-        "w": 254,
-        "h": 305
+        "y": 945,
+        "w": 326,
+        "h": 315
       },
       "rotated": false,
       "trimmed": false,
       "spriteSourceSize": {
         "x": 0,
         "y": 0,
-        "w": 254,
-        "h": 305
+        "w": 326,
+        "h": 315
       },
       "sourceSize": {
-        "w": 254,
-        "h": 305
+        "w": 326,
+        "h": 315
       }
     },
-    "krampus_walking_10": {
+    "punisher_running_10": {
       "frame": {
-        "x": 254,
-        "y": 915,
-        "w": 254,
-        "h": 305
+        "x": 326,
+        "y": 945,
+        "w": 326,
+        "h": 315
       },
       "rotated": false,
       "trimmed": false,
       "spriteSourceSize": {
         "x": 0,
         "y": 0,
-        "w": 254,
-        "h": 305
+        "w": 326,
+        "h": 315
       },
       "sourceSize": {
-        "w": 254,
-        "h": 305
+        "w": 326,
+        "h": 315
       }
     },
-    "krampus_walking_11": {
+    "punisher_running_11": {
       "frame": {
-        "x": 508,
-        "y": 915,
-        "w": 254,
-        "h": 305
+        "x": 652,
+        "y": 945,
+        "w": 326,
+        "h": 315
       },
       "rotated": false,
       "trimmed": false,
       "spriteSourceSize": {
         "x": 0,
         "y": 0,
-        "w": 254,
-        "h": 305
+        "w": 326,
+        "h": 315
       },
       "sourceSize": {
-        "w": 254,
-        "h": 305
+        "w": 326,
+        "h": 315
       }
     },
-    "krampus_walking_12": {
+    "punisher_running_12": {
       "frame": {
         "x": 0,
-        "y": 1220,
-        "w": 254,
-        "h": 305
+        "y": 1260,
+        "w": 326,
+        "h": 315
       },
       "rotated": false,
       "trimmed": false,
       "spriteSourceSize": {
         "x": 0,
         "y": 0,
-        "w": 254,
-        "h": 305
+        "w": 326,
+        "h": 315
       },
       "sourceSize": {
-        "w": 254,
-        "h": 305
+        "w": 326,
+        "h": 315
       }
     },
-    "krampus_walking_13": {
+    "punisher_running_13": {
       "frame": {
-        "x": 254,
-        "y": 1220,
-        "w": 254,
-        "h": 305
+        "x": 326,
+        "y": 1260,
+        "w": 326,
+        "h": 315
       },
       "rotated": false,
       "trimmed": false,
       "spriteSourceSize": {
         "x": 0,
         "y": 0,
-        "w": 254,
-        "h": 305
+        "w": 326,
+        "h": 315
       },
       "sourceSize": {
-        "w": 254,
-        "h": 305
+        "w": 326,
+        "h": 315
       }
     },
-    "krampus_walking_14": {
+    "punisher_running_14": {
       "frame": {
-        "x": 508,
-        "y": 1220,
-        "w": 254,
-        "h": 305
+        "x": 652,
+        "y": 1260,
+        "w": 326,
+        "h": 315
       },
       "rotated": false,
       "trimmed": false,
       "spriteSourceSize": {
         "x": 0,
         "y": 0,
-        "w": 254,
-        "h": 305
+        "w": 326,
+        "h": 315
       },
       "sourceSize": {
-        "w": 254,
-        "h": 305
+        "w": 326,
+        "h": 315
       }
     },
-    "krampus_walking_15": {
+    "punisher_running_15": {
       "frame": {
         "x": 0,
-        "y": 1525,
-        "w": 254,
-        "h": 305
+        "y": 1575,
+        "w": 326,
+        "h": 315
       },
       "rotated": false,
       "trimmed": false,
       "spriteSourceSize": {
         "x": 0,
         "y": 0,
-        "w": 254,
-        "h": 305
+        "w": 326,
+        "h": 315
       },
       "sourceSize": {
-        "w": 254,
-        "h": 305
+        "w": 326,
+        "h": 315
       }
     },
-    "krampus_walking_16": {
+    "punisher_running_16": {
       "frame": {
-        "x": 254,
-        "y": 1525,
-        "w": 254,
-        "h": 305
+        "x": 326,
+        "y": 1575,
+        "w": 326,
+        "h": 315
       },
       "rotated": false,
       "trimmed": false,
       "spriteSourceSize": {
         "x": 0,
         "y": 0,
-        "w": 254,
-        "h": 305
+        "w": 326,
+        "h": 315
       },
       "sourceSize": {
-        "w": 254,
-        "h": 305
+        "w": 326,
+        "h": 315
       }
     },
-    "krampus_walking_17": {
+    "punisher_running_17": {
       "frame": {
-        "x": 508,
-        "y": 1525,
-        "w": 254,
-        "h": 305
+        "x": 652,
+        "y": 1575,
+        "w": 326,
+        "h": 315
       },
       "rotated": false,
       "trimmed": false,
       "spriteSourceSize": {
         "x": 0,
         "y": 0,
-        "w": 254,
-        "h": 305
+        "w": 326,
+        "h": 315
       },
       "sourceSize": {
-        "w": 254,
-        "h": 305
+        "w": 326,
+        "h": 315
       }
     },
-    "krampus_walking_18": {
+    "punisher_running_18": {
       "frame": {
         "x": 0,
-        "y": 1830,
-        "w": 254,
-        "h": 305
+        "y": 1890,
+        "w": 326,
+        "h": 315
       },
       "rotated": false,
       "trimmed": false,
       "spriteSourceSize": {
         "x": 0,
         "y": 0,
-        "w": 254,
-        "h": 305
+        "w": 326,
+        "h": 315
       },
       "sourceSize": {
-        "w": 254,
-        "h": 305
+        "w": 326,
+        "h": 315
       }
     },
-    "krampus_walking_19": {
+    "punisher_running_19": {
       "frame": {
-        "x": 254,
-        "y": 1830,
-        "w": 254,
-        "h": 305
+        "x": 326,
+        "y": 1890,
+        "w": 326,
+        "h": 315
       },
       "rotated": false,
       "trimmed": false,
       "spriteSourceSize": {
         "x": 0,
         "y": 0,
-        "w": 254,
-        "h": 305
+        "w": 326,
+        "h": 315
       },
       "sourceSize": {
-        "w": 254,
-        "h": 305
+        "w": 326,
+        "h": 315
       }
     },
-    "krampus_walking_20": {
+    "punisher_running_20": {
       "frame": {
-        "x": 508,
-        "y": 1830,
-        "w": 254,
-        "h": 305
+        "x": 652,
+        "y": 1890,
+        "w": 326,
+        "h": 315
       },
       "rotated": false,
       "trimmed": false,
       "spriteSourceSize": {
         "x": 0,
         "y": 0,
-        "w": 254,
-        "h": 305
+        "w": 326,
+        "h": 315
       },
       "sourceSize": {
-        "w": 254,
-        "h": 305
+        "w": 326,
+        "h": 315
       }
     },
-    "krampus_walking_21": {
+    "punisher_running_21": {
       "frame": {
         "x": 0,
-        "y": 2135,
-        "w": 254,
-        "h": 305
+        "y": 2205,
+        "w": 326,
+        "h": 315
       },
       "rotated": false,
       "trimmed": false,
       "spriteSourceSize": {
         "x": 0,
         "y": 0,
-        "w": 254,
-        "h": 305
+        "w": 326,
+        "h": 315
       },
       "sourceSize": {
-        "w": 254,
-        "h": 305
+        "w": 326,
+        "h": 315
       }
     },
-    "krampus_walking_22": {
+    "punisher_running_22": {
       "frame": {
-        "x": 254,
-        "y": 2135,
-        "w": 254,
-        "h": 305
+        "x": 326,
+        "y": 2205,
+        "w": 326,
+        "h": 315
       },
       "rotated": false,
       "trimmed": false,
       "spriteSourceSize": {
         "x": 0,
         "y": 0,
-        "w": 254,
-        "h": 305
+        "w": 326,
+        "h": 315
       },
       "sourceSize": {
-        "w": 254,
-        "h": 305
+        "w": 326,
+        "h": 315
       }
     },
-    "krampus_walking_23": {
+    "punisher_running_23": {
       "frame": {
-        "x": 508,
-        "y": 2135,
-        "w": 254,
-        "h": 305
+        "x": 652,
+        "y": 2205,
+        "w": 326,
+        "h": 315
       },
       "rotated": false,
       "trimmed": false,
       "spriteSourceSize": {
         "x": 0,
         "y": 0,
-        "w": 254,
-        "h": 305
+        "w": 326,
+        "h": 315
       },
       "sourceSize": {
-        "w": 254,
-        "h": 305
+        "w": 326,
+        "h": 315
       }
     },
-    "krampus_walking_24": {
+    "punisher_running_24": {
       "frame": {
         "x": 0,
-        "y": 2440,
-        "w": 254,
-        "h": 305
+        "y": 2520,
+        "w": 326,
+        "h": 315
       },
       "rotated": false,
       "trimmed": false,
       "spriteSourceSize": {
         "x": 0,
         "y": 0,
-        "w": 254,
-        "h": 305
+        "w": 326,
+        "h": 315
       },
       "sourceSize": {
-        "w": 254,
-        "h": 305
+        "w": 326,
+        "h": 315
       }
     }
   },
   "meta": {
-    "image": "krampus_walking_spritesheet.png",
+    "image": "spritesheet.png",
     "size": {
-      "w": 762,
-      "h": 2745
+      "w": 978,
+      "h": 2835
     },
-    "scale": "1"
+    "scale": "1.0"
   }
 }

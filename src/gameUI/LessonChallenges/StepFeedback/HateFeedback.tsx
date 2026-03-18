@@ -3,7 +3,7 @@ import { motion } from "framer-motion";
 import {
   PENALTY_CHALLENGE_FEEDBACK_BACKGROUND,
   PENALTY_HATE_MAIN_TITLE,
-  PENALTY_KRAMPUS,
+  PENALTY_PUNISHER,
   PENALTY_STRIPE_FRONT,
   STRIPE_BACK,
 } from "@/constants/images";
@@ -39,7 +39,7 @@ export function HateFeedback({ score }: HateFeedbackProps) {
         left: "70%" as const,
         x: "-50%" as const,
       },
-      krampus: {
+      punisher: {
         w: 412,
         h: 448,
         top: 30,
@@ -54,7 +54,7 @@ export function HateFeedback({ score }: HateFeedbackProps) {
         x: "-50%" as const,
       },
     }),
-    []
+    [],
   );
 
   return (
@@ -176,13 +176,13 @@ export function HateFeedback({ score }: HateFeedbackProps) {
         />
       </motion.div>
 
-      {/* Krampus */}
+      {/* Punisher */}
       <motion.div
         className="absolute"
         style={{
-          top: layout.krampus.top,
-          left: layout.krampus.left,
-          transform: `translate(${layout.krampus.x}, 0)`,
+          top: layout.punisher.top,
+          left: layout.punisher.left,
+          transform: `translate(${layout.punisher.x}, 0)`,
         }}
         initial={{ opacity: 0, scale: 0.92, y: 18 }}
         animate="enter"
@@ -213,10 +213,10 @@ export function HateFeedback({ score }: HateFeedbackProps) {
           }}
         >
           <Image
-            src={PENALTY_KRAMPUS}
-            alt="krampus"
-            width={layout.krampus.w}
-            height={layout.krampus.h}
+            src={PENALTY_PUNISHER}
+            alt="punisher"
+            width={layout.punisher.w}
+            height={layout.punisher.h}
             draggable={false}
             className="select-none"
             priority

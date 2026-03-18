@@ -8,23 +8,40 @@ export type SpritesheetEntry = {
 };
 
 export const SPRITESHEETS = {
+  punisher: {
+    idle: {
+      key: 'punisher-idle',
+      image: '/actors/punisher/idle/spritesheet.png',
+      atlas: '/actors/punisher/idle/spritesheet.json'
+    },
+    running: {
+      key: 'punisher-running',
+      image: '/actors/punisher/running/spritesheet.png',
+      atlas: '/actors/punisher/running/spritesheet.json'
+    },
+    walking: {
+      key: 'punisher-walking',
+      image: '/actors/punisher/walking/spritesheet.png',
+      atlas: '/actors/punisher/walking/spritesheet.json'
+    }
+  },
   tutor: {
     idle: {
-      key: "tutor-idle",
-      image: "/actors/tutor/idle/spritesheet.png",
-      atlas: "/actors/tutor/idle/spritesheet.json",
+      key: 'tutor-idle',
+      image: '/actors/tutor/idle/spritesheet.png',
+      atlas: '/actors/tutor/idle/spritesheet.json'
     },
     sowing: {
-      key: "tutor-sowing",
-      image: "/actors/tutor/sowing/spritesheet.png",
-      atlas: "/actors/tutor/sowing/spritesheet.json",
+      key: 'tutor-sowing',
+      image: '/actors/tutor/sowing/spritesheet.png',
+      atlas: '/actors/tutor/sowing/spritesheet.json'
     },
     teaching: {
-      key: "tutor-teaching",
-      image: "/actors/tutor/teaching/spritesheet.png",
-      atlas: "/actors/tutor/teaching/spritesheet.json",
-    },
-  },
+      key: 'tutor-teaching',
+      image: '/actors/tutor/teaching/spritesheet.png',
+      atlas: '/actors/tutor/teaching/spritesheet.json'
+    }
+  }
 } as const;
 
 export type SpriteActor = keyof typeof SPRITESHEETS;

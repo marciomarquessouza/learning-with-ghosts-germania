@@ -20,7 +20,7 @@ export class LessonStartState extends BaseState {
           this.lessonActions.setCurrentLessonEntry();
           events.actors.tutor.sync.emit("idle");
           events.actors.player.sync.emit("listening");
-          // TODO: Krampus: state: idle
+          // TODO: Punisher: state: idle
           // TODO: Pumpkin Kid: state: destroyed
           return events.lesson.async.emitAsync("show-header");
         }),

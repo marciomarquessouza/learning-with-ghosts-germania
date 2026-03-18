@@ -9,7 +9,7 @@ import {
 } from "@/constants/images";
 import { events } from "@/events/events";
 
-type KrampusReleasedPayload = {
+type PunisherReleasedPayload = {
   skyEffectAmount?: number;
   onFinish?: () => void;
 };
@@ -27,12 +27,12 @@ export class CemeteryScenario {
   private cloudsSpeedPxPerSec = 8;
   private cemeteryDangerLayer: Phaser.GameObjects.Image | null = null;
   private dangerTween?: Phaser.Tweens.Tween;
-  private krampusDangerAmount = 0;
+  private punisherDangerAmount = 0;
   private onDangerTransitionFinish: null | (() => void) = null;
-  private onKrampusReleased = ({
+  private onPunisherReleased = ({
     skyEffectAmount = 1,
     onFinish,
-  }: KrampusReleasedPayload) => {
+  }: PunisherReleasedPayload) => {
     this.setDanger(skyEffectAmount, onFinish);
   };
   public width = 0;
@@ -98,7 +98,10 @@ export class CemeteryScenario {
       .setAlpha(0);
     this.container.add(this.cemeteryDangerLayer);
 
-    events.actors.krampus.sync.on("krampus/released", this.onKrampusReleased);
+    events.actors.punisher.sync.on(
+      "punisher/released",
+      this.onPunisherReleased,
+    );
 
     this.width = background.width;
     this.height = background.height;
@@ -111,7 +114,7 @@ export class CemeteryScenario {
   }
 
   private setDanger(skyEffectAmount: number = 1, onFinish?: () => void) {
-    this.krampusDangerAmount = Phaser.Math.Clamp(skyEffectAmount, 0, 1);
+    this.punisherDangerAmount = Phaser.Math.Clamp(skyEffectAmount, 0, 1);
     this.onDangerTransitionFinish = onFinish ?? null;
 
     const layer = this.cemeteryDangerLayer;
@@ -120,8 +123,8 @@ export class CemeteryScenario {
     this.dangerTween?.stop();
     this.dangerTween = undefined;
 
-    if (Math.abs(layer.alpha - this.krampusDangerAmount) < 0.001) {
-      layer.setAlpha(this.krampusDangerAmount);
+    if (Math.abs(layer.alpha - this.punisherDangerAmount) < 0.001) {
+      layer.setAlpha(this.punisherDangerAmount);
       this.onDangerTransitionFinish?.();
       this.onDangerTransitionFinish = null;
       return;
@@ -129,7 +132,7 @@ export class CemeteryScenario {
 
     this.dangerTween = layer.scene.tweens.add({
       targets: layer,
-      alpha: this.krampusDangerAmount,
+      alpha: this.punisherDangerAmount,
       duration: 1500,
       ease: "Linear",
       onComplete: () => {
@@ -146,6 +149,9 @@ export class CemeteryScenario {
   destroy() {
     this.dangerTween?.stop();
     this.dangerTween = undefined;
-    events.actors.krampus.sync.off("krampus/released", this.onKrampusReleased);
+    events.actors.punisher.sync.off(
+      "punisher/released",
+      this.onPunisherReleased,
+    );
   }
 }

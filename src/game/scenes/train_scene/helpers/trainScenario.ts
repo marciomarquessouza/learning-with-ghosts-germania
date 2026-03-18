@@ -2,7 +2,7 @@ import { TRAIN_BACKGROUND_IMG } from "@/constants/images";
 
 const TRAIN_BACKGROUND = "trainBackground";
 
-class TrainScenario {
+export class TrainScenario {
   public background!: Phaser.GameObjects.TileSprite;
   public ground!: Phaser.GameObjects.TileSprite;
 
@@ -17,11 +17,9 @@ class TrainScenario {
         0,
         scene.cameras.main.width,
         scene.cameras.main.height,
-        TRAIN_BACKGROUND
+        TRAIN_BACKGROUND,
       )
       .setOrigin(0, 0);
     return this.background;
   }
 }
-
-export const trainScenario = new TrainScenario();
