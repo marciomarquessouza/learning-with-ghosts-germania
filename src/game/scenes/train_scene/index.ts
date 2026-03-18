@@ -18,7 +18,7 @@ import { events } from "@/events/events";
 import { Locomotive } from "@/game/actors/locomotive/Locomotive";
 import { PunisherSpeedController } from "@/game/actors/punisher/helpers/PunisherSpeedController";
 import { Punisher } from "@/game/actors/punisher/Punisher";
-import { TrainScenario } from "./helpers/TrainScenario";
+import { TrainScenario } from "./helpers/Scenario";
 
 const TRAIN_RAILROAD = "trainRailroad";
 const GAP_MIN = 180;
