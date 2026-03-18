@@ -32,11 +32,11 @@ export const TWENTY_ONE_GRAMS_EXPERIMENT_URL =
   "https://en.wikipedia.org/wiki/21_grams_experiment";
 
 export enum CHARACTERS {
-  MARLENE = "marlene",
+  JAILER = "jailer",
   TUTOR = "tutor",
   PLAYER = "player",
   PUNISHER = "punisher",
-  PUMPKIN_KID = "pumpkinKid",
+  LEARNING_NODE = "learningNode",
 }
 
 export enum MOODS {
@@ -52,7 +52,7 @@ export enum MOODS {
 export const DIALOGUE_MAP: {
   [key: string]: { displayName: string; honorific?: string; avatar: string };
 } = {
-  [CHARACTERS.MARLENE]: {
+  [CHARACTERS.JAILER]: {
     displayName: "Marlene",
     honorific: "Fau",
     avatar: "/dialogue/dialogue_avatar_marlene.png",

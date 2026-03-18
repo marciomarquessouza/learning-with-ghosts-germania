@@ -20,7 +20,7 @@ export class ListeningState extends BaseState {
           return events.actors.tutor.async.emitAsync("sowing");
         }),
         stepBase(() => {
-          return events.actors.pumpkinKid.async.emitAsync("plant-pumpkin");
+          return events.actors.learningNode.async.emitAsync("plant");
         }),
         stepBase(() => {
           events.actors.player.sync.emit("listening");

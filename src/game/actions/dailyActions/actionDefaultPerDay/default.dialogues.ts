@@ -49,12 +49,12 @@ export const dialogues = {
 	`,
   ],
   default_marlene_first_dialogue: () => [
-    dialogue.marlene.angry`
+    dialogue.jailer.angry`
 		"I hate you Josef"
 	`,
   ],
   daily_challenge_alternatives: () => [
-    alternatives.marlene.neutral`
+    alternatives.jailer.neutral`
 		Você realmente quer iniciar o desafio do dia agora?
 	`.alternatives(
       {

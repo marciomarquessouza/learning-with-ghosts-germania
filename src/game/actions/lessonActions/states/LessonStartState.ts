@@ -21,7 +21,7 @@ export class LessonStartState extends BaseState {
           events.actors.tutor.sync.emit("idle");
           events.actors.player.sync.emit("listening");
           // TODO: Punisher: state: idle
-          // TODO: Pumpkin Kid: state: destroyed
+          // TODO: LearningNode Kid: state: destroyed
           return events.lesson.async.emitAsync("show-header");
         }),
         stepBase(() =>

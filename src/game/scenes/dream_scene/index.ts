@@ -6,7 +6,7 @@ import { DreamCamera } from "@/game/cameras/DreamCamera";
 import { changeWorldTransition } from "@/game/utils/changeWorldTransition";
 import { CHARACTERS, GAME_SCENES } from "@/constants/game";
 import { GameScenes } from "@/types";
-import { PumpkinKids } from "@/game/actors/pumpkinKids/PumpkinKids";
+import { LearningNode } from "@/game/actors/learningNode/LearningNode";
 import { events } from "@/events/events";
 import { DayActions } from "@/game/actions/dailyActions/actionDefaultPerDay/default.actions";
 import { GameScene } from "../GameScene";
@@ -23,20 +23,20 @@ export class DreamScene extends GameScene {
   private hud = new Hud();
   private player = new Player();
   private tutor = new Tutor();
-  private pumpkinKids = new PumpkinKids();
+  private learningNode = new LearningNode();
 
   constructor() {
     super({ key: GAME_SCENES.DREAM_SCENE });
     this.actors.register(CHARACTERS.PLAYER, this.player);
     this.actors.register(CHARACTERS.TUTOR, this.tutor);
-    this.actors.register(CHARACTERS.PUMPKIN_KID, this.pumpkinKids);
+    this.actors.register(CHARACTERS.LEARNING_NODE, this.learningNode);
   }
 
   preload() {
     this.scenario.preload(this);
     this.player.preload(this);
     this.tutor.preload(this);
-    this.pumpkinKids.preload(this);
+    this.learningNode.preload(this);
     this.hud.preload(this);
     this.physics.world.setBounds(0, 0, 2000, 1200);
   }
@@ -77,7 +77,7 @@ export class DreamScene extends GameScene {
         cursors,
         camera: this.dreamCamera.mainCamera,
       });
-      this.pumpkinKids.create(this, {
+      this.learningNode.create(this, {
         startX: this.scenario.width - 760,
         startY: 890,
         flipX: true,
@@ -99,7 +99,7 @@ export class DreamScene extends GameScene {
     this.scenario.update(delta);
     this.player.update(time, delta);
     this.tutor.update(delta);
-    this.pumpkinKids.update(delta);
+    this.learningNode.update(delta);
     if (this.dayActions) {
       this.dayActions.update(delta);
     }
@@ -109,7 +109,7 @@ export class DreamScene extends GameScene {
     this.tutor.destroy();
     this.scenario.destroy();
     this.hud.destroy();
-    this.pumpkinKids.destroy();
+    this.learningNode.destroy();
     this.player.destroy();
     events.game.async.clear("change-world-transition");
     if (this.dayActions) {

@@ -1,8 +1,8 @@
 import {
-  PUMPKIN_KID_SPROUTING_ATLAS_IMG,
-  PUMPKIN_KID_SPROUTING_ATLAS_JSON,
-  PUMPKIN_KID_SPROUT_IDLE_ATLAS_IMG,
-  PUMPKIN_KID_SPROUT_IDLE_ATLAS_JSON,
+  LEARNING_NODE_SPROUTING_ATLAS_IMG,
+  LEARNING_NODE_SPROUTING_ATLAS_JSON,
+  LEARNING_NODE_SPROUT_IDLE_ATLAS_IMG,
+  LEARNING_NODE_SPROUT_IDLE_ATLAS_JSON,
 } from "@/constants/images";
 import { onAnimationComplete } from "@/libs/animation/onAnimationComplete";
 
@@ -13,7 +13,7 @@ export const SPROUT_ANIMATIONS = {
   IDLE: "idle",
 } as const;
 
-export class Sprout {
+export class SproutAnimations {
   public animations = {
     SPROUTING: SPROUT_ANIMATIONS.SPROUTING,
     IDLE: SPROUT_ANIMATIONS.IDLE,
@@ -26,13 +26,13 @@ export class Sprout {
     const load = scene.load;
     load.atlas(
       SPROUTING_ANIMATION_ATLAS,
-      PUMPKIN_KID_SPROUTING_ATLAS_IMG,
-      PUMPKIN_KID_SPROUTING_ATLAS_JSON,
+      LEARNING_NODE_SPROUTING_ATLAS_IMG,
+      LEARNING_NODE_SPROUTING_ATLAS_JSON,
     );
     load.atlas(
       IDLE_ANIMATION_ATLAS,
-      PUMPKIN_KID_SPROUT_IDLE_ATLAS_IMG,
-      PUMPKIN_KID_SPROUT_IDLE_ATLAS_JSON,
+      LEARNING_NODE_SPROUT_IDLE_ATLAS_IMG,
+      LEARNING_NODE_SPROUT_IDLE_ATLAS_JSON,
     );
   }
 
@@ -49,7 +49,7 @@ export class Sprout {
       scene.anims.create({
         key: this.animations.SPROUTING,
         frames: scene.anims.generateFrameNames(SPROUTING_ANIMATION_ATLAS, {
-          prefix: "pumpkin_kid_stage_0_sprouting_",
+          prefix: "learningNode_stage_0_sprouting_",
           start: 0,
           end: 24,
         }),
@@ -62,7 +62,7 @@ export class Sprout {
       scene.anims.create({
         key: this.animations.IDLE,
         frames: scene.anims.generateFrameNames(IDLE_ANIMATION_ATLAS, {
-          prefix: "pumpkin_kid_stage_0_idle_",
+          prefix: "learningNode_stage_0_idle_",
           start: 0,
           end: 8,
         }),

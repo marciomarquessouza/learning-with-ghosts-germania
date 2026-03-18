@@ -1,13 +1,13 @@
-import { Sprout } from "./helpers/sprout";
 import { events } from "@/events/events";
 import { StateMachine } from "@/libs/game/state-machine/StateMachine";
-import { createPumpkinStateMachine } from "./stateMachine/createPumpkinStateMachine";
 import { EventController } from "@/libs/events/EventController";
 import {
-  PumpkinAsyncEvents,
-  PumpkinSyncEvents,
-} from "@/events/actors/pumpkin/events";
-import { PUMPKIN_STATES } from "./stateMachine/pumpkinStates";
+  LearningNodeAsyncEvents,
+  LearningNodeSyncEvents,
+} from "@/events/actors/learningNode/events";
+import { LEARNING_NODE_STATES } from "./constants/states";
+import { createLearningNodeStateMachine } from "./helpers/createLearningNodeStateMachine";
+import { SproutAnimations } from "./animations/SproutAnimations";
 
 interface CreatePayload {
   startX: number;
@@ -15,8 +15,10 @@ interface CreatePayload {
   flipX: boolean;
 }
 
-export class PumpkinKids {
-  public sprout = new Sprout();
+export class LearningNode {
+  public static readonly STATES = LEARNING_NODE_STATES;
+
+  public sprout = new SproutAnimations();
   public references: {
     groundPositionY: number;
     handPositionX: number;
@@ -24,8 +26,8 @@ export class PumpkinKids {
   } | null = null;
   public stateMachine!: StateMachine;
   public eventController!: EventController<
-    PumpkinSyncEvents,
-    PumpkinAsyncEvents
+    LearningNodeSyncEvents,
+    LearningNodeAsyncEvents
   >;
   public sprite!: Phaser.Physics.Arcade.Sprite;
 
@@ -49,18 +51,18 @@ export class PumpkinKids {
     });
 
     this.eventController = new EventController(
-      events.actors.pumpkinKid.sync,
-      events.actors.pumpkinKid.async,
+      events.actors.learningNode.sync,
+      events.actors.learningNode.async,
     );
 
-    this.stateMachine = createPumpkinStateMachine(scene, this);
+    this.stateMachine = createLearningNodeStateMachine(scene, this);
 
     this.attachEvents();
   }
 
   private attachEvents() {
-    this.eventController.addAsyncEvent("plant-pumpkin", () => {
-      this.stateMachine.changeTo(PUMPKIN_STATES.PLANT_PUMPKIN);
+    this.eventController.addAsyncEvent("plant", () => {
+      this.stateMachine.changeTo(LearningNode.STATES.PLANT_LEARNING_NODE);
     });
   }
 
@@ -73,7 +75,7 @@ export class PumpkinKids {
   destroy() {
     this.sprout.destroy();
     this.stateMachine.clear();
-    events.actors.pumpkinKid.sync.clear();
-    events.actors.pumpkinKid.async.clear();
+    events.actors.learningNode.sync.clear();
+    events.actors.learningNode.async.clear();
   }
 }

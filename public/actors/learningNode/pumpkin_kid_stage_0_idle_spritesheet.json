@@ -1,6 +1,6 @@
 {
   "frames": {
-    "pumpkin_kid_stage_0_idle_0": {
+    "learningNode_stage_0_idle_0": {
       "frame": {
         "x": 0,
         "y": 0,
@@ -20,7 +20,7 @@
         "h": 107
       }
     },
-    "pumpkin_kid_stage_0_idle_1": {
+    "learningNode_stage_0_idle_1": {
       "frame": {
         "x": 101,
         "y": 0,
@@ -40,7 +40,7 @@
         "h": 107
       }
     },
-    "pumpkin_kid_stage_0_idle_2": {
+    "learningNode_stage_0_idle_2": {
       "frame": {
         "x": 202,
         "y": 0,
@@ -60,7 +60,7 @@
         "h": 107
       }
     },
-    "pumpkin_kid_stage_0_idle_3": {
+    "learningNode_stage_0_idle_3": {
       "frame": {
         "x": 303,
         "y": 0,
@@ -80,7 +80,7 @@
         "h": 107
       }
     },
-    "pumpkin_kid_stage_0_idle_4": {
+    "learningNode_stage_0_idle_4": {
       "frame": {
         "x": 404,
         "y": 0,
@@ -100,7 +100,7 @@
         "h": 107
       }
     },
-    "pumpkin_kid_stage_0_idle_5": {
+    "learningNode_stage_0_idle_5": {
       "frame": {
         "x": 505,
         "y": 0,
@@ -120,7 +120,7 @@
         "h": 107
       }
     },
-    "pumpkin_kid_stage_0_idle_6": {
+    "learningNode_stage_0_idle_6": {
       "frame": {
         "x": 0,
         "y": 107,
@@ -140,7 +140,7 @@
         "h": 107
       }
     },
-    "pumpkin_kid_stage_0_idle_7": {
+    "learningNode_stage_0_idle_7": {
       "frame": {
         "x": 101,
         "y": 107,
@@ -160,7 +160,7 @@
         "h": 107
       }
     },
-    "pumpkin_kid_stage_0_idle_8": {
+    "learningNode_stage_0_idle_8": {
       "frame": {
         "x": 202,
         "y": 107,
@@ -182,7 +182,7 @@
     }
   },
   "meta": {
-    "image": "pumpkin_kid_stage_0_idle_spritesheet.png",
+    "image": "learningNode_stage_0_idle_spritesheet.png",
     "size": {
       "w": 606,
       "h": 214

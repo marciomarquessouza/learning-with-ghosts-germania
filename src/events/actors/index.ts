@@ -1,13 +1,13 @@
 import { tutorEvents } from "./tutor/events";
 import { playerEvents } from "./player/events";
 import { punisherEvents } from "./punisher/events";
-import { pumpkinKidEvents } from "./pumpkin/events";
+import { learningNodeEvents } from "./learningNode/events";
 
 export const actorsEvents = {
   tutor: tutorEvents,
   player: playerEvents,
   punisher: punisherEvents,
-  pumpkinKid: pumpkinKidEvents,
+  learningNode: learningNodeEvents,
 };
 
 export type ActorsEvents = typeof actorsEvents;

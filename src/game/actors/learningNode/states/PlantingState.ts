@@ -1,27 +1,26 @@
 import { BaseState } from "@/libs/game/state-machine/BaseState";
-import { PumpkinKids } from "../../PumpkinKids";
 import { runSteps, stepBase } from "@/libs/game/runSteps";
-import { PUMPKIN_STATES } from "../pumpkinStates";
-import { Seed } from "../../helpers/seed";
+import { LearningNode } from "../LearningNode";
+import { SeedAnimations } from "../animations/SeedAnimations";
 
-export class PlantPumpkinState extends BaseState {
+export class PlantingState extends BaseState {
   constructor(
     scene: Phaser.Scene,
-    private pumpkinKid: PumpkinKids,
+    private learningNode: LearningNode,
   ) {
     super(scene);
   }
 
   enter(): void {
-    if (!this.pumpkinKid.references) {
+    if (!this.learningNode.references) {
       console.error("The references have not been initialized.");
       return;
     }
 
     const { groundPositionY, handPositionX, handPositionY } =
-      this.pumpkinKid.references;
+      this.learningNode.references;
 
-    const seed = new Seed(this.scene, {
+    const seed = new SeedAnimations(this.scene, {
       x: handPositionX,
       startY: handPositionY,
       groundY: groundPositionY,
@@ -30,12 +29,12 @@ export class PlantPumpkinState extends BaseState {
     runSteps(
       [
         stepBase(() => seed.dropSeed()),
-        stepBase(() => this.pumpkinKid.sprout.sprouting()),
+        stepBase(() => this.learningNode.sprout.sprouting()),
       ],
       {},
     ).then(() => {
-      this.pumpkinKid.eventController.closeAsyncEvent("plant-pumpkin");
-      this.changeTo(PUMPKIN_STATES.SPROUT_IDLE);
+      this.learningNode.eventController.closeAsyncEvent("plant");
+      this.changeTo(LearningNode.STATES.SPROUT_IDLE);
     });
   }
 

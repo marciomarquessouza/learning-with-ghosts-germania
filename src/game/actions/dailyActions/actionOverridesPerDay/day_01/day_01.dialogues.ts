@@ -15,15 +15,15 @@ export const dialogues = {
     `,
   ],
   marlene_first_interaction: () => [
-    dialogue.marlene.neutral`
+    dialogue.jailer.neutral`
       Prisoner Josef G.
       Already feeling at home in your cell?
     `,
-    dialogue.marlene.neutral`
+    dialogue.jailer.neutral`
       In ten minutes your first test begins. 
       The topic: "GREETINGS" in German.
     `,
-    dialogue.marlene.neutral`
+    dialogue.jailer.neutral`
       Do well, and you eat.
       Fail and you will spend a day hungry to try to improve...
     `,
@@ -31,7 +31,7 @@ export const dialogues = {
       But… I have no books. 
       Nothing to study with.
     `,
-    dialogue.marlene.happy`
+    dialogue.jailer.happy`
       [MARLENE SMILES] That’s your problem. 
       See you in ten minutes.
     `,

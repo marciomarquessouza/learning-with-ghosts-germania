@@ -1,8 +1,8 @@
 import { WritingScore } from "@/gameUI/LessonChallenges/StepWriting";
 import { CHARACTERS, GAME_SCENES, GAME_WORLDS, MOODS } from "@/constants/game";
 import { AudioScoreSummary } from "@/libs/audio/useAudioScoreV2";
-import { PumpkinKids } from "@/game/actors/pumpkinKids/PumpkinKids";
-import { Marlene } from "@/game/actors/marlene/Marlene";
+import { LearningNode } from "@/game/actors/learningNode/LearningNode";
+import { Jailer } from "@/game/actors/jailer/Jailer";
 import { Tutor } from "@/game/actors/tutor/Tutor";
 import { Player } from "@/game/actors/player/Player";
 import { Punisher } from "@/game/actors/punisher/Punisher";
@@ -95,9 +95,9 @@ export interface Alternative {
 export type GameActors = {
   [CHARACTERS.PLAYER]: Player;
   [CHARACTERS.TUTOR]: Tutor;
-  [CHARACTERS.PUMPKIN_KID]: PumpkinKids;
+  [CHARACTERS.LEARNING_NODE]: LearningNode;
   [CHARACTERS.PUNISHER]: Punisher;
-  [CHARACTERS.MARLENE]: Marlene;
+  [CHARACTERS.JAILER]: Jailer;
 };
 
 export type CharacterMood = {

@@ -1,6 +1,6 @@
 import { ActorPayload } from "../types/Actor";
 
-export class Marlene {
+export class Jailer {
   public sprite!: Phaser.Types.Physics.Arcade.SpriteWithDynamicBody;
 
   create(scene: Phaser.Scene, { startX, startY }: ActorPayload) {

@@ -6,7 +6,7 @@ export interface SeedPosition {
   groundY: number;
 }
 
-export class Seed {
+export class SeedAnimations {
   constructor(
     private scene: Phaser.Scene,
     private seePosition: SeedPosition,
