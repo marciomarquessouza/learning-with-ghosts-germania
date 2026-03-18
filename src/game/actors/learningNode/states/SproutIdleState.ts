@@ -9,7 +9,7 @@ export class SproutIdleState extends BaseState {
     super(scene);
   }
   enter(): void {
-    this.learningNode.sprout.idle();
+    this.learningNode.animations.playSproutIdle();
   }
 
   exit(): void {}

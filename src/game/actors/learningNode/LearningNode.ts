@@ -18,7 +18,7 @@ interface CreatePayload {
 export class LearningNode {
   public static readonly STATES = LEARNING_NODE_STATES;
 
-  public sprout = new SproutAnimations();
+  public animations = new SproutAnimations();
   public references: {
     groundPositionY: number;
     handPositionX: number;
@@ -29,13 +29,17 @@ export class LearningNode {
     LearningNodeSyncEvents,
     LearningNodeAsyncEvents
   >;
-  public sprite!: Phaser.Physics.Arcade.Sprite;
+  public sprite!: Phaser.Types.Physics.Arcade.SpriteWithDynamicBody;
 
   preload(scene: Phaser.Scene) {
-    this.sprout.preload(scene);
+    this.animations.preload(scene);
   }
 
   create(scene: Phaser.Scene, { startX, startY, flipX }: CreatePayload) {
+    this.sprite = scene.physics.add
+      .sprite(startX, startY, "", "")
+      .setFlipX(!!flipX)
+      .setVisible(false);
     const groundPositionY = startY;
     const handPositionY = groundPositionY - 360;
     this.references = {
@@ -44,11 +48,7 @@ export class LearningNode {
       handPositionY,
     };
 
-    this.sprite = this.sprout.create(scene, {
-      startX,
-      startY: groundPositionY,
-      flipX,
-    });
+    this.animations.create(scene, this.sprite);
 
     this.eventController = new EventController(
       events.actors.learningNode.sync,
@@ -67,15 +67,12 @@ export class LearningNode {
   }
 
   update(delta: number) {
-    if (this.stateMachine) {
-      this.stateMachine.updateAndHandleInput(delta);
-    }
+    this.stateMachine?.updateAndHandleInput(delta);
   }
 
   destroy() {
-    this.sprout.destroy();
+    this.animations.destroy();
     this.stateMachine.clear();
-    events.actors.learningNode.sync.clear();
-    events.actors.learningNode.async.clear();
+    this.eventController.offAllEvents();
   }
 }

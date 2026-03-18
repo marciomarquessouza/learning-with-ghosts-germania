@@ -47,10 +47,7 @@ export class EntryIntroductionState extends BaseState {
       return;
     }
 
-    if (
-      Phaser.Input.Keyboard.JustDown(this.keyMap.SPACE) ||
-      Phaser.Input.Keyboard.JustDown(this.keyMap.ENTER)
-    ) {
+    if (this.keyMap.SPACE.isDown || this.keyMap.ENTER.isDown) {
       this.isWaitingForContinue = false;
       this.changeTo(LessonActions.STATES.LISTENING);
     }

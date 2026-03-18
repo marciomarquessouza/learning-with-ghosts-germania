@@ -18,7 +18,7 @@ export class LessonActions {
   }
 
   update(delta: number) {
-    this.stateMachine?.update(delta);
+    this.stateMachine?.updateAndHandleInput(delta);
   }
 
   startLesson() {

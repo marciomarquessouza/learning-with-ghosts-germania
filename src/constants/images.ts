@@ -49,16 +49,6 @@ export const GHOST_SHADOW_IMG = "/actors/player/ghost_shadow.png";
 export const GHOST_ATLAS_IMG = "/actors/player/ghost_spritesheet.png";
 export const GHOST_ATLAS_JSON = "/actors/player/ghost_spritesheet.json";
 
-// LEARNING_NODES
-export const LEARNING_NODE_SPROUTING_ATLAS_IMG =
-  "/actors/learningNodes/learningNode_stage_0_sprouting_spritesheet.png";
-export const LEARNING_NODE_SPROUTING_ATLAS_JSON =
-  "/actors/learningNodes/learningNode_stage_0_sprouting_spritesheet.json";
-export const LEARNING_NODE_SPROUT_IDLE_ATLAS_IMG =
-  "/actors/learningNodes/learningNode_stage_0_idle_spritesheet.png";
-export const LEARNING_NODE_SPROUT_IDLE_ATLAS_JSON =
-  "/actors/learningNodes/learningNode_stage_0_idle_spritesheet.json";
-
 // PUNISHER
 export const PUNISHER_LIGHT_IMG = "/actors/punisher/punisher_light.png";
 
