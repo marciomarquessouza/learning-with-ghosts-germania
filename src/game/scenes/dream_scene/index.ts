@@ -12,6 +12,7 @@ import { DayActions } from "@/game/actions/dailyActions/actionDefaultPerDay/defa
 import { GameScene } from "../GameScene";
 import { Player } from "@/game/actors/player/Player";
 import { Tutor } from "@/game/actors/tutor/Tutor";
+import { LessonManager } from "@/game/lesson/LessonManager";
 
 export const DEFAULT_POSITION_X = 510;
 export const DEFAULT_POSITION_Y = 720;
@@ -24,6 +25,7 @@ export class DreamScene extends GameScene {
   private player = new Player();
   private tutor = new Tutor();
   private learningNode = new LearningNode();
+  private lessonManager = new LessonManager();
 
   constructor() {
     super({ key: GAME_SCENES.DREAM_SCENE });
@@ -66,7 +68,7 @@ export class DreamScene extends GameScene {
 
     getDayAction(this.scene.key as GameScenes).then((dayActions) => {
       this.dayActions = dayActions;
-      this.dayActions.create(this);
+      this.lessonManager.create(this, dayActions.lesson);
       this.tutor.create(this, {
         startX: this.scenario.width - 800,
         startY: DEFAULT_POSITION_Y - 100,
@@ -96,25 +98,21 @@ export class DreamScene extends GameScene {
   }
 
   update(time: number, delta: number) {
+    this.lessonManager.update(delta);
     this.scenario.update(delta);
     this.player.update(time, delta);
     this.tutor.update(delta);
     this.learningNode.update(delta);
-    if (this.dayActions) {
-      this.dayActions.update(delta);
-    }
   }
 
   destroy() {
+    this.lessonManager.destroy();
     this.tutor.destroy();
     this.scenario.destroy();
     this.hud.destroy();
     this.learningNode.destroy();
     this.player.destroy();
     events.game.async.clear("change-world-transition");
-    if (this.dayActions) {
-      this.dayActions.destroy();
-    }
   }
 }
 

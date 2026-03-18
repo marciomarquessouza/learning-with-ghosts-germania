@@ -1,5 +1,5 @@
 import { events } from "@/events/events";
-import { LessonActions } from "../LessonActions";
+import { LessonManager } from "../LessonManager";
 import { runSteps, stepBase } from "@/libs/game/runSteps";
 import { BaseState } from "@/libs/game/state-machine/BaseState";
 import { createKeyMap, KEY_CODES, KeyMap } from "@/utils/createKeyMap";
@@ -10,14 +10,14 @@ export class EntryIntroductionState extends BaseState {
 
   constructor(
     scene: Phaser.Scene,
-    private lessonActions: LessonActions,
+    private lessonManager: LessonManager,
   ) {
     super(scene);
     this.keyMap = createKeyMap(scene, [KEY_CODES.SPACE, KEY_CODES.ENTER]);
   }
 
   enter(): void {
-    const step = this.lessonActions.getStepByType("introduction");
+    const step = this.lessonManager.getStepByType("introduction");
     runSteps(
       [
         stepBase(() => {
@@ -47,9 +47,14 @@ export class EntryIntroductionState extends BaseState {
       return;
     }
 
-    if (this.keyMap.SPACE.isDown || this.keyMap.ENTER.isDown) {
+    if (
+      this.isWaitingForContinue &&
+      (Phaser.Input.Keyboard.JustDown(this.keyMap.SPACE) ||
+        Phaser.Input.Keyboard.JustDown(this.keyMap.ENTER))
+    ) {
       this.isWaitingForContinue = false;
-      this.changeTo(LessonActions.STATES.LISTENING);
+      events.lesson.sync.emit("hide-lesson-description");
+      this.changeTo(LessonManager.STATES.LISTENING);
     }
   }
 

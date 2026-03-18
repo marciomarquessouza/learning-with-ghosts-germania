@@ -7,8 +7,10 @@ import type {
 import { createEventManagers } from "@/libs/events/createEventManagers";
 
 export type LessonSyncEvents = {
+  "start-lesson": undefined;
   "toggle-notebook": ToggleNotebookEvent;
   "lesson-entry-notebook-phase": LessonEntryNotebookEvent;
+  "hide-lesson-description": undefined;
 };
 
 export type LessonAsyncEvents = {

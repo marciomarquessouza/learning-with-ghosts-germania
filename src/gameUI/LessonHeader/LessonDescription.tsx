@@ -89,7 +89,8 @@ export function LessonDescription({
   }, [description, phase, setTextToType, startTyping, changePhase]);
 
   const handleOnExit = () => {
-    changePhase("hidden")
+    setTextToType("");
+    changePhase("hidden");
   };
 
   useEffect(() => {

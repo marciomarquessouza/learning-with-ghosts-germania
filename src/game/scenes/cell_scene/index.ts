@@ -47,7 +47,6 @@ class CellScene extends Phaser.Scene {
 
     getDayAction(this.scene.key as GameScenes).then((dayActions) => {
       this.dayActions = dayActions;
-      dayActions.create(this);
       dayActions.onStart();
       selectableAreas.create(this, dayActions);
       const hudContainer = this.hud.create(this, dayActions, [
@@ -63,17 +62,10 @@ class CellScene extends Phaser.Scene {
     });
   }
 
-  update(_time: number, delta: number): void {
-    if (this.dayActions) {
-      this.dayActions.update(delta);
-    }
-  }
+  update(): void {}
 
   destroy() {
     this.hud.destroy();
-    if (this.dayActions) {
-      this.dayActions.destroy();
-    }
     events.game.async.clear("change-world-transition");
   }
 }

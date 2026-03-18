@@ -1,5 +1,5 @@
 import { BaseState } from "@/libs/game/state-machine/BaseState";
-import { LessonActions } from "../LessonActions";
+import { LessonManager } from "../LessonManager";
 import { events } from "@/events/events";
 import { runSteps, stepBase } from "@/libs/game/runSteps";
 
@@ -8,7 +8,7 @@ const CLOSE_TITLE_AFTER = 2_000;
 export class LessonStartState extends BaseState {
   constructor(
     scene: Phaser.Scene,
-    private lessonActions: LessonActions,
+    private lessonManager: LessonManager,
   ) {
     super(scene);
   }
@@ -17,7 +17,7 @@ export class LessonStartState extends BaseState {
     runSteps(
       [
         stepBase(() => {
-          this.lessonActions.setCurrentLessonEntry();
+          this.lessonManager.setCurrentLessonEntry();
           events.actors.tutor.sync.emit("idle");
           events.actors.player.sync.emit("listening");
           // TODO: Punisher: state: idle
@@ -26,8 +26,8 @@ export class LessonStartState extends BaseState {
         }),
         stepBase(() =>
           events.lesson.async.emitAsync("show-lesson-title", {
-            title: this.lessonActions.lesson.title,
-            day: this.lessonActions.lesson.day,
+            title: this.lessonManager.lesson.title,
+            day: this.lessonManager.lesson.day,
             closeAfter: CLOSE_TITLE_AFTER,
           }),
         ),
@@ -35,7 +35,7 @@ export class LessonStartState extends BaseState {
       {},
     )
       .then(() => {
-        this.changeTo(LessonActions.STATES.ENTRY_INTRODUCTION);
+        this.changeTo(LessonManager.STATES.ENTRY_INTRODUCTION);
       })
       .catch((error) => {
         this.stateMachine.log(`LessonStartState failed ${error}`, "error");

@@ -53,7 +53,7 @@ export const defaultState: State = {
   ready: false,
 };
 
-export enum LessonActions {
+export enum LessonManager {
   CREATE_LESSON = "CREATE_LESSON",
   NEXT_LESSON_ENTRY = "NEXT_LESSON_ENTRY",
   PREVIOUS_LESSON_ENTRY = "PREVIOUS_LESSON_ENTRY",
@@ -64,41 +64,41 @@ export enum LessonActions {
 }
 
 type LessonAction =
-  | { type: LessonActions.CREATE_LESSON; payload: { lesson: Lesson } }
-  | { type: LessonActions.NEXT_LESSON_ENTRY }
-  | { type: LessonActions.PREVIOUS_LESSON_ENTRY }
-  | { type: LessonActions.NEXT_LESSON_STEP }
-  | { type: LessonActions.PREVIOUS_LESSON_STEP }
-  | { type: LessonActions.SHOW_LESSON_STEP }
-  | { type: LessonActions.HIDE_LESSON };
+  | { type: LessonManager.CREATE_LESSON; payload: { lesson: Lesson } }
+  | { type: LessonManager.NEXT_LESSON_ENTRY }
+  | { type: LessonManager.PREVIOUS_LESSON_ENTRY }
+  | { type: LessonManager.NEXT_LESSON_STEP }
+  | { type: LessonManager.PREVIOUS_LESSON_STEP }
+  | { type: LessonManager.SHOW_LESSON_STEP }
+  | { type: LessonManager.HIDE_LESSON };
 
 export function lessonReducer(state: State, action: LessonAction): State {
   switch (action.type) {
-    case LessonActions.CREATE_LESSON:
+    case LessonManager.CREATE_LESSON:
       const { lesson } = action.payload;
       return createLesson(state, lesson);
-    case LessonActions.SHOW_LESSON_STEP:
+    case LessonManager.SHOW_LESSON_STEP:
       return {
         ...state,
         ready: false,
       };
-    case LessonActions.NEXT_LESSON_ENTRY:
+    case LessonManager.NEXT_LESSON_ENTRY:
       return getNextEntry(state);
-    case LessonActions.PREVIOUS_LESSON_ENTRY:
+    case LessonManager.PREVIOUS_LESSON_ENTRY:
       return getPreviousEntry(state);
-    case LessonActions.NEXT_LESSON_STEP:
+    case LessonManager.NEXT_LESSON_STEP:
       if (state.stepFlags.isLastStep) {
         if (state.entryFlags.isLastEntry) return state;
         return getNextEntry(state);
       }
       return getNextStep(state);
-    case LessonActions.PREVIOUS_LESSON_STEP:
+    case LessonManager.PREVIOUS_LESSON_STEP:
       if (state.stepFlags.isFirstStep) {
         if (state.entryFlags.isFirstEntry) return state;
         return getPreviousEntry(state);
       }
       return getPreviousStep(state);
-    case LessonActions.HIDE_LESSON:
+    case LessonManager.HIDE_LESSON:
       return {
         ...state,
         visible: false,

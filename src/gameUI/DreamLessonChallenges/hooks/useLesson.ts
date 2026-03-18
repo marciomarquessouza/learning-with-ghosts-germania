@@ -2,7 +2,7 @@ import { useCallback, useMemo, useReducer, useRef } from "react";
 import {
   lessonReducer,
   defaultState,
-  LessonActions,
+  LessonManager,
   defaultLessonEntry,
   defaultLessonDetails,
 } from "./reducers/lessonReducer";
@@ -24,7 +24,7 @@ export const useLesson = () => {
     (lesson: Lesson, onComplete?: () => void | null) => {
       onCompleteRef.current = onComplete ?? null;
       dispatch({
-        type: LessonActions.CREATE_LESSON,
+        type: LessonManager.CREATE_LESSON,
         payload: { lesson },
       });
     },
@@ -53,23 +53,23 @@ export const useLesson = () => {
   const nextStep = useCallback(() => {
     if (isLast) {
       dispatch({
-        type: LessonActions.HIDE_LESSON,
+        type: LessonManager.HIDE_LESSON,
       });
       onCompleteRef.current?.();
       onCompleteRef.current = null;
       return;
     }
 
-    dispatch({ type: LessonActions.NEXT_LESSON_STEP });
+    dispatch({ type: LessonManager.NEXT_LESSON_STEP });
   }, [isLast]);
 
   const previousStep = useCallback(() => {
     if (isFirst) return;
-    dispatch({ type: LessonActions.PREVIOUS_LESSON_STEP });
+    dispatch({ type: LessonManager.PREVIOUS_LESSON_STEP });
   }, [isFirst]);
 
   const hideInteraction = useCallback(() => {
-    dispatch({ type: LessonActions.HIDE_LESSON });
+    dispatch({ type: LessonManager.HIDE_LESSON });
   }, []);
 
   return useMemo(() => {

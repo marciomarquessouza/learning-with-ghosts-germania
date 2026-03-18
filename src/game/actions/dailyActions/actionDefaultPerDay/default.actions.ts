@@ -11,12 +11,11 @@ import {
   stepGameMessage,
   stepShowDialogue,
 } from "../../stepActions";
-import { LessonActions } from "../../lessonActions/LessonActions";
+import { events } from "@/events/events";
 
 const DEFAULT_SCENE = GAME_SCENES.CELL_SCENE;
 
 export class DayActions {
-  public lessonActions = new LessonActions();
   private currentGameScene: GameScenes | null = null;
   clicked = {
     desk: 0,
@@ -28,7 +27,7 @@ export class DayActions {
     bars: 0,
   };
 
-  protected get lesson(): Lesson {
+  get lesson(): Lesson {
     return useLessonStore.getState().lesson;
   }
 
@@ -67,18 +66,6 @@ export class DayActions {
     if (currentDay > lessonDay) {
       this.lesson = lessonWithAudio;
     }
-  }
-
-  create(scene: Phaser.Scene) {
-    this.lessonActions.create(scene, this.lesson);
-  }
-
-  update(delta: number) {
-    this.lessonActions.update(delta);
-  }
-
-  destroy() {
-    this.lessonActions.destroy();
   }
 
   onStart() {
@@ -161,12 +148,8 @@ export class DayActions {
         alternativeId: undefined,
       },
     ).then(() => {
-      this.onLesson();
+      events.lesson.sync.emit("start-lesson");
     });
-  }
-
-  onLesson() {
-    this.lessonActions.startLesson();
   }
 }
 
