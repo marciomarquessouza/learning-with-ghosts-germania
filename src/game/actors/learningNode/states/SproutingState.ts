@@ -29,7 +29,7 @@ export class SproutingState extends BaseState {
     runSteps(
       [
         stepBase(() => seed.dropSeed()),
-        stepBase(() => this.learningNode.animations.playSproutBorn()),
+        stepBase(() => this.learningNode.animations.playSproutTransition()),
       ],
       {},
     ).then(() => {
