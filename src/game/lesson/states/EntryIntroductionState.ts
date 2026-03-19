@@ -1,5 +1,5 @@
 import { events } from "@/events/events";
-import { LessonManager } from "../LessonManager";
+import { LessonController } from "../LessonController";
 import { runSteps, stepBase } from "@/libs/game/runSteps";
 import { BaseState } from "@/libs/game/state-machine/BaseState";
 import { createKeyMap, KEY_CODES, KeyMap } from "@/utils/createKeyMap";
@@ -10,14 +10,14 @@ export class EntryIntroductionState extends BaseState {
 
   constructor(
     scene: Phaser.Scene,
-    private lessonManager: LessonManager,
+    private lessonController: LessonController,
   ) {
     super(scene);
     this.keyMap = createKeyMap(scene, [KEY_CODES.SPACE, KEY_CODES.ENTER]);
   }
 
   enter(): void {
-    const step = this.lessonManager.getStepByType("introduction");
+    const step = this.lessonController.getStepByType("introduction");
     runSteps(
       [
         stepBase(() => {
@@ -54,7 +54,7 @@ export class EntryIntroductionState extends BaseState {
     ) {
       this.isWaitingForContinue = false;
       events.lesson.sync.emit("hide-lesson-description");
-      this.changeTo(LessonManager.STATES.LISTENING);
+      this.changeTo(LessonController.STATES.LISTENING);
     }
   }
 

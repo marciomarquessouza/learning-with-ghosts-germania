@@ -17,7 +17,7 @@ export const lesson: Lesson = {
         },
         {
           type: "listening",
-          text: `Listening Text Placeholder`,
+          text: `Pergunte o nome dela 3 vezes (clique F ou clique na criaturinha)`,
           instruction: "",
         },
         {

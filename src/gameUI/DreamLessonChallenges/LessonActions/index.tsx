@@ -6,7 +6,7 @@ import { StepIntroduction } from "@/gameUI/LessonChallenges/StepIntroduction";
 import { StepPronunciation } from "@/gameUI/LessonChallenges/StepPronunciation";
 import { StepWriting } from "@/gameUI/LessonChallenges/StepWriting";
 
-export interface LessonManagerProps {
+export interface LessonControllerProps {
   show: boolean;
   isFirst: boolean;
   isLast: boolean;
@@ -17,7 +17,7 @@ export interface LessonManagerProps {
   previousStep: () => void;
 }
 
-export function LessonManager({
+export function LessonController({
   isFirst,
   isLast,
   show,
@@ -26,7 +26,7 @@ export function LessonManager({
   lessonStep,
   nextStep,
   previousStep,
-}: LessonManagerProps) {
+}: LessonControllerProps) {
   const [visible, setVisible] = useState(false);
   const { setInteractionDialogueOpen } = useUiStore();
 

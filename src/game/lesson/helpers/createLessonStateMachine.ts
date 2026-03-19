@@ -3,7 +3,7 @@ import {
   StateConstructor,
   StateMachine,
 } from "@/libs/game/state-machine/StateMachine";
-import { LessonManager } from "../LessonManager";
+import { LessonController } from "../LessonController";
 import { LessonStateNames } from "../constants/states";
 import { LessonStartState } from "../states/LessonStartState";
 import { EntryIntroductionState } from "../states/EntryIntroductionState";
@@ -18,24 +18,24 @@ import { LessonSummaryState } from "../states/LessonSummaryState";
 
 export function createLessonStateMachine(
   scene: Phaser.Scene,
-  lessonManager: LessonManager,
+  lessonController: LessonController,
 ): StateMachine {
   const stateMachine = new StateMachine(scene);
   const states: [LessonStateNames, StateConstructor<IState>][] = [
-    [LessonManager.STATES.LESSON_START, LessonStartState],
-    [LessonManager.STATES.ENTRY_INTRODUCTION, EntryIntroductionState],
-    [LessonManager.STATES.LISTENING, ListeningState],
-    [LessonManager.STATES.PRONUNCIATION, PronunciationState],
-    [LessonManager.STATES.WRITING, WritingState],
-    [LessonManager.STATES.ENTRY_RESULT, EntryResultState],
-    [LessonManager.STATES.REWARD, RewardState],
-    [LessonManager.STATES.PUNISHMENT, PunishmentState],
-    [LessonManager.STATES.ENTRY_SUMMARY, EntrySummaryState],
-    [LessonManager.STATES.LESSON_SUMMARY, LessonSummaryState],
+    [LessonController.STATES.LESSON_START, LessonStartState],
+    [LessonController.STATES.ENTRY_INTRODUCTION, EntryIntroductionState],
+    [LessonController.STATES.LISTENING, ListeningState],
+    [LessonController.STATES.PRONUNCIATION, PronunciationState],
+    [LessonController.STATES.WRITING, WritingState],
+    [LessonController.STATES.ENTRY_RESULT, EntryResultState],
+    [LessonController.STATES.REWARD, RewardState],
+    [LessonController.STATES.PUNISHMENT, PunishmentState],
+    [LessonController.STATES.ENTRY_SUMMARY, EntrySummaryState],
+    [LessonController.STATES.LESSON_SUMMARY, LessonSummaryState],
   ];
 
   states.forEach(([name, state]) => {
-    stateMachine.addState(name, state, lessonManager);
+    stateMachine.addState(name, state, lessonController);
   });
 
   return stateMachine;

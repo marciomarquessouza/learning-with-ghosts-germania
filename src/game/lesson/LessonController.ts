@@ -4,7 +4,7 @@ import { LESSON_STATES } from "./constants/states";
 import { createLessonStateMachine } from "./helpers/createLessonStateMachine";
 import { events } from "@/events/events";
 
-export class LessonManager {
+export class LessonController {
   public static readonly STATES = LESSON_STATES;
 
   public lesson!: Lesson;
@@ -27,7 +27,7 @@ export class LessonManager {
   }
 
   startLesson() {
-    this.stateMachine.changeTo(LessonManager.STATES.LESSON_START);
+    this.stateMachine.changeTo(LessonController.STATES.LESSON_START);
   }
 
   public setCurrentLessonEntry() {
