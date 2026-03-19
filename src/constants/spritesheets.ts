@@ -9,15 +9,15 @@ export type SpritesheetEntry = {
 
 export const SPRITESHEETS = {
   learningNode: {
-    sprout_born: {
-      key: 'learningNode-sprout_born',
-      image: '/actors/learningNode/sprout_born/spritesheet.png',
-      atlas: '/actors/learningNode/sprout_born/spritesheet.json'
+    sprouting_idle: {
+      key: 'learningNode-sprouting_idle',
+      image: '/actors/learningNode/sprouting_idle/spritesheet.png',
+      atlas: '/actors/learningNode/sprouting_idle/spritesheet.json'
     },
-    sprout_idle: {
-      key: 'learningNode-sprout_idle',
-      image: '/actors/learningNode/sprout_idle/spritesheet.png',
-      atlas: '/actors/learningNode/sprout_idle/spritesheet.json'
+    sprouting_transition: {
+      key: 'learningNode-sprouting_transition',
+      image: '/actors/learningNode/sprouting_transition/spritesheet.png',
+      atlas: '/actors/learningNode/sprouting_transition/spritesheet.json'
     }
   },
   punisher: {

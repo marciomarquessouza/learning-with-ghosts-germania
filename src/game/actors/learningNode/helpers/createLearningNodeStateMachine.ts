@@ -5,8 +5,8 @@ import {
 } from "@/libs/game/state-machine/StateMachine";
 import { LearningNode } from "../LearningNode";
 import { LearningNodeStateNames } from "../constants/states";
-import { PlantingState } from "../states/PlantingState";
-import { SproutIdleState } from "../states/SproutIdleState";
+import { SproutingState } from "../states/SproutingState";
+import { EmergingState } from "../states/EmergingState";
 
 export function createLearningNodeStateMachine(
   scene: Phaser.Scene,
@@ -14,8 +14,8 @@ export function createLearningNodeStateMachine(
 ): StateMachine {
   const stateMachine = new StateMachine(scene);
   const states: [LearningNodeStateNames, StateConstructor<IState>][] = [
-    [LearningNode.STATES.PLANT_LEARNING_NODE, PlantingState],
-    [LearningNode.STATES.SPROUT_IDLE, SproutIdleState],
+    [LearningNode.STATES.SPROUTING, SproutingState],
+    [LearningNode.STATES.EMERGING, EmergingState],
   ];
 
   states.forEach(([name, state]) => {

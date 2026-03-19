@@ -5,7 +5,7 @@ import { runSteps, stepBase } from "@/libs/game/runSteps";
 
 const CLOSE_TITLE_AFTER = 2_000;
 
-export class LessonStartState extends BaseState {
+export class StartingState extends BaseState {
   constructor(
     scene: Phaser.Scene,
     private lessonController: LessonController,
@@ -35,7 +35,7 @@ export class LessonStartState extends BaseState {
       {},
     )
       .then(() => {
-        this.changeTo(LessonController.STATES.ENTRY_INTRODUCTION);
+        this.changeTo(LessonController.STATES.INTRO);
       })
       .catch((error) => {
         this.stateMachine.log(`LessonStartState failed ${error}`, "error");

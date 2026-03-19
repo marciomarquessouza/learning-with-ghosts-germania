@@ -5,16 +5,15 @@ import {
 } from "@/libs/game/state-machine/StateMachine";
 import { LessonController } from "../LessonController";
 import { LessonStateNames } from "../constants/states";
-import { LessonStartState } from "../states/LessonStartState";
-import { EntryIntroductionState } from "../states/EntryIntroductionState";
+import { StartingState } from "../states/StartingState";
+import { IntroState } from "../states/IntroState";
 import { ListeningState } from "../states/ListeningState";
 import { PronunciationState } from "../states/PronunciationState";
 import { WritingState } from "../states/WritingState";
-import { EntryResultState } from "../states/EntryResultState";
+import { ResultState } from "../states/ResultState";
 import { RewardState } from "../states/RewardState";
 import { PunishmentState } from "../states/PunishmentState";
-import { EntrySummaryState } from "../states/EntrySummaryState";
-import { LessonSummaryState } from "../states/LessonSummaryState";
+import { SummaryState } from "../states/SummaryState";
 
 export function createLessonStateMachine(
   scene: Phaser.Scene,
@@ -22,16 +21,15 @@ export function createLessonStateMachine(
 ): StateMachine {
   const stateMachine = new StateMachine(scene);
   const states: [LessonStateNames, StateConstructor<IState>][] = [
-    [LessonController.STATES.LESSON_START, LessonStartState],
-    [LessonController.STATES.ENTRY_INTRODUCTION, EntryIntroductionState],
+    [LessonController.STATES.STARTING, StartingState],
+    [LessonController.STATES.INTRO, IntroState],
     [LessonController.STATES.LISTENING, ListeningState],
     [LessonController.STATES.PRONUNCIATION, PronunciationState],
     [LessonController.STATES.WRITING, WritingState],
-    [LessonController.STATES.ENTRY_RESULT, EntryResultState],
+    [LessonController.STATES.RESULT, ResultState],
     [LessonController.STATES.REWARD, RewardState],
     [LessonController.STATES.PUNISHMENT, PunishmentState],
-    [LessonController.STATES.ENTRY_SUMMARY, EntrySummaryState],
-    [LessonController.STATES.LESSON_SUMMARY, LessonSummaryState],
+    [LessonController.STATES.SUMMARY, SummaryState],
   ];
 
   states.forEach(([name, state]) => {

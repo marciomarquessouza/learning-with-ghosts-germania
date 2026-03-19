@@ -1,5 +1,5 @@
-import { LessonController } from "../LessonController";
 import { BaseState } from "@/libs/game/state-machine/BaseState";
+import { LessonController } from "../LessonController";
 
 export class PunishmentState extends BaseState {
   constructor(

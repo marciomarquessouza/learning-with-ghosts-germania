@@ -4,7 +4,7 @@ import { runSteps, stepBase } from "@/libs/game/runSteps";
 import { BaseState } from "@/libs/game/state-machine/BaseState";
 import { createKeyMap, KEY_CODES, KeyMap } from "@/utils/createKeyMap";
 
-export class EntryIntroductionState extends BaseState {
+export class IntroState extends BaseState {
   private isWaitingForContinue = false;
   private keyMap: KeyMap;
 

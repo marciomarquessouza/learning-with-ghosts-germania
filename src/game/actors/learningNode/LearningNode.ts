@@ -7,7 +7,7 @@ import {
 } from "@/events/actors/learningNode/events";
 import { LEARNING_NODE_STATES } from "./constants/states";
 import { createLearningNodeStateMachine } from "./helpers/createLearningNodeStateMachine";
-import { SproutAnimations } from "./animations/SproutAnimations";
+import { LearningNodeAnimations as Animations } from "./animations/LearningNodeAnimations";
 
 interface CreatePayload {
   startX: number;
@@ -18,7 +18,7 @@ interface CreatePayload {
 export class LearningNode {
   public static readonly STATES = LEARNING_NODE_STATES;
 
-  public animations = new SproutAnimations();
+  public animations = new Animations();
   public references: {
     groundPositionY: number;
     handPositionX: number;
@@ -61,8 +61,8 @@ export class LearningNode {
   }
 
   private attachEvents() {
-    this.eventController.addAsyncEvent("plant", () => {
-      this.stateMachine.changeTo(LearningNode.STATES.PLANT_LEARNING_NODE);
+    this.eventController.addAsyncEvent("sprouting:transition", () => {
+      this.stateMachine.changeTo(LearningNode.STATES.SPROUTING);
     });
   }
 

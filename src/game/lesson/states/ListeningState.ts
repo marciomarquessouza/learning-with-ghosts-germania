@@ -1,7 +1,7 @@
 import { runSteps, stepBase } from "@/libs/game/runSteps";
-import { LessonController } from "../LessonController";
 import { BaseState } from "@/libs/game/state-machine/BaseState";
 import { events } from "@/events/events";
+import { LessonController } from "../LessonController";
 
 export class ListeningState extends BaseState {
   constructor(
@@ -20,7 +20,9 @@ export class ListeningState extends BaseState {
           return events.actors.tutor.async.emitAsync("sowing");
         }),
         stepBase(() => {
-          return events.actors.learningNode.async.emitAsync("plant");
+          return events.actors.learningNode.async.emitAsync(
+            "sprouting:transition",
+          );
         }),
         stepBase(() => {
           events.actors.player.sync.emit("listening");

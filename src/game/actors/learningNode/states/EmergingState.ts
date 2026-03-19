@@ -1,7 +1,7 @@
 import { BaseState } from "@/libs/game/state-machine/BaseState";
 import { LearningNode } from "../LearningNode";
 
-export class SproutIdleState extends BaseState {
+export class EmergingState extends BaseState {
   constructor(
     scene: Phaser.Scene,
     private learningNode: LearningNode,

@@ -27,7 +27,7 @@ export class LessonController {
   }
 
   startLesson() {
-    this.stateMachine.changeTo(LessonController.STATES.LESSON_START);
+    this.stateMachine.changeTo(LessonController.STATES.STARTING);
   }
 
   public setCurrentLessonEntry() {

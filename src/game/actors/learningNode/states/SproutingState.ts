@@ -3,7 +3,7 @@ import { runSteps, stepBase } from "@/libs/game/runSteps";
 import { LearningNode } from "../LearningNode";
 import { SeedAnimations } from "../animations/SeedAnimations";
 
-export class PlantingState extends BaseState {
+export class SproutingState extends BaseState {
   constructor(
     scene: Phaser.Scene,
     private learningNode: LearningNode,
@@ -33,8 +33,7 @@ export class PlantingState extends BaseState {
       ],
       {},
     ).then(() => {
-      this.learningNode.eventController.closeAsyncEvent("plant");
-      this.changeTo(LearningNode.STATES.SPROUT_IDLE);
+      this.learningNode.eventController.closeAsyncEvent("sprouting:transition");
     });
   }
 
