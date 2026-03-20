@@ -55,10 +55,14 @@ export class AudioManager {
   public playVoice(key: string, config?: Phaser.Types.Sound.SoundConfig) {
     if (this.isMuted || !this.isUnlocked) return;
 
-    return this.scene.sound.play(key, {
+    const sound = this.scene.sound.add(key, {
       ...config,
       volume: (config?.volume ?? 1) * this.voiceVolume,
     });
+
+    sound.play();
+
+    return sound;
   }
 
   public playSfx(key: string, config?: Phaser.Types.Sound.SoundConfig) {

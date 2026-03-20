@@ -9,19 +9,22 @@ import { AudioManifest } from "@/types";
 
 const CONFIG = {
   AUDIO_BASE_DIR: "public/audio",
-  MANIFEST_BASE_DIR: "src/game/actions/actionOverridesPerDay",
+  MANIFEST_BASE_DIR: "src/game/actions/dailyActions/actionOverridesPerDay",
   HASH_LENGTH: 8,
 } as const;
 
 export class AudioProcessor {
-  constructor(private language: string, private day: string) {}
+  constructor(
+    private language: string,
+    private day: string,
+  ) {}
 
   private getManifestPath(): string {
     const dayString = `day_${padDay(this.day)}`;
     const manifestDir = path.join(
       process.cwd(),
       CONFIG.MANIFEST_BASE_DIR,
-      dayString
+      dayString,
     );
     return path.join(manifestDir, `${dayString}.audio.json`);
   }
@@ -32,7 +35,7 @@ export class AudioProcessor {
       process.cwd(),
       CONFIG.AUDIO_BASE_DIR,
       this.language,
-      dayString
+      dayString,
     );
   }
 
@@ -50,7 +53,7 @@ export class AudioProcessor {
 
   private async writeManifest(
     manifestPath: string,
-    manifest: AudioManifest
+    manifest: AudioManifest,
   ): Promise<void> {
     const manifestDir = path.dirname(manifestPath);
 
@@ -88,7 +91,7 @@ export class AudioProcessor {
     const outDir = this.getOutputDir();
     const outPath = path.join(outDir, filename);
     const publicPath = `audio/${this.language}/day_${padDay(
-      this.day
+      this.day,
     )}/${filename}`;
 
     try {
@@ -100,7 +103,7 @@ export class AudioProcessor {
       tts.save(outPath, entry, (error) => {
         if (error) {
           reject(
-            new Error(`Failed to generate audio for "${entry}": ${error}`)
+            new Error(`Failed to generate audio for "${entry}": ${error}`),
           );
           return;
         }
@@ -123,7 +126,7 @@ export class AudioProcessor {
     let skippedCount = 0;
 
     console.log(
-      `Processing ${entries.length} entries for day ${this.day} in ${this.language}`
+      `Processing ${entries.length} entries for day ${this.day} in ${this.language}`,
     );
 
     for (const entry of entries) {

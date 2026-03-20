@@ -1,6 +1,5 @@
 import { GAME_SCENES } from "@/constants/game";
 import { PunisherAnimations } from "./animations/PunisherAnimation";
-import { events } from "@/events/events";
 import { PunisherLight } from "./helpers/PunisherLight";
 import { PunisherChasing } from "./helpers/PunisherChasing";
 
@@ -64,8 +63,5 @@ export class Punisher {
     );
   }
 
-  destroy() {
-    events.actors.punisher.sync.clear();
-    events.actors.punisher.async.clear();
-  }
+  destroy() {}
 }
