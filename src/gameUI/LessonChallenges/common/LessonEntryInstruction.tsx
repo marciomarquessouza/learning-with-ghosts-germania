@@ -1,6 +1,6 @@
 import { useEffect, useMemo } from "react";
-import { useAudioPlayback } from "@/libs/audio/useAudioPlayback";
 import { IconAudio } from "../icons/IconAudio";
+import { useAudioPlayback } from "@/libs/audio/game-ui-audio/useAudioPlayback";
 
 export interface LessonEntryInstructionProps {
   audio: string | undefined;
@@ -28,7 +28,7 @@ export function LessonEntryInstruction({
 
       if (idx > lastIndex) {
         nodes.push(
-          <span key={`txt-${key++}`}>{instruction.slice(lastIndex, idx)}</span>
+          <span key={`txt-${key++}`}>{instruction.slice(lastIndex, idx)}</span>,
         );
       }
 
@@ -57,7 +57,7 @@ export function LessonEntryInstruction({
               <span aria-hidden>
                 <IconAudio />
               </span>
-            </button>
+            </button>,
           );
           break;
         }
@@ -71,7 +71,7 @@ export function LessonEntryInstruction({
 
     if (lastIndex < instruction.length) {
       nodes.push(
-        <span key={`txt-${key++}`}>{instruction.slice(lastIndex)}</span>
+        <span key={`txt-${key++}`}>{instruction.slice(lastIndex)}</span>,
       );
     }
 

@@ -1,4 +1,3 @@
-import { AudioScoreSummary } from "@/libs/audio/useAudioScoreV2";
 import { ChallengeScoreResult } from "./getChallengeScore";
 import {
   HATE_PENALTY,
@@ -7,6 +6,7 @@ import {
   MIN_ATTACK_REWARD,
   MIN_COAL_REWARD,
 } from "@/constants/game";
+import { AudioScoreSummary } from "@/libs/audio/game-ui-audio/useAudioScoreV2";
 import { ChallengeCommand } from "@/types";
 
 const STATUS_MULTIPLIER: Record<AudioScoreSummary["status"], number> = {
@@ -28,7 +28,7 @@ const getRewardRange = (command: ChallengeCommand) => {
 
 export function getPronunciationChallengeScore(
   command: ChallengeCommand,
-  audioScoreSummary: AudioScoreSummary
+  audioScoreSummary: AudioScoreSummary,
 ): ChallengeScoreResult {
   const { status } = audioScoreSummary;
 

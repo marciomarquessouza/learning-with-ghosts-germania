@@ -1,6 +1,5 @@
 import { useCallback, useState } from "react";
 import { LessonComponentProps } from "@/types";
-import { useAudioPlayback } from "@/libs/audio/useAudioPlayback";
 import { useTimeline } from "@/hooks/useTimeline";
 import { LessonEntryInstruction } from "../common/LessonEntryInstruction";
 import { LessonEntryLeft } from "../common/LessonEntryLeft";
@@ -9,6 +8,7 @@ import { AudioPlaybackContainer } from "../common/AudioPlaybackContainer";
 import { LessonActionContainer } from "../common/LessonActionContainer";
 import { DialogContainer } from "../common/DialogContainer";
 import { StepControls } from "./StepControls";
+import { useAudioPlayback } from "@/libs/audio/game-ui-audio/useAudioPlayback";
 
 export function StepIntroduction({
   isFirst = false,

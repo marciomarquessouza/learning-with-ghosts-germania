@@ -2,7 +2,7 @@ import { LessonEntry, LessonEntryStep } from "@/types";
 import { LessonEntryInstruction } from "../common/LessonEntryInstruction";
 import { VoiceLevelIndicator } from "./VoiceLevelIndicator";
 import { AudioButton } from "../common/AudioButton";
-import { RecorderState } from "@/libs/audio/useAudioRecorderV2";
+import { RecorderState } from "@/libs/audio/game-ui-audio/useAudioRecorderV2";
 
 export interface PronunciationDialogProps {
   lessonEntry: Omit<LessonEntry, "steps">;

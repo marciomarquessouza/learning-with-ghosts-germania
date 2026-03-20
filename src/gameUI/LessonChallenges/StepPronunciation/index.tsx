@@ -1,13 +1,13 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { LessonComponentProps, StepPhases } from "@/types";
 import { LessonActionContainer } from "../common/LessonActionContainer";
-import { useReferenceAudioV2 } from "@/libs/audio/useReferenceAudioV2";
-import { useAudioRecorderV2 } from "@/libs/audio/useAudioRecorderV2";
-import { useAudioScoreV2 } from "@/libs/audio/useAudioScoreV2";
 import { PronunciationDialog } from "./PronunciationDialog";
 import { PronunciationFeedback } from "./PronunciationFeedback";
 import { DialogContainer } from "../common/DialogContainer";
 import { StepControls } from "./StepControls";
+import { useReferenceAudioV2 } from "@/libs/audio/game-ui-audio/useReferenceAudioV2";
+import { useAudioRecorderV2 } from "@/libs/audio/game-ui-audio/useAudioRecorderV2";
+import { useAudioScoreV2 } from "@/libs/audio/game-ui-audio/useAudioScoreV2";
 
 export function StepPronunciation({
   isFirst,
@@ -29,7 +29,7 @@ export function StepPronunciation({
   const [pendingAutoRecord, setPendingAutoRecord] = useState(false);
 
   const { audioBufferReference, loading, error } = useReferenceAudioV2(
-    lessonEntry.audio || ""
+    lessonEntry.audio || "",
   );
 
   const {
@@ -51,7 +51,7 @@ export function StepPronunciation({
 
   const canStart = useMemo(
     () => !!audioBufferReference && !loading && !error,
-    [audioBufferReference, loading, error]
+    [audioBufferReference, loading, error],
   );
 
   const isBusy = recorderState === "recording" || recorderState === "playing";

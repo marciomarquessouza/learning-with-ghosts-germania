@@ -1,7 +1,7 @@
-import { ScoreResult } from "@/libs/audio/utils/audioScore";
+import { ScoreResult } from "@/libs/audio/game-ui-audio/utils/scoreRecording";
 import { AudioPlaybackContainer } from "../common/AudioPlaybackContainer";
 import { LessonEntry } from "@/types";
-import { AudioScoreSummary } from "@/libs/audio/useAudioScoreV2";
+import { AudioScoreSummary } from "@/libs/audio/game-ui-audio/useAudioScoreV2";
 
 export interface PronunciationFeedbackProps {
   scoreResult: ScoreResult;
@@ -23,7 +23,6 @@ export function PronunciationFeedback({
   const barWidth = `${Math.max(15, clampedScore)}%`;
 
   const { audio, target } = lessonEntry;
-
 
   const headline = audioScoreSummary?.headline ?? "";
   const label = audioScoreSummary?.label ?? "";
