@@ -36,9 +36,9 @@ export class ListeningState extends BaseState {
     );
   }
 
+  handleInput(): void {}
+
   exit(): void {}
 
   update(): void {}
-
-  handleInput(): void {}
 }

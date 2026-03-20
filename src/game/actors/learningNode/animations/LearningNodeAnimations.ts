@@ -48,6 +48,10 @@ export class LearningNodeAnimations {
     this.animationManager.playAnimation(this.getSprite(), "sprouting_idle");
   }
 
+  playSproutSpeaking() {
+    throw new Error("Speaking animation not implemented");
+  }
+
   destroy() {
     if (this.sprite) {
       this.sprite.destroy();
