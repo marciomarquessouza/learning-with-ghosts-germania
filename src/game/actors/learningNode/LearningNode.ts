@@ -35,7 +35,7 @@ export class LearningNode {
     this.animations.preload(scene);
   }
 
-  create(scene: Phaser.Scene, { startX, startY, flipX }: CreatePayload) {
+  spawn(scene: Phaser.Scene, { startX, startY, flipX }: CreatePayload) {
     this.sprite = scene.physics.add
       .sprite(startX, startY, "", "")
       .setFlipX(!!flipX)

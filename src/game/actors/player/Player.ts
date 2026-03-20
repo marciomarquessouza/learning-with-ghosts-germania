@@ -37,7 +37,7 @@ export class Player {
     this.shadow.preload(scene);
   }
 
-  create(scene: Phaser.Scene, { startX, startY, cursors }: ActorPayload) {
+  spawn(scene: Phaser.Scene, { startX, startY, cursors }: ActorPayload) {
     this.sprite = this.animations.create(scene, startX, startY);
     this.shadow.create(scene, startX, startY);
     this.levitation.create(this.sprite, this.shadow);

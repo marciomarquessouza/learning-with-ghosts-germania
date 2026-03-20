@@ -1,5 +1,5 @@
 import { useMemo } from "react";
-import { CHARACTERS, DIALOGUE_MAP } from "@/constants/game";
+import { ACTORS, DIALOGUE_MAP } from "@/constants/game";
 
 export interface CharacterDetails {
   characterName: string;
@@ -9,7 +9,7 @@ export interface CharacterDetails {
 }
 
 export const useCharacterDetails = (
-  character?: CHARACTERS | null
+  character?: ACTORS | null,
 ): CharacterDetails => {
   return useMemo(() => {
     return {

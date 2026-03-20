@@ -1,4 +1,4 @@
-import { CHARACTERS } from "@/constants/game";
+import { ACTORS } from "@/constants/game";
 import { LessonEntry, Lesson } from "@/types";
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
@@ -20,7 +20,7 @@ export const useLessonStore = create<LessonState>()(
         id: "",
         title: "",
         day: 0,
-        character: CHARACTERS.PLAYER,
+        character: ACTORS.PLAYER,
         entries: [] as LessonEntry[],
       },
       update: (lesson: Lesson) => set((state) => ({ ...state, lesson })),

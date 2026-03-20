@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { CHARACTERS, MOODS } from "@/constants/game";
+import { ACTORS, MOODS } from "@/constants/game";
 import { dedent } from "../../utils/dedent";
 import { CharacterMood, DialogueLine } from "@/types";
 
@@ -7,7 +7,7 @@ interface DialogueTag extends DialogueLine {
   reactions: (charactersMood: CharacterMood[]) => DialogueLine;
 }
 
-function createDialogueTag(character: CHARACTERS, mood: MOODS) {
+function createDialogueTag(character: ACTORS, mood: MOODS) {
   return (strings: TemplateStringsArray, ...values: unknown[]): DialogueTag => {
     const text = dedent(strings, values).trim();
     const moods: CharacterMood[] = [{ character, mood }];
@@ -29,10 +29,10 @@ function createDialogueTag(character: CHARACTERS, mood: MOODS) {
 }
 
 export function createDialogue(
-  characters: CHARACTERS[],
-  moods: MOODS[]
+  characters: ACTORS[],
+  moods: MOODS[],
 ): Record<
-  CHARACTERS,
+  ACTORS,
   Record<MOODS, (s: TemplateStringsArray, ...v: unknown[]) => DialogueTag>
 > {
   const out: any = {};

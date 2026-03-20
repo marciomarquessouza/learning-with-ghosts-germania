@@ -31,7 +31,7 @@ export const DEFAULT_INITIAL_SOUL_WEIGHT = 21;
 export const TWENTY_ONE_GRAMS_EXPERIMENT_URL =
   "https://en.wikipedia.org/wiki/21_grams_experiment";
 
-export enum CHARACTERS {
+export enum ACTORS {
   JAILER = "jailer",
   TUTOR = "tutor",
   PLAYER = "player",
@@ -52,17 +52,17 @@ export enum MOODS {
 export const DIALOGUE_MAP: {
   [key: string]: { displayName: string; honorific?: string; avatar: string };
 } = {
-  [CHARACTERS.JAILER]: {
+  [ACTORS.JAILER]: {
     displayName: "Marlene",
     honorific: "Fau",
     avatar: "/dialogue/dialogue_avatar_marlene.png",
   },
-  [CHARACTERS.TUTOR]: {
+  [ACTORS.TUTOR]: {
     displayName: "Nun",
     honorific: "Masked",
     avatar: "/dialogue/dialogue_avatar_masked_nun.png",
   },
-  [CHARACTERS.PLAYER]: {
+  [ACTORS.PLAYER]: {
     displayName: "Josef G.",
     avatar: "/dialogue/dialogue_avatar_josef.png",
   },

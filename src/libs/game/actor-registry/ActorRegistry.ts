@@ -1,21 +1,31 @@
 export class ActorRegistry<T extends Record<string, unknown>> {
   private actors = new Map<keyof T, T[keyof T]>();
 
-  register<K extends keyof T>(name: K, actor: T[K] ) {
-    this.actors.set(name, actor)
+  register<K extends keyof T>(name: K, actor: T[K]) {
+    this.actors.set(name, actor);
+    return actor;
+  }
+
+  create<K extends keyof T, A extends unknown[]>(
+    name: K,
+    ActorClass: new (...args: A) => T[K],
+    ...args: A
+  ): T[K] {
+    const actor = new ActorClass(...args);
+    this.actors.set(name, actor);
+    return actor;
   }
 
   get<K extends keyof T>(name: K): T[K] | null {
-    if (!this.actors.has(name)) return null
-
-    return this.actors.get(name) as T[K]
+    if (!this.actors.has(name)) return null;
+    return this.actors.get(name) as T[K];
   }
 
   remove<K extends keyof T>(name: K) {
-    this.actors.delete(name)
+    this.actors.delete(name);
   }
 
   removeAll() {
-    this.actors.clear()
+    this.actors.clear();
   }
 }

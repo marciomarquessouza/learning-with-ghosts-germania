@@ -38,7 +38,7 @@ export class Tutor {
     this.animations.preload(scene);
   }
 
-  create(scene: Phaser.Scene, payload: CreatePayload) {
+  spawn(scene: Phaser.Scene, payload: CreatePayload) {
     const { dayActions, player, startX, startY, scale, flipX } = payload;
 
     this.sprite = scene.physics.add

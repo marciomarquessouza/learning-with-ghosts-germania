@@ -1,5 +1,5 @@
 import { WritingScore } from "@/gameUI/LessonChallenges/StepWriting";
-import { CHARACTERS, GAME_SCENES, GAME_WORLDS, MOODS } from "@/constants/game";
+import { ACTORS, GAME_SCENES, GAME_WORLDS, MOODS } from "@/constants/game";
 import { LearningNode } from "@/game/actors/learningNode/LearningNode";
 import { Jailer } from "@/game/actors/jailer/Jailer";
 import { Tutor } from "@/game/actors/tutor/Tutor";
@@ -93,21 +93,21 @@ export interface Alternative {
 }
 
 export type GameActors = {
-  [CHARACTERS.PLAYER]: Player;
-  [CHARACTERS.TUTOR]: Tutor;
-  [CHARACTERS.LEARNING_NODE]: LearningNode;
-  [CHARACTERS.PUNISHER]: Punisher;
-  [CHARACTERS.JAILER]: Jailer;
+  [ACTORS.PLAYER]: Player;
+  [ACTORS.TUTOR]: Tutor;
+  [ACTORS.LEARNING_NODE]: LearningNode;
+  [ACTORS.PUNISHER]: Punisher;
+  [ACTORS.JAILER]: Jailer;
 };
 
 export type CharacterMood = {
-  character: CHARACTERS;
+  character: ACTORS;
   mood: MOODS;
 };
 
 export interface BaseLine {
   text: string;
-  character: CHARACTERS;
+  character: ACTORS;
   moods?: CharacterMood[];
   speed?: number;
 }

@@ -1,4 +1,4 @@
-import { CHARACTERS } from "@/constants/game";
+import { ACTORS } from "@/constants/game";
 
 export interface LessonEntryNotebookEvent {
   ids: string[];
@@ -18,5 +18,5 @@ export interface ShowLessonTitleEvent {
 export interface WriteLessonDescriptionEvent {
   description: string;
   skipPressContinue?: boolean;
-  teacher?: CHARACTERS;
+  teacher?: ACTORS;
 }

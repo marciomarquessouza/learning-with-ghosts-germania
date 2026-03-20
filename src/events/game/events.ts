@@ -6,7 +6,7 @@ import {
   ZoomPropsEvent,
 } from "./types";
 import { ReactNode } from "react";
-import { CHARACTERS, MOODS } from "@/constants/game";
+import { ACTORS, MOODS } from "@/constants/game";
 import { ACTIONS_ICONS } from "@/game/scenes/hud/helpers/actionIcons";
 import { HUD_ITEMS } from "@/game/scenes/hud";
 import { createEventManagers } from "@/libs/events/createEventManagers";
@@ -26,7 +26,7 @@ export type GameSyncEvents = {
   "game-message/hide": { delay?: number };
   "dialogue/show": DialogueEvent;
   "dialogue/hide": { dialogueId?: string };
-  "dialogue/set-mood": { mood: MOODS; character: CHARACTERS };
+  "dialogue/set-mood": { mood: MOODS; character: ACTORS };
   "hud/weight-decrease": UpdateWeightEvent;
   "hud/show-items": HUD_ITEMS[];
   "hud/hide-items": HUD_ITEMS[];

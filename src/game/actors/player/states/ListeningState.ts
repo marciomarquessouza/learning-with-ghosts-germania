@@ -1,6 +1,6 @@
 import { BaseState } from "@/libs/game/state-machine/BaseState";
 import { events } from "@/events/events";
-import { CHARACTERS } from "@/constants/game";
+import { ACTORS } from "@/constants/game";
 import { GameScene } from "@/game/scenes/GameScene";
 import { Player } from "../Player";
 
@@ -19,7 +19,7 @@ export class ListeningState extends BaseState {
 
     this.removeListeners.push(
       events.game.sync.on("dialogue/set-mood", ({ character, mood }) => {
-        if (character === CHARACTERS.PLAYER) {
+        if (character === ACTORS.PLAYER) {
           this.player.animations.playAnimationByMood(mood);
         } else {
           const target = (this.scene as GameScene).actors.get(character);

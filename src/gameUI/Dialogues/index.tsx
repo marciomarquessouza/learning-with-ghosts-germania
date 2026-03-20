@@ -1,7 +1,7 @@
 import { useState, useEffect, useCallback, useRef, useMemo } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useTypewriter } from "@/hooks/useTypewriter";
-import { CHARACTERS, MOODS } from "@/constants/game";
+import { ACTORS, MOODS } from "@/constants/game";
 import { useDeviceType } from "@/hooks/useDeviceType";
 import Image from "next/image";
 import { useCharacterDetails } from "@/hooks/useCharacterDetails";
@@ -22,7 +22,7 @@ import { setCharactersMood } from "@/game/actions/stepActions/actions/setCharact
 export function Dialogue() {
   const device = useDeviceType();
   const [visible, setVisible] = useState(false);
-  const [character, setCharacter] = useState<CHARACTERS | null>(null);
+  const [character, setCharacter] = useState<ACTORS | null>(null);
   const { displayedText, isComplete, setTextToType, startTyping, resumeText } =
     useTypewriter();
   const [lineIndex, setLineIndex] = useState(0);
@@ -87,7 +87,7 @@ export function Dialogue() {
       setVisible(false);
       setLastLine(false);
       setCharactersMood(
-        Object.values(CHARACTERS).map((character) => ({
+        Object.values(ACTORS).map((character) => ({
           mood: MOODS.NEUTRAL,
           character,
         })),

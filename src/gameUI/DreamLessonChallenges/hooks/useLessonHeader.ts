@@ -1,4 +1,4 @@
-import { CHARACTERS } from "@/constants/game";
+import { ACTORS } from "@/constants/game";
 import { events } from "@/events/events";
 import {
   ShowLessonTitleEvent,
@@ -15,7 +15,7 @@ export interface State {
   title: string;
   description: string;
   skipPressContinue?: boolean;
-  teacher: CHARACTERS;
+  teacher: ACTORS;
   day: number;
   closeAfter?: number;
 }
@@ -29,7 +29,7 @@ const defaultState: State = {
   description: "",
 
   day: 1,
-  teacher: CHARACTERS.TUTOR,
+  teacher: ACTORS.TUTOR,
   closeAfter: 2_000,
 };
 

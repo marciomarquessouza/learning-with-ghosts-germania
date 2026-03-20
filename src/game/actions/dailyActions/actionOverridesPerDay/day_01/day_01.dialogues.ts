@@ -1,4 +1,4 @@
-import { CHARACTERS, MOODS } from "@/constants/game";
+import { ACTORS, MOODS } from "@/constants/game";
 import { alternatives, dialogue } from "@/libs/dialogues";
 
 export const dialogues = {
@@ -65,7 +65,7 @@ export const dialogues = {
       You’re only dreaming that you’re dead, a ghost. †  
     `.reactions([
       {
-        character: CHARACTERS.PLAYER,
+        character: ACTORS.PLAYER,
         mood: MOODS.SURPRISED,
       },
     ]),
@@ -84,38 +84,38 @@ export const dialogues = {
     A confessional… with a nun?
     Who are you?
     What is happening?
-  `.reactions([{ mood: MOODS.TALKING, character: CHARACTERS.TUTOR }]),
+  `.reactions([{ mood: MOODS.TALKING, character: ACTORS.TUTOR }]),
 
     dialogue.tutor.talking`
     Don’t overthink it, Josef.
     That’s not your strength.
     You’re dreaming.
-  `.reactions([{ mood: MOODS.SURPRISED, character: CHARACTERS.PLAYER }]),
+  `.reactions([{ mood: MOODS.SURPRISED, character: ACTORS.PLAYER }]),
 
     dialogue.player.sad`
     I… I don’t understand.
     Why am I here?
     Why are you here?
-  `.reactions([{ mood: MOODS.TALKING, character: CHARACTERS.TUTOR }]),
+  `.reactions([{ mood: MOODS.TALKING, character: ACTORS.TUTOR }]),
 
     dialogue.tutor.talking`
     My name is tutor.
     The “why” comes later.
     Now: you need to learn German.
-  `.reactions([{ mood: MOODS.SURPRISED, character: CHARACTERS.PLAYER }]),
+  `.reactions([{ mood: MOODS.SURPRISED, character: ACTORS.PLAYER }]),
 
     dialogue.player.surprised`
     Learn… in a dream?
     And if I wake up…
     I’ll forget everything.
-  `.reactions([{ mood: MOODS.TALKING, character: CHARACTERS.TUTOR }]),
+  `.reactions([{ mood: MOODS.TALKING, character: ACTORS.TUTOR }]),
 
     dialogue.tutor.talking`
     You won’t forget what matters.
     Pass today’s test and you eat.
     Fail it… and you don’t.
     Now… let’s begin, Josef. †
-  `.reactions([{ mood: MOODS.NEUTRAL, character: CHARACTERS.PLAYER }]),
+  `.reactions([{ mood: MOODS.NEUTRAL, character: ACTORS.PLAYER }]),
   ],
 
   lesson_finish: () => [
@@ -123,13 +123,13 @@ export const dialogues = {
     There… that is enough for today, Josef.
     You did well.
     Better than I expected. †
-  `.reactions([{ mood: MOODS.SURPRISED, character: CHARACTERS.PLAYER }]),
+  `.reactions([{ mood: MOODS.SURPRISED, character: ACTORS.PLAYER }]),
 
     dialogue.tutor.talking`
     But learning fades quickly.
     So I offer you one more challenge —
     to seal it inside that restless head of yours. †
-  `.reactions([{ mood: MOODS.SURPRISED, character: CHARACTERS.PLAYER }]),
+  `.reactions([{ mood: MOODS.SURPRISED, character: ACTORS.PLAYER }]),
 
     alternatives.player.neutral`
     What kind of challenge?
@@ -150,13 +150,13 @@ export const dialogues = {
     Braver than you look.
     Come, then.
     Let us see what remains in that head. †
-  `.reactions([{ mood: MOODS.SURPRISED, character: CHARACTERS.PLAYER }]),
+  `.reactions([{ mood: MOODS.SURPRISED, character: ACTORS.PLAYER }]),
   ],
   return_to_cell: () => [
     dialogue.tutor.talking`
     Very well.
     May your memory serve you better than your fear.
     We shall see soon enough. †
-  `.reactions([{ mood: MOODS.NEUTRAL, character: CHARACTERS.PLAYER }]),
+  `.reactions([{ mood: MOODS.NEUTRAL, character: ACTORS.PLAYER }]),
   ],
 };

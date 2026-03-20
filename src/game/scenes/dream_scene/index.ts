@@ -4,7 +4,7 @@ import { CemeteryScenario } from "./helpers/cemeteryScenario";
 import { getDayAction } from "@/game/actions/getAction";
 import { DreamCamera } from "@/game/cameras/DreamCamera";
 import { changeWorldTransition } from "@/game/utils/changeWorldTransition";
-import { CHARACTERS, GAME_SCENES } from "@/constants/game";
+import { ACTORS, GAME_SCENES } from "@/constants/game";
 import { GameScenes } from "@/types";
 import { LearningNode } from "@/game/actors/learningNode/LearningNode";
 import { events } from "@/events/events";
@@ -22,16 +22,13 @@ export class DreamScene extends GameScene {
   private scenario = new CemeteryScenario();
   private dreamCamera = new DreamCamera();
   private hud = new Hud();
-  private player = new Player();
-  private tutor = new Tutor();
-  private learningNode = new LearningNode();
+  private player = this.createActor(ACTORS.PLAYER, Player);
+  private tutor = this.createActor(ACTORS.TUTOR, Tutor);
+  private learningNode = this.createActor(ACTORS.LEARNING_NODE, LearningNode);
   private lessonController = new LessonController();
 
   constructor() {
     super({ key: GAME_SCENES.DREAM_SCENE });
-    this.actors.register(CHARACTERS.PLAYER, this.player);
-    this.actors.register(CHARACTERS.TUTOR, this.tutor);
-    this.actors.register(CHARACTERS.LEARNING_NODE, this.learningNode);
   }
 
   preload() {
@@ -54,7 +51,7 @@ export class DreamScene extends GameScene {
       this.scenario.width - 200,
       this.scenario.height,
     );
-    const playerSprite = this.player.create(this, {
+    const playerSprite = this.player.spawn(this, {
       startX: DEFAULT_POSITION_X,
       startY: DEFAULT_POSITION_Y,
       cursors,
@@ -69,7 +66,7 @@ export class DreamScene extends GameScene {
     getDayAction(this.scene.key as GameScenes).then((dayActions) => {
       this.dayActions = dayActions;
       this.lessonController.create(this, dayActions.lesson);
-      this.tutor.create(this, {
+      this.tutor.spawn(this, {
         startX: this.scenario.width - 800,
         startY: DEFAULT_POSITION_Y - 100,
         scale: 0.8,
@@ -79,7 +76,7 @@ export class DreamScene extends GameScene {
         cursors,
         camera: this.dreamCamera.mainCamera,
       });
-      this.learningNode.create(this, {
+      this.learningNode.spawn(this, {
         startX: this.scenario.width - 760,
         startY: 890,
         flipX: true,
