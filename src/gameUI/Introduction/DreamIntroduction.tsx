@@ -1,6 +1,7 @@
 import { GHOSTS_TITLE } from "@/constants/images";
 import { events } from "@/events/events";
 import { useTypewriter } from "@/hooks/useTypewriter";
+import { useLessonStore } from "@/store/lessonStore";
 import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
 
@@ -14,7 +15,7 @@ export function DreamIntroduction() {
   const [currentLine, setCurrentLine] = useState(0);
   const [line1, setLine1] = useState("");
   const [line2, setLine2] = useState("");
-  const [lesson, setLesson] = useState("");
+  const { lesson } = useLessonStore();
   const { displayedText, isComplete, startTyping, setTextToType } =
     useTypewriter(TYPEWRITER_SPEED);
 
@@ -24,13 +25,11 @@ export function DreamIntroduction() {
   useEffect(() => {
     const handler = (
       payload: {
-        lesson: string;
         hideAfter?: number;
         afterClose?: () => void;
       },
       done: () => void,
     ) => {
-      setLesson(payload.lesson);
       setPhase("entering");
 
       const visibleTime = payload.hideAfter || DEFAULT_HIDE_AFTER;
@@ -141,7 +140,7 @@ export function DreamIntroduction() {
           >
             <div className="mx-auto w-full bg-[#EFA32F] py-4">
               <p className="text-center font-mono text-3xl text-white">
-                Lesson: {lesson}
+                Lesson: {lesson.title}
               </p>
             </div>
           </div>

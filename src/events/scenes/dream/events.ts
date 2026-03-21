@@ -2,7 +2,7 @@ import { DreamShowIntroductionEvent } from "./types";
 import { createEventManagers } from "@/libs/events/createEventManagers";
 
 export type DreamSyncEvents = {
-  "dream/show-introduction": DreamShowIntroductionEvent;
+  placeholder: undefined;
 };
 
 export type DreamAsyncEvents = {

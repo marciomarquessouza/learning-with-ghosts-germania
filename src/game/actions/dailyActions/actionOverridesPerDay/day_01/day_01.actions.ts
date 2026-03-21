@@ -92,10 +92,9 @@ class DayActions1 extends DayActions {
           stepChangeWorldTransition(null, {
             showWhenAlternativeIs: "sleeping_with_ghosts",
           }),
-          stepShowDreamIntroduction(
-            { lesson: lesson.title },
-            { showWhenAlternativeIs: "sleeping_with_ghosts" },
-          ),
+          stepShowDreamIntroduction(null, {
+            showWhenAlternativeIs: "sleeping_with_ghosts",
+          }),
           stepSetGameWorld(
             {
               targetWorld: GAME_WORLDS.DREAM,
@@ -146,12 +145,6 @@ class DayActions1 extends DayActions {
       {},
     );
   }
-
-  // onTutorInteraction() {
-  //   runSteps([stepShowDialogue({ lines: dialogues.lesson_preparation() })], {
-  //     alternativeId: undefined,
-  //   });
-  // }
 }
 
 export const dayAction = new DayActions1(lesson, audioManifest);

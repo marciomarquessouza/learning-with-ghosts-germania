@@ -7,10 +7,7 @@ import { IntroductionEvent } from "@/events/scenes/cell/types";
 import { events } from "@/events/events";
 import { ChallengeEvent, setChallenge } from "./actions/setChallenge";
 import { changeWorldTransition } from "./actions/showDreamTransition";
-import {
-  showDreamIntroduction,
-  ShowDreamIntroduction,
-} from "./actions/showDreamIntroduction";
+import { showDreamIntroduction } from "./actions/showDreamIntroduction";
 import { setGameWorld, SetGameWorld } from "./actions/setGameWorld";
 
 /**
@@ -61,9 +58,9 @@ export const stepChangeWorldTransition = (
 ): Step => stepBase(() => changeWorldTransition(), options);
 
 export const stepShowDreamIntroduction = (
-  payload: ShowDreamIntroduction,
+  _payload?: null,
   options?: StepOptions,
-): Step => stepBase(() => showDreamIntroduction(payload), options);
+): Step => stepBase(() => showDreamIntroduction(), options);
 
 export const stepSetGameWorld = (
   payload: SetGameWorld,
