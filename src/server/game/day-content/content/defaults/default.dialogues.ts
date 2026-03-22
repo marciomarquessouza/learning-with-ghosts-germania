@@ -1,7 +1,6 @@
 import { alternatives, dialogue } from "@/libs/dialogues";
-import { InteractionLine } from "@/types";
 
-export const dialogues: Record<string, () => InteractionLine[]> = {
+export const dialogues = {
   before_sleep: () => [
     dialogue.player.neutral`
 		Talk to the general at the bars.

@@ -119,13 +119,11 @@ export interface DialogueLine extends BaseLine {
 export interface AlternativeLine extends BaseLine {
   type: "alternatives";
   alternatives: Alternative[];
-  onSubmitted: (alternativeId?: string) => void;
 }
 
 export interface InputLine extends BaseLine {
   type: "input";
-  inputLabel: React.ReactNode;
-  onSubmitted: (answer: string) => void;
+  inputLabel: string;
 }
 
 export type InteractionLine = DialogueLine | AlternativeLine | InputLine;
@@ -136,6 +134,11 @@ export interface AudioManifest {
     target: string;
   };
 }
+
+export type DayContent = {
+  lesson: Lesson;
+  dialogues: Record<string, InteractionLine[]>;
+};
 
 export type Position = { x: number; y: number };
 export type Size = { width: number; height: number };

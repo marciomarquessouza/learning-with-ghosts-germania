@@ -8,7 +8,7 @@ import { persist } from "zustand/middleware";
  */
 export interface LessonState {
   lesson: Lesson;
-  update: (lesson: Lesson) => void;
+  setLesson: (lesson: Lesson) => void;
   updateEntry: (id: string, entry: LessonEntry) => void;
   updateEntriesPhase: (ids: string[], phase: string) => void;
 }
@@ -23,7 +23,7 @@ export const useLessonStore = create<LessonState>()(
         character: ACTORS.PLAYER,
         entries: [] as LessonEntry[],
       },
-      update: (lesson: Lesson) => set((state) => ({ ...state, lesson })),
+      setLesson: (lesson: Lesson) => set((state) => ({ ...state, lesson })),
       updateEntry: (id: string, updatedEntry: LessonEntry) =>
         set((state) => ({
           ...state,

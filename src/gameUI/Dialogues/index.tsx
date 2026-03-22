@@ -39,6 +39,8 @@ export function Dialogue() {
     [device],
   );
   const onCompleteRef = useRef<() => void | null>(null);
+  const onAlternativeSelectedRef = useRef<(id: string) => void | null>(null);
+  const onAnswerSubmittedRef = useRef<(answer: string) => void | null>(null);
   const boxRef = useRef<HTMLDivElement>(null);
   const dialogueId = useRef<string>("");
 
@@ -59,6 +61,8 @@ export function Dialogue() {
       setTextToType(payload.lines[0].text);
       setLastLine(payload.lines.length === 1);
       onCompleteRef.current = payload?.onComplete ?? null;
+      onAlternativeSelectedRef.current = payload.onAlternativeSelected ?? null;
+      onAnswerSubmittedRef.current = payload.onAnswerSubmitted ?? null;
       setVisible(true);
     };
 
@@ -68,12 +72,12 @@ export function Dialogue() {
 
   const advanceLine = useCallback(() => {
     if (lines[lineIndex].type === "alternatives" && selectedAlternative) {
-      lines[lineIndex].onSubmitted(selectedAlternative);
+      onAlternativeSelectedRef.current?.(selectedAlternative);
       setSelectedAlternative(null);
     }
 
     if (lines[lineIndex].type === "input") {
-      lines[lineIndex].onSubmitted(answer);
+      onAnswerSubmittedRef.current?.(answer);
       setAnswer("");
     }
 

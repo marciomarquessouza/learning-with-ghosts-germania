@@ -5,6 +5,7 @@ import { CharacterMood, DialogueLine } from "@/types";
 
 interface DialogueTag extends DialogueLine {
   reactions: (charactersMood: CharacterMood[]) => DialogueLine;
+  end: () => DialogueLine;
 }
 
 function createDialogueTag(character: ACTORS, mood: MOODS) {
@@ -24,6 +25,7 @@ function createDialogueTag(character: ACTORS, mood: MOODS) {
         ...dialogueLine,
         moods: [...moods, ...charactersMood],
       }),
+      end: () => dialogueLine,
     };
   };
 }

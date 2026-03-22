@@ -3,7 +3,7 @@ import { useEffect, useRef } from "react";
 
 export interface InputTextProps {
   questionText: string;
-  inputLabel: React.ReactNode;
+  inputLabel: string;
   characterDetails: CharacterDetails;
   answerText: string;
   isTypeWritingComplete: boolean;

@@ -6,13 +6,10 @@ export function showDialogue(
   setAlternative: (id?: string) => void = () => {},
 ): Promise<void> {
   return new Promise((resolve) => {
-    lines.forEach((line) => {
-      if (line.type === "alternatives") {
-        line.onSubmitted = setAlternative;
-      }
-    });
     events.game.sync.emit("dialogue/show", {
       lines,
+      onAlternativeSelected: setAlternative,
+      onAnswerSubmitted: () => {},
       onComplete: () => {
         onComplete?.();
         resolve();

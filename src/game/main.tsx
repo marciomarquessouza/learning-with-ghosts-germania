@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { GhostLoading } from "@/components/HomePage/GhostLoading";
 import { initPhaser } from "./phaser/initPhaser";
 import { gameWorldConfig } from "@/game/config/gameWorldConfig";
@@ -11,10 +11,16 @@ import {
 } from "@/constants/game";
 import { useRouter, useSearchParams } from "next/navigation";
 import { getSceneName } from "./utils/sceneNameMap";
-import { GameScenes, GameWorlds } from "@/types";
+import { DayContent, GameScenes, GameWorlds } from "@/types";
 import { events } from "@/events/events";
+import { useLessonStore } from "@/store/lessonStore";
 
-export default function MainGame() {
+interface MainGameProps {
+  day: number;
+  dayContent: DayContent;
+}
+
+export default function MainGame({ day, dayContent }: MainGameProps) {
   const router = useRouter();
   const searchParams = useSearchParams();
 
@@ -22,8 +28,9 @@ export default function MainGame() {
   const urlScene = getSceneName(rawSceneParam);
   const urlWorld = sceneWorldMap[urlScene];
 
-  const { day, setDay, gameWorld, currentScene, setGameScene, setWeight } =
+  const { setDay, gameWorld, currentScene, setGameScene, setWeight } =
     useGameStore();
+  const { setLesson } = useLessonStore();
 
   const [fakeLoading, setFakeLoading] = useState(true);
   const [loading, setLoading] = useState(true);
@@ -38,13 +45,6 @@ export default function MainGame() {
     [loading, gameWorld],
   );
 
-  const checkIfIsFirstDay = useCallback(() => {
-    if (day === 0) {
-      setDay(1);
-      setWeight(DEFAULT_INITIAL_WEIGHT);
-    }
-  }, [day, setDay, setWeight]);
-
   useEffect(() => {
     if (typeof window !== "object") return;
 
@@ -56,10 +56,24 @@ export default function MainGame() {
     currentGame.current?.destroy(true);
 
     setGameScene(urlWorld, urlScene);
+    setDay(day);
+    setWeight(DEFAULT_INITIAL_WEIGHT);
+    setLesson(dayContent.lesson);
 
     setLoading(true);
     started.current = false;
-  }, [urlScene, urlWorld, currentScene, gameWorld, setGameScene]);
+  }, [
+    urlScene,
+    urlWorld,
+    currentScene,
+    gameWorld,
+    setGameScene,
+    setDay,
+    day,
+    setWeight,
+    setLesson,
+    dayContent.lesson,
+  ]);
 
   useEffect(() => {
     if (typeof window !== "object") {
@@ -95,7 +109,6 @@ export default function MainGame() {
       started.current = true;
       const gameConfig = gameWorldConfig(gameWorld, currentScene);
       initPhaser({ ...gameConfig, parent: "game-container" }).then((game) => {
-        checkIfIsFirstDay();
         setLoading(false);
         currentGame.current = game;
       });
@@ -109,7 +122,6 @@ export default function MainGame() {
     searchParams,
     loading,
     fakeLoading,
-    checkIfIsFirstDay,
     setGameScene,
     currentScene,
     gameWorld,

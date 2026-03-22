@@ -9,6 +9,8 @@ export interface ZoomPropsEvent {
 export interface DialogueEvent {
   dialogueId?: string;
   lines: InteractionLine[];
+  onAlternativeSelected?: (selectedAlternative: string) => void;
+  onAnswerSubmitted?: (answer: string) => void;
   onComplete?: () => void;
 }
 

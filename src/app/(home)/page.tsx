@@ -35,7 +35,8 @@ export default function Home() {
         aria-label="Primary action"
       >
         <Link
-          href="/game"
+          // TODO: get the real day authenticated users
+          href="/game/1"
           aria-label="Start Learning With Ghosts — Germania"
           className={[
             "rounded-xl border-2 border-black bg-[#F3B162]",

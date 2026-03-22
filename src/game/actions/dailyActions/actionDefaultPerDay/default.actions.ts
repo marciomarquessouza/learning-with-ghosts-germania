@@ -32,7 +32,7 @@ export class DayActions {
   }
 
   protected set lesson(lesson: Lesson) {
-    useLessonStore.getState().update(lesson);
+    useLessonStore.getState().setLesson(lesson);
   }
 
   get gameScene(): GameScenes {

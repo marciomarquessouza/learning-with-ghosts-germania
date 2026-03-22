@@ -1,17 +1,6 @@
-"use client";
-import dynamic from "next/dynamic";
-import { GameUI } from "@/gameUI";
+import { redirect } from "next/navigation";
 
-const GameRoot = dynamic(() => import("@/game/main"), {
-  ssr: false,
-});
-
-export default function Game() {
-  return (
-    <div className="bg-black text-white w-screen h-screen overflow-hidden flex">
-      <div id="game-container" className="flex-grow h-full" />
-      <GameUI />
-      <GameRoot />
-    </div>
-  );
+export default async function GameRedirectPage() {
+  const day = 1; // TODO: get the real day fro muser progress
+  redirect(`/game/${day}`);
 }

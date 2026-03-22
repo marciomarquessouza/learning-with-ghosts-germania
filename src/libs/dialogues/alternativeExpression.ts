@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { ACTORS, MOODS } from "@/constants/game";
 import { dedent } from "../../utils/dedent";
-import { Alternative, AlternativeLine } from "@/types";
+import { Alternative, AlternativeLine, CharacterMood } from "@/types";
 
 type AlternativesBuilder = {
   alternatives: (...opts: Alternative[]) => AlternativeLine;
@@ -13,14 +13,18 @@ function createAlternativeTag(character: ACTORS, mood: MOODS) {
     ...values: unknown[]
   ): AlternativesBuilder => {
     const text = dedent(strings, values).trim();
+    const moods: CharacterMood[] = [{ character, mood }];
+    const alternativeLine: AlternativeLine = {
+      type: "alternatives",
+      text,
+      character,
+      moods,
+      alternatives: [],
+    };
     return {
       alternatives: (...opts: Alternative[]) => ({
-        type: "alternatives",
-        text,
-        character,
-        mood,
+        ...alternativeLine,
         alternatives: opts,
-        onSubmitted: () => {},
       }),
     };
   };
