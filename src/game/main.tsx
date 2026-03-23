@@ -58,27 +58,9 @@ export default function MainGame({ day, dayContent }: MainGameProps) {
     currentGame.current?.destroy(true);
 
     setGameScene(urlWorld, urlScene);
-    setDay(day);
-    setWeight(DEFAULT_INITIAL_WEIGHT);
-    setLesson(dayContent.lesson);
-    setDialogues(dayContent.dialogues);
-
     setLoading(true);
     started.current = false;
-  }, [
-    urlScene,
-    urlWorld,
-    currentScene,
-    gameWorld,
-    setGameScene,
-    setDay,
-    day,
-    setWeight,
-    setLesson,
-    setDialogues,
-    dayContent.lesson,
-    dayContent.dialogues,
-  ]);
+  }, [currentScene, gameWorld, setGameScene, urlScene, urlWorld]);
 
   useEffect(() => {
     if (typeof window !== "object") {
@@ -112,6 +94,10 @@ export default function MainGame({ day, dayContent }: MainGameProps) {
 
     if (!fakeLoading && loading && !started.current) {
       started.current = true;
+      setDay(day);
+      setWeight(DEFAULT_INITIAL_WEIGHT);
+      setLesson(dayContent.lesson);
+      setDialogues(dayContent.dialogues);
       const gameConfig = gameWorldConfig(gameWorld, currentScene);
       initPhaser({ ...gameConfig, parent: "game-container" }).then((game) => {
         setLoading(false);
@@ -130,6 +116,13 @@ export default function MainGame({ day, dayContent }: MainGameProps) {
     setGameScene,
     currentScene,
     gameWorld,
+    setDay,
+    day,
+    setWeight,
+    setLesson,
+    dayContent.lesson,
+    dayContent.dialogues,
+    setDialogues,
   ]);
 
   return showLoading ? <GhostLoading /> : null;

@@ -1,15 +1,9 @@
 import { ActorPayload } from "../types/Actor";
 import { createKeyMap } from "@/utils/createKeyMap";
-import { events } from "@/events/events";
 import { StateMachine } from "@/libs/game/state-machine/StateMachine";
-import { EventController } from "@/libs/events/EventController";
 import { Shadow } from "./helpers/Shadow";
 import { Levitation } from "./helpers/Levitation";
 import { PLAYER_STATES } from "./constants/states";
-import {
-  PlayerAsyncEvents,
-  PlayerSyncEvents,
-} from "@/events/actors/player/events";
 import { PlayerAnimations } from "./animations/PlayerAnimations";
 import { createPlayerStateMachine } from "./helpers/createPlayerStateMachine";
 
@@ -24,7 +18,6 @@ export class Player {
   public static readonly STATES = PLAYER_STATES;
 
   public speed = DEFAULT_SPEED;
-  public eventController!: EventController<PlayerSyncEvents, PlayerAsyncEvents>;
   public sprite: Phaser.Physics.Arcade.Sprite | null = null;
   public cursors: Phaser.Types.Input.Keyboard.CursorKeys | null = null;
   public keyMap: Partial<
@@ -34,7 +27,6 @@ export class Player {
   private shadow = new Shadow();
   private levitation = new Levitation();
   private stateMachine!: StateMachine;
-  private gameEventsToRemove: (() => void)[] = [];
 
   preload(scene: Phaser.Scene) {
     this.animations.preload(scene);
@@ -48,48 +40,27 @@ export class Player {
     this.cursors = cursors;
     this.keyMap = createKeyMap(scene, [KEY_CODES.A, KEY_CODES.D]);
 
-    this.eventController = new EventController(
-      events.actors.player.sync,
-      events.actors.player.async,
-    );
-
     this.stateMachine = createPlayerStateMachine(scene, this);
     // Initial State
     this.stateMachine.changeTo(Player.STATES.IDLE);
 
-    this.attachEvents();
-
     return this.sprite;
   }
 
-  attachEvents() {
-    this.eventController.addSyncEvent("idle", () => {
-      this.stateMachine.changeTo(Player.STATES.IDLE);
-    });
+  enterIdle() {
+    this.stateMachine.changeTo(Player.STATES.IDLE);
+  }
 
-    this.eventController.addSyncEvent("listening", () => {
-      this.stateMachine.changeTo(Player.STATES.LISTENING);
-    });
+  enterListening() {
+    this.stateMachine.changeTo(Player.STATES.LISTENING);
+  }
 
-    this.eventController.addSyncEvent("speaking", () => {
-      this.stateMachine.changeTo(Player.STATES.SPEAKING);
-    });
+  enterSpeaking() {
+    this.stateMachine.changeTo(Player.STATES.SPEAKING);
+  }
 
-    this.eventController.addSyncEvent("scared", () => {
-      this.stateMachine.changeTo(Player.STATES.SCARED);
-    });
-
-    this.gameEventsToRemove.push(
-      events.game.sync.on("dialogue/show", () => {
-        this.stateMachine.changeTo(Player.STATES.LISTENING);
-      }),
-    );
-
-    this.gameEventsToRemove.push(
-      events.game.sync.on("dialogue/hide", () => {
-        this.stateMachine.changeTo(this.stateMachine.getPreviousStateName());
-      }),
-    );
+  enterScared() {
+    this.stateMachine.changeTo(Player.STATES.SCARED);
   }
 
   public getHorizontalInput() {
@@ -132,7 +103,5 @@ export class Player {
 
   destroy() {
     this.stateMachine.clear();
-    this.eventController.offAllEvents();
-    this.gameEventsToRemove.forEach((remove) => remove());
   }
 }

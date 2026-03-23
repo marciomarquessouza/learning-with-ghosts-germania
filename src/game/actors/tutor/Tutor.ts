@@ -1,11 +1,5 @@
 import { ActorPayload } from "../types/Actor";
 import { StateMachine } from "@/libs/game/state-machine/StateMachine";
-import { events } from "@/events/events";
-import {
-  TutorAsyncEvents,
-  TutorSyncEvents,
-} from "@/events/actors/tutor/events";
-import { EventController } from "@/libs/events/EventController";
 import { TUTOR_STATES } from "./constants/states";
 import { TutorAnimations } from "./animations/TutorAnimations";
 import { createTutorStateMachine } from "./helpers/createTutorStateMachine";
@@ -15,8 +9,8 @@ export class Tutor {
 
   public sprite!: Phaser.Types.Physics.Arcade.SpriteWithDynamicBody;
   public animations = new TutorAnimations();
-  public eventController!: EventController<TutorSyncEvents, TutorAsyncEvents>;
 
+  private resolveSowing: (() => void) | null = null;
   private stateMachine!: StateMachine;
 
   preload(scene: Phaser.Scene) {
@@ -33,29 +27,28 @@ export class Tutor {
 
     this.animations.create(scene, this.sprite);
 
-    this.eventController = new EventController(
-      events.actors.tutor.sync,
-      events.actors.tutor.async,
-    );
-
     this.stateMachine = createTutorStateMachine(scene, this);
     this.stateMachine.changeTo(Tutor.STATES.IDLE);
-
-    this.attachEvents();
   }
 
-  private attachEvents() {
-    this.eventController.addSyncEvent("idle", () => {
-      this.stateMachine.changeTo(Tutor.STATES.IDLE);
-    });
+  enterIdle() {
+    this.stateMachine.changeTo(Tutor.STATES.IDLE);
+  }
 
-    this.eventController.addSyncEvent("teaching", () => {
-      this.stateMachine.changeTo(Tutor.STATES.TEACHING);
-    });
+  enterTeaching() {
+    this.stateMachine.changeTo(Tutor.STATES.TEACHING);
+  }
 
-    this.eventController.addAsyncEvent("sowing", () => {
+  async waitForSowing(): Promise<void> {
+    return new Promise((resolve) => {
+      this.resolveSowing = resolve;
       this.stateMachine.changeTo(Tutor.STATES.SOWING);
     });
+  }
+
+  finishSowing() {
+    this.resolveSowing?.();
+    this.resolveSowing = null;
   }
 
   update(delta: number) {
@@ -64,6 +57,5 @@ export class Tutor {
 
   destroy() {
     this.stateMachine.clear();
-    this.eventController.offAllEvents();
   }
 }

@@ -49,11 +49,13 @@ export class DreamScene extends GameScene {
     if (!this.input.keyboard)
       throw new Error("Mobile/Tablet version not implemented");
 
+    this.dreamCamera.create(this);
     const cursors = this.input.keyboard?.createCursorKeys();
     this.scenario.create(this);
-    const boundW = this.scenario.width - 200;
+    const boundW = this.scenario.width;
     const boundH = this.scenario.height;
     this.physics.world.setBounds(0, 0, boundW, boundH);
+    this.dreamCamera.setBounds(0, 0, boundW, boundH);
 
     const playerSprite = this.player.spawn(this, {
       startX: DEFAULT_POSITION_X,
@@ -61,12 +63,7 @@ export class DreamScene extends GameScene {
       cursors,
     });
 
-    this.dreamCamera.create(this, playerSprite, {
-      x: 0,
-      y: 0,
-      width: this.scenario.width,
-      height: this.scenario.height,
-    });
+    this.dreamCamera.attachTarget(playerSprite);
 
     this.tutor.spawn(this, {
       startX: this.scenario.width - 800,
@@ -81,23 +78,22 @@ export class DreamScene extends GameScene {
       flipX: true,
     });
 
-    this.stateMachine = createDreamSceneStateMachine(
-      this as Phaser.Scene,
-      this as DreamScene,
-    );
-
     const hudContainer = this.hud.create(this, [HUD_ITEMS.WEIGHT]);
     this.children.bringToTop(hudContainer);
-
-    // TODO: Move this fade in to the State Machine
-    this.dreamCamera.fadeIn({ onComplete: () => {} });
 
     events.game.async.on("change-world-transition", (_, done) => {
       changeWorldTransition(this, done);
     });
+
+    this.stateMachine = createDreamSceneStateMachine(
+      this as Phaser.Scene,
+      this as DreamScene,
+    );
+    this.stateMachine.changeTo(DreamScene.STATES.SCENE_INTRO);
   }
 
   update(time: number, delta: number) {
+    this.stateMachine.updateAndHandleInput(delta);
     this.scenario.update(delta);
     this.player.update(time, delta);
     this.tutor.update(delta);
@@ -105,6 +101,7 @@ export class DreamScene extends GameScene {
   }
 
   destroy() {
+    this.stateMachine.clear();
     this.tutor.destroy();
     this.scenario.destroy();
     this.hud.destroy();

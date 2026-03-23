@@ -8,14 +8,26 @@ export class LessonController {
   constructor(lesson: Lesson) {
     this.lesson = lesson;
     this.nextEntries = [...this.lesson.entries];
+    this.setCurrentLessonEntry();
   }
 
-  public setCurrentLessonEntry() {
+  private setCurrentLessonEntry() {
     if (this.hasNextEntry()) {
       const [entry, ...nextEntries] = this.nextEntries;
       this.currentLessonEntry = entry;
       this.nextEntries = nextEntries;
     }
+  }
+
+  public callNextEntry(): boolean {
+    if (this.hasNextEntry()) {
+      const [entry, ...nextEntries] = this.nextEntries;
+      this.currentLessonEntry = entry;
+      this.nextEntries = nextEntries;
+      return true;
+    }
+
+    return false;
   }
 
   public getStepByType(stepType: LessonStepType) {
@@ -34,5 +46,9 @@ export class LessonController {
 
   public hasNextEntry() {
     return this.nextEntries.length > 0;
+  }
+
+  public getCurrentLessonDay() {
+    return this.lesson.day;
   }
 }

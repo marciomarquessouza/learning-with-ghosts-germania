@@ -24,7 +24,6 @@ export type GameSyncEvents = {
     closeAfter?: number;
   };
   "game-message/hide": { delay?: number };
-  "dialogue/show": DialogueEvent;
   "dialogue/hide": { dialogueId?: string };
   "dialogue/set-mood": { mood: MOODS; character: ACTORS };
   "hud/weight-decrease": UpdateWeightEvent;
@@ -33,6 +32,7 @@ export type GameSyncEvents = {
 };
 
 export type GameAsyncEvents = {
+  "dialogue/show": DialogueEvent;
   "change-world-transition": undefined;
   "change-scene": ChangeSceneEvent;
   "hud/actions-timer": {

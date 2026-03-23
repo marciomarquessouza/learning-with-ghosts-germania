@@ -15,8 +15,7 @@ export class SowingState extends BaseState {
       [
         stepBase(() =>
           this.tutor.animations.playSowing({
-            onOpeningHand: () =>
-              this.tutor.eventController.closeAsyncEvent("sowing"),
+            onOpeningHand: () => this.tutor.finishSowing(),
           }),
         ),
       ],

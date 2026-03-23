@@ -1,10 +1,7 @@
 import { createEventManagers } from "@/libs/events/createEventManagers";
 
 export type PlayerSyncEvents = {
-  idle: undefined;
-  listening: undefined;
-  speaking: undefined;
-  scared: undefined;
+  placeholder: undefined;
 };
 
 export type PlayerAsyncEvents = {

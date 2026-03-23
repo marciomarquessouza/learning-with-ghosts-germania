@@ -38,7 +38,7 @@ export function Dialogue() {
     () => getDialogueDimension(device),
     [device],
   );
-  const onCompleteRef = useRef<() => void | null>(null);
+  const onCompleteRef = useRef<() => void>(() => {});
   const onAlternativeSelectedRef = useRef<(id: string) => void | null>(null);
   const onAnswerSubmittedRef = useRef<(answer: string) => void | null>(null);
   const boxRef = useRef<HTMLDivElement>(null);
@@ -52,7 +52,7 @@ export function Dialogue() {
   }, [visible, setInteractionDialogueOpen]);
 
   useEffect(() => {
-    const handler = (payload: DialogueEvent) => {
+    const handler = (payload: DialogueEvent, done: () => void) => {
       dialogueId.current = getUUID();
       setLines(payload.lines);
       setLineIndex(0);
@@ -60,14 +60,17 @@ export function Dialogue() {
       setCharacter(payload.lines[0].character);
       setTextToType(payload.lines[0].text);
       setLastLine(payload.lines.length === 1);
-      onCompleteRef.current = payload?.onComplete ?? null;
+      onCompleteRef.current = () => {
+        payload?.onComplete?.();
+        done();
+      };
       onAlternativeSelectedRef.current = payload.onAlternativeSelected ?? null;
       onAnswerSubmittedRef.current = payload.onAnswerSubmitted ?? null;
       setVisible(true);
     };
 
-    events.game.sync.on("dialogue/show", handler);
-    return () => events.game.sync.off("dialogue/show", handler);
+    events.game.async.on("dialogue/show", handler);
+    return () => events.game.async.off("dialogue/show", handler);
   }, [setTextToType]);
 
   const advanceLine = useCallback(() => {
@@ -98,7 +101,7 @@ export function Dialogue() {
       );
       if (onCompleteRef.current) {
         onCompleteRef.current?.();
-        onCompleteRef.current = null;
+        onCompleteRef.current = () => {};
       }
       return;
     }

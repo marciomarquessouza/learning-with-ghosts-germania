@@ -15,7 +15,7 @@ import { DreamScene } from "..";
 import { LessonIntroState } from "../states/LessonIntroState";
 import { LessonStartingState } from "../states/LessonStartingState";
 import { SceneIntroState } from "../states/SceneIntroState";
-import { SceneIdleState } from "../states/SceneIdleState";
+import { IdleState } from "../states/IdleState";
 
 export function createDreamSceneStateMachine(
   scene: Phaser.Scene,
@@ -24,7 +24,7 @@ export function createDreamSceneStateMachine(
   const stateMachine = new StateMachine(scene);
   const states: [SceneStateNames, StateConstructor<IState>][] = [
     [DreamScene.STATES.SCENE_INTRO, SceneIntroState],
-    [DreamScene.STATES.IDLE, SceneIdleState],
+    [DreamScene.STATES.IDLE, IdleState],
     [DreamScene.STATES.LESSON_STARTING, LessonStartingState],
     [DreamScene.STATES.LESSON_INTRO, LessonIntroState],
     [DreamScene.STATES.LISTENING, ListeningState],

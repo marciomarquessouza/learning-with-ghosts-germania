@@ -5,7 +5,7 @@ import { events } from "@/events/events";
 import { InputController } from "@/libs/inputs/InputController";
 import { createInputController } from "@/libs/inputs/createInputController";
 
-export class SceneIdleState extends BaseState {
+export class IdleState extends BaseState {
   private isStateRunning = false;
   private lessonInteractionArea: InteractionArea = new InteractionArea();
   private input?: InputController;
@@ -38,6 +38,9 @@ export class SceneIdleState extends BaseState {
       onEnter: () => this.onEnterLessonInteractionArea(),
       onLeave: () => this.onLeaveLessonInteractionArea(),
     });
+
+    // this.dreamScene.dreamCamera.fadeIn({ onComplete: () => {} });
+
     this.isStateRunning = true;
   }
 
