@@ -1,4 +1,5 @@
-import { AudioManifest, Lesson, LessonEntry } from "@/types";
+import { AudioManifest } from "@/libs/audio/types";
+import { Lesson, LessonEntry } from "@/libs/lesson/types";
 
 export function mergeLessonWithAudioManifest(
   lesson: Lesson,

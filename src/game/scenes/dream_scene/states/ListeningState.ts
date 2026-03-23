@@ -1,18 +1,18 @@
 import { runSteps, stepBase } from "@/libs/game/runSteps";
 import { BaseState } from "@/libs/game/state-machine/BaseState";
 import { events } from "@/events/events";
-import { LessonController } from "../LessonController";
+import { DreamScene } from "..";
 
 export class ListeningState extends BaseState {
   constructor(
     scene: Phaser.Scene,
-    private lessonController: LessonController,
+    private dreamScene: DreamScene,
   ) {
     super(scene);
   }
 
   enter(): void {
-    const step = this.lessonController.getStepByType("listening");
+    const step = this.dreamScene.lessonController.getStepByType("listening");
     runSteps(
       [
         stepBase(() => {

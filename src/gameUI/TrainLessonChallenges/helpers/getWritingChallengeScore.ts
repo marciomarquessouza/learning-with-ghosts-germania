@@ -1,4 +1,4 @@
-import { WritingScore } from "@/gameUI/LessonChallenges/StepWriting";
+import { WritingScore } from "@/libs/lesson/types";
 import { ChallengeScoreResult } from "./getChallengeScore";
 import {
   HATE_PENALTY,
@@ -20,7 +20,7 @@ const getRewardRange = (command: Command) => {
 
 export function getWritingChallengeScore(
   command: Command,
-  score: WritingScore
+  score: WritingScore,
 ): ChallengeScoreResult {
   const { success, size, errors, tips } = score;
 

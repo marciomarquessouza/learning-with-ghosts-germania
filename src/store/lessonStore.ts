@@ -1,5 +1,5 @@
 import { ACTORS } from "@/constants/game";
-import { LessonEntry, Lesson } from "@/types";
+import { Lesson, LessonEntry } from "@/libs/lesson/types";
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
 

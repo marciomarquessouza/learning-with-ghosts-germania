@@ -1,4 +1,4 @@
-import { Alternative } from "@/types";
+import { Alternative } from "./types";
 
 export interface SelectNextAlternativeProps {
   alternatives: Alternative[];
@@ -23,7 +23,7 @@ export function handleAlternativeKeyDown({
   const signal = selectPrevious ? -1 : 1;
 
   const currentIndex = alternatives.findIndex(
-    ({ id }) => id === selectedAlternative
+    ({ id }) => id === selectedAlternative,
   );
 
   if (currentIndex === -1) {

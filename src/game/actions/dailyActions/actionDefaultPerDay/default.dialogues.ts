@@ -1,5 +1,5 @@
 import { alternatives, dialogue } from "@/libs/dialogues";
-import { InteractionLine } from "@/types";
+import { InteractionLine } from "@/libs/dialogues/types";
 
 export const dialogues: Record<string, () => InteractionLine[]> = {
   before_sleep: () => [

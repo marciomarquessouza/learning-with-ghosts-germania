@@ -1,5 +1,4 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
-import { LessonComponentProps, StepPhases } from "@/types";
 import { LessonActionContainer } from "../common/LessonActionContainer";
 import { PronunciationDialog } from "./PronunciationDialog";
 import { PronunciationFeedback } from "./PronunciationFeedback";
@@ -8,6 +7,25 @@ import { StepControls } from "./StepControls";
 import { useReferenceAudioV2 } from "@/libs/audio/game-ui-audio/useReferenceAudioV2";
 import { useAudioRecorderV2 } from "@/libs/audio/game-ui-audio/useAudioRecorderV2";
 import { useAudioScoreV2 } from "@/libs/audio/game-ui-audio/useAudioScoreV2";
+import {
+  ChallengeResult,
+  LessonEntry,
+  LessonEntryStep,
+  StepPhases,
+} from "@/libs/lesson/types";
+
+interface LessonComponentProps {
+  show?: boolean;
+  isFirst?: boolean;
+  isLast?: boolean;
+  lessonEntry: Omit<LessonEntry, "steps">;
+  lessonStep: LessonEntryStep;
+  reproduceTargetAudioOnStart?: boolean;
+  useCustomFeedback?: boolean;
+  onClickNext: () => void;
+  onClickPrevious: () => void;
+  onResult?: (challengeResult: ChallengeResult) => void;
+}
 
 export function StepPronunciation({
   isFirst,

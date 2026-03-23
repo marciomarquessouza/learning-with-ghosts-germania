@@ -1,5 +1,5 @@
+import { Lesson, LessonEntry } from "@/libs/lesson/types";
 import { useLessonStore } from "@/store/lessonStore";
-import { Lesson, LessonEntry } from "@/types";
 import { shuffleArray } from "@/utils/shuffleArray";
 import { useCallback, useEffect, useMemo, useState } from "react";
 
@@ -42,7 +42,7 @@ const buildRawChallenges = (lesson: Lesson): LessonChallenge[] => {
 
 const enforceMaxSameTypeInARow = (
   input: LessonChallenge[],
-  maxSameTypeInARow: number
+  maxSameTypeInARow: number,
 ): LessonChallenge[] => {
   if (maxSameTypeInARow <= 0) return shuffleArray(input);
   if (input.length <= 1) return input;
@@ -113,7 +113,7 @@ const enforceMaxSameTypeInARow = (
 
 const buildChallengeTrail = (
   lesson: Lesson,
-  maxSameTypeInARow: number
+  maxSameTypeInARow: number,
 ): LessonChallenge[] => {
   const raw = buildRawChallenges(lesson);
   const shuffled = shuffleArray(raw);
@@ -127,7 +127,7 @@ export function useTrainLessonChallenges(options?: {
   const maxSameTypeInARow = options?.maxSameTypeInARow ?? 3;
 
   const [trail, setTrail] = useState<LessonChallenge[]>(() =>
-    buildChallengeTrail(lesson, maxSameTypeInARow)
+    buildChallengeTrail(lesson, maxSameTypeInARow),
   );
   const [finished, setFinished] = useState(trail.length === 0);
 
@@ -157,6 +157,6 @@ export function useTrainLessonChallenges(options?: {
       completeCurrentChallenge,
       finished,
     }),
-    [getChallenge, completeCurrentChallenge, finished]
+    [getChallenge, completeCurrentChallenge, finished],
   );
 }

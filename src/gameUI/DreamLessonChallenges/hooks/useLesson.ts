@@ -6,7 +6,12 @@ import {
   defaultLessonEntry,
   defaultLessonDetails,
 } from "./reducers/lessonReducer";
-import { Lesson, LessonDetails, LessonEntry, LessonEntryStep } from "@/types";
+import {
+  Lesson,
+  LessonDetails,
+  LessonEntry,
+  LessonEntryStep,
+} from "@/libs/lesson/types";
 
 export const useLesson = () => {
   const [state, dispatch] = useReducer(lessonReducer, defaultState);

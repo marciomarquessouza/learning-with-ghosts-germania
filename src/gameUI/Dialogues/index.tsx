@@ -14,10 +14,10 @@ import { getDialogueDimension } from "./helpers/getDialgueDimension";
 import { InputText } from "./InputText";
 import { getUUID } from "@/utils/getUUID";
 import { handleAlternativeKeyDown } from "@/libs/dialogues/handleAlternativeKeyDown";
-import { InteractionLine } from "@/types";
 import { events } from "@/events/events";
 import { DialogueEvent } from "@/events/game/types";
 import { setCharactersMood } from "@/game/actions/stepActions/actions/setCharactersMood";
+import { InteractionLine } from "@/libs/dialogues/types";
 
 export function Dialogue() {
   const device = useDeviceType();

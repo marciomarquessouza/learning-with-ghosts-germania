@@ -1,7 +1,7 @@
 import { GAME_SCENES } from "@/constants/game";
 import { runSteps } from "@/libs/game/runSteps";
 import { dialogues } from "./default.dialogues";
-import { AudioManifest, GameScenes, Lesson } from "@/types";
+import { GameScenes } from "@/types";
 import { defaultLesson } from "./default.lessons";
 import { useLessonStore } from "@/store/lessonStore";
 import { useGameStore } from "@/store/gameStore";
@@ -12,6 +12,8 @@ import {
   stepShowDialogue,
 } from "../../stepActions";
 import { events } from "@/events/events";
+import { Lesson } from "@/libs/lesson/types";
+import { AudioManifest } from "@/libs/audio/types";
 
 const DEFAULT_SCENE = GAME_SCENES.CELL_SCENE;
 

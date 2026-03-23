@@ -1,10 +1,10 @@
 import { BaseState } from "@/libs/game/state-machine/BaseState";
-import { LessonController } from "../LessonController";
+import { DreamScene } from "..";
 
-export class RewardState extends BaseState {
+export class SummaryState extends BaseState {
   constructor(
     scene: Phaser.Scene,
-    private lessonController: LessonController,
+    private dreamScene: DreamScene,
   ) {
     super(scene);
   }

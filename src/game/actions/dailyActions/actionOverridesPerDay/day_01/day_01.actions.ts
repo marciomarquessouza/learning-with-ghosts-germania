@@ -2,7 +2,6 @@ import { DayActions } from "../../actionDefaultPerDay/default.actions";
 import { runSteps } from "@/libs/game/runSteps";
 import { dialogues } from "./day_01.dialogues";
 import { dialogues as defaultDialogues } from "../../actionDefaultPerDay/default.dialogues";
-import { AudioManifest, Lesson } from "@/types";
 import { lesson } from "./day_01.lesson";
 import audioManifest from "./day_01.audio.json";
 import { GAME_SCENES, GAME_WORLDS } from "@/constants/game";
@@ -16,6 +15,8 @@ import {
   stepShowDialogue,
   stepShowDreamIntroduction,
 } from "@/game/actions/stepActions";
+import { Lesson } from "@/libs/lesson/types";
+import { AudioManifest } from "@/libs/audio/types";
 
 class DayActions1 extends DayActions {
   constructor(lesson: Lesson, audioManifest?: AudioManifest) {
@@ -27,7 +28,7 @@ class DayActions1 extends DayActions {
       case GAME_SCENES.DREAM_SCENE:
         runSteps(
           [
-            // stepShowDialogue({ lines: dialogues.dream_introduction() }),
+            stepShowDialogue({ lines: dialogues.dream_introduction() }),
             stepGameMessage({
               title: "Go to Eliza",
               text: "Use the arrow keys or the A and D keys",

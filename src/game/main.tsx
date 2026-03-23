@@ -14,6 +14,7 @@ import { getSceneName } from "./utils/sceneNameMap";
 import { DayContent, GameScenes, GameWorlds } from "@/types";
 import { events } from "@/events/events";
 import { useLessonStore } from "@/store/lessonStore";
+import { useDialoguesStore } from "@/store/dialogueStore";
 
 interface MainGameProps {
   day: number;
@@ -31,6 +32,7 @@ export default function MainGame({ day, dayContent }: MainGameProps) {
   const { setDay, gameWorld, currentScene, setGameScene, setWeight } =
     useGameStore();
   const { setLesson } = useLessonStore();
+  const { setDialogues } = useDialoguesStore();
 
   const [fakeLoading, setFakeLoading] = useState(true);
   const [loading, setLoading] = useState(true);
@@ -59,6 +61,7 @@ export default function MainGame({ day, dayContent }: MainGameProps) {
     setDay(day);
     setWeight(DEFAULT_INITIAL_WEIGHT);
     setLesson(dayContent.lesson);
+    setDialogues(dayContent.dialogues);
 
     setLoading(true);
     started.current = false;
@@ -72,7 +75,9 @@ export default function MainGame({ day, dayContent }: MainGameProps) {
     day,
     setWeight,
     setLesson,
+    setDialogues,
     dayContent.lesson,
+    dayContent.dialogues,
   ]);
 
   useEffect(() => {

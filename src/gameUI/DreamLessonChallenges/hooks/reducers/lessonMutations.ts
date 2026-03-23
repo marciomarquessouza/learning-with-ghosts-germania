@@ -1,4 +1,4 @@
-import { Lesson } from "@/types";
+import { Lesson } from "@/libs/lesson/types";
 import { defaultState, State } from "./lessonReducer";
 
 export const createLesson = (state: State, lesson: Lesson): State => {

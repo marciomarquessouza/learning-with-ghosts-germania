@@ -6,7 +6,7 @@ import {
   MIN_ATTACK_REWARD,
   MIN_COAL_REWARD,
 } from "@/constants/game";
-import { AudioScoreSummary } from "@/libs/audio/game-ui-audio/useAudioScoreV2";
+import { AudioScoreSummary } from "@/libs/audio/types";
 import { ChallengeCommand } from "@/types";
 
 const STATUS_MULTIPLIER: Record<AudioScoreSummary["status"], number> = {

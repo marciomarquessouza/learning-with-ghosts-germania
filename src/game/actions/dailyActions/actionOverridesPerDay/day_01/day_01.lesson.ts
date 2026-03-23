@@ -1,4 +1,4 @@
-import { Lesson } from "@/types";
+import { Lesson } from "@/libs/lesson/types";
 
 export const lesson: Lesson = {
   id: "greetings",

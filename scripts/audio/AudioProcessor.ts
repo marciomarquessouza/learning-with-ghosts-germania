@@ -5,7 +5,7 @@ import gtts from "node-gtts";
 import { getEntries } from "./helpers/getWords";
 import { slugify } from "@/utils/slugfy";
 import { padDay } from "@/utils/padDay";
-import { AudioManifest } from "@/types";
+import { AudioManifest } from "@/libs/audio/types";
 
 const CONFIG = {
   AUDIO_BASE_DIR: "public/audio",

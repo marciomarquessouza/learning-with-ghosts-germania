@@ -1,6 +1,6 @@
 import Image from "next/image";
 import { Button } from "@/components/Button";
-import { StepPhases } from "@/types";
+import { StepPhases } from "@/libs/lesson/types";
 
 export interface BoardControlsProps {
   phase: StepPhases;

@@ -1,7 +1,7 @@
 import { useMemo } from "react";
 import { isSpace } from "./utils/isSpace";
 import { PreparedTarget } from "./utils/prepareTarget";
-import { StepPhases } from "@/types";
+import { StepPhases } from "@/libs/lesson/types";
 
 export interface AnswerContainerProps {
   answerIndexes: number[];

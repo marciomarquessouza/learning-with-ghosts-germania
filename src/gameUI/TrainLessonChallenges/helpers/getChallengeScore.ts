@@ -1,4 +1,4 @@
-import { ChallengeResult } from "@/types";
+import { ChallengeResult } from "@/libs/lesson/types";
 import { getPronunciationChallengeScore } from "./getPronunciationChallengeScore";
 import { getWritingChallengeScore } from "./getWritingChallengeScore";
 
@@ -10,7 +10,7 @@ export interface ChallengeScoreResult {
 
 export function getChallengeScore(
   command: "attack" | "coal",
-  challengeResult: ChallengeResult
+  challengeResult: ChallengeResult,
 ): ChallengeScoreResult | null {
   const { result } = challengeResult;
 

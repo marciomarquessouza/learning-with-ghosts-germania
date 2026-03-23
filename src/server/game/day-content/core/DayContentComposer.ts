@@ -1,10 +1,13 @@
-import { AudioManifest, DayContent, InteractionLine, Lesson } from "@/types";
+import { DayContent } from "@/types";
 import { mergeLessonWithAudioManifest } from "../helpers/mergeLessonWithAudioManifest";
+import { DayDialogues, DefaultDialogues } from "@/libs/dialogues/types";
+import { AudioManifest } from "@/libs/audio/types";
+import { Lesson } from "@/libs/lesson/types";
 
 interface ComposeParams {
   lesson: Lesson;
-  dialogues: Record<string, InteractionLine[]>;
-  defaultDialogues: Record<string, InteractionLine[]>;
+  dialogues: DayDialogues;
+  defaultDialogues: DefaultDialogues;
   audioManifest: AudioManifest;
 }
 

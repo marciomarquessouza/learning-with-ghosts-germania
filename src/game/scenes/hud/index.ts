@@ -16,8 +16,8 @@ export class Hud {
 
   create(
     scene: Phaser.Scene,
-    dayActions: DayActions,
     show: HUD_ITEMS[] = [HUD_ITEMS.WEIGHT, HUD_ITEMS.ACTIONS],
+    dayActions?: DayActions,
   ): Phaser.GameObjects.Container {
     const container = scene.add.container(0, 0);
     container.name = "hud";

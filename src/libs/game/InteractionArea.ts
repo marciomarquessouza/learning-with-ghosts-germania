@@ -10,13 +10,15 @@ interface Options {
 }
 
 export class InteractionArea {
-  interactionArea!: Phaser.GameObjects.Zone;
-  target!: Phaser.Physics.Arcade.Sprite | Phaser.GameObjects.Image;
-  private scene: Phaser.Scene | null = null;
-  public isOverlapping = false;
-  private player!: Phaser.Types.Physics.Arcade.ArcadeColliderType;
+  private interactionArea?: Phaser.GameObjects.Zone;
+  private target?: Phaser.Physics.Arcade.Sprite | Phaser.GameObjects.Image;
+  private scene?: Phaser.Scene;
+  private player?: Phaser.Types.Physics.Arcade.ArcadeColliderType;
   private onEnter?: () => void;
   private onLeave?: () => void;
+  private overlapCollider?: Phaser.Physics.Arcade.Collider;
+
+  public isOverlapping = false;
 
   create(
     scene: Phaser.Scene,
@@ -31,20 +33,25 @@ export class InteractionArea {
       onLeave,
     }: Options,
   ) {
+    this.destroy();
+
     this.scene = scene;
     this.target = target;
     this.player = player;
     this.onEnter = onEnter;
     this.onLeave = onLeave;
+    this.isOverlapping = false;
 
-    this.interactionArea = scene.add.zone(0, 0, width, height);
-    scene.physics.add.existing(this.interactionArea, true);
+    const interactionArea = scene.add.zone(0, 0, width, height);
+    scene.physics.add.existing(interactionArea, true);
+
+    this.interactionArea = interactionArea;
 
     this.syncInteractionArea(offsetX, offsetY);
 
-    scene.physics.add.overlap(
+    this.overlapCollider = scene.physics.add.overlap(
       player,
-      this.interactionArea,
+      interactionArea,
       () => {
         if (!this.isOverlapping) {
           this.isOverlapping = true;
@@ -60,17 +67,27 @@ export class InteractionArea {
     if (!this.target || !this.interactionArea) return;
 
     const bounds = this.target.getBounds();
+
     this.interactionArea.setPosition(
       bounds.centerX + offsetX,
       bounds.centerY + offsetY,
     );
 
-    const body = this.interactionArea.body as Phaser.Physics.Arcade.StaticBody;
-    body.updateFromGameObject();
+    const body = this.interactionArea.body as
+      | Phaser.Physics.Arcade.StaticBody
+      | undefined;
+    body?.updateFromGameObject();
   }
 
   update() {
-    if (!this.scene || !this.isOverlapping) return;
+    if (
+      !this.scene ||
+      !this.player ||
+      !this.interactionArea ||
+      !this.isOverlapping
+    ) {
+      return;
+    }
 
     const stillOverlapping = this.scene.physics.overlap(
       this.player,
@@ -81,5 +98,20 @@ export class InteractionArea {
       this.isOverlapping = false;
       this.onLeave?.();
     }
+  }
+
+  destroy() {
+    this.overlapCollider?.destroy();
+    this.overlapCollider = undefined;
+
+    this.interactionArea?.destroy();
+    this.interactionArea = undefined;
+
+    this.target = undefined;
+    this.player = undefined;
+    this.scene = undefined;
+    this.onEnter = undefined;
+    this.onLeave = undefined;
+    this.isOverlapping = false;
   }
 }

@@ -1,12 +1,12 @@
-import { AudioManifest, InteractionLine, Lesson } from "@/types";
+import { AudioManifest } from "@/libs/audio/types";
+import { DayDialogues } from "@/libs/dialogues/types";
+import { Lesson } from "@/libs/lesson/types";
 
 export const dayContentImporters: Record<
   number,
   {
     lesson: () => Promise<{ lesson: Lesson }>;
-    dialogues: () => Promise<{
-      dialogues: Record<string, () => InteractionLine[]>;
-    }>;
+    dialogues: () => Promise<{ dialogues: DayDialogues }>;
     audio: () => Promise<{ default: AudioManifest }>;
   }
 > = {

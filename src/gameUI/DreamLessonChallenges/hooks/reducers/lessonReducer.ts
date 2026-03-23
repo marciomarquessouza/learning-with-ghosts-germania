@@ -1,4 +1,9 @@
-import { Lesson, LessonDetails, LessonEntry, StepFlags } from "@/types";
+import {
+  Lesson,
+  LessonDetails,
+  LessonEntry,
+  StepFlags,
+} from "@/libs/lesson/types";
 import {
   createLesson,
   getNextEntry,

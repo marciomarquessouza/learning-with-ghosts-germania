@@ -1,8 +1,9 @@
-import { Lesson, InteractionLine, AudioManifest } from "@/types";
 import { DayContentSource } from "../core/DayContentSource";
-import { parseDialogueLines } from "@/server/game/day-content/helpers/parseDialogueLines";
 import { dayContentImporters } from "../content/dayContentImporters";
 import { dialogues as defaultDialogues } from "../content/defaults/default.dialogues";
+import { DayDialogues, DefaultDialogues } from "@/libs/dialogues/types";
+import { Lesson } from "@/libs/lesson/types";
+import { AudioManifest } from "@/libs/audio/types";
 
 export class FileSystemDayContentSource implements DayContentSource {
   private getDayImporter(day: number, contentType: string) {
@@ -28,14 +29,14 @@ export class FileSystemDayContentSource implements DayContentSource {
     return audioManifest;
   }
 
-  async getDialogues(day: number): Promise<Record<string, InteractionLine[]>> {
+  async getDialogues(day: number): Promise<DayDialogues> {
     const importer = this.getDayImporter(day, "Dialogues");
     const { dialogues } = await importer.dialogues();
 
-    return parseDialogueLines(dialogues);
+    return dialogues;
   }
 
-  async getDefaultDialogues(): Promise<Record<string, InteractionLine[]>> {
-    return parseDialogueLines(defaultDialogues);
+  async getDefaultDialogues(): Promise<DefaultDialogues> {
+    return defaultDialogues;
   }
 }

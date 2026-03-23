@@ -1,5 +1,5 @@
 import { Button } from "@/components/Button";
-import { StepPhases } from "@/types";
+import { StepPhases } from "@/libs/lesson/types";
 
 export interface StepControlsProps {
   isFirst?: boolean;

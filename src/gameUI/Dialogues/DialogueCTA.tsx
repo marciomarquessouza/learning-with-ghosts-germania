@@ -1,6 +1,6 @@
 import { useMemo } from "react";
 import { Button } from "../../components/Button";
-import { InteractionTypes } from "@/types";
+import { InteractionTypes } from "@/libs/dialogues/types";
 
 export interface DialogueCTAProps {
   isTypeWritingComplete: boolean;

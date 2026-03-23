@@ -3,6 +3,7 @@ import { ScoreResult } from "./utils/scoreRecording";
 import { RecorderState } from "./useAudioRecorderV2";
 import { audioScore } from "./utils/audioScore";
 import { getScoreFeedback } from "./helpers/getScoreFeedback";
+import { AudioScoreSummary } from "../types";
 
 export interface AudioScoreProps {
   audioBufferReference: AudioBuffer | null;
@@ -23,14 +24,6 @@ const SCORING_SETTINGS = {
   windowRatioMax: 1.7,
   maxCostForPerfect: 0.21, // <== Adjust here to calibrate the score
 } as const;
-
-export interface AudioScoreSummary {
-  status: "excellent" | "good" | "pass" | "fail";
-  headline: string;
-  label: string;
-  textColor: string;
-  barColor: string;
-}
 
 export interface AudioScore {
   score: ScoreResult | null;
@@ -54,7 +47,7 @@ export function useAudioScoreV2({
       const scoreResult = await audioScore(
         audioBufferReference,
         audioBufferUserRecord,
-        SCORING_SETTINGS
+        SCORING_SETTINGS,
       );
       if (!cancelled) setScore(scoreResult);
     })();

@@ -1,10 +1,10 @@
 import { useCallback, useEffect, useState } from "react";
 import { useUiStore } from "@/store/uiStore";
 import { CharacterDetails } from "@/hooks/useCharacterDetails";
-import { LessonEntry, LessonEntryStep } from "@/types";
 import { StepIntroduction } from "@/gameUI/LessonChallenges/StepIntroduction";
 import { StepPronunciation } from "@/gameUI/LessonChallenges/StepPronunciation";
 import { StepWriting } from "@/gameUI/LessonChallenges/StepWriting";
+import { LessonEntry, LessonEntryStep } from "@/libs/lesson/types";
 
 export interface LessonControllerProps {
   show: boolean;

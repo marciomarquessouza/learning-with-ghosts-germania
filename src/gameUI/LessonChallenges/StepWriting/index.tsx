@@ -1,4 +1,3 @@
-import { LessonComponentProps, StepPhases } from "@/types";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { AudioPlayback } from "./AudioPlayback";
@@ -10,17 +9,29 @@ import { prepareTarget } from "./utils/prepareTarget";
 import { balanceGrind } from "./utils/balanceGrid";
 import { CornerLeft } from "./CornerLeft";
 import { CornerRight } from "./CornerRight";
+import {
+  ChallengeResult,
+  LessonEntry,
+  LessonEntryStep,
+  StepPhases,
+} from "@/libs/lesson/types";
 
 export const DEFAULT_SLOT_QNT_W = 4;
 export const DEFAULT_TOTAL_ERRORS = 5;
 export const DEFAULT_TOTAL_TIPS = 3;
 export const DEFAULT_SLOT_QNT_H = 4;
 
-export interface WritingScore {
-  success: boolean;
-  size: number;
-  errors: number;
-  tips: number;
+interface LessonComponentProps {
+  show?: boolean;
+  isFirst?: boolean;
+  isLast?: boolean;
+  lessonEntry: Omit<LessonEntry, "steps">;
+  lessonStep: LessonEntryStep;
+  reproduceTargetAudioOnStart?: boolean;
+  useCustomFeedback?: boolean;
+  onClickNext: () => void;
+  onClickPrevious: () => void;
+  onResult?: (challengeResult: ChallengeResult) => void;
 }
 
 export function StepWriting({
@@ -42,7 +53,7 @@ export function StepWriting({
   const nextIndex = useRef<number>(1);
   const { slotQntH, slotQntW } = useMemo(
     () => balanceGrind(preparedTarget),
-    [preparedTarget]
+    [preparedTarget],
   );
   const [introductionFinished, setIntroductionFinished] = useState(false);
 

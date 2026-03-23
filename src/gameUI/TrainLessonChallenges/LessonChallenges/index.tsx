@@ -6,12 +6,13 @@ import {
 import { StepPronunciation as Pronunciation } from "@/gameUI/LessonChallenges/StepPronunciation";
 import { StepWriting as Writing } from "@/gameUI/LessonChallenges/StepWriting";
 import { StepFeedback as Feedback } from "../../LessonChallenges/StepFeedback";
-import { ChallengeCommand, ChallengeResult, StepPhases } from "@/types";
+import { ChallengeCommand } from "@/types";
 import {
   ChallengeScoreResult,
   getChallengeScore,
 } from "../helpers/getChallengeScore";
 import { events } from "@/events/events";
+import { ChallengeResult, StepPhases } from "@/libs/lesson/types";
 
 type ActiveChallengeState = {
   phase: StepPhases;

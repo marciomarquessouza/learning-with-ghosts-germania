@@ -1,5 +1,4 @@
 import { useCallback, useState } from "react";
-import { LessonComponentProps } from "@/types";
 import { useTimeline } from "@/hooks/useTimeline";
 import { LessonEntryInstruction } from "../common/LessonEntryInstruction";
 import { LessonEntryLeft } from "../common/LessonEntryLeft";
@@ -9,6 +8,24 @@ import { LessonActionContainer } from "../common/LessonActionContainer";
 import { DialogContainer } from "../common/DialogContainer";
 import { StepControls } from "./StepControls";
 import { useAudioPlayback } from "@/libs/audio/game-ui-audio/useAudioPlayback";
+import {
+  ChallengeResult,
+  LessonEntry,
+  LessonEntryStep,
+} from "@/libs/lesson/types";
+
+interface LessonComponentProps {
+  show?: boolean;
+  isFirst?: boolean;
+  isLast?: boolean;
+  lessonEntry: Omit<LessonEntry, "steps">;
+  lessonStep: LessonEntryStep;
+  reproduceTargetAudioOnStart?: boolean;
+  useCustomFeedback?: boolean;
+  onClickNext: () => void;
+  onClickPrevious: () => void;
+  onResult?: (challengeResult: ChallengeResult) => void;
+}
 
 export function StepIntroduction({
   isFirst = false,

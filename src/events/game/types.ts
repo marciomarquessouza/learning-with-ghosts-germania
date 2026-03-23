@@ -1,5 +1,6 @@
 import { TransitionOptions } from "@/game/core/SceneManager";
-import { GameScenes, InteractionLine } from "@/types";
+import { InteractionLine } from "@/libs/dialogues/types";
+import { GameScenes } from "@/types";
 
 export interface ZoomPropsEvent {
   zoom: number;

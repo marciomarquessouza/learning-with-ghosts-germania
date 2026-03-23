@@ -1,5 +1,5 @@
 import { CharacterDetails } from "@/hooks/useCharacterDetails";
-import { Alternative } from "@/types";
+import { Alternative } from "@/libs/dialogues/types";
 import { useEffect, useRef } from "react";
 
 export interface AlternativesProps {

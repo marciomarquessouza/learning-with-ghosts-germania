@@ -1,31 +1,34 @@
 import { createScene } from "@/game/core/CreateScene";
 import { Hud, HUD_ITEMS } from "../hud";
 import { CemeteryScenario } from "./helpers/cemeteryScenario";
-import { getDayAction } from "@/game/actions/getAction";
 import { DreamCamera } from "@/game/cameras/DreamCamera";
 import { changeWorldTransition } from "@/game/utils/changeWorldTransition";
 import { ACTORS, GAME_SCENES } from "@/constants/game";
-import { GameScenes } from "@/types";
 import { LearningNode } from "@/game/actors/learningNode/LearningNode";
 import { events } from "@/events/events";
-import { DayActions } from "@/game/actions/dailyActions/actionDefaultPerDay/default.actions";
 import { GameScene } from "../GameScene";
 import { Player } from "@/game/actors/player/Player";
 import { Tutor } from "@/game/actors/tutor/Tutor";
-import { LessonController } from "@/game/lesson/LessonController";
+import { LessonController } from "@/libs/lesson/LessonController";
+import { useLessonStore } from "@/store/lessonStore";
+import { DREAM_SCENE_STATES } from "./constants/states";
 
 export const DEFAULT_POSITION_X = 510;
 export const DEFAULT_POSITION_Y = 720;
 
 export class DreamScene extends GameScene {
-  private dayActions: DayActions | null = null;
+  public static readonly STATES = DREAM_SCENE_STATES;
+
   private scenario = new CemeteryScenario();
-  private dreamCamera = new DreamCamera();
-  private hud = new Hud();
-  private player = this.createActor(ACTORS.PLAYER, Player);
-  private tutor = this.createActor(ACTORS.TUTOR, Tutor);
-  private learningNode = this.createActor(ACTORS.LEARNING_NODE, LearningNode);
-  private lessonController = new LessonController();
+  public dreamCamera = new DreamCamera();
+  public hud = new Hud();
+  public player = this.createActor(ACTORS.PLAYER, Player);
+  public tutor = this.createActor(ACTORS.TUTOR, Tutor);
+  public learningNode = this.createActor(ACTORS.LEARNING_NODE, LearningNode);
+
+  public lessonController = new LessonController(
+    useLessonStore.getState().lesson,
+  );
 
   constructor() {
     super({ key: GAME_SCENES.DREAM_SCENE });
@@ -41,21 +44,21 @@ export class DreamScene extends GameScene {
   }
 
   create() {
-    this.scenario.create(this);
     if (!this.input.keyboard)
       throw new Error("Mobile/Tablet version not implemented");
+
     const cursors = this.input.keyboard?.createCursorKeys();
-    this.physics.world.setBounds(
-      0,
-      0,
-      this.scenario.width - 200,
-      this.scenario.height,
-    );
+    this.scenario.create(this);
+    const boundW = this.scenario.width - 200;
+    const boundH = this.scenario.height;
+    this.physics.world.setBounds(0, 0, boundW, boundH);
+
     const playerSprite = this.player.spawn(this, {
       startX: DEFAULT_POSITION_X,
       startY: DEFAULT_POSITION_Y,
       cursors,
     });
+
     this.dreamCamera.create(this, playerSprite, {
       x: 0,
       y: 0,
@@ -63,31 +66,24 @@ export class DreamScene extends GameScene {
       height: this.scenario.height,
     });
 
-    getDayAction(this.scene.key as GameScenes).then((dayActions) => {
-      this.dayActions = dayActions;
-      this.lessonController.create(this, dayActions.lesson);
-      this.tutor.spawn(this, {
-        startX: this.scenario.width - 800,
-        startY: DEFAULT_POSITION_Y - 100,
-        scale: 0.8,
-        flipX: true,
-        player: playerSprite,
-        dayActions,
-        cursors,
-        camera: this.dreamCamera.mainCamera,
-      });
-      this.learningNode.spawn(this, {
-        startX: this.scenario.width - 760,
-        startY: 890,
-        flipX: true,
-      });
-      const hudContainer = this.hud.create(this, dayActions, [
-        HUD_ITEMS.WEIGHT,
-      ]);
-      this.children.bringToTop(hudContainer);
-
-      this.dreamCamera.fadeIn({ onComplete: () => dayActions.onStart() });
+    this.tutor.spawn(this, {
+      startX: this.scenario.width - 800,
+      startY: DEFAULT_POSITION_Y - 100,
+      scale: 0.8,
+      flipX: true,
     });
+
+    this.learningNode.spawn(this, {
+      startX: this.scenario.width - 760,
+      startY: 890,
+      flipX: true,
+    });
+
+    const hudContainer = this.hud.create(this, [HUD_ITEMS.WEIGHT]);
+    this.children.bringToTop(hudContainer);
+
+    // TODO: Move this fade in to the State Machine
+    this.dreamCamera.fadeIn({ onComplete: () => {} });
 
     events.game.async.on("change-world-transition", (_, done) => {
       changeWorldTransition(this, done);
@@ -95,7 +91,6 @@ export class DreamScene extends GameScene {
   }
 
   update(time: number, delta: number) {
-    this.lessonController.update(delta);
     this.scenario.update(delta);
     this.player.update(time, delta);
     this.tutor.update(delta);
@@ -103,7 +98,6 @@ export class DreamScene extends GameScene {
   }
 
   destroy() {
-    this.lessonController.destroy();
     this.tutor.destroy();
     this.scenario.destroy();
     this.hud.destroy();

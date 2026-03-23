@@ -16,6 +16,10 @@ import { createPlayerStateMachine } from "./helpers/createPlayerStateMachine";
 export const KEY_CODES = Phaser.Input.Keyboard.KeyCodes;
 const DEFAULT_SPEED = 200;
 
+interface PlayerSpawnPayload extends ActorPayload {
+  cursors: Phaser.Types.Input.Keyboard.CursorKeys;
+}
+
 export class Player {
   public static readonly STATES = PLAYER_STATES;
 
@@ -37,7 +41,7 @@ export class Player {
     this.shadow.preload(scene);
   }
 
-  spawn(scene: Phaser.Scene, { startX, startY, cursors }: ActorPayload) {
+  spawn(scene: Phaser.Scene, { startX, startY, cursors }: PlayerSpawnPayload) {
     this.sprite = this.animations.create(scene, startX, startY);
     this.shadow.create(scene, startX, startY);
     this.levitation.create(this.sprite, this.shadow);

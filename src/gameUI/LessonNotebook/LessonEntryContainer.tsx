@@ -1,4 +1,4 @@
-import { LessonEntry } from "@/types";
+import { LessonEntry } from "@/libs/lesson/types";
 
 export function LessonEntryContainer({ reference, target }: LessonEntry) {
   const isLong = reference.length > 12 || target.length > 12;

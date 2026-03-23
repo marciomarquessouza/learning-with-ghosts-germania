@@ -1,23 +1,23 @@
 import { events } from "@/events/events";
-import { LessonController } from "../LessonController";
 import { runSteps, stepBase } from "@/libs/game/runSteps";
 import { BaseState } from "@/libs/game/state-machine/BaseState";
 import { createKeyMap, KEY_CODES, KeyMap } from "@/utils/createKeyMap";
+import { DreamScene } from "..";
 
-export class IntroState extends BaseState {
+export class LessonIntroState extends BaseState {
   private isWaitingForContinue = false;
   private keyMap: KeyMap;
 
   constructor(
     scene: Phaser.Scene,
-    private lessonController: LessonController,
+    private dreamScene: DreamScene,
   ) {
     super(scene);
     this.keyMap = createKeyMap(scene, [KEY_CODES.SPACE, KEY_CODES.ENTER]);
   }
 
   enter(): void {
-    const step = this.lessonController.getStepByType("introduction");
+    const step = this.dreamScene.lessonController.getStepByType("introduction");
     runSteps(
       [
         stepBase(() => {
@@ -54,7 +54,7 @@ export class IntroState extends BaseState {
     ) {
       this.isWaitingForContinue = false;
       events.lesson.sync.emit("hide-lesson-description");
-      this.changeTo(LessonController.STATES.LISTENING);
+      this.changeTo(DreamScene.STATES.LISTENING);
     }
   }
 

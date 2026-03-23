@@ -4,7 +4,6 @@ import {
   StateMachine,
 } from "@/libs/game/state-machine/StateMachine";
 import { Tutor } from "../Tutor";
-import { WaitingState } from "../states/WaitingState";
 import { IdleState } from "../states/IdleState";
 import { SowingState } from "../states/SowingState";
 import { TeachingState } from "../states/TeachingState";
@@ -16,7 +15,6 @@ export function createTutorStateMachine(
 ): StateMachine {
   const stateMachine = new StateMachine(scene);
   const states: [TutorStateNames, StateConstructor<IState>][] = [
-    [Tutor.STATES.WAITING, WaitingState],
     [Tutor.STATES.IDLE, IdleState],
     [Tutor.STATES.TEACHING, TeachingState],
     [Tutor.STATES.SOWING, SowingState],

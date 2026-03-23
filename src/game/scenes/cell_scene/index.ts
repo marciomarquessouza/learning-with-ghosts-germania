@@ -49,10 +49,11 @@ class CellScene extends Phaser.Scene {
       this.dayActions = dayActions;
       dayActions.onStart();
       selectableAreas.create(this, dayActions);
-      const hudContainer = this.hud.create(this, dayActions, [
-        HUD_ITEMS.WEIGHT,
-        HUD_ITEMS.ACTIONS,
-      ]);
+      const hudContainer = this.hud.create(
+        this,
+        [HUD_ITEMS.WEIGHT, HUD_ITEMS.ACTIONS],
+        dayActions,
+      );
       this.children.bringToTop(hudContainer);
       this.children.bringToTop(calendarContainer);
     });

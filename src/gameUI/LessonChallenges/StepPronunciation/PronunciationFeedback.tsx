@@ -1,7 +1,7 @@
 import { ScoreResult } from "@/libs/audio/game-ui-audio/utils/scoreRecording";
 import { AudioPlaybackContainer } from "../common/AudioPlaybackContainer";
-import { LessonEntry } from "@/types";
-import { AudioScoreSummary } from "@/libs/audio/game-ui-audio/useAudioScoreV2";
+import { AudioScoreSummary } from "@/libs/audio/types";
+import { LessonEntry } from "@/libs/lesson/types";
 
 export interface PronunciationFeedbackProps {
   scoreResult: ScoreResult;
