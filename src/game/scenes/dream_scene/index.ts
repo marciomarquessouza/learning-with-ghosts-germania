@@ -12,6 +12,8 @@ import { Tutor } from "@/game/actors/tutor/Tutor";
 import { LessonController } from "@/libs/lesson/LessonController";
 import { useLessonStore } from "@/store/lessonStore";
 import { DREAM_SCENE_STATES } from "./constants/states";
+import { StateMachine } from "@/libs/game/state-machine/StateMachine";
+import { createDreamSceneStateMachine } from "./helpers/createDreamSceneStateMachine";
 
 export const DEFAULT_POSITION_X = 510;
 export const DEFAULT_POSITION_Y = 720;
@@ -25,10 +27,10 @@ export class DreamScene extends GameScene {
   public player = this.createActor(ACTORS.PLAYER, Player);
   public tutor = this.createActor(ACTORS.TUTOR, Tutor);
   public learningNode = this.createActor(ACTORS.LEARNING_NODE, LearningNode);
-
   public lessonController = new LessonController(
     useLessonStore.getState().lesson,
   );
+  private stateMachine!: StateMachine;
 
   constructor() {
     super({ key: GAME_SCENES.DREAM_SCENE });
@@ -78,6 +80,11 @@ export class DreamScene extends GameScene {
       startY: 890,
       flipX: true,
     });
+
+    this.stateMachine = createDreamSceneStateMachine(
+      this as Phaser.Scene,
+      this as DreamScene,
+    );
 
     const hudContainer = this.hud.create(this, [HUD_ITEMS.WEIGHT]);
     this.children.bringToTop(hudContainer);
