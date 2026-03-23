@@ -39,8 +39,6 @@ export class IdleState extends BaseState {
       onLeave: () => this.onLeaveLessonInteractionArea(),
     });
 
-    // this.dreamScene.dreamCamera.fadeIn({ onComplete: () => {} });
-
     this.isStateRunning = true;
   }
 
