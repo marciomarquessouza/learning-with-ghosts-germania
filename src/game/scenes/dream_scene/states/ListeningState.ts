@@ -13,27 +13,24 @@ export class ListeningState extends BaseState {
 
   enter(): void {
     const step = this.dreamScene.lessonController.getStepByType("listening");
-    runSteps(
-      [
-        stepBase(() => {
-          events.actors.player.sync.emit("scared");
-          return events.actors.tutor.async.emitAsync("sowing");
-        }),
-        stepBase(() => {
-          return events.actors.learningNode.async.emitAsync(
-            "sprouting:transition",
-          );
-        }),
-        stepBase(() => {
-          events.actors.player.sync.emit("listening");
-          return events.lesson.async.emitAsync("write-lesson-description", {
-            description: step.text,
-            skipPressContinue: true,
-          });
-        }),
-      ],
-      {},
-    );
+    runSteps([
+      stepBase(() => {
+        this.dreamScene.player.enterScared();
+        return this.dreamScene.tutor.waitForSowing();
+      }),
+      stepBase(() => {
+        return events.actors.learningNode.async.emitAsync(
+          "sprouting:transition",
+        );
+      }),
+      stepBase(() => {
+        this.dreamScene.player.enterListening();
+        return events.lesson.async.emitAsync("write-lesson-description", {
+          description: step.text,
+          skipPressContinue: true,
+        });
+      }),
+    ]);
   }
 
   handleInput(): void {}

@@ -1,19 +1,20 @@
 import { events } from "@/events/events";
 import { runSteps, stepBase } from "@/libs/game/runSteps";
 import { BaseState } from "@/libs/game/state-machine/BaseState";
-import { createKeyMap, KEY_CODES, KeyMap } from "@/utils/createKeyMap";
 import { DreamScene } from "..";
+import { InputController } from "@/libs/inputs/InputController";
+import { createInputController } from "@/libs/inputs/createInputController";
 
 export class LessonIntroState extends BaseState {
   private isWaitingForContinue = false;
-  private keyMap: KeyMap;
+  private input?: InputController;
 
   constructor(
     scene: Phaser.Scene,
     private dreamScene: DreamScene,
   ) {
     super(scene);
-    this.keyMap = createKeyMap(scene, [KEY_CODES.SPACE, KEY_CODES.ENTER]);
+    this.input = createInputController(this.scene);
   }
 
   enter(): void {
@@ -21,8 +22,8 @@ export class LessonIntroState extends BaseState {
     runSteps(
       [
         stepBase(() => {
-          events.actors.tutor.sync.emit("teaching");
-          events.actors.player.sync.emit("listening");
+          this.dreamScene.tutor.enterTeaching();
+          this.dreamScene.player.enterListening();
           return events.lesson.async.emitAsync("write-lesson-description", {
             description: step.text,
           });
@@ -39,19 +40,9 @@ export class LessonIntroState extends BaseState {
   }
 
   handleInput(): void {
-    if (
-      !this.isWaitingForContinue ||
-      !this.keyMap?.SPACE ||
-      !this.keyMap?.ENTER
-    ) {
-      return;
-    }
+    if (!this.isWaitingForContinue) return;
 
-    if (
-      this.isWaitingForContinue &&
-      (Phaser.Input.Keyboard.JustDown(this.keyMap.SPACE) ||
-        Phaser.Input.Keyboard.JustDown(this.keyMap.ENTER))
-    ) {
+    if (this.input?.justPressed("interact")) {
       this.isWaitingForContinue = false;
       events.lesson.sync.emit("hide-lesson-description");
       this.changeTo(DreamScene.STATES.LISTENING);
