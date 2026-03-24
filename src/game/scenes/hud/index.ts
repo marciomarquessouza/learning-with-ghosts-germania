@@ -1,4 +1,3 @@
-import { DayActions } from "@/game/actions/dailyActions/actionDefaultPerDay/default.actions";
 import { hudActions } from "./hudActions";
 import { hudWeight } from "./hudWeight";
 import { events } from "@/events/events";
@@ -17,7 +16,6 @@ export class Hud {
   create(
     scene: Phaser.Scene,
     show: HUD_ITEMS[] = [HUD_ITEMS.WEIGHT, HUD_ITEMS.ACTIONS],
-    dayActions?: DayActions,
   ): Phaser.GameObjects.Container {
     const container = scene.add.container(0, 0);
     container.name = "hud";
@@ -27,12 +25,6 @@ export class Hud {
       const hudWeightContainer = hudWeight.create(scene);
       hudWeightContainer.setName(HUD_ITEMS.WEIGHT);
       container.add(hudWeightContainer);
-    }
-
-    if (show.includes(HUD_ITEMS.ACTIONS)) {
-      const hudActionsContainer = hudActions.create(scene, dayActions);
-      hudActionsContainer.setName(HUD_ITEMS.ACTIONS);
-      container.add(hudActionsContainer);
     }
 
     const toggleItem = (item: HUD_ITEMS, option: "show" | "hide" = "show") => {

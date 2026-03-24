@@ -1,4 +1,4 @@
-import { runSteps, stepBase } from "@/libs/game/runSteps";
+import { runSteps, stepBase } from "@/libs/game/game-flow/runSteps";
 import { BaseState } from "@/libs/game/state-machine/BaseState";
 import { events } from "@/events/events";
 import { DreamScene } from "..";

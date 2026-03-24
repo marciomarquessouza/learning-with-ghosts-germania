@@ -3,7 +3,7 @@ import { useTypewriter } from "@/hooks/useTypewriter";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { PressContinue } from "./PressContinue";
-import { createDialogueKeyDownHandler } from "@/libs/game/createDialogueKeyDownHandler";
+import { createDialogueKeyDownHandler } from "@/libs/inputs/createDialogueKeyDownHandler";
 
 export type DescriptionPhases =
   | "hidden"

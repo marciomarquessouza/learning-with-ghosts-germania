@@ -1,6 +1,5 @@
 import { createScene } from "@/game/core/CreateScene";
 import { TRAIN_RAILROAD_IMG } from "@/constants/images";
-import { getDayAction } from "@/game/actions/getAction";
 import { Hud, HUD_ITEMS } from "../hud";
 import { TrainSpeedController } from "@/game/actors/locomotive/helpers/TrainSpeedController";
 import {
@@ -13,7 +12,6 @@ import {
   LOCOMOTIVE_START_POSITION,
 } from "@/constants/game";
 import { ChaseDistanceController } from "./helpers/ChaseDistanceController";
-import { GameScenes } from "@/types";
 import { events } from "@/events/events";
 import { Locomotive } from "@/game/actors/locomotive/Locomotive";
 import { PunisherSpeedController } from "@/game/actors/punisher/helpers/PunisherSpeedController";

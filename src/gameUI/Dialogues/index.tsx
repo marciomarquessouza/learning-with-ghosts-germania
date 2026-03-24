@@ -6,7 +6,7 @@ import { useDeviceType } from "@/hooks/useDeviceType";
 import Image from "next/image";
 import { useCharacterDetails } from "@/hooks/useCharacterDetails";
 import { useUiStore } from "@/store/uiStore";
-import { createDialogueKeyDownHandler } from "@/libs/game/createDialogueKeyDownHandler";
+import { createDialogueKeyDownHandler } from "@/libs/inputs/createDialogueKeyDownHandler";
 import { DialogueLines } from "./DialogueLines";
 import { Alternatives } from "./Alternatives";
 import { DialogueCTA } from "./DialogueCTA";
@@ -16,8 +16,8 @@ import { getUUID } from "@/utils/getUUID";
 import { handleAlternativeKeyDown } from "@/libs/dialogues/handleAlternativeKeyDown";
 import { events } from "@/events/events";
 import { DialogueEvent } from "@/events/game/types";
-import { setCharactersMood } from "@/game/actions/stepActions/actions/setCharactersMood";
 import { InteractionLine } from "@/libs/dialogues/types";
+import { setCharactersMood } from "./helpers/setCharacterMood";
 
 export function Dialogue() {
   const device = useDeviceType();

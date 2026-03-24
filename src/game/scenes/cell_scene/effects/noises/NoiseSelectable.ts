@@ -4,13 +4,13 @@ import {
   NOISE_WHITE_ATLAS_JSON,
 } from "@/constants/images";
 import { Noise } from "./Noise";
-import { Position, Size } from "@/types";
+import { Vector4 } from "@/utils/vectors";
 
 export const WHITE_BASE = "whiteBase";
 export const NOISE_WHITE_ATLAS = "noiseWhiteAtlas";
 export const NOISE_WHITE_ANIM = "noiseWhiteAnim";
 
-class NoiseSelectable extends Noise {
+export class NoiseSelectable extends Noise {
   private noise: Phaser.GameObjects.Sprite | null = null;
   private whiteBase: Phaser.GameObjects.Image | null = null;
 
@@ -23,11 +23,7 @@ class NoiseSelectable extends Noise {
     scene.load.image(WHITE_BASE, CELL_WHITE_BASE);
   }
 
-  create(
-    scene: Phaser.Scene,
-    position?: Position,
-    size?: Size,
-  ): Phaser.GameObjects.Sprite {
+  create(scene: Phaser.Scene, bounds?: Vector4): Phaser.GameObjects.Sprite {
     if (this.noise) {
       return this.noise;
     }
@@ -57,10 +53,10 @@ class NoiseSelectable extends Noise {
       .setAlpha(0.8);
 
     this.noise.play(NOISE_WHITE_ANIM);
-    const positionX = position?.x || 0;
-    const positionY = position?.y || 0;
-    const width = size?.width || 0;
-    const height = size?.height || 0;
+    const positionX = bounds?.x || 0;
+    const positionY = bounds?.y || 0;
+    const width = bounds?.width || 0;
+    const height = bounds?.height || 0;
 
     this.whiteBase = scene.add.image(centerX, centerY, WHITE_BASE);
     this.whiteBase.setCrop(positionX, positionY, width, height);
@@ -78,5 +74,3 @@ class NoiseSelectable extends Noise {
     this.whiteBase = null;
   }
 }
-
-export const noiseSelectable = new NoiseSelectable();

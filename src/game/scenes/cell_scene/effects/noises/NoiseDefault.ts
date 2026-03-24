@@ -4,7 +4,7 @@ import { Noise } from "./Noise";
 export const DEFAULT_NOISE_ATLAS = "noiseAtlas";
 export const DEFAULT_NOISE_ANIM = "noiseAnim";
 
-class NoiseDefault extends Noise {
+export class NoiseDefault extends Noise {
   private noise: Phaser.GameObjects.Sprite | null = null;
 
   preload(scene: Phaser.Scene): void {
@@ -48,5 +48,3 @@ class NoiseDefault extends Noise {
     this.noise = null;
   }
 }
-
-export const noiseDefault = new NoiseDefault();

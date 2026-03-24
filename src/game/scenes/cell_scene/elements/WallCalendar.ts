@@ -7,7 +7,10 @@ type CalendarContainer = Phaser.GameObjects.Container & {
 
 const CALENDAR_KEY = "calendar";
 
-class Calendar {
+export class WallCalendar {
+  public container!: CalendarContainer;
+  private dayText: Phaser.GameObjects.Text | null = null;
+
   preload(scene: Phaser.Scene) {
     scene.load.image(CALENDAR_KEY, CALENDAR_IMG);
   }
@@ -24,31 +27,35 @@ class Calendar {
     calendarImage.setOrigin(0.5, 0);
     calendarImage.setScale(1.2);
 
-    const dayText = scene.add.text(0, 38, `${day}`, {
+    this.dayText = scene.add.text(0, 38, `${day}`, {
       fontSize: "68px",
       color: "#000000",
     });
-    dayText.setOrigin(0.5, 0);
-    dayText.setAlign("center");
+    this.dayText.setOrigin(0.5, 0);
+    this.dayText.setAlign("center");
 
     document.fonts.ready.then(() => {
-      dayText.setFontFamily("SpecialElite");
+      this.dayText?.setFontFamily("SpecialElite");
     });
 
-    function increaseDay() {
-      useGameStore.getState().increaseDay();
-      const newDay = useGameStore.getState().day;
-      dayText.setText(`${newDay}`);
+    if (this.container) {
+      this.container.increaseDay = this.increaseDay;
     }
 
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    (container as any).increaseDay = increaseDay;
-
     container.add(calendarImage);
-    container.add(dayText);
+    container.add(this.dayText);
 
     return container as CalendarContainer;
   }
-}
 
-export const calendar = new Calendar();
+  increaseDay() {
+    useGameStore.getState().increaseDay();
+    const newDay = useGameStore.getState().day;
+    this.dayText?.setText(`${newDay}`);
+  }
+
+  destroy() {
+    this.container.destroy();
+    this.dayText?.destroy();
+  }
+}
