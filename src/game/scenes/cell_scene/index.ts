@@ -7,6 +7,7 @@ import { StateMachine } from "@/libs/game/state-machine/StateMachine";
 import { SelectableAreasController } from "@/libs/game/interaction/SelectableAreasController";
 import { Vector4 } from "@/utils/vectors";
 import {
+  CellScenePhases,
   ELEMENTS_BOUNDS,
   SCENE_ELEMENTS,
   SceneElementKeys,
@@ -17,6 +18,7 @@ import { IdleState } from "./states/IdleState";
 import { IntroState } from "./states/IntroState";
 import { PerformingActionState } from "./states/PerformingActionState";
 import { SceneElementsController } from "./elements/SceneElementsController";
+import { SceneTransitionState } from "./states/SceneTransitionState";
 
 const CELL = "cell";
 
@@ -26,6 +28,7 @@ export class CellScene extends Phaser.Scene {
   public noiseEffect = new NoiseEffect();
   public selectableAreasController = new SelectableAreasController();
   public sceneElements = new SceneElementsController();
+  public currentScenePhase: CellScenePhases = "start";
 
   private hud = new Hud();
   private calendar = new WallCalendar();
@@ -69,11 +72,8 @@ export class CellScene extends Phaser.Scene {
     this.stateMachine
       .addState(CellScene.STATES.INTRO, IntroState, this)
       .addState(CellScene.STATES.IDLE, IdleState, this)
-      .addState(
-        CellScene.STATES.PERFORMING_ACTION,
-        PerformingActionState,
-        this,
-      );
+      .addState(CellScene.STATES.PERFORMING_ACTION, PerformingActionState, this)
+      .addState(CellScene.STATES.SCENE_TRANSITION, SceneTransitionState, this);
     this.stateMachine.changeTo(CellScene.STATES.INTRO);
   }
 
@@ -110,6 +110,14 @@ export class CellScene extends Phaser.Scene {
 
   getElementClicks(key: SceneElementKeys) {
     return this.clicksByElement.get(key) ?? 0;
+  }
+
+  getScenePhase(): CellScenePhases {
+    return this.currentScenePhase;
+  }
+
+  setScenePhase(phase: CellScenePhases): void {
+    this.currentScenePhase = phase;
   }
 
   update(time: number, delta: number) {

@@ -2,6 +2,7 @@ export const CELL_SCENE_STATES = {
   INTRO: "SCENE_INTRO",
   IDLE: "SCENE_IDLE",
   PERFORMING_ACTION: "PERFORMING_ACTION",
+  SCENE_TRANSITION: "SCENE_TRANSITION",
 } as const;
 
 export type SceneStateNames =

@@ -16,3 +16,9 @@ export const ELEMENTS_BOUNDS: Record<SceneElementKeys, Vector4> = {
   food: { x: 430, y: 59, width: 395, height: 404 },
   rat: { x: 928, y: 615, width: 249, height: 254 },
 };
+
+export type CellScenePhases =
+  | "start"
+  | "after-jailer-talk"
+  | "after-lesson"
+  | "after-challenge";
