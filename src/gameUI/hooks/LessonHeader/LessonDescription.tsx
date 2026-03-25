@@ -1,5 +1,5 @@
-import { CharacterDetails } from "@/hooks/useCharacterDetails";
-import { useTypewriter } from "@/hooks/useTypewriter";
+import { CharacterDetails } from "@/gameUI/hooks/useCharacterDetails";
+import { useTypewriter } from "@/gameUI/hooks/useTypewriter";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { PressContinue } from "./PressContinue";

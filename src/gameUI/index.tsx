@@ -1,6 +1,6 @@
-import { Dialogue } from "./Dialogues";
-import { DreamLessonChallenges } from "./DreamLessonChallenges";
-import { GameMessage } from "./GameMessage";
+import { Dialogue } from "./components/Dialogues";
+import { DreamLessonChallenges } from "./components/DreamLessonChallenges";
+import { GameMessage } from "./components/GameMessage";
 import { DreamIntroduction } from "./Introduction/DreamIntroduction";
 import { SceneIntroduction } from "./Introduction/SceneIntroduction";
 import { LessonNotebook } from "./LessonNotebook";

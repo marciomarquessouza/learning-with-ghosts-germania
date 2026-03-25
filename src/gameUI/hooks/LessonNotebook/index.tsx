@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { useLessonStore } from "@/store/lessonStore";
 import { LessonEntryContainer } from "./LessonEntryContainer";
-import { usePagination } from "@/hooks/usePagination";
+import { usePagination } from "@/gameUI/hooks/usePagination";
 import { AnimatePresence, motion } from "framer-motion";
 import { ButtonTransparent } from "@/components/Button/ButtonTransparent";
 import { PaginationControls } from "@/components/Pagination/PaginationControl";

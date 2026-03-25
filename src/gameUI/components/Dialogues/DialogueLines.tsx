@@ -1,4 +1,4 @@
-import { CharacterDetails } from "@/hooks/useCharacterDetails";
+import { CharacterDetails } from "@/gameUI/hooks/useCharacterDetails";
 
 export interface DialogueBoxProps {
   displayedText: string;

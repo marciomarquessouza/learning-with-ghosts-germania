@@ -1,10 +1,10 @@
 import { useState, useEffect, useCallback, useRef, useMemo } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { useTypewriter } from "@/hooks/useTypewriter";
+import { useTypewriter } from "@/gameUI/hooks/useTypewriter";
 import { ACTORS, MOODS } from "@/constants/game";
-import { useDeviceType } from "@/hooks/useDeviceType";
+import { useDeviceType } from "@/gameUI/hooks/useDeviceType";
 import Image from "next/image";
-import { useCharacterDetails } from "@/hooks/useCharacterDetails";
+import { useCharacterDetails } from "@/gameUI/hooks/useCharacterDetails";
 import { useUiStore } from "@/store/uiStore";
 import { createDialogueKeyDownHandler } from "@/libs/inputs/createDialogueKeyDownHandler";
 import { DialogueLines } from "./DialogueLines";

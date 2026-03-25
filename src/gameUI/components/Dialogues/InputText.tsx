@@ -1,4 +1,4 @@
-import { CharacterDetails } from "@/hooks/useCharacterDetails";
+import { CharacterDetails } from "@/gameUI/hooks/useCharacterDetails";
 import { useEffect, useRef } from "react";
 
 export interface InputTextProps {

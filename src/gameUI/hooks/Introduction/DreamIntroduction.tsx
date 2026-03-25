@@ -1,6 +1,6 @@
 import { GHOSTS_TITLE } from "@/constants/images";
 import { events } from "@/events/events";
-import { useTypewriter } from "@/hooks/useTypewriter";
+import { useTypewriter } from "@/gameUI/hooks/useTypewriter";
 import { useLessonStore } from "@/store/lessonStore";
 import Image from "next/image";
 import { useEffect, useRef, useState } from "react";

@@ -1,4 +1,4 @@
-import { CharacterDetails } from "@/hooks/useCharacterDetails";
+import { CharacterDetails } from "@/gameUI/hooks/useCharacterDetails";
 import { Alternative } from "@/libs/dialogues/types";
 import { useEffect, useRef } from "react";
 

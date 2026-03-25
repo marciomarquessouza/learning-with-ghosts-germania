@@ -1,4 +1,4 @@
-import { DeviceType } from "@/hooks/useDeviceType";
+import { DeviceType } from "@/gameUI/hooks/useDeviceType";
 
 export const getDialogueDimension = (device: DeviceType) => {
   switch (device) {

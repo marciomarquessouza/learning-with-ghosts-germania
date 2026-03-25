@@ -1,5 +1,5 @@
 import { useCallback, useState } from "react";
-import { useTimeline } from "@/hooks/useTimeline";
+import { useTimeline } from "@/gameUI/hooks/useTimeline";
 import { LessonEntryInstruction } from "../common/LessonEntryInstruction";
 import { LessonEntryLeft } from "../common/LessonEntryLeft";
 import { LessonEntryRight } from "../common/LessonEntryRight";
