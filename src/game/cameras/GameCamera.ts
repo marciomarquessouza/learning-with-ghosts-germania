@@ -7,19 +7,21 @@ interface FadeInProps {
   duration?: number;
 }
 
-export class DreamCamera {
+export class GameCamera {
   public mainCamera!: Phaser.Cameras.Scene2D.Camera;
   private removeZoomListener?: () => void;
+  private scene!: Phaser.Scene;
 
   private get camera() {
     if (!this.mainCamera) {
-      throw new Error("DreamCamera has not been created yet.");
+      throw new Error("GameCamera has not been created yet.");
     }
 
     return this.mainCamera;
   }
 
   create(scene: Phaser.Scene) {
+    this.scene = scene;
     this.mainCamera = scene.cameras.main;
     this.mainCamera.setBackgroundColor(0x000000);
     this.mainCamera.fadeOut(0, FADE_COLOR.r, FADE_COLOR.g, FADE_COLOR.b);
@@ -39,11 +41,6 @@ export class DreamCamera {
     this.removeZoomListener = () => {
       events.game.sync.off("camera/zoom-to", zoomHandler);
     };
-  }
-
-  destroy() {
-    this.removeZoomListener?.();
-    this.removeZoomListener = undefined;
   }
 
   setBounds(x: number, y: number, width: number, height: number) {
@@ -67,5 +64,26 @@ export class DreamCamera {
         resolve();
       });
     });
+  }
+
+  async changeWorldTransition(): Promise<void> {
+    return new Promise((resolve) => {
+      const transition = this.scene.add.graphics().setDepth(9999);
+      transition.fillStyle(0x000000, 0.0);
+      transition.fillRect(0, 0, this.camera.width, this.camera.height);
+
+      this.camera.zoomTo(1.08, 1200, "Sine.easeInOut");
+      this.camera.fade(1200, 0, 0, 0);
+
+      this.camera.once("camerafadeoutcomplete", () => {
+        this.camera.flash(120, 180, 0, 0);
+        resolve();
+      });
+    });
+  }
+
+  destroy() {
+    this.removeZoomListener?.();
+    this.removeZoomListener = undefined;
   }
 }

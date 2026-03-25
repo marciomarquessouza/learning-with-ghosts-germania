@@ -1,6 +1,6 @@
 import { createScene } from "@/game/core/CreateScene";
 import { TRAIN_RAILROAD_IMG } from "@/constants/images";
-import { Hud, HUD_ITEMS } from "../hud";
+import { Hud, HUD_ITEMS } from "../../hud";
 import { TrainSpeedController } from "@/game/actors/locomotive/helpers/TrainSpeedController";
 import {
   GAME_SCENES,

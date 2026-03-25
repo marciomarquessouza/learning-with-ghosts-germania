@@ -7,8 +7,8 @@ import {
 } from "./types";
 import { ReactNode } from "react";
 import { ACTORS, MOODS } from "@/constants/game";
-import { ACTIONS_ICONS } from "@/game/scenes/hud/helpers/actionIcons";
-import { HUD_ITEMS } from "@/game/scenes/hud";
+import { ACTIONS_ICONS } from "@/game/hud/helpers/actionIcons";
+import { HUD_ITEMS } from "@/game/hud";
 import { createEventManagers } from "@/libs/events/createEventManagers";
 
 export type GameSyncEvents = {
@@ -33,7 +33,6 @@ export type GameSyncEvents = {
 
 export type GameAsyncEvents = {
   "dialogue/show": DialogueEvent;
-  "change-world-transition": undefined;
   "change-scene": ChangeSceneEvent;
   "hud/actions-timer": {
     icon: ACTIONS_ICONS;

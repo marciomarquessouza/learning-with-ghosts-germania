@@ -1,10 +1,8 @@
 import { CELL_IMAGE } from "@/constants/images";
 import { createScene } from "@/game/core/CreateScene";
 import { NoiseEffect } from "./effects/NoiseEffect";
-import { Hud, HUD_ITEMS } from "../hud";
-import { changeWorldTransition } from "@/game/utils/changeWorldTransition";
+import { Hud, HUD_ITEMS } from "../../hud";
 import { GAME_SCENES } from "@/constants/game";
-import { events } from "@/events/events";
 import { StateMachine } from "@/libs/game/state-machine/StateMachine";
 import { SelectableAreasController } from "@/libs/game/interaction/SelectableAreasController";
 import { Vector4 } from "@/utils/vectors";
@@ -77,10 +75,6 @@ export class CellScene extends Phaser.Scene {
         this,
       );
     this.stateMachine.changeTo(CellScene.STATES.INTRO);
-
-    events.game.async.on("change-world-transition", (_, done) => {
-      changeWorldTransition(this, done);
-    });
   }
 
   getElementBounds(key: SceneElementKeys): Vector4 {
@@ -129,7 +123,6 @@ export class CellScene extends Phaser.Scene {
     this.calendar.destroy();
     this.selectableAreasController?.destroyAll();
     this.stateMachine.clear();
-    events.game.async.clear("change-world-transition");
   }
 }
 

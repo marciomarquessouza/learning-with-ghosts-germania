@@ -19,7 +19,7 @@ export class SceneIntroState extends BaseState {
       lessonDay === 1 && introDialogueLines.length > 0;
 
     runSteps([
-      stepBase(() => this.dreamScene.dreamCamera.fadeIn({ duration: 800 })),
+      stepBase(() => this.dreamScene.gameCamera.fadeIn({ duration: 800 })),
       stepBase(
         () => {
           this.dreamScene.player.enterListening();
