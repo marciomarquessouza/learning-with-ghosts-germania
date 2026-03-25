@@ -3,8 +3,8 @@ import {
   LessonChallenge,
   useTrainLessonChallenges,
 } from "../hooks/useTrainLesson";
-import { StepPronunciation as Pronunciation } from "@/gameUI/LessonChallenges/StepPronunciation";
-import { StepWriting as Writing } from "@/gameUI/LessonChallenges/StepWriting";
+import { StepPronunciation as Pronunciation } from "@/gameUI/components/LessonChallenges/StepPronunciation";
+import { StepWriting as Writing } from "@/gameUI/components/LessonChallenges/StepWriting";
 import { StepFeedback as Feedback } from "../../LessonChallenges/StepFeedback";
 import { ChallengeCommand } from "@/types";
 import {

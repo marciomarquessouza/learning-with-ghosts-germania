@@ -1,9 +1,9 @@
 import { useCallback, useEffect, useState } from "react";
 import { useUiStore } from "@/store/uiStore";
 import { CharacterDetails } from "@/gameUI/hooks/useCharacterDetails";
-import { StepIntroduction } from "@/gameUI/LessonChallenges/StepIntroduction";
-import { StepPronunciation } from "@/gameUI/LessonChallenges/StepPronunciation";
-import { StepWriting } from "@/gameUI/LessonChallenges/StepWriting";
+import { StepIntroduction } from "@/gameUI/components/LessonChallenges/StepIntroduction";
+import { StepPronunciation } from "@/gameUI/components/LessonChallenges/StepPronunciation";
+import { StepWriting } from "@/gameUI/components/LessonChallenges/StepWriting";
 import { LessonEntry, LessonEntryStep } from "@/libs/lesson/types";
 
 export interface LessonControllerProps {

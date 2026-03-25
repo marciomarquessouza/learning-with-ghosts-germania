@@ -1,10 +1,10 @@
-import { LessonTitle } from "../../LessonHeader/LessonTitle";
+import { LessonHeaderWrapper } from "@/gameUI/components/LessonHeader/LessonHeaderWrapper";
 import { useLessonHeader } from "./hooks/useLessonHeader";
-import { LessonHeaderWrapper } from "../../LessonHeader/LessonHeaderWrapper";
-import { NotebookToggleButton } from "../../LessonHeader/NotebookToggleButton";
-import { LessonExit } from "../../LessonHeader/LessonExit";
-import { LessonDescription } from "../../LessonHeader/LessonDescription";
 import { useCharacterDetails } from "@/gameUI/hooks/useCharacterDetails";
+import { NotebookToggleButton } from "@/gameUI/components/LessonHeader/NotebookToggleButton";
+import { LessonExit } from "@/gameUI/components/LessonHeader/LessonExit";
+import { LessonTitle } from "@/gameUI/components/LessonHeader/LessonTitle";
+import { LessonDescription } from "@/gameUI/components/LessonHeader/LessonDescription";
 
 export function DreamLessonChallenges() {
   const {

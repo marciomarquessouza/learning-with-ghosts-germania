@@ -4,8 +4,8 @@ import {
   ShowLessonTitleEvent,
   WriteLessonDescriptionEvent,
 } from "@/events/lesson/types";
-import { DescriptionPhases } from "@/gameUI/LessonHeader/LessonDescription";
-import { HeaderPhases } from "@/gameUI/LessonHeader/LessonHeaderWrapper";
+import { DescriptionPhases } from "@/gameUI/components/LessonHeader/LessonDescription";
+import { HeaderPhases } from "@/gameUI/components/LessonHeader/LessonHeaderWrapper";
 import { useCallback, useEffect, useMemo, useReducer, useRef } from "react";
 
 export interface State {
