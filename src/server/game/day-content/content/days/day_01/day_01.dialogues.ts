@@ -53,7 +53,7 @@ export const dialogues = defineDialogues<DayDialogues>({
         What do you want to do?
       `.alternatives(
         {
-          id: "sleeping_with_ghosts",
+          id: "dream",
           text: "Sleep until the challenge arrives",
         },
         {

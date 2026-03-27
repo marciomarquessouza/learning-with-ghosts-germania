@@ -1,6 +1,6 @@
 import { BaseState } from "@/libs/game/state-machine/BaseState";
 import { DreamScene } from "..";
-import { InteractionArea } from "@/libs/game/InteractionArea";
+import { InteractionArea } from "@/libs/game/interaction/InteractionArea";
 import { events } from "@/events/events";
 import { InputController } from "@/libs/inputs/InputController";
 import { createInputController } from "@/libs/inputs/createInputController";

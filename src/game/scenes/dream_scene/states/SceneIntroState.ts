@@ -1,5 +1,5 @@
 import { BaseState } from "@/libs/game/state-machine/BaseState";
-import { runSteps, stepBase } from "@/libs/game/runSteps";
+import { runSteps, stepBase } from "@/libs/game/game-flow/runSteps";
 import { events } from "@/events/events";
 import { getDialogueLines } from "@/store/dialogueStore";
 import { DreamScene } from "..";
@@ -19,7 +19,7 @@ export class SceneIntroState extends BaseState {
       lessonDay === 1 && introDialogueLines.length > 0;
 
     runSteps([
-      stepBase(() => this.dreamScene.dreamCamera.fadeIn({ duration: 800 })),
+      stepBase(() => this.dreamScene.gameCamera.fadeIn({ duration: 800 })),
       stepBase(
         () => {
           this.dreamScene.player.enterListening();

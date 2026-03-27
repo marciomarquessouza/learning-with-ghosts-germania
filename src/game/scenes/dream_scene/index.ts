@@ -1,11 +1,9 @@
 import { createScene } from "@/game/core/CreateScene";
-import { Hud, HUD_ITEMS } from "../hud";
+import { Hud, HUD_ITEMS } from "../../hud";
 import { CemeteryScenario } from "./helpers/cemeteryScenario";
-import { DreamCamera } from "@/game/cameras/DreamCamera";
-import { changeWorldTransition } from "@/game/utils/changeWorldTransition";
+import { GameCamera } from "@/game/cameras/GameCamera";
 import { ACTORS, GAME_SCENES } from "@/constants/game";
 import { LearningNode } from "@/game/actors/learningNode/LearningNode";
-import { events } from "@/events/events";
 import { GameScene } from "../GameScene";
 import { Player } from "@/game/actors/player/Player";
 import { Tutor } from "@/game/actors/tutor/Tutor";
@@ -22,7 +20,7 @@ export class DreamScene extends GameScene {
   public static readonly STATES = DREAM_SCENE_STATES;
 
   private scenario = new CemeteryScenario();
-  public dreamCamera = new DreamCamera();
+  public gameCamera = new GameCamera();
   public hud = new Hud();
   public player = this.createActor(ACTORS.PLAYER, Player);
   public tutor = this.createActor(ACTORS.TUTOR, Tutor);
@@ -49,13 +47,13 @@ export class DreamScene extends GameScene {
     if (!this.input.keyboard)
       throw new Error("Mobile/Tablet version not implemented");
 
-    this.dreamCamera.create(this);
+    this.gameCamera.create(this);
     const cursors = this.input.keyboard?.createCursorKeys();
     this.scenario.create(this);
     const boundW = this.scenario.width;
     const boundH = this.scenario.height;
     this.physics.world.setBounds(0, 0, boundW, boundH);
-    this.dreamCamera.setBounds(0, 0, boundW, boundH);
+    this.gameCamera.setBounds(0, 0, boundW, boundH);
 
     const playerSprite = this.player.spawn(this, {
       startX: DEFAULT_POSITION_X,
@@ -63,7 +61,7 @@ export class DreamScene extends GameScene {
       cursors,
     });
 
-    this.dreamCamera.attachTarget(playerSprite);
+    this.gameCamera.attachTarget(playerSprite);
 
     this.tutor.spawn(this, {
       startX: this.scenario.width - 800,
@@ -80,10 +78,6 @@ export class DreamScene extends GameScene {
 
     const hudContainer = this.hud.create(this, [HUD_ITEMS.WEIGHT]);
     this.children.bringToTop(hudContainer);
-
-    events.game.async.on("change-world-transition", (_, done) => {
-      changeWorldTransition(this, done);
-    });
 
     this.stateMachine = createDreamSceneStateMachine(
       this as Phaser.Scene,
@@ -107,7 +101,6 @@ export class DreamScene extends GameScene {
     this.hud.destroy();
     this.learningNode.destroy();
     this.player.destroy();
-    events.game.async.clear("change-world-transition");
   }
 }
 

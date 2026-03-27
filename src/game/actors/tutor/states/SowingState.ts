@@ -1,5 +1,5 @@
 import { BaseState } from "@/libs/game/state-machine/BaseState";
-import { runSteps, stepBase } from "@/libs/game/runSteps";
+import { runSteps, stepBase } from "@/libs/game/game-flow/runSteps";
 import { Tutor } from "../Tutor";
 
 export class SowingState extends BaseState {

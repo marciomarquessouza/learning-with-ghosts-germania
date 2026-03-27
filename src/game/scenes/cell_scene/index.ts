@@ -1,23 +1,40 @@
 import { CELL_IMAGE } from "@/constants/images";
 import { createScene } from "@/game/core/CreateScene";
-import { noiseEffect } from "./noiseEffect";
-import { Hud, HUD_ITEMS } from "../hud";
-import { calendar } from "./calendar";
-import { selectableAreas } from "./selectableAreas";
-import { getDayAction } from "@/game/actions/getAction";
-import { changeWorldTransition } from "@/game/utils/changeWorldTransition";
+import { NoiseEffect } from "./effects/NoiseEffect";
+import { Hud, HUD_ITEMS } from "../../hud";
 import { GAME_SCENES } from "@/constants/game";
-import { GameScenes } from "@/types";
-import { events } from "@/events/events";
-import { DayActions } from "@/game/actions/dailyActions/actionDefaultPerDay/default.actions";
+import { StateMachine } from "@/libs/game/state-machine/StateMachine";
+import { SelectableAreasController } from "@/libs/game/interaction/SelectableAreasController";
+import { Vector4 } from "@/utils/vectors";
+import {
+  CellScenePhases,
+  ELEMENTS_BOUNDS,
+  SCENE_ELEMENTS,
+  SceneElementKeys,
+} from "./constants/scene";
+import { WallCalendar } from "./elements/WallCalendar";
+import { CELL_SCENE_STATES } from "./constants/states";
+import { IdleState } from "./states/IdleState";
+import { IntroState } from "./states/IntroState";
+import { PerformingActionState } from "./states/PerformingActionState";
+import { SceneElementsController } from "./elements/SceneElementsController";
+import { SceneTransitionState } from "./states/SceneTransitionState";
 
 const CELL = "cell";
 
-class CellScene extends Phaser.Scene {
-  player: Phaser.Types.Physics.Arcade.SpriteWithDynamicBody | null = null;
-  target: { x: number; y: number } | null = null;
-  private dayActions: DayActions | null = null;
+export class CellScene extends Phaser.Scene {
+  public static readonly STATES = CELL_SCENE_STATES;
+  public selectedElement: SceneElementKeys | null = null;
+  public noiseEffect = new NoiseEffect();
+  public selectableAreasController = new SelectableAreasController();
+  public sceneElements = new SceneElementsController();
+  public currentScenePhase: CellScenePhases = "start";
+
   private hud = new Hud();
+  private calendar = new WallCalendar();
+  private stateMachine!: StateMachine;
+  private hudContainer!: Phaser.GameObjects.Container;
+  private clicksByElement = new Map<SceneElementKeys, number>();
 
   constructor() {
     super({ key: GAME_SCENES.CELL_SCENE });
@@ -26,8 +43,8 @@ class CellScene extends Phaser.Scene {
   preload() {
     const load: Phaser.Loader.LoaderPlugin = this.load;
     load.image(CELL, CELL_IMAGE);
-    noiseEffect.preload(this);
-    calendar.preload(this);
+    this.noiseEffect.preload(this);
+    this.calendar.preload(this);
     this.hud.preload(this);
   }
 
@@ -41,33 +58,79 @@ class CellScene extends Phaser.Scene {
     const background = this.add.image(centerX, centerY, CELL);
     background.setDisplaySize(this.scale.width, this.scale.height);
 
-    const calendarContainer = calendar.create(this);
+    this.calendar.create(this);
 
-    noiseEffect.create(this);
+    this.noiseEffect.create(this);
 
-    getDayAction(this.scene.key as GameScenes).then((dayActions) => {
-      this.dayActions = dayActions;
-      dayActions.onStart();
-      selectableAreas.create(this, dayActions);
-      const hudContainer = this.hud.create(
-        this,
-        [HUD_ITEMS.WEIGHT, HUD_ITEMS.ACTIONS],
-        dayActions,
-      );
-      this.children.bringToTop(hudContainer);
-      this.children.bringToTop(calendarContainer);
-    });
+    this.selectableAreasController.create(this);
 
-    events.game.async.on("change-world-transition", (_, done) => {
-      changeWorldTransition(this, done);
+    this.hudContainer = this.hud.create(this, [HUD_ITEMS.WEIGHT]);
+    this.children.bringToTop(this.hudContainer);
+    this.children.bringToTop(this.calendar.container);
+
+    this.stateMachine = new StateMachine(this);
+    this.stateMachine
+      .addState(CellScene.STATES.INTRO, IntroState, this)
+      .addState(CellScene.STATES.IDLE, IdleState, this)
+      .addState(CellScene.STATES.PERFORMING_ACTION, PerformingActionState, this)
+      .addState(CellScene.STATES.SCENE_TRANSITION, SceneTransitionState, this);
+    this.stateMachine.changeTo(CellScene.STATES.INTRO);
+  }
+
+  getElementBounds(key: SceneElementKeys): Vector4 {
+    return ELEMENTS_BOUNDS[key];
+  }
+
+  createElementsSelectableArea() {
+    Object.values(SCENE_ELEMENTS).forEach((element) => {
+      const bounds = this.getElementBounds(element);
+      this.addSelectableArea(element, bounds);
     });
   }
 
-  update(): void {}
+  addSelectableArea(key: SceneElementKeys, bounds: Vector4) {
+    this.selectableAreasController.addArea(key, {
+      bounds,
+      onClick: () => this.onClickElement(key),
+      onHover: () => this.noiseEffect.setNoiseArea(bounds),
+      onPointerOut: () => this.noiseEffect.resetNoiseArea(),
+    });
+  }
+
+  private onClickElement(key: SceneElementKeys) {
+    this.addElementClick(key);
+    this.selectableAreasController.setAllDisabled(true);
+    this.selectedElement = key;
+    this.stateMachine.changeTo(CellScene.STATES.PERFORMING_ACTION);
+  }
+
+  addElementClick(key: SceneElementKeys) {
+    this.clicksByElement.set(key, this.getElementClicks(key) + 1);
+  }
+
+  getElementClicks(key: SceneElementKeys) {
+    return this.clicksByElement.get(key) ?? 0;
+  }
+
+  getScenePhase(): CellScenePhases {
+    return this.currentScenePhase;
+  }
+
+  setScenePhase(phase: CellScenePhases): void {
+    this.currentScenePhase = phase;
+  }
+
+  update(time: number, delta: number) {
+    this.stateMachine?.updateAndHandleInput(delta);
+  }
 
   destroy() {
+    this.noiseEffect.destroy();
     this.hud.destroy();
-    events.game.async.clear("change-world-transition");
+    this.hudContainer.destroy();
+    this.calendar.destroy();
+    this.selectableAreasController?.destroyAll();
+    this.stateMachine.clear();
   }
 }
 

@@ -1,8 +1,8 @@
-import { IntroductionEvent, NoiseEffectEvent } from "./types";
+import { IntroductionEvent } from "./types";
 import { createEventManagers } from "@/libs/events/createEventManagers";
 
 export type CellSyncEvents = {
-  "noise-effect": NoiseEffectEvent;
+  placeholder: undefined;
 };
 
 export type CellAsyncEvents = {

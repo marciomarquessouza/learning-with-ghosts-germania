@@ -1,11 +1,11 @@
-import { Dialogue } from "./Dialogues";
-import { DreamLessonChallenges } from "./DreamLessonChallenges";
-import { GameMessage } from "./GameMessage";
-import { DreamIntroduction } from "./Introduction/DreamIntroduction";
-import { SceneIntroduction } from "./Introduction/SceneIntroduction";
-import { LessonNotebook } from "./LessonNotebook";
-import { RotateOverlay } from "./RotateOverlay";
-import { TrainLessonChallenges } from "./TrainLessonChallenges";
+import { Dialogue } from "./components/Dialogues";
+import { DreamLessonChallenges } from "./components/DreamLessonChallenges";
+import { GameMessage } from "./components/GameMessage";
+import { DreamIntroduction } from "./components/Introduction/DreamIntroduction";
+import { SceneIntroduction } from "./components/Introduction/SceneIntroduction";
+import { LessonNotebook } from "./components/LessonNotebook";
+import { RotateOverlay } from "./components/RotateOverlay";
+import { TrainLessonChallenges } from "./components/TrainLessonChallenges";
 
 export function GameUI() {
   return (

@@ -128,7 +128,7 @@ export class StateMachine {
   }
 
   log(
-    message: string,
+    message: string | Error | unknown,
     type: "info" | "enter" | "exit" | "init" | "error" | "warn",
   ): void {
     const enabled =
