@@ -1,21 +1,18 @@
-import { hudActions } from "./hudActions";
 import { hudWeight } from "./hudWeight";
 import { events } from "@/events/events";
 
 export enum HUD_ITEMS {
   WEIGHT = "WEIGHT",
-  ACTIONS = "ACTIONS",
 }
 
 export class Hud {
   preload(scene: Phaser.Scene): void {
     hudWeight.preload(scene);
-    hudActions.preload(scene);
   }
 
   create(
     scene: Phaser.Scene,
-    show: HUD_ITEMS[] = [HUD_ITEMS.WEIGHT, HUD_ITEMS.ACTIONS],
+    show: HUD_ITEMS[] = [HUD_ITEMS.WEIGHT],
   ): Phaser.GameObjects.Container {
     const container = scene.add.container(0, 0);
     container.name = "hud";

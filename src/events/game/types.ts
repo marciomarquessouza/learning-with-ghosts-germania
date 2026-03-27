@@ -1,6 +1,7 @@
 import { TransitionOptions } from "@/game/core/SceneManager";
 import { InteractionLine } from "@/libs/dialogues/types";
-import { GameScenes } from "@/types";
+import { GameScenes, GameWorlds } from "@/types";
+import { ReactNode } from "react";
 
 export interface ZoomPropsEvent {
   zoom: number;
@@ -24,4 +25,23 @@ export type ChangeSceneEvent = {
 export type UpdateWeightEvent = {
   operation: "increase" | "decrease";
   amount: number;
+};
+
+export type GameMessageShowEvent = {
+  title: string;
+  text: ReactNode;
+  closeAfter?: number;
+};
+
+export type ChangeWorldEvent = {
+  targetWorld: GameWorlds;
+  targetScene: GameScenes;
+};
+
+export type GameActionPromptEvent = {
+  title: string;
+  fixed?: boolean;
+  description?: string;
+  duration?: number;
+  autoClose?: boolean;
 };

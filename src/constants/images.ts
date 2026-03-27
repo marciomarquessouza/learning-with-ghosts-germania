@@ -34,15 +34,6 @@ export const HUD_WEIGHT_NUMBER_ATLAS_JSON = "/hud/number_spritesheet.json";
 export const HUD_WEIGHT_NUMBER_WIDTH = 70;
 export const HUD_WEIGHT_NUMBER_HEIGHT = 72.41;
 
-// HUD ACTIONS IMAGES
-export const HUD_ACTIONS_IMG = "/hud/hud_actions.png";
-export const HUD_ACTIONS_IMG_WIDTH = 221;
-export const HUD_ACTIONS_IMG_HEIGHT = 615;
-export const HUD_ACTION_BARS_IMG = "/hud/action_icons/bars_icon.png";
-export const HUD_ACTION_SOLITARY_IMG = "/hud/action_icons/solitary_icon.png";
-export const HUD_ACTION_CHALLENGE_IMG = "/hud/action_icons/challenge_icon.png";
-export const HUD_ACTION_EXIT_IMG = "/hud/action_icons/exit_icon.png";
-
 // ACTORS
 // PLAYER
 export const GHOST_SHADOW_IMG = "/actors/player/ghost_shadow.png";
@@ -125,3 +116,20 @@ export const ATTACK_ST_URSULA = "/train/feedback/attack/st_ursula.png";
 export const ATTACK_STRIPE_FRONT = "/train/feedback/attack/stripe_front.png";
 export const ATTACK_FEEDBACK_BACKGROUND =
   "/train/feedback/reward/challenge_feedback_background.png";
+
+// GAME UI
+// Action Dialogue Preload
+export const ACTION_DIALOGUE_ACCEPT_BTN =
+  "/ui/action_dialogue/action_dialogue_accept_btn.png";
+
+export const ACTION_DIALOGUE_BACKGROUND =
+  "/ui/action_dialogue/action_dialogue_background.jpg";
+
+export const ACTION_DIALOGUE_CLOSE_BTN =
+  "/ui/action_dialogue/action_dialogue_close_btn.png";
+
+export const ACTION_DIALOGUE_ICON =
+  "/ui/action_dialogue/action_dialogue_icon.png";
+
+export const ACTION_DIALOGUE_STRIPE =
+  "/ui/action_dialogue/action_dialogue_stripe.png";
