@@ -1,47 +1,14 @@
 import type { Metadata } from "next";
 import {
-  Geist,
-  Geist_Mono,
-  Josefin_Sans,
-  Russo_One,
-  Special_Elite,
-  UnifrakturMaguntia,
-} from "next/font/google";
+  geistSans,
+  geistMono,
+  josefinSans,
+  russoOne,
+  specialElite,
+  unifrakturMaguntia,
+} from "./fonts";
 import "./globals.css";
 import { Analytics } from "@vercel/analytics/next";
-
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
-});
-
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
-});
-
-const josefinSans = Josefin_Sans({
-  subsets: ["latin"],
-  variable: "--font-primary",
-});
-
-const russoOne = Russo_One({
-  subsets: ["latin"],
-  weight: "400",
-  variable: "--font-secondary",
-});
-
-const unifrakturMaguntia = UnifrakturMaguntia({
-  subsets: ["latin"],
-  weight: "400",
-  variable: "--font-unifraktur",
-});
-
-const specialElite = Special_Elite({
-  weight: "400",
-  variable: "--font-special-elite",
-  subsets: ["latin", "latin-ext"],
-});
 
 export const metadata: Metadata = {
   title: "Learning With Ghosts",
