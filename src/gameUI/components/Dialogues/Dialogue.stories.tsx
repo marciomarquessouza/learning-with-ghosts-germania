@@ -12,18 +12,12 @@ const meta: Meta<typeof Dialogue> = {
 
 export default meta;
 
-type Story = StoryObj<typeof Dialogue>;
-
-export const Default: Story = {
-  args: {},
-};
-
-export const ClickExample: StoryObj = {
+export const DialogueExample: StoryObj = {
   render: () => {
     const [count, setCount] = useState(0);
 
     const handleClick = () => {
-      events.game.async.emitAsync("dialogue/show", {
+      void events.game.async.emitAsync("dialogue/show", {
         lines: [{ text: "Test", type: "dialogue", character: ACTORS.PLAYER }],
       });
       setCount((current) => current + 1);

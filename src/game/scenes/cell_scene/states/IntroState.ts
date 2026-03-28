@@ -27,6 +27,12 @@ export class IntroState extends BaseState {
           lines: getDialogueLines("cell.welcome"),
         }),
       ),
+      stepBase(() =>
+        events.game.sync.emit("game-action-prompt/show", {
+          title: "The Jailer is Knocking the Door",
+          description: "Press 'Space' or 'E' to interact",
+        }),
+      ),
     ])
       .then(() => {
         this.changeTo(CellScene.STATES.IDLE);

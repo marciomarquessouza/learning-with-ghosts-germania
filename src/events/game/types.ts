@@ -40,8 +40,7 @@ export type ChangeWorldEvent = {
 
 export type GameActionPromptEvent = {
   title: string;
+  description: string;
   fixed?: boolean;
-  description?: string;
   duration?: number;
-  autoClose?: boolean;
 };
