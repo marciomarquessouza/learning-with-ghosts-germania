@@ -1,5 +1,5 @@
 import { useMemo } from "react";
-import { Button } from "../../../components/Button";
+import { Button } from "../../../../components/Button";
 import { InteractionTypes } from "@/libs/dialogues/types";
 
 export interface DialogueCTAProps {
