@@ -1,6 +1,7 @@
 import {
   ACTION_DIALOGUE_ACCEPT_BTN,
   ACTION_DIALOGUE_BACKGROUND,
+  ACTION_DIALOGUE_BACKGROUND_MIN,
   ACTION_DIALOGUE_CLOSE_BTN,
   ACTION_DIALOGUE_ICON,
   ACTION_DIALOGUE_STRIPE,
@@ -9,11 +10,12 @@ import { usePreloadImages } from "@/gameUI/hooks/usePreloadImages";
 import { AnimatePresence, motion } from "framer-motion";
 import { PromptStates } from "./GameActionPrompt.boundary";
 import { GameActionPromptEvent } from "@/events/game/types";
-import { GameActionPromptHeader as Header } from "./components/GameActionPromptHeader";
-import { GameActionPromptDescription as Description } from "./components/GameActionPromptDescription";
+import { PromptHeader } from "./components/PromptHeader";
+import { PromptDescription } from "./components/PromptDescription";
 import { GermaniaIcon } from "@/components/Icons/GermaniaIcon";
-import { GameActionPromptButtons as SideButtons } from "./components/GameActionPromptButtons";
-import { GameActionPromptTimer as Timer } from "./components/GameActionPromptTimer";
+import { SideButtons } from "./components/SideButtons";
+import { Timer } from "./components/Timer";
+import { PromptWrapper } from "./components/PromptWrapper";
 
 interface GameActionPromptProps extends GameActionPromptEvent {
   state: PromptStates;
@@ -26,11 +28,13 @@ export function GameActionPrompt({
   description,
   state,
   duration,
+  fixed,
   onAction,
   changeState,
 }: GameActionPromptProps) {
   usePreloadImages([
     ACTION_DIALOGUE_BACKGROUND,
+    ACTION_DIALOGUE_BACKGROUND_MIN,
     ACTION_DIALOGUE_ACCEPT_BTN,
     ACTION_DIALOGUE_CLOSE_BTN,
     ACTION_DIALOGUE_ICON,
@@ -42,7 +46,15 @@ export function GameActionPrompt({
     changeState("hidden");
   };
 
+  const handleExpand = () => {
+    changeState("expanded");
+  };
+
   const handleClose = () => {
+    if (fixed) {
+      changeState("minimized");
+      return;
+    }
     changeState("hidden");
   };
 
@@ -63,21 +75,20 @@ export function GameActionPrompt({
             transition={{ duration: 0.25 }}
             className="pointer-events-auto"
           >
-            <div className="relative w-[504px] h-[135px]">
-              <div
-                className={[
-                  "object-contain pointer-events-none",
-                  "absolute inset-0 w-full h-full",
-                  "bg-[url('/ui/action_dialogue/action_dialogue_background.jpg')]",
-                  "bg-no-repeat bg-center",
-                ].join(" ")}
-              />
+            <PromptWrapper state={state} onExpand={handleExpand}>
               <div className="relative px-10 py-6 flex flex-col items-center">
-                <Header title={title} />
-                <Description description={description} show />
+                <PromptHeader title={title} />
+                <PromptDescription
+                  description={description}
+                  hide={state === "minimized"}
+                />
               </div>
               <div className="absolute right-0 top-1/2 transform -translate-y-1/2 translate-x-full">
-                <SideButtons onAction={handleAction} onClose={handleClose} />
+                <SideButtons
+                  onAction={handleAction}
+                  onClose={handleClose}
+                  hide={state === "minimized"}
+                />
               </div>
               <div className="absolute -bottom-5 right-5 transform">
                 {duration && (
@@ -91,7 +102,7 @@ export function GameActionPrompt({
               <div className="absolute -bottom-2 left-1/2 transform -translate-x-1/2">
                 <GermaniaIcon />
               </div>
-            </div>
+            </PromptWrapper>
           </motion.div>
         )}
       </AnimatePresence>

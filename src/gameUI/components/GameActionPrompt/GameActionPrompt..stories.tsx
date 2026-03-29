@@ -21,6 +21,7 @@ type ActionsProps = {
   title: string;
   description: string;
   duration?: number;
+  fixed?: boolean;
   onAction: HandlerFunction;
 };
 
@@ -29,6 +30,7 @@ const component = ({
   title,
   description,
   duration,
+  fixed,
   onAction,
 }: ActionsProps) => {
   const [state, setState] = useState<PromptStates>(initialState);
@@ -47,6 +49,7 @@ const component = ({
         state={state}
         title={title}
         duration={duration}
+        fixed={fixed}
         description={description}
         changeState={changeState}
         onAction={onAction}
@@ -71,6 +74,17 @@ export const Timer: StoryObj<ActionsProps> = {
     title: "With Timer",
     description: "Description",
     duration: 30,
+    onAction: action("Action"),
+  },
+  render: component,
+};
+
+export const Minimized: StoryObj<ActionsProps> = {
+  args: {
+    initialState: "minimized",
+    title: "Minimized",
+    description: "Description",
+    fixed: true,
     onAction: action("Action"),
   },
   render: component,

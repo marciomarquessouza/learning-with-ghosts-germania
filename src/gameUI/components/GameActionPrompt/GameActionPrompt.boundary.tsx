@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { GameActionPrompt } from "./GameActionPrompt";
 
 export type GameActionPromptData = GameActionPromptEvent | null;
-export type PromptStates = "hidden" | "expanded";
+export type PromptStates = "hidden" | "minimized" | "expanded";
 
 export function GameActionPromptBoundary() {
   const [state, setState] = useState<PromptStates>("hidden");
