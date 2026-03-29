@@ -28,7 +28,7 @@ export class CellScene extends Phaser.Scene {
   public noiseEffect = new NoiseEffect();
   public selectableAreasController = new SelectableAreasController();
   public sceneElements = new SceneElementsController();
-  public currentScenePhase: CellScenePhases = "start";
+  public currentScenePhase: CellScenePhases = "before-jailer-talk";
 
   private hud = new Hud();
   private calendar = new WallCalendar();

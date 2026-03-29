@@ -18,7 +18,7 @@ export const ELEMENTS_BOUNDS: Record<SceneElementKeys, Vector4> = {
 };
 
 export type CellScenePhases =
-  | "start"
+  | "before-jailer-talk"
   | "after-jailer-talk"
   | "after-lesson"
   | "after-challenge";
