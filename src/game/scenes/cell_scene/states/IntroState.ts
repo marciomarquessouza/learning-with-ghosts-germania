@@ -1,8 +1,7 @@
 import { BaseState } from "@/libs/game/state-machine/BaseState";
 import { CellScene } from "..";
-import { runSteps, stepBase } from "@/libs/game/game-flow/runSteps";
-import { events } from "@/events/events";
-import { getDialogueLines } from "@/store/dialogueStore";
+import { IntroductionFlow } from "../flows/Introduction.flow";
+import { PauseFlow } from "../flows/Pause.flow";
 
 export class IntroState extends BaseState {
   constructor(
@@ -13,29 +12,19 @@ export class IntroState extends BaseState {
   }
 
   enter(): void {
+    this.cellScene.nextFlow = undefined;
     this.cellScene.selectableAreasController.setAllDisabled(true);
     this.cellScene.noiseEffect.resetNoiseArea();
 
-    runSteps([
-      stepBase(() =>
-        events.scenes.cell.async.emitAsync("show-introduction", {
-          title: "Welcome to the Prison",
-        }),
-      ),
-      stepBase(() =>
-        events.game.async.emitAsync("dialogue/show", {
-          lines: getDialogueLines("cell.welcome"),
-        }),
-      ),
-      stepBase(() =>
-        events.game.sync.emit("game-action-prompt/show", {
-          title: "The Jailer is Knocking the Door",
-          description: "Press 'Space' or 'E' to interact",
-        }),
-      ),
-    ])
-      .then(() => {
-        this.changeTo(CellScene.STATES.IDLE);
+    this.cellScene.flowController
+      .run(IntroductionFlow)
+      .then(({ nextState, nextFlow, cancelFlow }) => {
+        this.cellScene.nextFlow = nextFlow;
+        this.cellScene.cancelFlow = cancelFlow ?? PauseFlow;
+
+        if (nextState) {
+          this.changeTo(nextState);
+        }
       })
       .catch((error) => {
         this.stateMachine.log(error, "error");

@@ -17,9 +17,7 @@ export type GameSyncEvents = {
   "camera/zoom-to": ZoomPropsEvent;
   "game-message/show": GameMessageShowEvent;
   "game-message/hide": { delay?: number };
-  "game-action-prompt/show": GameActionPromptEvent;
   "game-action-prompt/hide": undefined;
-  "game-action-prompt/action": undefined;
   "dialogue/hide": { dialogueId?: string };
   "dialogue/set-mood": { mood: MOODS; character: ACTORS };
   "hud/weight-decrease": UpdateWeightEvent;
@@ -28,6 +26,7 @@ export type GameSyncEvents = {
 };
 
 export type GameAsyncEvents = {
+  "game-action-prompt/show": GameActionPromptEvent;
   "dialogue/show": DialogueEvent;
   "change-scene": ChangeSceneEvent;
 };

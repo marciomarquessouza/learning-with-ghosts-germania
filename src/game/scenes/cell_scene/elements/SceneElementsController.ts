@@ -1,23 +1,28 @@
+import { CellScene } from "..";
 import { SceneElementKeys } from "../constants/scene";
-import { Bed } from "./Bed";
-import { Desk } from "./Desk";
-import { Food } from "./Food";
-import { Rat } from "./Rat";
-import { SceneElement } from "./SceneElement";
+import { SceneStateNames } from "../constants/states";
+import { BedInteractionFlow } from "../flows/BedInteraction.flow";
+import { FlowClass } from "@/libs/flows/types";
+import { DeskInteractionFlow } from "../flows/DeskInteraction.flow";
+import { FoodInteractionFlow } from "../flows/FoodInteraction.flow";
+import { RatInteractionFlow } from "../flows/RatInteraction.flow";
 
 export class SceneElementsController {
-  private sceneElements: Record<SceneElementKeys, SceneElement>;
+  private elementsFlows: Record<
+    SceneElementKeys,
+    FlowClass<SceneStateNames, CellScene>
+  >;
 
   constructor() {
-    this.sceneElements = {
-      bed: new Bed(),
-      desk: new Desk(),
-      food: new Food(),
-      rat: new Rat(),
+    this.elementsFlows = {
+      bed: BedInteractionFlow,
+      desk: DeskInteractionFlow,
+      food: FoodInteractionFlow,
+      rat: RatInteractionFlow,
     };
   }
 
-  get(key: SceneElementKeys): SceneElement {
-    return this.sceneElements[key];
+  getElementFlow(key: SceneElementKeys): FlowClass<SceneStateNames, CellScene> {
+    return this.elementsFlows[key];
   }
 }

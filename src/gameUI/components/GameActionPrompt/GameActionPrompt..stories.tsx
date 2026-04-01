@@ -35,15 +35,13 @@ const component = ({
 }: ActionsProps) => {
   const [state, setState] = useState<PromptStates>(initialState);
 
-  const changeState = (newState: PromptStates) => {
-    setState(newState);
-  };
-
   return (
     <>
       <Button
         label={state === "hidden" ? "open" : "close"}
-        onClick={() => changeState(state === "hidden" ? "expanded" : "hidden")}
+        onClick={() =>
+          setState((s) => (s === "hidden" ? "expanded" : "hidden"))
+        }
       />
       <GameActionPrompt
         state={state}
@@ -51,8 +49,9 @@ const component = ({
         duration={duration}
         fixed={fixed}
         description={description}
-        changeState={changeState}
         onAction={onAction}
+        onExpanded={() => setState("expanded")}
+        onClosed={() => setState(fixed ? "minimized" : "hidden")}
       />
     </>
   );

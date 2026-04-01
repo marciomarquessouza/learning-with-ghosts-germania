@@ -20,7 +20,8 @@ import { PromptWrapper } from "./components/PromptWrapper";
 interface GameActionPromptProps extends GameActionPromptEvent {
   state: PromptStates;
   onAction: () => void;
-  changeState: (newState: PromptStates) => void;
+  onExpanded: () => void;
+  onClosed: () => void;
 }
 
 export function GameActionPrompt({
@@ -28,9 +29,9 @@ export function GameActionPrompt({
   description,
   state,
   duration,
-  fixed,
   onAction,
-  changeState,
+  onExpanded,
+  onClosed,
 }: GameActionPromptProps) {
   usePreloadImages([
     ACTION_DIALOGUE_BACKGROUND,
@@ -40,23 +41,6 @@ export function GameActionPrompt({
     ACTION_DIALOGUE_ICON,
     ACTION_DIALOGUE_STRIPE,
   ]);
-
-  const handleAction = () => {
-    onAction();
-    changeState("hidden");
-  };
-
-  const handleExpand = () => {
-    changeState("expanded");
-  };
-
-  const handleClose = () => {
-    if (fixed) {
-      changeState("minimized");
-      return;
-    }
-    changeState("hidden");
-  };
 
   return (
     <div
@@ -75,7 +59,7 @@ export function GameActionPrompt({
             transition={{ duration: 0.25 }}
             className="pointer-events-auto"
           >
-            <PromptWrapper state={state} onExpand={handleExpand}>
+            <PromptWrapper state={state} onExpand={onExpanded}>
               <div className="relative px-10 py-6 flex flex-col items-center">
                 <PromptHeader title={title} />
                 <PromptDescription
@@ -85,8 +69,8 @@ export function GameActionPrompt({
               </div>
               <div className="absolute right-0 top-1/2 transform -translate-y-1/2 translate-x-full">
                 <SideButtons
-                  onAction={handleAction}
-                  onClose={handleClose}
+                  onAction={onAction}
+                  onClosed={onClosed}
                   hide={state === "minimized"}
                 />
               </div>
@@ -95,7 +79,7 @@ export function GameActionPrompt({
                   <Timer
                     state={state}
                     duration={duration}
-                    onFinish={handleAction}
+                    onFinish={onAction}
                   />
                 )}
               </div>
