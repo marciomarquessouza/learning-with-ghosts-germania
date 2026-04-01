@@ -43,12 +43,30 @@ export const dialogues = defineDialogues<DefaultDialogues>({
     ],
   },
 
+  "cell.desk_blocked": {
+    scene: "CellScene",
+    lines: [
+      dialogue.player.neutral`
+        I don’t want to do anything at the table right now.
+      `,
+    ],
+  },
+
   "cell.food_interaction": {
     scene: "CellScene",
     lines: [
       dialogue.player.neutral`
         We won’t have any food until we win the language challenge.
         Forget it. I just want to sleep
+      `,
+    ],
+  },
+
+  "cell.food_blocked": {
+    scene: "CellScene",
+    lines: [
+      dialogue.player.neutral`
+        Não está na hora de comer ainda.
       `,
     ],
   },
@@ -63,12 +81,30 @@ export const dialogues = defineDialogues<DefaultDialogues>({
     ],
   },
 
+  "cell.rat_blocked": {
+    scene: "CellScene",
+    lines: [
+      dialogue.player.neutral`
+        Não quero mexer nisso agora.
+      `,
+    ],
+  },
+
   "cell.bed_interaction": {
     scene: "CellScene",
     lines: [
       dialogue.player.neutral`
         Talk to the general at the bars.
         Then we’ll sleep...
+      `,
+    ],
+  },
+
+  "cell.bed_blocked": {
+    scene: "CellScene",
+    lines: [
+      dialogue.player.neutral`
+        Você tem coisas para fazer antes de dormir.
       `,
     ],
   },

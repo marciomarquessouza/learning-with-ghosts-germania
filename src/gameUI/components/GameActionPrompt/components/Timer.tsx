@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { PromptStates } from "../GameActionPrompt.boundary";
 
-export interface GameActionPromptTimerProps {
+export interface TimerProps {
   state: PromptStates;
   duration?: number;
   onFinish: () => void;
@@ -9,11 +9,11 @@ export interface GameActionPromptTimerProps {
 
 const DEFAULT_TIME = 30;
 
-export function GameActionPromptTimer({
+export function Timer({
   state,
   duration = DEFAULT_TIME,
   onFinish,
-}: GameActionPromptTimerProps) {
+}: TimerProps) {
   const [time, setTime] = useState(duration);
 
   useEffect(() => {

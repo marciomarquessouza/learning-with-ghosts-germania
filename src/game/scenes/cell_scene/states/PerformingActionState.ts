@@ -1,6 +1,6 @@
 import { BaseState } from "@/libs/game/state-machine/BaseState";
 import { CellScene } from "..";
-import { SceneElementKeys } from "../constants/scene";
+import { PauseFlow } from "../flows/Pause.flow";
 
 export class PerformingActionState extends BaseState {
   constructor(
@@ -14,20 +14,19 @@ export class PerformingActionState extends BaseState {
     try {
       this.cellScene.selectableAreasController.setAllDisabled(true);
 
-      const selectedElementKey = this.getSelectedElementKey();
-      const elementBounds = this.cellScene.getElementBounds(selectedElementKey);
-      const sceneElement = this.cellScene.sceneElements.get(selectedElementKey);
-
-      if (!sceneElement) {
-        throw new Error(`Scene element "${selectedElementKey}" was not found`);
+      if (!this.cellScene.nextFlow) {
+        throw new Error("Flow not found");
       }
 
-      this.cellScene.noiseEffect.setNoiseArea(elementBounds);
+      this.cellScene.flowController
+        .run(this.cellScene.nextFlow)
+        .then(({ nextFlow, nextState, cancelFlow }) => {
+          this.cellScene.nextFlow = nextFlow;
+          this.cellScene.cancelFlow = cancelFlow ?? PauseFlow;
 
-      sceneElement
-        .action(this.scene, this.cellScene)
-        .then((nextState) => {
-          this.changeTo(nextState);
+          if (nextState) {
+            this.changeTo(nextState);
+          }
         })
         .catch((error) => {
           this.stateMachine.log(error, "error");
@@ -35,16 +34,9 @@ export class PerformingActionState extends BaseState {
         });
     } catch (error) {
       this.stateMachine.log(error, "error");
+      this.cellScene.nextFlow = undefined;
       this.changeTo(CellScene.STATES.IDLE);
     }
-  }
-
-  private getSelectedElementKey(): SceneElementKeys {
-    const selectedElement = this.cellScene.selectedElement;
-    if (!selectedElement) {
-      throw new Error("THe element was not selected");
-    }
-    return selectedElement;
   }
 
   update(): void {}

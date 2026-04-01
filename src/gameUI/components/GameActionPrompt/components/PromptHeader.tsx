@@ -1,11 +1,11 @@
 import { ACTION_DIALOGUE_STRIPE } from "@/constants/images";
 import Image from "next/image";
 
-export interface GameActionPromptHeaderProps {
+export interface PromptHeaderProps {
   title: string;
 }
 
-export function GameActionPromptHeader({ title }: GameActionPromptHeaderProps) {
+export function PromptHeader({ title }: PromptHeaderProps) {
   return (
     <div className="relative">
       <Image

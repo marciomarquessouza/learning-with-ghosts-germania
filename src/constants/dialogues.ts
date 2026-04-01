@@ -4,9 +4,13 @@ export const DIALOGUES = {
     MARLENE_FIRST_INTERACTION: "cell.marlene_first_interaction",
     DAILY_CHALLENGE: "cell.daily_challenge",
     DESK_INTERACTION: "cell.desk_interaction",
+    DESK_BLOCKED: "cell.desk_blocked",
     FOOD_INTERACTION: "cell.food_interaction",
+    FOOD_BLOCKED: "cell.food_blocked",
     RAT_INTERACTION: "cell.rat_interaction",
+    RAT_BLOCKED: "cell.rat_blocked",
     BED_INTERACTION: "cell.bed_interaction",
+    BED_BLOCKED: "cell.bed_blocked",
   },
 
   DREAM: {

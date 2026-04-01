@@ -1,8 +1,9 @@
 import { SelectableArea, SelectableAreaConfig } from "./SelectableArea";
 
 export class SelectableAreasController {
-  private scene!: Phaser.Scene;
   private areas = new Map<string, SelectableArea>();
+
+  constructor(private scene: Phaser.Scene) {}
 
   create(scene: Phaser.Scene) {
     this.scene = scene;

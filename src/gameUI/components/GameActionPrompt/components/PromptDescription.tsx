@@ -1,17 +1,17 @@
 import { AnimatePresence } from "framer-motion";
 
-export interface GameActionPromptDescriptionProps {
+export interface PromptDescriptionProps {
   description: string;
-  show?: boolean;
+  hide?: boolean;
 }
 
-export function GameActionPromptDescription({
+export function PromptDescription({
   description,
-  show,
-}: GameActionPromptDescriptionProps) {
+  hide,
+}: PromptDescriptionProps) {
   return (
     <AnimatePresence>
-      {show && (
+      {!hide && (
         <div className={"flex items-center justify-center mt-3 my-4"}>
           <p className="text-black text-lg font-primary tracking-wide">
             {description}

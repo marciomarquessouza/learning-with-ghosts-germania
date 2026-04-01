@@ -13,31 +13,41 @@ import {
   SceneElementKeys,
 } from "./constants/scene";
 import { WallCalendar } from "./elements/WallCalendar";
-import { CELL_SCENE_STATES } from "./constants/states";
+import { CELL_SCENE_STATES, SceneStateNames } from "./constants/states";
 import { IdleState } from "./states/IdleState";
 import { IntroState } from "./states/IntroState";
 import { PerformingActionState } from "./states/PerformingActionState";
 import { SceneElementsController } from "./elements/SceneElementsController";
 import { SceneTransitionState } from "./states/SceneTransitionState";
+import { FlowController } from "@/libs/flows/FlowController";
+import { FlowClass } from "@/libs/flows/types";
+import { PauseFlow } from "./flows/Pause.flow";
 
 const CELL = "cell";
 
 export class CellScene extends Phaser.Scene {
   public static readonly STATES = CELL_SCENE_STATES;
-  public selectedElement: SceneElementKeys | null = null;
   public noiseEffect = new NoiseEffect();
-  public selectableAreasController = new SelectableAreasController();
+  public selectableAreasController: SelectableAreasController;
   public sceneElements = new SceneElementsController();
-  public currentScenePhase: CellScenePhases = "before-jailer-talk";
+  public flowController: FlowController<SceneStateNames, CellScene>;
+  public nextFlow?: FlowClass<SceneStateNames, CellScene>;
+  public cancelFlow: FlowClass<SceneStateNames, CellScene> = PauseFlow;
 
   private hud = new Hud();
   private calendar = new WallCalendar();
   private stateMachine!: StateMachine;
   private hudContainer!: Phaser.GameObjects.Container;
+  private currentScenePhase: CellScenePhases = "before-jailer-talk";
   private clicksByElement = new Map<SceneElementKeys, number>();
 
   constructor() {
     super({ key: GAME_SCENES.CELL_SCENE });
+    this.selectableAreasController = new SelectableAreasController(this);
+    this.flowController = new FlowController({
+      scene: this,
+      gameScene: this as CellScene,
+    });
   }
 
   preload() {
@@ -100,7 +110,9 @@ export class CellScene extends Phaser.Scene {
   private onClickElement(key: SceneElementKeys) {
     this.addElementClick(key);
     this.selectableAreasController.setAllDisabled(true);
-    this.selectedElement = key;
+    const elementBounds = this.getElementBounds(key);
+    this.noiseEffect.setNoiseArea(elementBounds);
+    this.nextFlow = this.sceneElements.getElementFlow(key);
     this.stateMachine.changeTo(CellScene.STATES.PERFORMING_ACTION);
   }
 

@@ -125,6 +125,9 @@ export const ACTION_DIALOGUE_ACCEPT_BTN =
 export const ACTION_DIALOGUE_BACKGROUND =
   "/ui/action_dialogue/action_dialogue_background.jpg";
 
+export const ACTION_DIALOGUE_BACKGROUND_MIN =
+  "/ui/action_dialogue/action_dialogue_background_minimized.jpg";
+
 export const ACTION_DIALOGUE_CLOSE_BTN =
   "/ui/action_dialogue/action_dialogue_close_btn.png";
 

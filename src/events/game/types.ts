@@ -43,4 +43,5 @@ export type GameActionPromptEvent = {
   description: string;
   fixed?: boolean;
   duration?: number;
+  onAction?: () => void;
 };
