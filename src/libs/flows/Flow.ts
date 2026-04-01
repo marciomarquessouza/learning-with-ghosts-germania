@@ -12,4 +12,6 @@ export abstract class Flow<TState extends string, TGameScene> {
   }
 
   abstract run(): Promise<FlowResult<TState, TGameScene>>;
+
+  abstract destroy(): void;
 }

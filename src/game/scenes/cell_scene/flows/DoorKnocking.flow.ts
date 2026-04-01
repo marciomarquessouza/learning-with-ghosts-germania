@@ -34,4 +34,6 @@ export class DoorKnockingFlow extends Flow<SceneStateNames, CellScene> {
         };
     }
   }
+
+  destroy(): void {}
 }

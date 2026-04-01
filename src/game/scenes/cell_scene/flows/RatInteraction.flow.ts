@@ -26,4 +26,6 @@ export class RatInteractionFlow extends Flow<SceneStateNames, CellScene> {
         };
     }
   }
+
+  destroy(): void {}
 }

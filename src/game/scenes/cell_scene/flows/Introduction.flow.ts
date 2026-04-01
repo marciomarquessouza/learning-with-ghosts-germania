@@ -38,4 +38,6 @@ export class IntroductionFlow extends Flow<SceneStateNames, CellScene> {
         };
     }
   }
+
+  destroy(): void {}
 }
