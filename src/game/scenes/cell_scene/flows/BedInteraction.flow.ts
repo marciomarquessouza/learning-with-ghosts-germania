@@ -44,4 +44,6 @@ export class BedInteractionFlow extends Flow<SceneStateNames, CellScene> {
         };
     }
   }
+
+  destroy(): void {}
 }

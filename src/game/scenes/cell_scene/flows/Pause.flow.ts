@@ -9,4 +9,6 @@ export class PauseFlow extends Flow<SceneStateNames, CellScene> {
   run(): Promise<FlowResult<SceneStateNames, CellScene>> {
     throw new Error("Method not implemented.");
   }
+
+  destroy(): void {}
 }

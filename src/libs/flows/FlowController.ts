@@ -24,6 +24,7 @@ export class FlowController<TState extends string, TGameScene> {
     const result: FlowResult<TState, TGameScene> = await flow.run();
 
     if (this.currentFlow === flow) {
+      flow.destroy();
       this.currentFlow = undefined;
     }
 

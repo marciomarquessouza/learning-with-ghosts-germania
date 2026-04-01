@@ -27,4 +27,6 @@ export class DeskInteractionFlow extends Flow<SceneStateNames, CellScene> {
         };
     }
   }
+
+  destroy(): void {}
 }

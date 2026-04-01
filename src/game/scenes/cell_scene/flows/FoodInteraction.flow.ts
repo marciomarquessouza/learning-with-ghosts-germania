@@ -27,4 +27,6 @@ export class FoodInteractionFlow extends Flow<SceneStateNames, CellScene> {
         };
     }
   }
+
+  destroy(): void {}
 }
