@@ -20,7 +20,7 @@ import { PerformingActionState } from "./states/PerformingActionState";
 import { SceneElementsController } from "./elements/SceneElementsController";
 import { SceneTransitionState } from "./states/SceneTransitionState";
 import { FlowController } from "@/libs/flows/FlowController";
-import { FlowClass } from "@/libs/flows/types";
+import { FlowClass, FlowResult, ScheduledFlow } from "@/libs/flows/types";
 import { PauseFlow } from "./flows/Pause.flow";
 
 const CELL = "cell";
@@ -34,6 +34,12 @@ export class CellScene extends Phaser.Scene {
   public nextFlow?: FlowClass<SceneStateNames, CellScene>;
   public cancelFlow: FlowClass<SceneStateNames, CellScene> = PauseFlow;
 
+  private scheduledFlows: ScheduledFlow<SceneStateNames, CellScene>[] = [];
+  private queuedFlows: FlowClass<SceneStateNames, CellScene>[] = [];
+  private flowTimeoutsToClear = new Map<
+    string,
+    ReturnType<typeof setTimeout>
+  >();
   private hud = new Hud();
   private calendar = new WallCalendar();
   private stateMachine!: StateMachine;
@@ -130,6 +136,63 @@ export class CellScene extends Phaser.Scene {
 
   setScenePhase(phase: CellScenePhases): void {
     this.currentScenePhase = phase;
+  }
+
+  addScheduledFlows(
+    newScheduledFlows: ScheduledFlow<SceneStateNames, CellScene>[],
+  ) {
+    this.scheduledFlows = [...this.scheduledFlows, ...newScheduledFlows];
+  }
+
+  private runScheduledFlows() {
+    const flowsToRun = [...this.scheduledFlows];
+    this.scheduledFlows = [];
+    flowsToRun.forEach(({ id, delayMs, FlowClass, mode }) => {
+      const timeout = setTimeout(() => {
+        this.clearFlowTimeout(id);
+        const currentFlow = this.flowController.getCurrentFlow();
+        if (currentFlow && mode === "queue") {
+          this.queuedFlows.push(FlowClass);
+          return;
+        }
+        this.flowController.run(FlowClass);
+      }, delayMs);
+      this.flowTimeoutsToClear.set(id, timeout);
+    });
+  }
+
+  applyFlowResult(result: {
+    nextFlow?: FlowClass<SceneStateNames, CellScene>;
+    scheduledFlows?: ScheduledFlow<SceneStateNames, CellScene>[];
+    cancelFlow?: FlowClass<SceneStateNames, CellScene>;
+  }) {
+    const { nextFlow, scheduledFlows, cancelFlow } = result;
+
+    this.nextFlow = nextFlow;
+    this.cancelFlow = cancelFlow ?? PauseFlow;
+    this.addScheduledFlows(scheduledFlows ?? []);
+    this.runScheduledFlows();
+  }
+
+  private clearFlowTimeout(flowId: string) {
+    const timeout = this.flowTimeoutsToClear.get(flowId);
+    if (timeout) {
+      clearTimeout(timeout);
+      this.flowTimeoutsToClear.delete(flowId);
+    }
+  }
+
+  public hasQueuedFlows() {
+    return this.queuedFlows.length > 0;
+  }
+
+  public runQueuedFlow(): Promise<
+    FlowResult<SceneStateNames, CellScene>
+  > | void {
+    const nextFlow = this.queuedFlows.shift();
+    if (!nextFlow) return;
+
+    return this.flowController.run(nextFlow);
   }
 
   update(time: number, delta: number) {

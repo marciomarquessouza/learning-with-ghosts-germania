@@ -28,8 +28,15 @@ export class IntroductionFlow extends Flow<SceneStateNames, CellScene> {
         ]);
 
         return {
-          nextState: "PERFORMING_ACTION",
-          nextFlow: DoorKnockingFlow,
+          nextState: "SCENE_IDLE",
+          scheduledFlows: [
+            {
+              id: crypto.randomUUID(),
+              delayMs: 3_000,
+              FlowClass: DoorKnockingFlow,
+              mode: "queue",
+            },
+          ],
         };
 
       default:

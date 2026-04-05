@@ -1,7 +1,6 @@
 import { BaseState } from "@/libs/game/state-machine/BaseState";
 import { CellScene } from "..";
 import { IntroductionFlow } from "../flows/Introduction.flow";
-import { PauseFlow } from "../flows/Pause.flow";
 
 export class IntroState extends BaseState {
   constructor(
@@ -18,13 +17,9 @@ export class IntroState extends BaseState {
 
     this.cellScene.flowController
       .run(IntroductionFlow)
-      .then(({ nextState, nextFlow, cancelFlow }) => {
-        this.cellScene.nextFlow = nextFlow;
-        this.cellScene.cancelFlow = cancelFlow ?? PauseFlow;
-
-        if (nextState) {
-          this.changeTo(nextState);
-        }
+      .then(({ nextState, ...flowResult }) => {
+        this.cellScene.applyFlowResult(flowResult);
+        this.changeTo(nextState ?? CellScene.STATES.IDLE);
       })
       .catch((error) => {
         this.stateMachine.log(error, "error");
