@@ -71,6 +71,7 @@ export const Timer: StoryObj<ActionsProps> = {
   args: {
     initialState: "expanded",
     title: "With Timer",
+    fixed: true,
     description: "Description",
     durationMs: 30_000,
     onAction: action("Action"),

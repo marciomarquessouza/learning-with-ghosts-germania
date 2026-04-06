@@ -21,8 +21,6 @@ export function Timer({
       setTimeMs(durationMs);
       return;
     }
-
-    setTimeMs(durationMs);
   }, [state, durationMs]);
 
   useEffect(() => {
