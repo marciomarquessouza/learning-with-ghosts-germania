@@ -15,7 +15,10 @@ export function GameActionPromptBoundary() {
     const show = (payload: GameActionPromptEvent, done: () => void) => {
       setData(payload);
       setState("expanded");
-      closeEvent.current = done;
+      closeEvent.current = () => {
+        payload.onClose?.();
+        done();
+      };
     };
 
     const hide = () => {

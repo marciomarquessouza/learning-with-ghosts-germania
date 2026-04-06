@@ -22,15 +22,17 @@ import { SceneTransitionState } from "./states/SceneTransitionState";
 import { FlowController } from "@/libs/flows/FlowController";
 import { FlowClass, FlowResult, ScheduledFlow } from "@/libs/flows/types";
 import { PauseFlow } from "./flows/Pause.flow";
+import { AudioController } from "./audios/AudioController";
 
 const CELL = "cell";
 
 export class CellScene extends Phaser.Scene {
   public static readonly STATES = CELL_SCENE_STATES;
   public noiseEffect = new NoiseEffect();
-  public selectableAreasController: SelectableAreasController;
   public sceneElements = new SceneElementsController();
+  public selectableAreasController: SelectableAreasController;
   public flowController: FlowController<SceneStateNames, CellScene>;
+  public audioController = new AudioController();
   public nextFlow?: FlowClass<SceneStateNames, CellScene>;
   public cancelFlow: FlowClass<SceneStateNames, CellScene> = PauseFlow;
 
@@ -59,6 +61,7 @@ export class CellScene extends Phaser.Scene {
   preload() {
     const load: Phaser.Loader.LoaderPlugin = this.load;
     load.image(CELL, CELL_IMAGE);
+    this.audioController.preloadAll(this);
     this.noiseEffect.preload(this);
     this.calendar.preload(this);
     this.hud.preload(this);
@@ -73,6 +76,8 @@ export class CellScene extends Phaser.Scene {
 
     const background = this.add.image(centerX, centerY, CELL);
     background.setDisplaySize(this.scale.width, this.scale.height);
+
+    this.audioController.create(this);
 
     this.calendar.create(this);
 
@@ -147,7 +152,7 @@ export class CellScene extends Phaser.Scene {
   private runScheduledFlows() {
     const flowsToRun = [...this.scheduledFlows];
     this.scheduledFlows = [];
-    flowsToRun.forEach(({ id, delayMs, FlowClass, mode }) => {
+    flowsToRun.forEach(({ id, delayMs, FlowClass, mode, state }) => {
       const timeout = setTimeout(() => {
         this.clearFlowTimeout(id);
         const currentFlow = this.flowController.getCurrentFlow();
@@ -155,7 +160,8 @@ export class CellScene extends Phaser.Scene {
           this.queuedFlows.push(FlowClass);
           return;
         }
-        this.flowController.run(FlowClass);
+        this.nextFlow = FlowClass;
+        this.stateMachine.changeTo(state ?? CellScene.STATES.PERFORMING_ACTION);
       }, delayMs);
       this.flowTimeoutsToClear.set(id, timeout);
     });
@@ -200,6 +206,7 @@ export class CellScene extends Phaser.Scene {
   }
 
   destroy() {
+    this.audioController.destroy();
     this.noiseEffect.destroy();
     this.hud.destroy();
     this.hudContainer.destroy();

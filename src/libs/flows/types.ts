@@ -14,6 +14,7 @@ export type ScheduledFlow<TState extends string, TGameScene> = {
   mode: "parallel" | "queue";
   delayMs: number;
   FlowClass: FlowClass<TState, TGameScene>;
+  state?: TState;
 };
 
 export type FlowResult<TState extends string, TGameScene> = {

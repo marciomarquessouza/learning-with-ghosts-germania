@@ -15,11 +15,13 @@ export class DeskInteractionFlow extends Flow<SceneStateNames, CellScene> {
     switch (scenePhase) {
       default:
         await runSteps([
-          stepBase(() =>
+          stepBase(() => {
+            const elementBounds = this.gameScene.getElementBounds("desk");
+            this.gameScene.noiseEffect.setNoiseArea(elementBounds);
             events.game.async.emitAsync("dialogue/show", {
               lines: getDialogueLines("cell.desk_blocked"),
-            }),
-          ),
+            });
+          }),
         ]);
 
         return {

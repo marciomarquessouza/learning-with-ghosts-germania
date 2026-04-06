@@ -28,7 +28,7 @@ export function GameActionPrompt({
   title,
   description,
   state,
-  duration,
+  durationMs,
   onAction,
   onExpanded,
   onClosed,
@@ -75,10 +75,10 @@ export function GameActionPrompt({
                 />
               </div>
               <div className="absolute -bottom-5 right-5 transform">
-                {duration && (
+                {durationMs && (
                   <Timer
                     state={state}
-                    duration={duration}
+                    durationMs={durationMs}
                     onFinish={onAction}
                   />
                 )}

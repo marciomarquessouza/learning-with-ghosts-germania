@@ -13,6 +13,7 @@ export class PerformingActionState extends BaseState {
   enter(): void {
     try {
       this.cellScene.selectableAreasController.setAllDisabled(true);
+      this.cellScene.noiseEffect.resetNoiseArea();
 
       if (!this.cellScene.nextFlow) {
         throw new Error("Flow not found");
@@ -24,9 +25,7 @@ export class PerformingActionState extends BaseState {
           this.cellScene.nextFlow = nextFlow;
           this.cellScene.cancelFlow = cancelFlow ?? PauseFlow;
 
-          if (nextState) {
-            this.changeTo(nextState);
-          }
+          this.changeTo(nextState ?? CellScene.STATES.IDLE);
         })
         .catch((error) => {
           this.stateMachine.log(error, "error");
@@ -44,7 +43,7 @@ export class PerformingActionState extends BaseState {
   handleInput(): void {}
 
   exit(): void {
-    this.cellScene.selectableAreasController.setAllDisabled(false);
+    this.cellScene.selectableAreasController.setAllDisabled(true);
     this.cellScene.noiseEffect.resetNoiseArea();
   }
 }

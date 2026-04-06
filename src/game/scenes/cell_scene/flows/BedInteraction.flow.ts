@@ -14,11 +14,13 @@ export class BedInteractionFlow extends Flow<SceneStateNames, CellScene> {
     switch (scenePhase) {
       case "before-jailer-talk":
         await runSteps([
-          stepBase(() =>
+          stepBase(() => {
+            const elementBounds = this.gameScene.getElementBounds("bed");
+            this.gameScene.noiseEffect.setNoiseArea(elementBounds);
             events.game.async.emitAsync("dialogue/show", {
               lines: getDialogueLines("cell.bed_blocked"),
-            }),
-          ),
+            });
+          }),
         ]);
 
         return {

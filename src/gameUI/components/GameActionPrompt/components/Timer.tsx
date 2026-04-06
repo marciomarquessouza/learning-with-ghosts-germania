@@ -3,44 +3,46 @@ import { PromptStates } from "../GameActionPrompt.boundary";
 
 export interface TimerProps {
   state: PromptStates;
-  duration?: number;
+  durationMs?: number;
   onFinish: () => void;
 }
 
-const DEFAULT_TIME = 30;
+const DEFAULT_TIME = 30_000;
 
 export function Timer({
   state,
-  duration = DEFAULT_TIME,
+  durationMs = DEFAULT_TIME,
   onFinish,
 }: TimerProps) {
-  const [time, setTime] = useState(duration);
+  const [timeMs, setTimeMs] = useState(durationMs);
 
   useEffect(() => {
     if (state === "hidden") {
-      setTime(duration);
+      setTimeMs(durationMs);
       return;
     }
 
-    setTime(duration);
-  }, [state, duration]);
+    setTimeMs(durationMs);
+  }, [state, durationMs]);
 
   useEffect(() => {
     if (state === "hidden") return;
 
-    if (time <= 0) {
+    if (timeMs <= 0) {
       onFinish();
       return;
     }
 
     const timeout = window.setTimeout(() => {
-      setTime((currentTime) => Math.max(0, currentTime - 1));
-    }, 1000);
+      setTimeMs((current) => Math.max(0, current - 100));
+    }, 100);
 
     return () => window.clearTimeout(timeout);
-  }, [state, time, onFinish]);
+  }, [state, timeMs, onFinish]);
 
-  const progress = duration > 0 ? time / duration : 0;
+  const progress = durationMs > 0 ? timeMs / durationMs : 0;
+
+  const seconds = Math.ceil(timeMs / 1000);
 
   return (
     <div className="relative h-10 w-10 bg-red-600">
@@ -50,7 +52,7 @@ export function Timer({
       />
       <div className="absolute inset-0 flex items-center justify-center">
         <p className="text-center font-mono text-base font-bold tracking-wide text-white">
-          {time}
+          {seconds}
         </p>
       </div>
     </div>

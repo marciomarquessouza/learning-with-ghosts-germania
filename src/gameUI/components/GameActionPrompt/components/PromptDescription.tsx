@@ -1,4 +1,5 @@
 import { AnimatePresence } from "framer-motion";
+import { renderFormattedText } from "../helpers/renderFormattedText";
 
 export interface PromptDescriptionProps {
   description: string;
@@ -14,7 +15,7 @@ export function PromptDescription({
       {!hide && (
         <div className={"flex items-center justify-center mt-3 my-4"}>
           <p className="text-black text-lg font-primary tracking-wide">
-            {description}
+            {renderFormattedText(description)}
           </p>
         </div>
       )}

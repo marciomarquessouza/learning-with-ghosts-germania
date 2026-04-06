@@ -20,7 +20,7 @@ type ActionsProps = {
   initialState: PromptStates;
   title: string;
   description: string;
-  duration?: number;
+  durationMs?: number;
   fixed?: boolean;
   onAction: HandlerFunction;
 };
@@ -29,7 +29,7 @@ const component = ({
   initialState,
   title,
   description,
-  duration,
+  durationMs,
   fixed,
   onAction,
 }: ActionsProps) => {
@@ -46,7 +46,7 @@ const component = ({
       <GameActionPrompt
         state={state}
         title={title}
-        duration={duration}
+        durationMs={durationMs}
         fixed={fixed}
         description={description}
         onAction={onAction}
@@ -72,7 +72,7 @@ export const Timer: StoryObj<ActionsProps> = {
     initialState: "expanded",
     title: "With Timer",
     description: "Description",
-    duration: 30,
+    durationMs: 30_000,
     onAction: action("Action"),
   },
   render: component,

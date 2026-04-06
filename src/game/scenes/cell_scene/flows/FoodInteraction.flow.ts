@@ -15,11 +15,13 @@ export class FoodInteractionFlow extends Flow<SceneStateNames, CellScene> {
     switch (scenePhase) {
       default:
         await runSteps([
-          stepBase(() =>
+          stepBase(() => {
+            const elementBounds = this.gameScene.getElementBounds("food");
+            this.gameScene.noiseEffect.setNoiseArea(elementBounds);
             events.game.async.emitAsync("dialogue/show", {
               lines: getDialogueLines("cell.food_blocked"),
-            }),
-          ),
+            });
+          }),
         ]);
 
         return {

@@ -1,63 +1,80 @@
-type MusicPlayOptions = {
+import { getAudioActions, getAudioStates } from "@/store/audioStore";
+
+export type MusicPlayOptions = {
   volume?: number;
   loop?: boolean;
   fadeInMs?: number;
 };
 
-type StopMusicOptions = {
+export type StopMusicOptions = {
   fadeOutMs?: number;
 };
 
 export class AudioManager {
   private currentMusic?: Phaser.Sound.BaseSound;
+  private scene?: Phaser.Scene;
 
-  private isUnlocked = false;
-  private isMuted = false;
+  public preload(scene: Phaser.Scene, key: string, file: string) {
+    scene.load.audio(key, file);
+  }
 
-  private masterVolume = 1;
-  private musicVolume = 0.6;
-  private sfxVolume = 1;
-  private voiceVolume = 1;
+  create(scene: Phaser.Scene) {
+    this.scene = scene;
+    const { masterVolume, isMuted } = getAudioStates();
 
-  constructor(private scene: Phaser.Scene) {}
+    scene.sound.setVolume(masterVolume);
+    scene.sound.mute = isMuted;
+  }
+
+  private getScene(): Phaser.Scene {
+    if (!this.scene) {
+      throw new Error("Scene not available");
+    }
+    return this.scene;
+  }
 
   public unlock() {
-    this.isUnlocked = true;
+    getAudioActions().unlock();
   }
 
   public mute() {
-    this.isMuted = true;
-    this.scene.sound.mute = true;
+    getAudioActions().mute();
+    this.getScene().sound.mute = true;
   }
 
   public setMasterVolume(volume: number) {
-    this.masterVolume = Phaser.Math.Clamp(volume, 0, 1);
-    this.scene.sound.setVolume(this.masterVolume);
+    const masterVolume = Phaser.Math.Clamp(volume, 0, 1);
+    getAudioActions().setMasterVolume(masterVolume);
+    this.getScene().sound.setVolume(masterVolume);
   }
 
   public setMusicVolume(volume: number) {
-    this.musicVolume = Phaser.Math.Clamp(volume, 0, 1);
+    const musicVolume = Phaser.Math.Clamp(volume, 0, 1);
+    getAudioActions().setMusicVolume(musicVolume);
   }
 
   public setVoiceVolume(volume: number) {
-    this.voiceVolume = Phaser.Math.Clamp(volume, 0, 1);
+    const voiceVolume = Phaser.Math.Clamp(volume, 0, 1);
+    getAudioActions().setVoiceVolume(voiceVolume);
   }
 
   public setSfxVolume(volume: number) {
-    this.sfxVolume = Phaser.Math.Clamp(volume, 0, 1);
+    const sfxVolume = Phaser.Math.Clamp(volume, 0, 1);
+    getAudioActions().setSfxVolume(sfxVolume);
   }
 
   public unmute() {
-    this.isMuted = false;
-    this.scene.sound.mute = false;
+    getAudioActions().unmute();
+    this.getScene().sound.mute = false;
   }
 
   public playVoice(key: string, config?: Phaser.Types.Sound.SoundConfig) {
-    if (this.isMuted || !this.isUnlocked) return;
+    const { isMuted, isUnlocked, voiceVolume } = getAudioStates();
+    if (isMuted || !isUnlocked) return;
 
-    const sound = this.scene.sound.add(key, {
+    const sound = this.getScene().sound.add(key, {
       ...config,
-      volume: (config?.volume ?? 1) * this.voiceVolume,
+      volume: (config?.volume ?? 1) * voiceVolume,
     });
 
     sound.play();
@@ -66,19 +83,23 @@ export class AudioManager {
   }
 
   public playSfx(key: string, config?: Phaser.Types.Sound.SoundConfig) {
-    if (this.isMuted || !this.isUnlocked) return;
+    const { isMuted, isUnlocked, sfxVolume } = getAudioStates();
 
-    return this.scene.sound.play(key, {
+    if (isMuted || !isUnlocked) return;
+
+    return this.getScene().sound.play(key, {
       ...config,
-      volume: (config?.volume ?? 1) * this.sfxVolume,
+      loop: false,
+      volume: (config?.volume ?? 1) * sfxVolume,
     });
   }
 
   public playMusic(key: string, musicPlayOptions: MusicPlayOptions = {}) {
-    if (this.isMuted || !this.isUnlocked) return;
+    const { isMuted, isUnlocked, musicVolume } = getAudioStates();
+    if (isMuted || !isUnlocked) return;
 
     const {
-      volume = this.musicVolume,
+      volume = musicVolume,
       loop = true,
       fadeInMs = 0,
     } = musicPlayOptions;
@@ -89,7 +110,7 @@ export class AudioManager {
 
     this.stopMusic();
 
-    const music = this.scene.sound.add(key, {
+    const music = this.getScene().sound.add(key, {
       loop,
       volume: fadeInMs > 0 ? 0 : volume,
     });
@@ -99,7 +120,7 @@ export class AudioManager {
     this.currentMusic = music;
 
     if (fadeInMs > 0) {
-      this.scene.tweens.add({
+      this.getScene().tweens.add({
         targets: music,
         volume,
         duration: fadeInMs,
@@ -116,7 +137,7 @@ export class AudioManager {
     this.currentMusic = undefined;
 
     if (fadeOutMs > 0) {
-      this.scene.tweens.add({
+      this.getScene().tweens.add({
         targets: music,
         volume: 0,
         duration: fadeOutMs,
@@ -134,16 +155,5 @@ export class AudioManager {
 
   public destroy() {
     this.stopMusic();
-  }
-
-  public getSnapshot() {
-    return {
-      isUnlocked: this.isUnlocked,
-      isMuted: this.isMuted,
-      masterVolume: this.masterVolume,
-      musicVolume: this.musicVolume,
-      sfxVolume: this.sfxVolume,
-      voiceVolume: this.voiceVolume,
-    };
   }
 }

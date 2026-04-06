@@ -32,7 +32,7 @@ export class IntroductionFlow extends Flow<SceneStateNames, CellScene> {
           scheduledFlows: [
             {
               id: crypto.randomUUID(),
-              delayMs: 3_000,
+              delayMs: 2_000,
               FlowClass: DoorKnockingFlow,
               mode: "queue",
             },
