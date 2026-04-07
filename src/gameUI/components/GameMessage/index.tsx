@@ -28,15 +28,8 @@ export function GameMessage() {
   }, []);
 
   useEffect(() => {
-    const handler = (payload: { delay?: number }) => {
-      if (!payload.delay) {
-        setVisible(false);
-        return;
-      }
-
-      setTimeout(() => {
-        setVisible(false);
-      }, payload.delay);
+    const handler = () => {
+      setVisible(false);
     };
 
     events.game.sync.on("game-message/hide", handler);

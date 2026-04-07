@@ -16,13 +16,14 @@ export type GameSyncEvents = {
   "change-world": ChangeWorldEvent;
   "camera/zoom-to": ZoomPropsEvent;
   "game-message/show": GameMessageShowEvent;
-  "game-message/hide": { delay?: number };
+  "game-message/hide": undefined;
   "game-action-prompt/hide": undefined;
-  "dialogue/hide": { dialogueId?: string };
+  "dialogue/hide": undefined;
   "dialogue/set-mood": { mood: MOODS; character: ACTORS };
   "hud/weight-decrease": UpdateWeightEvent;
   "hud/show-items": HUD_ITEMS[];
   "hud/hide-items": HUD_ITEMS[];
+  "close-all-ui-interactions": undefined;
 };
 
 export type GameAsyncEvents = {

@@ -4,11 +4,10 @@ import { CellScene } from "..";
 import { FlowResult } from "@/libs/flows/types";
 import { runSteps, stepBase } from "@/libs/game/game-flow/runSteps";
 import { events } from "@/events/events";
+import { LessonAnnouncement } from "./LessonAnnouncement";
 
 export class DoorKnockingFlow extends Flow<SceneStateNames, CellScene> {
   public flowName: string = "DoorKnockingFlow";
-
-  private knockTimer?: Phaser.Time.TimerEvent;
 
   async run(): Promise<FlowResult<SceneStateNames, CellScene>> {
     const scenePhase = this.gameScene.getScenePhase();
@@ -25,34 +24,29 @@ export class DoorKnockingFlow extends Flow<SceneStateNames, CellScene> {
               this.gameScene.audioController.playKnockOnTheDoor(hitCount, 3);
             };
 
-            try {
-              knock();
+            knock();
 
-              this.knockTimer = this.scene.time.addEvent({
-                delay: 3_000,
-                loop: true,
-                callback: knock,
-              });
+            const knockTimer = this.scene.time.addEvent({
+              delay: 3_000,
+              loop: true,
+              callback: knock,
+            });
 
-              await events.game.async.emitAsync("game-action-prompt/show", {
-                title: "The Jailer is Knocking on the Door",
-                description: "Press {{key|Space}} or {{key|E}} to interact",
-                durationMs: 30_000,
-                fixed: true,
-                onClose: () => {
-                  this.knockTimer?.remove();
-                  this.knockTimer = undefined;
-                },
-              });
-            } finally {
-              this.knockTimer?.remove();
-              this.knockTimer = undefined;
-            }
+            events.game.async.emitAsync("game-action-prompt/show", {
+              title: "The Jailer is Knocking on the Door",
+              description: "Press {{key|Space}} or {{key|E}} to interact",
+              durationMs: 30_000,
+              fixed: true,
+              onAction: () => this.gameScene.runNextAction(LessonAnnouncement),
+              onClose: () => knockTimer.remove(),
+            });
           }),
         ]);
 
         return {
-          // TODO: replace by: nextState: "PERFORMING_ACTION" and nextAction: Lesson Announcement
+          nextFlow: LessonAnnouncement,
+          nextState: CellScene.STATES.PERFORMING_ACTION,
+          waitInputToContinue: true,
         };
 
       default:
@@ -62,8 +56,5 @@ export class DoorKnockingFlow extends Flow<SceneStateNames, CellScene> {
     }
   }
 
-  destroy(): void {
-    this.knockTimer?.remove();
-    this.knockTimer = undefined;
-  }
+  destroy(): void {}
 }

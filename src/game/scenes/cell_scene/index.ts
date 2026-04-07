@@ -201,6 +201,14 @@ export class CellScene extends Phaser.Scene {
     return this.flowController.run(nextFlow);
   }
 
+  public runNextAction(
+    flowClass: FlowClass<SceneStateNames, CellScene>,
+    state?: SceneStateNames,
+  ) {
+    this.nextFlow = flowClass;
+    this.stateMachine.changeTo(state ?? CellScene.STATES.PERFORMING_ACTION);
+  }
+
   update(time: number, delta: number) {
     this.stateMachine?.updateAndHandleInput(delta);
   }

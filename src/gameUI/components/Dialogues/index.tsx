@@ -73,6 +73,14 @@ export function Dialogue() {
     return () => events.game.async.off("dialogue/show", handler);
   }, [setTextToType]);
 
+  useEffect(() => {
+    const handle = () => {
+      closeDialogue();
+    };
+    events.game.sync.on("dialogue/hide", handle);
+    return () => events.game.sync.off("dialogue/hide", handle);
+  }, []);
+
   const advanceLine = useCallback(() => {
     if (lines[lineIndex].type === "alternatives" && selectedAlternative) {
       onAlternativeSelectedRef.current?.(selectedAlternative);
@@ -88,21 +96,7 @@ export function Dialogue() {
     const newLine = lines[newIndex];
 
     if (!newLine) {
-      events.game.sync.emit("dialogue/hide", {
-        dialogueId: dialogueId.current,
-      });
-      setVisible(false);
-      setLastLine(false);
-      setCharactersMood(
-        Object.values(ACTORS).map((character) => ({
-          mood: MOODS.NEUTRAL,
-          character,
-        })),
-      );
-      if (onCompleteRef.current) {
-        onCompleteRef.current?.();
-        onCompleteRef.current = () => {};
-      }
+      closeDialogue();
       return;
     }
 
@@ -121,15 +115,22 @@ export function Dialogue() {
     answer,
   ]);
 
-  const handleClickOnText = useCallback(() => {
-    if (lines[lineIndex].type !== "dialogue") {
-      return;
+  const closeDialogue = () => {
+    setVisible(false);
+    setLastLine(false);
+    if (onCompleteRef.current) {
+      onCompleteRef.current?.();
+      onCompleteRef.current = () => {};
     }
+  };
 
-    resumeText(() => advanceLine());
+  const handleClickOnText = useCallback(() => {
+    if (lines[lineIndex].type === "dialogue") {
+      resumeText(() => advanceLine());
+    }
   }, [resumeText, advanceLine, lineIndex, lines]);
 
-  const handleOnClick = useCallback(() => {
+  const handleOnCTAClick = useCallback(() => {
     if (lines[lineIndex].type !== "dialogue") {
       advanceLine();
       return;
@@ -240,7 +241,7 @@ export function Dialogue() {
               isTypeWritingComplete={isComplete}
               isLastLine={isLastLine}
               interactionType={lines[lineIndex].type}
-              onClick={handleOnClick}
+              onClick={handleOnCTAClick}
             />
           </div>
         </motion.div>

@@ -50,7 +50,7 @@ export class IdleState extends BaseState {
   }
 
   private onLeaveLessonInteractionArea() {
-    events.game.sync.emit("game-message/hide", {});
+    events.game.sync.emit("game-message/hide");
   }
 
   update(): void {
@@ -66,7 +66,7 @@ export class IdleState extends BaseState {
   }
 
   exit(): void {
-    events.game.sync.emit("game-message/hide", {});
+    events.game.sync.emit("game-message/hide");
     this.lessonInteractionArea.destroy();
     this.input?.clear();
     this.input = undefined;
