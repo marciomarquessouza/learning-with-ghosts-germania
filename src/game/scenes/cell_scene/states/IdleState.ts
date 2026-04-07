@@ -51,6 +51,7 @@ export class IdleState extends BaseState {
   }
 
   exit(): void {
+    console.log("Leaving IdleState");
     this.isWaitingForContinue = false;
     this.cellScene.selectableAreasController.setAllDisabled(true);
   }
