@@ -8,6 +8,14 @@ import { LessonAnnouncement } from "./LessonAnnouncement";
 
 export class DoorKnockingFlow extends Flow<SceneStateNames, CellScene> {
   public flowName: string = "DoorKnockingFlow";
+  private hitCount = 0;
+  private knockTimer?: Phaser.Time.TimerEvent;
+
+  private knock() {
+    this.hitCount += 1;
+    this.gameScene.cameras.main.shake(200, 0.02);
+    this.gameScene.audioController.playKnockOnTheDoor(this.hitCount, 3);
+  }
 
   async run(): Promise<FlowResult<SceneStateNames, CellScene>> {
     const scenePhase = this.gameScene.getScenePhase();
@@ -16,20 +24,12 @@ export class DoorKnockingFlow extends Flow<SceneStateNames, CellScene> {
       case "before-jailer-talk":
         await runSteps([
           stepBase(async () => {
-            let hitCount = 0;
+            this.knock();
 
-            const knock = () => {
-              hitCount += 1;
-              this.gameScene.cameras.main.shake(200, 0.02);
-              this.gameScene.audioController.playKnockOnTheDoor(hitCount, 3);
-            };
-
-            knock();
-
-            const knockTimer = this.scene.time.addEvent({
+            this.knockTimer = this.scene.time.addEvent({
               delay: 3_000,
               loop: true,
-              callback: knock,
+              callback: () => this.knock(),
             });
 
             events.game.async.emitAsync("game-action-prompt/show", {
@@ -37,16 +37,24 @@ export class DoorKnockingFlow extends Flow<SceneStateNames, CellScene> {
               description: "Press {{key|Space}} or {{key|E}} to interact",
               durationMs: 30_000,
               fixed: true,
-              onAction: () => this.gameScene.runNextAction(LessonAnnouncement),
-              onClose: () => knockTimer.remove(),
+              onAction: () =>
+                events.interactions.sync.emit("interaction/accept", {
+                  id: this.flowName,
+                }),
+              onClose: () => this.knockTimer?.remove(),
             });
           }),
+          stepBase(() =>
+            this.waitInteractionEvent(() => {
+              this.knockTimer?.remove();
+              events.game.sync.emit("game-action-prompt/hide");
+            }),
+          ),
         ]);
 
         return {
           nextFlow: LessonAnnouncement,
           nextState: CellScene.STATES.PERFORMING_ACTION,
-          waitInputToContinue: true,
         };
 
       default:

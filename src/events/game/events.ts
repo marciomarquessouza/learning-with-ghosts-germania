@@ -23,7 +23,6 @@ export type GameSyncEvents = {
   "hud/weight-decrease": UpdateWeightEvent;
   "hud/show-items": HUD_ITEMS[];
   "hud/hide-items": HUD_ITEMS[];
-  "close-all-ui-interactions": undefined;
 };
 
 export type GameAsyncEvents = {

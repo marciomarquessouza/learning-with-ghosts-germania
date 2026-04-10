@@ -22,5 +22,4 @@ export type FlowResult<TState extends string, TGameScene> = {
   nextFlow?: FlowClass<TState, TGameScene>;
   cancelFlow?: FlowClass<TState, TGameScene>;
   scheduledFlows?: ScheduledFlow<TState, TGameScene>[];
-  waitInputToContinue?: boolean;
 };

@@ -4,11 +4,8 @@ import { PauseFlow } from "../flows/Pause.flow";
 import { InputController } from "@/libs/inputs/InputController";
 import { createInputController } from "@/libs/inputs/createInputController";
 import { events } from "@/events/events";
-import { SceneStateNames } from "../constants/states";
 
 export class PerformingActionState extends BaseState {
-  private nextStateAfterInteract?: SceneStateNames;
-  private inputLocked = true;
   private input?: InputController;
 
   constructor(
@@ -33,15 +30,9 @@ export class PerformingActionState extends BaseState {
 
       this.cellScene.flowController
         .run(flow)
-        .then(({ nextFlow, nextState, cancelFlow, waitInputToContinue }) => {
+        .then(({ nextFlow, nextState, cancelFlow }) => {
           this.cellScene.nextFlow = nextFlow;
           this.cellScene.cancelFlow = cancelFlow ?? PauseFlow;
-
-          if (waitInputToContinue) {
-            this.nextStateAfterInteract = nextState;
-            this.inputLocked = false;
-            return;
-          }
 
           this.changeTo(nextState ?? CellScene.STATES.IDLE);
         })
@@ -59,18 +50,18 @@ export class PerformingActionState extends BaseState {
   update(): void {}
 
   handleInput(): void {
-    if (this.inputLocked) return;
-
     if (this.input?.justPressed("interact")) {
-      this.changeTo(this.nextStateAfterInteract ?? CellScene.STATES.IDLE);
+      const currentFlow = this.cellScene.flowController.getCurrentFlow();
+      if (currentFlow) {
+        events.interactions.sync.emit("interaction/accept", {
+          id: currentFlow.flowName,
+        });
+      }
     }
   }
 
   exit(): void {
-    this.inputLocked = true;
-    this.nextStateAfterInteract = undefined;
     this.cellScene.selectableAreasController.setAllDisabled(true);
     this.cellScene.noiseEffect.resetNoiseArea();
-    events.game.sync.emit("close-all-ui-interactions");
   }
 }
