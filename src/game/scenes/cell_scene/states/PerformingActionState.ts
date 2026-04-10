@@ -34,7 +34,9 @@ export class PerformingActionState extends BaseState {
           this.cellScene.nextFlow = nextFlow;
           this.cellScene.cancelFlow = cancelFlow ?? PauseFlow;
 
-          this.changeTo(nextState ?? CellScene.STATES.IDLE);
+          if (nextState) {
+            this.changeTo(nextState);
+          }
         })
         .catch((error) => {
           this.stateMachine.log(error, "error");
