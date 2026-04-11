@@ -17,7 +17,7 @@ export class FoodInteractionFlow extends Flow<SceneStateNames, CellScene> {
         await runSteps([
           stepBase(() => {
             const elementBounds = this.gameScene.getElementBounds("food");
-            this.gameScene.noiseEffect.setNoiseArea(elementBounds);
+            this.gameScene.noiseAnimations.setNoiseArea(elementBounds);
             events.game.async.emitAsync("dialogue/show", {
               lines: getDialogueLines("cell.food_blocked"),
             });

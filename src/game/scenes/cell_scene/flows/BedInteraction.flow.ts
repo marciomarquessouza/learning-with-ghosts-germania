@@ -16,7 +16,7 @@ export class BedInteractionFlow extends Flow<SceneStateNames, CellScene> {
         await runSteps([
           stepBase(() => {
             const elementBounds = this.gameScene.getElementBounds("bed");
-            this.gameScene.noiseEffect.setNoiseArea(elementBounds);
+            this.gameScene.noiseAnimations.setNoiseArea(elementBounds);
             events.game.async.emitAsync("dialogue/show", {
               lines: getDialogueLines("cell.bed_blocked"),
             });

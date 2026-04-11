@@ -17,7 +17,7 @@ export class DeskInteractionFlow extends Flow<SceneStateNames, CellScene> {
         await runSteps([
           stepBase(() => {
             const elementBounds = this.gameScene.getElementBounds("desk");
-            this.gameScene.noiseEffect.setNoiseArea(elementBounds);
+            this.gameScene.noiseAnimations.setNoiseArea(elementBounds);
             events.game.async.emitAsync("dialogue/show", {
               lines: getDialogueLines("cell.desk_blocked"),
             });

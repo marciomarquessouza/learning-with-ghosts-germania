@@ -19,7 +19,7 @@ export class PerformingActionState extends BaseState {
   enter(): void {
     try {
       this.cellScene.selectableAreasController.setAllDisabled(true);
-      this.cellScene.noiseEffect.resetNoiseArea();
+      this.cellScene.noiseAnimations.resetNoiseArea();
 
       if (!this.cellScene.nextFlow) {
         throw new Error("Flow not found");
@@ -64,6 +64,6 @@ export class PerformingActionState extends BaseState {
 
   exit(): void {
     this.cellScene.selectableAreasController.setAllDisabled(true);
-    this.cellScene.noiseEffect.resetNoiseArea();
+    this.cellScene.noiseAnimations.resetNoiseArea();
   }
 }

@@ -1,6 +1,5 @@
-import { CELL_IMAGE } from "@/constants/images";
 import { createScene } from "@/game/core/CreateScene";
-import { NoiseEffect } from "./effects/NoiseEffect";
+import { NoiseAnimations } from "./animations/NoiseAnimations";
 import { Hud, HUD_ITEMS } from "../../hud";
 import { GAME_SCENES } from "@/constants/game";
 import { StateMachine } from "@/libs/game/state-machine/StateMachine";
@@ -12,24 +11,21 @@ import {
   SCENE_ELEMENTS,
   SceneElementKeys,
 } from "./constants/scene";
-import { WallCalendar } from "./elements/WallCalendar";
 import { CELL_SCENE_STATES, SceneStateNames } from "./constants/states";
 import { IdleState } from "./states/IdleState";
 import { IntroState } from "./states/IntroState";
 import { PerformingActionState } from "./states/PerformingActionState";
-import { SceneElementsController } from "./elements/SceneElementsController";
+import { ScenarioController } from "./scenario/ScenarioController";
 import { SceneTransitionState } from "./states/SceneTransitionState";
 import { FlowController } from "@/libs/flows/FlowController";
 import { FlowClass, FlowResult, ScheduledFlow } from "@/libs/flows/types";
 import { PauseFlow } from "./flows/Pause.flow";
 import { AudioController } from "./audios/AudioController";
 
-const CELL = "cell";
-
 export class CellScene extends Phaser.Scene {
   public static readonly STATES = CELL_SCENE_STATES;
-  public noiseEffect = new NoiseEffect();
-  public sceneElements = new SceneElementsController();
+  public noiseAnimations = new NoiseAnimations();
+  public scenario = new ScenarioController();
   public selectableAreasController: SelectableAreasController;
   public flowController: FlowController<SceneStateNames, CellScene>;
   public audioController = new AudioController();
@@ -43,7 +39,6 @@ export class CellScene extends Phaser.Scene {
     ReturnType<typeof setTimeout>
   >();
   private hud = new Hud();
-  private calendar = new WallCalendar();
   private stateMachine!: StateMachine;
   private hudContainer!: Phaser.GameObjects.Container;
   private currentScenePhase: CellScenePhases = "before-jailer-talk";
@@ -59,11 +54,9 @@ export class CellScene extends Phaser.Scene {
   }
 
   preload() {
-    const load: Phaser.Loader.LoaderPlugin = this.load;
-    load.image(CELL, CELL_IMAGE);
     this.audioController.preloadAll(this);
-    this.noiseEffect.preload(this);
-    this.calendar.preload(this);
+    this.scenario.preload(this);
+    this.noiseAnimations.preload(this);
     this.hud.preload(this);
   }
 
@@ -71,23 +64,17 @@ export class CellScene extends Phaser.Scene {
     this.add.text(0, 0, "", {
       fontFamily: "SpecialElite",
     });
-    const centerX = this.cameras.main.centerX;
-    const centerY = this.cameras.main.centerY;
-
-    const background = this.add.image(centerX, centerY, CELL);
-    background.setDisplaySize(this.scale.width, this.scale.height);
 
     this.audioController.create(this);
 
-    this.calendar.create(this);
+    this.scenario.create(this);
 
-    this.noiseEffect.create(this);
+    this.noiseAnimations.create(this);
 
     this.selectableAreasController.create(this);
 
     this.hudContainer = this.hud.create(this, [HUD_ITEMS.WEIGHT]);
     this.children.bringToTop(this.hudContainer);
-    this.children.bringToTop(this.calendar.container);
 
     this.stateMachine = new StateMachine(this);
     this.stateMachine
@@ -113,8 +100,8 @@ export class CellScene extends Phaser.Scene {
     this.selectableAreasController.addArea(key, {
       bounds,
       onClick: () => this.onClickElement(key),
-      onHover: () => this.noiseEffect.setNoiseArea(bounds),
-      onPointerOut: () => this.noiseEffect.resetNoiseArea(),
+      onHover: () => this.noiseAnimations.setNoiseArea(bounds),
+      onPointerOut: () => this.noiseAnimations.resetNoiseArea(),
     });
   }
 
@@ -122,8 +109,8 @@ export class CellScene extends Phaser.Scene {
     this.addElementClick(key);
     this.selectableAreasController.setAllDisabled(true);
     const elementBounds = this.getElementBounds(key);
-    this.noiseEffect.setNoiseArea(elementBounds);
-    this.nextFlow = this.sceneElements.getElementFlow(key);
+    this.noiseAnimations.setNoiseArea(elementBounds);
+    this.nextFlow = this.scenario.getElementFlow(key);
     this.stateMachine.changeTo(CellScene.STATES.PERFORMING_ACTION);
   }
 
@@ -215,10 +202,10 @@ export class CellScene extends Phaser.Scene {
 
   destroy() {
     this.audioController.destroy();
-    this.noiseEffect.destroy();
+    this.noiseAnimations.destroy();
     this.hud.destroy();
     this.hudContainer.destroy();
-    this.calendar.destroy();
+    this.scenario.destroy();
     this.selectableAreasController?.destroyAll();
     this.stateMachine.clear();
   }

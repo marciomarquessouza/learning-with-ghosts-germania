@@ -35,7 +35,7 @@ export class IdleState extends BaseState {
 
     this.cellScene.nextFlow = undefined;
     this.cellScene.selectableAreasController.destroyAll();
-    this.cellScene.noiseEffect.resetNoiseArea();
+    this.cellScene.noiseAnimations.resetNoiseArea();
     this.cellScene.createElementsSelectableArea();
     this.isWaitingForContinue = true;
   }

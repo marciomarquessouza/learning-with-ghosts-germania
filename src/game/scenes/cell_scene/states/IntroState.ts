@@ -13,7 +13,7 @@ export class IntroState extends BaseState {
   enter(): void {
     this.cellScene.nextFlow = undefined;
     this.cellScene.selectableAreasController.setAllDisabled(true);
-    this.cellScene.noiseEffect.resetNoiseArea();
+    this.cellScene.noiseAnimations.resetNoiseArea();
 
     this.cellScene.flowController
       .run(IntroductionFlow)

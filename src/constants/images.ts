@@ -15,6 +15,8 @@ export const NOISE_ATLAS_IMG = "/cell/noise_spritesheet.png";
 export const NOISE_ATLAS_JSON = "/cell/noise_spritesheet.json";
 export const NOISE_WHITE_ATLAS_IMG = "/cell/noise_white_spritesheet.png";
 export const NOISE_WHITE_ATLAS_JSON = "/cell/noise_white_spritesheet.json";
+export const BARS_NOISE_ATLAS_IMG = "/cell/bars_noise_spritesheet.png";
+export const BARS_NOISE_ATLAS_JSON = "/cell/bars_noise_spritesheet.json";
 
 // CALENDAR IMAGES
 export const CALENDAR_IMG = "/cell/calendar.png";

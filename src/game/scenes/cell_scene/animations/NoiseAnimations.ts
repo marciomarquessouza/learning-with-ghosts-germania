@@ -3,7 +3,7 @@ import { NoiseSelectable } from "./noises/NoiseSelectable";
 import { NoiseDefault } from "./noises/NoiseDefault";
 import { Vector4 } from "@/utils/vectors";
 
-export class NoiseEffect {
+export class NoiseAnimations {
   private currentNoise: Noise | null = null;
   private readonly noiseDefault: Noise = new NoiseDefault();
   private readonly noiseSelectable: Noise = new NoiseSelectable();
