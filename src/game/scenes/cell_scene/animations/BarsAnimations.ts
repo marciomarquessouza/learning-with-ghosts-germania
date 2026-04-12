@@ -17,7 +17,7 @@ export class BarsAnimations {
     load.atlas(CELL_BARS, BARS_NOISE_ATLAS_IMG, BARS_NOISE_ATLAS_JSON);
   }
 
-  private getSprite(): Phaser.GameObjects.Sprite {
+  public getSprite(): Phaser.GameObjects.Sprite {
     if (!this.sprite) {
       throw new Error("Tutor sprite was not initialized. Call create() first.");
     }
@@ -52,7 +52,7 @@ export class BarsAnimations {
     this.sprite = scene.add
       .sprite(0, 0, CELL_BARS, "bars_noise_0")
       .setOrigin(0)
-      .setVisible(false);
+      .play(ANIMATIONS.BARS_WITH_NOISE);
   }
 
   setVisible(isVisible: boolean) {

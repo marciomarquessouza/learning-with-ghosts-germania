@@ -21,6 +21,8 @@ import { FlowController } from "@/libs/flows/FlowController";
 import { FlowClass, FlowResult, ScheduledFlow } from "@/libs/flows/types";
 import { PauseFlow } from "./flows/Pause.flow";
 import { AudioController } from "./audios/AudioController";
+import { Jailer } from "@/game/actors/jailer/Jailer";
+import { createJailerPortrait } from "@/game/actors/jailer/createJailerPortrait";
 
 export class CellScene extends Phaser.Scene {
   public static readonly STATES = CELL_SCENE_STATES;
@@ -31,6 +33,7 @@ export class CellScene extends Phaser.Scene {
   public audioController = new AudioController();
   public nextFlow?: FlowClass<SceneStateNames, CellScene>;
   public cancelFlow: FlowClass<SceneStateNames, CellScene> = PauseFlow;
+  public jailer: Jailer = createJailerPortrait();
 
   private scheduledFlows: ScheduledFlow<SceneStateNames, CellScene>[] = [];
   private queuedFlows: FlowClass<SceneStateNames, CellScene>[] = [];
@@ -56,6 +59,7 @@ export class CellScene extends Phaser.Scene {
   preload() {
     this.audioController.preloadAll(this);
     this.scenario.preload(this);
+    this.jailer.preload(this);
     this.noiseAnimations.preload(this);
     this.hud.preload(this);
   }
@@ -67,7 +71,9 @@ export class CellScene extends Phaser.Scene {
 
     this.audioController.create(this);
 
-    this.scenario.create(this);
+    this.jailer.create(this, { startX: this.scale.width / 2, startY: 0 });
+
+    this.scenario.create(this, this.jailer);
 
     this.noiseAnimations.create(this);
 
@@ -206,6 +212,7 @@ export class CellScene extends Phaser.Scene {
     this.hud.destroy();
     this.hudContainer.destroy();
     this.scenario.destroy();
+    this.jailer.destroy();
     this.selectableAreasController?.destroyAll();
     this.stateMachine.clear();
   }

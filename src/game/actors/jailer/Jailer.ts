@@ -1,13 +1,18 @@
+import { MOODS } from "@/constants/game";
 import { ActorPayload } from "../types/Actor";
 
-export class Jailer {
-  public sprite!: Phaser.Types.Physics.Arcade.SpriteWithDynamicBody;
+export abstract class Jailer {
+  abstract preload(scene: Phaser.Scene): void;
 
-  create(scene: Phaser.Scene, { startX, startY }: ActorPayload) {
-    this.sprite = scene.physics.add.sprite(startX, startY, "", "");
-  }
+  abstract getSprite(): Phaser.GameObjects.Sprite;
 
-  update() {}
+  abstract create(scene: Phaser.Scene, { startX, startY }: ActorPayload): void;
 
-  destroy() {}
+  abstract interactions(mood: MOODS): void;
+
+  abstract setActiveAndVisible(value: boolean): void;
+
+  abstract update(): void;
+
+  abstract destroy(): void;
 }

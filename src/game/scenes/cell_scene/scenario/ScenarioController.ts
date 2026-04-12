@@ -13,6 +13,7 @@ import { FoodInteractionFlow } from "../flows/FoodInteraction.flow";
 import { RatInteractionFlow } from "../flows/RatInteraction.flow";
 import { WallCalendar } from "./WallCalendar";
 import { BarsAnimations } from "../animations/BarsAnimations";
+import { Jailer } from "@/game/actors/jailer/Jailer";
 
 export type ScenarioPerspective = "cell" | "jailer";
 
@@ -24,10 +25,13 @@ export class ScenarioController {
     SceneElementKeys,
     FlowClass<SceneStateNames, CellScene>
   >;
+  private cellViewContainer: Phaser.GameObjects.Container | null = null;
+  private jailerViewContainer: Phaser.GameObjects.Container | null = null;
   private calendar = new WallCalendar();
   private bars = new BarsAnimations();
   private cellBackground: Phaser.GameObjects.Image | null = null;
   private jailerBackground: Phaser.GameObjects.Rectangle | null = null;
+  private jailer: Jailer | null = null;
 
   constructor() {
     this.elementsFlows = {
@@ -46,18 +50,39 @@ export class ScenarioController {
     this.calendar.preload(scene);
   }
 
-  create(scene: Phaser.Scene) {
+  create(
+    scene: Phaser.Scene,
+    jailer: Jailer,
+    defaultPerspective: ScenarioPerspective = "cell",
+  ) {
     const centerX = scene.cameras.main.centerX;
     const centerY = scene.cameras.main.centerY;
 
+    this.cellViewContainer = scene.add
+      .container(0, 0)
+      .setVisible(false)
+      .setActive(false);
     this.cellBackground = scene.add.image(centerX, centerY, CELL_BACKGROUND);
     this.cellBackground.setDisplaySize(scene.scale.width, scene.scale.height);
+    this.cellViewContainer.add(this.cellBackground);
 
     this.calendar.create(scene);
+    if (this.calendar.container) {
+      this.cellViewContainer.add(this.calendar.container);
+    }
 
-    this.createJailerBackground(scene);
-
+    this.jailerViewContainer = scene.add
+      .container(0, 0)
+      .setVisible(false)
+      .setActive(false);
+    this.jailerBackground = this.createJailerBackground(scene);
+    this.jailerViewContainer.add(this.jailerBackground);
+    this.jailer = jailer;
+    this.jailerViewContainer.add(this.jailer.getSprite());
     this.bars.create(scene);
+    this.jailerViewContainer.add(this.bars.getSprite());
+
+    this.setScenarioByPerspective(defaultPerspective);
   }
 
   getElementFlow(key: SceneElementKeys): FlowClass<SceneStateNames, CellScene> {
@@ -76,36 +101,32 @@ export class ScenarioController {
   }
 
   private showJailerPerspective() {
-    this.hideCellPerspective();
-    this.jailerBackground?.setVisible(true);
-    this.bars.setVisible(true);
-  }
-
-  private hideJailPerspective() {
-    this.jailerBackground?.setVisible(false);
-    this.bars.setVisible(false);
+    this.cellViewContainer?.setActive(false);
+    this.cellViewContainer?.setVisible(false);
+    this.jailerViewContainer?.setActive(true);
+    this.jailerViewContainer?.setVisible(true);
   }
 
   private showCellPerspective() {
-    this.hideJailPerspective();
-    this.cellBackground?.setVisible(true);
-    this.calendar.setVisible(true);
-  }
-
-  private hideCellPerspective() {
-    this.cellBackground?.setVisible(false);
-    this.calendar.setVisible(false);
+    this.jailerViewContainer?.setActive(false);
+    this.jailerViewContainer?.setVisible(false);
+    this.cellViewContainer?.setActive(true);
+    this.cellViewContainer?.setVisible(true);
   }
 
   private createJailerBackground(scene: Phaser.Scene) {
-    this.jailerBackground = scene.add
+    return scene.add
       .rectangle(0, 0, scene.scale.width, scene.scale.height, 0xb20d0f)
-      .setOrigin(0, 0)
-      .setVisible(false);
+      .setOrigin(0, 0);
   }
 
   destroy() {
     this.bars.destroy();
+    this.jailer = null;
     this.calendar.destroy();
+    this.cellViewContainer = null;
+    this.jailerViewContainer = null;
+    this.cellBackground = null;
+    this.jailerBackground = null;
   }
 }
