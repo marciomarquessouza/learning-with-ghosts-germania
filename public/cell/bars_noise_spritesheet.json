@@ -4,108 +4,108 @@
       "frame": {
         "x": 0,
         "y": 0,
-        "w": 1667,
-        "h": 858
+        "w": 1920,
+        "h": 1080
       },
       "rotated": false,
       "trimmed": false,
       "spriteSourceSize": {
         "x": 0,
         "y": 0,
-        "w": 1667,
-        "h": 858
+        "w": 1920,
+        "h": 1080
       },
       "sourceSize": {
-        "w": 1667,
-        "h": 858
+        "w": 1920,
+        "h": 1080
       }
     },
     "bars_noise_1": {
       "frame": {
-        "x": 1667,
+        "x": 1920,
         "y": 0,
-        "w": 1667,
-        "h": 858
+        "w": 1920,
+        "h": 1080
       },
       "rotated": false,
       "trimmed": false,
       "spriteSourceSize": {
         "x": 0,
         "y": 0,
-        "w": 1667,
-        "h": 858
+        "w": 1920,
+        "h": 1080
       },
       "sourceSize": {
-        "w": 1667,
-        "h": 858
+        "w": 1920,
+        "h": 1080
       }
     },
     "bars_noise_2": {
       "frame": {
-        "x": 3334,
+        "x": 3840,
         "y": 0,
-        "w": 1667,
-        "h": 858
+        "w": 1920,
+        "h": 1080
       },
       "rotated": false,
       "trimmed": false,
       "spriteSourceSize": {
         "x": 0,
         "y": 0,
-        "w": 1667,
-        "h": 858
+        "w": 1920,
+        "h": 1080
       },
       "sourceSize": {
-        "w": 1667,
-        "h": 858
+        "w": 1920,
+        "h": 1080
       }
     },
     "bars_noise_3": {
       "frame": {
         "x": 0,
-        "y": 858,
-        "w": 1667,
-        "h": 858
+        "y": 1080,
+        "w": 1920,
+        "h": 1080
       },
       "rotated": false,
       "trimmed": false,
       "spriteSourceSize": {
         "x": 0,
         "y": 0,
-        "w": 1667,
-        "h": 858
+        "w": 1920,
+        "h": 1080
       },
       "sourceSize": {
-        "w": 1667,
-        "h": 858
+        "w": 1920,
+        "h": 1080
       }
     },
     "bars_noise_4": {
       "frame": {
-        "x": 1667,
-        "y": 858,
-        "w": 1667,
-        "h": 858
+        "x": 1920,
+        "y": 1080,
+        "w": 1920,
+        "h": 1080
       },
       "rotated": false,
       "trimmed": false,
       "spriteSourceSize": {
         "x": 0,
         "y": 0,
-        "w": 1667,
-        "h": 858
+        "w": 1920,
+        "h": 1080
       },
       "sourceSize": {
-        "w": 1667,
-        "h": 858
+        "w": 1920,
+        "h": 1080
       }
     }
   },
   "meta": {
     "image": "bars_noise_spritesheet.png",
     "size": {
-      "w": 5001,
-      "h": 1716
+      "w": 5760,
+      "h": 2160
     },
     "scale": "1.0"
   }

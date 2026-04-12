@@ -8,7 +8,7 @@ type CalendarContainer = Phaser.GameObjects.Container & {
 const CALENDAR_KEY = "calendar";
 
 export class WallCalendar {
-  public container!: CalendarContainer;
+  public container: CalendarContainer | null = null;
   private dayText: Phaser.GameObjects.Text | null = null;
 
   preload(scene: Phaser.Scene) {
@@ -18,11 +18,11 @@ export class WallCalendar {
   create(scene: Phaser.Scene): CalendarContainer {
     const day = useGameStore.getState().day;
 
-    const container = scene.add
+    this.container = scene.add
       .container(0, 0)
       .setPosition(1390, 180)
-      .setScale(0.8);
-    container.name = "calendar";
+      .setScale(0.8) as CalendarContainer;
+    this.container.name = "calendar";
     const calendarImage = scene.add.image(0, 0, CALENDAR_KEY);
     calendarImage.setOrigin(0.5, 0);
     calendarImage.setScale(1.2);
@@ -38,14 +38,16 @@ export class WallCalendar {
       this.dayText?.setFontFamily("SpecialElite");
     });
 
-    if (this.container) {
-      this.container.increaseDay = this.increaseDay;
-    }
+    this.container.increaseDay = this.increaseDay;
 
-    container.add(calendarImage);
-    container.add(this.dayText);
+    this.container.add(calendarImage);
+    this.container.add(this.dayText);
 
-    return container as CalendarContainer;
+    return this.container;
+  }
+
+  setVisible(isVisible: boolean) {
+    this.container?.setVisible(isVisible);
   }
 
   increaseDay() {
@@ -55,7 +57,7 @@ export class WallCalendar {
   }
 
   destroy() {
-    this.container.destroy();
+    this.container?.destroy();
     this.dayText?.destroy();
   }
 }

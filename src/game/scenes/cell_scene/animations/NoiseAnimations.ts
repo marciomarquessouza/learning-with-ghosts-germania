@@ -39,6 +39,10 @@ export class NoiseAnimations {
     this.currentNoise.create(this.scene);
   }
 
+  clearCellNoise() {
+    this.currentNoise?.destroy();
+  }
+
   destroy(): void {
     this.destroyCurrent();
     this.noiseDefault.destroy();
