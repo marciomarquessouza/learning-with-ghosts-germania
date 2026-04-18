@@ -15,6 +15,7 @@ export class LessonAnnouncement extends Flow<SceneStateNames, CellScene> {
         await runSteps([
           stepBase(() => {
             this.gameScene.noiseAnimations.clearCellNoise();
+            this.gameScene.gameCamera.fadeIn({ duration: 2_000 });
             this.gameScene.scenario.setScenarioByPerspective("jailer");
           }),
         ]);

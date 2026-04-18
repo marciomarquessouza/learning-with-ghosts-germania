@@ -48,6 +48,7 @@ export class DreamScene extends GameScene {
       throw new Error("Mobile/Tablet version not implemented");
 
     this.gameCamera.create(this);
+    this.gameCamera.fadeOut({ duration: 0 });
     const cursors = this.input.keyboard?.createCursorKeys();
     this.scenario.create(this);
     const boundW = this.scenario.width;

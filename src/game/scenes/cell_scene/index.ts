@@ -23,6 +23,7 @@ import { PauseFlow } from "./flows/Pause.flow";
 import { AudioController } from "./audios/AudioController";
 import { Jailer } from "@/game/actors/jailer/Jailer";
 import { createJailerPortrait } from "@/game/actors/jailer/createJailerPortrait";
+import { GameCamera } from "@/game/cameras/GameCamera";
 
 export class CellScene extends Phaser.Scene {
   public static readonly STATES = CELL_SCENE_STATES;
@@ -31,9 +32,11 @@ export class CellScene extends Phaser.Scene {
   public selectableAreasController: SelectableAreasController;
   public flowController: FlowController<SceneStateNames, CellScene>;
   public audioController = new AudioController();
+  public gameCamera = new GameCamera();
+  public jailer: Jailer = createJailerPortrait();
+
   public nextFlow?: FlowClass<SceneStateNames, CellScene>;
   public cancelFlow: FlowClass<SceneStateNames, CellScene> = PauseFlow;
-  public jailer: Jailer = createJailerPortrait();
 
   private scheduledFlows: ScheduledFlow<SceneStateNames, CellScene>[] = [];
   private queuedFlows: FlowClass<SceneStateNames, CellScene>[] = [];
@@ -69,9 +72,14 @@ export class CellScene extends Phaser.Scene {
       fontFamily: "SpecialElite",
     });
 
+    this.gameCamera.create(this);
+
     this.audioController.create(this);
 
-    this.jailer.create(this, { startX: this.scale.width / 2, startY: 0 });
+    this.jailer.create(this, {
+      startX: this.scale.width / 2 + 60,
+      startY: 0,
+    });
 
     this.scenario.create(this, this.jailer);
 

@@ -1,9 +1,8 @@
 import { events } from "@/events/events";
 
-const FADE_IN_DURATION = 1500;
 const FADE_COLOR = { r: 0, g: 0, b: 0 };
 
-interface FadeInProps {
+interface FadeProps {
   duration?: number;
 }
 
@@ -24,7 +23,6 @@ export class GameCamera {
     this.scene = scene;
     this.mainCamera = scene.cameras.main;
     this.mainCamera.setBackgroundColor(0x000000);
-    this.mainCamera.fadeOut(0, FADE_COLOR.r, FADE_COLOR.g, FADE_COLOR.b);
 
     const zoomHandler = ({
       zoom,
@@ -51,16 +49,31 @@ export class GameCamera {
     this.camera.startFollow(target, true, 0.12, 0.12);
   }
 
-  async fadeIn({ duration }: FadeInProps): Promise<void> {
+  async fadeIn({ duration }: FadeProps): Promise<void> {
     return new Promise((resolve) => {
       this.camera.fadeIn(
-        duration ?? FADE_IN_DURATION,
+        duration ?? 0,
         FADE_COLOR.r,
         FADE_COLOR.g,
         FADE_COLOR.b,
       );
 
       this.camera.once("camerafadeincomplete", () => {
+        resolve();
+      });
+    });
+  }
+
+  async fadeOut({ duration }: FadeProps): Promise<void> {
+    return new Promise((resolve) => {
+      this.mainCamera.fadeOut(
+        duration ?? 0,
+        FADE_COLOR.r,
+        FADE_COLOR.g,
+        FADE_COLOR.b,
+      );
+
+      this.camera.once("camerafadeoutcomplete", () => {
         resolve();
       });
     });
