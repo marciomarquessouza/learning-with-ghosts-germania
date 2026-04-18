@@ -211,6 +211,7 @@ export class CellScene extends Phaser.Scene {
   }
 
   update(time: number, delta: number) {
+    this.jailer.update(delta);
     this.stateMachine?.updateAndHandleInput(delta);
   }
 

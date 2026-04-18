@@ -1,0 +1,192 @@
+{
+  "frames": {
+    "jailer_idle_0": {
+      "frame": {
+        "x": 0,
+        "y": 0,
+        "w": 760,
+        "h": 1174
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 760,
+        "h": 1174
+      },
+      "sourceSize": {
+        "w": 760,
+        "h": 1174
+      }
+    },
+    "jailer_idle_1": {
+      "frame": {
+        "x": 760,
+        "y": 0,
+        "w": 760,
+        "h": 1174
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 760,
+        "h": 1174
+      },
+      "sourceSize": {
+        "w": 760,
+        "h": 1174
+      }
+    },
+    "jailer_idle_2": {
+      "frame": {
+        "x": 1520,
+        "y": 0,
+        "w": 760,
+        "h": 1174
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 760,
+        "h": 1174
+      },
+      "sourceSize": {
+        "w": 760,
+        "h": 1174
+      }
+    },
+    "jailer_idle_3": {
+      "frame": {
+        "x": 0,
+        "y": 1174,
+        "w": 760,
+        "h": 1174
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 760,
+        "h": 1174
+      },
+      "sourceSize": {
+        "w": 760,
+        "h": 1174
+      }
+    },
+    "jailer_idle_4": {
+      "frame": {
+        "x": 760,
+        "y": 1174,
+        "w": 760,
+        "h": 1174
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 760,
+        "h": 1174
+      },
+      "sourceSize": {
+        "w": 760,
+        "h": 1174
+      }
+    },
+    "jailer_idle_5": {
+      "frame": {
+        "x": 1520,
+        "y": 1174,
+        "w": 760,
+        "h": 1174
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 760,
+        "h": 1174
+      },
+      "sourceSize": {
+        "w": 760,
+        "h": 1174
+      }
+    },
+    "jailer_idle_6": {
+      "frame": {
+        "x": 0,
+        "y": 2348,
+        "w": 760,
+        "h": 1174
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 760,
+        "h": 1174
+      },
+      "sourceSize": {
+        "w": 760,
+        "h": 1174
+      }
+    },
+    "jailer_idle_7": {
+      "frame": {
+        "x": 760,
+        "y": 2348,
+        "w": 760,
+        "h": 1174
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 760,
+        "h": 1174
+      },
+      "sourceSize": {
+        "w": 760,
+        "h": 1174
+      }
+    },
+    "jailer_idle_8": {
+      "frame": {
+        "x": 1520,
+        "y": 2348,
+        "w": 760,
+        "h": 1174
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 760,
+        "h": 1174
+      },
+      "sourceSize": {
+        "w": 760,
+        "h": 1174
+      }
+    }
+  },
+  "meta": {
+    "image": "spritesheet.png",
+    "size": {
+      "w": 2280,
+      "h": 3522
+    },
+    "scale": "1.0"
+  }
+}

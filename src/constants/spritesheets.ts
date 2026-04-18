@@ -8,6 +8,13 @@ export type SpritesheetEntry = {
 };
 
 export const SPRITESHEETS = {
+  jailer: {
+    idle: {
+      key: 'jailer-idle',
+      image: '/actors/jailer/idle/spritesheet.png',
+      atlas: '/actors/jailer/idle/spritesheet.json'
+    }
+  },
   learningNode: {
     sprouting_idle: {
       key: 'learningNode-sprouting_idle',

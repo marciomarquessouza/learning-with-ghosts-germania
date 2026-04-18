@@ -1,10 +1,14 @@
 import { MOODS } from "@/constants/game";
 import { ActorPayload } from "../types/Actor";
+import { JailerAnimations } from "./portraitView/animations/JailerAnimations";
+import { JAILER_STATES } from "./portraitView/constants/states";
 
 export abstract class Jailer {
-  abstract preload(scene: Phaser.Scene): void;
+  public static readonly STATES = JAILER_STATES;
 
-  abstract getSprite(): Phaser.GameObjects.Sprite;
+  abstract animations: JailerAnimations;
+
+  abstract preload(scene: Phaser.Scene): void;
 
   abstract create(scene: Phaser.Scene, { startX, startY }: ActorPayload): void;
 
@@ -12,7 +16,9 @@ export abstract class Jailer {
 
   abstract setActiveAndVisible(value: boolean): void;
 
-  abstract update(): void;
+  abstract getSprite(): Phaser.GameObjects.Sprite;
+
+  abstract update(delta: number): void;
 
   abstract destroy(): void;
 }
