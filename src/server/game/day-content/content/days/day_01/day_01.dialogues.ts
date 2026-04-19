@@ -39,8 +39,8 @@ export const dialogues = defineDialogues<DayDialogues>({
         But… I have no books. 
         Nothing to study with.
       `,
-      dialogue.jailer.happy`
-        [MARLENE SMILES] That’s your problem. 
+      dialogue.jailer.neutral`
+        That’s your problem. 
         See you in ten minutes.
       `,
     ],

@@ -13,6 +13,11 @@ export const SPRITESHEETS = {
       key: 'jailer-idle',
       image: '/actors/jailer/idle/spritesheet.png',
       atlas: '/actors/jailer/idle/spritesheet.json'
+    },
+    talking: {
+      key: 'jailer-talking',
+      image: '/actors/jailer/talking/spritesheet.png',
+      atlas: '/actors/jailer/talking/spritesheet.json'
     }
   },
   learningNode: {

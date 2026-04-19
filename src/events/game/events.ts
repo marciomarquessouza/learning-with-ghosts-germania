@@ -19,7 +19,9 @@ export type GameSyncEvents = {
   "game-message/hide": undefined;
   "game-action-prompt/hide": undefined;
   "dialogue/hide": undefined;
-  "dialogue/set-mood": { mood: MOODS; character: ACTORS };
+  "dialogue/typing-start": { actor?: ACTORS | null };
+  "dialogue/typing-end": undefined;
+  "dialogue/set-mood": { mood: MOODS; actor: ACTORS };
   "hud/weight-decrease": UpdateWeightEvent;
   "hud/show-items": HUD_ITEMS[];
   "hud/hide-items": HUD_ITEMS[];

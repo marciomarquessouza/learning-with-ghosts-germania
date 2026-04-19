@@ -1,7 +1,7 @@
 import { useState, useEffect, useCallback, useRef, useMemo } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useTypewriter } from "@/gameUI/hooks/useTypewriter";
-import { ACTORS, MOODS } from "@/constants/game";
+import { ACTORS } from "@/constants/game";
 import { useDeviceType } from "@/gameUI/hooks/useDeviceType";
 import Image from "next/image";
 import { useCharacterDetails } from "@/gameUI/hooks/useCharacterDetails";
@@ -105,7 +105,7 @@ export function Dialogue() {
     setLastLine(newIndex === lines.length - 1);
     setCharactersMood(newLine.moods);
     setTextToType(newLine.text);
-    startTyping();
+    startTyping({ actor: newLine.character });
   }, [
     lineIndex,
     lines,
@@ -176,7 +176,7 @@ export function Dialogue() {
           initial={{ opacity: 0, bottom: -40 }}
           animate={{ opacity: 1, bottom: 40 }}
           exit={{ opacity: 0, bottom: -40 }}
-          onAnimationComplete={startTyping}
+          onAnimationComplete={() => startTyping({ actor: character })}
           transition={{ duration: 0.5, ease: "linear" }}
           onClick={handleClickOnText}
           onKeyDown={handleKeyDown}

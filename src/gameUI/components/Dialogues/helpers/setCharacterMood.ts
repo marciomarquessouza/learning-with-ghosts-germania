@@ -9,7 +9,7 @@ export function setCharactersMood(
     charactersMood.forEach(({ mood, character }) => {
       events.game.sync.emit("dialogue/set-mood", {
         mood,
-        character,
+        actor: character,
       });
     });
 

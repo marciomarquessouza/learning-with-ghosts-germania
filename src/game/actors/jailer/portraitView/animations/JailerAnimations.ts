@@ -1,3 +1,4 @@
+import { MOODS } from "@/constants/game";
 import { SPRITESHEETS } from "@/constants/spritesheets";
 import { AnimationManager } from "@/libs/animation/AnimationManager";
 
@@ -29,9 +30,25 @@ export class JailerAnimations {
       frameRate: 3.5,
       repeat: -1,
     });
+
+    this.animationManager.createAnimation(scene, "talking", {
+      frameRate: 4,
+      repeat: -1,
+    });
   }
 
   playIdle() {
     this.animationManager.playAnimation(this.getSprite(), "idle", true);
+  }
+
+  playTalking() {
+    this.animationManager.playAnimation(this.getSprite(), "talking", true);
+  }
+
+  playAnimationByMood(mood: MOODS) {
+    switch (mood) {
+      default:
+        this.animationManager.playAnimation(this.getSprite(), "idle", true);
+    }
   }
 }

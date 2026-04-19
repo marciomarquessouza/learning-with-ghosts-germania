@@ -26,6 +26,15 @@ export abstract class Flow<TState extends string, TGameScene> {
     });
   }
 
+  public delay(ms: number, callback?: () => void): Promise<void> {
+    return new Promise((resolve) => {
+      window.setTimeout(() => {
+        callback?.();
+        resolve();
+      }, ms);
+    });
+  }
+
   abstract run(): Promise<FlowResult<TState, TGameScene>>;
 
   abstract destroy(): void;

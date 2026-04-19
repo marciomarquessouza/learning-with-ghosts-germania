@@ -18,11 +18,11 @@ export class ListeningState extends BaseState {
     this.player.animations.playIdle();
 
     this.removeListeners.push(
-      events.game.sync.on("dialogue/set-mood", ({ character, mood }) => {
-        if (character === ACTORS.PLAYER) {
+      events.game.sync.on("dialogue/set-mood", ({ actor, mood }) => {
+        if (actor === ACTORS.PLAYER) {
           this.player.animations.playAnimationByMood(mood);
         } else {
-          const target = (this.scene as GameScene).actors.get(character);
+          const target = (this.scene as GameScene).actors.get(actor);
           this.player.faceTarget(target?.sprite);
         }
       }),

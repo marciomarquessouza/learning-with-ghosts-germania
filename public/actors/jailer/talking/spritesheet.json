@@ -1,6 +1,6 @@
 {
   "frames": {
-    "jailer_idle_0": {
+    "jailer_talking_0": {
       "frame": {
         "x": 0,
         "y": 0,
@@ -20,7 +20,7 @@
         "h": 1173
       }
     },
-    "jailer_idle_1": {
+    "jailer_talking_1": {
       "frame": {
         "x": 760,
         "y": 0,
@@ -40,7 +40,7 @@
         "h": 1173
       }
     },
-    "jailer_idle_2": {
+    "jailer_talking_2": {
       "frame": {
         "x": 1520,
         "y": 0,
@@ -60,7 +60,7 @@
         "h": 1173
       }
     },
-    "jailer_idle_3": {
+    "jailer_talking_3": {
       "frame": {
         "x": 0,
         "y": 1173,
@@ -80,7 +80,7 @@
         "h": 1173
       }
     },
-    "jailer_idle_4": {
+    "jailer_talking_4": {
       "frame": {
         "x": 760,
         "y": 1173,
@@ -100,7 +100,7 @@
         "h": 1173
       }
     },
-    "jailer_idle_5": {
+    "jailer_talking_5": {
       "frame": {
         "x": 1520,
         "y": 1173,
@@ -120,7 +120,7 @@
         "h": 1173
       }
     },
-    "jailer_idle_6": {
+    "jailer_talking_6": {
       "frame": {
         "x": 0,
         "y": 2346,
@@ -140,7 +140,7 @@
         "h": 1173
       }
     },
-    "jailer_idle_7": {
+    "jailer_talking_7": {
       "frame": {
         "x": 760,
         "y": 2346,
@@ -160,7 +160,7 @@
         "h": 1173
       }
     },
-    "jailer_idle_8": {
+    "jailer_talking_8": {
       "frame": {
         "x": 1520,
         "y": 2346,

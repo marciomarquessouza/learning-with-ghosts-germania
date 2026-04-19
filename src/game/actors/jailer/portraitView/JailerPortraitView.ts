@@ -1,12 +1,11 @@
-import { MOODS } from "@/constants/game";
 import { ActorPayload } from "../../types/Actor";
 import { Jailer } from "../Jailer";
 import { JailerAnimations } from "./animations/JailerAnimations";
 import { StateMachine } from "@/libs/game/state-machine/StateMachine";
 import { IdleState } from "./states/IdleState";
+import { InteractionState } from "./states/InteractionState";
 
 export class JailerPortrait extends Jailer {
-  public sprite!: Phaser.Types.Physics.Arcade.SpriteWithDynamicBody;
   public animations = new JailerAnimations();
   private stateMachine!: StateMachine;
 
@@ -24,7 +23,10 @@ export class JailerPortrait extends Jailer {
     this.animations.create(scene, this.sprite);
 
     this.stateMachine = new StateMachine(scene);
-    this.stateMachine.addState(Jailer.STATES.IDLE, IdleState, this);
+    this.stateMachine
+      .addState(Jailer.STATES.IDLE, IdleState, this)
+      .addState(Jailer.STATES.INTERACTION, InteractionState, this);
+    // Initial State
     this.stateMachine.changeTo(Jailer.STATES.IDLE);
   }
 
@@ -40,8 +42,12 @@ export class JailerPortrait extends Jailer {
     this.sprite.setActive(value).setVisible(value);
   }
 
-  interactions(mood: MOODS): void {
-    throw new Error("Method not implemented.");
+  enterIdle(): void {
+    this.stateMachine.changeTo(Jailer.STATES.IDLE);
+  }
+
+  enterInteraction(): void {
+    this.stateMachine.changeTo(Jailer.STATES.INTERACTION);
   }
 
   update(delta: number): void {

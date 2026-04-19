@@ -1,3 +1,5 @@
+import { ACTORS } from "@/constants/game";
+import { events } from "@/events/events";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 
 const TEXT_SPEED = 15;
@@ -35,6 +37,12 @@ export const useTypewriter = (speed: number = TEXT_SPEED) => {
     };
   }, [readyToTyping, text, speed]);
 
+  useEffect(() => {
+    if (isComplete) {
+      events.game.sync.emit("dialogue/typing-end");
+    }
+  }, [isComplete]);
+
   const setTextToType = (textToType: string) => {
     setDisplayedText("");
     setText(textToType);
@@ -42,8 +50,9 @@ export const useTypewriter = (speed: number = TEXT_SPEED) => {
     setReadyToTyping(false);
   };
 
-  const startTyping = () => {
+  const startTyping = (options?: { actor?: ACTORS | null }) => {
     setReadyToTyping(true);
+    events.game.sync.emit("dialogue/typing-start", { actor: options?.actor });
   };
 
   const resumeText = useCallback(
@@ -56,7 +65,7 @@ export const useTypewriter = (speed: number = TEXT_SPEED) => {
         callback?.();
       }
     },
-    [isComplete, text]
+    [isComplete, text],
   );
 
   return useMemo(
@@ -67,6 +76,6 @@ export const useTypewriter = (speed: number = TEXT_SPEED) => {
       setTextToType,
       resumeText,
     }),
-    [resumeText, displayedText, isComplete]
+    [resumeText, displayedText, isComplete],
   );
 };
