@@ -4,7 +4,7 @@ import { CellScene } from "..";
 import { FlowResult } from "@/libs/flows/types";
 import { runSteps, stepBase } from "@/libs/game/game-flow/runSteps";
 import { events } from "@/events/events";
-import { LessonAnnouncement } from "./LessonAnnouncement";
+import { LessonAnnouncement } from "./LessonAnnouncement.flow";
 
 export class DoorKnockingFlow extends Flow<SceneStateNames, CellScene> {
   public flowName: string = "DoorKnockingFlow";

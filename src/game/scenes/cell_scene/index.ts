@@ -18,7 +18,6 @@ import { PerformingActionState } from "./states/PerformingActionState";
 import { ScenarioController } from "./scenario/ScenarioController";
 import { SceneTransitionState } from "./states/SceneTransitionState";
 import { FlowController } from "@/libs/flows/FlowController";
-import { FlowClass, FlowResult, ScheduledFlow } from "@/libs/flows/types";
 import { PauseFlow } from "./flows/Pause.flow";
 import { AudioController } from "./audios/AudioController";
 import { Jailer } from "@/game/actors/jailer/Jailer";
@@ -30,20 +29,11 @@ export class CellScene extends Phaser.Scene {
   public noiseAnimations = new NoiseAnimations();
   public scenario = new ScenarioController();
   public selectableAreasController: SelectableAreasController;
-  public flowController: FlowController<SceneStateNames, CellScene>;
+  public flowController?: FlowController<SceneStateNames, CellScene>;
   public audioController = new AudioController();
   public gameCamera = new GameCamera();
   public jailer: Jailer = createJailerPortrait();
 
-  public nextFlow?: FlowClass<SceneStateNames, CellScene>;
-  public cancelFlow: FlowClass<SceneStateNames, CellScene> = PauseFlow;
-
-  private scheduledFlows: ScheduledFlow<SceneStateNames, CellScene>[] = [];
-  private queuedFlows: FlowClass<SceneStateNames, CellScene>[] = [];
-  private flowTimeoutsToClear = new Map<
-    string,
-    ReturnType<typeof setTimeout>
-  >();
   private hud = new Hud();
   private stateMachine!: StateMachine;
   private hudContainer!: Phaser.GameObjects.Container;
@@ -53,10 +43,6 @@ export class CellScene extends Phaser.Scene {
   constructor() {
     super({ key: GAME_SCENES.CELL_SCENE });
     this.selectableAreasController = new SelectableAreasController(this);
-    this.flowController = new FlowController({
-      scene: this,
-      gameScene: this as CellScene,
-    });
   }
 
   preload() {
@@ -96,6 +82,15 @@ export class CellScene extends Phaser.Scene {
       .addState(CellScene.STATES.IDLE, IdleState, this)
       .addState(CellScene.STATES.PERFORMING_ACTION, PerformingActionState, this)
       .addState(CellScene.STATES.SCENE_TRANSITION, SceneTransitionState, this);
+
+    this.flowController = new FlowController({
+      scene: this,
+      gameScene: this as CellScene,
+      cancelFlow: PauseFlow,
+      onRunScheduledFlow: (state) =>
+        this.stateMachine.changeTo(state || CellScene.STATES.PERFORMING_ACTION),
+    });
+
     this.stateMachine.changeTo(CellScene.STATES.INTRO);
   }
 
@@ -124,7 +119,8 @@ export class CellScene extends Phaser.Scene {
     this.selectableAreasController.setAllDisabled(true);
     const elementBounds = this.getElementBounds(key);
     this.noiseAnimations.setNoiseArea(elementBounds);
-    this.nextFlow = this.scenario.getElementFlow(key);
+    const flow = this.scenario.getElementFlow(key);
+    this.flowController?.setNextFlow(flow);
     this.stateMachine.changeTo(CellScene.STATES.PERFORMING_ACTION);
   }
 
@@ -142,72 +138,6 @@ export class CellScene extends Phaser.Scene {
 
   setScenePhase(phase: CellScenePhases): void {
     this.currentScenePhase = phase;
-  }
-
-  addScheduledFlows(
-    newScheduledFlows: ScheduledFlow<SceneStateNames, CellScene>[],
-  ) {
-    this.scheduledFlows = [...this.scheduledFlows, ...newScheduledFlows];
-  }
-
-  private runScheduledFlows() {
-    const flowsToRun = [...this.scheduledFlows];
-    this.scheduledFlows = [];
-    flowsToRun.forEach(({ id, delayMs, FlowClass, mode, state }) => {
-      const timeout = setTimeout(() => {
-        this.clearFlowTimeout(id);
-        const currentFlow = this.flowController.getCurrentFlow();
-        if (currentFlow && mode === "queue") {
-          this.queuedFlows.push(FlowClass);
-          return;
-        }
-        this.nextFlow = FlowClass;
-        this.stateMachine.changeTo(state ?? CellScene.STATES.PERFORMING_ACTION);
-      }, delayMs);
-      this.flowTimeoutsToClear.set(id, timeout);
-    });
-  }
-
-  applyFlowResult(result: {
-    nextFlow?: FlowClass<SceneStateNames, CellScene>;
-    scheduledFlows?: ScheduledFlow<SceneStateNames, CellScene>[];
-    cancelFlow?: FlowClass<SceneStateNames, CellScene>;
-  }) {
-    const { nextFlow, scheduledFlows, cancelFlow } = result;
-
-    this.nextFlow = nextFlow;
-    this.cancelFlow = cancelFlow ?? PauseFlow;
-    this.addScheduledFlows(scheduledFlows ?? []);
-    this.runScheduledFlows();
-  }
-
-  private clearFlowTimeout(flowId: string) {
-    const timeout = this.flowTimeoutsToClear.get(flowId);
-    if (timeout) {
-      clearTimeout(timeout);
-      this.flowTimeoutsToClear.delete(flowId);
-    }
-  }
-
-  public hasQueuedFlows() {
-    return this.queuedFlows.length > 0;
-  }
-
-  public runQueuedFlow(): Promise<
-    FlowResult<SceneStateNames, CellScene>
-  > | void {
-    const nextFlow = this.queuedFlows.shift();
-    if (!nextFlow) return;
-
-    return this.flowController.run(nextFlow);
-  }
-
-  public runNextAction(
-    flowClass: FlowClass<SceneStateNames, CellScene>,
-    state?: SceneStateNames,
-  ) {
-    this.nextFlow = flowClass;
-    this.stateMachine.changeTo(state ?? CellScene.STATES.PERFORMING_ACTION);
   }
 
   update(time: number, delta: number) {

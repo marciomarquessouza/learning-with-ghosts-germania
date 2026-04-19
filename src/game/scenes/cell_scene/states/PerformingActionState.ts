@@ -1,6 +1,5 @@
 import { BaseState } from "@/libs/game/state-machine/BaseState";
 import { CellScene } from "..";
-import { PauseFlow } from "../flows/Pause.flow";
 import { InputController } from "@/libs/inputs/InputController";
 import { createInputController } from "@/libs/inputs/createInputController";
 import { events } from "@/events/events";
@@ -17,34 +16,33 @@ export class PerformingActionState extends BaseState {
   }
 
   enter(): void {
+    events.game.sync.emit("game-action-prompt/hide");
+    events.game.sync.emit("dialogue/hide");
+
+    if (!this.cellScene.flowController) {
+      this.stateMachine.log("Scene flow was not created", "error");
+      return;
+    }
+
     try {
       this.cellScene.selectableAreasController.setAllDisabled(true);
       this.cellScene.noiseAnimations.resetNoiseArea();
+      const flow = this.cellScene.flowController.getNextFlow();
 
-      if (!this.cellScene.nextFlow) {
+      if (!flow) {
         throw new Error("Flow not found");
       }
 
-      const flow = this.cellScene.nextFlow;
-      this.cellScene.nextFlow = undefined;
+      this.cellScene.flowController.clearNextFlow();
 
-      this.cellScene.flowController
-        .run(flow)
-        .then(({ nextFlow, nextState, cancelFlow }) => {
-          this.cellScene.nextFlow = nextFlow;
-          this.cellScene.cancelFlow = cancelFlow ?? PauseFlow;
-
-          if (nextState) {
-            this.changeTo(nextState);
-          }
-        })
-        .catch((error) => {
-          this.stateMachine.log(error, "error");
-          this.changeTo(CellScene.STATES.IDLE);
-        });
+      this.cellScene.flowController.run(flow).then(({ nextState }) => {
+        if (nextState) {
+          this.changeTo(nextState);
+        }
+      });
     } catch (error) {
       this.stateMachine.log(error, "error");
-      this.cellScene.nextFlow = undefined;
+      this.cellScene.flowController.clearNextFlow();
       this.changeTo(CellScene.STATES.IDLE);
     }
   }
@@ -53,7 +51,7 @@ export class PerformingActionState extends BaseState {
 
   handleInput(): void {
     if (this.input?.justPressed("interact")) {
-      const currentFlow = this.cellScene.flowController.getCurrentFlow();
+      const currentFlow = this.cellScene.flowController?.getCurrentFlow();
       if (currentFlow) {
         events.interactions.sync.emit("interaction/accept", {
           id: currentFlow.flowName,

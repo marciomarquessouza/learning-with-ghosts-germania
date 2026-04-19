@@ -60,12 +60,8 @@ export class LessonAnnouncement extends Flow<SceneStateNames, CellScene> {
             events.game.async.emitAsync("game-action-prompt/show", {
               title: "Vá Dormir",
               description: "Vá Dormir ou será punido",
-              durationMs: 30_000,
               fixed: false,
-              onAction: () =>
-                events.interactions.sync.emit("interaction/accept", {
-                  id: this.flowName,
-                }),
+              onAction: () => events.game.sync.emit("game-action-prompt/hide"),
             });
           }),
         ]);

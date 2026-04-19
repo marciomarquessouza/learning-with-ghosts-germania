@@ -1,13 +1,13 @@
 import { Flow } from "./Flow";
 
+export type FlowClass<TState extends string, TGameScene> = new (
+  deps: FlowPayload<TGameScene>,
+) => Flow<TState, TGameScene>;
+
 export type FlowPayload<TGameScene> = {
   scene: Phaser.Scene;
   gameScene: TGameScene;
 };
-
-export type FlowClass<TState extends string, TGameScene> = new (
-  deps: FlowPayload<TGameScene>,
-) => Flow<TState, TGameScene>;
 
 export type ScheduledFlow<TState extends string, TGameScene> = {
   id: string;

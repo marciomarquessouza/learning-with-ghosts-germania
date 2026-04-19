@@ -16,12 +16,16 @@ export class IdleState extends BaseState {
   }
 
   enter(): void {
-    if (this.cellScene.hasQueuedFlows()) {
-      const queuedFlowPromise = this.cellScene.runQueuedFlow();
+    if (!this.cellScene.flowController) {
+      this.stateMachine.log("Scene flow was not created", "error");
+      return;
+    }
+
+    if (this.cellScene.flowController.hasQueuedFlows()) {
+      const queuedFlowPromise = this.cellScene.flowController.runQueuedFlow();
       if (queuedFlowPromise) {
         queuedFlowPromise
-          .then(({ nextState, ...flowResult }) => {
-            this.cellScene.applyFlowResult(flowResult);
+          .then(({ nextState }) => {
             this.changeTo(nextState ?? CellScene.STATES.IDLE);
             return;
           })
@@ -33,7 +37,7 @@ export class IdleState extends BaseState {
       return;
     }
 
-    this.cellScene.nextFlow = undefined;
+    this.cellScene.flowController.clearNextFlow();
     this.cellScene.selectableAreasController.destroyAll();
     this.cellScene.noiseAnimations.resetNoiseArea();
     this.cellScene.createElementsSelectableArea();
@@ -46,7 +50,7 @@ export class IdleState extends BaseState {
     if (!this.isWaitingForContinue) return;
 
     if (this.input?.justPressed("cancel")) {
-      this.cellScene.flowController.run(this.cellScene.cancelFlow);
+      this.cellScene.flowController?.runCancelFlow();
     }
   }
 

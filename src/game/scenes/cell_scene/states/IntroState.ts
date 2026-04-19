@@ -11,14 +11,18 @@ export class IntroState extends BaseState {
   }
 
   enter(): void {
-    this.cellScene.nextFlow = undefined;
+    if (!this.cellScene.flowController) {
+      this.stateMachine.log("Scene flow was not created", "error");
+      return;
+    }
+
+    this.cellScene.flowController.clearNextFlow();
     this.cellScene.selectableAreasController.setAllDisabled(true);
     this.cellScene.noiseAnimations.resetNoiseArea();
 
     this.cellScene.flowController
       .run(IntroductionFlow)
-      .then(({ nextState, ...flowResult }) => {
-        this.cellScene.applyFlowResult(flowResult);
+      .then(({ nextState }) => {
         this.changeTo(nextState ?? CellScene.STATES.IDLE);
       })
       .catch((error) => {

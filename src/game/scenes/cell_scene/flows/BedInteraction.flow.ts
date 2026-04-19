@@ -5,9 +5,11 @@ import { FlowResult } from "@/libs/flows/types";
 import { runSteps, stepBase } from "@/libs/game/game-flow/runSteps";
 import { events } from "@/events/events";
 import { getDialogueLines } from "@/store/dialogueStore";
+import { DreamTransition } from "./DreamTransition.flow";
 
 export class BedInteractionFlow extends Flow<SceneStateNames, CellScene> {
   public flowName: string = "BedInteractionFlow";
+  private selectedAlternative = "";
 
   async run(): Promise<FlowResult<SceneStateNames, CellScene>> {
     const scenePhase = this.gameScene.getScenePhase();
@@ -28,18 +30,26 @@ export class BedInteractionFlow extends Flow<SceneStateNames, CellScene> {
         };
 
       case "after-jailer-talk":
-        await runSteps([
-          stepBase(() =>
-            events.game.async.emitAsync("dialogue/show", {
-              lines: getDialogueLines("cell.bed_interaction"),
-            }),
-          ),
-        ]);
+        await runSteps(
+          [
+            stepBase(() =>
+              events.game.async.emitAsync("dialogue/show", {
+                lines: getDialogueLines("cell.bed_interaction"),
+                onAlternativeSelected: (alternative) => {
+                  this.selectedAlternative = alternative;
+                },
+              }),
+            ),
+          ],
+          {},
+        );
 
-        return {
-          nextState: "SCENE_IDLE",
-        };
-
+        if (this.selectedAlternative === "dream") {
+          return {
+            nextState: "SCENE_TRANSITION",
+            nextFlow: DreamTransition,
+          };
+        }
       default:
         return {
           nextState: "SCENE_IDLE",
