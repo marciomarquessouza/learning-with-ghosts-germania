@@ -14,9 +14,11 @@ export class DreamTransition extends Flow<SceneStateNames, CellScene> {
     switch (scenePhase) {
       case "after-jailer-talk":
         runSteps([
-          stepBase(() => this.gameScene.gameCamera.fadeIn({ duration: 1_000 })),
+          stepBase(() =>
+            this.gameScene.gameCamera.fadeOut({ duration: 1_000 }),
+          ),
           stepBase(() => {
-            events.game.sync.emit("change-world", {
+            events.game.sync.emit("change-world/start", {
               targetWorld: "DREAM",
               targetScene: "DreamScene",
             });

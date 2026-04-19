@@ -30,19 +30,16 @@ export class BedInteractionFlow extends Flow<SceneStateNames, CellScene> {
         };
 
       case "after-jailer-talk":
-        await runSteps(
-          [
-            stepBase(() =>
-              events.game.async.emitAsync("dialogue/show", {
-                lines: getDialogueLines("cell.bed_interaction"),
-                onAlternativeSelected: (alternative) => {
-                  this.selectedAlternative = alternative;
-                },
-              }),
-            ),
-          ],
-          {},
-        );
+        await runSteps([
+          stepBase(() => {
+            return events.game.async.emitAsync("dialogue/show", {
+              lines: getDialogueLines("cell.bed_interaction"),
+              onAlternativeSelected: (alternative) => {
+                this.selectedAlternative = alternative;
+              },
+            });
+          }),
+        ]);
 
         if (this.selectedAlternative === "dream") {
           return {

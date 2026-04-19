@@ -36,6 +36,7 @@ export type GameMessageShowEvent = {
 export type ChangeWorldEvent = {
   targetWorld: GameWorlds;
   targetScene: GameScenes;
+  showTransition?: boolean;
 };
 
 export type GameActionPromptEvent = {
@@ -45,4 +46,9 @@ export type GameActionPromptEvent = {
   durationMs?: number;
   onAction?: () => void;
   onClose?: () => void;
+};
+
+export type WorldTransitionEvent = {
+  hideAfter?: number;
+  afterClose?: () => void;
 };

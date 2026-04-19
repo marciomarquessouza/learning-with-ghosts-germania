@@ -13,7 +13,8 @@ import { createEventManagers } from "@/libs/events/createEventManagers";
 
 export type GameSyncEvents = {
   "canvas-ready": undefined;
-  "change-world": ChangeWorldEvent;
+  "change-world/start": ChangeWorldEvent;
+  "change-world/end": undefined;
   "camera/zoom-to": ZoomPropsEvent;
   "game-message/show": GameMessageShowEvent;
   "game-message/hide": undefined;

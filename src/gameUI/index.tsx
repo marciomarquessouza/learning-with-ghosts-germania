@@ -1,9 +1,8 @@
-import { useEffect } from "react";
 import { Dialogue } from "./components/Dialogues";
 import { DreamLessonChallenges } from "./components/DreamLessonChallenges";
 import { GameActionPrompt } from "./components/GameActionPrompt";
 import { GameMessage } from "./components/GameMessage";
-import { DreamIntroduction } from "./components/Introduction/DreamIntroduction";
+import { WorldTransition } from "./components/Introduction/WorldTransition";
 import { SceneIntroduction } from "./components/Introduction/SceneIntroduction";
 import { LessonNotebook } from "./components/LessonNotebook";
 import { RotateOverlay } from "./components/RotateOverlay";
@@ -14,7 +13,7 @@ export function GameUI() {
     <>
       <RotateOverlay />
       <SceneIntroduction />
-      <DreamIntroduction />
+      <WorldTransition />
       <GameMessage />
       <GameActionPrompt />
       <LessonNotebook />

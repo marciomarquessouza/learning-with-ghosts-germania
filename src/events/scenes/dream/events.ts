@@ -1,4 +1,3 @@
-import { DreamShowIntroductionEvent } from "./types";
 import { createEventManagers } from "@/libs/events/createEventManagers";
 
 export type DreamSyncEvents = {
@@ -6,7 +5,7 @@ export type DreamSyncEvents = {
 };
 
 export type DreamAsyncEvents = {
-  "dream/show-introduction": DreamShowIntroductionEvent;
+  placeholder: undefined;
 };
 
 export const dreamEvents = createEventManagers<

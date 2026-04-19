@@ -81,14 +81,14 @@ export default function MainGame({ day, dayContent }: MainGameProps) {
       started.current = false;
     };
 
-    events.game.sync.on("change-world", handle);
+    events.game.sync.on("change-world/start", handle);
 
     if (fakeLoading) {
       setTimeout(() => {
         setFakeLoading(false);
       }, 1000);
       return () => {
-        events.game.sync.off("change-world", handle);
+        events.game.sync.off("change-world/start", handle);
       };
     }
 
@@ -102,11 +102,12 @@ export default function MainGame({ day, dayContent }: MainGameProps) {
       initPhaser({ ...gameConfig, parent: "game-container" }).then((game) => {
         setLoading(false);
         currentGame.current = game;
+        events.game.sync.emit("change-world/end");
       });
     }
 
     return () => {
-      events.game.sync.off("change-world", handle);
+      events.game.sync.off("change-world/start", handle);
     };
   }, [
     router,

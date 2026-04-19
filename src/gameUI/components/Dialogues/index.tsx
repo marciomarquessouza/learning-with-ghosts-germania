@@ -162,6 +162,11 @@ export function Dialogue() {
     keyAction: () => resumeText(() => advanceLine()),
   });
 
+  const handleOnSelectedAlternative = useCallback((alternativeId: string) => {
+    setSelectedAlternative(alternativeId);
+    onAlternativeSelectedRef.current?.(alternativeId);
+  }, []);
+
   if (!visible || !characterDetails) return null;
 
   return (
@@ -211,7 +216,7 @@ export function Dialogue() {
                   characterDetails={characterDetails}
                   selectedAlternative={selectedAlternative}
                   alternatives={lines[lineIndex].alternatives}
-                  onSelected={setSelectedAlternative}
+                  onSelected={handleOnSelectedAlternative}
                 />
               )}
 
