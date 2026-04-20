@@ -13,7 +13,7 @@ export class DoorKnockingFlow extends Flow<SceneStateNames, CellScene> {
 
   private knock() {
     this.hitCount += 1;
-    this.gameScene.cameras.main.shake(200, 0.02);
+    this.gameScene.cameras.main.shake(200, 0.01);
     this.gameScene.audioController.playKnockOnTheDoor(this.hitCount, 3);
   }
 

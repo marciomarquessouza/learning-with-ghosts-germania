@@ -24,25 +24,37 @@ export const dialogues = defineDialogues<DayDialogues>({
     scene: "CellScene",
     lines: [
       dialogue.jailer.neutral`
-        Prisoner Josef G.
-        Already feeling at home in your cell?
-      `,
+      Prisoner Josef G.
+      My name is Marlene Weiss.
+      I am the jailer responsible
+      for the wing of non-German speakers.
+    `,
       dialogue.jailer.neutral`
-        In ten minutes your first test begins. 
-        The topic: "GREETINGS" in German.
-      `,
+      You may only speak your native language when I allow it.
+      You will only leave this place when you speak German.
+      And you will only eat if you SPEAK GERMAN.
+    `,
       dialogue.jailer.neutral`
-        Do well, and you eat.
-        Fail and you will spend a day hungry to try to improve...
-      `,
+      At the first hour of the morning
+      I will give you a German test.
+      The subject will be GERMAN GREETINGS.
+    `,
+      dialogue.jailer.neutral`
+      You will receive your meal
+      only if you pass the test.
+      If you fail,
+      hunger will improve your motivation.
+    `,
       dialogue.player.sad`
-        But… I have no books. 
-        Nothing to study with.
-      `,
+      But… I have no books.
+      I have nothing in this cell
+      to learn German.
+    `,
       dialogue.jailer.neutral`
-        That’s your problem. 
-        See you in ten minutes.
-      `,
+      That is not my problem.
+      It is time to sleep. The lights will be turned off.
+      I will return early tomorrow with your test.
+    `,
     ],
   },
 
