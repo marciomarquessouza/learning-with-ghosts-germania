@@ -120,11 +120,11 @@ export function WorldTransition() {
           data-test-id="dream-introduction"
           className="fixed left-0 top-0 z-[60] flex h-screen w-screen items-center justify-center bg-black"
           initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          exit={{ opacity: 0 }}
+          animate={{ opacity: 1, scale: 1 }}
+          exit={{ opacity: 0, scale: 1.02 }}
           transition={{
-            duration: phase === "exiting" ? 0.7 : 0.6,
-            ease: "easeOut",
+            duration: phase === "exiting" ? 1.1 : 0.6,
+            ease: phase === "exiting" ? "easeIn" : "easeOut",
           }}
         >
           <div className="flex flex-row">

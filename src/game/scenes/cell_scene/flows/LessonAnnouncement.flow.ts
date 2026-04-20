@@ -58,8 +58,8 @@ export class LessonAnnouncement extends Flow<SceneStateNames, CellScene> {
         await runSteps([
           stepBase(() => {
             events.game.async.emitAsync("game-action-prompt/show", {
-              title: "Vá Dormir",
-              description: "Vá Dormir ou será punido",
+              title: "Bedtime",
+              description: "It is time to sleep.",
               fixed: false,
               onAction: () => events.game.sync.emit("game-action-prompt/hide"),
             });

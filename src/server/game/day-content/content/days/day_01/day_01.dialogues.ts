@@ -66,7 +66,7 @@ export const dialogues = defineDialogues<DayDialogues>({
       `.alternatives(
         {
           id: "dream",
-          text: "Sleep until the challenge arrives",
+          text: "Try to sleep before the test",
         },
         {
           id: "nothing",
