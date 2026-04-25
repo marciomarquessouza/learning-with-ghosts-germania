@@ -1,7 +1,7 @@
 import { BaseState } from "@/libs/game/state-machine/BaseState";
 import { events } from "@/events/events";
 import { runSteps, stepBase } from "@/libs/game/game-flow/runSteps";
-import { DreamScene } from "..";
+import { DreamScene } from "../..";
 import { getDialogueLines } from "@/store/dialogueStore";
 
 const CLOSE_TITLE_AFTER = 2_000;
@@ -39,7 +39,7 @@ export class LessonStartingState extends BaseState {
       ),
     ])
       .then(() => {
-        this.changeTo(DreamScene.STATES.LESSON_INTRO);
+        // this.changeTo(DreamScene.STATES.LESSON_INTRO);
       })
       .catch((error) => {
         this.stateMachine.log(`LessonStartState failed ${error}`, "error");

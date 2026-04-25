@@ -1,7 +1,7 @@
-import { Flow } from "@/libs/flows/Flow";
+import { Flow } from "@/libs/game/game-flow/Flow";
 import { SceneStateNames } from "../constants/states";
 import { CellScene } from "..";
-import { FlowResult } from "@/libs/flows/types";
+import { FlowResult } from "@/libs/game/game-flow/types";
 import { runSteps, stepBase } from "@/libs/game/game-flow/runSteps";
 import { events } from "@/events/events";
 import { getDialogueLines } from "@/store/dialogueStore";

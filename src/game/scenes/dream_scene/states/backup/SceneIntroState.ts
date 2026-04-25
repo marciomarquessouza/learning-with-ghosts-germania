@@ -2,7 +2,7 @@ import { BaseState } from "@/libs/game/state-machine/BaseState";
 import { runSteps, stepBase } from "@/libs/game/game-flow/runSteps";
 import { events } from "@/events/events";
 import { getDialogueLines } from "@/store/dialogueStore";
-import { DreamScene } from "..";
+import { DreamScene } from "../..";
 
 export class SceneIntroState extends BaseState {
   constructor(

@@ -1,5 +1,5 @@
 import { BaseState } from "@/libs/game/state-machine/BaseState";
-import { DreamScene } from "..";
+import { DreamScene } from "../..";
 
 export class RewardState extends BaseState {
   constructor(

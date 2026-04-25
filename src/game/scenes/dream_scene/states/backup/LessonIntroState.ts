@@ -1,9 +1,9 @@
 import { events } from "@/events/events";
 import { runSteps, stepBase } from "@/libs/game/game-flow/runSteps";
 import { BaseState } from "@/libs/game/state-machine/BaseState";
-import { DreamScene } from "..";
 import { InputController } from "@/libs/inputs/InputController";
 import { createInputController } from "@/libs/inputs/createInputController";
+import { DreamScene } from "../..";
 
 export class LessonIntroState extends BaseState {
   private isWaitingForContinue = false;
@@ -45,7 +45,7 @@ export class LessonIntroState extends BaseState {
     if (this.input?.justPressed("interact")) {
       this.isWaitingForContinue = false;
       events.lesson.sync.emit("hide-lesson-description");
-      this.changeTo(DreamScene.STATES.LISTENING);
+      // this.changeTo(DreamScene.STATES.LISTENING);
     }
   }
 

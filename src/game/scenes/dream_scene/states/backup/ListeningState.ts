@@ -1,7 +1,7 @@
 import { runSteps, stepBase } from "@/libs/game/game-flow/runSteps";
 import { BaseState } from "@/libs/game/state-machine/BaseState";
 import { events } from "@/events/events";
-import { DreamScene } from "..";
+import { DreamScene } from "../..";
 
 export class ListeningState extends BaseState {
   constructor(

@@ -17,7 +17,7 @@ import { IntroState } from "./states/IntroState";
 import { PerformingActionState } from "./states/PerformingActionState";
 import { ScenarioController } from "./scenario/ScenarioController";
 import { SceneTransitionState } from "./states/SceneTransitionState";
-import { FlowController } from "@/libs/flows/FlowController";
+import { FlowController } from "@/libs/game/game-flow/FlowController";
 import { PauseFlow } from "./flows/Pause.flow";
 import { AudioController } from "./audios/AudioController";
 import { Jailer } from "@/game/actors/jailer/Jailer";

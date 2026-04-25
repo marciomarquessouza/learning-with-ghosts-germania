@@ -32,6 +32,7 @@ export type GameAsyncEvents = {
   "game-action-prompt/show": GameActionPromptEvent;
   "dialogue/show": DialogueEvent;
   "change-scene": ChangeSceneEvent;
+  "transition/cell-dream": undefined;
 };
 
 export const gameEvents = createEventManagers<

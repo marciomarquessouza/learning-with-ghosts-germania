@@ -58,6 +58,8 @@ export class FlowController<TState extends string, TGameScene> {
       gameScene: this.gameScene,
     });
 
+    this.log(flow.flowName, "enter");
+
     this.currentFlow = flow;
 
     const result: FlowResult<TState, TGameScene> = await flow.run();
@@ -68,6 +70,8 @@ export class FlowController<TState extends string, TGameScene> {
       flow.destroy();
       this.currentFlow = undefined;
     }
+
+    this.log(flow.flowName, "exit");
 
     return result;
   }
@@ -128,5 +132,32 @@ export class FlowController<TState extends string, TGameScene> {
     if (!nextFlow) return;
 
     return this.run(nextFlow);
+  }
+
+  log(
+    message: string | Error | unknown,
+    type: "info" | "enter" | "exit" | "init" | "error" | "warn",
+  ): void {
+    const enabled =
+      process.env.NODE_ENV === "development" ||
+      process.env.NEXT_PUBLIC_LOGGING_ENABLE;
+
+    if (!enabled) return;
+
+    const timestamp = this.scene.time.now.toFixed(0);
+    const prefix = `[→→→Flow ${timestamp}ms]`;
+
+    const styles = {
+      info: "color: #5dade2",
+      enter: "color: #2ecc8a; font-weight: bold",
+      exit: "color: #f39c6b; font-weight: bold",
+      transition: "color: #a569bd; font-weight: bold",
+      init: "color: #58d68d; font-weight: bold",
+      error: "color: #ec7063; font-weight: bold",
+      warn: "color: #f5b041",
+      debug: "color: #95a5a6",
+    };
+
+    console.log(`type: ${type} %c${prefix} ${message}`, styles[type]);
   }
 }

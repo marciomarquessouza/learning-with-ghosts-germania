@@ -1,25 +1,30 @@
 import { createScene } from "@/game/core/CreateScene";
-import { Hud, HUD_ITEMS } from "../../hud";
-import { CemeteryScenario } from "./helpers/cemeteryScenario";
 import { GameCamera } from "@/game/cameras/GameCamera";
+import { Hud, HUD_ITEMS } from "../../hud";
+import { CemeteryScenario } from "./scenario/cemeteryScenario";
 import { ACTORS, GAME_SCENES } from "@/constants/game";
-import { LearningNode } from "@/game/actors/learningNode/LearningNode";
 import { GameScene } from "../GameScene";
-import { Player } from "@/game/actors/player/Player";
-import { Tutor } from "@/game/actors/tutor/Tutor";
+
 import { LessonController } from "@/libs/lesson/LessonController";
 import { useLessonStore } from "@/store/lessonStore";
-import { DREAM_SCENE_STATES } from "./constants/states";
+
+import { Player } from "@/game/actors/player/Player";
+import { Tutor } from "@/game/actors/tutor/Tutor";
+import { LearningNode } from "@/game/actors/learningNode/LearningNode";
+
+import { FlowController } from "@/libs/game/game-flow/FlowController";
+import { PauseFlow } from "./flows/Pause.flow";
+
+import { DREAM_SCENE_STATES, SceneStateNames } from "./constants/states";
 import { StateMachine } from "@/libs/game/state-machine/StateMachine";
-import { createDreamSceneStateMachine } from "./helpers/createDreamSceneStateMachine";
+import { IdleState } from "./states/IdleState";
+import { IntroState } from "./states/IntroState";
 
 export const DEFAULT_POSITION_X = 510;
 export const DEFAULT_POSITION_Y = 720;
 
 export class DreamScene extends GameScene {
   public static readonly STATES = DREAM_SCENE_STATES;
-
-  private scenario = new CemeteryScenario();
   public gameCamera = new GameCamera();
   public hud = new Hud();
   public player = this.createActor(ACTORS.PLAYER, Player);
@@ -28,6 +33,9 @@ export class DreamScene extends GameScene {
   public lessonController = new LessonController(
     useLessonStore.getState().lesson,
   );
+  public flowController?: FlowController<SceneStateNames, DreamScene>;
+
+  private scenario = new CemeteryScenario();
   private stateMachine!: StateMachine;
 
   constructor() {
@@ -80,11 +88,20 @@ export class DreamScene extends GameScene {
     const hudContainer = this.hud.create(this, [HUD_ITEMS.WEIGHT]);
     this.children.bringToTop(hudContainer);
 
-    this.stateMachine = createDreamSceneStateMachine(
-      this as Phaser.Scene,
-      this as DreamScene,
-    );
-    this.stateMachine.changeTo(DreamScene.STATES.SCENE_INTRO);
+    this.stateMachine = new StateMachine(this);
+    this.stateMachine
+      .addState(DreamScene.STATES.IDLE, IdleState, this)
+      .addState(DreamScene.STATES.INTRO, IntroState, this);
+
+    this.flowController = new FlowController({
+      scene: this,
+      gameScene: this as DreamScene,
+      cancelFlow: PauseFlow,
+      onRunScheduledFlow: (state) =>
+        this.stateMachine.changeTo(state || DreamScene.STATES.IDLE),
+    });
+
+    this.stateMachine.changeTo(DreamScene.STATES.INTRO);
   }
 
   update(time: number, delta: number) {

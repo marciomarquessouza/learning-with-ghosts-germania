@@ -1,7 +1,7 @@
 import { BaseState } from "@/libs/game/state-machine/BaseState";
-import { DreamScene } from "..";
+import { DreamScene } from "../..";
 
-export class PronunciationState extends BaseState {
+export class SummaryState extends BaseState {
   constructor(
     scene: Phaser.Scene,
     private dreamScene: DreamScene,

@@ -18,6 +18,10 @@ export function createInputController(
     interact: [KEY_CODES.E, KEY_CODES.SPACE],
     cancel: [KEY_CODES.ESC],
     skip: [KEY_CODES.ENTER],
+    left: [KEY_CODES.LEFT, KEY_CODES.A],
+    right: [KEY_CODES.RIGHT, KEY_CODES.D],
+    up: [KEY_CODES.UP, KEY_CODES.W],
+    down: [KEY_CODES.DOWN, KEY_CODES.S],
   };
 
   const mergedBindings: Record<InputAction, number[]> = {

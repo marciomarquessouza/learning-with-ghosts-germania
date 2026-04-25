@@ -6,21 +6,22 @@ import { InputController } from "@/libs/inputs/InputController";
 import { createInputController } from "@/libs/inputs/createInputController";
 
 export class IdleState extends BaseState {
-  private isStateRunning = false;
   private lessonInteractionArea: InteractionArea = new InteractionArea();
-  private input?: InputController;
+  private input: InputController;
 
   constructor(
     scene: Phaser.Scene,
     private dreamScene: DreamScene,
   ) {
     super(scene);
+    this.input = createInputController(scene);
   }
 
   enter(): void {
-    if (this.isStateRunning) return;
+    this.dreamScene.flowController?.clearNextFlow();
+    this.dreamScene.player.enterIdle();
+    this.dreamScene.tutor.enterIdle();
 
-    this.input = createInputController(this.scene);
     const playerSprite = this.dreamScene.player.sprite;
     const tutorSprite = this.dreamScene.tutor.sprite;
 
@@ -38,8 +39,6 @@ export class IdleState extends BaseState {
       onEnter: () => this.onEnterLessonInteractionArea(),
       onLeave: () => this.onLeaveLessonInteractionArea(),
     });
-
-    this.isStateRunning = true;
   }
 
   private onEnterLessonInteractionArea() {
@@ -58,18 +57,23 @@ export class IdleState extends BaseState {
   }
 
   handleInput(): void {
-    if (!this.lessonInteractionArea.isOverlapping) return;
+    if (
+      this.input.justPressed("interact") &&
+      this.lessonInteractionArea.isOverlapping
+    ) {
+      // this.changeTo(DreamScene.STATES.LESSON_STARTING);
+      return;
+    }
 
-    if (this.input?.justPressed("interact")) {
-      this.changeTo(DreamScene.STATES.LESSON_STARTING);
+    if (this.input.justPressed("cancel")) {
+      events.game.sync.emit("game-message/hide");
+      events.game.sync.emit("game-action-prompt/hide");
     }
   }
 
   exit(): void {
     events.game.sync.emit("game-message/hide");
     this.lessonInteractionArea.destroy();
-    this.input?.clear();
-    this.input = undefined;
-    this.isStateRunning = false;
+    this.input.clear();
   }
 }
