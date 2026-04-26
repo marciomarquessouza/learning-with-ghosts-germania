@@ -49,6 +49,14 @@ export class GameCamera {
     this.camera.startFollow(target, true, 0.12, 0.12);
   }
 
+  zoomTo({ zoom, duration = 0 }: { zoom: number; duration?: number }) {
+    this.camera.zoomTo(zoom, duration);
+  }
+
+  centerOn(x: number, y: number) {
+    this.camera.centerOn(x, y);
+  }
+
   async fadeIn({ duration }: FadeProps): Promise<void> {
     return new Promise((resolve) => {
       this.camera.fadeIn(

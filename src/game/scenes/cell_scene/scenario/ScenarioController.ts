@@ -7,7 +7,7 @@ import { CellScene } from "..";
 import { SceneElementKeys } from "../constants/scene";
 import { SceneStateNames } from "../constants/states";
 import { BedInteractionFlow } from "../flows/BedInteraction.flow";
-import { FlowClass } from "@/libs/flows/types";
+import { FlowClass } from "@/libs/game/game-flow/types";
 import { DeskInteractionFlow } from "../flows/DeskInteraction.flow";
 import { FoodInteractionFlow } from "../flows/FoodInteraction.flow";
 import { RatInteractionFlow } from "../flows/RatInteraction.flow";

@@ -1,11 +1,11 @@
-import { Flow } from "@/libs/flows/Flow";
 import { SceneStateNames } from "../constants/states";
 import { CellScene } from "..";
-import { FlowResult } from "@/libs/flows/types";
+import { FlowResult } from "@/libs/game/game-flow/types";
 import { runSteps, stepBase } from "@/libs/game/game-flow/runSteps";
 import { events } from "@/events/events";
 import { getDialogueLines } from "@/store/dialogueStore";
 import { DreamTransition } from "./DreamTransition.flow";
+import { Flow } from "@/libs/game/game-flow/Flow";
 
 export class BedInteractionFlow extends Flow<SceneStateNames, CellScene> {
   public flowName: string = "BedInteractionFlow";

@@ -1,4 +1,12 @@
-export type InputAction = "interact" | "confirm" | "cancel" | "skip";
+export type InputAction =
+  | "interact"
+  | "confirm"
+  | "cancel"
+  | "skip"
+  | "left"
+  | "right"
+  | "up"
+  | "down";
 
 export type InputBindings = Partial<
   Record<InputAction, Phaser.Input.Keyboard.Key[]>

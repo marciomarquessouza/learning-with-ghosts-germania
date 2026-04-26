@@ -17,7 +17,7 @@ export function WorldTransition() {
   const [currentLine, setCurrentLine] = useState(0);
   const [line1, setLine1] = useState("");
   const [line2, setLine2] = useState("");
-  const [worldEnded, setWorldEnded] = useState(false);
+  const onFinishRef = useRef<() => void | null>(null);
 
   const { lesson } = useLessonStore();
   const { displayedText, isComplete, startTyping, setTextToType } =
@@ -32,36 +32,30 @@ export function WorldTransition() {
     }
   };
 
-  const resetInternalState = () => {
+  const onFinish = () => {
+    onFinishRef.current?.();
     clearTimers();
     setPhase("hidden");
     setCurrentLine(0);
     setLine1("");
     setLine2("");
-    setWorldEnded(false);
   };
 
   useEffect(() => {
-    const handleStart = () => {
+    const handleStart = (_: undefined, done: () => void) => {
       clearTimers();
-      setWorldEnded(false);
       setCurrentLine(0);
       setLine1("");
       setLine2("");
       setPhase("entering");
       setIsVisible(true);
+      onFinishRef.current = done;
     };
 
-    const handleEnd = () => {
-      setWorldEnded(true);
-    };
-
-    events.game.sync.on("change-world/start", handleStart);
-    events.game.sync.on("change-world/end", handleEnd);
+    events.game.async.on("transition/cell-dream", handleStart);
 
     return () => {
-      events.game.sync.off("change-world/start", handleStart);
-      events.game.sync.off("change-world/end", handleEnd);
+      events.game.async.off("transition/cell-dream", handleStart);
       clearTimers();
     };
   }, []);
@@ -103,17 +97,17 @@ export function WorldTransition() {
   }, [phase, currentLine, isComplete, setTextToType, startTyping]);
 
   useEffect(() => {
-    if (phase !== "ready" || !worldEnded) return;
+    if (phase !== "ready") return;
 
     clearTimers();
     hideTimer.current = window.setTimeout(() => {
       setPhase("exiting");
       setIsVisible(false);
     }, DEFAULT_HIDE_AFTER);
-  }, [phase, worldEnded]);
+  }, [phase]);
 
   return (
-    <AnimatePresence onExitComplete={resetInternalState}>
+    <AnimatePresence onExitComplete={onFinish}>
       {isVisible && (
         <motion.div
           key="world-transition"
@@ -123,7 +117,7 @@ export function WorldTransition() {
           animate={{ opacity: 1, scale: 1 }}
           exit={{ opacity: 0, scale: 1.02 }}
           transition={{
-            duration: phase === "exiting" ? 1.1 : 0.6,
+            duration: phase === "exiting" ? 0.5 : 0.6,
             ease: phase === "exiting" ? "easeIn" : "easeOut",
           }}
         >

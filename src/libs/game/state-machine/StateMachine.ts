@@ -138,7 +138,7 @@ export class StateMachine {
     if (!enabled) return;
 
     const timestamp = this.scene.time.now.toFixed(0);
-    const prefix = `[StateMachine ${timestamp}ms]`;
+    const prefix = `[◉→◉ StateMachine ${timestamp}ms]`;
 
     const styles = {
       info: "color: #3498db",
