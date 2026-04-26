@@ -1,6 +1,8 @@
 export const DREAM_SCENE_STATES = {
   INTRO: "SCENE_INTRO",
   IDLE: "SCENE_IDLE",
+  PERFORMING_ACTION: "PERFORMING_ACTION",
+  PERFORMING_LESSON: "PERFORMING_LESSON",
 } as const;
 
 export type SceneStateNames =

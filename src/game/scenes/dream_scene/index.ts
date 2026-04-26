@@ -15,16 +15,22 @@ import { LearningNode } from "@/game/actors/learningNode/LearningNode";
 import { FlowController } from "@/libs/game/game-flow/FlowController";
 import { PauseFlow } from "./flows/Pause.flow";
 
-import { DREAM_SCENE_STATES, SceneStateNames } from "./constants/states";
+import {
+  DREAM_SCENE_STATES as SCENE_STATES,
+  SceneStateNames,
+} from "./constants/states";
 import { StateMachine } from "@/libs/game/state-machine/StateMachine";
 import { IdleState } from "./states/IdleState";
 import { IntroState } from "./states/IntroState";
+import { PerformingActionState } from "./states/PerformingActionState";
+import { PerformingLessonState } from "./states/PerformingLessonState";
 
 export const DEFAULT_POSITION_X = 510;
 export const DEFAULT_POSITION_Y = 720;
 
 export class DreamScene extends GameScene {
-  public static readonly STATES = DREAM_SCENE_STATES;
+  public static readonly STATES = SCENE_STATES;
+
   public gameCamera = new GameCamera();
   public hud = new Hud();
   public player = this.createActor(ACTORS.PLAYER, Player);
@@ -90,8 +96,10 @@ export class DreamScene extends GameScene {
 
     this.stateMachine = new StateMachine(this);
     this.stateMachine
-      .addState(DreamScene.STATES.IDLE, IdleState, this)
-      .addState(DreamScene.STATES.INTRO, IntroState, this);
+      .addState(SCENE_STATES.IDLE, IdleState, this)
+      .addState(SCENE_STATES.INTRO, IntroState, this)
+      .addState(SCENE_STATES.PERFORMING_ACTION, PerformingActionState, this)
+      .addState(SCENE_STATES.PERFORMING_LESSON, PerformingLessonState, this);
 
     this.flowController = new FlowController({
       scene: this,

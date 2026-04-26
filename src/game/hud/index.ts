@@ -6,6 +6,8 @@ export enum HUD_ITEMS {
 }
 
 export class Hud {
+  private container?: Phaser.GameObjects.Container;
+
   preload(scene: Phaser.Scene): void {
     hudWeight.preload(scene);
   }
@@ -14,18 +16,18 @@ export class Hud {
     scene: Phaser.Scene,
     show: HUD_ITEMS[] = [HUD_ITEMS.WEIGHT],
   ): Phaser.GameObjects.Container {
-    const container = scene.add.container(0, 0);
-    container.name = "hud";
-    container.setScrollFactor(0);
+    this.container = scene.add.container(0, 0);
+    this.container.name = "hud";
+    this.container.setScrollFactor(0);
 
     if (show.includes(HUD_ITEMS.WEIGHT)) {
       const hudWeightContainer = hudWeight.create(scene);
       hudWeightContainer.setName(HUD_ITEMS.WEIGHT);
-      container.add(hudWeightContainer);
+      this.container.add(hudWeightContainer);
     }
 
     const toggleItem = (item: HUD_ITEMS, option: "show" | "hide" = "show") => {
-      const hudObject = container.getByName(
+      const hudObject = this.container?.getByName(
         item,
       ) as Phaser.GameObjects.Container;
       if (hudObject) hudObject.setVisible(option === "show");
@@ -39,7 +41,16 @@ export class Hud {
       items.forEach((item) => toggleItem(item, "hide"));
     });
 
-    return container;
+    return this.container;
+  }
+
+  setVisible(option: boolean) {
+    Object.values(HUD_ITEMS).forEach((item) => {
+      const hudObject = this.container?.getByName(
+        item,
+      ) as Phaser.GameObjects.Container;
+      if (hudObject) hudObject.setVisible(option);
+    });
   }
 
   destroy() {
