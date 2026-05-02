@@ -1,12 +1,12 @@
 import { createEventManagers } from "@/libs/events/createEventManagers";
 
 export type LearningNodeAsyncEvents = {
-  "sprouting:transition": undefined;
   "emerging:transition": undefined;
   "growing:transition": undefined;
 };
 
 export type LearningNodeSyncEvents = {
+  "sprouting:end": undefined;
   "sprouting:idle": undefined;
   "sprouting:speaking": undefined;
   "emerging:idle": undefined;

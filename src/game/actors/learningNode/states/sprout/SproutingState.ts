@@ -1,12 +1,10 @@
 import { BaseState } from "@/libs/game/state-machine/BaseState";
 import { runSteps, stepBase } from "@/libs/game/game-flow/runSteps";
-import { LearningNode } from "../LearningNode";
-import { SeedAnimations } from "../animations/SeedAnimations";
+import { LearningNode } from "../../LearningNode";
+import { SeedAnimations } from "../../animations/SeedAnimations";
 import { events } from "@/events/events";
 
 export class SproutingState extends BaseState {
-  private removeEventsListeners: (() => void)[] = [];
-
   constructor(
     scene: Phaser.Scene,
     private learningNode: LearningNode,
@@ -37,32 +35,15 @@ export class SproutingState extends BaseState {
       {},
     )
       .then(() => {
-        this.learningNode.eventController.closeAsyncEvent(
-          "sprouting:transition",
-        );
+        events.actors.learningNode.sync.emit("sprouting:end");
         this.learningNode.animations.playSproutIdle();
-
-        this.removeEventsListeners.push(
-          events.actors.learningNode.sync.on("sprouting:idle", () => {
-            this.learningNode.animations.playSproutIdle();
-          }),
-        );
-
-        this.removeEventsListeners.push(
-          events.actors.learningNode.sync.on("sprouting:speaking", () => {
-            this.learningNode.animations.playSproutSpeaking();
-          }),
-        );
       })
       .catch((error) => {
         this.stateMachine.log(error, "error");
       });
   }
 
-  exit(): void {
-    this.removeEventsListeners.forEach((removeEvent) => removeEvent());
-    this.removeEventsListeners = [];
-  }
+  exit(): void {}
 
   handleInput(): void {}
 

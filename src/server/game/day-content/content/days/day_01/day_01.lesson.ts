@@ -13,12 +13,12 @@ export const lesson: Lesson = {
         {
           type: "introduction",
           text: `Primeiro eu vou jogar a semente que vai gerar a sua nova palavra`,
-          instruction: "Listen and repeat (don’t be shy, say it out loud!)",
+          instruction: "",
         },
         {
           type: "listening",
           text: `Pergunte o nome dela 3 vezes (clique F ou clique na criaturinha)`,
-          instruction: "",
+          instruction: "Listen and repeat (don’t be shy, say it out loud!)",
         },
         {
           type: "pronunciation",

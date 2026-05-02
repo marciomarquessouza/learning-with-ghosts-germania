@@ -10,6 +10,12 @@ export type StopMusicOptions = {
   fadeOutMs?: number;
 };
 
+export const AUDIO_SPEED = {
+  NORMAL: 1,
+  SLOW: 0.75,
+  SLOWEST: 0.5,
+} as const;
+
 export class AudioManager {
   private currentMusic?: Phaser.Sound.BaseSound;
   private scene?: Phaser.Scene;
@@ -68,18 +74,36 @@ export class AudioManager {
     this.getScene().sound.mute = false;
   }
 
-  public playVoice(key: string, config?: Phaser.Types.Sound.SoundConfig) {
+  public async playVoice(
+    key: string,
+    config?: Phaser.Types.Sound.SoundConfig,
+  ): Promise<Phaser.Sound.BaseSound | null> {
     const { isMuted, isUnlocked, voiceVolume } = getAudioStates();
-    if (isMuted || !isUnlocked) return;
+
+    if (isMuted || !isUnlocked) {
+      return Promise.resolve(null);
+    }
 
     const sound = this.getScene().sound.add(key, {
       ...config,
       volume: (config?.volume ?? 1) * voiceVolume,
     });
 
-    sound.play();
+    return new Promise((resolve) => {
+      const cleanup = () => {
+        sound.off("complete", cleanup);
+        sound.off("stop", cleanup);
 
-    return sound;
+        this.getScene().sound.remove(sound);
+
+        resolve(sound);
+      };
+
+      sound.once("complete", cleanup);
+      sound.once("stop", cleanup);
+
+      sound.play();
+    });
   }
 
   public playSfx(key: string, config?: Phaser.Types.Sound.SoundConfig) {

@@ -1,0 +1,142 @@
+import {
+  AUDIO_PLAY_BUTTON_IMG,
+  AUDIO_PLAY_BUTTON_JSON,
+} from "@/constants/images";
+import Phaser from "phaser";
+
+type AttachPosition = "top" | "bottom" | "left" | "right";
+
+type Callback = () => void;
+
+export class AudioPlayButton {
+  private static readonly TEXTURE_KEY = "play_button_spritesheet";
+
+  private button?: Phaser.GameObjects.Sprite;
+  private scene?: Phaser.Scene;
+
+  public isPlaying = false;
+
+  preload(scene: Phaser.Scene) {
+    scene.load.atlas(
+      AudioPlayButton.TEXTURE_KEY,
+      AUDIO_PLAY_BUTTON_IMG,
+      AUDIO_PLAY_BUTTON_JSON,
+    );
+  }
+
+  create(scene: Phaser.Scene) {
+    this.scene = scene;
+
+    this.button = scene.add.sprite(
+      0,
+      0,
+      AudioPlayButton.TEXTURE_KEY,
+      "play_button_0",
+    );
+
+    this.button.setOrigin(0.5);
+    this.button.setInteractive({ useHandCursor: true });
+  }
+
+  setVisible(option: boolean) {
+    this.button?.setVisible(option);
+  }
+
+  play(onClick?: Callback) {
+    if (!this.button) return;
+
+    this.isPlaying = true;
+
+    this.button.setFrame("play_button_1");
+    this.button.disableInteractive();
+    this.button.setAlpha(1);
+    this.button.setScale(1);
+
+    onClick?.();
+  }
+
+  stop(callback?: Callback) {
+    if (!this.button) return;
+
+    this.isPlaying = false;
+
+    this.button.setFrame("play_button_0");
+    this.button.setInteractive({ useHandCursor: true });
+
+    callback?.();
+  }
+
+  attach({
+    target,
+    position,
+    onClick,
+    offset = 5,
+  }: {
+    target: Phaser.GameObjects.Container | Phaser.GameObjects.Sprite;
+    position: AttachPosition;
+    onClick?: () => void;
+    offset?: number;
+  }) {
+    if (!this.button) return;
+
+    this.button.on("pointerover", () => {
+      this.scene?.input.setDefaultCursor("pointer");
+    });
+
+    this.button.on("pointerout", () => {
+      this.scene?.input.setDefaultCursor("default");
+    });
+
+    this.button.on(Phaser.Input.Events.GAMEOBJECT_POINTER_DOWN, () => {
+      this.play(onClick);
+    });
+
+    const bounds = this.getTargetBounds(target);
+
+    switch (position) {
+      case "top":
+        this.button.setPosition(
+          bounds.centerX,
+          bounds.y - this.button.displayHeight / 2 - offset,
+        );
+        break;
+
+      case "bottom":
+        this.button.setPosition(
+          bounds.centerX,
+          bounds.bottom + this.button.displayHeight / 2 + offset,
+        );
+        break;
+
+      case "left":
+        this.button.setPosition(
+          bounds.x - this.button.displayWidth / 2 - offset,
+          bounds.centerY,
+        );
+        break;
+
+      case "right":
+        this.button.setPosition(
+          bounds.right + this.button.displayWidth / 2 + offset,
+          bounds.centerY,
+        );
+        break;
+    }
+  }
+
+  destroy() {
+    this.button?.destroy();
+    this.button = undefined;
+    this.scene = undefined;
+    this.isPlaying = false;
+  }
+
+  private getTargetBounds(
+    target:
+      | Phaser.GameObjects.Container
+      | Phaser.GameObjects.Sprite
+      | Phaser.Types.Physics.Arcade.SpriteWithDynamicBody,
+  ): Phaser.Geom.Rectangle {
+    return target.getBounds();
+  }
+}

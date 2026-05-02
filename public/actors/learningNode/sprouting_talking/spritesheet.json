@@ -1,0 +1,192 @@
+{
+  "frames": {
+    "learningNode_sprouting_talking_0": {
+      "frame": {
+        "x": 0,
+        "y": 0,
+        "w": 101,
+        "h": 107
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 101,
+        "h": 107
+      },
+      "sourceSize": {
+        "w": 101,
+        "h": 107
+      }
+    },
+    "learningNode_sprouting_talking_1": {
+      "frame": {
+        "x": 101,
+        "y": 0,
+        "w": 101,
+        "h": 107
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 101,
+        "h": 107
+      },
+      "sourceSize": {
+        "w": 101,
+        "h": 107
+      }
+    },
+    "learningNode_sprouting_talking_2": {
+      "frame": {
+        "x": 202,
+        "y": 0,
+        "w": 101,
+        "h": 107
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 101,
+        "h": 107
+      },
+      "sourceSize": {
+        "w": 101,
+        "h": 107
+      }
+    },
+    "learningNode_sprouting_talking_3": {
+      "frame": {
+        "x": 0,
+        "y": 107,
+        "w": 101,
+        "h": 107
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 101,
+        "h": 107
+      },
+      "sourceSize": {
+        "w": 101,
+        "h": 107
+      }
+    },
+    "learningNode_sprouting_talking_4": {
+      "frame": {
+        "x": 101,
+        "y": 107,
+        "w": 101,
+        "h": 107
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 101,
+        "h": 107
+      },
+      "sourceSize": {
+        "w": 101,
+        "h": 107
+      }
+    },
+    "learningNode_sprouting_talking_5": {
+      "frame": {
+        "x": 202,
+        "y": 107,
+        "w": 101,
+        "h": 107
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 101,
+        "h": 107
+      },
+      "sourceSize": {
+        "w": 101,
+        "h": 107
+      }
+    },
+    "learningNode_sprouting_talking_6": {
+      "frame": {
+        "x": 0,
+        "y": 214,
+        "w": 101,
+        "h": 107
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 101,
+        "h": 107
+      },
+      "sourceSize": {
+        "w": 101,
+        "h": 107
+      }
+    },
+    "learningNode_sprouting_talking_7": {
+      "frame": {
+        "x": 101,
+        "y": 214,
+        "w": 101,
+        "h": 107
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 101,
+        "h": 107
+      },
+      "sourceSize": {
+        "w": 101,
+        "h": 107
+      }
+    },
+    "learningNode_sprouting_talking_8": {
+      "frame": {
+        "x": 202,
+        "y": 214,
+        "w": 101,
+        "h": 107
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 101,
+        "h": 107
+      },
+      "sourceSize": {
+        "w": 101,
+        "h": 107
+      }
+    }
+  },
+  "meta": {
+    "image": "spritesheet.png",
+    "size": {
+      "w": 303,
+      "h": 321
+    },
+    "scale": "0.5"
+  }
+}

@@ -33,6 +33,11 @@ export class LearningNodeAnimations {
       frameRate: 4,
       repeat: -1,
     });
+
+    this.animationManager.createAnimation(scene, "sprouting_talking", {
+      frameRate: 4,
+      repeat: -1,
+    });
   }
 
   playSproutTransition(): Promise<void> {
@@ -48,8 +53,8 @@ export class LearningNodeAnimations {
     this.animationManager.playAnimation(this.getSprite(), "sprouting_idle");
   }
 
-  playSproutSpeaking() {
-    throw new Error("Speaking animation not implemented");
+  playSproutTalking() {
+    this.animationManager.playAnimation(this.getSprite(), "sprouting_talking");
   }
 
   destroy() {

@@ -58,12 +58,14 @@ export const stepBase =
   };
 
 export async function runSteps(
-  steps: Step[],
+  steps: (Step | Step[])[],
   initialContext: InitialContext = {},
 ): Promise<Context> {
   const context = createContext(initialContext);
 
-  for (const step of steps) {
+  const flattenedSteps = steps.flat();
+
+  for (const step of flattenedSteps) {
     await step(context);
   }
 

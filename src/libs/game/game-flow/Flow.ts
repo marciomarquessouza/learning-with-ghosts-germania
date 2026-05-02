@@ -1,5 +1,6 @@
 import { events } from "@/events/events";
 import { FlowPayload, FlowResult } from "./types";
+import { Step } from "./runSteps";
 
 export abstract class Flow<TState extends string, TGameScene> {
   protected scene: Phaser.Scene;
@@ -12,7 +13,9 @@ export abstract class Flow<TState extends string, TGameScene> {
     this.gameScene = gameScene;
   }
 
-  public waitInteractionEvent(callback?: () => void): Promise<void> {
+  abstract run(): Promise<FlowResult<TState, TGameScene>>;
+
+  protected waitInteractionEvent(callback?: () => void): Promise<void> {
     return new Promise((resolve) => {
       const handler = ({ id }: { id: string }) => {
         if (id !== this.flowName) return;
@@ -26,7 +29,7 @@ export abstract class Flow<TState extends string, TGameScene> {
     });
   }
 
-  public delay(ms: number, callback?: () => void): Promise<void> {
+  protected delay(ms: number, callback?: () => void): Promise<void> {
     return new Promise((resolve) => {
       window.setTimeout(() => {
         callback?.();
@@ -35,7 +38,14 @@ export abstract class Flow<TState extends string, TGameScene> {
     });
   }
 
-  abstract run(): Promise<FlowResult<TState, TGameScene>>;
+  protected repeatSteps(
+    repetitions: number,
+    createSteps: (index: number) => Step[],
+  ): Step[] {
+    return Array.from({ length: repetitions }).flatMap((_, index) => {
+      return createSteps(index);
+    });
+  }
 
   abstract destroy(): void;
 }

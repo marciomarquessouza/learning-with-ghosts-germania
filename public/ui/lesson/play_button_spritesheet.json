@@ -1,0 +1,52 @@
+{
+  "frames": {
+    "play_button_0": {
+      "frame": {
+        "x": 0,
+        "y": 0,
+        "w": 75,
+        "h": 75
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 75,
+        "h": 75
+      },
+      "sourceSize": {
+        "w": 75,
+        "h": 75
+      }
+    },
+    "play_button_1": {
+      "frame": {
+        "x": 75,
+        "y": 0,
+        "w": 75,
+        "h": 75
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 75,
+        "h": 75
+      },
+      "sourceSize": {
+        "w": 75,
+        "h": 75
+      }
+    }
+  },
+  "meta": {
+    "image": "play_button_spritesheet.png",
+    "size": {
+      "w": 225,
+      "h": 75
+    },
+    "scale": "1.0"
+  }
+}

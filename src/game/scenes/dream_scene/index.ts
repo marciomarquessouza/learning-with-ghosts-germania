@@ -24,6 +24,7 @@ import { IdleState } from "./states/IdleState";
 import { IntroState } from "./states/IntroState";
 import { PerformingActionState } from "./states/PerformingActionState";
 import { PerformingLessonState } from "./states/PerformingLessonState";
+import { AudioManager } from "@/libs/audio/game-audio/AudioManager";
 
 export const DEFAULT_POSITION_X = 510;
 export const DEFAULT_POSITION_Y = 720;
@@ -36,6 +37,7 @@ export class DreamScene extends GameScene {
   public player = this.createActor(ACTORS.PLAYER, Player);
   public tutor = this.createActor(ACTORS.TUTOR, Tutor);
   public learningNode = this.createActor(ACTORS.LEARNING_NODE, LearningNode);
+  public audioManager = new AudioManager();
   public lessonController = new LessonController(
     useLessonStore.getState().lesson,
   );
@@ -53,6 +55,7 @@ export class DreamScene extends GameScene {
     this.player.preload(this);
     this.tutor.preload(this);
     this.learningNode.preload(this);
+    this.lessonController.preload(this, this.audioManager);
     this.hud.preload(this);
     this.physics.world.setBounds(0, 0, 2000, 1200);
   }
@@ -69,8 +72,10 @@ export class DreamScene extends GameScene {
     const boundH = this.scenario.height;
     this.physics.world.setBounds(0, 0, boundW, boundH);
     this.gameCamera.setBounds(0, 0, boundW, boundH);
+    this.audioManager.create(this);
+    this.lessonController.create(this, this.audioManager);
 
-    const playerSprite = this.player.spawn(this, {
+    const playerSprite = this.player.create(this, {
       startX: DEFAULT_POSITION_X,
       startY: DEFAULT_POSITION_Y,
       cursors,
@@ -78,14 +83,14 @@ export class DreamScene extends GameScene {
 
     this.gameCamera.attachTarget(playerSprite);
 
-    this.tutor.spawn(this, {
+    this.tutor.create(this, {
       startX: this.scenario.width - 800,
       startY: DEFAULT_POSITION_Y - 100,
       scale: 0.8,
       flipX: true,
     });
 
-    this.learningNode.spawn(this, {
+    this.learningNode.create(this, {
       startX: this.scenario.width - 760,
       startY: 890,
       flipX: true,

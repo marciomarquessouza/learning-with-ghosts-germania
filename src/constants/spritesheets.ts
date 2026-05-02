@@ -26,6 +26,11 @@ export const SPRITESHEETS = {
       image: '/actors/learningNode/sprouting_idle/spritesheet.png',
       atlas: '/actors/learningNode/sprouting_idle/spritesheet.json'
     },
+    sprouting_talking: {
+      key: 'learningNode-sprouting_talking',
+      image: '/actors/learningNode/sprouting_talking/spritesheet.png',
+      atlas: '/actors/learningNode/sprouting_talking/spritesheet.json'
+    },
     sprouting_transition: {
       key: 'learningNode-sprouting_transition',
       image: '/actors/learningNode/sprouting_transition/spritesheet.png',

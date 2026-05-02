@@ -17,7 +17,7 @@ export class Tutor {
     this.animations.preload(scene);
   }
 
-  spawn(scene: Phaser.Scene, payload: ActorPayload) {
+  create(scene: Phaser.Scene, payload: ActorPayload) {
     const { startX, startY, scale, flipX } = payload;
 
     this.sprite = scene.physics.add

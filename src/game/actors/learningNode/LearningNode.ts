@@ -6,8 +6,13 @@ import {
   LearningNodeSyncEvents,
 } from "@/events/actors/learningNode/events";
 import { LEARNING_NODE_STATES } from "./constants/states";
-import { createLearningNodeStateMachine } from "./helpers/createLearningNodeStateMachine";
 import { LearningNodeAnimations as Animations } from "./animations/LearningNodeAnimations";
+import { AudioPlayButton } from "./components/AudioPlayButton";
+import { LessonTargetLabel } from "./components/LessonTargetLabel";
+
+import { SproutingState } from "./states/sprout/SproutingState";
+import { SproutTalkingState } from "./states/sprout/SproutTalkingState";
+import { SproutIdleState } from "./states/sprout/SproutIdleState";
 
 interface CreatePayload {
   startX: number;
@@ -29,13 +34,16 @@ export class LearningNode {
     LearningNodeSyncEvents,
     LearningNodeAsyncEvents
   >;
+  public audioPlayButton = new AudioPlayButton();
+  public lessonTargetLabel = new LessonTargetLabel();
   public sprite!: Phaser.Types.Physics.Arcade.SpriteWithDynamicBody;
 
   preload(scene: Phaser.Scene) {
     this.animations.preload(scene);
+    this.audioPlayButton.preload(scene);
   }
 
-  spawn(scene: Phaser.Scene, { startX, startY, flipX }: CreatePayload) {
+  create(scene: Phaser.Scene, { startX, startY, flipX }: CreatePayload) {
     this.sprite = scene.physics.add
       .sprite(startX, startY, "", "")
       .setFlipX(!!flipX)
@@ -50,20 +58,53 @@ export class LearningNode {
 
     this.animations.create(scene, this.sprite);
 
+    this.audioPlayButton.create(scene);
+    this.audioPlayButton.setVisible(false);
+
+    this.lessonTargetLabel.create(scene);
+    this.lessonTargetLabel.setVisible(false);
+
     this.eventController = new EventController(
       events.actors.learningNode.sync,
       events.actors.learningNode.async,
     );
 
-    this.stateMachine = createLearningNodeStateMachine(scene, this);
-
-    this.attachEvents();
+    this.stateMachine = new StateMachine(scene);
+    this.stateMachine
+      .addState(LearningNode.STATES.SPROUTING, SproutingState, this)
+      .addState(LearningNode.STATES.SPROUT_IDLE, SproutIdleState, this)
+      .addState(LearningNode.STATES.SPROUT_TALKING, SproutTalkingState, this);
   }
 
-  private attachEvents() {
-    this.eventController.addAsyncEvent("sprouting:transition", () => {
-      this.stateMachine.changeTo(LearningNode.STATES.SPROUTING);
+  public enterSproutingState() {
+    this.stateMachine.changeTo(LearningNode.STATES.SPROUTING);
+  }
+
+  public enterIdleState() {
+    this.stateMachine.changeTo(LearningNode.STATES.SPROUT_IDLE);
+  }
+
+  public enterSproutTalkingState() {
+    this.stateMachine.changeTo(LearningNode.STATES.SPROUT_TALKING);
+  }
+
+  attachPlayerButton(onClick: () => void) {
+    this.audioPlayButton.attach({
+      target: this.sprite,
+      position: "bottom",
+      onClick,
+      offset: -20,
     });
+    this.audioPlayButton.setVisible(true);
+  }
+
+  attachTargetLabel(targetText: string, onComplete?: () => void) {
+    this.lessonTargetLabel.typeText({ text: targetText, onComplete });
+    this.lessonTargetLabel.attach({
+      target: this.sprite,
+      position: "top",
+    });
+    this.lessonTargetLabel.setVisible(true);
   }
 
   update(delta: number) {
@@ -74,5 +115,7 @@ export class LearningNode {
     this.animations.destroy();
     this.stateMachine.clear();
     this.eventController.offAllEvents();
+    this.audioPlayButton.destroy();
+    this.lessonTargetLabel.destroy();
   }
 }

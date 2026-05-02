@@ -1,6 +1,9 @@
+import { AUDIO_SPEED, AudioManager } from "../audio/game-audio/AudioManager";
 import { Lesson, LessonEntry, LessonStepType } from "./types";
 
 export class LessonController {
+  private _scene?: Phaser.Scene;
+  private _audioManager?: AudioManager;
   private nextEntries: LessonEntry[] = [];
   public currentLessonEntry: LessonEntry | null = null;
   public lesson: Lesson;
@@ -9,6 +12,31 @@ export class LessonController {
     this.lesson = lesson;
     this.nextEntries = [...this.lesson.entries];
     this.setCurrentLessonEntry();
+  }
+
+  preload(scene: Phaser.Scene, audioManager: AudioManager) {
+    this.getLessonAudios().forEach(({ key, file }) => {
+      if (file) audioManager.preload(scene, key, file);
+    });
+  }
+
+  create(scene: Phaser.Scene, audioManager: AudioManager) {
+    this._scene = scene;
+    this._audioManager = audioManager;
+  }
+
+  private get scene(): Phaser.Scene {
+    if (!this._scene) {
+      throw new Error("scene not available");
+    }
+    return this._scene;
+  }
+
+  private get audioManager(): AudioManager {
+    if (!this._audioManager) {
+      throw new Error("audio manager not available");
+    }
+    return this._audioManager;
   }
 
   private setCurrentLessonEntry() {
@@ -50,5 +78,30 @@ export class LessonController {
 
   public getCurrentLessonDay() {
     return this.lesson.day;
+  }
+
+  public getEntryTarget() {
+    if (!this.currentLessonEntry?.target) {
+      throw new Error("Lesson Controller: target not available");
+    }
+    return this.currentLessonEntry.target;
+  }
+
+  private getLessonAudios() {
+    return this.lesson.entries.map(({ id, audio }) => ({
+      key: id,
+      file: audio,
+    }));
+  }
+
+  public async playTargetAudio(
+    speed: number = AUDIO_SPEED.NORMAL,
+  ): Promise<void> {
+    const entryId = this.currentLessonEntry?.id;
+    if (!entryId) {
+      throw new Error("playTargetAudio: Lesson entry id not available");
+    }
+
+    await this.audioManager.playVoice(entryId, { rate: speed });
   }
 }

@@ -5,6 +5,7 @@ import { events } from "@/events/events";
 import { InputController } from "@/libs/inputs/InputController";
 import { createInputController } from "@/libs/inputs/createInputController";
 import { BeforeLessonFlow } from "../flows/lesson/BeforeLesson.flow";
+import { LessonIntroductionFlow } from "../flows/lesson/LessonIntroduction.flow";
 
 export class IdleState extends BaseState {
   private lessonInteractionArea: InteractionArea = new InteractionArea();
@@ -64,8 +65,13 @@ export class IdleState extends BaseState {
       this.input.justPressed("interact") &&
       this.lessonInteractionArea.isOverlapping
     ) {
-      this.dreamScene.flowController?.setNextFlow(BeforeLessonFlow);
-      this.changeTo(DreamScene.STATES.PERFORMING_ACTION);
+      // uncomment after finish the development
+      // this.dreamScene.flowController?.setNextFlow(BeforeLessonFlow);
+      // this.changeTo(DreamScene.STATES.PERFORMING_ACTION);
+
+      // remove after the development
+      this.dreamScene.flowController?.setNextFlow(LessonIntroductionFlow);
+      this.changeTo(DreamScene.STATES.PERFORMING_LESSON);
     }
 
     if (this.input.justPressed("cancel")) {
