@@ -4,7 +4,7 @@ import { DreamScene } from "../..";
 import { FlowResult } from "@/libs/game/game-flow/types";
 import { runSteps, stepBase } from "@/libs/game/game-flow/runSteps";
 import { events } from "@/events/events";
-import { LessonListeningFlow } from "./LessonListeningFlow.flow";
+import { LessonListeningFlow } from "./LessonListening.flow";
 
 const CLOSE_TITLE_AFTER = 2_000;
 

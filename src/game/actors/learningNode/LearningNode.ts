@@ -23,6 +23,8 @@ interface CreatePayload {
 export class LearningNode {
   public static readonly STATES = LEARNING_NODE_STATES;
 
+  private _scene?: Phaser.Scene;
+
   public animations = new Animations();
   public references: {
     groundPositionY: number;
@@ -38,12 +40,20 @@ export class LearningNode {
   public lessonTargetLabel = new LessonTargetLabel();
   public sprite!: Phaser.Types.Physics.Arcade.SpriteWithDynamicBody;
 
+  private get scene(): Phaser.Scene {
+    if (!this._scene) {
+      throw new Error("The scene was not created");
+    }
+    return this._scene;
+  }
+
   preload(scene: Phaser.Scene) {
     this.animations.preload(scene);
     this.audioPlayButton.preload(scene);
   }
 
   create(scene: Phaser.Scene, { startX, startY, flipX }: CreatePayload) {
+    this._scene = scene;
     this.sprite = scene.physics.add
       .sprite(startX, startY, "", "")
       .setFlipX(!!flipX)
@@ -98,6 +108,11 @@ export class LearningNode {
     this.audioPlayButton.setVisible(true);
   }
 
+  detachPlayerButton() {
+    this.audioPlayButton.setVisible(false);
+    this.audioPlayButton.destroy();
+  }
+
   attachTargetLabel(targetText: string, onComplete?: () => void) {
     this.lessonTargetLabel.typeText({ text: targetText, onComplete });
     this.lessonTargetLabel.attach({
@@ -105,6 +120,23 @@ export class LearningNode {
       position: "top",
     });
     this.lessonTargetLabel.setVisible(true);
+  }
+
+  detachTargetLabel() {
+    this.lessonTargetLabel.setVisible(false);
+    this.lessonTargetLabel.destroy();
+  }
+
+  increaseSize() {
+    this.scene.tweens.killTweensOf(this.sprite);
+
+    this.scene.tweens.add({
+      targets: this.sprite,
+      scaleX: this.sprite.scaleX + 0.2,
+      scaleY: this.sprite.scaleY + 0.2,
+      duration: 350,
+      ease: "Back.easeOut",
+    });
   }
 
   update(delta: number) {
