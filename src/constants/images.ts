@@ -39,8 +39,6 @@ export const HUD_WEIGHT_NUMBER_HEIGHT = 72.41;
 // ACTORS
 // PLAYER
 export const GHOST_SHADOW_IMG = "/actors/player/ghost_shadow.png";
-export const GHOST_ATLAS_IMG = "/actors/player/ghost_spritesheet.png";
-export const GHOST_ATLAS_JSON = "/actors/player/ghost_spritesheet.json";
 
 // PUNISHER
 export const PUNISHER_LIGHT_IMG = "/actors/punisher/punisher_light.png";

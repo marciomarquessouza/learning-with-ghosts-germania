@@ -37,6 +37,23 @@ export const SPRITESHEETS = {
       atlas: '/actors/learningNode/sprouting_transition/spritesheet.json'
     }
   },
+  player: {
+    idle: {
+      key: 'player-idle',
+      image: '/actors/player/idle/spritesheet.png',
+      atlas: '/actors/player/idle/spritesheet.json'
+    },
+    inclined: {
+      key: 'player-inclined',
+      image: '/actors/player/inclined/spritesheet.png',
+      atlas: '/actors/player/inclined/spritesheet.json'
+    },
+    move: {
+      key: 'player-move',
+      image: '/actors/player/move/spritesheet.png',
+      atlas: '/actors/player/move/spritesheet.json'
+    }
+  },
   punisher: {
     idle: {
       key: 'punisher-idle',

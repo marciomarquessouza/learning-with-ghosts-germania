@@ -18,7 +18,7 @@ export class Player {
   public static readonly STATES = PLAYER_STATES;
 
   public speed = DEFAULT_SPEED;
-  public sprite: Phaser.Physics.Arcade.Sprite | null = null;
+  private _sprite?: Phaser.Types.Physics.Arcade.SpriteWithDynamicBody;
   public cursors: Phaser.Types.Input.Keyboard.CursorKeys | null = null;
   public keyMap: Partial<
     Record<keyof typeof KEY_CODES, Phaser.Input.Keyboard.Key>
@@ -27,6 +27,13 @@ export class Player {
   private shadow = new Shadow();
   private levitation = new Levitation();
   private stateMachine!: StateMachine;
+
+  public get sprite(): Phaser.Types.Physics.Arcade.SpriteWithDynamicBody {
+    if (!this?._sprite) {
+      throw new Error("Player: sprite not found");
+    }
+    return this._sprite;
+  }
 
   preload(scene: Phaser.Scene) {
     this.animations.preload(scene);
@@ -37,9 +44,13 @@ export class Player {
     scene: Phaser.Scene,
     { startX, startY, cursors }: PlayerCreatePayload,
   ) {
-    this.sprite = this.animations.create(scene, startX, startY);
+    this._sprite = scene.physics.add
+      .sprite(startX, startY, "", "")
+      .setDepth(10)
+      .setCollideWorldBounds(true);
+    this.animations.create(scene, this._sprite);
     this.shadow.create(scene, startX, startY);
-    this.levitation.create(this.sprite, this.shadow);
+    this.levitation.create(this._sprite, this.shadow);
     this.cursors = cursors;
     this.keyMap = createKeyMap(scene, [KEY_CODES.A, KEY_CODES.D]);
 
@@ -47,7 +58,7 @@ export class Player {
     // Initial State
     this.stateMachine.changeTo(Player.STATES.IDLE);
 
-    return this.sprite;
+    return this._sprite;
   }
 
   enterIdle() {
@@ -64,6 +75,10 @@ export class Player {
 
   enterScared() {
     this.stateMachine.changeTo(Player.STATES.SCARED);
+  }
+
+  enterInclined() {
+    this.stateMachine.changeTo(Player.STATES.INCLINED);
   }
 
   public getHorizontalInput() {

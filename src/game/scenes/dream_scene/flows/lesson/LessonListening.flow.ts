@@ -31,7 +31,8 @@ export class LessonListeningFlow extends Flow<SceneStateNames, DreamScene> {
         });
       }),
       stepBase(() => {
-        this.gameScene.player.enterListening();
+        // this.gameScene.player.enterListening();
+        this.gameScene.player.enterInclined();
         return events.lesson.async.emitAsync("write-lesson-description", {
           description: `${this.step.text}`,
           skipPressContinue: true,
@@ -69,6 +70,7 @@ export class LessonListeningFlow extends Flow<SceneStateNames, DreamScene> {
       stepBase(() => {
         this.gameScene.learningNode.detachTargetLabel();
         this.gameScene.learningNode.detachPlayerButton();
+        this.gameScene.player.enterIdle();
       }),
     ]);
 

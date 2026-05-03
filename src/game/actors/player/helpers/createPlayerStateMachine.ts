@@ -10,6 +10,7 @@ import { SpeakingState } from "../states/SpeakingState";
 import { Player } from "../Player";
 import { ScaredState } from "../states/ScaredState";
 import { playerStateNames } from "../constants/states";
+import { InclinedState } from "../states/InclinedState";
 
 export function createPlayerStateMachine(
   scene: Phaser.Scene,
@@ -22,6 +23,7 @@ export function createPlayerStateMachine(
     [Player.STATES.LISTENING, ListeningState],
     [Player.STATES.SPEAKING, SpeakingState],
     [Player.STATES.SCARED, ScaredState],
+    [Player.STATES.INCLINED, InclinedState],
   ];
 
   states.forEach(([name, state]) => {

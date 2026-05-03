@@ -4,6 +4,7 @@ export const PLAYER_STATES = {
   SPEAKING: "PLAYER_SPEAKING",
   LISTENING: "PLAYER_LISTENING",
   SCARED: "PLAYER_SCARED",
+  INCLINED: "PLAYER_INCLINED",
 } as const;
 
 export type playerStateNames =

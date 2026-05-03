@@ -1,0 +1,152 @@
+{
+  "frames": {
+    "player_inclined_0": {
+      "frame": {
+        "x": 0,
+        "y": 0,
+        "w": 120,
+        "h": 252
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 120,
+        "h": 252
+      },
+      "sourceSize": {
+        "w": 120,
+        "h": 252
+      }
+    },
+    "player_inclined_1": {
+      "frame": {
+        "x": 120,
+        "y": 0,
+        "w": 120,
+        "h": 252
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 120,
+        "h": 252
+      },
+      "sourceSize": {
+        "w": 120,
+        "h": 252
+      }
+    },
+    "player_inclined_2": {
+      "frame": {
+        "x": 240,
+        "y": 0,
+        "w": 120,
+        "h": 252
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 120,
+        "h": 252
+      },
+      "sourceSize": {
+        "w": 120,
+        "h": 252
+      }
+    },
+    "player_inclined_3": {
+      "frame": {
+        "x": 360,
+        "y": 0,
+        "w": 120,
+        "h": 252
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 120,
+        "h": 252
+      },
+      "sourceSize": {
+        "w": 120,
+        "h": 252
+      }
+    },
+    "player_inclined_4": {
+      "frame": {
+        "x": 480,
+        "y": 0,
+        "w": 120,
+        "h": 252
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 120,
+        "h": 252
+      },
+      "sourceSize": {
+        "w": 120,
+        "h": 252
+      }
+    },
+    "player_inclined_5": {
+      "frame": {
+        "x": 600,
+        "y": 0,
+        "w": 120,
+        "h": 252
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 120,
+        "h": 252
+      },
+      "sourceSize": {
+        "w": 120,
+        "h": 252
+      }
+    },
+    "player_inclined_6": {
+      "frame": {
+        "x": 0,
+        "y": 252,
+        "w": 120,
+        "h": 252
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 120,
+        "h": 252
+      },
+      "sourceSize": {
+        "w": 120,
+        "h": 252
+      }
+    }
+  },
+  "meta": {
+    "image": "spritesheet.png",
+    "size": {
+      "w": 720,
+      "h": 504
+    },
+    "scale": "0.3"
+  }
+}

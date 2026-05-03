@@ -1,135 +1,148 @@
 import { MOODS } from "@/constants/game";
-import { GHOST_ATLAS_IMG, GHOST_ATLAS_JSON } from "@/constants/images";
-
-const GHOST_ATLAS = "ghostAtlas";
+import { SPRITESHEETS } from "@/constants/spritesheets";
+import { AnimationManager } from "@/libs/animation/AnimationManager";
 
 export class PlayerAnimations {
-  private GHOST_ANIMATIONS = {
-    GHOST_IDLE_ANIM: "ghostIdleAnim",
-    GHOST_MOVE_ANIM: "ghostMoveAnim",
-    GHOST_SAD_ANIM: "ghostSadAnim",
-    GHOST_ANGRY_ANIM: "ghostAngryAnim",
-    GHOST_HAPPY_ANIM: "ghostHappyAnim",
-    GHOST_SURPRISED_ANIM: "ghostSurprisedAnim",
-    GHOST_FLUSHED_ANIM: "ghostFlushedAnim",
-  };
-  public currentAnimation = this.GHOST_ANIMATIONS.GHOST_IDLE_ANIM;
-  public sprite!: Phaser.Physics.Arcade.Sprite;
+  private animationManager = new AnimationManager<"player">(
+    SPRITESHEETS.player,
+  );
 
-  preload(scene: Phaser.Scene) {
-    const load = scene.load;
-    load.atlas(GHOST_ATLAS, GHOST_ATLAS_IMG, GHOST_ATLAS_JSON);
+  private PLAYER_EXPRESSIONS = {
+    [MOODS.SAD]: "PLAYER_" + MOODS.SAD,
+    [MOODS.ANGRY]: "PLAYER_" + MOODS.ANGRY,
+    [MOODS.HAPPY]: "PLAYER_" + MOODS.HAPPY,
+    [MOODS.SURPRISED]: "PLAYER_" + MOODS.SURPRISED,
+    [MOODS.FLUSHED]: "PLAYER_" + MOODS.FLUSHED,
+  };
+
+  private _sprite?: Phaser.Physics.Arcade.Sprite;
+
+  public get sprite(): Phaser.Physics.Arcade.Sprite {
+    if (!this._sprite) {
+      throw new Error("Player sprite was not initialized.");
+    }
+    return this._sprite;
   }
 
-  create(scene: Phaser.Scene, startX: number, startY: number) {
-    if (!scene.anims.exists(this.GHOST_ANIMATIONS.GHOST_IDLE_ANIM)) {
+  preload(scene: Phaser.Scene) {
+    this.animationManager.preloadAll(scene);
+  }
+
+  create(
+    scene: Phaser.Scene,
+    sprite: Phaser.Types.Physics.Arcade.SpriteWithDynamicBody,
+  ) {
+    this._sprite = sprite;
+    const IDLE_KEY = SPRITESHEETS.player.idle.key;
+
+    this.animationManager.createAnimation(scene, "idle", {
+      frames: [
+        { key: IDLE_KEY, frame: "player_idle_0", duration: 800 },
+        { key: IDLE_KEY, frame: "player_idle_1", duration: 10 },
+        { key: IDLE_KEY, frame: "player_idle_2", duration: 10 },
+        { key: IDLE_KEY, frame: "player_idle_1", duration: 10 },
+        { key: IDLE_KEY, frame: "player_idle_0", duration: 800 },
+      ],
+      frameRate: 14,
+      repeat: -1,
+    });
+
+    this.animationManager.createAnimation(scene, "move", {
+      frameRate: 6,
+      repeat: -1,
+    });
+
+    this.animationManager.createAnimation(scene, "inclined", {
+      frameRate: 14,
+      repeat: 0,
+    });
+
+    if (!scene.anims.exists(this.PLAYER_EXPRESSIONS[MOODS.SAD])) {
       scene.anims.create({
-        key: this.GHOST_ANIMATIONS.GHOST_IDLE_ANIM,
-        frames: [
-          { key: GHOST_ATLAS, frame: "ghost_0", duration: 800 },
-          { key: GHOST_ATLAS, frame: "ghost_1", duration: 10 },
-          { key: GHOST_ATLAS, frame: "ghost_2", duration: 10 },
-          { key: GHOST_ATLAS, frame: "ghost_1", duration: 10 },
-          { key: GHOST_ATLAS, frame: "ghost_0", duration: 800 },
-        ],
+        key: this.PLAYER_EXPRESSIONS[MOODS.SAD],
+        frames: [{ key: IDLE_KEY, frame: "player_idle_7", duration: 10 }],
         frameRate: 20,
         repeat: -1,
       });
     }
 
-    if (!scene.anims.exists(this.GHOST_ANIMATIONS.GHOST_MOVE_ANIM)) {
+    if (!scene.anims.exists(this.PLAYER_EXPRESSIONS[MOODS.ANGRY])) {
       scene.anims.create({
-        key: this.GHOST_ANIMATIONS.GHOST_MOVE_ANIM,
-        frames: [{ key: GHOST_ATLAS, frame: "ghost_3", duration: 10 }],
+        key: this.PLAYER_EXPRESSIONS[MOODS.ANGRY],
+        frames: [{ key: IDLE_KEY, frame: "player_idle_5", duration: 10 }],
         frameRate: 20,
         repeat: -1,
       });
     }
 
-    if (!scene.anims.exists(this.GHOST_ANIMATIONS.GHOST_SAD_ANIM)) {
+    if (!scene.anims.exists(this.PLAYER_EXPRESSIONS[MOODS.HAPPY])) {
       scene.anims.create({
-        key: this.GHOST_ANIMATIONS.GHOST_SAD_ANIM,
-        frames: [{ key: GHOST_ATLAS, frame: "ghost_4", duration: 10 }],
+        key: this.PLAYER_EXPRESSIONS[MOODS.HAPPY],
+        frames: [{ key: IDLE_KEY, frame: "player_idle_6", duration: 10 }],
         frameRate: 20,
         repeat: -1,
       });
     }
 
-    if (!scene.anims.exists(this.GHOST_ANIMATIONS.GHOST_ANGRY_ANIM)) {
+    if (!scene.anims.exists(this.PLAYER_EXPRESSIONS[MOODS.SURPRISED])) {
       scene.anims.create({
-        key: this.GHOST_ANIMATIONS.GHOST_ANGRY_ANIM,
-        frames: [{ key: GHOST_ATLAS, frame: "ghost_5", duration: 10 }],
+        key: this.PLAYER_EXPRESSIONS[MOODS.SURPRISED],
+        frames: [{ key: IDLE_KEY, frame: "player_idle_3", duration: 10 }],
         frameRate: 20,
         repeat: -1,
       });
     }
 
-    if (!scene.anims.exists(this.GHOST_ANIMATIONS.GHOST_HAPPY_ANIM)) {
+    if (!scene.anims.exists(this.PLAYER_EXPRESSIONS[MOODS.FLUSHED])) {
       scene.anims.create({
-        key: this.GHOST_ANIMATIONS.GHOST_HAPPY_ANIM,
-        frames: [{ key: GHOST_ATLAS, frame: "ghost_6", duration: 10 }],
+        key: this.PLAYER_EXPRESSIONS[MOODS.FLUSHED],
+        frames: [{ key: IDLE_KEY, frame: "player_idle_4", duration: 10 }],
         frameRate: 20,
         repeat: -1,
       });
     }
-
-    if (!scene.anims.exists(this.GHOST_ANIMATIONS.GHOST_SURPRISED_ANIM)) {
-      scene.anims.create({
-        key: this.GHOST_ANIMATIONS.GHOST_SURPRISED_ANIM,
-        frames: [{ key: GHOST_ATLAS, frame: "ghost_7", duration: 10 }],
-        frameRate: 20,
-        repeat: -1,
-      });
-    }
-
-    if (!scene.anims.exists(this.GHOST_ANIMATIONS.GHOST_FLUSHED_ANIM)) {
-      scene.anims.create({
-        key: this.GHOST_ANIMATIONS.GHOST_FLUSHED_ANIM,
-        frames: [{ key: GHOST_ATLAS, frame: "ghost_8", duration: 10 }],
-        frameRate: 20,
-        repeat: -1,
-      });
-    }
-
-    this.sprite = scene.physics.add.sprite(startX, startY, GHOST_ATLAS, 0);
-
-    this.sprite.setDepth(10).setCollideWorldBounds(true);
-
-    return this.sprite;
   }
 
   playIdle() {
-    this.sprite.play(this.GHOST_ANIMATIONS.GHOST_IDLE_ANIM, true);
+    this.animationManager.playAnimation(this.sprite, "idle", true);
   }
 
   playMoving() {
-    this.sprite.play(this.GHOST_ANIMATIONS.GHOST_MOVE_ANIM);
+    this.animationManager.playAnimation(this.sprite, "move", true);
   }
 
   playScared() {
-    this.sprite.play(this.GHOST_ANIMATIONS.GHOST_SURPRISED_ANIM);
+    this.sprite.play(this.PLAYER_EXPRESSIONS[MOODS.SURPRISED]);
+  }
+
+  playInclined(options?: { reverse: boolean }) {
+    if (options?.reverse) {
+      this.animationManager.playAnimationReverse(this.sprite, "inclined", true);
+      return;
+    }
+    this.animationManager.playAnimation(this.sprite, "inclined", true);
   }
 
   playAnimationByMood(mood: MOODS) {
     switch (mood) {
       case MOODS.HAPPY:
-        this.sprite.play(this.GHOST_ANIMATIONS.GHOST_HAPPY_ANIM);
+        this.sprite.play(this.PLAYER_EXPRESSIONS[MOODS.HAPPY]);
         break;
       case MOODS.SAD:
-        this.sprite.play(this.GHOST_ANIMATIONS.GHOST_SAD_ANIM);
+        this.sprite.play(this.PLAYER_EXPRESSIONS[MOODS.SAD]);
         break;
       case MOODS.ANGRY:
-        this.sprite.play(this.GHOST_ANIMATIONS.GHOST_ANGRY_ANIM);
+        this.sprite.play(this.PLAYER_EXPRESSIONS[MOODS.ANGRY]);
         break;
       case MOODS.SURPRISED:
-        this.sprite.play(this.GHOST_ANIMATIONS.GHOST_SURPRISED_ANIM);
+        this.sprite.play(this.PLAYER_EXPRESSIONS[MOODS.SURPRISED]);
         break;
       case MOODS.FLUSHED:
-        this.sprite.play(this.GHOST_ANIMATIONS.GHOST_FLUSHED_ANIM);
+        this.sprite.play(this.PLAYER_EXPRESSIONS[MOODS.FLUSHED]);
         break;
       case MOODS.NEUTRAL:
       default:
-        this.sprite.play(this.GHOST_ANIMATIONS.GHOST_IDLE_ANIM);
+        this.animationManager.playAnimation(this.sprite, "idle", true);
         break;
     }
   }

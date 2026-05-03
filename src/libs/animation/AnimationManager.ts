@@ -128,6 +128,17 @@ export class AnimationManager<TActor extends SpriteActor> {
     return this.createPlayResponses(sprite, animation);
   }
 
+  playAnimationReverse(
+    sprite: Phaser.GameObjects.Sprite,
+    animation: SpriteAnimation<TActor>,
+    ignoreIfPlaying = true,
+  ) {
+    const spritesheet = this.spritesheets[animation] as SpritesheetEntry;
+    sprite.anims.playReverse(spritesheet.key, ignoreIfPlaying);
+
+    return this.createPlayResponses(sprite, animation);
+  }
+
   private holdAnimationAt(
     sprite: Phaser.GameObjects.Sprite,
     animation: SpriteAnimation<TActor>,
