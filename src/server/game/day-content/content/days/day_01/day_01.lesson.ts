@@ -19,6 +19,9 @@ export const lesson: Lesson = {
           type: "listening",
           text: `Pergunte o nome dela 3 vezes (clique F ou clique na criaturinha)`,
           instruction: "Listen and repeat (don’t be shy, say it out loud!)",
+          meanings: [
+            'O nome dele é "Hallo - usado quando se encontra alguém pela primeira vez',
+          ],
         },
         {
           type: "pronunciation",

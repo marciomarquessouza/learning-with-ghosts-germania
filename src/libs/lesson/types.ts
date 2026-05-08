@@ -18,8 +18,10 @@ export type StepPhases =
 
 export type LessonEntryStep = {
   type: LessonStepType;
-  instruction: string;
   text: string;
+  instruction: string;
+  meanings?: string[];
+  gender?: string;
 };
 
 export type LessonEntry = {

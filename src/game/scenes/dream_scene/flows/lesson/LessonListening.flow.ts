@@ -31,14 +31,14 @@ export class LessonListeningFlow extends Flow<SceneStateNames, DreamScene> {
         });
       }),
       stepBase(() => {
-        // this.gameScene.player.enterListening();
-        this.gameScene.player.enterInclined();
+        this.gameScene.player.enterListening();
         return events.lesson.async.emitAsync("write-lesson-description", {
           description: `${this.step.text}`,
           skipPressContinue: true,
         });
       }),
       stepBase(() => {
+        this.gameScene.player.enterInclined();
         this.gameScene.learningNode.attachPlayerButton(() => {
           events.interactions.sync.emit("interaction/accept", {
             id: this.flowName,
@@ -52,17 +52,26 @@ export class LessonListeningFlow extends Flow<SceneStateNames, DreamScene> {
         stepBase(async () => {
           this.gameScene.learningNode.enterSproutTalkingState();
           await this.delay(500);
-          if (index === 0) {
+        }),
+        stepBase(
+          () => {
             this.gameScene.learningNode.attachTargetLabel(this.target);
-          }
-          this.gameScene.learningNode.lessonTargetLabel.setBadge(
-            `${index + 1}x`,
-          );
+            events.lesson.async.emitAsync("write-lesson-description", {
+              description: this.step?.meanings?.[0] ?? this.step.instruction,
+              skipPressContinue: true,
+            });
+          },
+          { when: () => index === 0 },
+        ),
+        stepBase(async () => {
           return this.gameScene.lessonController.playTargetAudio(
             AUDIO_SPEED.NORMAL,
           );
         }),
         stepBase(() => {
+          this.gameScene.learningNode.lessonTargetLabel.setBadge(
+            `${index + 1}x`,
+          );
           this.gameScene.learningNode.increaseSize();
           this.gameScene.learningNode.enterIdleState();
         }),
