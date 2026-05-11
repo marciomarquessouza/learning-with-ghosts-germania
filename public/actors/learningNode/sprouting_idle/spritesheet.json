@@ -4,188 +4,188 @@
       "frame": {
         "x": 0,
         "y": 0,
-        "w": 101,
-        "h": 107
+        "w": 145,
+        "h": 242
       },
       "rotated": false,
       "trimmed": false,
       "spriteSourceSize": {
         "x": 0,
         "y": 0,
-        "w": 101,
-        "h": 107
+        "w": 145,
+        "h": 242
       },
       "sourceSize": {
-        "w": 101,
-        "h": 107
+        "w": 145,
+        "h": 242
       }
     },
     "learningNode_sprouting_idle_1": {
       "frame": {
-        "x": 101,
+        "x": 145,
         "y": 0,
-        "w": 101,
-        "h": 107
+        "w": 145,
+        "h": 242
       },
       "rotated": false,
       "trimmed": false,
       "spriteSourceSize": {
         "x": 0,
         "y": 0,
-        "w": 101,
-        "h": 107
+        "w": 145,
+        "h": 242
       },
       "sourceSize": {
-        "w": 101,
-        "h": 107
+        "w": 145,
+        "h": 242
       }
     },
     "learningNode_sprouting_idle_2": {
       "frame": {
-        "x": 202,
+        "x": 290,
         "y": 0,
-        "w": 101,
-        "h": 107
+        "w": 145,
+        "h": 242
       },
       "rotated": false,
       "trimmed": false,
       "spriteSourceSize": {
         "x": 0,
         "y": 0,
-        "w": 101,
-        "h": 107
+        "w": 145,
+        "h": 242
       },
       "sourceSize": {
-        "w": 101,
-        "h": 107
+        "w": 145,
+        "h": 242
       }
     },
     "learningNode_sprouting_idle_3": {
       "frame": {
-        "x": 0,
-        "y": 107,
-        "w": 101,
-        "h": 107
+        "x": 435,
+        "y": 0,
+        "w": 145,
+        "h": 242
       },
       "rotated": false,
       "trimmed": false,
       "spriteSourceSize": {
         "x": 0,
         "y": 0,
-        "w": 101,
-        "h": 107
+        "w": 145,
+        "h": 242
       },
       "sourceSize": {
-        "w": 101,
-        "h": 107
+        "w": 145,
+        "h": 242
       }
     },
     "learningNode_sprouting_idle_4": {
       "frame": {
-        "x": 101,
-        "y": 107,
-        "w": 101,
-        "h": 107
+        "x": 580,
+        "y": 0,
+        "w": 145,
+        "h": 242
       },
       "rotated": false,
       "trimmed": false,
       "spriteSourceSize": {
         "x": 0,
         "y": 0,
-        "w": 101,
-        "h": 107
+        "w": 145,
+        "h": 242
       },
       "sourceSize": {
-        "w": 101,
-        "h": 107
+        "w": 145,
+        "h": 242
       }
     },
     "learningNode_sprouting_idle_5": {
       "frame": {
-        "x": 202,
-        "y": 107,
-        "w": 101,
-        "h": 107
+        "x": 725,
+        "y": 0,
+        "w": 145,
+        "h": 242
       },
       "rotated": false,
       "trimmed": false,
       "spriteSourceSize": {
         "x": 0,
         "y": 0,
-        "w": 101,
-        "h": 107
+        "w": 145,
+        "h": 242
       },
       "sourceSize": {
-        "w": 101,
-        "h": 107
+        "w": 145,
+        "h": 242
       }
     },
     "learningNode_sprouting_idle_6": {
       "frame": {
         "x": 0,
-        "y": 214,
-        "w": 101,
-        "h": 107
+        "y": 242,
+        "w": 145,
+        "h": 242
       },
       "rotated": false,
       "trimmed": false,
       "spriteSourceSize": {
         "x": 0,
         "y": 0,
-        "w": 101,
-        "h": 107
+        "w": 145,
+        "h": 242
       },
       "sourceSize": {
-        "w": 101,
-        "h": 107
+        "w": 145,
+        "h": 242
       }
     },
     "learningNode_sprouting_idle_7": {
       "frame": {
-        "x": 101,
-        "y": 214,
-        "w": 101,
-        "h": 107
+        "x": 145,
+        "y": 242,
+        "w": 145,
+        "h": 242
       },
       "rotated": false,
       "trimmed": false,
       "spriteSourceSize": {
         "x": 0,
         "y": 0,
-        "w": 101,
-        "h": 107
+        "w": 145,
+        "h": 242
       },
       "sourceSize": {
-        "w": 101,
-        "h": 107
+        "w": 145,
+        "h": 242
       }
     },
     "learningNode_sprouting_idle_8": {
       "frame": {
-        "x": 202,
-        "y": 214,
-        "w": 101,
-        "h": 107
+        "x": 290,
+        "y": 242,
+        "w": 145,
+        "h": 242
       },
       "rotated": false,
       "trimmed": false,
       "spriteSourceSize": {
         "x": 0,
         "y": 0,
-        "w": 101,
-        "h": 107
+        "w": 145,
+        "h": 242
       },
       "sourceSize": {
-        "w": 101,
-        "h": 107
+        "w": 145,
+        "h": 242
       }
     }
   },
   "meta": {
     "image": "spritesheet.png",
     "size": {
-      "w": 303,
-      "h": 321
+      "w": 870,
+      "h": 484
     },
     "scale": "0.5"
   }

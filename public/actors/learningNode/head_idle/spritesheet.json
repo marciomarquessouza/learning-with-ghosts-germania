@@ -1,6 +1,6 @@
 {
   "frames": {
-    "learningNode_sprouting_talking_0": {
+    "learningNode_head_idle_0": {
       "frame": {
         "x": 0,
         "y": 0,
@@ -20,7 +20,7 @@
         "h": 242
       }
     },
-    "learningNode_sprouting_talking_1": {
+    "learningNode_head_idle_1": {
       "frame": {
         "x": 145,
         "y": 0,
@@ -40,7 +40,7 @@
         "h": 242
       }
     },
-    "learningNode_sprouting_talking_2": {
+    "learningNode_head_idle_2": {
       "frame": {
         "x": 290,
         "y": 0,
@@ -60,7 +60,7 @@
         "h": 242
       }
     },
-    "learningNode_sprouting_talking_3": {
+    "learningNode_head_idle_3": {
       "frame": {
         "x": 435,
         "y": 0,
@@ -80,90 +80,10 @@
         "h": 242
       }
     },
-    "learningNode_sprouting_talking_4": {
+    "learningNode_head_idle_4": {
       "frame": {
         "x": 580,
         "y": 0,
-        "w": 145,
-        "h": 242
-      },
-      "rotated": false,
-      "trimmed": false,
-      "spriteSourceSize": {
-        "x": 0,
-        "y": 0,
-        "w": 145,
-        "h": 242
-      },
-      "sourceSize": {
-        "w": 145,
-        "h": 242
-      }
-    },
-    "learningNode_sprouting_talking_5": {
-      "frame": {
-        "x": 725,
-        "y": 0,
-        "w": 145,
-        "h": 242
-      },
-      "rotated": false,
-      "trimmed": false,
-      "spriteSourceSize": {
-        "x": 0,
-        "y": 0,
-        "w": 145,
-        "h": 242
-      },
-      "sourceSize": {
-        "w": 145,
-        "h": 242
-      }
-    },
-    "learningNode_sprouting_talking_6": {
-      "frame": {
-        "x": 0,
-        "y": 242,
-        "w": 145,
-        "h": 242
-      },
-      "rotated": false,
-      "trimmed": false,
-      "spriteSourceSize": {
-        "x": 0,
-        "y": 0,
-        "w": 145,
-        "h": 242
-      },
-      "sourceSize": {
-        "w": 145,
-        "h": 242
-      }
-    },
-    "learningNode_sprouting_talking_7": {
-      "frame": {
-        "x": 145,
-        "y": 242,
-        "w": 145,
-        "h": 242
-      },
-      "rotated": false,
-      "trimmed": false,
-      "spriteSourceSize": {
-        "x": 0,
-        "y": 0,
-        "w": 145,
-        "h": 242
-      },
-      "sourceSize": {
-        "w": 145,
-        "h": 242
-      }
-    },
-    "learningNode_sprouting_talking_8": {
-      "frame": {
-        "x": 290,
-        "y": 242,
         "w": 145,
         "h": 242
       },
@@ -185,7 +105,7 @@
     "image": "spritesheet.png",
     "size": {
       "w": 870,
-      "h": 484
+      "h": 242
     },
     "scale": "0.5"
   }

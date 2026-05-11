@@ -72,7 +72,6 @@ export class LessonListeningFlow extends Flow<SceneStateNames, DreamScene> {
           this.gameScene.learningNode.lessonTargetLabel.setBadge(
             `${index + 1}x`,
           );
-          this.gameScene.learningNode.increaseSize();
           this.gameScene.learningNode.enterIdleState();
         }),
       ]),

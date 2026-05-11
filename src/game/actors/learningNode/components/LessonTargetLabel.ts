@@ -106,7 +106,7 @@ export class LessonTargetLabel {
   attach({
     target,
     position,
-    offset = 20,
+    offset = 0,
   }: {
     target:
       | Phaser.GameObjects.Container
