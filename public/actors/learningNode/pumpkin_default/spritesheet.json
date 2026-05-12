@@ -4,128 +4,128 @@
       "frame": {
         "x": 0,
         "y": 0,
-        "w": 94,
-        "h": 201
+        "w": 145,
+        "h": 242
       },
       "rotated": false,
       "trimmed": false,
       "spriteSourceSize": {
         "x": 0,
         "y": 0,
-        "w": 94,
-        "h": 201
+        "w": 145,
+        "h": 242
       },
       "sourceSize": {
-        "w": 94,
-        "h": 201
+        "w": 145,
+        "h": 242
       }
     },
     "learningNode_pumpkin_default_1": {
       "frame": {
-        "x": 94,
+        "x": 145,
         "y": 0,
-        "w": 94,
-        "h": 201
+        "w": 145,
+        "h": 242
       },
       "rotated": false,
       "trimmed": false,
       "spriteSourceSize": {
         "x": 0,
         "y": 0,
-        "w": 94,
-        "h": 201
+        "w": 145,
+        "h": 242
       },
       "sourceSize": {
-        "w": 94,
-        "h": 201
+        "w": 145,
+        "h": 242
       }
     },
     "learningNode_pumpkin_default_2": {
       "frame": {
-        "x": 188,
+        "x": 290,
         "y": 0,
-        "w": 94,
-        "h": 201
+        "w": 145,
+        "h": 242
       },
       "rotated": false,
       "trimmed": false,
       "spriteSourceSize": {
         "x": 0,
         "y": 0,
-        "w": 94,
-        "h": 201
+        "w": 145,
+        "h": 242
       },
       "sourceSize": {
-        "w": 94,
-        "h": 201
+        "w": 145,
+        "h": 242
       }
     },
     "learningNode_pumpkin_default_3": {
       "frame": {
-        "x": 282,
+        "x": 435,
         "y": 0,
-        "w": 94,
-        "h": 201
+        "w": 145,
+        "h": 242
       },
       "rotated": false,
       "trimmed": false,
       "spriteSourceSize": {
         "x": 0,
         "y": 0,
-        "w": 94,
-        "h": 201
+        "w": 145,
+        "h": 242
       },
       "sourceSize": {
-        "w": 94,
-        "h": 201
+        "w": 145,
+        "h": 242
       }
     },
     "learningNode_pumpkin_default_4": {
       "frame": {
-        "x": 376,
+        "x": 580,
         "y": 0,
-        "w": 94,
-        "h": 201
+        "w": 145,
+        "h": 242
       },
       "rotated": false,
       "trimmed": false,
       "spriteSourceSize": {
         "x": 0,
         "y": 0,
-        "w": 94,
-        "h": 201
+        "w": 145,
+        "h": 242
       },
       "sourceSize": {
-        "w": 94,
-        "h": 201
+        "w": 145,
+        "h": 242
       }
     },
     "learningNode_pumpkin_default_5": {
       "frame": {
-        "x": 470,
+        "x": 725,
         "y": 0,
-        "w": 94,
-        "h": 201
+        "w": 145,
+        "h": 242
       },
       "rotated": false,
       "trimmed": false,
       "spriteSourceSize": {
         "x": 0,
         "y": 0,
-        "w": 94,
-        "h": 201
+        "w": 145,
+        "h": 242
       },
       "sourceSize": {
-        "w": 94,
-        "h": 201
+        "w": 145,
+        "h": 242
       }
     }
   },
   "meta": {
     "image": "spritesheet.png",
     "size": {
-      "w": 564,
-      "h": 201
+      "w": 870,
+      "h": 242
     },
     "scale": "0.5"
   }

@@ -9,9 +9,7 @@ export class PumpkinIdleState extends BaseState {
     super(scene);
   }
 
-  enter(): void {
-    this.learningNode.animations.playHeadIdle();
-  }
+  enter(): void {}
 
   exit(): void {}
 

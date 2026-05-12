@@ -10,8 +10,9 @@ export class PumpkinTransition extends BaseState {
   }
 
   enter(): void {
-    this.learningNode.animations.playHeadTransition().then(() => {
-      // this.changeTo(LearningNode.STATES.PUMPKIN_IDLE);
+    this.learningNode.animations.playPumpkinTransition().then(() => {
+      this.learningNode.preparePumpkinGrowth();
+      this.learningNode.enterPumpkinIdleState();
     });
   }
 

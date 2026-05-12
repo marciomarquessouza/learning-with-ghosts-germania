@@ -71,9 +71,14 @@ export class LearningNode {
 
   create(scene: Phaser.Scene, { startX, startY, flipX }: CreatePayload) {
     this._scene = scene;
+
+    const learningNodeX = startX + 110;
+    const learningNodeY = startY;
+
     this._container = scene.add.container(startX + 20, startY);
+
     this._sprite = scene.physics.add
-      .sprite(0, 0, "", "")
+      .sprite(learningNodeX, learningNodeY, "", "")
       .setFlipX(!!flipX)
       .setVisible(false);
 
@@ -127,6 +132,22 @@ export class LearningNode {
 
   public enterPumpkinIdleState() {
     this.stateMachine.changeTo(LearningNode.STATES.PUMPKIN_IDLE);
+  }
+
+  public preparePumpkinGrowth() {
+    this.animations.preparePumpkinReveal({
+      spritePosition: { x: this.sprite.x, y: this.sprite.y },
+      containerPosition: { x: this.container.x, y: this.container.y },
+      debug: false,
+    });
+  }
+
+  public growPumpkinTo(progress: number) {
+    return this.animations.growPumpkinTo(progress);
+  }
+
+  public increasePumpkinGrowth(amount = 0.25) {
+    return this.animations.increasePumpkinGrowth(amount);
   }
 
   attachPlayerButton(onClick: () => void) {

@@ -13,6 +13,10 @@ export class LessonPronunciation extends Flow<SceneStateNames, DreamScene> {
         this.gameScene.learningNode.enterPumpkinTransitionState();
         return this.waitInteractionEvent();
       }),
+      stepBase(async () => {
+        await this.gameScene.learningNode.growPumpkinTo(1);
+        return this.waitInteractionEvent();
+      }),
     ]);
 
     return {};
