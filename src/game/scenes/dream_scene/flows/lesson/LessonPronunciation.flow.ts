@@ -10,6 +10,11 @@ export class LessonPronunciation extends Flow<SceneStateNames, DreamScene> {
   async run(): Promise<FlowResult<SceneStateNames, DreamScene>> {
     await runSteps([
       stepBase(() => {
+        this.gameScene.learningNode.enterPumpkinTransitionState();
+        return this.waitInteractionEvent();
+      }),
+      stepBase(async () => {
+        await this.gameScene.learningNode.growPumpkinTo(1);
         return this.waitInteractionEvent();
       }),
     ]);

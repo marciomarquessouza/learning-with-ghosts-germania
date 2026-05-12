@@ -91,8 +91,8 @@ export class DreamScene extends GameScene {
     });
 
     this.learningNode.create(this, {
-      startX: this.scenario.width - 760,
-      startY: 890,
+      startX: this.scenario.width - 860,
+      startY: 870,
       flipX: true,
     });
 

@@ -13,24 +13,18 @@ export class SproutingState extends BaseState {
   }
 
   enter(): void {
-    if (!this.learningNode.references) {
-      console.error("The references have not been initialized.");
-      return;
-    }
-
-    const { groundPositionY, handPositionX, handPositionY } =
-      this.learningNode.references;
-
-    const seed = new SeedAnimations(this.scene, {
-      x: handPositionX,
-      startY: handPositionY,
-      groundY: groundPositionY,
-    });
-
     runSteps(
       [
-        stepBase(() => seed.dropSeed()),
-        stepBase(() => this.learningNode.animations.playSproutTransition()),
+        stepBase(() => this.learningNode.seed.dropSeed()),
+        stepBase(() => this.learningNode.floor.playOpen()),
+        stepBase(() => {
+          const sprite = this.learningNode.sprite;
+          this.learningNode.floor.attachActor(sprite, {
+            x: 80,
+            y: -92,
+          });
+          return this.learningNode.animations.playSproutTransition();
+        }),
       ],
       {},
     )

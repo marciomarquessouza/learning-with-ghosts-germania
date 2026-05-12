@@ -13,6 +13,10 @@ import { LessonTargetLabel } from "./components/LessonTargetLabel";
 import { SproutingState } from "./states/sprout/SproutingState";
 import { SproutTalkingState } from "./states/sprout/SproutTalkingState";
 import { SproutIdleState } from "./states/sprout/SproutIdleState";
+import { PumpkinIdleState } from "./states/pumpkin/PumpkinIdleState";
+import { PumpkinTransition } from "./states/pumpkin/PumpkinTransitionState";
+import { FloorAnimations } from "./animations/FloorAnimations";
+import { SeedAnimations } from "./animations/SeedAnimations";
 
 interface CreatePayload {
   startX: number;
@@ -24,13 +28,10 @@ export class LearningNode {
   public static readonly STATES = LEARNING_NODE_STATES;
 
   private _scene?: Phaser.Scene;
+  private _sprite?: Phaser.Types.Physics.Arcade.SpriteWithDynamicBody;
+  private _container?: Phaser.GameObjects.Container;
 
   public animations = new Animations();
-  public references: {
-    groundPositionY: number;
-    handPositionX: number;
-    handPositionY: number;
-  } | null = null;
   public stateMachine!: StateMachine;
   public eventController!: EventController<
     LearningNodeSyncEvents,
@@ -38,35 +39,60 @@ export class LearningNode {
   >;
   public audioPlayButton = new AudioPlayButton();
   public lessonTargetLabel = new LessonTargetLabel();
-  public sprite!: Phaser.Types.Physics.Arcade.SpriteWithDynamicBody;
+  public floor = new FloorAnimations();
+  public seed = new SeedAnimations();
 
   private get scene(): Phaser.Scene {
     if (!this._scene) {
-      throw new Error("The scene was not created");
+      throw new Error("Learning node: The scene was not created");
     }
     return this._scene;
+  }
+
+  private get container(): Phaser.GameObjects.Container {
+    if (!this._container) {
+      throw new Error("Learning node: Container was not created");
+    }
+    return this._container;
+  }
+
+  public get sprite(): Phaser.Types.Physics.Arcade.SpriteWithDynamicBody {
+    if (!this._sprite) {
+      throw new Error("Learning node: Sprite was not created");
+    }
+    return this._sprite;
   }
 
   preload(scene: Phaser.Scene) {
     this.animations.preload(scene);
     this.audioPlayButton.preload(scene);
+    this.floor.preload(scene);
   }
 
   create(scene: Phaser.Scene, { startX, startY, flipX }: CreatePayload) {
     this._scene = scene;
-    this.sprite = scene.physics.add
-      .sprite(startX, startY, "", "")
+
+    const learningNodeX = startX + 110;
+    const learningNodeY = startY;
+
+    this._container = scene.add.container(startX + 20, startY);
+
+    this._sprite = scene.physics.add
+      .sprite(learningNodeX, learningNodeY, "", "")
       .setFlipX(!!flipX)
       .setVisible(false);
-    const groundPositionY = startY;
-    const handPositionY = groundPositionY - 360;
-    this.references = {
-      handPositionX: startX,
-      groundPositionY,
-      handPositionY,
-    };
+
+    const handPositionY = startY - 360;
 
     this.animations.create(scene, this.sprite);
+
+    this.seed.create(scene, {
+      x: startX + 110,
+      startY: handPositionY + 40,
+      groundY: startY,
+    });
+
+    this.floor.create(scene, this.container);
 
     this.audioPlayButton.create(scene);
     this.audioPlayButton.setVisible(false);
@@ -83,7 +109,9 @@ export class LearningNode {
     this.stateMachine
       .addState(LearningNode.STATES.SPROUTING, SproutingState, this)
       .addState(LearningNode.STATES.SPROUT_IDLE, SproutIdleState, this)
-      .addState(LearningNode.STATES.SPROUT_TALKING, SproutTalkingState, this);
+      .addState(LearningNode.STATES.SPROUT_TALKING, SproutTalkingState, this)
+      .addState(LearningNode.STATES.PUMPKIN_TRANSITION, PumpkinTransition, this)
+      .addState(LearningNode.STATES.PUMPKIN_IDLE, PumpkinIdleState, this);
   }
 
   public enterSproutingState() {
@@ -98,12 +126,36 @@ export class LearningNode {
     this.stateMachine.changeTo(LearningNode.STATES.SPROUT_TALKING);
   }
 
+  public enterPumpkinTransitionState() {
+    this.stateMachine.changeTo(LearningNode.STATES.PUMPKIN_TRANSITION);
+  }
+
+  public enterPumpkinIdleState() {
+    this.stateMachine.changeTo(LearningNode.STATES.PUMPKIN_IDLE);
+  }
+
+  public preparePumpkinGrowth() {
+    this.animations.preparePumpkinReveal({
+      spritePosition: { x: this.sprite.x, y: this.sprite.y },
+      containerPosition: { x: this.container.x, y: this.container.y },
+      debug: false,
+    });
+  }
+
+  public growPumpkinTo(progress: number) {
+    return this.animations.growPumpkinTo(progress);
+  }
+
+  public increasePumpkinGrowth(amount = 0.25) {
+    return this.animations.increasePumpkinGrowth(amount);
+  }
+
   attachPlayerButton(onClick: () => void) {
     this.audioPlayButton.attach({
       target: this.sprite,
       position: "bottom",
       onClick,
-      offset: -20,
+      offset: 20,
     });
     this.audioPlayButton.setVisible(true);
   }
@@ -118,6 +170,7 @@ export class LearningNode {
     this.lessonTargetLabel.attach({
       target: this.sprite,
       position: "top",
+      offset: -150,
     });
     this.lessonTargetLabel.setVisible(true);
   }

@@ -21,6 +21,21 @@ export const SPRITESHEETS = {
     }
   },
   learningNode: {
+    floor_transition: {
+      key: 'learningNode-floor_transition',
+      image: '/actors/learningNode/floor_transition/spritesheet.png',
+      atlas: '/actors/learningNode/floor_transition/spritesheet.json'
+    },
+    pumpkin_default: {
+      key: 'learningNode-pumpkin_default',
+      image: '/actors/learningNode/pumpkin_default/spritesheet.png',
+      atlas: '/actors/learningNode/pumpkin_default/spritesheet.json'
+    },
+    pumpkin_full: {
+      key: 'learningNode-pumpkin_full',
+      image: '/actors/learningNode/pumpkin_full/spritesheet.png',
+      atlas: '/actors/learningNode/pumpkin_full/spritesheet.json'
+    },
     sprouting_idle: {
       key: 'learningNode-sprouting_idle',
       image: '/actors/learningNode/sprouting_idle/spritesheet.png',

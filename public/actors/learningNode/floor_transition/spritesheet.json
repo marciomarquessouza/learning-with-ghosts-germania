@@ -1,11 +1,11 @@
 {
   "frames": {
-    "learningNode_sprouting_talking_0": {
+    "learningNode_floor_transition_0": {
       "frame": {
         "x": 0,
         "y": 0,
         "w": 145,
-        "h": 242
+        "h": 66
       },
       "rotated": false,
       "trimmed": false,
@@ -13,19 +13,19 @@
         "x": 0,
         "y": 0,
         "w": 145,
-        "h": 242
+        "h": 66
       },
       "sourceSize": {
         "w": 145,
-        "h": 242
+        "h": 66
       }
     },
-    "learningNode_sprouting_talking_1": {
+    "learningNode_floor_transition_1": {
       "frame": {
         "x": 145,
         "y": 0,
         "w": 145,
-        "h": 242
+        "h": 66
       },
       "rotated": false,
       "trimmed": false,
@@ -33,19 +33,19 @@
         "x": 0,
         "y": 0,
         "w": 145,
-        "h": 242
+        "h": 66
       },
       "sourceSize": {
         "w": 145,
-        "h": 242
+        "h": 66
       }
     },
-    "learningNode_sprouting_talking_2": {
+    "learningNode_floor_transition_2": {
       "frame": {
         "x": 290,
         "y": 0,
         "w": 145,
-        "h": 242
+        "h": 66
       },
       "rotated": false,
       "trimmed": false,
@@ -53,19 +53,19 @@
         "x": 0,
         "y": 0,
         "w": 145,
-        "h": 242
+        "h": 66
       },
       "sourceSize": {
         "w": 145,
-        "h": 242
+        "h": 66
       }
     },
-    "learningNode_sprouting_talking_3": {
+    "learningNode_floor_transition_3": {
       "frame": {
         "x": 435,
         "y": 0,
         "w": 145,
-        "h": 242
+        "h": 66
       },
       "rotated": false,
       "trimmed": false,
@@ -73,19 +73,19 @@
         "x": 0,
         "y": 0,
         "w": 145,
-        "h": 242
+        "h": 66
       },
       "sourceSize": {
         "w": 145,
-        "h": 242
+        "h": 66
       }
     },
-    "learningNode_sprouting_talking_4": {
+    "learningNode_floor_transition_4": {
       "frame": {
         "x": 580,
         "y": 0,
         "w": 145,
-        "h": 242
+        "h": 66
       },
       "rotated": false,
       "trimmed": false,
@@ -93,19 +93,19 @@
         "x": 0,
         "y": 0,
         "w": 145,
-        "h": 242
+        "h": 66
       },
       "sourceSize": {
         "w": 145,
-        "h": 242
+        "h": 66
       }
     },
-    "learningNode_sprouting_talking_5": {
+    "learningNode_floor_transition_5": {
       "frame": {
         "x": 725,
         "y": 0,
         "w": 145,
-        "h": 242
+        "h": 66
       },
       "rotated": false,
       "trimmed": false,
@@ -113,19 +113,19 @@
         "x": 0,
         "y": 0,
         "w": 145,
-        "h": 242
+        "h": 66
       },
       "sourceSize": {
         "w": 145,
-        "h": 242
+        "h": 66
       }
     },
-    "learningNode_sprouting_talking_6": {
+    "learningNode_floor_transition_6": {
       "frame": {
         "x": 0,
-        "y": 242,
+        "y": 66,
         "w": 145,
-        "h": 242
+        "h": 66
       },
       "rotated": false,
       "trimmed": false,
@@ -133,19 +133,19 @@
         "x": 0,
         "y": 0,
         "w": 145,
-        "h": 242
+        "h": 66
       },
       "sourceSize": {
         "w": 145,
-        "h": 242
+        "h": 66
       }
     },
-    "learningNode_sprouting_talking_7": {
+    "learningNode_floor_transition_7": {
       "frame": {
         "x": 145,
-        "y": 242,
+        "y": 66,
         "w": 145,
-        "h": 242
+        "h": 66
       },
       "rotated": false,
       "trimmed": false,
@@ -153,19 +153,19 @@
         "x": 0,
         "y": 0,
         "w": 145,
-        "h": 242
+        "h": 66
       },
       "sourceSize": {
         "w": 145,
-        "h": 242
+        "h": 66
       }
     },
-    "learningNode_sprouting_talking_8": {
+    "learningNode_floor_transition_8": {
       "frame": {
         "x": 290,
-        "y": 242,
+        "y": 66,
         "w": 145,
-        "h": 242
+        "h": 66
       },
       "rotated": false,
       "trimmed": false,
@@ -173,11 +173,91 @@
         "x": 0,
         "y": 0,
         "w": 145,
-        "h": 242
+        "h": 66
       },
       "sourceSize": {
         "w": 145,
-        "h": 242
+        "h": 66
+      }
+    },
+    "learningNode_floor_transition_9": {
+      "frame": {
+        "x": 435,
+        "y": 66,
+        "w": 145,
+        "h": 66
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 145,
+        "h": 66
+      },
+      "sourceSize": {
+        "w": 145,
+        "h": 66
+      }
+    },
+    "learningNode_floor_transition_10": {
+      "frame": {
+        "x": 580,
+        "y": 66,
+        "w": 145,
+        "h": 66
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 145,
+        "h": 66
+      },
+      "sourceSize": {
+        "w": 145,
+        "h": 66
+      }
+    },
+    "learningNode_floor_transition_11": {
+      "frame": {
+        "x": 725,
+        "y": 66,
+        "w": 145,
+        "h": 66
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 145,
+        "h": 66
+      },
+      "sourceSize": {
+        "w": 145,
+        "h": 66
+      }
+    },
+    "learningNode_floor_transition_12": {
+      "frame": {
+        "x": 0,
+        "y": 132,
+        "w": 145,
+        "h": 66
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 145,
+        "h": 66
+      },
+      "sourceSize": {
+        "w": 145,
+        "h": 66
       }
     }
   },
@@ -185,7 +265,7 @@
     "image": "spritesheet.png",
     "size": {
       "w": 870,
-      "h": 484
+      "h": 198
     },
     "scale": "0.5"
   }
