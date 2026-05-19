@@ -3,15 +3,27 @@ import { StateMachine } from "@/libs/game/state-machine/StateMachine";
 import { TUTOR_STATES } from "./constants/states";
 import { TutorAnimations } from "./animations/TutorAnimations";
 import { createTutorStateMachine } from "./helpers/createTutorStateMachine";
+import { getRequired } from "@/utils/getRequired";
+import { TutorBlockerZone } from "./zones/TutorBlockerZone";
 
 export class Tutor {
   public static readonly STATES = TUTOR_STATES;
 
-  public sprite!: Phaser.Types.Physics.Arcade.SpriteWithDynamicBody;
+  private _container?: Phaser.GameObjects.Container;
+  private _sprite?: Phaser.Types.Physics.Arcade.SpriteWithDynamicBody;
+  private stateMachine!: StateMachine;
+  private blockerZone = new TutorBlockerZone();
+  private resolveSowing: (() => void) | null = null;
+
   public animations = new TutorAnimations();
 
-  private resolveSowing: (() => void) | null = null;
-  private stateMachine!: StateMachine;
+  public get container(): Phaser.GameObjects.Container {
+    return getRequired(this._container, "Tutor", "_container");
+  }
+
+  public get sprite(): Phaser.Types.Physics.Arcade.SpriteWithDynamicBody {
+    return getRequired(this._sprite, "Tutor", "_sprite");
+  }
 
   preload(scene: Phaser.Scene) {
     this.animations.preload(scene);
@@ -20,10 +32,22 @@ export class Tutor {
   create(scene: Phaser.Scene, payload: ActorPayload) {
     const { startX, startY, scale, flipX } = payload;
 
-    this.sprite = scene.physics.add
-      .sprite(startX, startY, "", "")
+    this._container = scene.add.container(startX, startY);
+
+    this._sprite = scene.physics.add
+      .sprite(0, 0, "", "")
       .setFlipX(!!flipX)
       .setScale(scale || 1);
+
+    this.container.add(this._sprite);
+
+    this.blockerZone.create(scene, {
+      x: this.container.x - 100,
+      y: this.container.y - 50,
+      width: 220,
+      height: 560,
+      debug: false,
+    });
 
     this.animations.create(scene, this.sprite);
 
@@ -49,6 +73,14 @@ export class Tutor {
   finishSowing() {
     this.resolveSowing?.();
     this.resolveSowing = null;
+  }
+
+  addCollisionWithPlayer(player: Phaser.Physics.Arcade.Sprite) {
+    this.blockerZone.addCollisionWith(player);
+  }
+
+  refreshBlockerArea() {
+    this.blockerZone.refreshBody();
   }
 
   update(delta: number) {

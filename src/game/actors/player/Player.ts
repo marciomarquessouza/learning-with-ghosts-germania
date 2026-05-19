@@ -6,6 +6,7 @@ import { Levitation } from "./helpers/Levitation";
 import { PLAYER_STATES } from "./constants/states";
 import { PlayerAnimations } from "./animations/PlayerAnimations";
 import { createPlayerStateMachine } from "./helpers/createPlayerStateMachine";
+import { getRequired } from "@/utils/getRequired";
 
 export const KEY_CODES = Phaser.Input.Keyboard.KeyCodes;
 const DEFAULT_SPEED = 200;
@@ -29,10 +30,7 @@ export class Player {
   private stateMachine!: StateMachine;
 
   public get sprite(): Phaser.Types.Physics.Arcade.SpriteWithDynamicBody {
-    if (!this?._sprite) {
-      throw new Error("Player: sprite not found");
-    }
-    return this._sprite;
+    return getRequired(this._sprite, "Player", "_sprite");
   }
 
   preload(scene: Phaser.Scene) {
@@ -45,10 +43,14 @@ export class Player {
     { startX, startY, cursors }: PlayerCreatePayload,
   ) {
     this._sprite = scene.physics.add
-      .sprite(startX, startY, "", "")
+      .sprite(startX, startY, "ghost", 0)
       .setDepth(10)
       .setCollideWorldBounds(true);
     this.animations.create(scene, this._sprite);
+
+    this._sprite.body.setSize(48, 96);
+    this._sprite.body.setOffset(24, 32);
+
     this.shadow.create(scene, startX, startY);
     this.levitation.create(this._sprite, this.shadow);
     this.cursors = cursors;
@@ -108,9 +110,8 @@ export class Player {
     return { left, right, velocityX };
   }
 
-  faceTarget(target?: Phaser.GameObjects.Sprite) {
-    if (!this.sprite || !target) return;
-    this.sprite.setFlipX(target.x < this.sprite.x);
+  faceTarget(targetX: number) {
+    this.sprite.setFlipX(targetX < this.sprite.x);
   }
 
   update(_time: number, delta: number) {

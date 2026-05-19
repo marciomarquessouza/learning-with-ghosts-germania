@@ -2,8 +2,7 @@ import { createScene } from "@/game/core/CreateScene";
 import { GameCamera } from "@/game/cameras/GameCamera";
 import { Hud, HUD_ITEMS } from "../../hud";
 import { CemeteryScenario } from "./scenario/cemeteryScenario";
-import { ACTORS, GAME_SCENES } from "@/constants/game";
-import { GameScene } from "../GameScene";
+import { GAME_SCENES } from "@/constants/game";
 
 import { LessonController } from "@/libs/lesson/LessonController";
 import { useLessonStore } from "@/store/lessonStore";
@@ -29,14 +28,14 @@ import { AudioManager } from "@/libs/audio/game-audio/AudioManager";
 export const DEFAULT_POSITION_X = 510;
 export const DEFAULT_POSITION_Y = 720;
 
-export class DreamScene extends GameScene {
+export class DreamScene extends Phaser.Scene {
   public static readonly STATES = SCENE_STATES;
 
   public gameCamera = new GameCamera();
   public hud = new Hud();
-  public player = this.createActor(ACTORS.PLAYER, Player);
-  public tutor = this.createActor(ACTORS.TUTOR, Tutor);
-  public learningNode = this.createActor(ACTORS.LEARNING_NODE, LearningNode);
+  public player = new Player();
+  public tutor = new Tutor();
+  public learningNode = new LearningNode();
   public audioManager = new AudioManager();
   public lessonController = new LessonController(
     useLessonStore.getState().lesson,
@@ -89,6 +88,8 @@ export class DreamScene extends GameScene {
       scale: 0.8,
       flipX: true,
     });
+
+    this.tutor.addCollisionWithPlayer(this.player.sprite);
 
     this.learningNode.create(this, {
       startX: this.scenario.width - 860,

@@ -21,8 +21,8 @@ export class PerformingLessonState extends BaseState {
 
     this.dreamScene.hud.setVisible(false);
 
-    const tutorSprite = this.dreamScene.tutor.sprite;
-    this.dreamScene.player.faceTarget(tutorSprite);
+    const tutorContainer = this.dreamScene.tutor.container;
+    this.dreamScene.player.faceTarget(tutorContainer.x);
 
     if (!this.dreamScene.flowController) {
       this.stateMachine.log("Scene flow was not created", "error");
