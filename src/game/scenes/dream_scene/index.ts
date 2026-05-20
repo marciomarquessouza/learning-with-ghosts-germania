@@ -83,7 +83,7 @@ export class DreamScene extends Phaser.Scene {
     this.gameCamera.attachTarget(playerSprite);
 
     this.tutor.create(this, {
-      startX: this.scenario.width - 800,
+      startX: this.scenario.width - 1200,
       startY: DEFAULT_POSITION_Y - 100,
       scale: 0.8,
       flipX: true,
@@ -92,7 +92,7 @@ export class DreamScene extends Phaser.Scene {
     this.tutor.addCollisionWithPlayer(this.player.sprite);
 
     this.learningNode.create(this, {
-      startX: this.scenario.width - 860,
+      startX: this.scenario.width - 1260,
       startY: 870,
       flipX: true,
     });
