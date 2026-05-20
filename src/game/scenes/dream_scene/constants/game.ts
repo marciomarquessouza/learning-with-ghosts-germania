@@ -1,0 +1,2 @@
+export const DEFAULT_PLAYER_POSITION_X = 510;
+export const DEFAULT_PLAYER_POSITION_Y = 720;
