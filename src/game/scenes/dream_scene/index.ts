@@ -18,15 +18,16 @@ import {
   DREAM_SCENE_STATES as SCENE_STATES,
   SceneStateNames,
 } from "./constants/states";
+import {
+  DEFAULT_PLAYER_POSITION_X,
+  DEFAULT_PLAYER_POSITION_Y,
+} from "./constants/game";
 import { StateMachine } from "@/libs/game/state-machine/StateMachine";
 import { IdleState } from "./states/IdleState";
 import { IntroState } from "./states/IntroState";
 import { PerformingActionState } from "./states/PerformingActionState";
 import { PerformingLessonState } from "./states/PerformingLessonState";
 import { AudioManager } from "@/libs/audio/game-audio/AudioManager";
-
-export const DEFAULT_POSITION_X = 510;
-export const DEFAULT_POSITION_Y = 720;
 
 export class DreamScene extends Phaser.Scene {
   public static readonly STATES = SCENE_STATES;
@@ -75,8 +76,8 @@ export class DreamScene extends Phaser.Scene {
     this.lessonController.create(this, this.audioManager);
 
     const playerSprite = this.player.create(this, {
-      startX: DEFAULT_POSITION_X,
-      startY: DEFAULT_POSITION_Y,
+      startX: DEFAULT_PLAYER_POSITION_X,
+      startY: DEFAULT_PLAYER_POSITION_Y,
       cursors,
     });
 
@@ -84,7 +85,7 @@ export class DreamScene extends Phaser.Scene {
 
     this.tutor.create(this, {
       startX: this.scenario.width - 800,
-      startY: DEFAULT_POSITION_Y - 100,
+      startY: DEFAULT_PLAYER_POSITION_Y - 100,
       scale: 0.8,
       flipX: true,
     });
