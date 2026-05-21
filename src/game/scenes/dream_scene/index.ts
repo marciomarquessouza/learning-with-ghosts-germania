@@ -93,7 +93,7 @@ export class DreamScene extends Phaser.Scene {
     this.tutor.addCollisionWithPlayer(this.player.sprite);
 
     this.learningNode.create(this, {
-      startX: this.scenario.width - 1260,
+      startX: this.tutor.container.x + 200,
       startY: 870,
       flipX: true,
     });
