@@ -43,12 +43,12 @@ export const useTypewriter = (speed: number = TEXT_SPEED) => {
     }
   }, [isComplete]);
 
-  const setTextToType = (textToType: string) => {
+  const setTextToType = useCallback((textToType: string) => {
     setDisplayedText("");
     setText(textToType);
     setIsComplete(false);
     setReadyToTyping(false);
-  };
+  }, []);
 
   const startTyping = (options?: { actor?: ACTORS | null }) => {
     setReadyToTyping(true);
