@@ -1,5 +1,5 @@
 import { PropsWithChildren, useEffect, useMemo, useRef } from "react";
-import { getDialogueDimension } from "@/gameUI/components/Dialogues/helpers/getDialgueDimension";
+import { getDialogueDimension } from "@/gameUI/components/Dialogues/helpers/getDialogueDimension";
 import { useDeviceType } from "@/gameUI/hooks/useDeviceType";
 import { motion, AnimatePresence } from "framer-motion";
 
@@ -21,7 +21,7 @@ export function DialogContainer({
   const device = useDeviceType();
   const { heightClass, widthClass } = useMemo(
     () => getDialogueDimension(device),
-    [device]
+    [device],
   );
 
   useEffect(() => {

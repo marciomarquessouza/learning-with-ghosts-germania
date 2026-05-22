@@ -76,6 +76,6 @@ export const useTypewriter = (speed: number = TEXT_SPEED) => {
       setTextToType,
       resumeText,
     }),
-    [resumeText, displayedText, isComplete],
+    [resumeText, displayedText, isComplete, setTextToType],
   );
 };

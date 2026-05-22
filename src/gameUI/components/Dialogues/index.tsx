@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback, useRef, useMemo, experimental_useEffectEvent } from "react";
+import { useState, useEffect, useCallback, useRef, useMemo } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useTypewriter } from "@/gameUI/hooks/useTypewriter";
 import { ACTORS } from "@/constants/game";
@@ -10,7 +10,7 @@ import { createDialogueKeyDownHandler } from "@/libs/inputs/createDialogueKeyDow
 import { DialogueLines } from "./components/DialogueLines";
 import { Alternatives } from "./components/Alternatives";
 import { DialogueCTA } from "./components/DialogueCTA";
-import { getDialogueDimension } from "./helpers/getDialgueDimension";
+import { getDialogueDimension } from "./helpers/getDialogueDimension";
 import { InputText } from "./components/InputText";
 import { getUUID } from "@/utils/getUUID";
 import { handleAlternativeKeyDown } from "@/libs/dialogues/handleAlternativeKeyDown";
@@ -51,8 +51,6 @@ export function Dialogue() {
     }
   }, [visible, setInteractionDialogueOpen]);
 
-  const setTextToTypeEvent = experimental_useEffectEvent(setTextToType)
-
   useEffect(() => {
     const handler = (payload: DialogueEvent, done: () => void) => {
       dialogueId.current = getUUID();
@@ -60,7 +58,7 @@ export function Dialogue() {
       setLineIndex(0);
       setCharactersMood(payload.lines[0].moods);
       setCharacter(payload.lines[0].character);
-      setTextToTypeEvent(payload.lines[0].text);
+      setTextToType(payload.lines[0].text);
       setLastLine(payload.lines.length === 1);
       onCompleteRef.current = () => {
         payload?.onComplete?.();
