@@ -42,7 +42,7 @@ export class Tutor {
     this.container.add(this._sprite);
 
     this.blockerZone.create(scene, {
-      x: this.container.x - 100,
+      x: this.container.x - 40,
       y: this.container.y - 50,
       width: 220,
       height: 560,

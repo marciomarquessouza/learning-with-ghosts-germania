@@ -1,4 +1,6 @@
 import { events } from "@/events/events";
+import { getRequired } from "@/utils/getRequired";
+
 import { StateMachine } from "@/libs/game/state-machine/StateMachine";
 import { EventController } from "@/libs/events/EventController";
 import {
@@ -43,24 +45,15 @@ export class LearningNode {
   public seed = new SeedAnimations();
 
   private get scene(): Phaser.Scene {
-    if (!this._scene) {
-      throw new Error("Learning node: The scene was not created");
-    }
-    return this._scene;
+    return getRequired(this._scene, "LearningNode", "_scene");
   }
 
   private get container(): Phaser.GameObjects.Container {
-    if (!this._container) {
-      throw new Error("Learning node: Container was not created");
-    }
-    return this._container;
+    return getRequired(this._container, "LearningNode", "_container");
   }
 
   public get sprite(): Phaser.Types.Physics.Arcade.SpriteWithDynamicBody {
-    if (!this._sprite) {
-      throw new Error("Learning node: Sprite was not created");
-    }
-    return this._sprite;
+    return getRequired(this._sprite, "LearningNode", "_sprite");
   }
 
   preload(scene: Phaser.Scene) {
@@ -72,10 +65,10 @@ export class LearningNode {
   create(scene: Phaser.Scene, { startX, startY, flipX }: CreatePayload) {
     this._scene = scene;
 
-    const learningNodeX = startX + 110;
+    const learningNodeX = startX - 160;
     const learningNodeY = startY;
 
-    this._container = scene.add.container(startX + 20, startY);
+    this._container = scene.add.container(learningNodeX - 80, startY);
 
     this._sprite = scene.physics.add
       .sprite(learningNodeX, learningNodeY, "", "")
@@ -87,7 +80,7 @@ export class LearningNode {
     this.animations.create(scene, this.sprite);
 
     this.seed.create(scene, {
-      x: startX + 110,
+      x: learningNodeX,
       startY: handPositionY + 40,
       groundY: startY,
     });
