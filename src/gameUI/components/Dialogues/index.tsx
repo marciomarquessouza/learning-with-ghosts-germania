@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback, useRef, useMemo } from "react";
+import { useState, useEffect, useCallback, useRef, useMemo, experimental_useEffectEvent } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useTypewriter } from "@/gameUI/hooks/useTypewriter";
 import { ACTORS } from "@/constants/game";
@@ -51,6 +51,8 @@ export function Dialogue() {
     }
   }, [visible, setInteractionDialogueOpen]);
 
+  const setTextToTypeEvent = experimental_useEffectEvent(setTextToType)
+
   useEffect(() => {
     const handler = (payload: DialogueEvent, done: () => void) => {
       dialogueId.current = getUUID();
@@ -58,7 +60,7 @@ export function Dialogue() {
       setLineIndex(0);
       setCharactersMood(payload.lines[0].moods);
       setCharacter(payload.lines[0].character);
-      setTextToType(payload.lines[0].text);
+      setTextToTypeEvent(payload.lines[0].text);
       setLastLine(payload.lines.length === 1);
       onCompleteRef.current = () => {
         payload?.onComplete?.();
@@ -71,7 +73,7 @@ export function Dialogue() {
 
     events.game.async.on("dialogue/show", handler);
     return () => events.game.async.off("dialogue/show", handler);
-  }, [setTextToType]);
+  }, []);
 
   useEffect(() => {
     const handle = () => {
