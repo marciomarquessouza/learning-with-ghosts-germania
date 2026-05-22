@@ -4,7 +4,6 @@ import { Hud, HUD_ITEMS } from "../../hud";
 import { CemeteryScenario } from "./scenario/cemeteryScenario";
 import { GAME_SCENES } from "@/constants/game";
 
-import { LessonController } from "@/libs/lesson/LessonController";
 import { useLessonStore } from "@/store/lessonStore";
 
 import { Player } from "@/game/actors/player/Player";
@@ -28,6 +27,7 @@ import { IntroState } from "./states/IntroState";
 import { PerformingActionState } from "./states/PerformingActionState";
 import { PerformingLessonState } from "./states/PerformingLessonState";
 import { AudioManager } from "@/libs/audio/game-audio/AudioManager";
+import { LessonManager } from "@/game/lesson/LessonManager";
 
 export class DreamScene extends Phaser.Scene {
   public static readonly STATES = SCENE_STATES;
@@ -38,9 +38,7 @@ export class DreamScene extends Phaser.Scene {
   public tutor = new Tutor();
   public learningNode = new LearningNode();
   public audioManager = new AudioManager();
-  public lessonController = new LessonController(
-    useLessonStore.getState().lesson,
-  );
+  public lessonManager = new LessonManager(useLessonStore.getState().lesson);
   public flowController?: FlowController<SceneStateNames, DreamScene>;
 
   private scenario = new CemeteryScenario();
@@ -55,7 +53,7 @@ export class DreamScene extends Phaser.Scene {
     this.player.preload(this);
     this.tutor.preload(this);
     this.learningNode.preload(this);
-    this.lessonController.preload(this, this.audioManager);
+    this.lessonManager.preload(this, this.audioManager);
     this.hud.preload(this);
     this.physics.world.setBounds(0, 0, 2000, 1200);
   }
@@ -73,7 +71,7 @@ export class DreamScene extends Phaser.Scene {
     this.physics.world.setBounds(0, 0, boundW, boundH);
     this.gameCamera.setBounds(0, 0, boundW, boundH);
     this.audioManager.create(this);
-    this.lessonController.create(this, this.audioManager);
+    this.lessonManager.create(this, this.audioManager);
 
     const playerSprite = this.player.create(this, {
       startX: DEFAULT_PLAYER_POSITION_X,

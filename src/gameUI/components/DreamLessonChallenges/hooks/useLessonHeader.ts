@@ -34,8 +34,8 @@ const defaultState: State = {
 };
 
 type Actions =
-  | { type: "show-header" }
-  | { type: "show-title"; payload: ShowLessonTitleEvent }
+  | { type: "show-header"; payload: ShowLessonTitleEvent }
+  | { type: "show-title" }
   | { type: "hide-title" }
   | { type: "clear-title" }
   | { type: "write-description"; payload: WriteLessonDescriptionEvent }
@@ -47,6 +47,7 @@ function reducer(state: State = defaultState, actions: Actions): State {
     case "show-header":
       return {
         ...state,
+        ...actions.payload,
         showHeader: true,
       };
     case "hide-header":
@@ -57,7 +58,6 @@ function reducer(state: State = defaultState, actions: Actions): State {
     case "show-title":
       return {
         ...state,
-        ...actions.payload,
         showTitle: true,
       };
     case "hide-title":
@@ -90,15 +90,12 @@ function reducer(state: State = defaultState, actions: Actions): State {
 
 export function useLessonHeader() {
   const [state, dispatch] = useReducer(reducer, defaultState);
-  const onHeaderVisible = useRef(() => {});
   const onHeaderHidden = useRef(() => {});
   const onDescriptionReady = useRef(() => {});
 
   const onHeaderPhaseChange = useCallback((phase: HeaderPhases) => {
     if (phase === "visible") {
-      const done = onHeaderVisible.current;
-      onHeaderVisible.current = () => {};
-      done();
+      dispatch({ type: "show-title" });
     }
     if (phase === "hidden") {
       const done = onHeaderHidden.current;
@@ -120,30 +117,8 @@ export function useLessonHeader() {
   }, []);
 
   useEffect(() => {
-    const handle = (_payload: undefined, done: () => void) => {
-      onHeaderVisible.current = done;
-      dispatch({ type: "show-header" });
-    };
-    events.lesson.async.on("show-header", handle);
-    return () => {
-      events.lesson.async.off("show-header", handle);
-    };
-  }, []);
-
-  useEffect(() => {
-    const handle = (_payload: undefined, done: () => void) => {
-      onHeaderHidden.current = done;
-      dispatch({ type: "hide-header" });
-    };
-    events.lesson.async.on("hide-header", handle);
-    return () => {
-      events.lesson.async.off("hide-header", handle);
-    };
-  }, []);
-
-  useEffect(() => {
     const handle = (payload: ShowLessonTitleEvent, done: () => void) => {
-      dispatch({ type: "show-title", payload });
+      dispatch({ type: "show-header", payload });
       setTimeout(() => {
         dispatch({ type: "hide-title" });
         done();
@@ -152,6 +127,17 @@ export function useLessonHeader() {
     events.lesson.async.on("show-lesson-title", handle);
     return () => {
       events.lesson.async.off("show-lesson-title", handle);
+    };
+  }, []);
+
+  useEffect(() => {
+    const handle = (_payload: undefined, done: () => void) => {
+      onHeaderHidden.current = done;
+      dispatch({ type: "hide-header" });
+    };
+    events.lesson.async.on("hide-lesson-title", handle);
+    return () => {
+      events.lesson.async.off("hide-lesson-title", handle);
     };
   }, []);
 

@@ -14,9 +14,8 @@ export type LessonSyncEvents = {
 };
 
 export type LessonAsyncEvents = {
-  "show-header": undefined;
-  "hide-header": undefined;
   "show-lesson-title": ShowLessonTitleEvent;
+  "hide-lesson-title": undefined;
   "write-lesson-description": WriteLessonDescriptionEvent;
 };
 

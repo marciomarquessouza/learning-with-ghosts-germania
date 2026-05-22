@@ -13,8 +13,8 @@ const LISTENING_REPETITION = 3;
 export class LessonListeningFlow extends Flow<SceneStateNames, DreamScene> {
   public flowName = "LessonListeningFlow";
 
-  private step = this.gameScene.lessonController.getStepByType("listening");
-  private target = this.gameScene.lessonController.getEntryTarget();
+  private step = this.gameScene.lessonManager.getStepByType("listening");
+  private target = this.gameScene.lessonManager.getEntryTarget();
 
   async run(): Promise<FlowResult<SceneStateNames, DreamScene>> {
     await runSteps([
@@ -32,7 +32,7 @@ export class LessonListeningFlow extends Flow<SceneStateNames, DreamScene> {
       }),
       stepBase(() => {
         this.gameScene.player.enterListening();
-        return events.lesson.async.emitAsync("write-lesson-description", {
+        return this.gameScene.lessonManager.writeLessonDescription({
           description: `${this.step.text}`,
           skipPressContinue: true,
         });
@@ -56,7 +56,7 @@ export class LessonListeningFlow extends Flow<SceneStateNames, DreamScene> {
         stepBase(
           () => {
             this.gameScene.learningNode.attachTargetLabel(this.target);
-            events.lesson.async.emitAsync("write-lesson-description", {
+            this.gameScene.lessonManager.writeLessonDescription({
               description: this.step?.meanings?.[0] ?? this.step.instruction,
               skipPressContinue: true,
             });
@@ -64,7 +64,7 @@ export class LessonListeningFlow extends Flow<SceneStateNames, DreamScene> {
           { when: () => index === 0 },
         ),
         stepBase(async () => {
-          return this.gameScene.lessonController.playTargetAudio(
+          return this.gameScene.lessonManager.playTargetAudio(
             AUDIO_SPEED.NORMAL,
           );
         }),
