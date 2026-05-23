@@ -1,6 +1,6 @@
 {
   "frames": {
-    "eliza_sowing_0": {
+    "tutor_sowing_0": {
       "frame": {
         "x": 0,
         "y": 0,
@@ -20,7 +20,7 @@
         "h": 950
       }
     },
-    "eliza_sowing_1": {
+    "tutor_sowing_1": {
       "frame": {
         "x": 1018,
         "y": 0,
@@ -40,7 +40,7 @@
         "h": 950
       }
     },
-    "eliza_sowing_2": {
+    "tutor_sowing_2": {
       "frame": {
         "x": 2036,
         "y": 0,
@@ -60,67 +60,7 @@
         "h": 950
       }
     },
-    "eliza_sowing_3": {
-      "frame": {
-        "x": 3054,
-        "y": 0,
-        "w": 1018,
-        "h": 950
-      },
-      "rotated": false,
-      "trimmed": false,
-      "spriteSourceSize": {
-        "x": 0,
-        "y": 0,
-        "w": 1018,
-        "h": 950
-      },
-      "sourceSize": {
-        "w": 1018,
-        "h": 950
-      }
-    },
-    "eliza_sowing_4": {
-      "frame": {
-        "x": 4072,
-        "y": 0,
-        "w": 1018,
-        "h": 950
-      },
-      "rotated": false,
-      "trimmed": false,
-      "spriteSourceSize": {
-        "x": 0,
-        "y": 0,
-        "w": 1018,
-        "h": 950
-      },
-      "sourceSize": {
-        "w": 1018,
-        "h": 950
-      }
-    },
-    "eliza_sowing_5": {
-      "frame": {
-        "x": 5090,
-        "y": 0,
-        "w": 1018,
-        "h": 950
-      },
-      "rotated": false,
-      "trimmed": false,
-      "spriteSourceSize": {
-        "x": 0,
-        "y": 0,
-        "w": 1018,
-        "h": 950
-      },
-      "sourceSize": {
-        "w": 1018,
-        "h": 950
-      }
-    },
-    "eliza_sowing_6": {
+    "tutor_sowing_3": {
       "frame": {
         "x": 0,
         "y": 950,
@@ -140,7 +80,7 @@
         "h": 950
       }
     },
-    "eliza_sowing_7": {
+    "tutor_sowing_4": {
       "frame": {
         "x": 1018,
         "y": 950,
@@ -160,7 +100,7 @@
         "h": 950
       }
     },
-    "eliza_sowing_8": {
+    "tutor_sowing_5": {
       "frame": {
         "x": 2036,
         "y": 950,
@@ -180,67 +120,7 @@
         "h": 950
       }
     },
-    "eliza_sowing_9": {
-      "frame": {
-        "x": 3054,
-        "y": 950,
-        "w": 1018,
-        "h": 950
-      },
-      "rotated": false,
-      "trimmed": false,
-      "spriteSourceSize": {
-        "x": 0,
-        "y": 0,
-        "w": 1018,
-        "h": 950
-      },
-      "sourceSize": {
-        "w": 1018,
-        "h": 950
-      }
-    },
-    "eliza_sowing_10": {
-      "frame": {
-        "x": 4072,
-        "y": 950,
-        "w": 1018,
-        "h": 950
-      },
-      "rotated": false,
-      "trimmed": false,
-      "spriteSourceSize": {
-        "x": 0,
-        "y": 0,
-        "w": 1018,
-        "h": 950
-      },
-      "sourceSize": {
-        "w": 1018,
-        "h": 950
-      }
-    },
-    "eliza_sowing_11": {
-      "frame": {
-        "x": 5090,
-        "y": 950,
-        "w": 1018,
-        "h": 950
-      },
-      "rotated": false,
-      "trimmed": false,
-      "spriteSourceSize": {
-        "x": 0,
-        "y": 0,
-        "w": 1018,
-        "h": 950
-      },
-      "sourceSize": {
-        "w": 1018,
-        "h": 950
-      }
-    },
-    "eliza_sowing_12": {
+    "tutor_sowing_6": {
       "frame": {
         "x": 0,
         "y": 1900,
@@ -260,7 +140,7 @@
         "h": 950
       }
     },
-    "eliza_sowing_13": {
+    "tutor_sowing_7": {
       "frame": {
         "x": 1018,
         "y": 1900,
@@ -280,7 +160,7 @@
         "h": 950
       }
     },
-    "eliza_sowing_14": {
+    "tutor_sowing_8": {
       "frame": {
         "x": 2036,
         "y": 1900,
@@ -300,67 +180,7 @@
         "h": 950
       }
     },
-    "eliza_sowing_15": {
-      "frame": {
-        "x": 3054,
-        "y": 1900,
-        "w": 1018,
-        "h": 950
-      },
-      "rotated": false,
-      "trimmed": false,
-      "spriteSourceSize": {
-        "x": 0,
-        "y": 0,
-        "w": 1018,
-        "h": 950
-      },
-      "sourceSize": {
-        "w": 1018,
-        "h": 950
-      }
-    },
-    "eliza_sowing_16": {
-      "frame": {
-        "x": 4072,
-        "y": 1900,
-        "w": 1018,
-        "h": 950
-      },
-      "rotated": false,
-      "trimmed": false,
-      "spriteSourceSize": {
-        "x": 0,
-        "y": 0,
-        "w": 1018,
-        "h": 950
-      },
-      "sourceSize": {
-        "w": 1018,
-        "h": 950
-      }
-    },
-    "eliza_sowing_17": {
-      "frame": {
-        "x": 5090,
-        "y": 1900,
-        "w": 1018,
-        "h": 950
-      },
-      "rotated": false,
-      "trimmed": false,
-      "spriteSourceSize": {
-        "x": 0,
-        "y": 0,
-        "w": 1018,
-        "h": 950
-      },
-      "sourceSize": {
-        "w": 1018,
-        "h": 950
-      }
-    },
-    "eliza_sowing_18": {
+    "tutor_sowing_9": {
       "frame": {
         "x": 0,
         "y": 2850,
@@ -380,7 +200,7 @@
         "h": 950
       }
     },
-    "eliza_sowing_19": {
+    "tutor_sowing_10": {
       "frame": {
         "x": 1018,
         "y": 2850,
@@ -400,7 +220,7 @@
         "h": 950
       }
     },
-    "eliza_sowing_20": {
+    "tutor_sowing_11": {
       "frame": {
         "x": 2036,
         "y": 2850,
@@ -420,67 +240,7 @@
         "h": 950
       }
     },
-    "eliza_sowing_21": {
-      "frame": {
-        "x": 3054,
-        "y": 2850,
-        "w": 1018,
-        "h": 950
-      },
-      "rotated": false,
-      "trimmed": false,
-      "spriteSourceSize": {
-        "x": 0,
-        "y": 0,
-        "w": 1018,
-        "h": 950
-      },
-      "sourceSize": {
-        "w": 1018,
-        "h": 950
-      }
-    },
-    "eliza_sowing_22": {
-      "frame": {
-        "x": 4072,
-        "y": 2850,
-        "w": 1018,
-        "h": 950
-      },
-      "rotated": false,
-      "trimmed": false,
-      "spriteSourceSize": {
-        "x": 0,
-        "y": 0,
-        "w": 1018,
-        "h": 950
-      },
-      "sourceSize": {
-        "w": 1018,
-        "h": 950
-      }
-    },
-    "eliza_sowing_23": {
-      "frame": {
-        "x": 5090,
-        "y": 2850,
-        "w": 1018,
-        "h": 950
-      },
-      "rotated": false,
-      "trimmed": false,
-      "spriteSourceSize": {
-        "x": 0,
-        "y": 0,
-        "w": 1018,
-        "h": 950
-      },
-      "sourceSize": {
-        "w": 1018,
-        "h": 950
-      }
-    },
-    "eliza_sowing_24": {
+    "tutor_sowing_12": {
       "frame": {
         "x": 0,
         "y": 3800,
@@ -500,7 +260,7 @@
         "h": 950
       }
     },
-    "eliza_sowing_25": {
+    "tutor_sowing_13": {
       "frame": {
         "x": 1018,
         "y": 3800,
@@ -520,7 +280,7 @@
         "h": 950
       }
     },
-    "eliza_sowing_26": {
+    "tutor_sowing_14": {
       "frame": {
         "x": 2036,
         "y": 3800,
@@ -540,10 +300,10 @@
         "h": 950
       }
     },
-    "eliza_sowing_27": {
+    "tutor_sowing_15": {
       "frame": {
-        "x": 3054,
-        "y": 3800,
+        "x": 0,
+        "y": 4750,
         "w": 1018,
         "h": 950
       },
@@ -560,10 +320,250 @@
         "h": 950
       }
     },
-    "eliza_sowing_28": {
+    "tutor_sowing_16": {
       "frame": {
-        "x": 4072,
-        "y": 3800,
+        "x": 1018,
+        "y": 4750,
+        "w": 1018,
+        "h": 950
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 1018,
+        "h": 950
+      },
+      "sourceSize": {
+        "w": 1018,
+        "h": 950
+      }
+    },
+    "tutor_sowing_17": {
+      "frame": {
+        "x": 2036,
+        "y": 4750,
+        "w": 1018,
+        "h": 950
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 1018,
+        "h": 950
+      },
+      "sourceSize": {
+        "w": 1018,
+        "h": 950
+      }
+    },
+    "tutor_sowing_18": {
+      "frame": {
+        "x": 0,
+        "y": 5700,
+        "w": 1018,
+        "h": 950
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 1018,
+        "h": 950
+      },
+      "sourceSize": {
+        "w": 1018,
+        "h": 950
+      }
+    },
+    "tutor_sowing_19": {
+      "frame": {
+        "x": 1018,
+        "y": 5700,
+        "w": 1018,
+        "h": 950
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 1018,
+        "h": 950
+      },
+      "sourceSize": {
+        "w": 1018,
+        "h": 950
+      }
+    },
+    "tutor_sowing_20": {
+      "frame": {
+        "x": 2036,
+        "y": 5700,
+        "w": 1018,
+        "h": 950
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 1018,
+        "h": 950
+      },
+      "sourceSize": {
+        "w": 1018,
+        "h": 950
+      }
+    },
+    "tutor_sowing_21": {
+      "frame": {
+        "x": 0,
+        "y": 6650,
+        "w": 1018,
+        "h": 950
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 1018,
+        "h": 950
+      },
+      "sourceSize": {
+        "w": 1018,
+        "h": 950
+      }
+    },
+    "tutor_sowing_22": {
+      "frame": {
+        "x": 1018,
+        "y": 6650,
+        "w": 1018,
+        "h": 950
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 1018,
+        "h": 950
+      },
+      "sourceSize": {
+        "w": 1018,
+        "h": 950
+      }
+    },
+    "tutor_sowing_23": {
+      "frame": {
+        "x": 2036,
+        "y": 6650,
+        "w": 1018,
+        "h": 950
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 1018,
+        "h": 950
+      },
+      "sourceSize": {
+        "w": 1018,
+        "h": 950
+      }
+    },
+    "tutor_sowing_24": {
+      "frame": {
+        "x": 0,
+        "y": 7600,
+        "w": 1018,
+        "h": 950
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 1018,
+        "h": 950
+      },
+      "sourceSize": {
+        "w": 1018,
+        "h": 950
+      }
+    },
+    "tutor_sowing_25": {
+      "frame": {
+        "x": 1018,
+        "y": 7600,
+        "w": 1018,
+        "h": 950
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 1018,
+        "h": 950
+      },
+      "sourceSize": {
+        "w": 1018,
+        "h": 950
+      }
+    },
+    "tutor_sowing_26": {
+      "frame": {
+        "x": 2036,
+        "y": 7600,
+        "w": 1018,
+        "h": 950
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 1018,
+        "h": 950
+      },
+      "sourceSize": {
+        "w": 1018,
+        "h": 950
+      }
+    },
+    "tutor_sowing_27": {
+      "frame": {
+        "x": 0,
+        "y": 8550,
+        "w": 1018,
+        "h": 950
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 1018,
+        "h": 950
+      },
+      "sourceSize": {
+        "w": 1018,
+        "h": 950
+      }
+    },
+    "tutor_sowing_28": {
+      "frame": {
+        "x": 1018,
+        "y": 8550,
         "w": 1018,
         "h": 950
       },
@@ -584,8 +584,8 @@
   "meta": {
     "image": "spritesheet.png",
     "size": {
-      "w": 6108,
-      "h": 4750
+      "w": 3054,
+      "h": 9500
     },
     "scale": "0.8"
   }

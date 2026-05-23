@@ -1,6 +1,6 @@
 {
   "frames": {
-    "eliza_teaching_0": {
+    "tutor_teaching_0": {
       "frame": {
         "x": 0,
         "y": 0,
@@ -20,7 +20,7 @@
         "h": 950
       }
     },
-    "eliza_teaching_1": {
+    "tutor_teaching_1": {
       "frame": {
         "x": 1018,
         "y": 0,
@@ -40,7 +40,7 @@
         "h": 950
       }
     },
-    "eliza_teaching_2": {
+    "tutor_teaching_2": {
       "frame": {
         "x": 2036,
         "y": 0,
@@ -60,67 +60,7 @@
         "h": 950
       }
     },
-    "eliza_teaching_3": {
-      "frame": {
-        "x": 3054,
-        "y": 0,
-        "w": 1018,
-        "h": 950
-      },
-      "rotated": false,
-      "trimmed": false,
-      "spriteSourceSize": {
-        "x": 0,
-        "y": 0,
-        "w": 1018,
-        "h": 950
-      },
-      "sourceSize": {
-        "w": 1018,
-        "h": 950
-      }
-    },
-    "eliza_teaching_4": {
-      "frame": {
-        "x": 4072,
-        "y": 0,
-        "w": 1018,
-        "h": 950
-      },
-      "rotated": false,
-      "trimmed": false,
-      "spriteSourceSize": {
-        "x": 0,
-        "y": 0,
-        "w": 1018,
-        "h": 950
-      },
-      "sourceSize": {
-        "w": 1018,
-        "h": 950
-      }
-    },
-    "eliza_teaching_5": {
-      "frame": {
-        "x": 5090,
-        "y": 0,
-        "w": 1018,
-        "h": 950
-      },
-      "rotated": false,
-      "trimmed": false,
-      "spriteSourceSize": {
-        "x": 0,
-        "y": 0,
-        "w": 1018,
-        "h": 950
-      },
-      "sourceSize": {
-        "w": 1018,
-        "h": 950
-      }
-    },
-    "eliza_teaching_6": {
+    "tutor_teaching_3": {
       "frame": {
         "x": 0,
         "y": 950,
@@ -140,7 +80,7 @@
         "h": 950
       }
     },
-    "eliza_teaching_7": {
+    "tutor_teaching_4": {
       "frame": {
         "x": 1018,
         "y": 950,
@@ -160,7 +100,7 @@
         "h": 950
       }
     },
-    "eliza_teaching_8": {
+    "tutor_teaching_5": {
       "frame": {
         "x": 2036,
         "y": 950,
@@ -180,70 +120,130 @@
         "h": 950
       }
     },
-    "eliza_teaching_9": {
-      "frame": {
-        "x": 3054,
-        "y": 950,
-        "w": 1018,
-        "h": 950
-      },
-      "rotated": false,
-      "trimmed": false,
-      "spriteSourceSize": {
-        "x": 0,
-        "y": 0,
-        "w": 1018,
-        "h": 950
-      },
-      "sourceSize": {
-        "w": 1018,
-        "h": 950
-      }
-    },
-    "eliza_teaching_10": {
-      "frame": {
-        "x": 4072,
-        "y": 950,
-        "w": 1018,
-        "h": 950
-      },
-      "rotated": false,
-      "trimmed": false,
-      "spriteSourceSize": {
-        "x": 0,
-        "y": 0,
-        "w": 1018,
-        "h": 950
-      },
-      "sourceSize": {
-        "w": 1018,
-        "h": 950
-      }
-    },
-    "eliza_teaching_11": {
-      "frame": {
-        "x": 5090,
-        "y": 950,
-        "w": 1018,
-        "h": 950
-      },
-      "rotated": false,
-      "trimmed": false,
-      "spriteSourceSize": {
-        "x": 0,
-        "y": 0,
-        "w": 1018,
-        "h": 950
-      },
-      "sourceSize": {
-        "w": 1018,
-        "h": 950
-      }
-    },
-    "eliza_teaching_12": {
+    "tutor_teaching_6": {
       "frame": {
         "x": 0,
         "y": 1900,
+        "w": 1018,
+        "h": 950
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 1018,
+        "h": 950
+      },
+      "sourceSize": {
+        "w": 1018,
+        "h": 950
+      }
+    },
+    "tutor_teaching_7": {
+      "frame": {
+        "x": 1018,
+        "y": 1900,
+        "w": 1018,
+        "h": 950
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 1018,
+        "h": 950
+      },
+      "sourceSize": {
+        "w": 1018,
+        "h": 950
+      }
+    },
+    "tutor_teaching_8": {
+      "frame": {
+        "x": 2036,
+        "y": 1900,
+        "w": 1018,
+        "h": 950
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 1018,
+        "h": 950
+      },
+      "sourceSize": {
+        "w": 1018,
+        "h": 950
+      }
+    },
+    "tutor_teaching_9": {
+      "frame": {
+        "x": 0,
+        "y": 2850,
+        "w": 1018,
+        "h": 950
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 1018,
+        "h": 950
+      },
+      "sourceSize": {
+        "w": 1018,
+        "h": 950
+      }
+    },
+    "tutor_teaching_10": {
+      "frame": {
+        "x": 1018,
+        "y": 2850,
+        "w": 1018,
+        "h": 950
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 1018,
+        "h": 950
+      },
+      "sourceSize": {
+        "w": 1018,
+        "h": 950
+      }
+    },
+    "tutor_teaching_11": {
+      "frame": {
+        "x": 2036,
+        "y": 2850,
+        "w": 1018,
+        "h": 950
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 1018,
+        "h": 950
+      },
+      "sourceSize": {
+        "w": 1018,
+        "h": 950
+      }
+    },
+    "tutor_teaching_12": {
+      "frame": {
+        "x": 0,
+        "y": 3800,
         "w": 1018,
         "h": 950
       },
@@ -264,8 +264,8 @@
   "meta": {
     "image": "spritesheet.png",
     "size": {
-      "w": 6108,
-      "h": 2850
+      "w": 3054,
+      "h": 4750
     },
     "scale": "0.8"
   }
