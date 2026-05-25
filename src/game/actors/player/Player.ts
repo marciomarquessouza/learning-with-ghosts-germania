@@ -1,8 +1,8 @@
 import { ActorPayload } from "../types/Actor";
 import { createKeyMap } from "@/utils/createKeyMap";
 import { StateMachine } from "@/libs/game/state-machine/StateMachine";
-import { Shadow } from "./helpers/Shadow";
-import { Levitation } from "./helpers/Levitation";
+import { Shadow } from "./effects/Shadow";
+import { Levitation } from "./effects/Levitation";
 import { PLAYER_STATES } from "./constants/states";
 import { PlayerAnimations } from "./animations/PlayerAnimations";
 import { createPlayerStateMachine } from "./helpers/createPlayerStateMachine";
