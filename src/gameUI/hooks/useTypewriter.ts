@@ -50,6 +50,10 @@ export const useTypewriter = (speed: number = TEXT_SPEED) => {
     setReadyToTyping(false);
   }, []);
 
+  const updateDisplayedText = useCallback((newText: string) => {
+    setDisplayedText(newText);
+  }, []);
+
   const startTyping = (options?: { actor?: ACTORS | null }) => {
     setReadyToTyping(true);
     events.game.sync.emit("dialogue/typing-start", { actor: options?.actor });
@@ -74,8 +78,9 @@ export const useTypewriter = (speed: number = TEXT_SPEED) => {
       isComplete,
       startTyping,
       setTextToType,
+      updateDisplayedText,
       resumeText,
     }),
-    [resumeText, displayedText, isComplete, setTextToType],
+    [resumeText, displayedText, isComplete, setTextToType, updateDisplayedText],
   );
 };

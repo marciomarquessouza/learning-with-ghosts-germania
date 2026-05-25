@@ -66,12 +66,12 @@ export class IdleState extends BaseState {
       this.lessonInteractionArea.isOverlapping
     ) {
       // uncomment after finish the development
-      // this.dreamScene.flowController?.setNextFlow(BeforeLessonFlow);
-      // this.changeTo(DreamScene.STATES.PERFORMING_ACTION);
+      this.dreamScene.flowController?.setNextFlow(BeforeLessonFlow);
+      this.changeTo(DreamScene.STATES.PERFORMING_ACTION);
 
       // remove after the development
-      this.dreamScene.flowController?.setNextFlow(LessonIntroductionFlow);
-      this.changeTo(DreamScene.STATES.PERFORMING_LESSON);
+      // this.dreamScene.flowController?.setNextFlow(LessonIntroductionFlow);
+      // this.changeTo(DreamScene.STATES.PERFORMING_LESSON);
     }
 
     if (this.input.justPressed("cancel")) {

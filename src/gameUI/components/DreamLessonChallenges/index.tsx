@@ -36,6 +36,7 @@ export function DreamLessonChallenges() {
         />
         <LessonDescription
           isVisible={headerState.showDescription}
+          dialogueTitle={headerState.dialogueTitle}
           description={headerState.description}
           hidePressContinue={headerState.skipPressContinue}
           characterDetails={teacher}

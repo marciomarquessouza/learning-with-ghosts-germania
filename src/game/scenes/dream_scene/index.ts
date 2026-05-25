@@ -28,6 +28,7 @@ import { PerformingActionState } from "./states/PerformingActionState";
 import { PerformingLessonState } from "./states/PerformingLessonState";
 import { AudioManager } from "@/libs/audio/game-audio/AudioManager";
 import { LessonManager } from "@/game/lesson/LessonManager";
+import { DialogueManager } from "@/game/dialogues/DialogueManager";
 
 export class DreamScene extends Phaser.Scene {
   public static readonly STATES = SCENE_STATES;
@@ -39,6 +40,7 @@ export class DreamScene extends Phaser.Scene {
   public learningNode = new LearningNode();
   public audioManager = new AudioManager();
   public lessonManager = new LessonManager(useLessonStore.getState().lesson);
+  public dialogueManager = new DialogueManager();
   public flowController?: FlowController<SceneStateNames, DreamScene>;
 
   private scenario = new CemeteryScenario();

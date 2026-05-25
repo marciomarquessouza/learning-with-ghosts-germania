@@ -20,7 +20,7 @@ export class IntroductionFlow extends Flow<SceneStateNames, DreamScene> {
         });
       }),
       stepBase(() => {
-        events.game.sync.emit("game-message/show", {
+        this.gameScene.dialogueManager.showGameMessage({
           title: "Go to Eliza",
           text: "Use the arrow keys or the A and D keys",
           closeAfter: 8_000,

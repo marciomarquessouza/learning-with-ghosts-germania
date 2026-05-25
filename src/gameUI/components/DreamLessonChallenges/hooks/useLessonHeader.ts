@@ -2,6 +2,7 @@ import { ACTORS } from "@/constants/game";
 import { events } from "@/events/events";
 import {
   ShowLessonTitleEvent,
+  UpdateLessonDescriptionEvent,
   WriteLessonDescriptionEvent,
 } from "@/events/lesson/types";
 import { DescriptionPhases } from "@/gameUI/components/LessonHeader/LessonDescription";
@@ -13,7 +14,9 @@ export interface State {
   showTitle: boolean;
   showDescription: boolean;
   title: string;
+  dialogueTitle?: string;
   description: string;
+  updateDescription?: string;
   skipPressContinue?: boolean;
   teacher: ACTORS;
   day: number;
@@ -26,8 +29,9 @@ const defaultState: State = {
   showDescription: false,
   skipPressContinue: false,
   title: "",
+  dialogueTitle: "",
   description: "",
-
+  updateDescription: "",
   day: 1,
   teacher: ACTORS.TUTOR,
   closeAfter: 2_000,
@@ -39,6 +43,10 @@ type Actions =
   | { type: "hide-title" }
   | { type: "clear-title" }
   | { type: "write-description"; payload: WriteLessonDescriptionEvent }
+  | {
+      type: "update-description";
+      payload: UpdateLessonDescriptionEvent;
+    }
   | { type: "hide-description" }
   | { type: "hide-header" };
 
@@ -76,6 +84,13 @@ function reducer(state: State = defaultState, actions: Actions): State {
         ...state,
         ...actions.payload,
         showDescription: true,
+      };
+    case "update-description":
+      const { description, title } = actions.payload;
+      return {
+        ...state,
+        dialogueTitle: title ?? state.dialogueTitle,
+        description: description ?? state.description,
       };
     case "hide-description":
       return {
@@ -165,6 +180,16 @@ export function useLessonHeader() {
     events.lesson.sync.on("hide-lesson-description", handle);
     return () => {
       events.lesson.sync.off("hide-lesson-description", handle);
+    };
+  }, []);
+
+  useEffect(() => {
+    const handle = (payload: UpdateLessonDescriptionEvent) => {
+      dispatch({ type: "update-description", payload });
+    };
+    events.lesson.sync.on("update-lesson-description", handle);
+    return () => {
+      events.lesson.sync.off("update-lesson-description", handle);
     };
   }, []);
 

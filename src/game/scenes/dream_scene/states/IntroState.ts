@@ -20,8 +20,8 @@ export class IntroState extends BaseState {
     this.dreamScene.flowController.clearNextFlow();
 
     this.dreamScene.flowController
-      // .run(IntroductionFlow)
-      .run(DevelopmentFlow)
+      .run(IntroductionFlow)
+      //.run(DevelopmentFlow)
       .then(({ nextState }) => {
         this.changeTo(nextState ?? DreamScene.STATES.IDLE);
       })

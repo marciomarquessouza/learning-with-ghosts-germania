@@ -16,7 +16,13 @@ export interface ShowLessonTitleEvent {
 }
 
 export interface WriteLessonDescriptionEvent {
+  dialogueTitle?: string;
   description: string;
   skipPressContinue?: boolean;
   teacher?: ACTORS;
+}
+
+export interface UpdateLessonDescriptionEvent {
+  title?: string;
+  description?: string;
 }

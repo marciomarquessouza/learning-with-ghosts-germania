@@ -22,9 +22,21 @@ export class LessonIntroductionFlow extends Flow<SceneStateNames, DreamScene> {
         });
       }),
       stepBase(() => {
+        this.gameScene.tutor.enterTeaching();
+        return this.gameScene.dialogueManager.showDialogue(
+          "dream.lesson_begin",
+        );
+      }),
+      stepBase(() => {
+        this.gameScene.tutor.enterIdle();
         return this.gameScene.lessonManager.writeLessonDescription({
-          description: this.step.text,
+          dialogueTitle: "Introduction",
+          description: `Follow the Masked Nun instructions`,
+          skipPressContinue: false,
         });
+      }),
+      stepBase(() => {
+        return this.waitInteractionEvent();
       }),
     ]);
 

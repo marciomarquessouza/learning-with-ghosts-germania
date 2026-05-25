@@ -14,7 +14,9 @@ export type DescriptionPhases =
 
 export interface LessonDescriptionProps {
   isVisible: boolean;
+  dialogueTitle?: string;
   description: string;
+  descriptionUpdate?: string;
   characterDetails: CharacterDetails;
   hidePressContinue?: boolean;
   onPhaseChange: (phase: DescriptionPhases) => void;
@@ -38,15 +40,26 @@ const MAXIMUM_SIZE_FOR_CENTERED_TEXT = 48;
 
 export function LessonDescription({
   isVisible,
+  dialogueTitle,
   description,
   characterDetails,
   hidePressContinue = false,
+  descriptionUpdate,
   onPhaseChange,
 }: LessonDescriptionProps) {
   const [phase, setPhase] = useState<DescriptionPhases>("hidden");
-  const { displayedText, setTextToType, startTyping, resumeText, isComplete } =
-    useTypewriter();
+  const {
+    displayedText,
+    setTextToType,
+    startTyping,
+    updateDisplayedText,
+    resumeText,
+    isComplete,
+  } = useTypewriter();
   const { characterName, honorific, hasHonorific } = characterDetails;
+  const completeCharacterName = hasHonorific
+    ? `${honorific} ${characterName}`
+    : characterName;
   const lastDescription = useRef("");
   const boxRef = useRef<HTMLDivElement>(null);
 
@@ -87,6 +100,12 @@ export function LessonDescription({
       startTyping();
     }
   }, [description, phase, setTextToType, startTyping, changePhase]);
+
+  useEffect(() => {
+    if (descriptionUpdate && descriptionUpdate !== displayedText) {
+      updateDisplayedText(descriptionUpdate);
+    }
+  }, [descriptionUpdate, updateDisplayedText, displayedText]);
 
   const handleOnExit = () => {
     setTextToType("");
@@ -142,7 +161,7 @@ export function LessonDescription({
           <div className="flex w-full flex-col items-center">
             <div className="my-2 bg-[#FFF3E4] px-4 py-0">
               <p className="font-primary text-left text-lg font-semibold tracking-wide text-black">
-                {`${hasHonorific ? `${honorific} ` : ""}${characterName}:`}
+                {dialogueTitle ?? completeCharacterName}
               </p>
             </div>
 

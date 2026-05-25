@@ -130,7 +130,7 @@ export const dialogues = defineDialogues<DayDialogues>({
       `.reactions([{ mood: MOODS.TALKING, character: ACTORS.TUTOR }]),
 
       dialogue.tutor.talking`
-        My name is tutor.
+        You can call me "Masked Nun".
         The “why” comes later.
         Now: you need to learn German.
       `.reactions([{ mood: MOODS.SURPRISED, character: ACTORS.PLAYER }]),
@@ -147,6 +147,33 @@ export const dialogues = defineDialogues<DayDialogues>({
         Fail it… and you don’t.
         Now… let’s begin, Josef. †
       `.reactions([{ mood: MOODS.NEUTRAL, character: ACTORS.PLAYER }]),
+    ],
+  },
+
+  "dream.lesson_begin": {
+    scene: "DreamScene",
+    lines: [
+      dialogue.tutor.talking`
+      Josef, learning a new language is like growing a plant.
+    `.reactions([{ mood: MOODS.NEUTRAL, character: ACTORS.PLAYER }]),
+
+      dialogue.tutor.talking`
+      First, you plant the seed.
+      Then you nurture it, again and again.
+      And when the time is right...
+      you harvest it.
+    `.reactions([{ mood: MOODS.TALKING, character: ACTORS.PLAYER }]),
+
+      dialogue.tutor.talking`
+      Since we are inside your head,
+      I can make that process quite literal.
+    `.reactions([{ mood: MOODS.SURPRISED, character: ACTORS.PLAYER }]),
+
+      dialogue.tutor.talking`
+      The first word I will cultivate
+      inside this empty little garden of yours
+      is “Good morning”.
+    `.reactions([{ mood: MOODS.NEUTRAL, character: ACTORS.PLAYER }]),
     ],
   },
 

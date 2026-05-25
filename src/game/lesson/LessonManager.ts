@@ -1,6 +1,7 @@
 import { events } from "@/events/events";
 import {
   ShowLessonTitleEvent,
+  UpdateLessonDescriptionEvent,
   WriteLessonDescriptionEvent,
 } from "@/events/lesson/types";
 import { LessonController } from "@/libs/lesson/LessonController";
@@ -31,5 +32,11 @@ export class LessonManager extends LessonController {
       "write-lesson-description",
       lessonDescription,
     );
+  }
+
+  public updateLessonDescription(
+    updatedDescription: UpdateLessonDescriptionEvent,
+  ) {
+    events.lesson.sync.emit("update-lesson-description", updatedDescription);
   }
 }
