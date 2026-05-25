@@ -1,0 +1,52 @@
+{
+  "frames": {
+    "record_button_0": {
+      "frame": {
+        "x": 0,
+        "y": 0,
+        "w": 75,
+        "h": 75
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 75,
+        "h": 75
+      },
+      "sourceSize": {
+        "w": 75,
+        "h": 75
+      }
+    },
+    "record_button_1": {
+      "frame": {
+        "x": 75,
+        "y": 0,
+        "w": 75,
+        "h": 75
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 75,
+        "h": 75
+      },
+      "sourceSize": {
+        "w": 75,
+        "h": 75
+      }
+    }
+  },
+  "meta": {
+    "image": "record_button_spritesheet.png",
+    "size": {
+      "w": 150,
+      "h": 75
+    },
+    "scale": "1.0"
+  }
+}

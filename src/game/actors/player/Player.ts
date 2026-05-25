@@ -7,6 +7,7 @@ import { PLAYER_STATES } from "./constants/states";
 import { PlayerAnimations } from "./animations/PlayerAnimations";
 import { createPlayerStateMachine } from "./helpers/createPlayerStateMachine";
 import { getRequired } from "@/utils/getRequired";
+import { AudioRecordButton } from "./components/AudioRecordButton";
 
 export const KEY_CODES = Phaser.Input.Keyboard.KeyCodes;
 const DEFAULT_SPEED = 200;
@@ -19,15 +20,18 @@ export class Player {
   public static readonly STATES = PLAYER_STATES;
 
   public speed = DEFAULT_SPEED;
+
   private _sprite?: Phaser.Types.Physics.Arcade.SpriteWithDynamicBody;
+  private shadow = new Shadow();
+  private levitation = new Levitation();
+  private stateMachine!: StateMachine;
+
   public cursors: Phaser.Types.Input.Keyboard.CursorKeys | null = null;
   public keyMap: Partial<
     Record<keyof typeof KEY_CODES, Phaser.Input.Keyboard.Key>
   > | null = null;
+  public audioRecordButton = new AudioRecordButton();
   public animations = new PlayerAnimations();
-  private shadow = new Shadow();
-  private levitation = new Levitation();
-  private stateMachine!: StateMachine;
 
   public get sprite(): Phaser.Types.Physics.Arcade.SpriteWithDynamicBody {
     return getRequired(this._sprite, "Player", "_sprite");
@@ -36,6 +40,7 @@ export class Player {
   preload(scene: Phaser.Scene) {
     this.animations.preload(scene);
     this.shadow.preload(scene);
+    this.audioRecordButton.preload(scene);
   }
 
   create(
@@ -55,6 +60,9 @@ export class Player {
     this.levitation.create(this._sprite, this.shadow);
     this.cursors = cursors;
     this.keyMap = createKeyMap(scene, [KEY_CODES.A, KEY_CODES.D]);
+
+    this.audioRecordButton.create(scene);
+    this.audioRecordButton.setVisible(false);
 
     this.stateMachine = createPlayerStateMachine(scene, this);
     // Initial State
@@ -112,6 +120,21 @@ export class Player {
 
   faceTarget(targetX: number) {
     this.sprite.setFlipX(targetX < this.sprite.x);
+  }
+
+  attachRecordButton(onClick: () => void) {
+    this.audioRecordButton.attach({
+      target: this.sprite,
+      position: "bottom",
+      onClick,
+      offset: 20,
+    });
+    this.audioRecordButton.setVisible(true);
+  }
+
+  detachRecordButton() {
+    this.audioRecordButton.setVisible(false);
+    this.audioRecordButton.destroy();
   }
 
   update(_time: number, delta: number) {

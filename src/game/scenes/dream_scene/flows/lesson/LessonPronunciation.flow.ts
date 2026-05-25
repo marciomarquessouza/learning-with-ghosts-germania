@@ -40,6 +40,8 @@ export class LessonPronunciation extends Flow<SceneStateNames, DreamScene> {
         });
       }),
       stepBase(() => {
+        this.gameScene.tutor.enterIdle();
+        this.gameScene.player.attachRecordButton(() => console.log("MARCIO"));
         this.gameScene.lessonManager.writeLessonDescription({
           description: "Clique no botão Record ou Space 3x",
           skipPressContinue: true,

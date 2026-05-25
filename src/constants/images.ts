@@ -58,6 +58,10 @@ export const CEMETERY_DANGER_LAYER_IMG =
   "/ghost_dream/cemetery/color_layer_red.png";
 export const AUDIO_PLAY_BUTTON_IMG = "/ui/lesson/play_button_spritesheet.png";
 export const AUDIO_PLAY_BUTTON_JSON = "/ui/lesson/play_button_spritesheet.json";
+export const AUDIO_RECORD_BUTTON_IMG =
+  "/ui/lesson/record_button_spritesheet.png";
+export const AUDIO_RECORD_BUTTON_JSON =
+  "/ui/lesson/record_button_spritesheet.json";
 
 // TRAIN SCENARIO
 export const TRAIN_BACKGROUND_IMG = "/train/scenario/train_background.png";
