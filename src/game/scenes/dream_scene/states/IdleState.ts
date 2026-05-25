@@ -6,10 +6,12 @@ import { InputController } from "@/libs/inputs/InputController";
 import { createInputController } from "@/libs/inputs/createInputController";
 import { BeforeLessonFlow } from "../flows/lesson/BeforeLesson.flow";
 import { LessonIntroductionFlow } from "../flows/lesson/LessonIntroduction.flow";
+import { useGameStore } from "@/store/gameStore";
 
 export class IdleState extends BaseState {
   private lessonInteractionArea: InteractionArea = new InteractionArea();
   private input: InputController;
+  private sawMovementInstructions = false;
 
   constructor(
     scene: Phaser.Scene,

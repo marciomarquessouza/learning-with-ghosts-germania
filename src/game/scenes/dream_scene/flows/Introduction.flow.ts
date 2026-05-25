@@ -5,6 +5,7 @@ import { FlowResult } from "@/libs/game/game-flow/types";
 import { runSteps, stepBase } from "@/libs/game/game-flow/runSteps";
 import { events } from "@/events/events";
 import { getDialogueLines } from "@/store/dialogueStore";
+import { useGameStore } from "@/store/gameStore";
 
 export class IntroductionFlow extends Flow<SceneStateNames, DreamScene> {
   public flowName: string = "IntroductionFlow";
@@ -20,11 +21,14 @@ export class IntroductionFlow extends Flow<SceneStateNames, DreamScene> {
         });
       }),
       stepBase(() => {
+        useGameStore.getState().setMovementLocked(false);
         this.gameScene.dialogueManager.showGameMessage({
+          id: "game-message/movement-instructions",
           title: "Go to Eliza",
           text: "Use the arrow keys or the A and D keys",
           closeAfter: 8_000,
         });
+        this.gameScene.player.sawMovementInstructions = true;
       }),
     ]);
 

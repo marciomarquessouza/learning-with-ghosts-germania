@@ -28,6 +28,7 @@ export type UpdateWeightEvent = {
 };
 
 export type GameMessageShowEvent = {
+  id?: string;
   title: string;
   text: ReactNode;
   closeAfter?: number;

@@ -1,5 +1,7 @@
 import { BaseState } from "@/libs/game/state-machine/BaseState";
 import { Player } from "../Player";
+import { useGameStore } from "@/store/gameStore";
+import { events } from "@/events/events";
 
 export class IdleState extends BaseState {
   constructor(
@@ -16,8 +18,17 @@ export class IdleState extends BaseState {
 
   handleInput(): void {
     const { velocityX } = this.player.getHorizontalInput();
+    const { movementLocked } = useGameStore.getState();
 
-    if (velocityX !== 0) {
+    if (velocityX !== 0 && !movementLocked) {
+      if (this.player.sawMovementInstructions && !this.player.hadMovement) {
+        this.player.hadMovement = true;
+        setTimeout(() => {
+          events.game.sync.emit("game-message/hide", {
+            id: "game-message/movement-instructions",
+          });
+        }, 1_000);
+      }
       this.changeTo(Player.STATES.MOVING);
     }
   }

@@ -4,16 +4,19 @@ import { Button } from "@/components/Button";
 import { events } from "@/events/events";
 
 export function GameMessage() {
+  const [messageId, setMessageId] = useState<string | undefined>(undefined);
   const [title, setTitle] = useState("");
   const [text, setText] = useState<ReactNode>("");
   const [visible, setVisible] = useState(false);
 
   useEffect(() => {
     const handler = (payload: {
+      id?: string;
       title: string;
       text: React.ReactNode;
       closeAfter?: number;
     }) => {
+      setMessageId(payload.id);
       setTitle(payload.title);
       setText(payload.text);
       setVisible(true);
@@ -28,13 +31,20 @@ export function GameMessage() {
   }, []);
 
   useEffect(() => {
-    const handler = () => {
-      setVisible(false);
+    const handler = (payload?: { id?: string }) => {
+      if (!payload?.id) {
+        setVisible(false);
+        return;
+      }
+
+      if (payload?.id && payload.id === messageId) {
+        setVisible(false);
+      }
     };
 
     events.game.sync.on("game-message/hide", handler);
     return () => events.game.sync.off("game-message/hide", handler);
-  }, []);
+  }, [messageId]);
 
   const handleCloseClick = () => {
     setVisible(false);

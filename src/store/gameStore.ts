@@ -18,7 +18,10 @@ export interface GameState {
   gameWorld: GameWorlds;
   currentScene: GameScenes;
   debugMode: boolean;
+  movementLocked: boolean;
+}
 
+type GameActions = {
   setDay: (day: number) => void;
   increaseDay: () => void;
   setGameScene: (gameWorld: GameWorlds, scene: GameScenes) => void;
@@ -32,11 +35,14 @@ export interface GameState {
   setSoulWeight: (amount: number) => void;
   increaseSoulWeight: (amount: number) => void;
   decreaseSoulWeight: (amount: number) => void;
-}
+
+  // Movements
+  setMovementLocked: (status: boolean) => void;
+};
 
 const clamp0 = (n: number) => Math.max(0, n);
 
-export const useGameStore = create<GameState>()(
+export const useGameStore = create<GameState & GameActions>()(
   persist(
     (set, get) => ({
       day: 0,
@@ -45,6 +51,7 @@ export const useGameStore = create<GameState>()(
       currentScene: GAME_SCENES.CELL_SCENE,
       weight: DEFAULT_INITIAL_WEIGHT,
       soulWeight: DEFAULT_INITIAL_SOUL_WEIGHT,
+      movementLocked: true,
 
       setDay: (day) => set({ day }),
       increaseDay: () => set({ day: get().day + 1 }),
@@ -62,6 +69,7 @@ export const useGameStore = create<GameState>()(
         set({ soulWeight: clamp0(get().soulWeight + amount) }),
       decreaseSoulWeight: (amount) =>
         set({ soulWeight: clamp0(get().soulWeight - amount) }),
+      setMovementLocked: (status) => set({ movementLocked: status }),
     }),
     { name: "game-storage" },
   ),

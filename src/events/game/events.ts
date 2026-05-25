@@ -17,7 +17,7 @@ export type GameSyncEvents = {
   "change-world/end": undefined;
   "camera/zoom-to": ZoomPropsEvent;
   "game-message/show": GameMessageShowEvent;
-  "game-message/hide": undefined;
+  "game-message/hide": { id?: string } | undefined;
   "game-action-prompt/hide": undefined;
   "dialogue/hide": undefined;
   "dialogue/typing-start": { actor?: ACTORS | null };

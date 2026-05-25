@@ -32,6 +32,8 @@ export class Player {
   > | null = null;
   public audioRecordButton = new AudioRecordButton();
   public animations = new PlayerAnimations();
+  public sawMovementInstructions = false;
+  public hadMovement = false;
 
   public get sprite(): Phaser.Types.Physics.Arcade.SpriteWithDynamicBody {
     return getRequired(this._sprite, "Player", "_sprite");
