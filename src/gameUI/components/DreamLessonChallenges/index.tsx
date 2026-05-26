@@ -1,10 +1,10 @@
 import { LessonHeaderWrapper } from "@/gameUI/components/LessonHeader/LessonHeaderWrapper";
 import { useLessonHeader } from "./hooks/useLessonHeader";
-import { useCharacterDetails } from "@/gameUI/hooks/useCharacterDetails";
 import { NotebookToggleButton } from "@/gameUI/components/LessonHeader/NotebookToggleButton";
 import { LessonExit } from "@/gameUI/components/LessonHeader/LessonExit";
 import { LessonTitle } from "@/gameUI/components/LessonHeader/LessonTitle";
 import { LessonDescription } from "@/gameUI/components/LessonHeader/LessonDescription";
+import { PronunciationVoiceIndicator } from "../LessonHeader/PronunciationVoiceIndicator";
 
 export function DreamLessonChallenges() {
   const {
@@ -17,8 +17,6 @@ export function DreamLessonChallenges() {
   const handleOnTitleClose = () => {
     clearTitle();
   };
-
-  const teacher = useCharacterDetails(headerState.teacher);
 
   return (
     <>
@@ -34,16 +32,24 @@ export function DreamLessonChallenges() {
           day={headerState.day}
           onClose={handleOnTitleClose}
         />
+        <div id="dialogue-title" className="flex w-full flex-col items-center">
+          <div className="my-2 bg-[#FFF3E4] px-4 py-0">
+            <p className="font-primary text-left text-lg font-semibold tracking-wide text-black">
+              {headerState.dialogueTitle}
+            </p>
+          </div>
+        </div>
         <LessonDescription
           isVisible={headerState.showDescription}
-          dialogueTitle={headerState.dialogueTitle}
           description={headerState.description}
-          hidePressContinue={headerState.skipPressContinue}
-          characterDetails={teacher}
+          hidePressContinue={headerState.hidePressContinue}
           onPhaseChange={onDescriptionPhaseChange}
         />
+        <PronunciationVoiceIndicator
+          isVisible={headerState.showVoiceIndicator}
+          voiceLevel={0.1}
+        />
       </LessonHeaderWrapper>
-      {/* TODO: LEsson Challenges */}
     </>
   );
 }

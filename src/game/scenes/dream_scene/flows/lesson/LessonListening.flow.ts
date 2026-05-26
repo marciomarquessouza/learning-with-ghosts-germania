@@ -47,7 +47,7 @@ export class LessonListeningFlow extends Flow<SceneStateNames, DreamScene> {
         this.gameScene.lessonManager.writeLessonDescription({
           dialogueTitle: "Step 1: Listening",
           description: `${this.step.text}`,
-          skipPressContinue: true,
+          hidePressContinue: true,
         });
         this.gameScene.player.enterInclined();
       }),

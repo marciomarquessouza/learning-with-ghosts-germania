@@ -13,11 +13,12 @@ export interface State {
   showHeader: boolean;
   showTitle: boolean;
   showDescription: boolean;
+  showVoiceIndicator: boolean;
   title: string;
   dialogueTitle?: string;
   description: string;
   updateDescription?: string;
-  skipPressContinue?: boolean;
+  hidePressContinue?: boolean;
   teacher: ACTORS;
   day: number;
   closeAfter?: number;
@@ -27,7 +28,8 @@ const defaultState: State = {
   showHeader: false,
   showTitle: false,
   showDescription: false,
-  skipPressContinue: false,
+  showVoiceIndicator: false,
+  hidePressContinue: false,
   title: "",
   dialogueTitle: "",
   description: "",
@@ -48,7 +50,9 @@ type Actions =
       payload: UpdateLessonDescriptionEvent;
     }
   | { type: "hide-description" }
-  | { type: "hide-header" };
+  | { type: "hide-header" }
+  | { type: "show-voice-indicator" }
+  | { type: "hide-voice-indicator" };
 
 function reducer(state: State = defaultState, actions: Actions): State {
   switch (actions.type) {
@@ -67,6 +71,8 @@ function reducer(state: State = defaultState, actions: Actions): State {
       return {
         ...state,
         showTitle: true,
+        showDescription: false,
+        showVoiceIndicator: false,
       };
     case "hide-title":
       return {
@@ -84,6 +90,8 @@ function reducer(state: State = defaultState, actions: Actions): State {
         ...state,
         ...actions.payload,
         showDescription: true,
+        showTitle: false,
+        showVoiceIndicator: false,
       };
     case "update-description":
       const { description, title } = actions.payload;
@@ -97,6 +105,18 @@ function reducer(state: State = defaultState, actions: Actions): State {
         ...state,
         description: "",
         showDescription: false,
+      };
+    case "show-voice-indicator":
+      return {
+        ...state,
+        showDescription: false,
+        showTitle: false,
+        showVoiceIndicator: true,
+      };
+    case "hide-voice-indicator":
+      return {
+        ...state,
+        showVoiceIndicator: false,
       };
     default:
       return state;
@@ -158,10 +178,10 @@ export function useLessonHeader() {
 
   useEffect(() => {
     const handle = (payload: WriteLessonDescriptionEvent, done: () => void) => {
-      const skipPressContinue = payload.skipPressContinue ?? false;
+      const hidePressContinue = payload.hidePressContinue ?? false;
       dispatch({
         type: "write-description",
-        payload: { ...payload, skipPressContinue },
+        payload: { ...payload, hidePressContinue },
       });
       onDescriptionReady.current = done;
     };
@@ -190,6 +210,26 @@ export function useLessonHeader() {
     events.lesson.sync.on("update-lesson-description", handle);
     return () => {
       events.lesson.sync.off("update-lesson-description", handle);
+    };
+  }, []);
+
+  useEffect(() => {
+    const handle = () => {
+      dispatch({ type: "show-voice-indicator" });
+    };
+    events.lesson.sync.on("show-voice-indicator", handle);
+    return () => {
+      events.lesson.sync.off("show-voice-indicator", handle);
+    };
+  }, []);
+
+  useEffect(() => {
+    const handle = () => {
+      dispatch({ type: "hide-voice-indicator" });
+    };
+    events.lesson.sync.on("hide-voice-indicator", handle);
+    return () => {
+      events.lesson.sync.off("hide-voice-indicator", handle);
     };
   }, []);
 

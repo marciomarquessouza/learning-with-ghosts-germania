@@ -39,4 +39,12 @@ export class LessonManager extends LessonController {
   ) {
     events.lesson.sync.emit("update-lesson-description", updatedDescription);
   }
+
+  public showVoiceIndicator() {
+    events.lesson.sync.emit("show-voice-indicator");
+  }
+
+  public hideVoiceIndicator() {
+    events.lesson.sync.emit("hide-voice-indicator");
+  }
 }

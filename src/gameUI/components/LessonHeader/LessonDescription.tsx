@@ -1,4 +1,3 @@
-import { CharacterDetails } from "@/gameUI/hooks/useCharacterDetails";
 import { useTypewriter } from "@/gameUI/hooks/useTypewriter";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
@@ -14,10 +13,8 @@ export type DescriptionPhases =
 
 export interface LessonDescriptionProps {
   isVisible: boolean;
-  dialogueTitle?: string;
   description: string;
   descriptionUpdate?: string;
-  characterDetails: CharacterDetails;
   hidePressContinue?: boolean;
   onPhaseChange: (phase: DescriptionPhases) => void;
 }
@@ -40,9 +37,7 @@ const MAXIMUM_SIZE_FOR_CENTERED_TEXT = 48;
 
 export function LessonDescription({
   isVisible,
-  dialogueTitle,
   description,
-  characterDetails,
   hidePressContinue = false,
   descriptionUpdate,
   onPhaseChange,
@@ -56,10 +51,6 @@ export function LessonDescription({
     resumeText,
     isComplete,
   } = useTypewriter();
-  const { characterName, honorific, hasHonorific } = characterDetails;
-  const completeCharacterName = hasHonorific
-    ? `${honorific} ${characterName}`
-    : characterName;
   const lastDescription = useRef("");
   const boxRef = useRef<HTMLDivElement>(null);
 
@@ -154,17 +145,11 @@ export function LessonDescription({
               startTyping();
             }
           }}
-          className="pointer-events-none flex h-full w-full items-center px-12 text-white outline-none"
+          className="pointer-events-none flex w-full items-center px-12 text-white outline-none"
           role="dialog"
           aria-live="polite"
         >
           <div className="flex w-full flex-col items-center">
-            <div className="my-2 bg-[#FFF3E4] px-4 py-0">
-              <p className="font-primary text-left text-lg font-semibold tracking-wide text-black">
-                {dialogueTitle ?? completeCharacterName}
-              </p>
-            </div>
-
             <div className="w-3xl px-4 items-center">
               <p
                 style={{

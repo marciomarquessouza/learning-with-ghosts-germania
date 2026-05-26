@@ -18,7 +18,7 @@ export interface ShowLessonTitleEvent {
 export interface WriteLessonDescriptionEvent {
   dialogueTitle?: string;
   description: string;
-  skipPressContinue?: boolean;
+  hidePressContinue?: boolean;
   teacher?: ACTORS;
 }
 

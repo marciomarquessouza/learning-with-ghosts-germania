@@ -34,7 +34,6 @@ export const IconReproduceWithCircle: React.FC<Props> = ({
           transform-origin: center;
         }
 
-        /* Estado animado quando tocando */
         .reproduce-icon.is-playing .circle {
           animation: pulse 1.2s ease-in-out infinite;
         }

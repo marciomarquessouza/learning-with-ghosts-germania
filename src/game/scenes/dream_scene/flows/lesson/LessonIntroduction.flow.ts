@@ -32,7 +32,7 @@ export class LessonIntroductionFlow extends Flow<SceneStateNames, DreamScene> {
         return this.gameScene.lessonManager.writeLessonDescription({
           dialogueTitle: "Introduction",
           description: `Follow the Masked Nun instructions`,
-          skipPressContinue: false,
+          hidePressContinue: false,
         });
       }),
       stepBase(() => {

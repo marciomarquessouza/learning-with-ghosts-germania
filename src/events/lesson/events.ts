@@ -13,6 +13,8 @@ export type LessonSyncEvents = {
   "lesson-entry-notebook-phase": LessonEntryNotebookEvent;
   "hide-lesson-description": undefined;
   "update-lesson-description": UpdateLessonDescriptionEvent;
+  "show-voice-indicator": undefined;
+  "hide-voice-indicator": undefined;
 };
 
 export type LessonAsyncEvents = {

@@ -43,7 +43,6 @@ export const IconAudioWithCircle: React.FC<Props> = ({
           animation: eq-wave 900ms ease-in-out infinite;
           opacity: 0.95;
         }
-        /* variação sutil por barra */
         .eq-icon .bar:nth-of-type(1) { animation-duration: 820ms; }
         .eq-icon .bar:nth-of-type(2) { animation-duration: 880ms; }
         .eq-icon .bar:nth-of-type(3) { animation-duration: 940ms; }
