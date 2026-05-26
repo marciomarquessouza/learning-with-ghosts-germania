@@ -135,6 +135,15 @@ export const dialogues = defineDialogues<DefaultDialogues>({
     ],
   },
 
+  "dream.lesson_begin": {
+    scene: "DreamScene",
+    lines: [
+      dialogue.tutor.talking`
+      Let's start a new Lesson Josef.
+    `.reactions([{ mood: MOODS.NEUTRAL, character: ACTORS.PLAYER }]),
+    ],
+  },
+
   "dream.lesson_finish": {
     scene: "DreamScene",
     lines: [
