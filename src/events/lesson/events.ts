@@ -11,7 +11,6 @@ export type LessonSyncEvents = {
   "start-lesson": undefined;
   "toggle-notebook": ToggleNotebookEvent;
   "lesson-entry-notebook-phase": LessonEntryNotebookEvent;
-  "hide-lesson-description": undefined;
   "update-lesson-description": UpdateLessonDescriptionEvent;
   "show-voice-indicator": undefined;
   "hide-voice-indicator": undefined;
@@ -21,6 +20,7 @@ export type LessonAsyncEvents = {
   "show-lesson-title": ShowLessonTitleEvent;
   "hide-lesson-title": undefined;
   "write-lesson-description": WriteLessonDescriptionEvent;
+  "hide-lesson-description": undefined;
 };
 
 export const lessonEvents = createEventManagers<

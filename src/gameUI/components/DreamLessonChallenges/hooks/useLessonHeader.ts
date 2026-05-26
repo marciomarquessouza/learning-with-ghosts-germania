@@ -127,6 +127,7 @@ export function useLessonHeader() {
   const [state, dispatch] = useReducer(reducer, defaultState);
   const onHeaderHidden = useRef(() => {});
   const onDescriptionReady = useRef(() => {});
+  const onDescriptionHide = useRef(() => {});
 
   const onHeaderPhaseChange = useCallback((phase: HeaderPhases) => {
     if (phase === "visible") {
@@ -143,6 +144,12 @@ export function useLessonHeader() {
     if (phase === "ready") {
       const done = onDescriptionReady.current;
       onDescriptionReady.current = () => {};
+      done();
+    }
+
+    if (phase === "hidden") {
+      const done = onDescriptionHide.current;
+      onDescriptionHide.current = () => {};
       done();
     }
   }, []);
@@ -192,14 +199,15 @@ export function useLessonHeader() {
   }, []);
 
   useEffect(() => {
-    const handle = () => {
+    const handle = (_: undefined, done: () => void) => {
       dispatch({
         type: "hide-description",
       });
+      onDescriptionHide.current = done;
     };
-    events.lesson.sync.on("hide-lesson-description", handle);
+    events.lesson.async.on("hide-lesson-description", handle);
     return () => {
-      events.lesson.sync.off("hide-lesson-description", handle);
+      events.lesson.async.off("hide-lesson-description", handle);
     };
   }, []);
 

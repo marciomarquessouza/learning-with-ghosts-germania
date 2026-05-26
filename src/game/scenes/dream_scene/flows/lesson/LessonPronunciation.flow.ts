@@ -41,7 +41,8 @@ export class LessonPronunciation extends Flow<SceneStateNames, DreamScene> {
       }),
       stepBase(() => {
         this.gameScene.tutor.enterIdle();
-        this.gameScene.player.attachRecordButton(() => {
+        this.gameScene.player.attachRecordButton(async () => {
+          await this.gameScene.lessonManager.hideLessonDescription();
           this.gameScene.lessonManager.showVoiceIndicator();
         });
         this.gameScene.lessonManager.writeLessonDescription({
