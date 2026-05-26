@@ -8,20 +8,33 @@ type AttachPosition = "top" | "bottom" | "left" | "right";
 
 type Callback = () => void;
 
+interface AudioRecordButtonOptions {
+  target: Phaser.GameObjects.Container | Phaser.GameObjects.Sprite;
+  position: AttachPosition;
+  offset?: number;
+  onStartRecord?: () => void;
+  onStopRecord?: () => void;
+}
+
 export class AudioRecordButton {
   private static readonly TEXTURE_KEY = "record_button_spritesheet";
 
   private _button?: Phaser.GameObjects.Sprite;
   private _scene?: Phaser.Scene;
+  private _buttonTween?: Phaser.Tweens.Tween;
 
   public isRecording = false;
+
+  private get scene(): Phaser.Scene {
+    return getRequired(this._scene, "AudioRecordButton", "_scene");
+  }
 
   private get button(): Phaser.GameObjects.Sprite {
     return getRequired(this._button, "AudioRecordButton", "_button");
   }
 
-  private get scene(): Phaser.Scene {
-    return getRequired(this._scene, "AudioRecordButton", "_scene");
+  private get buttonTween() {
+    return getRequired(this._buttonTween, "AudioRecordButton", "_buttonTween");
   }
 
   preload(scene: Phaser.Scene) {
@@ -42,6 +55,16 @@ export class AudioRecordButton {
       "record_button_0",
     );
 
+    this._buttonTween = scene.tweens.add({
+      targets: this._button,
+      scaleX: 1.1,
+      scaleY: 1.1,
+      duration: 500,
+      yoyo: true,
+      repeat: -1,
+      paused: true,
+    });
+
     this._button.setOrigin(0.5);
     this._button.setInteractive({ useHandCursor: true });
   }
@@ -50,50 +73,53 @@ export class AudioRecordButton {
     this.button.setVisible(option);
   }
 
-  record(onClick?: Callback) {
+  record(onStartRecord?: Callback) {
     this.isRecording = true;
 
     this.button.setFrame("record_button_1");
-    this.button.disableInteractive();
     this.button.setAlpha(1);
     this.button.setScale(1);
 
-    onClick?.();
+    onStartRecord?.();
   }
 
-  stop(callback?: Callback) {
+  stop(onStopRecord?: Callback) {
     this.isRecording = false;
 
     this.button.setFrame("record_button_0");
     this.button.setInteractive({ useHandCursor: true });
 
-    callback?.();
+    onStopRecord?.();
   }
 
   attach({
     target,
     position,
-    onClick,
+    onStartRecord,
+    onStopRecord,
     offset = 5,
-  }: {
-    target: Phaser.GameObjects.Container | Phaser.GameObjects.Sprite;
-    position: AttachPosition;
-    onClick?: () => void;
-    offset?: number;
-  }) {
+  }: AudioRecordButtonOptions) {
     this.button.setDepth(100);
+    this.buttonTween.resume();
+
     this.button.on("pointerover", () => {
+      this.buttonTween.stop();
       this.button.setScale(1.2);
       this.scene.input.setDefaultCursor("pointer");
     });
 
     this.button.on("pointerout", () => {
+      this.buttonTween.resume();
       this.button.setScale(1);
       this.scene?.input.setDefaultCursor("default");
     });
 
     this.button.on(Phaser.Input.Events.GAMEOBJECT_POINTER_DOWN, () => {
-      this.record(onClick);
+      if (this.isRecording) {
+        this.stop(onStopRecord);
+        return;
+      }
+      this.record(onStartRecord);
     });
 
     const bounds = this.getTargetBounds(target);
@@ -132,6 +158,7 @@ export class AudioRecordButton {
   destroy() {
     this.button.destroy();
     this._button = undefined;
+    this._buttonTween = undefined;
     this._scene = undefined;
     this.isRecording = false;
   }

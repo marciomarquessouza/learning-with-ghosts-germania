@@ -124,11 +124,18 @@ export class Player {
     this.sprite.setFlipX(targetX < this.sprite.x);
   }
 
-  attachRecordButton(onClick: () => void) {
+  attachRecordButton({
+    onStartRecord,
+    onStopRecord,
+  }: {
+    onStartRecord?: () => void;
+    onStopRecord?: () => void;
+  }) {
     this.audioRecordButton.attach({
       target: this.sprite,
       position: "bottom",
-      onClick,
+      onStartRecord,
+      onStopRecord,
       offset: 20,
     });
     this.audioRecordButton.setVisible(true);

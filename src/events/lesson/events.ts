@@ -12,6 +12,7 @@ export type LessonSyncEvents = {
   "toggle-notebook": ToggleNotebookEvent;
   "lesson-entry-notebook-phase": LessonEntryNotebookEvent;
   "update-lesson-description": UpdateLessonDescriptionEvent;
+  "show-description": undefined;
   "show-voice-indicator": undefined;
   "hide-voice-indicator": undefined;
 };

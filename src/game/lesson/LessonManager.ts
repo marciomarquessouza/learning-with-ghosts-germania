@@ -34,14 +34,18 @@ export class LessonManager extends LessonController {
     );
   }
 
-  public async hideLessonDescription(): Promise<void> {
-    return events.lesson.async.emitAsync("hide-lesson-description");
+  public showLessonDescription() {
+    events.lesson.sync.emit("show-description");
   }
 
   public updateLessonDescription(
     updatedDescription: UpdateLessonDescriptionEvent,
   ) {
     events.lesson.sync.emit("update-lesson-description", updatedDescription);
+  }
+
+  public async hideLessonDescription(): Promise<void> {
+    return events.lesson.async.emitAsync("hide-lesson-description");
   }
 
   public showVoiceIndicator() {

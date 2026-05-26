@@ -45,6 +45,7 @@ type Actions =
   | { type: "hide-title" }
   | { type: "clear-title" }
   | { type: "write-description"; payload: WriteLessonDescriptionEvent }
+  | { type: "show-description" }
   | {
       type: "update-description";
       payload: UpdateLessonDescriptionEvent;
@@ -84,6 +85,13 @@ function reducer(state: State = defaultState, actions: Actions): State {
         ...state,
         title: "",
         day: 1,
+      };
+    case "show-description":
+      return {
+        ...state,
+        showDescription: true,
+        showTitle: false,
+        showVoiceIndicator: false,
       };
     case "write-description":
       return {
@@ -195,6 +203,16 @@ export function useLessonHeader() {
     events.lesson.async.on("write-lesson-description", handle);
     return () => {
       events.lesson.async.off("write-lesson-description", handle);
+    };
+  }, []);
+
+  useEffect(() => {
+    const handle = () => {
+      dispatch({ type: "show-description" });
+    };
+    events.lesson.sync.on("show-description", handle);
+    return () => {
+      events.lesson.sync.off("show-description", handle);
     };
   }, []);
 

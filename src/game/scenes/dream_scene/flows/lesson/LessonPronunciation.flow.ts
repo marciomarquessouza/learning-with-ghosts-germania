@@ -41,14 +41,25 @@ export class LessonPronunciation extends Flow<SceneStateNames, DreamScene> {
       }),
       stepBase(() => {
         this.gameScene.tutor.enterIdle();
-        this.gameScene.player.attachRecordButton(async () => {
-          await this.gameScene.lessonManager.hideLessonDescription();
-          this.gameScene.lessonManager.showVoiceIndicator();
+        this.gameScene.player.attachRecordButton({
+          onStartRecord: async () => {
+            await this.gameScene.lessonManager.hideLessonDescription();
+            this.gameScene.lessonManager.showVoiceIndicator();
+          },
+          onStopRecord: () => {
+            this.gameScene.lessonManager.hideVoiceIndicator();
+            this.gameScene.lessonManager.updateLessonDescription({
+              description: "Tente mais uma vez",
+            });
+          },
         });
         this.gameScene.lessonManager.writeLessonDescription({
           description: "Clique no botão Record ou Space 3x",
           hidePressContinue: true,
         });
+      }),
+      stepBase(() => {
+        return this.waitInteractionEvent();
       }),
     ]);
 
