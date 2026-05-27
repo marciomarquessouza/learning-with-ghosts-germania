@@ -26,7 +26,8 @@ import { IdleState } from "./states/IdleState";
 import { IntroState } from "./states/IntroState";
 import { PerformingActionState } from "./states/PerformingActionState";
 import { PerformingLessonState } from "./states/PerformingLessonState";
-import { AudioManager } from "@/libs/audio/game-audio/AudioManager";
+import { GameAudio } from "@/libs/audio/game-audio/GameAudio";
+import { AudioRecorder } from "@/libs/audio/audio-recorder/AudioRecorder";
 import { LessonManager } from "@/game/lesson/LessonManager";
 import { DialogueManager } from "@/game/dialogues/DialogueManager";
 
@@ -38,7 +39,8 @@ export class DreamScene extends Phaser.Scene {
   public player = new Player();
   public tutor = new Tutor();
   public learningNode = new LearningNode();
-  public audioManager = new AudioManager();
+  public gameAudio = new GameAudio();
+  public audioRecorder = new AudioRecorder();
   public lessonManager = new LessonManager(useLessonStore.getState().lesson);
   public dialogueManager = new DialogueManager();
   public flowController?: FlowController<SceneStateNames, DreamScene>;
@@ -55,7 +57,7 @@ export class DreamScene extends Phaser.Scene {
     this.player.preload(this);
     this.tutor.preload(this);
     this.learningNode.preload(this);
-    this.lessonManager.preload(this, this.audioManager);
+    this.lessonManager.preload(this, this.gameAudio);
     this.hud.preload(this);
     this.physics.world.setBounds(0, 0, 2000, 1200);
   }
@@ -72,8 +74,8 @@ export class DreamScene extends Phaser.Scene {
     const boundH = this.scenario.height;
     this.physics.world.setBounds(0, 0, boundW, boundH);
     this.gameCamera.setBounds(0, 0, boundW, boundH);
-    this.audioManager.create(this);
-    this.lessonManager.create(this, this.audioManager);
+    this.gameAudio.create(this);
+    this.lessonManager.create(this, this.gameAudio);
 
     const playerSprite = this.player.create(this, {
       startX: DEFAULT_PLAYER_POSITION_X,
@@ -134,6 +136,7 @@ export class DreamScene extends Phaser.Scene {
     this.hud.destroy();
     this.learningNode.destroy();
     this.player.destroy();
+    this.audioRecorder.destroy();
   }
 }
 

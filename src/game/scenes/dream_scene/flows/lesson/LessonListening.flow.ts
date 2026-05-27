@@ -1,7 +1,7 @@
 import { events } from "@/events/events";
 import { Flow } from "@/libs/game/game-flow/Flow";
 import { FlowResult } from "@/libs/game/game-flow/types";
-import { AUDIO_SPEED } from "@/libs/audio/game-audio/AudioManager";
+import { AUDIO_SPEED } from "@/libs/audio/game-audio/GameAudio";
 import { runSteps, stepBase } from "@/libs/game/game-flow/runSteps";
 
 import { DreamScene } from "../..";

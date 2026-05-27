@@ -1,9 +1,10 @@
-import { AUDIO_SPEED, AudioManager } from "../audio/game-audio/AudioManager";
+import { getRequired } from "@/utils/getRequired";
+import { AUDIO_SPEED, GameAudio } from "../audio/game-audio/GameAudio";
 import { Lesson, LessonEntry, LessonStepType } from "./types";
 
 export class LessonController {
   private _scene?: Phaser.Scene;
-  private _audioManager?: AudioManager;
+  private _gameAudio?: GameAudio;
   private nextEntries: LessonEntry[] = [];
   public currentLessonEntry: LessonEntry | null = null;
   public lesson: Lesson;
@@ -14,29 +15,23 @@ export class LessonController {
     this.setCurrentLessonEntry();
   }
 
-  preload(scene: Phaser.Scene, audioManager: AudioManager) {
-    this.getLessonAudios().forEach(({ key, file }) => {
-      if (file) audioManager.preload(scene, key, file);
-    });
-  }
-
-  create(scene: Phaser.Scene, audioManager: AudioManager) {
-    this._scene = scene;
-    this._audioManager = audioManager;
+  private get gameAudio(): GameAudio {
+    return getRequired(this._gameAudio, "LessonController", "_gameAudio");
   }
 
   private get scene(): Phaser.Scene {
-    if (!this._scene) {
-      throw new Error("scene not available");
-    }
-    return this._scene;
+    return getRequired(this._scene, "LessonController", "this._scene");
   }
 
-  private get audioManager(): AudioManager {
-    if (!this._audioManager) {
-      throw new Error("audio manager not available");
-    }
-    return this._audioManager;
+  preload(scene: Phaser.Scene, gameAudio: GameAudio) {
+    this.getLessonAudios().forEach(({ key, file }) => {
+      if (file) gameAudio.preload(scene, key, file);
+    });
+  }
+
+  create(scene: Phaser.Scene, gameAudio: GameAudio) {
+    this._scene = scene;
+    this._gameAudio = gameAudio;
   }
 
   private setCurrentLessonEntry() {
@@ -102,6 +97,6 @@ export class LessonController {
       throw new Error("playTargetAudio: Lesson entry id not available");
     }
 
-    await this.audioManager.playVoice(entryId, { rate: speed });
+    await this.gameAudio.playVoice(entryId, { rate: speed });
   }
 }

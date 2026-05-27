@@ -16,7 +16,7 @@ export const AUDIO_SPEED = {
   SLOWEST: 0.5,
 } as const;
 
-export class AudioManager {
+export class GameAudio {
   private currentMusic?: Phaser.Sound.BaseSound;
   private scene?: Phaser.Scene;
 
