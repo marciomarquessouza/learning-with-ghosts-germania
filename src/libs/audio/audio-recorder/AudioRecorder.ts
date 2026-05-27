@@ -11,6 +11,13 @@ interface RecordingOptions {
   onError?: (message?: string, error?: unknown) => void;
 }
 
+interface PlayRecordingOptions {
+  recordingId: string;
+  onPlayRecord?: () => void;
+  onEndRecord?: () => void;
+  onError?: (message: string) => void;
+}
+
 export class AudioRecorder {
   constructor(
     private mediaRecord: MediaRecorder | null = null,
@@ -69,6 +76,17 @@ export class AudioRecorder {
     }
   }
 
+  stopRecording() {
+    if (this.mediaRecord && this.isRecording) {
+      this.mediaRecord.stop();
+      this.isRecording = false;
+
+      if (this.currentStream) {
+        this.currentStream.getTracks().forEach((track) => track.stop());
+      }
+    }
+  }
+
   getSupportedMimeType() {
     // Check for supported MIME types in order of preference
     const types = [
@@ -114,5 +132,77 @@ export class AudioRecorder {
         resolve(0);
       });
     });
+  }
+
+  playRecording({
+    recordingId,
+    onPlayRecord,
+    onEndRecord,
+    onError,
+  }: PlayRecordingOptions) {
+    const recording = this.recordings.get(recordingId);
+    if (!recording) {
+      console.error("Recording not found");
+      return;
+    }
+
+    const audio = new Audio(recording.url);
+
+    audio.onplay = () => {
+      onPlayRecord?.();
+    };
+
+    audio.onended = () => {
+      onEndRecord?.();
+    };
+
+    audio.onerror = (error) => {
+      console.error("Playback error:", error);
+      onError?.("Failed to play audio");
+    };
+
+    audio.play().catch((error) => {
+      console.error("Failed to play audio:", error);
+      onError?.("Failed to play audio");
+    });
+  }
+
+  deleteRecording(recordingId: string) {
+    const recording = this.recordings.get(recordingId);
+
+    if (recording) {
+      URL.revokeObjectURL(recording.url);
+      this.recordings.delete(recordingId);
+    }
+  }
+
+  getAllRecordings() {
+    return Array.from(this.recordings.entries()).map(([id, recording]) => ({
+      id,
+      blob: recording.blob,
+      timeStamp: recording.timestamp,
+    }));
+  }
+
+  saveRecordingsToStorage() {
+    const recordings = this.getAllRecordings();
+    const recordingData = recordings.map((r) => ({
+      id: r.id,
+      timeStamp: r.timeStamp,
+    }));
+
+    localStorage.setItem("audioRecordings", JSON.stringify(recordingData));
+  }
+
+  destroy() {
+    if (this.isRecording) {
+      this.stopRecording();
+    }
+
+    this.recordings.forEach((recording) => {
+      URL.revokeObjectURL(recording.url);
+    });
+
+    this.recordings.clear();
   }
 }
