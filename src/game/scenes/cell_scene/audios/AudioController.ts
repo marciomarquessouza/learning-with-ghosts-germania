@@ -1,5 +1,5 @@
 import { AudioKeys, AudioMeta, AUDIOS } from "@/constants/audios";
-import { GameAudio } from "@/libs/audio/game-audio/GameAudio";
+import { GameAudio } from "@/libs/audio/GameAudio";
 
 export const CELL_SCENE_AUDIOS: Record<AudioKeys, AudioMeta> = {
   knockOnTheDoor: AUDIOS.knockOnTheDoor,

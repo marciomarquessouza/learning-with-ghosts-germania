@@ -1,5 +1,5 @@
 import { getRequired } from "@/utils/getRequired";
-import { AUDIO_SPEED, GameAudio } from "../audio/game-audio/GameAudio";
+import { AUDIO_SPEED, GameAudio } from "../audio/GameAudio";
 import { Lesson, LessonEntry, LessonStepType } from "./types";
 
 export class LessonController {

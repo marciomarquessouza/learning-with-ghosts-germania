@@ -1,11 +1,5 @@
 import { CharacterMood } from "@/types";
-import { DialogueKey } from "@/constants/dialogues";
-import {
-  DayDialogues,
-  DialogueEntry,
-  DialogueLine,
-  InteractionLine,
-} from "./types";
+import { DialogueEntry, DialogueLine, InteractionLine } from "./types";
 
 type DialogueLineBuilder = DialogueLine & {
   reactions: (charactersMood: CharacterMood[]) => DialogueLine;
@@ -18,8 +12,6 @@ type AuthoringDialogueEntry = {
   scene: DialogueEntry["scene"];
   lines: AuthoringLine[];
 };
-
-type AuthoringDialogues = Partial<Record<DialogueKey, AuthoringDialogueEntry>>;
 
 function isDialogueLineBuilder(
   line: AuthoringLine,

@@ -26,8 +26,8 @@ import { IdleState } from "./states/IdleState";
 import { IntroState } from "./states/IntroState";
 import { PerformingActionState } from "./states/PerformingActionState";
 import { PerformingLessonState } from "./states/PerformingLessonState";
-import { GameAudio } from "@/libs/audio/game-audio/GameAudio";
-import { AudioRecorder } from "@/libs/audio/audio-recorder/AudioRecorder";
+import { GameAudio } from "@/libs/audio/GameAudio";
+import { AudioRecorder } from "@/libs/audio/AudioRecorder";
 import { LessonManager } from "@/game/lesson/LessonManager";
 import { DialogueManager } from "@/game/dialogues/DialogueManager";
 
