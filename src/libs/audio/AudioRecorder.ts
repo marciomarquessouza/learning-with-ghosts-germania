@@ -1,3 +1,5 @@
+import { VoiceActivityDetector } from "./VoiceActivityDetector";
+
 interface AudioRecord {
   id: string;
   blob: Blob;
@@ -6,8 +8,17 @@ interface AudioRecord {
   timestamp: Date;
 }
 
+interface AudioRecorderOptions {
+  voiceDetectionEnabled?: boolean;
+  autoStopOnSilence?: boolean;
+  silenceStopDuration?: number;
+}
+
 interface RecordingOptions {
   onStartRecord?: () => void;
+  onSpeakingStart?: () => void;
+  onSpeakingEnd?: () => void;
+  onVolumeChange?: (volume: number) => void;
   onError?: (message?: string, error?: unknown) => void;
 }
 
@@ -19,15 +30,29 @@ interface PlayRecordingOptions {
 }
 
 export class AudioRecorder {
-  constructor(
-    private mediaRecord: MediaRecorder | null = null,
-    private audioChunks: Blob[] = [],
-    private isRecording: boolean = false,
-    private recordings = new Map<string, AudioRecord>(),
-    private currentStream: MediaStream | null = null,
-  ) {}
+  private voiceDetectionEnabled: boolean;
+  private mediaRecord: MediaRecorder | null = null;
+  private audioChunks: Blob[] = [];
+  private isRecording: boolean = false;
+  private recordings = new Map<string, AudioRecord>();
+  private currentStream: MediaStream | null = null;
+  private voiceActivityDetector: VoiceActivityDetector | null = null;
+  private autoStopOnSilence: boolean;
+  private silenceStopDuration: number;
 
-  async startRecording({ onStartRecord, onError }: RecordingOptions) {
+  constructor(options: AudioRecorderOptions = {}) {
+    this.voiceDetectionEnabled = options.voiceDetectionEnabled !== false;
+    this.autoStopOnSilence = options.autoStopOnSilence || false;
+    this.silenceStopDuration = options.silenceStopDuration || 2000;
+  }
+
+  async startRecording({
+    onStartRecord,
+    onSpeakingStart,
+    onVolumeChange,
+    onSpeakingEnd,
+    onError,
+  }: RecordingOptions) {
     try {
       this.currentStream = await navigator.mediaDevices.getUserMedia({
         audio: {
@@ -37,6 +62,38 @@ export class AudioRecorder {
           noiseSuppression: true,
         },
       });
+
+      if (this.voiceDetectionEnabled) {
+        this.voiceActivityDetector = new VoiceActivityDetector(
+          this.currentStream,
+          {
+            threshold: 0.08, // Adjust sensitivity
+            silenceThreshold: 800, // 800ms of silence to consider stopped speaking
+            onSpeakingStart: () => {
+              console.log("User started speaking");
+              onSpeakingStart?.();
+            },
+            onSpeakingEnd: () => {
+              console.log("User stopped speaking");
+              onSpeakingEnd?.();
+
+              if (this.autoStopOnSilence && this.isRecording) {
+                setTimeout(() => {
+                  if (
+                    this.voiceActivityDetector &&
+                    !this.voiceActivityDetector.isSpeaking
+                  ) {
+                    this.stopRecording();
+                  }
+                }, this.silenceStopDuration);
+              }
+            },
+            onVolumeChange: (volume) => {
+              onVolumeChange?.(volume);
+            },
+          },
+        );
+      }
 
       this.mediaRecord = new MediaRecorder(this.currentStream, {
         mimeType: this.getSupportedMimeType(),
@@ -80,6 +137,11 @@ export class AudioRecorder {
     if (this.mediaRecord && this.isRecording) {
       this.mediaRecord.stop();
       this.isRecording = false;
+
+      if (this.voiceDetector) {
+        this.voiceDetector.destroy();
+        this.voiceDetector = null;
+      }
 
       if (this.currentStream) {
         this.currentStream.getTracks().forEach((track) => track.stop());
@@ -195,9 +257,7 @@ export class AudioRecorder {
   }
 
   destroy() {
-    if (this.isRecording) {
-      this.stopRecording();
-    }
+    if (this.isRecording) this.stopRecording();
 
     this.recordings.forEach((recording) => {
       URL.revokeObjectURL(recording.url);
