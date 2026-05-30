@@ -5,11 +5,11 @@ import {
   UpdateLessonDescriptionEvent,
   WriteLessonDescriptionEvent,
 } from "@/events/lesson/types";
-import { DescriptionPhases } from "@/gameUI/components/LessonHeader/LessonDescription";
-import { HeaderPhases } from "@/gameUI/components/LessonHeader/LessonHeaderWrapper";
+import { DescriptionPhases } from "@/gameUI/components/LessonHeader/components/StepDescription";
+import { HeaderPhases } from "@/gameUI/components/LessonHeader/components/LessonHeaderWrapper";
 import { useCallback, useEffect, useMemo, useReducer, useRef } from "react";
 
-export interface State {
+export type LessonHeaderState = {
   showHeader: boolean;
   showTitle: boolean;
   showDescription: boolean;
@@ -22,9 +22,9 @@ export interface State {
   teacher: ACTORS;
   day: number;
   closeAfter?: number;
-}
+};
 
-const defaultState: State = {
+const defaultState: LessonHeaderState = {
   showHeader: false,
   showTitle: false,
   showDescription: false,
@@ -55,7 +55,10 @@ type Actions =
   | { type: "show-voice-indicator" }
   | { type: "hide-voice-indicator" };
 
-function reducer(state: State = defaultState, actions: Actions): State {
+function reducer(
+  state: LessonHeaderState = defaultState,
+  actions: Actions,
+): LessonHeaderState {
   switch (actions.type) {
     case "show-header":
       return {

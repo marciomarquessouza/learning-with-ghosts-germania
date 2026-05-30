@@ -138,9 +138,9 @@ export class AudioRecorder {
       this.mediaRecord.stop();
       this.isRecording = false;
 
-      if (this.voiceDetector) {
-        this.voiceDetector.destroy();
-        this.voiceDetector = null;
+      if (this.voiceActivityDetector) {
+        this.voiceActivityDetector.destroy();
+        this.voiceActivityDetector = null;
       }
 
       if (this.currentStream) {

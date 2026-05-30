@@ -8,6 +8,8 @@ export interface AudioStates {
   musicVolume: number;
   sfxVolume: number;
   voiceVolume: number;
+  isRecording: boolean;
+  currentVoiceRecordingVolume: number;
 }
 
 export interface AudioActions {
@@ -18,6 +20,8 @@ export interface AudioActions {
   setMusicVolume: (v: number) => void;
   setSfxVolume: (v: number) => void;
   setVoiceVolume: (v: number) => void;
+  setIsRecording: (value: boolean) => void;
+  setCurrentVoiceRecordingVolume: (value: number) => void;
 }
 
 export type AudioStore = AudioStates & AudioActions;
@@ -31,6 +35,8 @@ export const useAudioStore = create<AudioStore>()(
       musicVolume: 0.6,
       sfxVolume: 1,
       voiceVolume: 1,
+      isRecording: false,
+      currentVoiceRecordingVolume: 0,
 
       unlock: () => set({ isUnlocked: true }),
       mute: () => set({ isMuted: true }),
@@ -40,6 +46,9 @@ export const useAudioStore = create<AudioStore>()(
       setMusicVolume: (musicVolume) => set({ musicVolume }),
       setSfxVolume: (sfxVolume) => set({ sfxVolume }),
       setVoiceVolume: (voiceVolume) => set({ voiceVolume }),
+      setIsRecording: (value) => set({ isRecording: value }),
+      setCurrentVoiceRecordingVolume: (value: number) =>
+        set({ currentVoiceRecordingVolume: value }),
     }),
     {
       name: "audio-settings",
@@ -55,43 +64,9 @@ export const useAudioStore = create<AudioStore>()(
 );
 
 export const getAudioStates = (): AudioStates => {
-  const {
-    isMuted,
-    isUnlocked,
-    masterVolume,
-    musicVolume,
-    sfxVolume,
-    voiceVolume,
-  } = useAudioStore.getState();
-
-  return {
-    isMuted,
-    isUnlocked,
-    masterVolume,
-    musicVolume,
-    sfxVolume,
-    voiceVolume,
-  };
+  return useAudioStore.getState();
 };
 
 export const getAudioActions = (): AudioActions => {
-  const {
-    unlock,
-    mute,
-    unmute,
-    setMasterVolume,
-    setMusicVolume,
-    setSfxVolume,
-    setVoiceVolume,
-  } = useAudioStore.getState();
-
-  return {
-    unlock,
-    mute,
-    unmute,
-    setMasterVolume,
-    setMusicVolume,
-    setSfxVolume,
-    setVoiceVolume,
-  };
+  return useAudioStore.getState();
 };

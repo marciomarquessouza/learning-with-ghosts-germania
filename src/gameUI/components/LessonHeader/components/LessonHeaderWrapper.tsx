@@ -61,7 +61,9 @@ export function LessonHeaderWrapper({
               }}
             >
               <div style={{ width: LEFT_W }} className="shrink-0" aria-hidden />
-              <div className="w-full h-40 overflow-hidden">{children}</div>
+              <div className="relative w-full h-40 overflow-hidden">
+                {children}
+              </div>
 
               <div
                 style={{ width: RIGHT_W }}

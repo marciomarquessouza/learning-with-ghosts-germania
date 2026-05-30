@@ -1,12 +1,13 @@
-import { LessonHeaderWrapper } from "@/gameUI/components/LessonHeader/LessonHeaderWrapper";
-import { useLessonHeader } from "./hooks/useLessonHeader";
-import { NotebookToggleButton } from "@/gameUI/components/LessonHeader/NotebookToggleButton";
-import { LessonExit } from "@/gameUI/components/LessonHeader/LessonExit";
-import { LessonTitle } from "@/gameUI/components/LessonHeader/LessonTitle";
-import { LessonDescription } from "@/gameUI/components/LessonHeader/LessonDescription";
-import { PronunciationVoiceIndicator } from "../LessonHeader/PronunciationVoiceIndicator";
+import { LessonHeaderWrapper } from "@/gameUI/components/LessonHeader/components/LessonHeaderWrapper";
+import { useLessonHeader } from "../LessonHeader/hooks/useLessonHeader";
+import { NotebookToggleButton } from "@/gameUI/components/LessonHeader/components/NotebookToggleButton";
+import { LessonExit } from "@/gameUI/components/LessonHeader/components/LessonExit";
+import { LessonTitle } from "@/gameUI/components/LessonHeader/components/LessonTitle";
+import { StepDescription } from "@/gameUI/components/LessonHeader/components/StepDescription";
+import { PronunciationVoiceIndicator } from "./components/PronunciationVoiceIndicator";
+import { StepTitle } from "./components/StepTitle";
 
-export function DreamLessonChallenges() {
+export function LessonHeader() {
   const {
     headerState,
     clearTitle,
@@ -32,14 +33,8 @@ export function DreamLessonChallenges() {
           day={headerState.day}
           onClose={handleOnTitleClose}
         />
-        <div id="dialogue-title" className="flex w-full flex-col items-center">
-          <div className="my-2 bg-[#FFF3E4] px-4 py-0">
-            <p className="font-primary text-left text-lg font-semibold tracking-wide text-black">
-              {headerState.dialogueTitle}
-            </p>
-          </div>
-        </div>
-        <LessonDescription
+        <StepTitle title={headerState.dialogueTitle} />
+        <StepDescription
           isVisible={headerState.showDescription}
           description={headerState.description}
           hidePressContinue={headerState.hidePressContinue}

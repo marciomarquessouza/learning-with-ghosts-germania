@@ -1,5 +1,5 @@
 import { useMemo } from "react";
-import { IconAudioWithCircle } from "../LessonChallenges/icons/IconAudioWithCircle";
+import { IconAudioWithCircle } from "../../LessonChallenges/icons/IconAudioWithCircle";
 
 export interface PronunciationVoiceIndicatorProps {
   isVisible: boolean;

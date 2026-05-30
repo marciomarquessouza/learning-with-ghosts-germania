@@ -30,6 +30,7 @@ import { GameAudio } from "@/libs/audio/GameAudio";
 import { AudioRecorder } from "@/libs/audio/AudioRecorder";
 import { LessonManager } from "@/game/lesson/LessonManager";
 import { DialogueManager } from "@/game/dialogues/DialogueManager";
+import { getAudioActions } from "@/store/audioStore";
 
 export class DreamScene extends Phaser.Scene {
   public static readonly STATES = SCENE_STATES;
@@ -40,12 +41,12 @@ export class DreamScene extends Phaser.Scene {
   public tutor = new Tutor();
   public learningNode = new LearningNode();
   public gameAudio = new GameAudio();
-  public audioRecorder = new AudioRecorder();
   public lessonManager = new LessonManager(useLessonStore.getState().lesson);
   public dialogueManager = new DialogueManager();
   public flowController?: FlowController<SceneStateNames, DreamScene>;
 
   private scenario = new CemeteryScenario();
+  private audioRecorder = new AudioRecorder();
   private stateMachine!: StateMachine;
 
   constructor() {
@@ -119,6 +120,14 @@ export class DreamScene extends Phaser.Scene {
     });
 
     this.stateMachine.changeTo(DreamScene.STATES.INTRO);
+  }
+
+  recordAudio() {
+    const { setCurrentVoiceRecordingVolume } = getAudioActions();
+    this.audioRecorder.startRecording({
+      onStartRecord: () => this.lessonManager.showVoiceIndicator(),
+      onVolumeChange: (volume) => setCurrentVoiceRecordingVolume(volume),
+    });
   }
 
   update(time: number, delta: number) {

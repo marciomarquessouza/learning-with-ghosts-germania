@@ -11,7 +11,7 @@ export type DescriptionPhases =
   | "ready"
   | "exiting";
 
-export interface LessonDescriptionProps {
+export interface StepDescriptionProps {
   isVisible: boolean;
   description: string;
   descriptionUpdate?: string;
@@ -35,13 +35,13 @@ const variants = {
 
 const MAXIMUM_SIZE_FOR_CENTERED_TEXT = 48;
 
-export function LessonDescription({
+export function StepDescription({
   isVisible,
   description,
   hidePressContinue = false,
   descriptionUpdate,
   onPhaseChange,
-}: LessonDescriptionProps) {
+}: StepDescriptionProps) {
   const [phase, setPhase] = useState<DescriptionPhases>("hidden");
   const {
     displayedText,
@@ -145,7 +145,7 @@ export function LessonDescription({
               startTyping();
             }
           }}
-          className="pointer-events-none flex w-full items-center px-12 text-white outline-none"
+          className="pointer-events-none absolute left-0 top-12 flex w-full items-center px-12 text-white outline-none"
           role="dialog"
           aria-live="polite"
         >
