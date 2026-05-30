@@ -3,6 +3,7 @@ import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { PressContinue } from "./PressContinue";
 import { createDialogueKeyDownHandler } from "@/libs/inputs/createDialogueKeyDownHandler";
+import { renderFormattedText } from "@/libs/dialogues/renderFormattedText";
 
 export type DescriptionPhases =
   | "hidden"
@@ -160,7 +161,7 @@ export function StepDescription({
                 }}
                 className="min-h-20 font-mono text-xl leading-relaxed text-[#FFF3E4]"
               >
-                {displayedText}
+                {renderFormattedText(displayedText)}
               </p>
               <div className="flex w-full h-8 justify-end items-end -my-2">
                 <PressContinue
