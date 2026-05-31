@@ -27,10 +27,8 @@ import { IntroState } from "./states/IntroState";
 import { PerformingActionState } from "./states/PerformingActionState";
 import { PerformingLessonState } from "./states/PerformingLessonState";
 import { GameAudio } from "@/libs/audio/GameAudio";
-import { AudioRecorder } from "@/libs/audio/AudioRecorder";
 import { LessonManager } from "@/game/lesson/LessonManager";
 import { DialogueManager } from "@/game/dialogues/DialogueManager";
-import { getAudioActions } from "@/store/audioStore";
 
 export class DreamScene extends Phaser.Scene {
   public static readonly STATES = SCENE_STATES;
@@ -46,7 +44,6 @@ export class DreamScene extends Phaser.Scene {
   public flowController?: FlowController<SceneStateNames, DreamScene>;
 
   private scenario = new CemeteryScenario();
-  private audioRecorder = new AudioRecorder();
   private stateMachine!: StateMachine;
 
   constructor() {
@@ -122,14 +119,6 @@ export class DreamScene extends Phaser.Scene {
     this.stateMachine.changeTo(DreamScene.STATES.INTRO);
   }
 
-  recordAudio() {
-    const { setCurrentVoiceRecordingVolume } = getAudioActions();
-    this.audioRecorder.startRecording({
-      onStartRecord: () => this.lessonManager.showVoiceIndicator(),
-      onVolumeChange: (volume) => setCurrentVoiceRecordingVolume(volume),
-    });
-  }
-
   update(time: number, delta: number) {
     this.stateMachine.updateAndHandleInput(delta);
     this.scenario.update(delta);
@@ -145,7 +134,7 @@ export class DreamScene extends Phaser.Scene {
     this.hud.destroy();
     this.learningNode.destroy();
     this.player.destroy();
-    this.audioRecorder.destroy();
+    this.lessonManager.destroy();
   }
 }
 

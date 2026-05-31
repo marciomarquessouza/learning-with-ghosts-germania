@@ -22,14 +22,14 @@ export function LessonHeader() {
   return (
     <>
       <LessonHeaderWrapper
-        isVisible={headerState.showHeader}
+        isVisible={headerState.showLessonHeader}
         leftIcon={<NotebookToggleButton />}
         rightIcon={<LessonExit />}
         onPhaseChange={onHeaderPhaseChange}
       >
         <LessonTitle
-          isVisible={headerState.showTitle}
-          title={headerState.title}
+          isVisible={headerState.showLessonTitle}
+          title={headerState.lessonTitle}
           day={headerState.day}
           onClose={handleOnTitleClose}
         />
@@ -42,7 +42,6 @@ export function LessonHeader() {
         />
         <PronunciationVoiceIndicator
           isVisible={headerState.showVoiceIndicator}
-          voiceLevel={0.1}
         />
       </LessonHeaderWrapper>
     </>

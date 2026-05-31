@@ -1,6 +1,6 @@
 import { VoiceActivityDetector } from "./VoiceActivityDetector";
 
-interface AudioRecord {
+export interface AudioRecord {
   id: string;
   blob: Blob;
   url: string;
@@ -17,7 +17,7 @@ interface AudioRecorderOptions {
 interface RecordingOptions {
   onStartRecord?: () => void;
   onSpeakingStart?: () => void;
-  onSpeakingEnd?: () => void;
+  onSpeakingEnd?: (recordId: string) => void;
   onVolumeChange?: (volume: number) => void;
   onError?: (message?: string, error?: unknown) => void;
 }
@@ -34,7 +34,7 @@ export class AudioRecorder {
   private mediaRecord: MediaRecorder | null = null;
   private audioChunks: Blob[] = [];
   private isRecording: boolean = false;
-  private recordings = new Map<string, AudioRecord>();
+  private currentRecord: AudioRecord | null = null;
   private currentStream: MediaStream | null = null;
   private voiceActivityDetector: VoiceActivityDetector | null = null;
   private autoStopOnSilence: boolean;
@@ -67,7 +67,7 @@ export class AudioRecorder {
         this.voiceActivityDetector = new VoiceActivityDetector(
           this.currentStream,
           {
-            threshold: 0.08, // Adjust sensitivity
+            threshold: 0.2, // Adjust sensitivity
             silenceThreshold: 800, // 800ms of silence to consider stopped speaking
             onSpeakingStart: () => {
               console.log("User started speaking");
@@ -75,7 +75,7 @@ export class AudioRecorder {
             },
             onSpeakingEnd: () => {
               console.log("User stopped speaking");
-              onSpeakingEnd?.();
+              this.stopRecording();
 
               if (this.autoStopOnSilence && this.isRecording) {
                 setTimeout(() => {
@@ -108,7 +108,8 @@ export class AudioRecorder {
       };
 
       this.mediaRecord.onstop = () => {
-        this.processRecording();
+        const { id } = this.processRecording();
+        onSpeakingEnd?.(id);
       };
 
       // Start Recording
@@ -168,20 +169,23 @@ export class AudioRecorder {
     return "audio/webm"; // Fallback
   }
 
-  async processRecording() {
+  processRecording(): AudioRecord {
     const audioBlob = new Blob(this.audioChunks, { type: "audio/webm" });
     const audioUrl = URL.createObjectURL(audioBlob);
 
     const recordingId = `recording_${Date.now()}`;
-    const duration = await this.getAudioDuration(audioBlob);
+    // const duration = await this.getAudioDuration(audioBlob);
+    const duration = 0;
 
-    this.recordings.set(recordingId, {
+    this.currentRecord = {
       id: recordingId,
       blob: audioBlob,
       url: audioUrl,
       duration,
       timestamp: new Date(),
-    });
+    };
+
+    return this.currentRecord;
   }
 
   async getAudioDuration(blob: Blob): Promise<number> {
@@ -202,8 +206,12 @@ export class AudioRecorder {
     onEndRecord,
     onError,
   }: PlayRecordingOptions) {
-    const recording = this.recordings.get(recordingId);
-    if (!recording) {
+    const recording = this.currentRecord;
+
+    console.log("#HERE recording ", recording);
+    console.log("#HERE recordingId ", recordingId);
+
+    if (!recording || recording.id !== recordingId) {
       console.error("Recording not found");
       return;
     }
@@ -229,40 +237,26 @@ export class AudioRecorder {
     });
   }
 
-  deleteRecording(recordingId: string) {
-    const recording = this.recordings.get(recordingId);
-
-    if (recording) {
-      URL.revokeObjectURL(recording.url);
-      this.recordings.delete(recordingId);
+  deleteRecord() {
+    if (this.currentRecord) {
+      URL.revokeObjectURL(this.currentRecord.url);
+      this.currentRecord = null;
     }
   }
 
-  getAllRecordings() {
-    return Array.from(this.recordings.entries()).map(([id, recording]) => ({
-      id,
-      blob: recording.blob,
-      timeStamp: recording.timestamp,
-    }));
-  }
-
-  saveRecordingsToStorage() {
-    const recordings = this.getAllRecordings();
-    const recordingData = recordings.map((r) => ({
-      id: r.id,
-      timeStamp: r.timeStamp,
-    }));
-
-    localStorage.setItem("audioRecordings", JSON.stringify(recordingData));
+  getRecord(id: string): AudioRecord | undefined {
+    if (this.currentRecord && this.currentRecord.id === id) {
+      return this.currentRecord;
+    }
   }
 
   destroy() {
     if (this.isRecording) this.stopRecording();
 
-    this.recordings.forEach((recording) => {
-      URL.revokeObjectURL(recording.url);
-    });
+    if (this.currentRecord) {
+      URL.revokeObjectURL(this.currentRecord.url);
+    }
 
-    this.recordings.clear();
+    this.currentRecord = null;
   }
 }

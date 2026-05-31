@@ -10,8 +10,8 @@ export interface ToggleNotebookEvent {
 }
 
 export interface ShowLessonTitleEvent {
-  title: string;
-  day: number;
+  title?: string;
+  day?: number;
   closeAfter?: number;
 }
 
@@ -20,9 +20,4 @@ export interface WriteLessonDescriptionEvent {
   description: string;
   hidePressContinue?: boolean;
   teacher?: ACTORS;
-}
-
-export interface UpdateLessonDescriptionEvent {
-  title?: string;
-  description?: string;
 }

@@ -1,10 +1,11 @@
 import { useEffect, useState } from "react";
 import Image from "next/image";
 import { AnimatePresence, motion } from "framer-motion";
+import { useLessonStore } from "@/store/lessonStore";
 
 export interface LessonTitleProps {
-  title: string;
-  day: number;
+  title?: string;
+  day?: number;
   isVisible: boolean;
   onClose?: () => void;
 }
@@ -33,6 +34,10 @@ export function LessonTitle({
   onClose,
 }: LessonTitleProps) {
   const [show, setShow] = useState(false);
+  const { lesson } = useLessonStore();
+
+  const lessonTitle = title || lesson.title;
+  const lessonDay = day || lesson.day;
 
   useEffect(() => {
     if (isVisible && !show) {
@@ -65,11 +70,11 @@ export function LessonTitle({
                 draggable={false}
               />
               <span className="inline-flex h-[80px] items-end font-sans text-[80px] mt-6 leading-none text-[#FFF3E4]">
-                {day}
+                {lessonDay}
               </span>
             </div>
             <p className="font-mono text-3xl text-[#FFF3E4]">
-              {title.toUpperCase()}
+              {lessonTitle.toUpperCase()}
             </p>
           </div>
         </motion.div>

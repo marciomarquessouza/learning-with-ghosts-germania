@@ -48,7 +48,7 @@ export class LessonPronunciation extends Flow<SceneStateNames, DreamScene> {
           },
           onStopRecord: () => {
             this.gameScene.lessonManager.hideVoiceIndicator();
-            this.gameScene.lessonManager.updateLessonDescription({
+            this.gameScene.lessonManager.writeLessonDescription({
               description: "Tente mais uma vez",
             });
           },

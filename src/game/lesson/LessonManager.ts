@@ -1,13 +1,19 @@
 import { events } from "@/events/events";
 import {
   ShowLessonTitleEvent,
-  UpdateLessonDescriptionEvent,
   WriteLessonDescriptionEvent,
 } from "@/events/lesson/types";
+import { AudioRecorder } from "@/libs/audio/AudioRecorder";
 import { LessonController } from "@/libs/lesson/LessonController";
 import { Lesson } from "@/libs/lesson/types";
+import { useAudioStore } from "@/store/audioStore";
 
 export class LessonManager extends LessonController {
+  private audioRecorder = new AudioRecorder({
+    voiceDetectionEnabled: true,
+    autoStopOnSilence: true,
+  });
+
   constructor(lesson: Lesson) {
     super(lesson);
   }
@@ -16,13 +22,13 @@ export class LessonManager extends LessonController {
     lessonTitleContent: ShowLessonTitleEvent,
   ): Promise<void> {
     return events.lesson.async.emitAsync(
-      "show-lesson-title",
+      "show-lesson-header",
       lessonTitleContent,
     );
   }
 
   public async hideLessonTitle(): Promise<void> {
-    return events.lesson.async.emitAsync("hide-lesson-title");
+    return events.lesson.async.emitAsync("hide-lesson-header");
   }
 
   public async writeLessonDescription(
@@ -38,21 +44,53 @@ export class LessonManager extends LessonController {
     events.lesson.sync.emit("show-description");
   }
 
-  public updateLessonDescription(
-    updatedDescription: UpdateLessonDescriptionEvent,
-  ) {
-    events.lesson.sync.emit("update-lesson-description", updatedDescription);
-  }
-
   public async hideLessonDescription(): Promise<void> {
     return events.lesson.async.emitAsync("hide-lesson-description");
   }
 
-  public showVoiceIndicator() {
-    events.lesson.sync.emit("show-voice-indicator");
+  public async showVoiceIndicator() {
+    return events.lesson.sync.emit("show-voice-indicator");
   }
 
   public hideVoiceIndicator() {
     events.lesson.sync.emit("hide-voice-indicator");
+  }
+
+  public async pronunciationChallenge(): Promise<{ recordId: string }> {
+    const { setIsRecording, setCurrentVoiceRecordingVolume } =
+      useAudioStore.getState();
+    return new Promise((resolve) => {
+      this.audioRecorder.startRecording({
+        onStartRecord: async () => {
+          setIsRecording(true);
+          events.lesson.sync.emit("show-voice-indicator");
+        },
+        onVolumeChange: (volume) => {
+          setCurrentVoiceRecordingVolume(volume);
+        },
+        onSpeakingEnd: (recordId) => {
+          setIsRecording(false);
+          events.lesson.sync.emit("hide-voice-indicator");
+          resolve({ recordId });
+        },
+        onError: () => {
+          setIsRecording(false);
+          console.error("Pronunciation Challenge Error");
+        },
+      });
+    });
+  }
+
+  public stopPronunciationChallenge() {
+    this.audioRecorder.stopRecording();
+    events.lesson.sync.emit("hide-voice-indicator");
+  }
+
+  public playPronunciationRecord(id: string) {
+    this.audioRecorder.playRecording({ recordingId: id });
+  }
+
+  destroy() {
+    this.audioRecorder.destroy();
   }
 }

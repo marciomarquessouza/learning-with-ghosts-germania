@@ -71,7 +71,7 @@ export class LessonListeningFlow extends Flow<SceneStateNames, DreamScene> {
         }),
         stepBase(
           () => {
-            this.gameScene.lessonManager.updateLessonDescription({
+            this.gameScene.lessonManager.writeLessonDescription({
               description: `Muito bem, repita isso ${LISTENING_REPETITION - (index + 1)}x`,
             });
           },

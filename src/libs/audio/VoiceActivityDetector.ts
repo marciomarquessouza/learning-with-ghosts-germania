@@ -24,7 +24,7 @@ export class VoiceActivityDetector {
 
   constructor(stream: MediaStream, options: VoiceActivityDetectorOptions) {
     // TODO: Adjust after tests
-    this.speakingThreshold = options.threshold || 0.1;
+    this.speakingThreshold = options.threshold || 0.8;
     // Default: 1 second of silence
     this.silenceThreshold = options.silenceThreshold || 1000;
 

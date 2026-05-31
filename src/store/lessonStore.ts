@@ -18,8 +18,8 @@ export const useLessonStore = create<LessonState>()(
     (set) => ({
       lesson: {
         id: "",
-        title: "",
-        day: 0,
+        title: "First Lesson",
+        day: 1,
         character: ACTORS.PLAYER,
         entries: [] as LessonEntry[],
       },
