@@ -27,7 +27,7 @@ interface RecordingOptions {
   onSpeakingEnd?: (recordId: string) => void;
   onVolumeChange?: (volume: number) => void;
   onError?: (message?: string, error?: unknown) => void;
-  onTimeUpdate?: (elapsed: number, maxTime: number) => void;
+  onRecordTimeout?: (elapsed: number, maxTime: number) => void;
 }
 
 interface PlayRecordingOptions {
@@ -289,11 +289,11 @@ export class AudioRecorder {
   }
 
   private setupAutoStop(options: RecordingOptions) {
-    const { onTimeUpdate } = options;
+    const { onRecordTimeout } = options;
 
-    this.autoStopTimer = setTimeout(() => {
+    setTimeout(() => {
       if (this.isRecording) {
-        onTimeUpdate?.(this.maxRecordingDuration, this.maxRecordingDuration);
+        onRecordTimeout?.(this.maxRecordingDuration, this.maxRecordingDuration);
       }
       this.stopRecording();
     }, this.maxRecordingDuration);

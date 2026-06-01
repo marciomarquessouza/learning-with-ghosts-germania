@@ -48,6 +48,7 @@ const component = ({
   const [phase, setPhase] = useState<Phases>("close");
   const { isRecording, setIsRecording } = useAudioStore();
   const [recordId, setRecordId] = useState<string | undefined>(undefined);
+  const [recordingTimeout, setRecordingTimeout] = useState(false);
 
   const openHeader = useCallback(async () => {
     setIsRecording(false);
@@ -66,7 +67,10 @@ const component = ({
   };
 
   const recordVoice = async () => {
-    const { recordId } = await lessonManager.pronunciationChallenge();
+    setRecordingTimeout(false);
+    const { recordId } = await lessonManager.pronunciationChallenge({
+      onRecordTimeout: () => setRecordingTimeout(true),
+    });
     setRecordId(recordId);
     await showRecordResult();
   };
@@ -88,7 +92,13 @@ const component = ({
   };
 
   return (
-    <div>
+    <div
+      id="container"
+      className={[
+        "flex flex-1 min-h-screen min-w-screen -m-8 p-0",
+        "w-full h-full flex-col items-center justify-center bg-white",
+      ].join(" ")}
+    >
       <LessonHeader />
       <div className="">
         <Button
@@ -118,6 +128,24 @@ const component = ({
           <Button label="Recorded Audio" onClick={() => playAudio()} />
         </div>
       )}
+      <div className="absolute bottom-0 w-8/12 p-2 bg-black">
+        <div className="flex items-center justify-center gap-6">
+          <span className="font-mono text-sm leading-relaxed text-[#FFF3E4]">
+            <strong>Phase:</strong> {phase}
+          </span>
+          <span className="font-mono text-sm leading-relaxed text-[#FFF3E4]">
+            <strong>Recording:</strong>{" "}
+            {isRecording ? <span className="text-red-600">yes</span> : "no"}
+          </span>
+          <span className="font-mono text-sm leading-relaxed text-[#FFF3E4]">
+            <strong>Audio Id:</strong> {recordId || "NA"}
+          </span>
+          <span className="font-mono text-sm leading-relaxed text-[#FFF3E4]">
+            <strong>Auto Stop by Time:</strong>{" "}
+            {recordingTimeout ? "yes" : "false"}
+          </span>
+        </div>
+      </div>
     </div>
   );
 };

@@ -56,7 +56,9 @@ export class LessonManager extends LessonController {
     events.lesson.sync.emit("hide-voice-indicator");
   }
 
-  public async pronunciationChallenge(): Promise<{ recordId: string }> {
+  public async pronunciationChallenge(options?: {
+    onRecordTimeout?: (elapsed: number, maxTime: number) => void;
+  }): Promise<{ recordId: string }> {
     const { setIsRecording, setCurrentVoiceRecordingVolume } =
       useAudioStore.getState();
     return new Promise((resolve) => {
@@ -73,6 +75,9 @@ export class LessonManager extends LessonController {
           setIsRecording(false);
           events.lesson.sync.emit("hide-voice-indicator");
           resolve({ recordId });
+        },
+        onRecordTimeout: (elapsed, maxTime) => {
+          options?.onRecordTimeout?.(elapsed, maxTime);
         },
         onError: () => {
           setIsRecording(false);
