@@ -5,14 +5,11 @@ import { events } from "@/events/events";
 import { useCallback, useState } from "react";
 import { useAudioStore } from "@/store/audioStore";
 import { LessonManager } from "@/game/lesson/LessonManager";
-import { useLessonStore } from "@/store/lessonStore";
+import { Lesson } from "@/libs/lesson/types";
 
 const meta: Meta<typeof LessonHeader> = {
   title: "Game/UI/LessonHeader",
   component: LessonHeader,
-  globals: {
-    backgrounds: { value: "white", grid: false },
-  },
   parameters: {
     layout: "centered",
   },
@@ -28,6 +25,21 @@ type ActionsProps = {
 
 type Phases = "close" | "open" | "transition";
 
+const lesson: Lesson = {
+  id: "__ID__",
+  day: 1,
+  title: "__MOCK__LESSON__",
+  entries: [
+    {
+      id: "__ID__",
+      reference: "Hello",
+      target: "Hallo",
+      steps: [],
+    },
+  ],
+};
+const lessonManager = new LessonManager(lesson);
+
 const component = ({
   title,
   description,
@@ -36,8 +48,6 @@ const component = ({
   const [phase, setPhase] = useState<Phases>("close");
   const { isRecording, setIsRecording } = useAudioStore();
   const [recordId, setRecordId] = useState<string | undefined>(undefined);
-  const { lesson } = useLessonStore();
-  const lessonManager = new LessonManager(lesson);
 
   const openHeader = useCallback(async () => {
     setIsRecording(false);
@@ -58,6 +68,7 @@ const component = ({
   const recordVoice = async () => {
     const { recordId } = await lessonManager.pronunciationChallenge();
     setRecordId(recordId);
+    await showRecordResult();
   };
 
   const stopVoiceRecord = async () => {

@@ -1,10 +1,13 @@
 import { VoiceActivityDetector } from "./VoiceActivityDetector";
 
+const DEFAULT_PHRASE_TIME_MULTIPLIER = 5;
+const DEFAULT_MINIMUM_RECORD_TIME = 1_000;
+const DEFAULT_MAXIMUM_RECORD_TIME = 6_000;
+
 export interface AudioRecord {
   id: string;
   blob: Blob;
   url: string;
-  duration: number;
   timestamp: Date;
 }
 
@@ -15,11 +18,16 @@ interface AudioRecorderOptions {
 }
 
 interface RecordingOptions {
+  targetPhrase?: string; // The phrase user should say (e.g., "Guten Morgen")
+  phraseTimeMultiplier?: number; // How many times longer than estimated)
+  minimumRecordTime?: number; // Minimum recording time in ms
+  maximumRecordTime?: number; // Hard maximum in ms (overrides phrase calculation)
   onStartRecord?: () => void;
   onSpeakingStart?: () => void;
   onSpeakingEnd?: (recordId: string) => void;
   onVolumeChange?: (volume: number) => void;
   onError?: (message?: string, error?: unknown) => void;
+  onTimeUpdate?: (elapsed: number, maxTime: number) => void;
 }
 
 interface PlayRecordingOptions {
@@ -40,20 +48,46 @@ export class AudioRecorder {
   private autoStopOnSilence: boolean;
   private silenceStopDuration: number;
 
+  // Auto-stop related
+  private autoStopTimer: NodeJS.Timeout | null = null;
+  private recordingStartTime: number = 0;
+  private maxRecordingDuration: number = 0;
+  private timeUpdateInterval: NodeJS.Timeout | null = null;
+
   constructor(options: AudioRecorderOptions = {}) {
     this.voiceDetectionEnabled = options.voiceDetectionEnabled !== false;
     this.autoStopOnSilence = options.autoStopOnSilence || false;
     this.silenceStopDuration = options.silenceStopDuration || 2000;
   }
 
-  async startRecording({
-    onStartRecord,
-    onSpeakingStart,
-    onVolumeChange,
-    onSpeakingEnd,
-    onError,
-  }: RecordingOptions) {
+  async startRecording(options: RecordingOptions) {
+    const {
+      targetPhrase = "",
+      phraseTimeMultiplier = DEFAULT_PHRASE_TIME_MULTIPLIER,
+      minimumRecordTime = DEFAULT_MINIMUM_RECORD_TIME,
+      maximumRecordTime = DEFAULT_MAXIMUM_RECORD_TIME,
+      onStartRecord,
+      onSpeakingStart,
+      onVolumeChange,
+      onSpeakingEnd,
+      onError,
+    } = options;
+
     try {
+      if (maximumRecordTime > 0) {
+        this.maxRecordingDuration = maximumRecordTime;
+      } else {
+        this.maxRecordingDuration = this.estimatePhrasesDuration(
+          targetPhrase,
+          phraseTimeMultiplier,
+        );
+        // Ensure it meets minimum
+        this.maxRecordingDuration = Math.max(
+          this.maxRecordingDuration,
+          minimumRecordTime,
+        );
+      }
+
       this.currentStream = await navigator.mediaDevices.getUserMedia({
         audio: {
           channelCount: 1,
@@ -67,7 +101,7 @@ export class AudioRecorder {
         this.voiceActivityDetector = new VoiceActivityDetector(
           this.currentStream,
           {
-            threshold: 0.2, // Adjust sensitivity
+            threshold: 0.8, // Adjust sensitivity => Lower = more sensitive
             silenceThreshold: 800, // 800ms of silence to consider stopped speaking
             onSpeakingStart: () => {
               console.log("User started speaking");
@@ -115,6 +149,8 @@ export class AudioRecorder {
       // Start Recording
       this.mediaRecord.start();
       this.isRecording = true;
+      this.recordingStartTime = Date.now();
+      this.setupAutoStop(options);
 
       onStartRecord?.();
     } catch (err: unknown) {
@@ -174,30 +210,15 @@ export class AudioRecorder {
     const audioUrl = URL.createObjectURL(audioBlob);
 
     const recordingId = `recording_${Date.now()}`;
-    // const duration = await this.getAudioDuration(audioBlob);
-    const duration = 0;
 
     this.currentRecord = {
       id: recordingId,
       blob: audioBlob,
       url: audioUrl,
-      duration,
       timestamp: new Date(),
     };
 
     return this.currentRecord;
-  }
-
-  async getAudioDuration(blob: Blob): Promise<number> {
-    return new Promise((resolve) => {
-      const audio = new Audio(URL.createObjectURL(blob));
-      audio.addEventListener("loadedmetadata", () => {
-        resolve(audio.duration);
-      });
-      audio.addEventListener("error", () => {
-        resolve(0);
-      });
-    });
   }
 
   playRecording({
@@ -206,17 +227,12 @@ export class AudioRecorder {
     onEndRecord,
     onError,
   }: PlayRecordingOptions) {
-    const recording = this.currentRecord;
-
-    console.log("#HERE recording ", recording);
-    console.log("#HERE recordingId ", recordingId);
-
-    if (!recording || recording.id !== recordingId) {
+    if (!this.currentRecord || this.currentRecord.id !== recordingId) {
       console.error("Recording not found");
       return;
     }
 
-    const audio = new Audio(recording.url);
+    const audio = new Audio(this.currentRecord.url);
 
     audio.onplay = () => {
       onPlayRecord?.();
@@ -248,6 +264,39 @@ export class AudioRecorder {
     if (this.currentRecord && this.currentRecord.id === id) {
       return this.currentRecord;
     }
+  }
+
+  private estimatePhrasesDuration(
+    phrase: string,
+    multiplier: number = DEFAULT_PHRASE_TIME_MULTIPLIER,
+  ): number {
+    if (!phrase || phrase.trim().length === 0) {
+      return DEFAULT_MAXIMUM_RECORD_TIME;
+    }
+
+    const characterCount = phrase.trim().length;
+    const wordCount = phrase.trim().split(/\s+/).length;
+
+    const estimatedSecondsFromWords = wordCount / 2.5;
+    const estimatedSecondsFromChars = characterCount / 12;
+
+    const baseEstimate = Math.max(
+      estimatedSecondsFromWords,
+      estimatedSecondsFromChars,
+    );
+
+    return Math.max(baseEstimate * multiplier, 2) * 1000;
+  }
+
+  private setupAutoStop(options: RecordingOptions) {
+    const { onTimeUpdate } = options;
+
+    this.autoStopTimer = setTimeout(() => {
+      if (this.isRecording) {
+        onTimeUpdate?.(this.maxRecordingDuration, this.maxRecordingDuration);
+      }
+      this.stopRecording();
+    }, this.maxRecordingDuration);
   }
 
   destroy() {

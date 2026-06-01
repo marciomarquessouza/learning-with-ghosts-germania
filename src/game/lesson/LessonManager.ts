@@ -61,6 +61,7 @@ export class LessonManager extends LessonController {
       useAudioStore.getState();
     return new Promise((resolve) => {
       this.audioRecorder.startRecording({
+        targetPhrase: this.getEntryTarget(),
         onStartRecord: async () => {
           setIsRecording(true);
           events.lesson.sync.emit("show-voice-indicator");
