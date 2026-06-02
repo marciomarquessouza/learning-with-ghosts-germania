@@ -1,3 +1,4 @@
+import { SCENE_FLOWS, useGameStore } from "@/store/gameStore";
 import { Flow } from "./Flow";
 import { FlowClass, FlowResult, ScheduledFlow } from "./types";
 
@@ -11,6 +12,7 @@ interface FlowControllerPayload<TState extends string, TGameScene> {
 export class FlowController<TState extends string, TGameScene> {
   private scene: Phaser.Scene;
   private gameScene: TGameScene;
+  private flows: Map<string, FlowClass<TState, TGameScene>> = new Map();
   private currentFlow?: Flow<TState, TGameScene>;
   private nextFlow?: FlowClass<TState, TGameScene>;
   private cancelFlow: FlowClass<TState, TGameScene>;
@@ -32,6 +34,19 @@ export class FlowController<TState extends string, TGameScene> {
     this.gameScene = gameScene;
     this.cancelFlow = cancelFlow;
     this.onRunScheduledFlow = onRunScheduledFlow;
+  }
+
+  addFlow(name: string, flowClass: FlowClass<TState, TGameScene>) {
+    this.flows.set(name, flowClass);
+    return this;
+  }
+
+  getFlowClassByName(name: string): FlowClass<TState, TGameScene> {
+    const flowClass = this.flows.get(name);
+    if (!flowClass) {
+      throw new Error(`Flow ${name} not found`);
+    }
+    return flowClass;
   }
 
   getNextFlow() {
@@ -59,6 +74,8 @@ export class FlowController<TState extends string, TGameScene> {
     });
 
     this.log(flow.flowName, "enter");
+    const { setCurrentFlow } = useGameStore.getState();
+    setCurrentFlow(flow.flowName as SCENE_FLOWS);
 
     this.currentFlow = flow;
 

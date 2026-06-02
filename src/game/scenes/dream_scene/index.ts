@@ -17,6 +17,7 @@ import {
   DREAM_SCENE_STATES as SCENE_STATES,
   SceneStateNames,
 } from "./constants/states";
+import { DREAM_SCENE_FLOWS as SCENE_FLOWS } from "./constants/flows";
 import {
   DEFAULT_PLAYER_POSITION_X,
   DEFAULT_PLAYER_POSITION_Y,
@@ -29,9 +30,15 @@ import { PerformingLessonState } from "./states/PerformingLessonState";
 import { GameAudio } from "@/libs/audio/GameAudio";
 import { LessonManager } from "@/game/lesson/LessonManager";
 import { DialogueManager } from "@/game/dialogues/DialogueManager";
+import { IntroductionFlow } from "./flows/Introduction.flow";
+import { BeforeLessonFlow } from "./flows/lesson/BeforeLesson.flow";
+import { LessonIntroductionFlow } from "./flows/lesson/LessonIntroduction.flow";
+import { LessonListeningFlow } from "./flows/lesson/LessonListening.flow";
+import { LessonPronunciationFlow } from "./flows/lesson/LessonPronunciation.flow";
 
 export class DreamScene extends Phaser.Scene {
   public static readonly STATES = SCENE_STATES;
+  public static readonly FLOWS = SCENE_FLOWS;
 
   public gameCamera = new GameCamera();
   public hud = new Hud();
@@ -115,6 +122,13 @@ export class DreamScene extends Phaser.Scene {
       onRunScheduledFlow: (state) =>
         this.stateMachine.changeTo(state || DreamScene.STATES.IDLE),
     });
+    this.flowController
+      .addFlow(SCENE_FLOWS.INTRO, IntroductionFlow)
+      .addFlow(SCENE_FLOWS.PAUSE, PauseFlow)
+      .addFlow(SCENE_FLOWS.BEFORE_LESSON, BeforeLessonFlow)
+      .addFlow(SCENE_FLOWS.LESSON_INTRODUCTION, LessonIntroductionFlow)
+      .addFlow(SCENE_FLOWS.LESSON_LISTENING, LessonListeningFlow)
+      .addFlow(SCENE_FLOWS.LESSON_PRONUNCIATION, LessonPronunciationFlow);
 
     this.stateMachine.changeTo(DreamScene.STATES.INTRO);
   }

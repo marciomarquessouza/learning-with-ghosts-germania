@@ -5,8 +5,8 @@ import { FlowResult } from "@/libs/game/game-flow/types";
 import { runSteps, stepBase } from "@/libs/game/game-flow/runSteps";
 import { ACTORS } from "@/constants/game";
 
-export class LessonPronunciation extends Flow<SceneStateNames, DreamScene> {
-  public flowName = "LessonPronunciation";
+export class LessonPronunciationFlow extends Flow<SceneStateNames, DreamScene> {
+  public flowName = "LessonPronunciationFlow";
 
   private step = this.gameScene.lessonManager.getStepByType("pronunciation");
   private recordId = "";

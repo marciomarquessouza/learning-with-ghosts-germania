@@ -1,3 +1,5 @@
+import { SCENE_STATES, useGameStore } from "@/store/gameStore";
+
 /* eslint-disable @typescript-eslint/no-explicit-any */
 export interface IState {
   enter(...args: any[]): void;
@@ -53,6 +55,8 @@ export class StateMachine {
     }
 
     this.log(`"${toState}"`, "enter");
+    const { setCurrentSceneState } = useGameStore.getState();
+    setCurrentSceneState(stateName as SCENE_STATES);
 
     this.currentState = this.states.get(stateName)!;
     this.currentStateName = stateName;

@@ -6,7 +6,7 @@ import { runSteps, stepBase } from "@/libs/game/game-flow/runSteps";
 
 import { DreamScene } from "../..";
 import { SceneStateNames } from "../../constants/states";
-import { LessonPronunciation } from "./LessonPronunciation.flow";
+import { LessonPronunciationFlow } from "./LessonPronunciation.flow";
 import { ACTORS } from "@/constants/game";
 
 const LISTENING_REPETITION = 3;
@@ -100,7 +100,7 @@ export class LessonListeningFlow extends Flow<SceneStateNames, DreamScene> {
 
     return {
       nextState: DreamScene.STATES.PERFORMING_LESSON,
-      nextFlow: LessonPronunciation,
+      nextFlow: LessonPronunciationFlow,
     };
   }
 

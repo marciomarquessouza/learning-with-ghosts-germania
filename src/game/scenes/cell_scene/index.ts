@@ -12,6 +12,7 @@ import {
   SceneElementKeys,
 } from "./constants/scene";
 import { CELL_SCENE_STATES, SceneStateNames } from "./constants/states";
+import { CELL_SCENE_FLOWS } from "./constants/flows";
 import { IdleState } from "./states/IdleState";
 import { IntroState } from "./states/IntroState";
 import { PerformingActionState } from "./states/PerformingActionState";
@@ -23,9 +24,19 @@ import { AudioController } from "./audios/AudioController";
 import { Jailer } from "@/game/actors/jailer/Jailer";
 import { createJailerPortrait } from "@/game/actors/jailer/createJailerPortrait";
 import { GameCamera } from "@/game/cameras/GameCamera";
+import { IntroductionFlow } from "./flows/Introduction.flow";
+import { BedInteractionFlow } from "./flows/BedInteraction.flow";
+import { DeskInteractionFlow } from "./flows/DeskInteraction.flow";
+import { DoorKnockingFlow } from "./flows/DoorKnocking.flow";
+import { DreamTransition } from "./flows/DreamTransition.flow";
+import { FoodInteractionFlow } from "./flows/FoodInteraction.flow";
+import { LessonAnnouncement } from "./flows/LessonAnnouncement.flow";
+import { RatInteractionFlow } from "./flows/RatInteraction.flow";
 
 export class CellScene extends Phaser.Scene {
   public static readonly STATES = CELL_SCENE_STATES;
+  public static readonly FLOWS = CELL_SCENE_FLOWS;
+
   public noiseAnimations = new NoiseAnimations();
   public scenario = new ScenarioController();
   public selectableAreasController: SelectableAreasController;
@@ -90,6 +101,17 @@ export class CellScene extends Phaser.Scene {
       onRunScheduledFlow: (state) =>
         this.stateMachine.changeTo(state || CellScene.STATES.PERFORMING_ACTION),
     });
+
+    this.flowController
+      .addFlow(CellScene.FLOWS.INTRO, IntroductionFlow)
+      .addFlow(CellScene.FLOWS.BED_INTERACTION, BedInteractionFlow)
+      .addFlow(CellScene.FLOWS.DESK_INTERACTION, DeskInteractionFlow)
+      .addFlow(CellScene.FLOWS.DOOR_KNOCKING, DoorKnockingFlow)
+      .addFlow(CellScene.FLOWS.DREAM_TRANSITION, DreamTransition)
+      .addFlow(CellScene.FLOWS.FOOD_INTERACTION, FoodInteractionFlow)
+      .addFlow(CellScene.FLOWS.LESSON_ANNOUNCEMENT, LessonAnnouncement)
+      .addFlow(CellScene.FLOWS.RAT_INTERACTION, RatInteractionFlow)
+      .addFlow(CellScene.FLOWS.PAUSE, PauseFlow);
 
     this.stateMachine.changeTo(CellScene.STATES.INTRO);
   }

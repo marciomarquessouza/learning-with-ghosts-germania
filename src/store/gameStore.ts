@@ -4,9 +4,16 @@ import {
   GAME_SCENES,
   GAME_WORLDS,
 } from "@/constants/game";
+import { SceneStateNames as CellSceneStates } from "@/game/scenes/cell_scene/constants/states";
+import { SceneFlowNames as CellSceneFlows } from "@/game/scenes/cell_scene/constants/flows";
+import { SceneStateNames as DreamSceneStates } from "@/game/scenes/dream_scene/constants/states";
+import { SceneFlowNames as DreamSceneFlows } from "@/game/scenes/dream_scene/constants/flows";
 import { GameScenes, GameWorlds } from "@/types";
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
+
+export type SCENE_STATES = CellSceneStates | DreamSceneStates;
+export type SCENE_FLOWS = CellSceneFlows | DreamSceneFlows;
 
 /**
  * Controls the overall state of the game (multiple scenes)
@@ -17,6 +24,8 @@ export interface GameState {
   soulWeight: number;
   gameWorld: GameWorlds;
   currentScene: GameScenes;
+  currentSceneState: SCENE_STATES;
+  currentFlow: SCENE_FLOWS;
   debugMode: boolean;
   movementLocked: boolean;
 }
@@ -38,6 +47,10 @@ type GameActions = {
 
   // Movements
   setMovementLocked: (status: boolean) => void;
+
+  // Progress
+  setCurrentSceneState: (state: SCENE_STATES) => void;
+  setCurrentFlow: (flow: SCENE_FLOWS) => void;
 };
 
 const clamp0 = (n: number) => Math.max(0, n);
@@ -49,6 +62,8 @@ export const useGameStore = create<GameState & GameActions>()(
       debugMode: false,
       gameWorld: GAME_WORLDS.REAL,
       currentScene: GAME_SCENES.CELL_SCENE,
+      currentSceneState: "SCENE_INTRO",
+      currentFlow: "IntroductionFlow",
       weight: DEFAULT_INITIAL_WEIGHT,
       soulWeight: DEFAULT_INITIAL_SOUL_WEIGHT,
       movementLocked: true,
@@ -70,6 +85,8 @@ export const useGameStore = create<GameState & GameActions>()(
       decreaseSoulWeight: (amount) =>
         set({ soulWeight: clamp0(get().soulWeight - amount) }),
       setMovementLocked: (status) => set({ movementLocked: status }),
+      setCurrentSceneState: (state) => set({ currentSceneState: state }),
+      setCurrentFlow: (flow) => set({ currentFlow: flow }),
     }),
     { name: "game-storage" },
   ),
