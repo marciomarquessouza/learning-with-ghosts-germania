@@ -49,24 +49,18 @@ export function useLessonHeader() {
 
   const writeLessonDescription = useCallback(
     async (payload: WriteLessonDescriptionEvent) => {
-      if (!state.showDescription) {
-        await events.lesson.async.emitAsync("show-lesson-header", {});
-      }
       const hidePressContinue = payload.hidePressContinue ?? false;
       dispatch({
         type: "write-description",
         payload: { ...payload, hidePressContinue },
       });
     },
-    [state.showDescription],
+    [],
   );
 
   const showVoiceIndicator = useCallback(async () => {
-    if (!state.showDescription) {
-      await events.lesson.async.emitAsync("show-lesson-header", {});
-    }
     dispatch({ type: "show-voice-indicator" });
-  }, [state.showDescription]);
+  }, []);
 
   const clearTitle = useCallback(() => {
     dispatch({ type: "clear-lesson-title" });

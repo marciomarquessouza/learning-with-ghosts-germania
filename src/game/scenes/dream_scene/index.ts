@@ -86,9 +86,17 @@ export class DreamScene extends Phaser.Scene {
     this.gameAudio.create(this);
     this.lessonManager.create(this, this.gameAudio);
 
+    const {
+      playerSnapshot,
+      currentFlow,
+      currentSceneState,
+      setCurrentSceneState,
+      setCurrentFlow,
+    } = useGameStore.getState();
+
     const playerSprite = this.player.create(this, {
-      startX: DEFAULT_PLAYER_POSITION_X,
-      startY: DEFAULT_PLAYER_POSITION_Y,
+      startX: playerSnapshot?.position.x ?? DEFAULT_PLAYER_POSITION_X,
+      startY: playerSnapshot?.position.y ?? DEFAULT_PLAYER_POSITION_Y,
       cursors,
     });
 
@@ -111,8 +119,6 @@ export class DreamScene extends Phaser.Scene {
 
     const hudContainer = this.hud.create(this, [HUD_ITEMS.WEIGHT]);
     this.children.bringToTop(hudContainer);
-
-    const { setCurrentSceneState, setCurrentFlow } = useGameStore.getState();
 
     this.stateMachine = new StateMachine(this, {
       onStateChange: (state) => setCurrentSceneState(state as SceneStateNames),

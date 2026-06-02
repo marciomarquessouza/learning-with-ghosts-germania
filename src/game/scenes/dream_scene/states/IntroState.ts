@@ -1,7 +1,6 @@
 import { BaseState } from "@/libs/game/state-machine/BaseState";
 import { DreamScene } from "..";
 import { IntroductionFlow } from "../flows/Introduction.flow";
-import { DevelopmentFlow } from "../flows/development.flow";
 
 export class IntroState extends BaseState {
   constructor(
@@ -21,7 +20,6 @@ export class IntroState extends BaseState {
 
     this.dreamScene.flowController
       .run(IntroductionFlow)
-      //.run(DevelopmentFlow)
       .then(({ nextState }) => {
         this.changeTo(nextState ?? DreamScene.STATES.IDLE);
       })
