@@ -9,15 +9,24 @@ import { ListeningState } from "../states/ListeningState";
 import { SpeakingState } from "../states/SpeakingState";
 import { Player } from "../Player";
 import { ScaredState } from "../states/ScaredState";
-import { playerStateNames } from "../constants/states";
+import { PlayerStateNames } from "../constants/states";
 import { InclinedState } from "../states/InclinedState";
+import { useGameStore } from "@/store/gameStore";
 
 export function createPlayerStateMachine(
   scene: Phaser.Scene,
   player: Player,
 ): StateMachine {
-  const stateMachine = new StateMachine(scene);
-  const states: [playerStateNames, StateConstructor<IState>][] = [
+  const { setPlayerSnapshot } = useGameStore.getState();
+  const stateMachine = new StateMachine(scene, {
+    onStateChange: (state) =>
+      setPlayerSnapshot({
+        position: { x: player.sprite.x, y: player.sprite.y },
+        state: state as PlayerStateNames,
+      }),
+  });
+
+  const states: [PlayerStateNames, StateConstructor<IState>][] = [
     [Player.STATES.IDLE, IdleState],
     [Player.STATES.MOVING, MovingState],
     [Player.STATES.LISTENING, ListeningState],

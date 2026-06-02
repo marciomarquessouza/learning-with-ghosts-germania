@@ -7,5 +7,5 @@ export const PLAYER_STATES = {
   INCLINED: "PLAYER_INCLINED",
 } as const;
 
-export type playerStateNames =
+export type PlayerStateNames =
   (typeof PLAYER_STATES)[keyof typeof PLAYER_STATES];

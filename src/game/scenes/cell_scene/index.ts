@@ -12,7 +12,7 @@ import {
   SceneElementKeys,
 } from "./constants/scene";
 import { CELL_SCENE_STATES, SceneStateNames } from "./constants/states";
-import { CELL_SCENE_FLOWS } from "./constants/flows";
+import { CELL_SCENE_FLOWS, SceneFlowNames } from "./constants/flows";
 import { IdleState } from "./states/IdleState";
 import { IntroState } from "./states/IntroState";
 import { PerformingActionState } from "./states/PerformingActionState";
@@ -32,6 +32,7 @@ import { DreamTransition } from "./flows/DreamTransition.flow";
 import { FoodInteractionFlow } from "./flows/FoodInteraction.flow";
 import { LessonAnnouncement } from "./flows/LessonAnnouncement.flow";
 import { RatInteractionFlow } from "./flows/RatInteraction.flow";
+import { useGameStore } from "@/store/gameStore";
 
 export class CellScene extends Phaser.Scene {
   public static readonly STATES = CELL_SCENE_STATES;
@@ -87,7 +88,11 @@ export class CellScene extends Phaser.Scene {
     this.hudContainer = this.hud.create(this, [HUD_ITEMS.WEIGHT]);
     this.children.bringToTop(this.hudContainer);
 
-    this.stateMachine = new StateMachine(this);
+    const { setCurrentSceneState, setCurrentFlow } = useGameStore.getState();
+
+    this.stateMachine = new StateMachine(this, {
+      onStateChange: (state) => setCurrentSceneState(state as SceneStateNames),
+    });
     this.stateMachine
       .addState(CellScene.STATES.INTRO, IntroState, this)
       .addState(CellScene.STATES.IDLE, IdleState, this)
@@ -98,6 +103,7 @@ export class CellScene extends Phaser.Scene {
       scene: this,
       gameScene: this as CellScene,
       cancelFlow: PauseFlow,
+      onRunNewFlow: (flowName) => setCurrentFlow(flowName as SceneFlowNames),
       onRunScheduledFlow: (state) =>
         this.stateMachine.changeTo(state || CellScene.STATES.PERFORMING_ACTION),
     });

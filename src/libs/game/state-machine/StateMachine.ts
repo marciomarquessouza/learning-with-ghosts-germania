@@ -1,5 +1,3 @@
-import { SCENE_STATES, useGameStore } from "@/store/gameStore";
-
 /* eslint-disable @typescript-eslint/no-explicit-any */
 export interface IState {
   enter(...args: any[]): void;
@@ -20,12 +18,14 @@ export class StateMachine {
   private currentStateName: string = "";
   private previousStateName: string = "";
   private scene: Phaser.Scene;
-  private events: {
-    remove: () => Phaser.Events.EventEmitter;
-  }[] = [];
+  private onChangeState: (state: string) => void;
 
-  constructor(scene: Phaser.Scene) {
+  constructor(
+    scene: Phaser.Scene,
+    options: { onStateChange?: (state: string) => void } = {},
+  ) {
     this.scene = scene;
+    this.onChangeState = options?.onStateChange ?? (() => {});
   }
 
   addState<T extends IState>(
@@ -55,20 +55,11 @@ export class StateMachine {
     }
 
     this.log(`"${toState}"`, "enter");
-    const { setCurrentSceneState } = useGameStore.getState();
-    setCurrentSceneState(stateName as SCENE_STATES);
+    this.onChangeState(toState);
 
     this.currentState = this.states.get(stateName)!;
     this.currentStateName = stateName;
     this.currentState.enter(...args);
-
-    this.scene.events.emit("stateChanged", {
-      from: fromState,
-      to: toState,
-      toState: this.currentState,
-      timestamp: this.scene.time.now,
-      args: args,
-    });
 
     return true;
   }
@@ -97,22 +88,6 @@ export class StateMachine {
       this.currentState.update(delta);
       this.currentState.handleInput(inputArgs);
     }
-  }
-
-  onStateChange(
-    callback: (data: {
-      from: string;
-      to: string;
-      fromState?: IState | null;
-      toState?: IState;
-      timestamp: number;
-      args: any[];
-    }) => void,
-  ) {
-    this.scene.events.on("stateChanged", callback);
-    this.events.push({
-      remove: () => this.scene.events.off("stateChanged", callback),
-    });
   }
 
   isIn(stateName: string): boolean {
@@ -163,7 +138,6 @@ export class StateMachine {
       this.currentState.exit();
     }
     this.states.clear();
-    this.events.forEach((event) => event.remove());
     this.currentState = null;
     this.currentStateName = "";
     this.previousStateName = "";

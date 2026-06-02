@@ -3,11 +3,12 @@ import { createKeyMap } from "@/utils/createKeyMap";
 import { StateMachine } from "@/libs/game/state-machine/StateMachine";
 import { Shadow } from "./effects/Shadow";
 import { Levitation } from "./effects/Levitation";
-import { PLAYER_STATES } from "./constants/states";
+import { PLAYER_STATES, PlayerStateNames } from "./constants/states";
 import { PlayerAnimations } from "./animations/PlayerAnimations";
 import { createPlayerStateMachine } from "./helpers/createPlayerStateMachine";
 import { getRequired } from "@/utils/getRequired";
 import { AudioRecordButton } from "./components/AudioRecordButton";
+import { useGameStore } from "@/store/gameStore";
 
 export const KEY_CODES = Phaser.Input.Keyboard.KeyCodes;
 const DEFAULT_SPEED = 200;
@@ -67,6 +68,7 @@ export class Player {
     this.audioRecordButton.setVisible(false);
 
     this.stateMachine = createPlayerStateMachine(scene, this);
+
     // Initial State
     this.stateMachine.changeTo(Player.STATES.IDLE);
 

@@ -11,9 +11,16 @@ import { SceneFlowNames as DreamSceneFlows } from "@/game/scenes/dream_scene/con
 import { GameScenes, GameWorlds } from "@/types";
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
+import { Vector2 } from "@/utils/vectors";
+import { PlayerStateNames } from "@/game/actors/player/constants/states";
 
 export type SCENE_STATES = CellSceneStates | DreamSceneStates;
 export type SCENE_FLOWS = CellSceneFlows | DreamSceneFlows;
+
+export type PlayerSnapshot = {
+  position: Vector2;
+  state: PlayerStateNames;
+};
 
 /**
  * Controls the overall state of the game (multiple scenes)
@@ -26,6 +33,7 @@ export interface GameState {
   currentScene: GameScenes;
   currentSceneState: SCENE_STATES;
   currentFlow: SCENE_FLOWS;
+  playerSnapshot: PlayerSnapshot | null;
   debugMode: boolean;
   movementLocked: boolean;
 }
@@ -51,6 +59,7 @@ type GameActions = {
   // Progress
   setCurrentSceneState: (state: SCENE_STATES) => void;
   setCurrentFlow: (flow: SCENE_FLOWS) => void;
+  setPlayerSnapshot: (snapshot: PlayerSnapshot) => void;
 };
 
 const clamp0 = (n: number) => Math.max(0, n);
@@ -67,6 +76,7 @@ export const useGameStore = create<GameState & GameActions>()(
       weight: DEFAULT_INITIAL_WEIGHT,
       soulWeight: DEFAULT_INITIAL_SOUL_WEIGHT,
       movementLocked: true,
+      playerSnapshot: null,
 
       setDay: (day) => set({ day }),
       increaseDay: () => set({ day: get().day + 1 }),
@@ -87,6 +97,7 @@ export const useGameStore = create<GameState & GameActions>()(
       setMovementLocked: (status) => set({ movementLocked: status }),
       setCurrentSceneState: (state) => set({ currentSceneState: state }),
       setCurrentFlow: (flow) => set({ currentFlow: flow }),
+      setPlayerSnapshot: (snapshot) => set({ playerSnapshot: snapshot }),
     }),
     { name: "game-storage" },
   ),

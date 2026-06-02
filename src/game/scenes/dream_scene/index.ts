@@ -17,7 +17,10 @@ import {
   DREAM_SCENE_STATES as SCENE_STATES,
   SceneStateNames,
 } from "./constants/states";
-import { DREAM_SCENE_FLOWS as SCENE_FLOWS } from "./constants/flows";
+import {
+  DREAM_SCENE_FLOWS as SCENE_FLOWS,
+  SceneFlowNames,
+} from "./constants/flows";
 import {
   DEFAULT_PLAYER_POSITION_X,
   DEFAULT_PLAYER_POSITION_Y,
@@ -35,6 +38,7 @@ import { BeforeLessonFlow } from "./flows/lesson/BeforeLesson.flow";
 import { LessonIntroductionFlow } from "./flows/lesson/LessonIntroduction.flow";
 import { LessonListeningFlow } from "./flows/lesson/LessonListening.flow";
 import { LessonPronunciationFlow } from "./flows/lesson/LessonPronunciation.flow";
+import { useGameStore } from "@/store/gameStore";
 
 export class DreamScene extends Phaser.Scene {
   public static readonly STATES = SCENE_STATES;
@@ -108,7 +112,11 @@ export class DreamScene extends Phaser.Scene {
     const hudContainer = this.hud.create(this, [HUD_ITEMS.WEIGHT]);
     this.children.bringToTop(hudContainer);
 
-    this.stateMachine = new StateMachine(this);
+    const { setCurrentSceneState, setCurrentFlow } = useGameStore.getState();
+
+    this.stateMachine = new StateMachine(this, {
+      onStateChange: (state) => setCurrentSceneState(state as SceneStateNames),
+    });
     this.stateMachine
       .addState(SCENE_STATES.IDLE, IdleState, this)
       .addState(SCENE_STATES.INTRO, IntroState, this)
@@ -119,6 +127,7 @@ export class DreamScene extends Phaser.Scene {
       scene: this,
       gameScene: this as DreamScene,
       cancelFlow: PauseFlow,
+      onRunNewFlow: (flowName) => setCurrentFlow(flowName as SceneFlowNames),
       onRunScheduledFlow: (state) =>
         this.stateMachine.changeTo(state || DreamScene.STATES.IDLE),
     });
