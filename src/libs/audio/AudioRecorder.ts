@@ -24,7 +24,7 @@ interface RecordingOptions {
   maximumRecordTime?: number; // Hard maximum in ms (overrides phrase calculation)
   onStartRecord?: () => void;
   onSpeakingStart?: () => void;
-  onSpeakingEnd?: (recordId: string) => void;
+  onSpeakingEnd?: (recordId: string, audioBlob: Blob) => void;
   onVolumeChange?: (volume: number) => void;
   onError?: (message?: string, error?: unknown) => void;
   onRecordTimeout?: (elapsed: number, maxTime: number) => void;
@@ -142,8 +142,8 @@ export class AudioRecorder {
       };
 
       this.mediaRecord.onstop = () => {
-        const { id } = this.processRecording();
-        onSpeakingEnd?.(id);
+        const { id, blob } = this.processRecording();
+        onSpeakingEnd?.(id, blob);
       };
 
       // Start Recording

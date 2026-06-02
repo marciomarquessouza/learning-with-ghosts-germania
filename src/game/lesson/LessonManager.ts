@@ -4,6 +4,7 @@ import {
   WriteLessonDescriptionEvent,
 } from "@/events/lesson/types";
 import { AudioRecorder } from "@/libs/audio/AudioRecorder";
+import { AudioTranscription } from "@/libs/audio/AudioTranscription";
 import { LessonController } from "@/libs/lesson/LessonController";
 import { Lesson } from "@/libs/lesson/types";
 import { useAudioStore } from "@/store/audioStore";
@@ -13,6 +14,7 @@ export class LessonManager extends LessonController {
     voiceDetectionEnabled: true,
     autoStopOnSilence: true,
   });
+  private audioTranscription = new AudioTranscription();
 
   constructor(lesson: Lesson) {
     super(lesson);
@@ -61,26 +63,44 @@ export class LessonManager extends LessonController {
   }): Promise<{ recordId: string }> {
     const { setIsRecording, setCurrentVoiceRecordingVolume } =
       useAudioStore.getState();
+    const { recordId, audioBlob } = await this.startRecording({
+      setIsRecording,
+      setCurrentVoiceRecordingVolume,
+      onRecordTimeout: options?.onRecordTimeout,
+    });
+    await this.audioTranscription.transcription(audioBlob);
+    // TODO: add transcription analysis
+
+    return {
+      recordId,
+    };
+  }
+
+  private async startRecording(options: {
+    setIsRecording: (value: boolean) => void;
+    setCurrentVoiceRecordingVolume: (volume: number) => void;
+    onRecordTimeout?: (elapsed: number, maxTime: number) => void;
+  }): Promise<{ recordId: string; audioBlob: Blob }> {
     return new Promise((resolve) => {
       this.audioRecorder.startRecording({
         targetPhrase: this.getEntryTarget(),
         onStartRecord: async () => {
-          setIsRecording(true);
+          options.setIsRecording(true);
           events.lesson.sync.emit("show-voice-indicator");
         },
         onVolumeChange: (volume) => {
-          setCurrentVoiceRecordingVolume(volume);
+          options.setCurrentVoiceRecordingVolume(volume);
         },
-        onSpeakingEnd: (recordId) => {
-          setIsRecording(false);
+        onSpeakingEnd: async (recordId, audioBlob) => {
+          options.setIsRecording(false);
           events.lesson.sync.emit("hide-voice-indicator");
-          resolve({ recordId });
+          resolve({ recordId, audioBlob });
         },
         onRecordTimeout: (elapsed, maxTime) => {
           options?.onRecordTimeout?.(elapsed, maxTime);
         },
         onError: () => {
-          setIsRecording(false);
+          options.setIsRecording(false);
           console.error("Pronunciation Challenge Error");
         },
       });

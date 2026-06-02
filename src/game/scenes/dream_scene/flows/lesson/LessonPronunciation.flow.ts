@@ -9,6 +9,7 @@ export class LessonPronunciation extends Flow<SceneStateNames, DreamScene> {
   public flowName = "LessonPronunciation";
 
   private step = this.gameScene.lessonManager.getStepByType("pronunciation");
+  private recordId = "";
 
   async run(): Promise<FlowResult<SceneStateNames, DreamScene>> {
     await runSteps([
@@ -44,22 +45,26 @@ export class LessonPronunciation extends Flow<SceneStateNames, DreamScene> {
         this.gameScene.player.attachRecordButton({
           onStartRecord: async () => {
             await this.gameScene.lessonManager.hideLessonDescription();
-            this.gameScene.lessonManager.showVoiceIndicator();
+            const { recordId } =
+              await this.gameScene.lessonManager.pronunciationChallenge();
+            this.recordId = recordId;
           },
           onStopRecord: () => {
             this.gameScene.lessonManager.hideVoiceIndicator();
-            this.gameScene.lessonManager.writeLessonDescription({
-              description: "Tente mais uma vez",
-            });
+            this.gameScene.lessonManager.stopPronunciationChallenge();
           },
         });
         this.gameScene.lessonManager.writeLessonDescription({
-          description: "Clique no botão Record ou Space 3x",
+          description: "Clique no botão Record ou Space",
           hidePressContinue: true,
         });
       }),
       stepBase(() => {
-        return this.waitInteractionEvent();
+        return this.waitInteractionEvent(async () => {
+          const { recordId } =
+            await this.gameScene.lessonManager.pronunciationChallenge();
+          this.recordId = recordId;
+        });
       }),
     ]);
 
