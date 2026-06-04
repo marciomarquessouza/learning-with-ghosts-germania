@@ -5,8 +5,6 @@ import { FlowResult } from "@/libs/game/game-flow/types";
 import { runSteps, stepBase } from "@/libs/game/game-flow/runSteps";
 import { LessonListeningFlow } from "./LessonListening.flow";
 
-const CLOSE_TITLE_AFTER = 2_500;
-
 export class LessonIntroductionFlow extends Flow<SceneStateNames, DreamScene> {
   public flowName = "LessonIntroductionFlow";
 
@@ -14,13 +12,6 @@ export class LessonIntroductionFlow extends Flow<SceneStateNames, DreamScene> {
 
   async run(): Promise<FlowResult<SceneStateNames, DreamScene>> {
     await runSteps([
-      stepBase(() => {
-        return this.gameScene.lessonManager.showLessonTitle({
-          title: this.gameScene.lessonManager.lesson.title,
-          day: this.gameScene.lessonManager.lesson.day,
-          closeAfter: CLOSE_TITLE_AFTER,
-        });
-      }),
       stepBase(() => {
         this.gameScene.tutor.enterTeaching();
         return this.gameScene.dialogueManager.showDialogue(

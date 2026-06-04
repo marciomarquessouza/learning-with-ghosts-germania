@@ -4,6 +4,8 @@ import { events } from "@/events/events";
 import { createInputController } from "@/libs/inputs/createInputController";
 import { InputController } from "@/libs/inputs/InputController";
 
+const CLOSE_TITLE_AFTER = 2_500;
+
 export class PerformingLessonState extends BaseState {
   private input: InputController;
 
@@ -36,7 +38,15 @@ export class PerformingLessonState extends BaseState {
       this.dreamScene.gameCamera.centerOn(playerSprite.x, playerSprite.y);
     }
 
+    this.runLessonFlow();
+  }
+
+  private async runLessonFlow() {
     try {
+      if (!this.dreamScene.flowController) {
+        throw new Error("The flow controller has not been initialized.");
+      }
+
       const flow = this.dreamScene.flowController.getNextFlow();
 
       if (!flow) {
@@ -45,6 +55,12 @@ export class PerformingLessonState extends BaseState {
 
       this.dreamScene.flowController.clearNextFlow();
 
+      await this.dreamScene.lessonManager.showLessonTitle({
+        title: this.dreamScene.lessonManager.lesson.title,
+        day: this.dreamScene.lessonManager.lesson.day,
+        closeAfter: CLOSE_TITLE_AFTER,
+      });
+
       this.dreamScene.flowController.run(flow).then(({ nextState }) => {
         if (nextState) {
           this.changeTo(nextState);
@@ -52,7 +68,7 @@ export class PerformingLessonState extends BaseState {
       });
     } catch (error) {
       this.stateMachine.log(error, "error");
-      this.dreamScene.flowController.clearNextFlow();
+      this.dreamScene.flowController?.clearNextFlow();
       this.changeTo(DreamScene.STATES.IDLE);
     }
   }

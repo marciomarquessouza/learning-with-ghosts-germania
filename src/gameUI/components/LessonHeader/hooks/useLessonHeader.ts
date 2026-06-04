@@ -47,21 +47,6 @@ export function useLessonHeader() {
     }
   }, []);
 
-  const writeLessonDescription = useCallback(
-    async (payload: WriteLessonDescriptionEvent) => {
-      const hidePressContinue = payload.hidePressContinue ?? false;
-      dispatch({
-        type: "write-description",
-        payload: { ...payload, hidePressContinue },
-      });
-    },
-    [],
-  );
-
-  const showVoiceIndicator = useCallback(async () => {
-    dispatch({ type: "show-voice-indicator" });
-  }, []);
-
   const clearTitle = useCallback(() => {
     dispatch({ type: "clear-lesson-title" });
   }, []);
@@ -93,14 +78,18 @@ export function useLessonHeader() {
 
   useEffect(() => {
     const handle = (payload: WriteLessonDescriptionEvent, done: () => void) => {
-      writeLessonDescription(payload);
+      const hidePressContinue = payload.hidePressContinue ?? false;
+      dispatch({
+        type: "write-description",
+        payload: { ...payload, hidePressContinue },
+      });
       onDescriptionReady.current = done;
     };
     events.lesson.async.on("write-lesson-description", handle);
     return () => {
       events.lesson.async.off("write-lesson-description", handle);
     };
-  }, [writeLessonDescription]);
+  }, []);
 
   useEffect(() => {
     const handle = async () => {
@@ -127,13 +116,13 @@ export function useLessonHeader() {
 
   useEffect(() => {
     const handle = () => {
-      showVoiceIndicator();
+      dispatch({ type: "show-voice-indicator" });
     };
     events.lesson.sync.on("show-voice-indicator", handle);
     return () => {
       events.lesson.sync.off("show-voice-indicator", handle);
     };
-  }, [showVoiceIndicator]);
+  }, []);
 
   useEffect(() => {
     const handle = () => {
