@@ -1,5 +1,5 @@
+import { HomeCTA } from "@/components/HomePage/CTA";
 import Image from "next/image";
-import Link from "next/link";
 
 export default function Home() {
   return (
@@ -34,19 +34,7 @@ export default function Home() {
         role="navigation"
         aria-label="Primary action"
       >
-        <Link
-          // TODO: get the real day authenticated users
-          href="/game/1"
-          aria-label="Start Learning With Ghosts — Germania"
-          className={[
-            "rounded-xl border-2 border-black bg-[#F3B162]",
-            "px-10 py-4 font-primary text-xl font-bold tracking-wide text-black",
-            "transition-transform active:translate-y-[2px] focus:outline-none",
-            "focus-visible:ring-4 focus-visible:ring-black/30",
-          ].join(" ")}
-        >
-          LEARN/PLAY
-        </Link>
+        <HomeCTA />
       </div>
     </main>
   );
