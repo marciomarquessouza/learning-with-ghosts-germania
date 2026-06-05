@@ -39,6 +39,7 @@ import { LessonIntroductionFlow } from "./flows/lesson/LessonIntroduction.flow";
 import { LessonListeningFlow } from "./flows/lesson/LessonListening.flow";
 import { LessonPronunciationFlow } from "./flows/lesson/LessonPronunciation.flow";
 import { useGameStore } from "@/store/gameStore";
+import { createFlowSnapshot } from "@/store/progressStore";
 
 export class DreamScene extends Phaser.Scene {
   public static readonly STATES = SCENE_STATES;
@@ -86,13 +87,8 @@ export class DreamScene extends Phaser.Scene {
     this.gameAudio.create(this);
     this.lessonManager.create(this, this.gameAudio);
 
-    const {
-      playerSnapshot,
-      currentFlow,
-      currentSceneState,
-      setCurrentSceneState,
-      setCurrentFlow,
-    } = useGameStore.getState();
+    const { playerSnapshot, setCurrentSceneState, setCurrentFlow } =
+      useGameStore.getState();
 
     const playerSprite = this.player.create(this, {
       startX: playerSnapshot?.position.x ?? DEFAULT_PLAYER_POSITION_X,
@@ -133,7 +129,11 @@ export class DreamScene extends Phaser.Scene {
       scene: this,
       gameScene: this as DreamScene,
       cancelFlow: PauseFlow,
-      onRunNewFlow: (flowName) => setCurrentFlow(flowName as SceneFlowNames),
+      onRunNewFlow: (flowName) => {
+        const newFlow = flowName as SceneFlowNames;
+        setCurrentFlow(newFlow);
+        createFlowSnapshot(GAME_SCENES.DREAM_SCENE, newFlow);
+      },
       onRunScheduledFlow: (state) =>
         this.stateMachine.changeTo(state || DreamScene.STATES.IDLE),
     });

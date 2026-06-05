@@ -33,6 +33,7 @@ import { FoodInteractionFlow } from "./flows/FoodInteraction.flow";
 import { LessonAnnouncement } from "./flows/LessonAnnouncement.flow";
 import { RatInteractionFlow } from "./flows/RatInteraction.flow";
 import { useGameStore } from "@/store/gameStore";
+import { createFlowSnapshot } from "@/store/progressStore";
 
 export class CellScene extends Phaser.Scene {
   public static readonly STATES = CELL_SCENE_STATES;
@@ -103,7 +104,11 @@ export class CellScene extends Phaser.Scene {
       scene: this,
       gameScene: this as CellScene,
       cancelFlow: PauseFlow,
-      onRunNewFlow: (flowName) => setCurrentFlow(flowName as SceneFlowNames),
+      onRunNewFlow: (flowName) => {
+        const newFlow = flowName as SceneFlowNames;
+        setCurrentFlow(newFlow);
+        createFlowSnapshot(GAME_SCENES.CELL_SCENE, newFlow);
+      },
       onRunScheduledFlow: (state) =>
         this.stateMachine.changeTo(state || CellScene.STATES.PERFORMING_ACTION),
     });
