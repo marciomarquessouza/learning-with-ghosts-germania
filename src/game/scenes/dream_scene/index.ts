@@ -18,6 +18,7 @@ import {
   SceneStateNames,
 } from "./constants/states";
 import {
+  DREAM_SCENE_FLOWS,
   DREAM_SCENE_FLOWS as SCENE_FLOWS,
   SceneFlowNames,
 } from "./constants/flows";
@@ -39,11 +40,15 @@ import { LessonIntroductionFlow } from "./flows/lesson/LessonIntroduction.flow";
 import { LessonListeningFlow } from "./flows/lesson/LessonListening.flow";
 import { LessonPronunciationFlow } from "./flows/lesson/LessonPronunciation.flow";
 import { useGameStore } from "@/store/gameStore";
-import { createFlowSnapshot } from "@/store/progressStore";
+import {
+  createFlowSnapshot,
+  getSceneLastSnapshot,
+} from "@/store/progressStore";
 
 export class DreamScene extends Phaser.Scene {
   public static readonly STATES = SCENE_STATES;
   public static readonly FLOWS = SCENE_FLOWS;
+  public static readonly FADE_IN_DURATION = 2_000;
 
   public gameCamera = new GameCamera();
   public hud = new Hud();
@@ -87,12 +92,13 @@ export class DreamScene extends Phaser.Scene {
     this.gameAudio.create(this);
     this.lessonManager.create(this, this.gameAudio);
 
-    const { playerSnapshot, setCurrentSceneState, setCurrentFlow } =
-      useGameStore.getState();
+    const day = useGameStore.getState().day;
+    const snapshot = getSceneLastSnapshot(GAME_SCENES.DREAM_SCENE, day);
+    const { setCurrentSceneState, setCurrentFlow } = useGameStore.getState();
 
     const playerSprite = this.player.create(this, {
-      startX: playerSnapshot?.position.x ?? DEFAULT_PLAYER_POSITION_X,
-      startY: playerSnapshot?.position.y ?? DEFAULT_PLAYER_POSITION_Y,
+      startX: snapshot?.playerPosition?.x ?? DEFAULT_PLAYER_POSITION_X,
+      startY: snapshot?.playerPosition?.y ?? DEFAULT_PLAYER_POSITION_Y,
       cursors,
     });
 
@@ -145,7 +151,18 @@ export class DreamScene extends Phaser.Scene {
       .addFlow(SCENE_FLOWS.LESSON_LISTENING, LessonListeningFlow)
       .addFlow(SCENE_FLOWS.LESSON_PRONUNCIATION, LessonPronunciationFlow);
 
-    this.stateMachine.changeTo(DreamScene.STATES.INTRO);
+    const nextFlow =
+      snapshot?.flow ?? (DREAM_SCENE_FLOWS.INTRO as SceneFlowNames);
+    const nextFlowClass = this.flowController.getFlowClassByName(nextFlow);
+
+    const nextState = snapshot?.state ?? DreamScene.STATES.INTRO;
+
+    if (nextFlow !== DREAM_SCENE_FLOWS.INTRO) {
+      this.gameCamera.fadeIn({ duration: DreamScene.FADE_IN_DURATION });
+    }
+
+    this.flowController.setNextFlow(nextFlowClass);
+    this.stateMachine.changeTo(nextState);
   }
 
   update(time: number, delta: number) {

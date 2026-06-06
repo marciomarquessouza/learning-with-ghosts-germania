@@ -39,6 +39,8 @@ export function Navbar() {
           type="button"
           aria-label="Login"
           className="bg-red-600 text-white px-4 py-1 rounded hover:bg-red-700 text-sm md:text-base focus:outline-none focus-visible:ring-4 focus-visible:ring-black/30"
+          // TODO: Add Register/Login mechanic
+          style={{ display: "none" }}
         >
           LOGIN
         </button>

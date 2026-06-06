@@ -34,6 +34,7 @@ export interface GameProgressActions {
     day: number,
     snapshot?: GameSnapshot,
   ) => void;
+  clearSnapshot: () => void;
 }
 
 export type GameProgressStore = GameProgressStates & GameProgressActions;
@@ -43,6 +44,8 @@ export const useGameProgressStore = create<GameProgressStore>()(
     (set) => ({
       createSnapshot: (scene, day, snapshot = {}) =>
         set({ scene, day, snapshot }),
+      clearSnapshot: () =>
+        set({ scene: undefined, day: undefined, snapshot: undefined }),
     }),
     {
       name: "game-progress",

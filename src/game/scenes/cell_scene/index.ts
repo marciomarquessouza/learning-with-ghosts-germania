@@ -33,7 +33,12 @@ import { FoodInteractionFlow } from "./flows/FoodInteraction.flow";
 import { LessonAnnouncement } from "./flows/LessonAnnouncement.flow";
 import { RatInteractionFlow } from "./flows/RatInteraction.flow";
 import { useGameStore } from "@/store/gameStore";
-import { createFlowSnapshot } from "@/store/progressStore";
+import {
+  createFlowSnapshot,
+  getSceneLastSnapshot,
+} from "@/store/progressStore";
+import { LessonManager } from "@/game/lesson/LessonManager";
+import { useLessonStore } from "@/store/lessonStore";
 
 export class CellScene extends Phaser.Scene {
   public static readonly STATES = CELL_SCENE_STATES;
@@ -42,6 +47,7 @@ export class CellScene extends Phaser.Scene {
   public noiseAnimations = new NoiseAnimations();
   public scenario = new ScenarioController();
   public selectableAreasController: SelectableAreasController;
+  public lessonManager = new LessonManager(useLessonStore.getState().lesson);
   public flowController?: FlowController<SceneStateNames, CellScene>;
   public audioController = new AudioController();
   public gameCamera = new GameCamera();
@@ -124,7 +130,17 @@ export class CellScene extends Phaser.Scene {
       .addFlow(CellScene.FLOWS.RAT_INTERACTION, RatInteractionFlow)
       .addFlow(CellScene.FLOWS.PAUSE, PauseFlow);
 
-    this.stateMachine.changeTo(CellScene.STATES.INTRO);
+    const day = useGameStore.getState().day;
+    const snapshot = getSceneLastSnapshot(GAME_SCENES.CELL_SCENE, day);
+
+    const nextFlow =
+      snapshot?.flow ?? (CELL_SCENE_FLOWS.INTRO as SceneFlowNames);
+    const nextFlowClass = this.flowController.getFlowClassByName(nextFlow);
+
+    const nextState = snapshot?.state ?? CellScene.STATES.INTRO;
+
+    this.flowController.setNextFlow(nextFlowClass);
+    this.stateMachine.changeTo(nextState);
   }
 
   getElementBounds(key: SceneElementKeys): Vector4 {

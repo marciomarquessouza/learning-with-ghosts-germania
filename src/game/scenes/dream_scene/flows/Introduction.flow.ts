@@ -13,7 +13,11 @@ export class IntroductionFlow extends Flow<SceneStateNames, DreamScene> {
   async run(): Promise<FlowResult<SceneStateNames, DreamScene>> {
     await runSteps([
       stepBase(() => events.game.async.emitAsync("transition/cell-dream")),
-      stepBase(() => this.gameScene.gameCamera.fadeIn({ duration: 2_000 })),
+      stepBase(() =>
+        this.gameScene.gameCamera.fadeIn({
+          duration: DreamScene.FADE_IN_DURATION,
+        }),
+      ),
       stepBase(() => {
         this.gameScene.player.enterListening();
         return events.game.async.emitAsync("dialogue/show", {

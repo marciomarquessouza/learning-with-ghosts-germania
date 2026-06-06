@@ -1,5 +1,5 @@
-import { HomeCTA } from "@/components/HomePage/CTA";
 import Image from "next/image";
+import { HomeCTA } from "@/components/HomePage/HomeCTA";
 
 export default function Home() {
   return (
