@@ -12,15 +12,15 @@ export const lesson: Lesson = {
       steps: [
         {
           type: "introduction",
-          text: `Primeiro eu vou jogar a semente que vai gerar a sua nova palavra`,
+          text: ``,
           instruction: "",
         },
         {
           type: "listening",
-          text: `Pergunte o nome dela 3 vezes (clique F ou clique na criaturinha)`,
+          text: ``,
           instruction: "Listen and repeat (don’t be shy, say it out loud!)",
           meanings: [
-            'O nome dele é "Hallo - usado quando se encontra alguém pela primeira vez',
+            "“Hallo” is a common German greeting. It means “hello” and is used to greet someone in both casual and neutral situations.",
           ],
         },
         {

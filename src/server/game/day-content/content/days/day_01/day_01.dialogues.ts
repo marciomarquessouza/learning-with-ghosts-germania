@@ -2,6 +2,9 @@ import { ACTORS, MOODS } from "@/constants/game";
 import { alternatives, dialogue } from "@/libs/dialogues";
 import { defineDialogues } from "@/libs/dialogues/defineDialogues";
 import { DayDialogues } from "@/libs/dialogues/types";
+import { lesson } from "./day_01.lesson";
+
+const firstTarget = lesson.entries.length > 0 ? lesson.entries[0].target : "";
 
 export const dialogues = defineDialogues<DayDialogues>({
   "cell.welcome": {
@@ -172,7 +175,7 @@ export const dialogues = defineDialogues<DayDialogues>({
       dialogue.tutor.talking`
       The first word I will cultivate
       inside this empty little garden of yours
-      is “Good morning”.
+      is “${firstTarget}”.
     `.reactions([{ mood: MOODS.NEUTRAL, character: ACTORS.PLAYER }]),
     ],
   },

@@ -5,6 +5,9 @@ import { TutorAnimations } from "./animations/TutorAnimations";
 import { createTutorStateMachine } from "./helpers/createTutorStateMachine";
 import { getRequired } from "@/utils/getRequired";
 import { TutorBlockerZone } from "./zones/TutorBlockerZone";
+import { ACTORS } from "@/constants/game";
+import { events } from "@/events/events";
+import { InteractionLine } from "@/libs/dialogues/types";
 
 export class Tutor {
   public static readonly STATES = TUTOR_STATES;
@@ -53,6 +56,28 @@ export class Tutor {
 
     this.stateMachine = createTutorStateMachine(scene, this);
     this.stateMachine.changeTo(Tutor.STATES.IDLE);
+  }
+
+  async dialogue(content: string | string[]): Promise<void> {
+    if (typeof content === "string") {
+      return events.game.async.emitAsync("dialogue/show", {
+        lines: [
+          {
+            type: "dialogue",
+            text: content,
+            character: ACTORS.TUTOR,
+          },
+        ],
+      });
+    }
+    const lines: InteractionLine[] = content.map((text) => ({
+      type: "dialogue",
+      text,
+      character: ACTORS.TUTOR,
+    }));
+    return events.game.async.emitAsync("dialogue/show", {
+      lines,
+    });
   }
 
   enterIdle() {

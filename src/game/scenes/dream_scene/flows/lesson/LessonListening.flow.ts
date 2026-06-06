@@ -7,7 +7,6 @@ import { runSteps, stepBase } from "@/libs/game/game-flow/runSteps";
 import { DreamScene } from "../..";
 import { SceneStateNames } from "../../constants/states";
 import { LessonPronunciationFlow } from "./LessonPronunciation.flow";
-import { ACTORS } from "@/constants/game";
 
 const LISTENING_REPETITION = 3;
 
@@ -16,10 +15,17 @@ export class LessonListeningFlow extends Flow<SceneStateNames, DreamScene> {
 
   private step = this.gameScene.lessonManager.getStepByType("listening");
   private target = this.gameScene.lessonManager.getEntryTarget();
+  private meanings =
+    this.step.meanings && this.step.meanings.length ? this.step.meanings : [];
 
   async run(): Promise<FlowResult<SceneStateNames, DreamScene>> {
     await runSteps([
       stepBase(() => {
+        this.gameScene.lessonManager.writeLessonDescription({
+          dialogueTitle: "Step 1: Listening",
+          description: `Follow the Masked Nun instructions`,
+          hidePressContinue: true,
+        });
         this.gameScene.player.enterScared();
         return this.gameScene.tutor.waitForSowing();
       }),
@@ -33,25 +39,61 @@ export class LessonListeningFlow extends Flow<SceneStateNames, DreamScene> {
       }),
       stepBase(() => {
         this.gameScene.player.enterListening();
-        return this.gameScene.dialogueManager.showDialogue({
-          lines: [
-            {
-              type: "dialogue",
-              text: "Você precisa perguntar o nome dele por 3 vezes e veja o que vai acontecer.",
-              character: ACTORS.TUTOR,
-            },
-          ],
-        });
+        return this.gameScene.tutor.dialogue(
+          `You need to ask his name ${LISTENING_REPETITION} times for her to grow.`,
+        );
       }),
       stepBase(() => {
-        this.gameScene.lessonManager.writeLessonDescription({
-          dialogueTitle: "Step 1: Listening",
-          description: `${this.step.text}`,
-          hidePressContinue: true,
-        });
         this.gameScene.player.enterInclined();
       }),
       this.repeatSteps(LISTENING_REPETITION, (index) => [
+        stepBase(
+          () => {
+            this.gameScene.lessonManager.writeLessonDescription({
+              dialogueTitle: "Step 1: Listening",
+              description:
+                "Press the {{key|play}} button or press {{key|space}} to hear the little creature’s name and make it grow.",
+              hidePressContinue: true,
+            });
+          },
+          {
+            when: () => index === 0,
+          },
+        ),
+        stepBase(
+          () => {
+            return this.gameScene.tutor.dialogue(this.meanings);
+          },
+          {
+            when: () => index === 1 && this.meanings.length > 0,
+          },
+        ),
+        stepBase(
+          () => {
+            this.gameScene.lessonManager.writeLessonDescription({
+              dialogueTitle: "Step 1: Listening",
+              description:
+                "Very good, press the {{key|play}} button or press {{key|space}} one more time.",
+              hidePressContinue: true,
+            });
+          },
+          {
+            when: () => index === 1,
+          },
+        ),
+        stepBase(
+          () => {
+            this.gameScene.lessonManager.writeLessonDescription({
+              dialogueTitle: "Step 1: Listening",
+              description:
+                "Now for the last time. Memorize the pronunciation well. Press the {{key|play}} button or press {{key|space}} one more time to hear the name again.",
+              hidePressContinue: true,
+            });
+          },
+          {
+            when: () => index === 2,
+          },
+        ),
         stepBase(() => {
           this.gameScene.learningNode.attachPlayerButton(() => {
             events.interactions.sync.emit("interaction/accept", {
@@ -69,14 +111,6 @@ export class LessonListeningFlow extends Flow<SceneStateNames, DreamScene> {
             AUDIO_SPEED.NORMAL,
           );
         }),
-        stepBase(
-          () => {
-            this.gameScene.lessonManager.writeLessonDescription({
-              description: `Muito bem, repita isso ${LISTENING_REPETITION - (index + 1)}x`,
-            });
-          },
-          { when: () => LISTENING_REPETITION - (index + 1) > 0 },
-        ),
         stepBase(async () => {
           this.gameScene.learningNode.lessonTargetLabel.setBadge(
             `${index + 1}x`,

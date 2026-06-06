@@ -14,20 +14,16 @@ export class LessonIntroductionFlow extends Flow<SceneStateNames, DreamScene> {
     await runSteps([
       stepBase(() => {
         this.gameScene.tutor.enterTeaching();
-        return this.gameScene.dialogueManager.showDialogue(
-          "dream.lesson_begin",
-        );
-      }),
-      stepBase(() => {
-        this.gameScene.tutor.enterIdle();
         return this.gameScene.lessonManager.writeLessonDescription({
           dialogueTitle: "Introduction",
           description: `Follow the Masked Nun instructions`,
-          hidePressContinue: false,
+          hidePressContinue: true,
         });
       }),
       stepBase(() => {
-        return this.waitInteractionEvent();
+        return this.gameScene.dialogueManager.showDialogue(
+          "dream.lesson_begin",
+        );
       }),
     ]);
 
