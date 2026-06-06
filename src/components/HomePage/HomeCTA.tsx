@@ -2,16 +2,38 @@
 import { useGameProgressStore } from "@/store/progressStore";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
+import { useState } from "react";
 
 export function HomeCTA() {
-  const { snapshot, clearSnapshot } = useGameProgressStore();
+  const [isStartingNewGame, setIsStartingNewGame] = useState(false);
+  const { snapshot, clearSnapshot, hasHydrated } = useGameProgressStore();
   const router = useRouter();
   const hasSavedProgress = snapshot && snapshot.day && snapshot.scene;
 
   const onNewGame = () => {
+    setIsStartingNewGame(true);
     clearSnapshot();
     router.push("/game/1");
   };
+
+  if (!hasHydrated || isStartingNewGame) {
+    return (
+      <button
+        type="button"
+        disabled
+        className={[
+          "rounded-xl border-2 border-black bg-[#F7EEDB]",
+          "px-6 py-3 sm:px-10 sm:py-4",
+          "font-primary text-base sm:text-xl font-bold tracking-wide text-black",
+          "opacity-70 cursor-wait",
+          "shadow-[4px_4px_0px_#000000]",
+          "w-full sm:w-auto text-center",
+        ].join(" ")}
+      >
+        LOADING...
+      </button>
+    );
+  }
 
   if (!hasSavedProgress) {
     return (

@@ -145,13 +145,17 @@ export class LearningNodeAnimations {
 
   playSproutTransition(): Promise<void> {
     return new Promise((resolve) => {
-      this.sprite.setVisible(true);
+      this.setVisible(true);
       this.clearPumpkinMask();
 
       this.animationManager
         .playAnimation(this.sprite, "sprouting_transition")
         .onAnimationComplete(resolve);
     });
+  }
+
+  setVisible(value: boolean) {
+    this.sprite.setVisible(value);
   }
 
   playSproutIdle() {

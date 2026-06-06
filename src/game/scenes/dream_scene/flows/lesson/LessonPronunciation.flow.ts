@@ -18,7 +18,6 @@ export class LessonPronunciationFlow extends Flow<SceneStateNames, DreamScene> {
           dialogueTitle: "Step 2: Pronunciation",
           description: "Siga as instruções da Masked Nun",
         });
-        this.gameScene.learningNode.enterPumpkinTransitionState();
       }),
       stepBase(() => {
         return this.waitInteractionEvent();

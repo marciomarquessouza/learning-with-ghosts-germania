@@ -95,6 +95,7 @@ export class LessonListeningFlow extends Flow<SceneStateNames, DreamScene> {
         this.gameScene.learningNode.detachTargetLabel();
         this.gameScene.learningNode.detachPlayerButton();
         this.gameScene.player.enterIdle();
+        return this.gameScene.learningNode.enterPumpkinTransitionState();
       }),
     ]);
 
