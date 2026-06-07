@@ -12,15 +12,21 @@ export class LessonPronunciationFlow extends Flow<SceneStateNames, DreamScene> {
   private recordId = "";
 
   async run(): Promise<FlowResult<SceneStateNames, DreamScene>> {
+    const hasActorAttached = this.gameScene.learningNode.floor.hasActorAttached;
     await runSteps([
+      stepBase(
+        () => {
+          return this.gameScene.learningNode.resumeSproutToPumpkin();
+        },
+        { when: () => !hasActorAttached },
+      ),
       stepBase(() => {
+        this.gameScene.learningNode.enterPumpkinIdleState();
         this.gameScene.lessonManager.writeLessonDescription({
           dialogueTitle: "Step 2: Pronunciation",
-          description: "Siga as instruções da Masked Nun",
+          description: `Follow the Masked Nun instructions`,
+          hidePressContinue: true,
         });
-      }),
-      stepBase(() => {
-        return this.waitInteractionEvent();
       }),
       stepBase(() => {
         this.gameScene.tutor.enterTeaching();

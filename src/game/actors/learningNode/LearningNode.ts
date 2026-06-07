@@ -173,6 +173,17 @@ export class LearningNode {
     this.lessonTargetLabel.destroy();
   }
 
+  async resumeSproutToPumpkin(): Promise<void> {
+    await this.floor.playOpen();
+    this.floor.attachActor(this.sprite, {
+      x: 80,
+      y: -92,
+    });
+    await this.animations.playSproutTransition();
+    await this.animations.playPumpkinTransition();
+    this.preparePumpkinGrowth();
+  }
+
   increaseSize() {
     this.scene.tweens.killTweensOf(this.sprite);
 

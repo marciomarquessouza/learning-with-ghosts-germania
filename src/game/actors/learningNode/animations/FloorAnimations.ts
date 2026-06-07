@@ -1,4 +1,5 @@
 import { SPRITESHEETS } from "@/constants/spritesheets";
+import { getRequired } from "@/utils/getRequired";
 
 type AttachActorOptions = {
   x?: number;
@@ -9,42 +10,27 @@ export class FloorAnimations {
   private static readonly OPEN_ANIMATION_KEY =
     "learningNode_floor_transition_open";
 
-  private _container?: Phaser.GameObjects.Container;
+  public hasActorAttached: boolean = false;
 
+  private _container?: Phaser.GameObjects.Container;
   private _openingSprite?: Phaser.GameObjects.Sprite;
   private _baseSprite?: Phaser.GameObjects.Sprite;
   private _frontSprite?: Phaser.GameObjects.Sprite;
 
   private get container(): Phaser.GameObjects.Container {
-    if (!this._container) {
-      throw new Error("FloorAnimations - container was not initialized");
-    }
-
-    return this._container;
+    return getRequired(this._container, "FloorAnimation", "_container");
   }
 
   private get openingSprite(): Phaser.GameObjects.Sprite {
-    if (!this._openingSprite) {
-      throw new Error("FloorAnimations - opening sprite was not initialized");
-    }
-
-    return this._openingSprite;
+    return getRequired(this._openingSprite, "FloorAnimation", "_openingSprite");
   }
 
   private get baseSprite(): Phaser.GameObjects.Sprite {
-    if (!this._baseSprite) {
-      throw new Error("FloorAnimations - base sprite was not initialized");
-    }
-
-    return this._baseSprite;
+    return getRequired(this._baseSprite, "FloorAnimation", "_baseSprite");
   }
 
   private get frontSprite(): Phaser.GameObjects.Sprite {
-    if (!this._frontSprite) {
-      throw new Error("FloorAnimations - front sprite was not initialized");
-    }
-
-    return this._frontSprite;
+    return getRequired(this._frontSprite, "FloorAnimation", "_frontSprite");
   }
 
   private get textureKey(): string {
@@ -150,6 +136,8 @@ export class FloorAnimations {
     const frontSpriteIndex = this.container.getIndex(this.frontSprite);
 
     this.container.addAt(actor, frontSpriteIndex);
+
+    this.hasActorAttached = true;
   }
 
   destroy() {
