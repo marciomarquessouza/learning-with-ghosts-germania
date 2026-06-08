@@ -6,20 +6,30 @@ export interface PronunciationVoiceIndicatorProps {
   isVisible: boolean;
 }
 
+const MEDIUM_THRESHOLD = 40;
+
+const MIN_VOLUME = 0.01;
+const MAX_VOLUME = 0.18;
+
 export function PronunciationVoiceIndicator({
   isVisible,
 }: PronunciationVoiceIndicatorProps) {
   const { currentVoiceRecordingVolume } = useAudioStore();
 
-  const amplified = useMemo(
-    () => Math.pow(currentVoiceRecordingVolume, 0.3),
-    [currentVoiceRecordingVolume],
-  );
+  const mirroredWidth = useMemo(() => {
+    const volume = currentVoiceRecordingVolume;
 
-  const halfPct = useMemo(() => Math.min(100, amplified * 200), [amplified]);
-  const mirroredWidth = useMemo(() => Math.min(100, halfPct), [halfPct]);
+    if (volume <= MIN_VOLUME) {
+      return 0;
+    }
 
-  const MEDIUM_THRESHOLD = 50;
+    const normalized = Math.min(
+      1,
+      (volume - MIN_VOLUME) / (MAX_VOLUME - MIN_VOLUME),
+    );
+
+    return Math.pow(normalized, 1.05) * 100;
+  }, [currentVoiceRecordingVolume]);
 
   const activeColor = useMemo(() => {
     return mirroredWidth >= MEDIUM_THRESHOLD ? "#31A24C" : "#C20013";
