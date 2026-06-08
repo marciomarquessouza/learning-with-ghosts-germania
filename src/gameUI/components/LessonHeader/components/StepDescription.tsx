@@ -36,7 +36,7 @@ const variants = {
   },
 };
 
-const MAXIMUM_SIZE_FOR_CENTERED_TEXT = 48;
+const MAXIMUM_SIZE_FOR_CENTERED_TEXT = 80;
 
 export function StepDescription({
   isVisible,
