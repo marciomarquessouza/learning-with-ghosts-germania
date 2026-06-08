@@ -26,7 +26,8 @@ export const lesson: Lesson = {
         {
           type: "pronunciation",
           text: `HA-loh (like “HAH-loh”). The first syllable is short, the final “o” is an open “oh”.`,
-          instruction: "Your turn. Click the mic and say: “{{audio|Hallo}}”.",
+          instruction:
+            "Click the mic or click {{key|space}} and say: “{{audio|Hallo}}”.",
         },
         {
           type: "writing",

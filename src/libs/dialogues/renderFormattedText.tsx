@@ -1,9 +1,17 @@
-import React from "react";
+type SupportedFormat = "key" | "audio";
 
-type SupportedFormat = "key";
+type RenderFormattedTextOptions = {
+  audioIcon?: React.ReactNode;
+  playAudio?: (audio: string) => void;
+};
 
-function renderFormattedPart(format: string, value: string, key: React.Key) {
-  switch (format as SupportedFormat) {
+function renderFormattedPart(
+  format: string,
+  value: string,
+  key: React.Key,
+  options?: RenderFormattedTextOptions,
+) {
+  switch (format.trim() as SupportedFormat) {
     case "key":
       return (
         <span
@@ -14,12 +22,34 @@ function renderFormattedPart(format: string, value: string, key: React.Key) {
         </span>
       );
 
+    case "audio":
+      return (
+        <button
+          key={key}
+          type="button"
+          className={[
+            "pointer-events-auto cursor-pointer",
+            "inline-flex items-center gap-1 px-2 py-0.5 rounded-md",
+            " hover:font-bold disabled:opacity-50 disabled:cursor-not-allowed",
+            "underline decoration-dotted",
+          ].join(" ")}
+          onClick={() => options?.playAudio?.(value)}
+          disabled={!options?.playAudio}
+        >
+          {value}
+          <span aria-hidden>{options?.audioIcon}</span>
+        </button>
+      );
+
     default:
       return <span key={key}>{value}</span>;
   }
 }
 
-export function renderFormattedText(text: string): React.ReactElement {
+export function renderFormattedText(
+  text: string,
+  options?: RenderFormattedTextOptions,
+): React.ReactElement {
   const regex = /\{\{([^|}]+)\|([^}]+)\}\}/g;
   const parts: React.ReactNode[] = [];
 
@@ -38,7 +68,9 @@ export function renderFormattedText(text: string): React.ReactElement {
       );
     }
 
-    parts.push(renderFormattedPart(format.trim(), value, `tag-${startIndex}`));
+    parts.push(
+      renderFormattedPart(format, value, `tag-${startIndex}`, options),
+    );
 
     lastIndex = startIndex + fullMatch.length;
   }

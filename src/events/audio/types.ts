@@ -28,3 +28,7 @@ export interface AudioMusicSetVolumeEvent {
 export interface AudioSfxSetVolumeEvent {
   volume: number;
 }
+
+export interface AudioPlaySample {
+  audioKey: string;
+}

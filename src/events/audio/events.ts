@@ -4,6 +4,7 @@ import type {
   AudioMusicPlayEvent,
   AudioMusicSetVolumeEvent,
   AudioMusicStopEvent,
+  AudioPlaySample,
   AudioSfxPlayEvent,
   AudioSfxSetVolumeEvent,
   AudioVoicePlayEvent,
@@ -18,6 +19,7 @@ export type AudioSyncEvents = {
   "audio:sfx:set-volume": AudioSfxSetVolumeEvent;
   "audio:mute": undefined;
   "audio:unmute": undefined;
+  "audio:play-sample": AudioPlaySample;
 };
 
 export type AudioAsyncEvents = {

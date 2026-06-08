@@ -4,6 +4,8 @@ import { AnimatePresence, motion } from "framer-motion";
 import { PressContinue } from "./PressContinue";
 import { createDialogueKeyDownHandler } from "@/libs/inputs/createDialogueKeyDownHandler";
 import { renderFormattedText } from "@/libs/dialogues/renderFormattedText";
+import { IconAudio } from "../../LessonChallenges/icons/IconAudio";
+import { events } from "@/events/events";
 
 export type DescriptionPhases =
   | "hidden"
@@ -161,7 +163,13 @@ export function StepDescription({
                 }}
                 className="min-h-20 font-mono text-xl leading-relaxed text-[#FFF3E4]"
               >
-                {renderFormattedText(displayedText)}
+                {renderFormattedText(displayedText, {
+                  audioIcon: <IconAudio fill="#FFF3E4" stroke="#FFF3E4" />,
+                  playAudio: (audio) =>
+                    events.audio.sync.emit("audio:play-sample", {
+                      audioKey: audio,
+                    }),
+                })}
               </p>
               <div className="flex w-full h-8 justify-end items-end -my-2">
                 <PressContinue
