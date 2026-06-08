@@ -1,4 +1,7 @@
 import { CharacterDetails } from "@/gameUI/hooks/useCharacterDetails";
+import { renderFormattedText } from "@/libs/dialogues/renderFormattedText";
+import { IconAudio } from "../../LessonChallenges/icons/IconAudio";
+import { events } from "@/events/events";
 
 export interface DialogueBoxProps {
   displayedText: string;
@@ -25,7 +28,7 @@ export function DialogueLines({
 
       <div className="mt-2 bg-[rgba(245,245,245,0.5)] px-4 py-2 outline-1 outline-neutral-300 rounded-sm flex-1 overflow-auto">
         <p className="text-neutral-900 font-mono text-base leading-snug whitespace-pre-line">
-          {displayedText}
+          {renderFormattedText(displayedText)}
         </p>
       </div>
     </>

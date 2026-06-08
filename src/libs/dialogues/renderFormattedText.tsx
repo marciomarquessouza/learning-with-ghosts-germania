@@ -1,4 +1,4 @@
-type SupportedFormat = "key" | "audio";
+type SupportedFormat = "key" | "audio" | "target";
 
 type RenderFormattedTextOptions = {
   audioIcon?: React.ReactNode;
@@ -39,6 +39,15 @@ function renderFormattedPart(
           {value}
           <span aria-hidden>{options?.audioIcon}</span>
         </button>
+      );
+    case "target":
+      return (
+        <span
+          key={key}
+          className="rounded-sm border-b-2 border-yellow-500 bg-yellow-100 px-1 font-bold text-yellow-950"
+        >
+          {value}
+        </span>
       );
 
     default:

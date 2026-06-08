@@ -26,6 +26,17 @@ export class LessonPronunciationFlow extends Flow<SceneStateNames, DreamScene> {
         { when: () => !hasActorAttached },
       ),
       stepBase(() => {
+        this.removePlayAudioEvent = events.audio.sync.on(
+          "audio:play-sample",
+          async () => {
+            if (this.isAudioSamplePlaying) return;
+            this.isAudioSamplePlaying = true;
+            await this.gameScene.lessonManager.playTargetAudio();
+            this.isAudioSamplePlaying = false;
+          },
+        );
+      }),
+      stepBase(() => {
         this.gameScene.player.enterListening();
         this.gameScene.learningNode.enterPumpkinIdleState();
         return this.gameScene.lessonManager.writeLessonDescription({
@@ -38,7 +49,7 @@ export class LessonPronunciationFlow extends Flow<SceneStateNames, DreamScene> {
         this.gameScene.tutor.enterTeaching();
         return this.gameScene.tutor.dialogue([
           "Very good, let's now move on to pronunciation.",
-          `Click the record button and say "${this.target}" out loud.
+          `Click the mic or click {{key|space}} and say: “{{target|${this.target}}}”.
           ${this.step.text}`,
         ]);
       }),
@@ -49,15 +60,6 @@ export class LessonPronunciationFlow extends Flow<SceneStateNames, DreamScene> {
           description: this.step.instruction,
           hidePressContinue: true,
         });
-        this.removePlayAudioEvent = events.audio.sync.on(
-          "audio:play-sample",
-          async () => {
-            if (this.isAudioSamplePlaying) return;
-            this.isAudioSamplePlaying = true;
-            await this.gameScene.lessonManager.playTargetAudio();
-            this.isAudioSamplePlaying = false;
-          },
-        );
         this.gameScene.player.attachRecordButton({
           onStartRecord: async () => {
             await this.gameScene.lessonManager.hideLessonDescription();
