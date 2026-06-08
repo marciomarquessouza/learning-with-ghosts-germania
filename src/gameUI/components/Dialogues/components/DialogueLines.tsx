@@ -1,7 +1,5 @@
 import { CharacterDetails } from "@/gameUI/hooks/useCharacterDetails";
 import { renderFormattedText } from "@/libs/dialogues/renderFormattedText";
-import { IconAudio } from "../../LessonChallenges/icons/IconAudio";
-import { events } from "@/events/events";
 
 export interface DialogueBoxProps {
   displayedText: string;
