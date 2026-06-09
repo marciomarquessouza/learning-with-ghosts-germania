@@ -53,6 +53,10 @@ const component = ({
   const openHeader = useCallback(async () => {
     setIsRecording(false);
     setPhase("transition");
+    await events.lesson.async.emitAsync("show-lesson-header", {
+      title: "Lesson",
+      day: 1,
+    });
     await events.lesson.async.emitAsync("write-lesson-description", {
       dialogueTitle: title,
       description: description,
@@ -91,6 +95,10 @@ const component = ({
     });
   };
 
+  const showPronunciationScore = async () => {
+    return events.lesson.sync.emit("show-pronunciation-score");
+  };
+
   return (
     <div
       id="container"
@@ -121,6 +129,11 @@ const component = ({
             iconPosition="start"
             onClick={isRecording ? stopVoiceRecord : recordVoice}
           />
+        </div>
+      )}
+      {phase === "open" && (
+        <div className="mt-4">
+          <Button label="Show Score" onClick={showPronunciationScore} />
         </div>
       )}
       {recordId && (

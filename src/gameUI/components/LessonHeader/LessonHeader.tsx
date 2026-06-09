@@ -6,6 +6,7 @@ import { LessonTitle } from "@/gameUI/components/LessonHeader/components/LessonT
 import { StepDescription } from "@/gameUI/components/LessonHeader/components/StepDescription";
 import { PronunciationVoiceIndicator } from "./components/PronunciationVoiceIndicator";
 import { StepTitle } from "./components/StepTitle";
+import { PronunciationScore } from "./components/PronunciationScore";
 
 export function LessonHeader() {
   const {
@@ -42,6 +43,10 @@ export function LessonHeader() {
         />
         <PronunciationVoiceIndicator
           isVisible={headerState.showVoiceIndicator}
+        />
+        <PronunciationScore
+          isVisible={headerState.showPronunciationScore}
+          target="Hallo"
         />
       </LessonHeaderWrapper>
     </>

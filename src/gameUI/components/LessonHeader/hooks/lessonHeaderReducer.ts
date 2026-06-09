@@ -9,6 +9,7 @@ export type LessonHeaderState = {
   showLessonTitle: boolean;
   showDescription: boolean;
   showVoiceIndicator: boolean;
+  showPronunciationScore: boolean;
   lessonTitle?: string;
   dialogueTitle?: string;
   description: string;
@@ -24,6 +25,7 @@ export const lessonHeaderDefaultState: LessonHeaderState = {
   showLessonTitle: false,
   showDescription: false,
   showVoiceIndicator: false,
+  showPronunciationScore: false,
   hidePressContinue: false,
   lessonTitle: "",
   dialogueTitle: "",
@@ -44,7 +46,9 @@ export type Actions =
   | { type: "write-description"; payload: WriteLessonDescriptionEvent }
   | { type: "hide-description" }
   | { type: "show-voice-indicator" }
-  | { type: "hide-voice-indicator" };
+  | { type: "hide-voice-indicator" }
+  | { type: "show-pronunciation-score" }
+  | { type: "hide-pronunciation-score" };
 
 export function lessonHeaderReducer(
   state: LessonHeaderState = lessonHeaderDefaultState,
@@ -69,6 +73,7 @@ export function lessonHeaderReducer(
         showLessonTitle: true,
         showDescription: false,
         showVoiceIndicator: false,
+        showPronunciationScore: false,
       };
     case "hide-lesson-title":
       return {
@@ -88,6 +93,7 @@ export function lessonHeaderReducer(
         showDescription: true,
         showLessonTitle: false,
         showVoiceIndicator: false,
+        showPronunciationScore: false,
       };
     case "write-description":
       return {
@@ -97,6 +103,7 @@ export function lessonHeaderReducer(
         showDescription: true,
         showLessonTitle: false,
         showVoiceIndicator: false,
+        showPronunciationScore: false,
       };
     case "hide-description":
       return {
@@ -111,11 +118,26 @@ export function lessonHeaderReducer(
         showDescription: false,
         showLessonTitle: false,
         showVoiceIndicator: true,
+        showPronunciationScore: false,
       };
     case "hide-voice-indicator":
       return {
         ...state,
         showVoiceIndicator: false,
+      };
+    case "show-pronunciation-score":
+      return {
+        ...state,
+        showLessonHeader: true,
+        showDescription: false,
+        showLessonTitle: false,
+        showVoiceIndicator: false,
+        showPronunciationScore: true,
+      };
+    case "hide-pronunciation-score":
+      return {
+        ...state,
+        showPronunciationScore: false,
       };
     default:
       return state;

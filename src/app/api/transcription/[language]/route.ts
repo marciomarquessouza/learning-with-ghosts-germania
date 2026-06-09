@@ -1,10 +1,12 @@
 import { NextResponse } from "next/server";
+import { DeepgramTranscriptionResponse } from "./types";
+import { PronunciationTranscription } from "@/types";
 
 export const runtime = "nodejs";
 
 export async function POST(
   request: Request,
-  { params }: { params: Promise<{ language: string }> },
+  { params }: { params: Promise<{ language: string; target: string }> },
 ) {
   try {
     const apiKey = process.env.DEEPGRAM_API_KEY;
@@ -15,7 +17,7 @@ export async function POST(
       );
     }
 
-    const { language } = await params;
+    const { language, target } = await params;
     const apiURL = `https://api.deepgram.com/v1/listen?model=nova-3&language=${language}&smart_format=true`;
 
     const formData = await request.formData();
@@ -50,12 +52,31 @@ export async function POST(
       );
     }
 
-    const data = await apiResponse.json();
+    const data: DeepgramTranscriptionResponse = await apiResponse.json();
 
-    const transcript =
-      data.results?.channels?.[0]?.alternatives?.[0]?.transcript ?? "";
+    const firstAlternative = data.results?.channels?.[0]?.alternatives?.[0];
 
-    return NextResponse.json({ transcript, raw: data });
+    if (firstAlternative === undefined || firstAlternative === null) {
+      return NextResponse.json(
+        {
+          error: "API did not return any alternatives",
+        },
+        { status: 500 },
+      );
+    }
+
+    const transcript = firstAlternative.transcript ?? "";
+    const words = firstAlternative.words.map(({ word }) => word);
+    const confidence = firstAlternative.confidence;
+
+    return NextResponse.json<
+      PronunciationTranscription & { raw: DeepgramTranscriptionResponse }
+    >({
+      confidence,
+      transcript,
+      words,
+      raw: data,
+    });
   } catch (error) {
     return NextResponse.json(
       {

@@ -61,6 +61,7 @@ export class LessonManager extends LessonController {
   public async pronunciationChallenge(options?: {
     onRecordTimeout?: (elapsed: number, maxTime: number) => void;
   }): Promise<{ recordId: string }> {
+    const target = this.getEntryTarget();
     const { setIsRecording, setCurrentVoiceRecordingVolume } =
       useAudioStore.getState();
     const { recordId, audioBlob } = await this.startRecording({
@@ -68,7 +69,7 @@ export class LessonManager extends LessonController {
       setCurrentVoiceRecordingVolume,
       onRecordTimeout: options?.onRecordTimeout,
     });
-    await this.audioTranscription.transcription(audioBlob);
+    await this.audioTranscription.transcription(audioBlob, target);
     // TODO: add transcription analysis
 
     return {

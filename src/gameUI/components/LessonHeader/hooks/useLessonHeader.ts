@@ -134,6 +134,26 @@ export function useLessonHeader() {
     };
   }, []);
 
+  useEffect(() => {
+    const handle = () => {
+      dispatch({ type: "show-pronunciation-score" });
+    };
+    events.lesson.sync.on("show-pronunciation-score", handle);
+    return () => {
+      events.lesson.sync.off("show-pronunciation-score", handle);
+    };
+  }, []);
+
+  useEffect(() => {
+    const handle = () => {
+      dispatch({ type: "hide-pronunciation-score" });
+    };
+    events.lesson.sync.on("hide-pronunciation-score", handle);
+    return () => {
+      events.lesson.sync.off("hide-pronunciation-score", handle);
+    };
+  }, []);
+
   return useMemo(
     () => ({
       headerState: state,

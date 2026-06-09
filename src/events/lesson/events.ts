@@ -13,6 +13,8 @@ export type LessonSyncEvents = {
   "show-description": undefined;
   "show-voice-indicator": undefined;
   "hide-voice-indicator": undefined;
+  "show-pronunciation-score": undefined;
+  "hide-pronunciation-score": undefined;
 };
 
 export type LessonAsyncEvents = {

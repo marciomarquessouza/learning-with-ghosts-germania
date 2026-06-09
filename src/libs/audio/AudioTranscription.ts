@@ -1,7 +1,14 @@
+import { PronunciationTranscription } from "@/types";
+
 export class AudioTranscription {
-  public async transcription(audioBlob: Blob, language: string = "de") {
+  public async transcription(
+    audioBlob: Blob,
+    target: string,
+    language: string = "de",
+  ): Promise<PronunciationTranscription> {
     const formData = new FormData();
     formData.append("audio", audioBlob, "recording.webm");
+    formData.append("target", target);
 
     const apiResponse = await fetch(`/api/transcription/${language}`, {
       method: "POST",
@@ -18,6 +25,10 @@ export class AudioTranscription {
 
     const data = await apiResponse.json();
 
-    return data?.transcript;
+    return {
+      confidence: data?.confidence ?? 0,
+      transcript: data?.transcript ?? "",
+      words: data?.words ?? [],
+    };
   }
 }

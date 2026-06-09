@@ -29,3 +29,9 @@ export type DayContent = {
   lesson: Lesson;
   dialogues: Dialogues;
 };
+
+export type PronunciationTranscription = {
+  confidence?: number;
+  transcript?: string;
+  words: string[];
+};
