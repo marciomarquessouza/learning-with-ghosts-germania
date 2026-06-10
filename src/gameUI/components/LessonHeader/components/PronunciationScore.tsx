@@ -10,7 +10,7 @@ export function PronunciationScore({
   target,
 }: PronunciationScoreProps) {
   const { headline, label, textColor, barColor } =
-    getPronunciationScoreFeedback(80);
+    getPronunciationScoreFeedback(100);
 
   if (!isVisible) {
     return null;

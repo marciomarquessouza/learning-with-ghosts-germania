@@ -1,39 +1,50 @@
-import { ACTORS } from "@/constants/game";
 import {
   ShowLessonTitleEvent,
   WriteLessonDescriptionEvent,
 } from "@/events/lesson/types";
 
 export type LessonHeaderState = {
-  showLessonHeader: boolean;
-  showLessonTitle: boolean;
-  showDescription: boolean;
-  showVoiceIndicator: boolean;
-  showPronunciationScore: boolean;
-  lessonTitle?: string;
-  dialogueTitle?: string;
-  description: string;
-  updateDescription?: string;
+  showHeader: boolean;
   hidePressContinue?: boolean;
-  teacher: ACTORS;
-  day?: number;
   closeAfter?: number;
+  lesson: {
+    show: boolean;
+    title?: string;
+    day?: number;
+  };
+  step: {
+    show: boolean;
+    title?: string;
+    description?: string;
+  };
+  voiceIndicator: {
+    show: boolean;
+  };
+  pronunciationScore: {
+    show: boolean;
+  };
 };
 
 export const lessonHeaderDefaultState: LessonHeaderState = {
-  showLessonHeader: false,
-  showLessonTitle: false,
-  showDescription: false,
-  showVoiceIndicator: false,
-  showPronunciationScore: false,
+  showHeader: false,
   hidePressContinue: false,
-  lessonTitle: "",
-  dialogueTitle: "",
-  description: "",
-  updateDescription: "",
-  day: 1,
-  teacher: ACTORS.TUTOR,
   closeAfter: 2_000,
+  lesson: {
+    show: false,
+    title: "",
+    day: 1,
+  },
+  step: {
+    show: false,
+    title: "",
+    description: "",
+  },
+  voiceIndicator: {
+    show: false,
+  },
+  pronunciationScore: {
+    show: false,
+  },
 };
 
 export type Actions =
@@ -59,85 +70,161 @@ export function lessonHeaderReducer(
       return {
         ...state,
         ...actions.payload,
-        showLessonHeader: true,
+        showHeader: true,
       };
     case "hide-lesson-header":
       return {
         ...state,
-        showLessonHeader: false,
+        showHeader: false,
       };
     case "show-lesson-title":
       return {
         ...state,
-        showLessonHeader: true,
-        showLessonTitle: true,
-        showDescription: false,
-        showVoiceIndicator: false,
-        showPronunciationScore: false,
+        lesson: {
+          ...state.lesson,
+          show: true,
+        },
+        step: {
+          ...state.step,
+          show: false,
+        },
+        voiceIndicator: {
+          ...state.voiceIndicator,
+          show: false,
+        },
+        pronunciationScore: {
+          ...state.pronunciationScore,
+          show: false,
+        },
       };
     case "hide-lesson-title":
       return {
         ...state,
-        showLessonTitle: false,
+        lesson: {
+          ...state.lesson,
+          show: false,
+        },
       };
     case "clear-lesson-title":
       return {
         ...state,
-        lessonTitle: "",
-        day: 1,
+        lesson: {
+          ...state.lesson,
+          show: false,
+          title: "",
+          day: 1,
+        },
       };
     case "show-description":
       return {
         ...state,
-        showLessonHeader: true,
-        showDescription: true,
-        showLessonTitle: false,
-        showVoiceIndicator: false,
-        showPronunciationScore: false,
+        showHeader: true,
+        lesson: {
+          ...state.lesson,
+          show: false,
+        },
+        step: {
+          ...state.step,
+          show: true,
+        },
+        voiceIndicator: {
+          ...state.voiceIndicator,
+          show: false,
+        },
+        pronunciationScore: {
+          ...state.pronunciationScore,
+          show: false,
+        },
       };
     case "write-description":
       return {
         ...state,
-        ...actions.payload,
-        showLessonHeader: true,
-        showDescription: true,
-        showLessonTitle: false,
-        showVoiceIndicator: false,
-        showPronunciationScore: false,
+        showHeader: true,
+        hidePressContinue: actions.payload.hidePressContinue,
+        lesson: {
+          ...state.lesson,
+          show: false,
+        },
+        step: {
+          ...state.step,
+          show: true,
+          title: actions.payload.dialogueTitle,
+          description: actions.payload.description,
+        },
+        voiceIndicator: {
+          ...state.voiceIndicator,
+          show: false,
+        },
+        pronunciationScore: {
+          ...state.pronunciationScore,
+          show: false,
+        },
       };
     case "hide-description":
       return {
         ...state,
-        description: "",
-        showDescription: false,
+        step: {
+          ...state.step,
+          show: false,
+          title: "",
+          description: "",
+        },
       };
     case "show-voice-indicator":
       return {
         ...state,
-        showLessonHeader: true,
-        showDescription: false,
-        showLessonTitle: false,
-        showVoiceIndicator: true,
-        showPronunciationScore: false,
+        lesson: {
+          ...state.lesson,
+          show: false,
+        },
+        step: {
+          ...state.step,
+          show: false,
+        },
+        voiceIndicator: {
+          ...state.voiceIndicator,
+          show: true,
+        },
+        pronunciationScore: {
+          ...state.pronunciationScore,
+          show: false,
+        },
       };
     case "hide-voice-indicator":
       return {
         ...state,
-        showVoiceIndicator: false,
+        voiceIndicator: {
+          ...state.voiceIndicator,
+          show: false,
+        },
       };
     case "show-pronunciation-score":
       return {
         ...state,
-        showLessonHeader: true,
-        showDescription: false,
-        showLessonTitle: false,
-        showVoiceIndicator: false,
-        showPronunciationScore: true,
+        lesson: {
+          ...state.lesson,
+          show: false,
+        },
+        step: {
+          ...state.step,
+          show: false,
+        },
+        voiceIndicator: {
+          ...state.voiceIndicator,
+          show: false,
+        },
+        pronunciationScore: {
+          ...state.pronunciationScore,
+          show: true,
+        },
       };
     case "hide-pronunciation-score":
       return {
         ...state,
-        showPronunciationScore: false,
+        pronunciationScore: {
+          ...state.pronunciationScore,
+          show: false,
+        },
       };
     default:
       return state;

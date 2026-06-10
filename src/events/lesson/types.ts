@@ -19,5 +19,4 @@ export interface WriteLessonDescriptionEvent {
   dialogueTitle?: string;
   description: string;
   hidePressContinue?: boolean;
-  teacher?: ACTORS;
 }

@@ -23,29 +23,29 @@ export function LessonHeader() {
   return (
     <>
       <LessonHeaderWrapper
-        isVisible={headerState.showLessonHeader}
+        isVisible={headerState.showHeader}
         leftIcon={<NotebookToggleButton />}
         rightIcon={<LessonExit />}
         onPhaseChange={onHeaderPhaseChange}
       >
         <LessonTitle
-          isVisible={headerState.showLessonTitle}
-          title={headerState.lessonTitle}
-          day={headerState.day}
+          isVisible={headerState.lesson.show}
+          title={headerState.lesson.title}
+          day={headerState.lesson.day}
           onClose={handleOnTitleClose}
         />
-        <StepTitle title={headerState.dialogueTitle} />
+        <StepTitle title={headerState.step.title} />
         <StepDescription
-          isVisible={headerState.showDescription}
-          description={headerState.description}
+          isVisible={headerState.step.show}
+          description={headerState.step.description ?? ""}
           hidePressContinue={headerState.hidePressContinue}
           onPhaseChange={onDescriptionPhaseChange}
         />
         <PronunciationVoiceIndicator
-          isVisible={headerState.showVoiceIndicator}
+          isVisible={headerState.voiceIndicator.show}
         />
         <PronunciationScore
-          isVisible={headerState.showPronunciationScore}
+          isVisible={headerState.pronunciationScore.show}
           target="Hallo"
         />
       </LessonHeaderWrapper>
