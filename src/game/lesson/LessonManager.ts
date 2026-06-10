@@ -4,7 +4,7 @@ import {
   WriteLessonDescriptionEvent,
 } from "@/events/lesson/types";
 import { AudioRecorder } from "@/libs/audio/AudioRecorder";
-import { AudioTranscription } from "@/libs/audio/AudioTranscription";
+import { PronunciationAPI } from "@/libs/lesson/PronunciationChallenge";
 import { LessonController } from "@/libs/lesson/LessonController";
 import { Lesson } from "@/libs/lesson/types";
 import { useAudioStore } from "@/store/audioStore";
@@ -14,7 +14,7 @@ export class LessonManager extends LessonController {
     voiceDetectionEnabled: true,
     autoStopOnSilence: true,
   });
-  private audioTranscription = new AudioTranscription();
+  private pronunciationAPI = new PronunciationAPI();
 
   constructor(lesson: Lesson) {
     super(lesson);
@@ -69,7 +69,7 @@ export class LessonManager extends LessonController {
       setCurrentVoiceRecordingVolume,
       onRecordTimeout: options?.onRecordTimeout,
     });
-    await this.audioTranscription.transcription(audioBlob, target);
+    await this.pronunciationAPI.calculatePronunciationScore(audioBlob, target);
     // TODO: add transcription analysis
 
     return {

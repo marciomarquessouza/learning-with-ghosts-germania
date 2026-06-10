@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
-import { DeepgramTranscriptionResponse } from "./types";
-import { PronunciationTranscription } from "@/types";
+import { DeepgramTranscriptionResponse } from "@/server/types";
+import { calculatePronunciationScore } from "@/server/game/pronunciation/calculatePronunciationScore";
+import { PronunciationResult } from "@/libs/lesson/PronunciationChallenge";
 
 export const runtime = "nodejs";
 
@@ -65,17 +66,17 @@ export async function POST(
       );
     }
 
-    const transcript = firstAlternative.transcript ?? "";
     const words = firstAlternative.words.map(({ word }) => word);
     const confidence = firstAlternative.confidence;
+    const transcript = firstAlternative.transcript ?? "";
 
-    return NextResponse.json<
-      PronunciationTranscription & { raw: DeepgramTranscriptionResponse }
-    >({
+    const pronunciationScore = calculatePronunciationScore(target, transcript);
+
+    return NextResponse.json<PronunciationResult>({
+      pronunciationScore,
       confidence,
       transcript,
       words,
-      raw: data,
     });
   } catch (error) {
     return NextResponse.json(
