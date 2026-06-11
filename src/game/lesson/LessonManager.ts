@@ -1,10 +1,11 @@
 import { events } from "@/events/events";
 import {
+  PronunciationResultEvent,
   ShowLessonTitleEvent,
   WriteLessonDescriptionEvent,
 } from "@/events/lesson/types";
 import { AudioRecorder } from "@/libs/audio/AudioRecorder";
-import { PronunciationAPI } from "@/libs/lesson/PronunciationChallenge";
+import { PronunciationAPI } from "@/libs/lesson/PronunciationAPI";
 import { LessonController } from "@/libs/lesson/LessonController";
 import { Lesson } from "@/libs/lesson/types";
 import { useAudioStore } from "@/store/audioStore";
@@ -50,7 +51,7 @@ export class LessonManager extends LessonController {
     return events.lesson.async.emitAsync("hide-lesson-description");
   }
 
-  public async showVoiceIndicator() {
+  public showVoiceIndicator() {
     return events.lesson.sync.emit("show-voice-indicator");
   }
 
@@ -58,23 +59,36 @@ export class LessonManager extends LessonController {
     events.lesson.sync.emit("hide-voice-indicator");
   }
 
+  public showPronunciationScore(value: PronunciationResultEvent) {
+    events.lesson.sync.emit("show-pronunciation-score", value);
+  }
+
   public async pronunciationChallenge(options?: {
     onRecordTimeout?: (elapsed: number, maxTime: number) => void;
-  }): Promise<{ recordId: string }> {
-    const target = this.getEntryTarget();
-    const { setIsRecording, setCurrentVoiceRecordingVolume } =
-      useAudioStore.getState();
-    const { recordId, audioBlob } = await this.startRecording({
-      setIsRecording,
-      setCurrentVoiceRecordingVolume,
-      onRecordTimeout: options?.onRecordTimeout,
-    });
-    await this.pronunciationAPI.calculatePronunciationScore(audioBlob, target);
-    // TODO: add transcription analysis
+  }): Promise<PronunciationResultEvent> {
+    try {
+      const target = this.getEntryTarget();
+      const { setIsRecording, setCurrentVoiceRecordingVolume } =
+        useAudioStore.getState();
+      const { recordId, audioBlob } = await this.startRecording({
+        setIsRecording,
+        setCurrentVoiceRecordingVolume,
+        onRecordTimeout: options?.onRecordTimeout,
+      });
+      const { score, feedback } =
+        await this.pronunciationAPI.calculatePronunciationScore(
+          audioBlob,
+          target,
+        );
 
-    return {
-      recordId,
-    };
+      return {
+        recordId,
+        score,
+        feedback,
+      };
+    } catch (error) {
+      throw error;
+    }
   }
 
   private async startRecording(options: {
@@ -87,20 +101,22 @@ export class LessonManager extends LessonController {
         targetPhrase: this.getEntryTarget(),
         onStartRecord: async () => {
           options.setIsRecording(true);
-          events.lesson.sync.emit("show-voice-indicator");
+          this.showVoiceIndicator();
         },
         onVolumeChange: (volume) => {
           options.setCurrentVoiceRecordingVolume(volume);
         },
         onSpeakingEnd: async (recordId, audioBlob) => {
           options.setIsRecording(false);
-          events.lesson.sync.emit("hide-voice-indicator");
+          this.hideVoiceIndicator();
           resolve({ recordId, audioBlob });
         },
         onRecordTimeout: (elapsed, maxTime) => {
+          this.hideVoiceIndicator();
           options?.onRecordTimeout?.(elapsed, maxTime);
         },
         onError: () => {
+          this.hideVoiceIndicator();
           options.setIsRecording(false);
           console.error("Pronunciation Challenge Error");
         },

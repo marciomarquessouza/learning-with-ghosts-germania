@@ -1,4 +1,7 @@
-import { ACTORS } from "@/constants/game";
+import {
+  PronunciationFeedback,
+  PronunciationScore,
+} from "@/libs/lesson/PronunciationAPI";
 
 export interface LessonEntryNotebookEvent {
   ids: string[];
@@ -19,4 +22,10 @@ export interface WriteLessonDescriptionEvent {
   dialogueTitle?: string;
   description: string;
   hidePressContinue?: boolean;
+}
+
+export interface PronunciationResultEvent {
+  recordId: string;
+  score: PronunciationScore;
+  feedback: PronunciationFeedback;
 }

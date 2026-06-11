@@ -3,6 +3,7 @@ import type {
   WriteLessonDescriptionEvent,
   ShowLessonTitleEvent,
   ToggleNotebookEvent,
+  PronunciationResultEvent,
 } from "./types";
 import { createEventManagers } from "@/libs/events/createEventManagers";
 
@@ -13,7 +14,7 @@ export type LessonSyncEvents = {
   "show-description": undefined;
   "show-voice-indicator": undefined;
   "hide-voice-indicator": undefined;
-  "show-pronunciation-score": undefined;
+  "show-pronunciation-score": PronunciationResultEvent;
   "hide-pronunciation-score": undefined;
 };
 

@@ -13,7 +13,11 @@ export class LessonPronunciationFlow extends Flow<SceneStateNames, DreamScene> {
   private isAudioSamplePlaying = false;
   private removePlayAudioEvent: () => void = () => {};
 
-  private recordId = "";
+  private async startPronunciationChallenge() {
+    const pronunciationResult =
+      await this.gameScene.lessonManager.pronunciationChallenge();
+    this.gameScene.lessonManager.showPronunciationScore(pronunciationResult);
+  }
 
   async run(): Promise<FlowResult<SceneStateNames, DreamScene>> {
     const hasActorAttached = this.gameScene.learningNode.floor.hasActorAttached;
@@ -63,9 +67,7 @@ export class LessonPronunciationFlow extends Flow<SceneStateNames, DreamScene> {
         this.gameScene.player.attachRecordButton({
           onStartRecord: async () => {
             await this.gameScene.lessonManager.hideLessonDescription();
-            const { recordId } =
-              await this.gameScene.lessonManager.pronunciationChallenge();
-            this.recordId = recordId;
+            await this.startPronunciationChallenge();
           },
           onStopRecord: () => {
             this.gameScene.lessonManager.hideVoiceIndicator();
@@ -75,9 +77,7 @@ export class LessonPronunciationFlow extends Flow<SceneStateNames, DreamScene> {
       }),
       stepBase(() => {
         return this.waitInteractionEvent(async () => {
-          const { recordId } =
-            await this.gameScene.lessonManager.pronunciationChallenge();
-          this.recordId = recordId;
+          await this.startPronunciationChallenge();
         });
       }),
     ]);

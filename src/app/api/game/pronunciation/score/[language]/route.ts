@@ -1,13 +1,13 @@
 import { NextResponse } from "next/server";
 import { DeepgramTranscriptionResponse } from "@/server/types";
 import { calculatePronunciationScore } from "@/server/game/pronunciation/calculatePronunciationScore";
-import { PronunciationResult } from "@/libs/lesson/PronunciationChallenge";
+import { PronunciationResult } from "@/libs/lesson/PronunciationAPI";
 
 export const runtime = "nodejs";
 
 export async function POST(
   request: Request,
-  { params }: { params: Promise<{ language: string; target: string }> },
+  { params }: { params: Promise<{ language: string }> },
 ) {
   try {
     const apiKey = process.env.DEEPGRAM_API_KEY;
@@ -18,11 +18,19 @@ export async function POST(
       );
     }
 
-    const { language, target } = await params;
+    const { language } = await params;
     const apiURL = `https://api.deepgram.com/v1/listen?model=nova-3&language=${language}&smart_format=true`;
 
     const formData = await request.formData();
+    const target = formData.get("target");
     const audioFile = formData.get("audio");
+
+    if (!target || typeof target !== "string") {
+      return NextResponse.json(
+        { error: "Missing or Incorrect target" },
+        { status: 400 },
+      );
+    }
 
     if (!audioFile || !(audioFile instanceof File)) {
       return NextResponse.json(

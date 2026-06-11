@@ -1,6 +1,7 @@
 import { PRONUNCIATION_FEEDBACK_THRESHOLDS } from "@/constants/game";
 
 export interface PronunciationCharacterResult {
+  id: string;
   character: string;
   found: boolean;
 }

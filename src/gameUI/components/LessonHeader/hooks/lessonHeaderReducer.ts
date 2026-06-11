@@ -1,4 +1,5 @@
 import {
+  PronunciationResultEvent,
   ShowLessonTitleEvent,
   WriteLessonDescriptionEvent,
 } from "@/events/lesson/types";
@@ -22,6 +23,7 @@ export type LessonHeaderState = {
   };
   pronunciationScore: {
     show: boolean;
+    pronunciationResult?: PronunciationResultEvent;
   };
 };
 
@@ -44,6 +46,7 @@ export const lessonHeaderDefaultState: LessonHeaderState = {
   },
   pronunciationScore: {
     show: false,
+    pronunciationResult: undefined,
   },
 };
 
@@ -58,7 +61,7 @@ export type Actions =
   | { type: "hide-description" }
   | { type: "show-voice-indicator" }
   | { type: "hide-voice-indicator" }
-  | { type: "show-pronunciation-score" }
+  | { type: "show-pronunciation-score"; payload: PronunciationResultEvent }
   | { type: "hide-pronunciation-score" };
 
 export function lessonHeaderReducer(
@@ -216,6 +219,7 @@ export function lessonHeaderReducer(
         pronunciationScore: {
           ...state.pronunciationScore,
           show: true,
+          pronunciationResult: actions.payload,
         },
       };
     case "hide-pronunciation-score":
@@ -224,6 +228,7 @@ export function lessonHeaderReducer(
         pronunciationScore: {
           ...state.pronunciationScore,
           show: false,
+          pronunciationResult: undefined,
         },
       };
     default:

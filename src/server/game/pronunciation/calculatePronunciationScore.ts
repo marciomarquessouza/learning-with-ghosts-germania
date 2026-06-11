@@ -1,4 +1,4 @@
-import { PronunciationScore } from "@/libs/lesson/PronunciationChallenge";
+import { PronunciationScore } from "@/libs/lesson/PronunciationAPI";
 import { getMatchedTargetIndexes } from "./helpers/getMatchedTargetIndexes";
 import { normalizeWithOriginalIndex } from "./helpers/normalizeWithOriginalIndex";
 
@@ -42,6 +42,7 @@ export function calculatePronunciationScore(
         (item) => item.originalIndex === index,
       );
       return {
+        id: `${index}-${character}`,
         character,
         found: isComparableCharacter ? matchedOriginalIndexes.has(index) : true,
       };

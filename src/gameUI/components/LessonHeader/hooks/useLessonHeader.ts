@@ -1,5 +1,6 @@
 import { events } from "@/events/events";
 import {
+  PronunciationResultEvent,
   ShowLessonTitleEvent,
   WriteLessonDescriptionEvent,
 } from "@/events/lesson/types";
@@ -135,8 +136,8 @@ export function useLessonHeader() {
   }, []);
 
   useEffect(() => {
-    const handle = () => {
-      dispatch({ type: "show-pronunciation-score" });
+    const handle = (payload: PronunciationResultEvent) => {
+      dispatch({ type: "show-pronunciation-score", payload });
     };
     events.lesson.sync.on("show-pronunciation-score", handle);
     return () => {

@@ -46,7 +46,9 @@ export function LessonHeader() {
         />
         <PronunciationScore
           isVisible={headerState.pronunciationScore.show}
-          target="Hallo"
+          pronunciationResult={
+            headerState.pronunciationScore.pronunciationResult
+          }
         />
       </LessonHeaderWrapper>
     </>
