@@ -18,12 +18,42 @@ export default meta;
 
 type Story = StoryObj<typeof ActionButton>;
 
-export const Default: Story = {
+export const Attack: Story = {
   args: {
     label: "ATTACK",
     icon: "attack",
     active: false,
     hotkey: "A",
+    onClick: action("action-button-click"),
+  },
+};
+
+export const Coal: Story = {
+  args: {
+    label: "COAL",
+    icon: "coal",
+    active: false,
+    hotkey: "C",
+    onClick: action("action-button-click"),
+  },
+};
+
+export const PronunciationRepeat: Story = {
+  args: {
+    label: "REPEAT",
+    icon: "pronunciation-repeat",
+    active: false,
+    hotkey: "R",
+    onClick: action("action-button-click"),
+  },
+};
+
+export const Next: Story = {
+  args: {
+    label: "NEXT",
+    icon: "next",
+    active: false,
+    hotkey: "N",
     onClick: action("action-button-click"),
   },
 };

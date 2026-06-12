@@ -11,8 +11,8 @@ interface ActionButtonProps {
   onClick: () => void;
 }
 
-const WIDTH = 280;
-const HEIGHT = 50;
+const WIDTH = 220;
+const HEIGHT = 40;
 
 export function ActionButton({
   disabled,
@@ -60,7 +60,7 @@ export function ActionButton({
           alt={`${icon}_icon_hover`}
           priority
           className={[
-            "absolute opacity-100",
+            "absolute opacity-0",
             "group-hover:opacity-100 group-disabled:opacity-0",
             "group-data-[active=true]:opacity-100",
             "transition-opacity",

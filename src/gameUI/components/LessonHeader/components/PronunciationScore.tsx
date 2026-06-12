@@ -1,4 +1,6 @@
 import { PronunciationResultEvent } from "@/events/lesson/types";
+import { ActionButton } from "../../ActionButton";
+import { AudioButton } from "../../AudioButton";
 
 interface PronunciationScoreProps {
   isVisible: boolean;
@@ -32,9 +34,9 @@ export function PronunciationScore({
       </div>
       <div
         id="pronunciation-score-description"
-        className="pointer-events-none absolute left-0 top-12 flex w-full items-center px-12 text-white outline-none"
+        className="pointer-events-none absolute left-0 top-12 flex w-full items-center px-12 py-0 text-white outline-none"
       >
-        <div className="flex w-full flex-col items-center">
+        <div className="flex w-full flex-col items-center my-0">
           <div className="px-4 items-center">
             <p className=" font-mono text-sm underline decoration-dotted">
               Your Answer
@@ -48,9 +50,36 @@ export function PronunciationScore({
                   {item.character}
                 </span>
               ))}
-              <span className="text-[#FFF3E4]">{` (${score.accuracyPercentage}%)`}</span>
+              <span className="font-mono text-[#FFF3E4] text-sm">{` (${score.accuracyPercentage}%)`}</span>
             </p>
           </div>
+        </div>
+      </div>
+      <div
+        id="pronunciation-score-title"
+        className="absolute left-1/2 -translate-x-1/2 bottom-1 z-50"
+      >
+        <div className="flex flex-row gap-6">
+          <ActionButton
+            label="REPEAT"
+            icon="pronunciation-repeat"
+            active={false}
+            hotkey="R"
+            onClick={() => console.log("#HERE")}
+          />
+          <div className="mx-4">
+            <AudioButton
+              type="reproduce"
+              onClick={() => console.log("#HERE")}
+            />
+          </div>
+          <ActionButton
+            label="NEXT"
+            icon="next"
+            active={false}
+            hotkey="F"
+            onClick={() => console.log("#HERE")}
+          />
         </div>
       </div>
     </>
