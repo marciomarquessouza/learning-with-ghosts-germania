@@ -57,7 +57,7 @@ export function PronunciationScore({
       </div>
       <div
         id="pronunciation-score-title"
-        className="absolute left-1/2 -translate-x-1/2 bottom-1 z-50"
+        className="absolute left-1/2 -translate-x-1/2 bottom-2 z-50"
       >
         <div className="flex flex-row gap-6">
           <ActionButton

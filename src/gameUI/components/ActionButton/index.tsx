@@ -11,8 +11,8 @@ interface ActionButtonProps {
   onClick: () => void;
 }
 
-const WIDTH = 220;
-const HEIGHT = 40;
+const WIDTH = 210;
+const HEIGHT = 36;
 
 export function ActionButton({
   disabled,
@@ -81,7 +81,7 @@ export function ActionButton({
       <span
         className={[
           "flex-1 flex items-center justify-start text-left pl-2 pr-3 pt-1",
-          "font-primary text-xl",
+          "font-primary text-md",
           "group-hover:font-bold",
           "group-data-[active=true]:font-bold",
           "text-[#3A3A3A] group-disabled:text-[#9B9B9B]",
@@ -101,7 +101,7 @@ export function ActionButton({
           "transition-colors",
         ].join(" ")}
       >
-        <span className="text-white font-primary text-2xl font-bold">
+        <span className="text-white font-primary text-xl font-bold">
           {hotkey}
         </span>
       </div>
