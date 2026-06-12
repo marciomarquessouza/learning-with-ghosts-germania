@@ -1,9 +1,10 @@
 interface StepTitleProps {
+  isVisible: boolean;
   title?: string;
 }
 
-export const StepTitle = ({ title }: StepTitleProps) => {
-  if (!title) return null;
+export const StepTitle = ({ isVisible, title }: StepTitleProps) => {
+  if (!isVisible || !title) return null;
 
   return (
     <div

@@ -34,7 +34,10 @@ export function LessonHeader() {
           day={headerState.lesson.day}
           onClose={handleOnTitleClose}
         />
-        <StepTitle title={headerState.step.title} />
+        <StepTitle
+          isVisible={headerState.step.show}
+          title={headerState.step.title}
+        />
         <StepDescription
           isVisible={headerState.step.show}
           description={headerState.step.description ?? ""}

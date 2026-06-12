@@ -6,6 +6,7 @@ import { useCallback, useState } from "react";
 import { useAudioStore } from "@/store/audioStore";
 import { LessonManager } from "@/game/lesson/LessonManager";
 import { Lesson } from "@/libs/lesson/types";
+import { PronunciationResultEvent } from "@/events/lesson/types";
 
 const meta: Meta<typeof LessonHeader> = {
   title: "Game/UI/LessonHeader",
@@ -20,7 +21,8 @@ export default meta;
 type ActionsProps = {
   title: string;
   description: string;
-  isPronunciationRecord?: boolean;
+  showPronunciationRecord?: boolean;
+  showPronunciationResults?: boolean;
 };
 
 type Phases = "close" | "open" | "transition";
@@ -38,12 +40,71 @@ const lesson: Lesson = {
     },
   ],
 };
+
+const defaultPronunciationResult: PronunciationResultEvent = {
+  recordId: "#",
+  score: {
+    accuracyPercentage: 100,
+    characters: [
+      { id: "0-h", character: "H", found: true },
+      { id: "1-a", character: "a", found: true },
+      { id: "2-l", character: "l", found: true },
+      { id: "3-l", character: "l", found: true },
+      { id: "4-o", character: "o", found: true },
+    ],
+  },
+  feedback: {
+    status: "excellent",
+    label: "EXCELLENT!!!",
+    barColor: "#009E93",
+  },
+};
+
+const goodPronunciationResult: PronunciationResultEvent = {
+  recordId: "#",
+  score: {
+    accuracyPercentage: 85,
+    characters: [
+      { id: "0-h", character: "H", found: true },
+      { id: "1-a", character: "a", found: true },
+      { id: "2-l", character: "l", found: false },
+      { id: "3-l", character: "l", found: false },
+      { id: "4-o", character: "o", found: false },
+    ],
+  },
+  feedback: {
+    status: "excellent",
+    label: "ALMOST THERE",
+    barColor: "#FCA30E",
+  },
+};
+
+const failPronunciationResult: PronunciationResultEvent = {
+  recordId: "#",
+  score: {
+    accuracyPercentage: 0,
+    characters: [
+      { id: "0-h", character: "H", found: false },
+      { id: "1-a", character: "a", found: false },
+      { id: "2-l", character: "l", found: false },
+      { id: "3-l", character: "l", found: false },
+      { id: "4-o", character: "o", found: false },
+    ],
+  },
+  feedback: {
+    status: "fail",
+    label: "TRY AGAIN",
+    barColor: "#B40F00",
+  },
+};
+
 const lessonManager = new LessonManager(lesson);
 
 const component = ({
   title,
   description,
-  isPronunciationRecord,
+  showPronunciationRecord,
+  showPronunciationResults,
 }: ActionsProps) => {
   const [phase, setPhase] = useState<Phases>("close");
   const { isRecording, setIsRecording } = useAudioStore();
@@ -95,8 +156,8 @@ const component = ({
     });
   };
 
-  const showPronunciationScore = async () => {
-    return events.lesson.sync.emit("show-pronunciation-score");
+  const showPronunciationScore = (value: PronunciationResultEvent) => {
+    return events.lesson.sync.emit("show-pronunciation-score", value);
   };
 
   return (
@@ -121,7 +182,7 @@ const component = ({
           disabled={phase === "transition"}
         />
       </div>
-      {phase === "open" && isPronunciationRecord && (
+      {phase === "open" && showPronunciationRecord && (
         <div className="mt-4">
           <Button
             label={isRecording ? "Stop" : "Record"}
@@ -131,11 +192,32 @@ const component = ({
           />
         </div>
       )}
-      {phase === "open" && (
-        <div className="mt-4">
-          <Button label="Show Score" onClick={showPronunciationScore} />
-        </div>
-      )}
+      <div className="flex flex-row gap-4">
+        {phase === "open" && showPronunciationResults && (
+          <div className="mt-4">
+            <Button
+              label="Show Score - Excellent"
+              onClick={() => showPronunciationScore(defaultPronunciationResult)}
+            />
+          </div>
+        )}
+        {phase === "open" && showPronunciationResults && (
+          <div className="mt-4">
+            <Button
+              label="Show Score - Good"
+              onClick={() => showPronunciationScore(goodPronunciationResult)}
+            />
+          </div>
+        )}
+        {phase === "open" && showPronunciationResults && (
+          <div className="mt-4">
+            <Button
+              label="Show Score - fail"
+              onClick={() => showPronunciationScore(failPronunciationResult)}
+            />
+          </div>
+        )}
+      </div>
       {recordId && (
         <div className="my-4">
           <Button label="Recorded Audio" onClick={() => playAudio()} />
@@ -167,6 +249,8 @@ export const Default: StoryObj<ActionsProps> = {
   args: {
     title: "Default",
     description: "Press {{key|Space}} or {{key|E}} to interact",
+    showPronunciationRecord: false,
+    showPronunciationResults: false,
   },
   render: component,
 };
@@ -175,7 +259,18 @@ export const RecordAudio: StoryObj<ActionsProps> = {
   args: {
     title: "Default",
     description: "Press {{key|Space}} or {{key|E}} to interact",
-    isPronunciationRecord: true,
+    showPronunciationRecord: true,
+    showPronunciationResults: false,
+  },
+  render: component,
+};
+
+export const PronunciationResult: StoryObj<ActionsProps> = {
+  args: {
+    title: "Default",
+    description: "Press {{key|Space}} or {{key|E}} to interact",
+    showPronunciationRecord: false,
+    showPronunciationResults: true,
   },
   render: component,
 };

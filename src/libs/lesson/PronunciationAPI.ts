@@ -20,7 +20,6 @@ export type PronunciationResult = {
 
 export type PronunciationFeedback = {
   status: "excellent" | "good" | "pass" | "fail";
-  headline: string;
   label: string;
   barColor: string;
 };
@@ -71,23 +70,20 @@ export class PronunciationAPI {
     if (accuracyPercentage >= PRONUNCIATION_FEEDBACK_THRESHOLDS.EXCELLENT) {
       return {
         status: "excellent",
-        headline: "That sounded natural and clear.",
-        label: "NATURAL",
-        barColor: "bg-emerald-500",
+        label: "EXCELLENT!!!",
+        barColor: "#009E93",
       };
     } else if (accuracyPercentage >= PRONUNCIATION_FEEDBACK_THRESHOLDS.PASS) {
       return {
         status: "good",
-        headline: "Very close — just a few small details.",
         label: "ALMOST THERE",
-        barColor: "bg-amber-500",
+        barColor: "#FCA30E",
       };
     } else {
       return {
         status: "fail",
-        headline: "Not quite there yet. Listen once more and try again.",
         label: "TRY AGAIN",
-        barColor: "bg-red-600/80",
+        barColor: "#B40F00",
       };
     }
   }
