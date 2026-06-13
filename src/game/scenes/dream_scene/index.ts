@@ -123,6 +123,7 @@ export class DreamScene extends Phaser.Scene {
     this.children.bringToTop(hudContainer);
 
     this.stateMachine = new StateMachine(this, {
+      source: "scene",
       onStateChange: (state) => setCurrentSceneState(state as SceneStateNames),
     });
     this.stateMachine

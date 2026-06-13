@@ -98,6 +98,7 @@ export class CellScene extends Phaser.Scene {
     const { setCurrentSceneState, setCurrentFlow } = useGameStore.getState();
 
     this.stateMachine = new StateMachine(this, {
+      source: "scene",
       onStateChange: (state) => setCurrentSceneState(state as SceneStateNames),
     });
     this.stateMachine

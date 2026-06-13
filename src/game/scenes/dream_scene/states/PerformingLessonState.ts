@@ -8,6 +8,7 @@ const CLOSE_TITLE_AFTER = 2_500;
 
 export class PerformingLessonState extends BaseState {
   private input: InputController;
+  private isFirstLessonState = false;
 
   constructor(
     scene: Phaser.Scene,
@@ -18,6 +19,19 @@ export class PerformingLessonState extends BaseState {
   }
 
   enter(): void {
+    const previousState = this.stateMachine.getPreviousStateName();
+    const currentState = this.stateMachine.getCurrentStateName();
+    const isFirstLessonState = previousState !== currentState;
+    this.isFirstLessonState = isFirstLessonState;
+
+    if (isFirstLessonState) {
+      this.lessonPreparation();
+    }
+
+    this.runLessonFlow();
+  }
+
+  private lessonPreparation() {
     events.game.sync.emit("game-action-prompt/hide");
     events.game.sync.emit("dialogue/hide");
 
@@ -37,8 +51,6 @@ export class PerformingLessonState extends BaseState {
     if (playerSprite) {
       this.dreamScene.gameCamera.centerOn(playerSprite.x, playerSprite.y);
     }
-
-    this.runLessonFlow();
   }
 
   private async runLessonFlow() {
@@ -55,11 +67,13 @@ export class PerformingLessonState extends BaseState {
 
       this.dreamScene.flowController.clearNextFlow();
 
-      await this.dreamScene.lessonManager.showLessonTitle({
-        title: this.dreamScene.lessonManager.lesson.title,
-        day: this.dreamScene.lessonManager.lesson.day,
-        closeAfter: CLOSE_TITLE_AFTER,
-      });
+      if (this.isFirstLessonState) {
+        await this.dreamScene.lessonManager.showLessonTitle({
+          title: this.dreamScene.lessonManager.lesson.title,
+          day: this.dreamScene.lessonManager.lesson.day,
+          closeAfter: CLOSE_TITLE_AFTER,
+        });
+      }
 
       this.dreamScene.flowController.run(flow).then(({ nextState }) => {
         if (nextState) {

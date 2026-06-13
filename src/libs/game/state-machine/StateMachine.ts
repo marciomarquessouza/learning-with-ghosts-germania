@@ -12,19 +12,23 @@ export type StateConstructor<T extends IState> = new (
   ...args: any[]
 ) => T;
 
+type Source = "scene" | "actor";
+
 export class StateMachine {
   private states: Map<string, IState> = new Map();
   private currentState: IState | null = null;
   private currentStateName: string = "";
   private previousStateName: string = "";
+  private source: string = "";
   private scene: Phaser.Scene;
   private onChangeState: (state: string) => void;
 
   constructor(
     scene: Phaser.Scene,
-    options: { onStateChange?: (state: string) => void } = {},
+    options: { source?: Source; onStateChange?: (state: string) => void } = {},
   ) {
     this.scene = scene;
+    this.source = options?.source ?? "";
     this.onChangeState = options?.onStateChange ?? (() => {});
   }
 
@@ -113,11 +117,13 @@ export class StateMachine {
     const enabled =
       process.env.NODE_ENV === "development" ||
       process.env.NEXT_PUBLIC_LOGGING_ENABLE;
+    const loggingFrom = process.env.NEXT_PUBLIC_STATE_LOGGING_FROM;
 
-    if (!enabled) return;
+    if (!enabled || (loggingFrom && loggingFrom !== this.source)) return;
 
     const timestamp = this.scene.time.now.toFixed(0);
-    const prefix = `[◉→◉ StateMachine ${timestamp}ms]`;
+    const from = !!this.source ? `-${this.source}` : "";
+    const prefix = `[◉→◉ StateMachine${from} ${timestamp}ms]`;
 
     const styles = {
       info: "color: #3498db",
@@ -130,7 +136,7 @@ export class StateMachine {
       debug: "color: #7f8c8d",
     };
 
-    console.log(`type: ${type} %c${prefix} ${message}`, styles[type]);
+    console.log(`type: ${type} %c${prefix}  ${message}`, styles[type]);
   }
 
   clear(): void {
