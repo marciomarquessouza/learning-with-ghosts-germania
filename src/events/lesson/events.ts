@@ -16,6 +16,8 @@ export type LessonSyncEvents = {
   "hide-voice-indicator": undefined;
   "show-pronunciation-score": PronunciationResultEvent;
   "hide-pronunciation-score": undefined;
+  "show-loading": undefined;
+  "hide-loading": undefined;
 };
 
 export type LessonAsyncEvents = {

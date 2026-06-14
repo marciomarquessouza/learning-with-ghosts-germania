@@ -23,6 +23,7 @@ type ActionsProps = {
   description: string;
   showPronunciationRecord?: boolean;
   showPronunciationResults?: boolean;
+  showLoading?: boolean;
 };
 
 type Phases = "close" | "open" | "transition";
@@ -105,11 +106,13 @@ const component = ({
   description,
   showPronunciationRecord,
   showPronunciationResults,
+  showLoading,
 }: ActionsProps) => {
   const [phase, setPhase] = useState<Phases>("close");
   const { isRecording, setIsRecording } = useAudioStore();
   const [recordId, setRecordId] = useState<string | undefined>(undefined);
   const [recordingTimeout, setRecordingTimeout] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   const openHeader = useCallback(async () => {
     setIsRecording(false);
@@ -160,6 +163,18 @@ const component = ({
     return events.lesson.sync.emit("show-pronunciation-score", value);
   };
 
+  const toggleLoading = useCallback(() => {
+    setLoading((value) => {
+      if (value) {
+        events.lesson.sync.emit("hide-loading");
+        return false;
+      } else {
+        events.lesson.sync.emit("show-loading");
+        return true;
+      }
+    });
+  }, []);
+
   return (
     <div
       id="container"
@@ -170,17 +185,19 @@ const component = ({
     >
       <LessonHeader />
       <div className="">
-        <Button
-          label={
-            phase === "transition"
-              ? "Wait"
-              : phase === "open"
-                ? "Close"
-                : "Open"
-          }
-          onClick={phase === "close" ? openHeader : closeHeader}
-          disabled={phase === "transition"}
-        />
+        {!loading && (
+          <Button
+            label={
+              phase === "transition"
+                ? "Wait"
+                : phase === "open"
+                  ? "Close"
+                  : "Open"
+            }
+            onClick={phase === "close" ? openHeader : closeHeader}
+            disabled={phase === "transition"}
+          />
+        )}
       </div>
       {phase === "open" && showPronunciationRecord && (
         <div className="mt-4">
@@ -189,6 +206,14 @@ const component = ({
             labelIcon={isRecording ? "⏹" : "⏺"}
             iconPosition="start"
             onClick={isRecording ? stopVoiceRecord : recordVoice}
+          />
+        </div>
+      )}
+      {phase === "open" && showLoading && (
+        <div className="mt-4">
+          <Button
+            label={loading ? "hide loading" : "show loading"}
+            onClick={toggleLoading}
           />
         </div>
       )}
@@ -239,6 +264,9 @@ const component = ({
             <strong>Auto Stop by Time:</strong>{" "}
             {recordingTimeout ? "yes" : "false"}
           </span>
+          <span className="font-mono text-sm leading-relaxed text-[#FFF3E4]">
+            <strong>Loading:</strong> {loading ? "yes" : "false"}
+          </span>
         </div>
       </div>
     </div>
@@ -271,6 +299,17 @@ export const PronunciationResult: StoryObj<ActionsProps> = {
     description: "Press {{key|Space}} or {{key|E}} to interact",
     showPronunciationRecord: false,
     showPronunciationResults: true,
+  },
+  render: component,
+};
+
+export const Loading: StoryObj<ActionsProps> = {
+  args: {
+    title: "Default",
+    description: "Press {{key|Space}} or {{key|E}} to interact",
+    showPronunciationRecord: false,
+    showPronunciationResults: false,
+    showLoading: true,
   },
   render: component,
 };

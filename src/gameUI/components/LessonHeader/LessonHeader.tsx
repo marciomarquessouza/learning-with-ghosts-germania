@@ -7,6 +7,7 @@ import { StepDescription } from "@/gameUI/components/LessonHeader/components/Ste
 import { PronunciationVoiceIndicator } from "./components/PronunciationVoiceIndicator";
 import { StepTitle } from "./components/StepTitle";
 import { PronunciationScore } from "./components/PronunciationScore";
+import { LessonLoading } from "./components/LessonLoading";
 
 export function LessonHeader() {
   const {
@@ -53,6 +54,7 @@ export function LessonHeader() {
             headerState.pronunciationScore.pronunciationResult
           }
         />
+        <LessonLoading isVisible={headerState.loading} />
       </LessonHeaderWrapper>
     </>
   );

@@ -155,6 +155,26 @@ export function useLessonHeader() {
     };
   }, []);
 
+  useEffect(() => {
+    const handle = () => {
+      dispatch({ type: "show-loading" });
+    };
+    events.lesson.sync.on("show-loading", handle);
+    return () => {
+      events.lesson.sync.off("show-loading", handle);
+    };
+  }, []);
+
+  useEffect(() => {
+    const handle = () => {
+      dispatch({ type: "hide-loading" });
+    };
+    events.lesson.sync.on("hide-loading", handle);
+    return () => {
+      events.lesson.sync.off("hide-loading", handle);
+    };
+  }, []);
+
   return useMemo(
     () => ({
       headerState: state,

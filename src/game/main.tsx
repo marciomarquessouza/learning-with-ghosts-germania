@@ -2,7 +2,7 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { initPhaser } from "./phaser/initPhaser";
 import { getSceneName } from "./utils/sceneNameMap";
-import { GhostLoading } from "@/components/GhostLoading";
+import { GhostLoading } from "@/components/PageLoading";
 import { gameWorldConfig } from "@/game/config/gameWorldConfig";
 import { useGameStore } from "@/store/gameStore";
 import {

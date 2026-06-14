@@ -8,6 +8,7 @@ export type LessonHeaderState = {
   showHeader: boolean;
   hidePressContinue?: boolean;
   closeAfter?: number;
+  loading?: boolean;
   lesson: {
     show: boolean;
     title?: string;
@@ -62,7 +63,9 @@ export type Actions =
   | { type: "show-voice-indicator" }
   | { type: "hide-voice-indicator" }
   | { type: "show-pronunciation-score"; payload: PronunciationResultEvent }
-  | { type: "hide-pronunciation-score" };
+  | { type: "hide-pronunciation-score" }
+  | { type: "show-loading" }
+  | { type: "hide-loading" };
 
 export function lessonHeaderReducer(
   state: LessonHeaderState = lessonHeaderDefaultState,
@@ -230,6 +233,32 @@ export function lessonHeaderReducer(
           show: false,
           pronunciationResult: undefined,
         },
+      };
+    case "show-loading":
+      return {
+        ...state,
+        loading: true,
+        lesson: {
+          ...state.lesson,
+          show: false,
+        },
+        step: {
+          ...state.step,
+          show: false,
+        },
+        voiceIndicator: {
+          ...state.voiceIndicator,
+          show: false,
+        },
+        pronunciationScore: {
+          ...state.pronunciationScore,
+          show: false,
+        },
+      };
+    case "hide-loading":
+      return {
+        ...state,
+        loading: false,
       };
     default:
       return state;
