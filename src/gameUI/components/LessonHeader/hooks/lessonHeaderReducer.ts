@@ -86,6 +86,7 @@ export function lessonHeaderReducer(
     case "show-lesson-title":
       return {
         ...state,
+        loading: false,
         lesson: {
           ...state.lesson,
           show: true,
@@ -125,6 +126,7 @@ export function lessonHeaderReducer(
       return {
         ...state,
         showHeader: true,
+        loading: false,
         lesson: {
           ...state.lesson,
           show: false,
@@ -146,6 +148,7 @@ export function lessonHeaderReducer(
       return {
         ...state,
         showHeader: true,
+        loading: false,
         hidePressContinue: actions.payload.hidePressContinue,
         lesson: {
           ...state.lesson,
@@ -179,6 +182,7 @@ export function lessonHeaderReducer(
     case "show-voice-indicator":
       return {
         ...state,
+        loading: false,
         lesson: {
           ...state.lesson,
           show: false,
@@ -207,6 +211,7 @@ export function lessonHeaderReducer(
     case "show-pronunciation-score":
       return {
         ...state,
+        loading: false,
         lesson: {
           ...state.lesson,
           show: false,

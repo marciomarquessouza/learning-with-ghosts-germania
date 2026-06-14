@@ -1,6 +1,6 @@
 import { VoiceActivityDetector } from "./VoiceActivityDetector";
 
-const DEFAULT_PHRASE_TIME_MULTIPLIER = 5;
+const DEFAULT_PHRASE_TIME_MULTIPLIER = 3;
 const DEFAULT_MINIMUM_RECORD_TIME = 1_000;
 const DEFAULT_MAXIMUM_RECORD_TIME = 6_000;
 

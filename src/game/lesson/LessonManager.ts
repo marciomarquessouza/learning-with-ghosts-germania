@@ -67,6 +67,7 @@ export class LessonManager extends LessonController {
     onRecordTimeout?: (elapsed: number, maxTime: number) => void;
   }): Promise<PronunciationResultEvent> {
     try {
+      events.lesson.sync.emit("show-loading");
       const target = this.getEntryTarget();
       const { setIsRecording, setCurrentVoiceRecordingVolume } =
         useAudioStore.getState();
@@ -108,7 +109,7 @@ export class LessonManager extends LessonController {
         },
         onSpeakingEnd: async (recordId, audioBlob) => {
           options.setIsRecording(false);
-          this.hideVoiceIndicator();
+          events.lesson.sync.emit("show-loading");
           resolve({ recordId, audioBlob });
         },
         onRecordTimeout: (elapsed, maxTime) => {
