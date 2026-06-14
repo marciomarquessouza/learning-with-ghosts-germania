@@ -1,4 +1,5 @@
 import { events } from "@/events/events";
+import { getRequired } from "@/utils/getRequired";
 
 const FADE_COLOR = { r: 0, g: 0, b: 0 };
 
@@ -7,22 +8,26 @@ interface FadeProps {
 }
 
 export class GameCamera {
-  public mainCamera!: Phaser.Cameras.Scene2D.Camera;
+  private _scene?: Phaser.Scene;
+  private _mainCamera?: Phaser.Cameras.Scene2D.Camera;
   private removeZoomListener?: () => void;
-  private scene!: Phaser.Scene;
 
-  private get camera() {
-    if (!this.mainCamera) {
-      throw new Error("GameCamera has not been created yet.");
-    }
+  private get scene() {
+    return getRequired(this._scene, "GameCamera", "_scene");
+  }
 
-    return this.mainCamera;
+  private get mainCamera() {
+    return getRequired(this._mainCamera, "GameCamera", "mainCamera");
+  }
+
+  public get camera() {
+    return getRequired(this._mainCamera, "GameCamera", "mainCamera");
   }
 
   create(scene: Phaser.Scene) {
-    this.scene = scene;
-    this.mainCamera = scene.cameras.main;
-    this.mainCamera.setBackgroundColor(0x000000);
+    this._scene = scene;
+    this._mainCamera = scene.cameras.main;
+    this._mainCamera.setBackgroundColor(0x000000);
 
     const zoomHandler = ({
       zoom,
@@ -55,6 +60,23 @@ export class GameCamera {
 
   centerOn(x: number, y: number) {
     this.camera.centerOn(x, y);
+  }
+
+  centerOnTarget(target: Phaser.Physics.Arcade.Sprite) {
+    const center = target.getCenter();
+
+    this.camera.centerOn(center.x, center.y);
+  }
+
+  setBoundsWithCenterPadding(
+    x: number,
+    y: number,
+    width: number,
+    height: number,
+  ) {
+    const paddingX = this.camera.width / this.camera.zoom / 2;
+
+    this.camera.setBounds(x - paddingX, 0, width + paddingX * 3, height);
   }
 
   async fadeIn({ duration }: FadeProps): Promise<void> {

@@ -59,8 +59,8 @@ export class DreamScene extends Phaser.Scene {
   public lessonManager = new LessonManager(useLessonStore.getState().lesson);
   public dialogueManager = new DialogueManager();
   public flowController?: FlowController<SceneStateNames, DreamScene>;
+  public scenario = new CemeteryScenario();
 
-  private scenario = new CemeteryScenario();
   private stateMachine!: StateMachine;
 
   constructor() {

@@ -44,12 +44,19 @@ export class PerformingLessonState extends BaseState {
       this.stateMachine.log("Scene flow was not created", "error");
       return;
     }
-
-    this.dreamScene.gameCamera.zoomTo({ zoom: 1.2, duration: 1_000 });
     const playerSprite = this.dreamScene.player.sprite;
 
     if (playerSprite) {
-      this.dreamScene.gameCamera.centerOn(playerSprite.x, playerSprite.y);
+      const mapWidth = this.dreamScene.scenario.width;
+      const mapHeight = this.dreamScene.scenario.height;
+      this.dreamScene.gameCamera.setBoundsWithCenterPadding(
+        0,
+        0,
+        mapWidth,
+        mapHeight,
+      );
+      this.dreamScene.gameCamera.centerOnTarget(playerSprite);
+      this.dreamScene.gameCamera.zoomTo({ zoom: 1.2, duration: 1_000 });
     }
   }
 
