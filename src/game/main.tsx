@@ -1,6 +1,8 @@
 import { useEffect, useMemo, useRef, useState } from "react";
-import { GhostLoading } from "@/components/HomePage/GhostLoading";
+import { useRouter, useSearchParams } from "next/navigation";
 import { initPhaser } from "./phaser/initPhaser";
+import { getSceneName } from "./utils/sceneNameMap";
+import { GhostLoading } from "@/components/GhostLoading";
 import { gameWorldConfig } from "@/game/config/gameWorldConfig";
 import { useGameStore } from "@/store/gameStore";
 import {
@@ -9,8 +11,6 @@ import {
   GAME_WORLDS,
   sceneWorldMap,
 } from "@/constants/game";
-import { useRouter, useSearchParams } from "next/navigation";
-import { getSceneName } from "./utils/sceneNameMap";
 import { DayContent, GameScenes, GameWorlds } from "@/types";
 import { events } from "@/events/events";
 import { useLessonStore } from "@/store/lessonStore";

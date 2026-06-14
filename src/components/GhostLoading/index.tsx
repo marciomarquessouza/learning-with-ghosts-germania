@@ -3,7 +3,7 @@ import Image from "next/image";
 import { motion } from "framer-motion";
 import { useEffect, useRef, useState } from "react";
 import { GHOST_LOADER_BODY, GHOST_LOADER_FLOOR } from "@/constants/images";
-import { WaveText } from "./WaveText";
+import { WaveText } from "../WaveText";
 
 export function GhostLoading() {
   const ref = useRef<HTMLDivElement>(null);
