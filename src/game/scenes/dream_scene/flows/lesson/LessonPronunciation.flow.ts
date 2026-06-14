@@ -16,6 +16,7 @@ export class LessonPronunciationFlow extends Flow<SceneStateNames, DreamScene> {
   private async startPronunciationChallenge() {
     const pronunciationResult =
       await this.gameScene.lessonManager.pronunciationChallenge();
+    this.gameScene.player.detachRecordButton();
     this.gameScene.lessonManager.showPronunciationScore(pronunciationResult);
   }
 
