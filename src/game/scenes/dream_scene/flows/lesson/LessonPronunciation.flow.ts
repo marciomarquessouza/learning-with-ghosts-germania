@@ -78,16 +78,23 @@ export class LessonPronunciationFlow extends Flow<SceneStateNames, DreamScene> {
             });
           },
           onStopRecord: () => {
-            this.gameScene.lessonManager.hideVoiceIndicator();
-            this.gameScene.lessonManager.stopPronunciationChallenge();
+            events.interactions.sync.emit("interaction/cancel", {
+              id: this.flowName,
+            });
           },
         });
       }),
       stepBase(() => {
-        return this.waitInteractionEvent(async () => {
-          await this.gameScene.lessonManager.hideLessonDescription();
-          await this.startPronunciationChallenge();
-        });
+        return this.waitInteractionEvent(
+          async () => {
+            await this.gameScene.lessonManager.hideLessonDescription();
+            await this.startPronunciationChallenge();
+          },
+          async () => {
+            await this.gameScene.lessonManager.hideLessonDescription();
+            this.gameScene.lessonManager.stopPronunciationChallenge();
+          },
+        );
       }),
     ]);
 
