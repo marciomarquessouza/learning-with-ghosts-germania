@@ -18,6 +18,9 @@ export type LessonSyncEvents = {
   "hide-pronunciation-score": undefined;
   "show-loading": undefined;
   "hide-loading": undefined;
+  "action-button:next": undefined;
+  "action-button:repeat": undefined;
+  "action-button:reproduce-audio": undefined;
 };
 
 export type LessonAsyncEvents = {

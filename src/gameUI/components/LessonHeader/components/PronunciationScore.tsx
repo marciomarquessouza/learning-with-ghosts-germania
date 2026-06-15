@@ -1,6 +1,7 @@
 import { PronunciationResultEvent } from "@/events/lesson/types";
 import { ActionButton } from "../../ActionButton";
 import { AudioButton } from "../../AudioButton";
+import { events } from "@/events/events";
 
 interface PronunciationScoreProps {
   isVisible: boolean;
@@ -65,12 +66,14 @@ export function PronunciationScore({
             icon="pronunciation-repeat"
             active={false}
             hotkey="R"
-            onClick={() => console.log("#HERE")}
+            onClick={() => events.lesson.sync.emit("action-button:repeat")}
           />
           <div className="mx-4">
             <AudioButton
               type="reproduce"
-              onClick={() => console.log("#HERE")}
+              onClick={() =>
+                events.lesson.sync.emit("action-button:reproduce-audio")
+              }
             />
           </div>
           <ActionButton
@@ -78,7 +81,7 @@ export function PronunciationScore({
             icon="next"
             active={false}
             hotkey="F"
-            onClick={() => console.log("#HERE")}
+            onClick={() => events.lesson.sync.emit("action-button:next")}
           />
         </div>
       </div>

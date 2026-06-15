@@ -11,11 +11,18 @@ export class LessonPronunciationFlow extends Flow<SceneStateNames, DreamScene> {
   private target = this.gameScene.lessonManager.getEntryTarget();
   private step = this.gameScene.lessonManager.getStepByType("pronunciation");
   private isAudioSamplePlaying = false;
-  private removePlayAudioEvent: () => void = () => {};
+  private removePlayAudioEvents: (() => void)[] = [];
 
   private async startPronunciationChallenge() {
     const pronunciationResult =
       await this.gameScene.lessonManager.pronunciationChallenge();
+    this.removePlayAudioEvents.push(
+      events.lesson.sync.on("action-button:reproduce-audio", () => {
+        this.gameScene.lessonManager.playPronunciationRecord(
+          pronunciationResult.recordId,
+        );
+      }),
+    );
     this.gameScene.player.detachRecordButton();
     this.gameScene.lessonManager.showPronunciationScore(pronunciationResult);
   }
@@ -31,14 +38,13 @@ export class LessonPronunciationFlow extends Flow<SceneStateNames, DreamScene> {
         { when: () => !hasActorAttached },
       ),
       stepBase(() => {
-        this.removePlayAudioEvent = events.audio.sync.on(
-          "audio:play-sample",
-          async () => {
+        this.removePlayAudioEvents.push(
+          events.audio.sync.on("audio:play-sample", async () => {
             if (this.isAudioSamplePlaying) return;
             this.isAudioSamplePlaying = true;
             await this.gameScene.lessonManager.playTargetAudio();
             this.isAudioSamplePlaying = false;
-          },
+          }),
         );
       }),
       stepBase(() => {
@@ -67,8 +73,9 @@ export class LessonPronunciationFlow extends Flow<SceneStateNames, DreamScene> {
         });
         this.gameScene.player.attachRecordButton({
           onStartRecord: async () => {
-            await this.gameScene.lessonManager.hideLessonDescription();
-            await this.startPronunciationChallenge();
+            events.interactions.sync.emit("interaction/accept", {
+              id: this.flowName,
+            });
           },
           onStopRecord: () => {
             this.gameScene.lessonManager.hideVoiceIndicator();
@@ -78,6 +85,7 @@ export class LessonPronunciationFlow extends Flow<SceneStateNames, DreamScene> {
       }),
       stepBase(() => {
         return this.waitInteractionEvent(async () => {
+          await this.gameScene.lessonManager.hideLessonDescription();
           await this.startPronunciationChallenge();
         });
       }),
@@ -87,6 +95,6 @@ export class LessonPronunciationFlow extends Flow<SceneStateNames, DreamScene> {
   }
 
   destroy(): void {
-    this.removePlayAudioEvent();
+    this.removePlayAudioEvents.forEach((removeEvent) => removeEvent());
   }
 }

@@ -2,11 +2,13 @@ import {
   AUDIO_RECORD_BUTTON_IMG,
   AUDIO_RECORD_BUTTON_JSON,
 } from "@/constants/images";
+import { events } from "@/events/events";
 import { getRequired } from "@/utils/getRequired";
 
 type AttachPosition = "top" | "bottom" | "left" | "right";
 
 type Callback = () => void;
+type RemoveListener = () => void;
 
 interface AudioRecordButtonOptions {
   target: Phaser.GameObjects.Container | Phaser.GameObjects.Sprite;
@@ -22,8 +24,12 @@ export class AudioRecordButton {
   private _button?: Phaser.GameObjects.Sprite;
   private _scene?: Phaser.Scene;
   private _buttonTween?: Phaser.Tweens.Tween;
+  private _loadingTween?: Phaser.Tweens.Tween;
 
   public isRecording = false;
+  public isLoading = false;
+
+  private removeLoadingEvent: RemoveListener = () => {};
 
   private get scene(): Phaser.Scene {
     return getRequired(this._scene, "AudioRecordButton", "_scene");
@@ -35,6 +41,14 @@ export class AudioRecordButton {
 
   private get buttonTween() {
     return getRequired(this._buttonTween, "AudioRecordButton", "_buttonTween");
+  }
+
+  private get loadingTween() {
+    return getRequired(
+      this._loadingTween,
+      "AudioRecordButton",
+      "_loadingTween",
+    );
   }
 
   preload(scene: Phaser.Scene) {
@@ -65,6 +79,14 @@ export class AudioRecordButton {
       paused: true,
     });
 
+    this._loadingTween = scene.tweens.add({
+      targets: this._button,
+      angle: 360,
+      duration: 800,
+      repeat: -1,
+      paused: true,
+    });
+
     this._button.setOrigin(0.5);
     this._button.setInteractive({ useHandCursor: true });
   }
@@ -75,21 +97,76 @@ export class AudioRecordButton {
 
   record(onStartRecord?: Callback) {
     this.isRecording = true;
+    this.isLoading = false;
+
+    this.removeLoadingEvent();
+
+    this.loadingTween.pause();
+    this.buttonTween.pause();
 
     this.button.setFrame("record_button_1");
     this.button.setAlpha(1);
     this.button.setScale(1);
+    this.button.setAngle(0);
+    this.button.setInteractive({ useHandCursor: true });
 
     onStartRecord?.();
   }
 
-  stop(onStopRecord?: Callback) {
+  setLoading(callback?: Callback) {
+    if (this.isLoading) return;
+
     this.isRecording = false;
+    this.isLoading = true;
+
+    this.buttonTween.pause();
+
+    this.button.setFrame("record_button_2");
+    this.button.setAlpha(1);
+    this.button.setScale(1);
+    this.button.setAngle(0);
+    this.button.disableInteractive();
+
+    this.loadingTween.restart();
+
+    callback?.();
+  }
+
+  stop(onStopRecord?: Callback) {
+    this.removeLoadingEvent();
+
+    this.isRecording = false;
+    this.isLoading = false;
+
+    this.loadingTween.pause();
+    this.buttonTween.resume();
 
     this.button.setFrame("record_button_0");
+    this.button.setAlpha(1);
+    this.button.setScale(1);
+    this.button.setAngle(0);
     this.button.setInteractive({ useHandCursor: true });
 
     onStopRecord?.();
+  }
+
+  private waitForVoiceIndicator() {
+    this.removeLoadingEvent();
+
+    const handleShowVoiceIndicator = () => {
+      this.removeLoadingEvent = () => {};
+
+      if (!this.isLoading) return;
+
+      this.record();
+    };
+
+    events.lesson.sync.once("show-voice-indicator", handleShowVoiceIndicator);
+
+    this.removeLoadingEvent = () => {
+      events.lesson.sync.off("show-voice-indicator", handleShowVoiceIndicator);
+      this.removeLoadingEvent = () => {};
+    };
   }
 
   attach({
@@ -103,23 +180,34 @@ export class AudioRecordButton {
     this.buttonTween.resume();
 
     this.button.on("pointerover", () => {
-      this.buttonTween.stop();
+      if (this.isLoading) return;
+
+      this.buttonTween.pause();
       this.button.setScale(1.2);
       this.scene.input.setDefaultCursor("pointer");
     });
 
     this.button.on("pointerout", () => {
-      this.buttonTween.resume();
+      if (this.isLoading) return;
+
+      if (!this.isRecording) {
+        this.buttonTween.resume();
+      }
+
       this.button.setScale(1);
-      this.scene?.input.setDefaultCursor("default");
+      this.scene.input.setDefaultCursor("default");
     });
 
     this.button.on(Phaser.Input.Events.GAMEOBJECT_POINTER_DOWN, () => {
+      if (this.isLoading) return;
+
       if (this.isRecording) {
         this.stop(onStopRecord);
         return;
       }
-      this.record(onStartRecord);
+
+      this.waitForVoiceIndicator();
+      this.setLoading(onStartRecord);
     });
 
     const bounds = this.getTargetBounds(target);
@@ -156,11 +244,19 @@ export class AudioRecordButton {
   }
 
   destroy() {
-    this.button.destroy();
+    this.removeLoadingEvent();
+
+    this._buttonTween?.remove();
+    this._loadingTween?.remove();
+    this._button?.destroy();
+
     this._button = undefined;
     this._buttonTween = undefined;
+    this._loadingTween = undefined;
     this._scene = undefined;
+
     this.isRecording = false;
+    this.isLoading = false;
   }
 
   private getTargetBounds(
