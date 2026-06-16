@@ -13,6 +13,7 @@ type RemoveListener = () => void;
 interface AudioRecordButtonOptions {
   target: Phaser.GameObjects.Container | Phaser.GameObjects.Sprite;
   position: AttachPosition;
+  skipNativeLoading?: boolean;
   offset?: number;
   onStartRecord?: () => void;
   onStopRecord?: () => void;
@@ -28,6 +29,7 @@ export class AudioRecordButton {
 
   public isRecording = false;
   public isLoading = false;
+  public hasButtonAttached = false;
 
   private removeLoadingEvent: RemoveListener = () => {};
 
@@ -150,6 +152,11 @@ export class AudioRecordButton {
     onStopRecord?.();
   }
 
+  showLoadingUntilVoiceIndicatorAppears() {
+    this.waitForVoiceIndicator();
+    this.setLoading();
+  }
+
   private waitForVoiceIndicator() {
     this.removeLoadingEvent();
 
@@ -174,6 +181,7 @@ export class AudioRecordButton {
     position,
     onStartRecord,
     onStopRecord,
+    skipNativeLoading,
     offset = 5,
   }: AudioRecordButtonOptions) {
     this.button.setDepth(100);
@@ -203,6 +211,11 @@ export class AudioRecordButton {
 
       if (this.isRecording) {
         this.stop(onStopRecord);
+        return;
+      }
+
+      if (skipNativeLoading) {
+        onStartRecord?.();
         return;
       }
 

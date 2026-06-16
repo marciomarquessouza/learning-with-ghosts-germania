@@ -15,17 +15,29 @@ export abstract class Flow<TState extends string, TGameScene> {
 
   abstract run(): Promise<FlowResult<TState, TGameScene>>;
 
-  protected waitInteractionEvent(callback?: () => void): Promise<void> {
+  protected waitInteractionEvent(
+    callbackAccept?: () => void,
+    callbackCancel?: () => void,
+  ): Promise<void> {
     return new Promise((resolve) => {
-      const handler = ({ id }: { id: string }) => {
+      const handlerAccept = ({ id }: { id: string }) => {
         if (id !== this.flowName) return;
 
-        callback?.();
-        events.interactions.sync.off("interaction/accept", handler);
+        callbackAccept?.();
+        events.interactions.sync.off("interaction/accept", handlerAccept);
         resolve();
       };
 
-      events.interactions.sync.on("interaction/accept", handler);
+      const handlerCancel = ({ id }: { id: string }) => {
+        if (id !== this.flowName) return;
+
+        callbackCancel?.();
+        events.interactions.sync.off("interaction/cancel", handlerAccept);
+        resolve();
+      };
+
+      events.interactions.sync.on("interaction/accept", handlerAccept);
+      events.interactions.sync.on("interaction/cancel", handlerCancel);
     });
   }
 

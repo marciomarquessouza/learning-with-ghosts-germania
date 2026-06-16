@@ -269,7 +269,7 @@ export class LearningNodeAnimations {
     this.sprite.anims.play(this.LEARNING_NODE_PUMPKIN_FULL_IDLE, true);
   }
 
-  growPumpkinTo(progress: number): Promise<void> {
+  async growPumpkinTo(progress: number): Promise<void> {
     if (!this.pumpkinRevealState) {
       throw new Error(
         "Pumpkin reveal was not initialized. Call preparePumpkinReveal() first.",

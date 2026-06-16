@@ -103,6 +103,14 @@ export class PerformingLessonState extends BaseState {
         });
       }
     }
+    if (this.input?.justPressed("cancel")) {
+      const currentFlow = this.dreamScene.flowController?.getCurrentFlow();
+      if (currentFlow) {
+        events.interactions.sync.emit("interaction/cancel", {
+          id: currentFlow.flowName,
+        });
+      }
+    }
   }
 
   update(): void {}
