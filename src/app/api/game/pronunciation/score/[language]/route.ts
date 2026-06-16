@@ -5,11 +5,43 @@ import { PronunciationResult } from "@/libs/lesson/PronunciationAPI";
 
 export const runtime = "nodejs";
 
+function createMockPronunciationResult(target: string): PronunciationResult {
+  const transcript = target;
+  const words = target.trim().split(/\s+/).filter(Boolean);
+
+  return {
+    pronunciationScore: calculatePronunciationScore(target, transcript),
+    confidence: 0.99,
+    transcript,
+    words,
+  };
+}
+
 export async function POST(
   request: Request,
   { params }: { params: Promise<{ language: string }> },
 ) {
   try {
+    const formData = await request.formData();
+    const target = formData.get("target");
+
+    if (!target || typeof target !== "string") {
+      return NextResponse.json(
+        { error: "Missing or Incorrect target" },
+        { status: 400 },
+      );
+    }
+
+    const shouldUseMock =
+      process.env.MOCK_DEEPGRAM_TRANSCRIPTION === "true" ||
+      new URL(request.url).searchParams.get("mock") === "true";
+
+    if (shouldUseMock) {
+      return NextResponse.json<PronunciationResult>(
+        createMockPronunciationResult(target),
+      );
+    }
+
     const apiKey = process.env.DEEPGRAM_API_KEY;
     if (!apiKey) {
       return NextResponse.json(
@@ -21,16 +53,7 @@ export async function POST(
     const { language } = await params;
     const apiURL = `https://api.deepgram.com/v1/listen?model=nova-3&language=${language}&smart_format=true`;
 
-    const formData = await request.formData();
-    const target = formData.get("target");
     const audioFile = formData.get("audio");
-
-    if (!target || typeof target !== "string") {
-      return NextResponse.json(
-        { error: "Missing or Incorrect target" },
-        { status: 400 },
-      );
-    }
 
     if (!audioFile || !(audioFile instanceof File)) {
       return NextResponse.json(

@@ -11,40 +11,63 @@ export class LessonPronunciationFlow extends Flow<SceneStateNames, DreamScene> {
   private target = this.gameScene.lessonManager.getEntryTarget();
   private step = this.gameScene.lessonManager.getStepByType("pronunciation");
   private isAudioSamplePlaying = false;
-  private removePlayAudioEvents: (() => void)[] = [];
+  private removePlayTargetAudioEvent: () => void = () => {};
+  private removePlayRecordedAudioEvent: () => void = () => {};
+  private removeRepeatChallengeEvent: () => void = () => {};
 
-  private async startPronunciationChallenge() {
+  private async pronunciationChallenge() {
+    this.gameScene.player.audioRecordButton.setVisible(true);
+    this.gameScene.player.audioRecordButton.showLoadingUntilVoiceIndicatorAppears();
     const pronunciationResult =
       await this.gameScene.lessonManager.pronunciationChallenge();
-    this.removePlayAudioEvents.push(
-      events.lesson.sync.on("action-button:reproduce-audio", () => {
+    this.removePlayRecordedAudioEvent();
+    this.removePlayRecordedAudioEvent = events.lesson.sync.on(
+      "action-button:reproduce-audio",
+      () => {
         this.gameScene.lessonManager.playPronunciationRecord(
           pronunciationResult.recordId,
         );
-      }),
+      },
     );
-    this.gameScene.player.detachRecordButton();
+
+    this.gameScene.player.audioRecordButton.setVisible(false);
     this.gameScene.lessonManager.showPronunciationScore(pronunciationResult);
   }
 
+  private async startPronunciationChallenge(): Promise<void> {
+    return new Promise(async (resolve) => {
+      this.pronunciationChallenge();
+      this.removeRepeatChallengeEvent = events.lesson.sync.on(
+        "action-button:repeat",
+        async () => {
+          this.pronunciationChallenge();
+        },
+      );
+      events.lesson.sync.once("action-button:next", () => {
+        resolve();
+      });
+    });
+  }
+
   async run(): Promise<FlowResult<SceneStateNames, DreamScene>> {
-    const hasActorAttached = this.gameScene.learningNode.floor.hasActorAttached;
+    const hasLearningNode = this.gameScene.learningNode.floor.hasActorAttached;
     await runSteps([
       stepBase(
         () => {
           this.gameScene.player.enterInclined();
           return this.gameScene.learningNode.resumeSproutToPumpkin();
         },
-        { when: () => !hasActorAttached },
+        { when: () => !hasLearningNode },
       ),
       stepBase(() => {
-        this.removePlayAudioEvents.push(
-          events.audio.sync.on("audio:play-sample", async () => {
+        this.removePlayTargetAudioEvent = events.audio.sync.on(
+          "audio:play-sample",
+          async () => {
             if (this.isAudioSamplePlaying) return;
             this.isAudioSamplePlaying = true;
             await this.gameScene.lessonManager.playTargetAudio();
             this.isAudioSamplePlaying = false;
-          }),
+          },
         );
       }),
       stepBase(() => {
@@ -72,29 +95,31 @@ export class LessonPronunciationFlow extends Flow<SceneStateNames, DreamScene> {
           hidePressContinue: true,
         });
         this.gameScene.player.attachRecordButton({
+          skipNativeLoading: true,
           onStartRecord: async () => {
             events.interactions.sync.emit("interaction/accept", {
               id: this.flowName,
             });
           },
-          onStopRecord: () => {
-            events.interactions.sync.emit("interaction/cancel", {
-              id: this.flowName,
-            });
+          onStopRecord: async () => {
+            this.gameScene.lessonManager.stopPronunciationChallenge();
           },
         });
       }),
+      stepBase(() => this.waitInteractionEvent()),
       stepBase(() => {
-        return this.waitInteractionEvent(
-          async () => {
-            await this.gameScene.lessonManager.hideLessonDescription();
-            await this.startPronunciationChallenge();
-          },
-          async () => {
-            await this.gameScene.lessonManager.hideLessonDescription();
-            this.gameScene.lessonManager.stopPronunciationChallenge();
-          },
-        );
+        return this.startPronunciationChallenge();
+      }),
+      stepBase(() => {
+        return this.gameScene.learningNode.increasePumpkinGrowth();
+      }),
+      stepBase(() => {
+        this.gameScene.lessonManager.writeLessonDescription({
+          dialogueTitle: "Step 2: Pronunciation",
+          description: `Congrats!`,
+          hidePressContinue: true,
+        });
+        return;
       }),
     ]);
 
@@ -102,6 +127,8 @@ export class LessonPronunciationFlow extends Flow<SceneStateNames, DreamScene> {
   }
 
   destroy(): void {
-    this.removePlayAudioEvents.forEach((removeEvent) => removeEvent());
+    this.removePlayRecordedAudioEvent();
+    this.removePlayTargetAudioEvent();
+    this.removeRepeatChallengeEvent();
   }
 }

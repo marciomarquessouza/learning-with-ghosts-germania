@@ -128,13 +128,16 @@ export class Player {
   attachRecordButton({
     onStartRecord,
     onStopRecord,
+    skipNativeLoading,
   }: {
+    skipNativeLoading?: boolean;
     onStartRecord?: () => void;
     onStopRecord?: () => void;
   }) {
     this.audioRecordButton.attach({
       target: this.sprite,
       position: "bottom",
+      skipNativeLoading,
       onStartRecord,
       onStopRecord,
       offset: 20,
