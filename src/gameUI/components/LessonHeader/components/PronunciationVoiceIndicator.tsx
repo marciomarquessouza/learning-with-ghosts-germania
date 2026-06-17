@@ -42,9 +42,10 @@ export function PronunciationVoiceIndicator({
   return (
     <div
       id="pronunciation-voice-indicator"
-      className="pointer-events-none absolute left-0 top-12 flex w-full items-center px-12 text-white outline-none"
+      className="pointer-events-none absolute left-0 top-6 flex w-full items-center px-12 text-white outline-none"
     >
       <div className="flex w-full h-20 flex-col items-center justify-center">
+        <p className="font-mono mb-3">SPEAK!!!</p>
         <div className="mt-2 w-[520px] mx-auto text-center">
           <div className="relative flex items-center justify-center">
             <div className="relative h-3 w-full rounded-full bg-[#efe6d9] shadow-[0_1px_0_rgba(0,0,0,0.2)]">
