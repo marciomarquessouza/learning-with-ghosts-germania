@@ -54,7 +54,10 @@ export function LessonHeader() {
             headerState.pronunciationScore.pronunciationResult
           }
         />
-        <LessonLoading isVisible={headerState.loading} />
+        <LessonLoading
+          isVisible={headerState.loading.show}
+          text={headerState.loading.text}
+        />
       </LessonHeaderWrapper>
     </>
   );

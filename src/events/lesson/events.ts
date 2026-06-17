@@ -4,6 +4,7 @@ import type {
   ShowLessonTitleEvent,
   ToggleNotebookEvent,
   PronunciationResultEvent,
+  LoadingEvent,
 } from "./types";
 import { createEventManagers } from "@/libs/events/createEventManagers";
 
@@ -16,7 +17,7 @@ export type LessonSyncEvents = {
   "hide-voice-indicator": undefined;
   "show-pronunciation-score": PronunciationResultEvent;
   "hide-pronunciation-score": undefined;
-  "show-loading": undefined;
+  "show-loading": LoadingEvent;
   "hide-loading": undefined;
   "action-button:next": undefined;
   "action-button:repeat": undefined;

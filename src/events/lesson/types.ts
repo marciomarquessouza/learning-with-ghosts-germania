@@ -29,3 +29,7 @@ export interface PronunciationResultEvent {
   score: PronunciationScore;
   feedback: PronunciationFeedback;
 }
+
+export interface LoadingEvent {
+  text?: string;
+}

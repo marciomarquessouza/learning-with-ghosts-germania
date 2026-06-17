@@ -1,5 +1,6 @@
 import { events } from "@/events/events";
 import {
+  LoadingEvent,
   PronunciationResultEvent,
   ShowLessonTitleEvent,
   WriteLessonDescriptionEvent,
@@ -156,8 +157,8 @@ export function useLessonHeader() {
   }, []);
 
   useEffect(() => {
-    const handle = () => {
-      dispatch({ type: "show-loading" });
+    const handle = (payload: LoadingEvent) => {
+      dispatch({ type: "show-loading", payload });
     };
     events.lesson.sync.on("show-loading", handle);
     return () => {
