@@ -47,6 +47,7 @@ export function LessonHeader() {
         />
         <PronunciationVoiceIndicator
           isVisible={headerState.voiceIndicator.show}
+          target={headerState.voiceIndicator.text}
         />
         <PronunciationScore
           isVisible={headerState.pronunciationScore.show}

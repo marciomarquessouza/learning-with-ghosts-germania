@@ -3,6 +3,7 @@ import {
   LoadingEvent,
   PronunciationResultEvent,
   ShowLessonTitleEvent,
+  VoiceIndicatorEvent,
   WriteLessonDescriptionEvent,
 } from "@/events/lesson/types";
 import { DescriptionPhases } from "@/gameUI/components/LessonHeader/components/StepDescription";
@@ -117,8 +118,8 @@ export function useLessonHeader() {
   }, []);
 
   useEffect(() => {
-    const handle = () => {
-      dispatch({ type: "show-voice-indicator" });
+    const handle = (payload: VoiceIndicatorEvent) => {
+      dispatch({ type: "show-voice-indicator", payload });
     };
     events.lesson.sync.on("show-voice-indicator", handle);
     return () => {

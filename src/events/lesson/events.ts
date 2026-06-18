@@ -5,6 +5,7 @@ import type {
   ToggleNotebookEvent,
   PronunciationResultEvent,
   LoadingEvent,
+  VoiceIndicatorEvent,
 } from "./types";
 import { createEventManagers } from "@/libs/events/createEventManagers";
 
@@ -13,7 +14,7 @@ export type LessonSyncEvents = {
   "toggle-notebook": ToggleNotebookEvent;
   "lesson-entry-notebook-phase": LessonEntryNotebookEvent;
   "show-description": undefined;
-  "show-voice-indicator": undefined;
+  "show-voice-indicator": VoiceIndicatorEvent;
   "hide-voice-indicator": undefined;
   "show-pronunciation-score": PronunciationResultEvent;
   "hide-pronunciation-score": undefined;

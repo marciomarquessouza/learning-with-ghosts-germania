@@ -2,6 +2,7 @@ import {
   LoadingEvent,
   PronunciationResultEvent,
   ShowLessonTitleEvent,
+  VoiceIndicatorEvent,
   WriteLessonDescriptionEvent,
 } from "@/events/lesson/types";
 
@@ -21,6 +22,7 @@ export type LessonHeaderState = {
   };
   voiceIndicator: {
     show: boolean;
+    text?: string;
   };
   pronunciationScore: {
     show: boolean;
@@ -68,7 +70,7 @@ export type Actions =
   | { type: "show-description" }
   | { type: "write-description"; payload: WriteLessonDescriptionEvent }
   | { type: "hide-description" }
-  | { type: "show-voice-indicator" }
+  | { type: "show-voice-indicator"; payload?: VoiceIndicatorEvent }
   | { type: "hide-voice-indicator" }
   | { type: "show-pronunciation-score"; payload: PronunciationResultEvent }
   | { type: "hide-pronunciation-score" }
@@ -190,6 +192,11 @@ export function lessonHeaderReducer(
     case "show-voice-indicator":
       return {
         ...state,
+        voiceIndicator: {
+          ...state.voiceIndicator,
+          show: true,
+          text: actions?.payload?.target,
+        },
         lesson: {
           ...state.lesson,
           show: false,
@@ -197,10 +204,6 @@ export function lessonHeaderReducer(
         step: {
           ...state.step,
           show: false,
-        },
-        voiceIndicator: {
-          ...state.voiceIndicator,
-          show: true,
         },
         pronunciationScore: {
           ...state.pronunciationScore,

@@ -15,6 +15,7 @@ export default meta;
 
 type ActionsProps = {
   isVisible: boolean;
+  target: string;
 };
 
 const VOLUME_STEPS = [
@@ -23,7 +24,7 @@ const VOLUME_STEPS = [
   { label: "HIGH", value: 0.16 },
 ];
 
-function PronunciationVoiceIndicatorStory({ isVisible }: ActionsProps) {
+function PronunciationVoiceIndicatorStory({ isVisible, target }: ActionsProps) {
   const { setCurrentVoiceRecordingVolume } = useAudioStore();
 
   useEffect(() => {
@@ -42,12 +43,17 @@ function PronunciationVoiceIndicatorStory({ isVisible }: ActionsProps) {
     };
   }, [setCurrentVoiceRecordingVolume]);
 
-  return <PronunciationVoiceIndicator isVisible={isVisible} />;
+  return (
+    <div className=" bg-black flex flex-1 min-h-screen min-w-screen">
+      <PronunciationVoiceIndicator isVisible={isVisible} target={target} />
+    </div>
+  );
 }
 
 export const Default: StoryObj<ActionsProps> = {
   args: {
     isVisible: true,
+    target: "Hallo",
   },
   render: PronunciationVoiceIndicatorStory,
 };

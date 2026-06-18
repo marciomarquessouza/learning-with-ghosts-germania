@@ -1,3 +1,23 @@
+/**
+ * Renders text with inline formatted parts using the syntax:
+ * {{format|value}}
+ *
+ * Supported formats:
+ * - {{key|space}}: renders the value as a keyboard key label.
+ * - {{audio|Hallo}}: renders the value as a clickable audio button.
+ *   Requires `playAudio` to be passed in the options.
+ * - {{target|Hallo}}: renders the value as the highlighted target word.
+ *
+ * Example:
+ * renderFormattedText(
+ *   'Press {{key|space}} to hear {{audio|Hallo}} and repeat {{target|Hallo}}.',
+ *   {
+ *     audioIcon: <AudioIcon />,
+ *     playAudio: (audio) => play(audio),
+ *   },
+ * );
+ */
+
 type SupportedFormat = "key" | "audio" | "target";
 
 type RenderFormattedTextOptions = {
@@ -44,7 +64,7 @@ function renderFormattedPart(
       return (
         <span
           key={key}
-          className="rounded-sm border-b-2 border-yellow-500 bg-yellow-100 px-1 font-bold text-yellow-950"
+          className="rounded-sm border-b-2 border-yellow-500 bg-yellow-100 px-1 pt-1 font-bold text-yellow-950"
         >
           {value}
         </span>

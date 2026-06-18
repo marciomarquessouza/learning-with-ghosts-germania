@@ -24,6 +24,10 @@ export interface WriteLessonDescriptionEvent {
   hidePressContinue?: boolean;
 }
 
+export interface VoiceIndicatorEvent {
+  target?: string;
+}
+
 export interface PronunciationResultEvent {
   recordId: string;
   score: PronunciationScore;

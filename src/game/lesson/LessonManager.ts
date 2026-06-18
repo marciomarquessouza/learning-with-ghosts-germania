@@ -52,7 +52,8 @@ export class LessonManager extends LessonController {
   }
 
   public showVoiceIndicator() {
-    return events.lesson.sync.emit("show-voice-indicator");
+    const target = this.getEntryTarget();
+    return events.lesson.sync.emit("show-voice-indicator", { target });
   }
 
   public hideVoiceIndicator() {
