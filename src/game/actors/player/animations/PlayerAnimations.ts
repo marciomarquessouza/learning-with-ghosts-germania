@@ -57,6 +57,11 @@ export class PlayerAnimations {
       repeat: 0,
     });
 
+    this.animationManager.createAnimation(scene, "talking", {
+      frameRate: 8,
+      repeat: -1,
+    });
+
     if (!scene.anims.exists(this.PLAYER_EXPRESSIONS[MOODS.SAD])) {
       scene.anims.create({
         key: this.PLAYER_EXPRESSIONS[MOODS.SAD],
@@ -115,12 +120,22 @@ export class PlayerAnimations {
     this.sprite.play(this.PLAYER_EXPRESSIONS[MOODS.SURPRISED]);
   }
 
-  playInclined(options?: { reverse: boolean }) {
-    if (options?.reverse) {
-      this.animationManager.playAnimationReverse(this.sprite, "inclined", true);
-      return;
-    }
-    this.animationManager.playAnimation(this.sprite, "inclined", true);
+  async playInclined(options?: { reverse: boolean }): Promise<void> {
+    return new Promise((resolve) => {
+      if (options?.reverse) {
+        this.animationManager
+          .playAnimationReverse(this.sprite, "inclined", true)
+          .onAnimationComplete(resolve);
+        return;
+      }
+      this.animationManager
+        .playAnimation(this.sprite, "inclined", true)
+        .onAnimationComplete(resolve);
+    });
+  }
+
+  playTalking() {
+    this.animationManager.playAnimation(this.sprite, "talking", true);
   }
 
   playAnimationByMood(mood: MOODS) {

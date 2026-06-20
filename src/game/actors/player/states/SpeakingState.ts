@@ -9,7 +9,9 @@ export class SpeakingState extends BaseState {
     super(scene);
   }
 
-  enter(): void {}
+  enter(): void {
+    this.player.animations.playTalking();
+  }
 
   exit(): void {}
 

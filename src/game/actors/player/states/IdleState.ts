@@ -2,6 +2,7 @@ import { BaseState } from "@/libs/game/state-machine/BaseState";
 import { Player } from "../Player";
 import { useGameStore } from "@/store/gameStore";
 import { events } from "@/events/events";
+import { PLAYER_STATES } from "../constants/states";
 
 export class IdleState extends BaseState {
   constructor(
@@ -11,8 +12,16 @@ export class IdleState extends BaseState {
     super(scene);
   }
 
-  enter(): void {
+  private async playAnimation() {
+    if (this.stateMachine.getPreviousStateName() === PLAYER_STATES.INCLINED) {
+      await this.player.animations.playInclined({ reverse: true });
+      this.player.animations.playIdle();
+    }
     this.player.animations.playIdle();
+  }
+
+  enter(): void {
+    this.playAnimation();
     this.player.sprite?.setVelocityX(0);
   }
 

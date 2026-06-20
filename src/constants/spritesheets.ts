@@ -67,6 +67,11 @@ export const SPRITESHEETS = {
       key: 'player-move',
       image: '/actors/player/move/spritesheet.png',
       atlas: '/actors/player/move/spritesheet.json'
+    },
+    talking: {
+      key: 'player-talking',
+      image: '/actors/player/talking/spritesheet.png',
+      atlas: '/actors/player/talking/spritesheet.json'
     }
   },
   punisher: {

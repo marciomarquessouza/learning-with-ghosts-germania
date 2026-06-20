@@ -1,0 +1,112 @@
+{
+  "frames": {
+    "player_talking_0": {
+      "frame": {
+        "x": 0,
+        "y": 0,
+        "w": 110,
+        "h": 252
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 110,
+        "h": 252
+      },
+      "sourceSize": {
+        "w": 110,
+        "h": 252
+      }
+    },
+    "player_talking_1": {
+      "frame": {
+        "x": 110,
+        "y": 0,
+        "w": 110,
+        "h": 252
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 110,
+        "h": 252
+      },
+      "sourceSize": {
+        "w": 110,
+        "h": 252
+      }
+    },
+    "player_talking_2": {
+      "frame": {
+        "x": 220,
+        "y": 0,
+        "w": 110,
+        "h": 252
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 110,
+        "h": 252
+      },
+      "sourceSize": {
+        "w": 110,
+        "h": 252
+      }
+    },
+    "player_talking_3": {
+      "frame": {
+        "x": 330,
+        "y": 0,
+        "w": 110,
+        "h": 252
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 110,
+        "h": 252
+      },
+      "sourceSize": {
+        "w": 110,
+        "h": 252
+      }
+    },
+    "player_talking_4": {
+      "frame": {
+        "x": 0,
+        "y": 252,
+        "w": 110,
+        "h": 252
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 110,
+        "h": 252
+      },
+      "sourceSize": {
+        "w": 110,
+        "h": 252
+      }
+    }
+  },
+  "meta": {
+    "image": "spritesheet.png",
+    "size": {
+      "w": 440,
+      "h": 504
+    },
+    "scale": "0.3"
+  }
+}

@@ -70,6 +70,7 @@ export class LessonManager extends LessonController {
     try {
       events.lesson.sync.emit("show-loading", { text: "Mic Setuuup..." });
       const target = this.getEntryTarget();
+      // TODO: replace state with audio or lesson event
       const { setIsRecording, setCurrentVoiceRecordingVolume } =
         useAudioStore.getState();
       const { recordId, audioBlob } = await this.startRecording({

@@ -13,9 +13,7 @@ export class InclinedState extends BaseState {
     this.player.animations.playInclined();
   }
 
-  exit(): void {
-    this.player.animations.playInclined({ reverse: true });
-  }
+  exit(): void {}
 
   update(): void {}
 
