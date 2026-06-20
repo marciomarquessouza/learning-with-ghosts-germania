@@ -6,7 +6,8 @@ export type InputAction =
   | "left"
   | "right"
   | "up"
-  | "down";
+  | "down"
+  | "repeat";
 
 export type InputBindings = Partial<
   Record<InputAction, Phaser.Input.Keyboard.Key[]>

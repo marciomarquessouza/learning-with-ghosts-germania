@@ -45,9 +45,13 @@ export class DoorKnockingFlow extends Flow<SceneStateNames, CellScene> {
             });
           }),
           stepBase(() =>
-            this.waitInteractionEvent(() => {
-              this.knockTimer?.remove();
-              events.game.sync.emit("game-action-prompt/hide");
+            this.waitInteractionEvent({
+              accept: {
+                callback: () => {
+                  this.knockTimer?.remove();
+                  events.game.sync.emit("game-action-prompt/hide");
+                },
+              },
             }),
           ),
         ]);

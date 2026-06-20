@@ -111,6 +111,14 @@ export class PerformingLessonState extends BaseState {
         });
       }
     }
+    if (this.input?.justPressed("repeat")) {
+      const currentFlow = this.dreamScene.flowController?.getCurrentFlow();
+      if (currentFlow) {
+        events.interactions.sync.emit("interaction/repeat", {
+          id: currentFlow.flowName,
+        });
+      }
+    }
   }
 
   update(): void {}

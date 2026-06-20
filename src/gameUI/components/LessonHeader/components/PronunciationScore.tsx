@@ -2,6 +2,7 @@ import { PronunciationResultEvent } from "@/events/lesson/types";
 import { ActionButton } from "../../ActionButton";
 import { AudioButton } from "../../AudioButton";
 import { events } from "@/events/events";
+import { useEffect, useState } from "react";
 
 interface PronunciationScoreProps {
   isVisible: boolean;
@@ -12,6 +13,35 @@ export function PronunciationScore({
   isVisible,
   pronunciationResult,
 }: PronunciationScoreProps) {
+  const [activeNextButton, setActiveNextButton] = useState(false);
+  const [activeRepeatButton, setActiveRepeatButton] = useState(false);
+
+  useEffect(() => {
+    const handle = () => {
+      setActiveNextButton(true);
+      setTimeout(() => {
+        setActiveNextButton(false);
+      }, 1_500);
+    };
+    events.interactions.sync.on("interaction/accept", handle);
+    return () => {
+      events.interactions.sync.off("interaction/accept", handle);
+    };
+  }, []);
+
+  useEffect(() => {
+    const handle = () => {
+      setActiveRepeatButton(true);
+      setTimeout(() => {
+        setActiveRepeatButton(false);
+      }, 1_500);
+    };
+    events.interactions.sync.on("interaction/repeat", handle);
+    return () => {
+      events.interactions.sync.off("interaction/repeat", handle);
+    };
+  }, []);
+
   if (!isVisible || !pronunciationResult) {
     return null;
   }
@@ -58,13 +88,13 @@ export function PronunciationScore({
       </div>
       <div
         id="pronunciation-score-title"
-        className="absolute left-1/2 -translate-x-1/2 bottom-2 z-50"
+        className="absolute left-1/2 -translate-x-1/2 top-28 z-50"
       >
         <div className="flex flex-row gap-6">
           <ActionButton
             label="REPEAT"
             icon="pronunciation-repeat"
-            active={false}
+            active={activeRepeatButton}
             hotkey="R"
             onClick={() => events.lesson.sync.emit("action-button:repeat")}
           />
@@ -79,8 +109,8 @@ export function PronunciationScore({
           <ActionButton
             label="NEXT"
             icon="next"
-            active={false}
-            hotkey="F"
+            active={activeNextButton}
+            hotkey="E"
             onClick={() => events.lesson.sync.emit("action-button:next")}
           />
         </div>

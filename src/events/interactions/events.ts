@@ -4,6 +4,7 @@ import { InteractionEvent } from "./types";
 export type InteractionsSyncEvents = {
   "interaction/accept": InteractionEvent;
   "interaction/cancel": InteractionEvent;
+  "interaction/repeat": InteractionEvent;
 };
 
 export type InteractionsAsyncEvents = {

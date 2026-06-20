@@ -35,17 +35,27 @@ export class LessonPronunciationFlow extends Flow<SceneStateNames, DreamScene> {
   }
 
   private async startPronunciationChallenge(): Promise<void> {
-    return new Promise(async (resolve) => {
-      this.pronunciationChallenge();
-      this.removeRepeatChallengeEvent = events.lesson.sync.on(
-        "action-button:repeat",
-        async () => {
+    this.pronunciationChallenge();
+    this.removeRepeatChallengeEvent = events.lesson.sync.on(
+      "action-button:repeat",
+      async () => {
+        this.pronunciationChallenge();
+      },
+    );
+    events.lesson.sync.once("action-button:next", () => {
+      events.interactions.sync.emit("interaction/accept", {
+        id: this.flowName,
+      });
+    });
+    return this.waitInteractionEvent({
+      repeat: {
+        // Keyboard Event necessary only for the repeat actions.
+        // The accept action is called with the default callback
+        callback: () => {
+          this.delay(500);
           this.pronunciationChallenge();
         },
-      );
-      events.lesson.sync.once("action-button:next", () => {
-        resolve();
-      });
+      },
     });
   }
 

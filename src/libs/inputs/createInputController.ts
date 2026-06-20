@@ -22,6 +22,7 @@ export function createInputController(
     right: [KEY_CODES.RIGHT, KEY_CODES.D],
     up: [KEY_CODES.UP, KEY_CODES.W],
     down: [KEY_CODES.DOWN, KEY_CODES.S],
+    repeat: [KEY_CODES.R],
   };
 
   const mergedBindings: Record<InputAction, number[]> = {

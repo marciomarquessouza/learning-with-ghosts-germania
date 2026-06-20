@@ -2,6 +2,20 @@ import { events } from "@/events/events";
 import { FlowPayload, FlowResult } from "./types";
 import { Step } from "./runSteps";
 
+interface WaitInteractionEventOptions {
+  accept?: {
+    callback?: () => void;
+  };
+  cancel?: {
+    resolvePromise?: boolean;
+    callback?: () => void;
+  };
+  repeat?: {
+    resolvePromise?: boolean;
+    callback?: () => void;
+  };
+}
+
 export abstract class Flow<TState extends string, TGameScene> {
   protected scene: Phaser.Scene;
   protected gameScene: TGameScene;
@@ -16,28 +30,41 @@ export abstract class Flow<TState extends string, TGameScene> {
   abstract run(): Promise<FlowResult<TState, TGameScene>>;
 
   protected waitInteractionEvent(
-    callbackAccept?: () => void,
-    callbackCancel?: () => void,
+    options?: WaitInteractionEventOptions,
   ): Promise<void> {
     return new Promise((resolve) => {
       const handlerAccept = ({ id }: { id: string }) => {
         if (id !== this.flowName) return;
 
-        callbackAccept?.();
+        options?.accept?.callback?.();
         events.interactions.sync.off("interaction/accept", handlerAccept);
         resolve();
+      };
+
+      const handleRepeat = ({ id }: { id: string }) => {
+        if (id !== this.flowName) return;
+
+        options?.repeat?.callback?.();
+        events.interactions.sync.off("interaction/repeat", handlerAccept);
+
+        if (options?.repeat?.resolvePromise) {
+          resolve();
+        }
       };
 
       const handlerCancel = ({ id }: { id: string }) => {
         if (id !== this.flowName) return;
 
-        callbackCancel?.();
+        options?.cancel?.callback?.();
         events.interactions.sync.off("interaction/cancel", handlerAccept);
-        resolve();
+        if (options?.cancel?.resolvePromise) {
+          resolve();
+        }
       };
 
       events.interactions.sync.on("interaction/accept", handlerAccept);
       events.interactions.sync.on("interaction/cancel", handlerCancel);
+      events.interactions.sync.on("interaction/repeat", handleRepeat);
     });
   }
 
