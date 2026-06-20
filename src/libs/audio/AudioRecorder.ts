@@ -221,35 +221,38 @@ export class AudioRecorder {
     return this.currentRecord;
   }
 
-  playRecording({
+  async playRecording({
     recordingId,
     onPlayRecord,
     onEndRecord,
     onError,
-  }: PlayRecordingOptions) {
-    if (!this.currentRecord || this.currentRecord.id !== recordingId) {
-      console.error("Recording not found");
-      return;
-    }
+  }: PlayRecordingOptions): Promise<void> {
+    return new Promise((resolve, reject) => {
+      if (!this.currentRecord || this.currentRecord.id !== recordingId) {
+        reject("Recording not found");
+        return;
+      }
 
-    const audio = new Audio(this.currentRecord.url);
+      const audio = new Audio(this.currentRecord.url);
 
-    audio.onplay = () => {
-      onPlayRecord?.();
-    };
+      audio.onplay = () => {
+        onPlayRecord?.();
+      };
 
-    audio.onended = () => {
-      onEndRecord?.();
-    };
+      audio.onended = () => {
+        resolve();
+        onEndRecord?.();
+      };
 
-    audio.onerror = (error) => {
-      console.error("Playback error:", error);
-      onError?.("Failed to play audio");
-    };
+      audio.onerror = (error) => {
+        onError?.("Failed to play audio");
+        reject(error);
+      };
 
-    audio.play().catch((error) => {
-      console.error("Failed to play audio:", error);
-      onError?.("Failed to play audio");
+      audio.play().catch((error) => {
+        onError?.("Failed to play audio");
+        reject(error);
+      });
     });
   }
 

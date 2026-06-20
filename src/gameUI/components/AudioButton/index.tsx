@@ -10,6 +10,7 @@ export interface AudioButtonProps {
   isPlaying?: boolean;
   isRecording?: boolean;
   isLoading?: boolean;
+  disabled?: boolean;
   onClick: () => void;
 }
 
@@ -18,6 +19,7 @@ export function AudioButton({
   isPlaying = false,
   isRecording = false,
   isLoading = false,
+  disabled,
   onClick,
 }: AudioButtonProps) {
   const ariaLabel = useMemo(() => {
@@ -36,6 +38,7 @@ export function AudioButton({
       type="button"
       onClick={onClick}
       aria-label={ariaLabel}
+      disabled={disabled}
       className={[
         "absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 z-10",
         "h-10 w-10 rounded-full bg-white",

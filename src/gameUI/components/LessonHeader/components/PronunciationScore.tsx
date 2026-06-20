@@ -15,6 +15,13 @@ export function PronunciationScore({
 }: PronunciationScoreProps) {
   const [activeNextButton, setActiveNextButton] = useState(false);
   const [activeRepeatButton, setActiveRepeatButton] = useState(false);
+  const [isReproducing, setIsReproducing] = useState(false);
+
+  const handlePlayRecord = async () => {
+    setIsReproducing(true);
+    await events.lesson.async.emitAsync("action-button:reproduce-audio");
+    setIsReproducing(false);
+  };
 
   useEffect(() => {
     const handle = () => {
@@ -101,9 +108,9 @@ export function PronunciationScore({
           <div className="mx-4">
             <AudioButton
               type="reproduce"
-              onClick={() =>
-                events.lesson.sync.emit("action-button:reproduce-audio")
-              }
+              isPlaying={isReproducing}
+              disabled={isReproducing}
+              onClick={handlePlayRecord}
             />
           </div>
           <ActionButton

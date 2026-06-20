@@ -4,6 +4,7 @@ import { DreamScene } from "../..";
 import { FlowResult } from "@/libs/game/game-flow/types";
 import { runSteps, stepBase } from "@/libs/game/game-flow/runSteps";
 import { events } from "@/events/events";
+import { ClearEvent } from "@/libs/events/types";
 
 export class LessonPronunciationFlow extends Flow<SceneStateNames, DreamScene> {
   public flowName = "LessonPronunciationFlow";
@@ -12,7 +13,7 @@ export class LessonPronunciationFlow extends Flow<SceneStateNames, DreamScene> {
   private step = this.gameScene.lessonManager.getStepByType("pronunciation");
   private isAudioSamplePlaying = false;
   private removePlayTargetAudioEvent: () => void = () => {};
-  private removePlayRecordedAudioEvent: () => void = () => {};
+  private removePlayRecordedAudioEvent: ClearEvent = { remove: () => {} };
   private removeRepeatChallengeEvent: () => void = () => {};
 
   private async pronunciationChallenge() {
@@ -20,13 +21,14 @@ export class LessonPronunciationFlow extends Flow<SceneStateNames, DreamScene> {
     this.gameScene.player.audioRecordButton.showLoadingUntilVoiceIndicatorAppears();
     const pronunciationResult =
       await this.gameScene.lessonManager.pronunciationChallenge();
-    this.removePlayRecordedAudioEvent();
-    this.removePlayRecordedAudioEvent = events.lesson.sync.on(
+    this.removePlayRecordedAudioEvent.remove();
+    this.removePlayRecordedAudioEvent = events.lesson.async.on(
       "action-button:reproduce-audio",
-      () => {
-        this.gameScene.lessonManager.playPronunciationRecord(
+      async (_, done) => {
+        await this.gameScene.lessonManager.playPronunciationRecord(
           pronunciationResult.recordId,
         );
+        done();
       },
     );
 
@@ -137,7 +139,7 @@ export class LessonPronunciationFlow extends Flow<SceneStateNames, DreamScene> {
   }
 
   destroy(): void {
-    this.removePlayRecordedAudioEvent();
+    this.removePlayRecordedAudioEvent.remove();
     this.removePlayTargetAudioEvent();
     this.removeRepeatChallengeEvent();
   }

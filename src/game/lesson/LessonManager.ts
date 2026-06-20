@@ -133,8 +133,8 @@ export class LessonManager extends LessonController {
     events.lesson.sync.emit("hide-voice-indicator");
   }
 
-  public playPronunciationRecord(id: string) {
-    this.audioRecorder.playRecording({ recordingId: id });
+  public async playPronunciationRecord(id: string): Promise<void> {
+    return this.audioRecorder.playRecording({ recordingId: id });
   }
 
   destroy() {

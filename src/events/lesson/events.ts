@@ -22,7 +22,6 @@ export type LessonSyncEvents = {
   "hide-loading": undefined;
   "action-button:next": undefined;
   "action-button:repeat": undefined;
-  "action-button:reproduce-audio": undefined;
 };
 
 export type LessonAsyncEvents = {
@@ -30,6 +29,7 @@ export type LessonAsyncEvents = {
   "hide-lesson-header": undefined;
   "write-lesson-description": WriteLessonDescriptionEvent;
   "hide-lesson-description": undefined;
+  "action-button:reproduce-audio": undefined;
 };
 
 export const lessonEvents = createEventManagers<
