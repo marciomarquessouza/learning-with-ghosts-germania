@@ -5,6 +5,7 @@ import { FlowResult } from "@/libs/game/game-flow/types";
 import { runSteps, stepBase } from "@/libs/game/game-flow/runSteps";
 import { events } from "@/events/events";
 import { ClearEvent } from "@/libs/events/types";
+import { useAudioStore } from "@/store/audioStore";
 
 export class LessonPronunciationFlow extends Flow<SceneStateNames, DreamScene> {
   public flowName = "LessonPronunciationFlow";
@@ -17,10 +18,24 @@ export class LessonPronunciationFlow extends Flow<SceneStateNames, DreamScene> {
   private removeRepeatChallengeEvent: () => void = () => {};
 
   private async pronunciationChallenge() {
+    const { setIsRecording, setCurrentVoiceRecordingVolume } =
+      useAudioStore.getState();
     this.gameScene.player.audioRecordButton.setVisible(true);
     this.gameScene.player.audioRecordButton.showLoadingUntilVoiceIndicatorAppears();
+    this.gameScene.player.enterPronunciation();
     const pronunciationResult =
-      await this.gameScene.lessonManager.pronunciationChallenge();
+      await this.gameScene.lessonManager.pronunciationChallenge({
+        onRecording: (isRecording) => {
+          setIsRecording(isRecording);
+          if (!isRecording) {
+            this.gameScene.player.audioRecordButton.setVisible(false);
+          }
+        },
+        onVolumeChange: (volume) => {
+          setCurrentVoiceRecordingVolume(volume);
+        },
+      });
+    this.gameScene.player.enterIdle();
     this.removePlayRecordedAudioEvent.remove();
     this.removePlayRecordedAudioEvent = events.lesson.async.on(
       "action-button:reproduce-audio",

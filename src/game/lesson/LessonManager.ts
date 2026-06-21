@@ -8,7 +8,6 @@ import { AudioRecorder } from "@/libs/audio/AudioRecorder";
 import { PronunciationAPI } from "@/libs/lesson/PronunciationAPI";
 import { LessonController } from "@/libs/lesson/LessonController";
 import { Lesson } from "@/libs/lesson/types";
-import { useAudioStore } from "@/store/audioStore";
 
 export class LessonManager extends LessonController {
   private audioRecorder = new AudioRecorder({
@@ -65,17 +64,16 @@ export class LessonManager extends LessonController {
   }
 
   public async pronunciationChallenge(options?: {
+    onRecording?: (isRecording: boolean) => void;
+    onVolumeChange?: (volume: number) => void;
     onRecordTimeout?: (elapsed: number, maxTime: number) => void;
   }): Promise<PronunciationResultEvent> {
     try {
       events.lesson.sync.emit("show-loading", { text: "Mic Setuuup..." });
       const target = this.getEntryTarget();
-      // TODO: replace state with audio or lesson event
-      const { setIsRecording, setCurrentVoiceRecordingVolume } =
-        useAudioStore.getState();
       const { recordId, audioBlob } = await this.startRecording({
-        setIsRecording,
-        setCurrentVoiceRecordingVolume,
+        onRecording: options?.onRecording,
+        onVolumeChange: options?.onVolumeChange,
         onRecordTimeout: options?.onRecordTimeout,
       });
       const { score, feedback } =
@@ -95,22 +93,22 @@ export class LessonManager extends LessonController {
   }
 
   private async startRecording(options: {
-    setIsRecording: (value: boolean) => void;
-    setCurrentVoiceRecordingVolume: (volume: number) => void;
+    onRecording?: (value: boolean) => void;
+    onVolumeChange?: (volume: number) => void;
     onRecordTimeout?: (elapsed: number, maxTime: number) => void;
   }): Promise<{ recordId: string; audioBlob: Blob }> {
     return new Promise((resolve) => {
       this.audioRecorder.startRecording({
         targetPhrase: this.getEntryTarget(),
         onStartRecord: async () => {
-          options.setIsRecording(true);
+          options.onRecording?.(true);
           this.showVoiceIndicator();
         },
         onVolumeChange: (volume) => {
-          options.setCurrentVoiceRecordingVolume(volume);
+          options?.onVolumeChange?.(volume);
         },
         onSpeakingEnd: async (recordId, audioBlob) => {
-          options.setIsRecording(false);
+          options.onRecording?.(false);
           events.lesson.sync.emit("show-loading", {
             text: "Checking Auuudio...",
           });
@@ -122,7 +120,7 @@ export class LessonManager extends LessonController {
         },
         onError: () => {
           this.hideVoiceIndicator();
-          options.setIsRecording(false);
+          options.onRecording?.(false);
           console.error("Pronunciation Challenge Error");
         },
       });

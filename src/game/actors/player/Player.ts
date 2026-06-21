@@ -82,8 +82,8 @@ export class Player {
     this.stateMachine.changeTo(Player.STATES.LISTENING);
   }
 
-  enterSpeaking() {
-    this.stateMachine.changeTo(Player.STATES.SPEAKING);
+  enterPronunciation() {
+    this.stateMachine.changeTo(Player.STATES.PRONUNCIATION);
   }
 
   enterScared() {

@@ -6,7 +6,7 @@ import {
 import { IdleState } from "../states/IdleState";
 import { MovingState } from "../states/MovingState";
 import { ListeningState } from "../states/ListeningState";
-import { SpeakingState } from "../states/SpeakingState";
+import { PronunciationState } from "../states/PronunciationState";
 import { Player } from "../Player";
 import { ScaredState } from "../states/ScaredState";
 import { PlayerStateNames } from "../constants/states";
@@ -30,7 +30,7 @@ export function createPlayerStateMachine(
     [Player.STATES.IDLE, IdleState],
     [Player.STATES.MOVING, MovingState],
     [Player.STATES.LISTENING, ListeningState],
-    [Player.STATES.SPEAKING, SpeakingState],
+    [Player.STATES.PRONUNCIATION, PronunciationState],
     [Player.STATES.SCARED, ScaredState],
     [Player.STATES.INCLINED, InclinedState],
   ];
