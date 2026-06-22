@@ -7,6 +7,7 @@ import { LessonNotebook } from "./components/LessonNotebook";
 import { RotateOverlay } from "./components/RotateOverlay";
 import { TrainLessonChallenges } from "./components/TrainLessonChallenges";
 import { LessonHeader } from "./components/LessonHeader/LessonHeader";
+import { WritingBoard } from "./components/WritingBoard";
 
 export function GameUI() {
   return (
@@ -19,6 +20,7 @@ export function GameUI() {
       <LessonNotebook />
       <LessonHeader />
       <TrainLessonChallenges />
+      <WritingBoard />
       <Dialogue />
     </>
   );
