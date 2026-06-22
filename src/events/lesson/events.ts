@@ -6,6 +6,7 @@ import type {
   PronunciationResultEvent,
   LoadingEvent,
   VoiceIndicatorEvent,
+  ShowWritingBoardEvent,
 } from "./types";
 import { createEventManagers } from "@/libs/events/createEventManagers";
 
@@ -22,6 +23,8 @@ export type LessonSyncEvents = {
   "hide-loading": undefined;
   "action-button:next": undefined;
   "action-button:repeat": undefined;
+  "show-writing-board": ShowWritingBoardEvent;
+  "hide-writing-board": undefined;
 };
 
 export type LessonAsyncEvents = {

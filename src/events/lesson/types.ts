@@ -37,3 +37,7 @@ export interface PronunciationResultEvent {
 export interface LoadingEvent {
   text?: string;
 }
+
+export interface ShowWritingBoardEvent {
+  target: string;
+}

@@ -5,6 +5,7 @@ export const DREAM_SCENE_FLOWS = {
   LESSON_INTRODUCTION: "LessonIntroductionFlow",
   LESSON_LISTENING: "LessonListeningFlow",
   LESSON_PRONUNCIATION: "LessonPronunciationFlow",
+  LESSON_WRITING: "LessonWritingFlow",
 } as const;
 
 export type SceneFlowNames =
