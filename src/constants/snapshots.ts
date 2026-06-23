@@ -25,4 +25,8 @@ export const developmentSnapshots: Record<string, GameSnapshot> = {
     ...defaultLessonSnapshot,
     flow: "LessonPronunciationFlow",
   },
+  writing: {
+    ...defaultLessonSnapshot,
+    flow: "LessonWritingFlow",
+  },
 };

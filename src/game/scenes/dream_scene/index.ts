@@ -44,6 +44,7 @@ import {
   createFlowSnapshot,
   getSceneLastSnapshot,
 } from "@/store/progressStore";
+import { LessonWritingFlow } from "./flows/lesson/LessonWriting.flow";
 
 export class DreamScene extends Phaser.Scene {
   public static readonly STATES = SCENE_STATES;
@@ -150,7 +151,8 @@ export class DreamScene extends Phaser.Scene {
       .addFlow(SCENE_FLOWS.BEFORE_LESSON, BeforeLessonFlow)
       .addFlow(SCENE_FLOWS.LESSON_INTRODUCTION, LessonIntroductionFlow)
       .addFlow(SCENE_FLOWS.LESSON_LISTENING, LessonListeningFlow)
-      .addFlow(SCENE_FLOWS.LESSON_PRONUNCIATION, LessonPronunciationFlow);
+      .addFlow(SCENE_FLOWS.LESSON_PRONUNCIATION, LessonPronunciationFlow)
+      .addFlow(SCENE_FLOWS.LESSON_WRITING, LessonWritingFlow);
 
     const nextFlow =
       snapshot?.flow ?? (DREAM_SCENE_FLOWS.INTRO as SceneFlowNames);

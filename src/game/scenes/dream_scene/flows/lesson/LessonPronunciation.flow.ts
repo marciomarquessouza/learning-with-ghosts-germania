@@ -6,6 +6,7 @@ import { runSteps, stepBase } from "@/libs/game/game-flow/runSteps";
 import { events } from "@/events/events";
 import { ClearEvent } from "@/libs/events/types";
 import { useAudioStore } from "@/store/audioStore";
+import { LessonWritingFlow } from "./LessonWriting.flow";
 
 export class LessonPronunciationFlow extends Flow<SceneStateNames, DreamScene> {
   public flowName = "LessonPronunciationFlow";
@@ -138,19 +139,26 @@ export class LessonPronunciationFlow extends Flow<SceneStateNames, DreamScene> {
         return this.startPronunciationChallenge();
       }),
       stepBase(() => {
-        return this.gameScene.learningNode.increasePumpkinGrowth();
+        return this.gameScene.learningNode.increasePumpkinGrowth(0.25);
       }),
-      stepBase(() => {
+      stepBase(async () => {
         this.gameScene.lessonManager.writeLessonDescription({
           dialogueTitle: "Step 2: Pronunciation",
-          description: `Congrats!`,
+          description: `Congrats! You earned +10 teru teru`,
           hidePressContinue: true,
         });
-        return;
+        await this.delay(3_000);
+        return this.gameScene.tutor.dialogue([
+          "Very well, your new knowledge is almost ready to be harvested.",
+          "Let's move on to the next phase.",
+        ]);
       }),
     ]);
 
-    return {};
+    return {
+      nextState: DreamScene.STATES.PERFORMING_LESSON,
+      nextFlow: LessonWritingFlow,
+    };
   }
 
   destroy(): void {
