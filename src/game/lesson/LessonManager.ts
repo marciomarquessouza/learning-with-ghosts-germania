@@ -59,10 +59,6 @@ export class LessonManager extends LessonController {
     events.lesson.sync.emit("hide-voice-indicator");
   }
 
-  public showPronunciationScore(value: PronunciationResultEvent) {
-    events.lesson.sync.emit("show-pronunciation-score", value);
-  }
-
   public async pronunciationChallenge(options?: {
     onRecording?: (isRecording: boolean) => void;
     onVolumeChange?: (volume: number) => void;
@@ -127,6 +123,10 @@ export class LessonManager extends LessonController {
     });
   }
 
+  public showPronunciationScore(value: PronunciationResultEvent) {
+    events.lesson.sync.emit("show-pronunciation-score", value);
+  }
+
   public stopPronunciationChallenge() {
     this.audioRecorder.stopRecording();
     events.lesson.sync.emit("hide-voice-indicator");
@@ -134,6 +134,17 @@ export class LessonManager extends LessonController {
 
   public async playPronunciationRecord(id: string): Promise<void> {
     return this.audioRecorder.playRecording({ recordingId: id });
+  }
+
+  public startWritingChallenge(payload: {
+    onClickNext: () => void;
+    onClickCancel?: () => void;
+  }) {
+    events.lesson.sync.emit("show-writing-board", {
+      target: this.getEntryTarget(),
+      onClickNext: payload.onClickNext,
+      onClickCancel: payload?.onClickCancel,
+    });
   }
 
   destroy() {

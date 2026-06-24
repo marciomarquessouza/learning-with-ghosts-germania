@@ -11,7 +11,7 @@ import { CornerLeft } from "./CornerLeft";
 import { CornerRight } from "./CornerRight";
 import { StepPhases } from "@/libs/lesson/types";
 import { events } from "@/events/events";
-import { ShowWritingBoardEvent } from "@/events/lesson/types";
+import { ShowWritingBoardEvent, WritingResult } from "@/events/lesson/types";
 
 export const DEFAULT_SLOT_QNT_W = 4;
 export const DEFAULT_TOTAL_ERRORS = 5;
@@ -21,6 +21,7 @@ export const DEFAULT_SLOT_QNT_H = 4;
 export function WritingBoard() {
   const [isVisible, setIsVisible] = useState(false);
   const [target, setTarget] = useState("");
+  const onClickNextRef = useRef<(result: WritingResult) => void>(() => {});
   const boxRef = useRef<HTMLDivElement>(null);
   const preparedTarget = useMemo(() => prepareTarget(target), [target]);
   const [phase, setPhase] = useState<StepPhases>("writing");
@@ -81,9 +82,10 @@ export function WritingBoard() {
   }, [isVisible]);
 
   useEffect(() => {
-    const handle = ({ target }: ShowWritingBoardEvent) => {
+    const handle = ({ target, onClickNext }: ShowWritingBoardEvent) => {
       setTarget(target);
       setIsVisible(true);
+      onClickNextRef.current = onClickNext;
     };
     events.lesson.sync.on("show-writing-board", handle);
     return () => events.lesson.sync.off("show-writing-board", handle);
@@ -106,22 +108,16 @@ export function WritingBoard() {
     }
   }, [errors, preparedTarget.sanitizedTarget.length, tips]);
 
-  useEffect(() => {
-    if (phase === "result:correct" || phase === "result:fail") {
-      // onResult?.({
-      //   totalTime: 0,
-      //   result: {
-      //     type: "writing",
-      //     scoreResult: {
-      //       success: phase === "result:correct",
-      //       size: preparedTarget.sanitizedTarget.length,
-      //       errors,
-      //       tips,
-      //     },
-      //   },
-      // });
-    }
-  }, [phase]);
+  const onClickNext = () => {
+    const result: WritingResult = {
+      success: phase === "result:correct",
+      size: preparedTarget.sanitizedTarget.length,
+      errors,
+      tips,
+    };
+    onClickNextRef.current(result);
+    setIsVisible(false);
+  };
 
   if (!isVisible && !(preparedTarget.wordCount > 0)) {
     return null;
@@ -174,7 +170,7 @@ export function WritingBoard() {
               tipsDisabled={tips === DEFAULT_TOTAL_TIPS}
               onClickRetry={handleRetry}
               onClickTip={handleOnClickTip}
-              onClickNext={() => {}}
+              onClickNext={onClickNext}
             />
             <CornerLeft totalTips={DEFAULT_TOTAL_TIPS} currentTips={tips} />
             <CornerRight

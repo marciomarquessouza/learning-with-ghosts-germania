@@ -40,4 +40,13 @@ export interface LoadingEvent {
 
 export interface ShowWritingBoardEvent {
   target: string;
+  onClickNext: (result: WritingResult) => void;
+  onClickCancel?: () => void;
 }
+
+export type WritingResult = {
+  success: boolean;
+  size: number;
+  errors: number;
+  tips: number;
+};
