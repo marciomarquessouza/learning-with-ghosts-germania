@@ -45,6 +45,7 @@ import {
   getSceneLastSnapshot,
 } from "@/store/progressStore";
 import { LessonWritingFlow } from "./flows/lesson/LessonWriting.flow";
+import { getRequired } from "@/utils/getRequired";
 
 export class DreamScene extends Phaser.Scene {
   public static readonly STATES = SCENE_STATES;
@@ -57,10 +58,13 @@ export class DreamScene extends Phaser.Scene {
   public tutor = new Tutor();
   public learningNode = new LearningNode();
   public gameAudio = new GameAudio();
-  public lessonManager = new LessonManager(useLessonStore.getState().lesson);
+  private _lessonManager?: LessonManager;
   public dialogueManager = new DialogueManager();
   public flowController?: FlowController<SceneStateNames, DreamScene>;
   public scenario = new CemeteryScenario();
+  public get lessonManager(): LessonManager {
+    return getRequired(this._lessonManager, "DreamScene", "lessonManager");
+  }
 
   private stateMachine!: StateMachine;
 
@@ -73,7 +77,8 @@ export class DreamScene extends Phaser.Scene {
     this.player.preload(this);
     this.tutor.preload(this);
     this.learningNode.preload(this);
-    this.lessonManager.preload(this, this.gameAudio);
+    this._lessonManager = new LessonManager(useLessonStore.getState().lesson);
+    this._lessonManager.preload(this, this.gameAudio);
     this.hud.preload(this);
     this.physics.world.setBounds(0, 0, 2000, 1200);
   }

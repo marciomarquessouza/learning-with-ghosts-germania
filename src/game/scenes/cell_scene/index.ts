@@ -39,6 +39,7 @@ import {
 } from "@/store/progressStore";
 import { LessonManager } from "@/game/lesson/LessonManager";
 import { useLessonStore } from "@/store/lessonStore";
+import { getRequired } from "@/utils/getRequired";
 
 export class CellScene extends Phaser.Scene {
   public static readonly STATES = CELL_SCENE_STATES;
@@ -47,11 +48,14 @@ export class CellScene extends Phaser.Scene {
   public noiseAnimations = new NoiseAnimations();
   public scenario = new ScenarioController();
   public selectableAreasController: SelectableAreasController;
-  public lessonManager = new LessonManager(useLessonStore.getState().lesson);
+  private _lessonManager?: LessonManager;
   public flowController?: FlowController<SceneStateNames, CellScene>;
   public audioController = new AudioController();
   public gameCamera = new GameCamera();
   public jailer: Jailer = createJailerPortrait();
+  public get lessonManager(): LessonManager {
+    return getRequired(this._lessonManager, "CellScene", "lessonManager");
+  }
 
   private hud = new Hud();
   private stateMachine!: StateMachine;
@@ -70,6 +74,7 @@ export class CellScene extends Phaser.Scene {
     this.jailer.preload(this);
     this.noiseAnimations.preload(this);
     this.hud.preload(this);
+    this._lessonManager = new LessonManager(useLessonStore.getState().lesson);
   }
 
   create() {
