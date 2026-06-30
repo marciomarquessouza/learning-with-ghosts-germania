@@ -22,6 +22,9 @@ export function WritingBoard() {
   const [isVisible, setIsVisible] = useState(false);
   const [target, setTarget] = useState("");
   const onClickNextRef = useRef<(result: WritingResult) => void>(() => {});
+  const onClickCancelRef = useRef<
+    ((result: WritingResult) => void) | undefined
+  >(undefined);
   const boxRef = useRef<HTMLDivElement>(null);
   const preparedTarget = useMemo(() => prepareTarget(target), [target]);
   const [phase, setPhase] = useState<StepPhases>("writing");
@@ -33,8 +36,6 @@ export function WritingBoard() {
     () => balanceGrind(preparedTarget),
     [preparedTarget],
   );
-  const [introductionFinished, setIntroductionFinished] = useState(false);
-
   const handleOnClickSlot = (slot: LetterSlot) => {
     if (phase !== "writing") return;
     const { index, isAnswer } = slot;
@@ -82,10 +83,15 @@ export function WritingBoard() {
   }, [isVisible]);
 
   useEffect(() => {
-    const handle = ({ target, onClickNext }: ShowWritingBoardEvent) => {
+    const handle = ({
+      target,
+      onClickNext,
+      onClickCancel,
+    }: ShowWritingBoardEvent) => {
       setTarget(target);
       setIsVisible(true);
       onClickNextRef.current = onClickNext;
+      onClickCancelRef.current = onClickCancel;
     };
     events.lesson.sync.on("show-writing-board", handle);
     return () => events.lesson.sync.off("show-writing-board", handle);
@@ -138,17 +144,10 @@ export function WritingBoard() {
           animate={{ opacity: 1, scale: 1 }}
           exit={{ opacity: 0, scale: 0.95 }}
           transition={{ duration: 0.4, ease: "linear" }}
-          onAnimationComplete={() => {
-            setIntroductionFinished(true);
-          }}
         >
           <div className="absolute inset-0 bg-[#D9D9D9]/60 pointer-events-none" />
           <div className="relative flex flex-col justify-center items-center px-6 py-4">
-            <AudioPlayback
-              audio="test"
-              reproduceTargetAudioOnStart={false}
-              introductionFinished={introductionFinished}
-            />
+            <AudioPlayback target={target} />
             <AnswerContainer
               answerIndexes={answerIndexes}
               preparedTarget={preparedTarget}

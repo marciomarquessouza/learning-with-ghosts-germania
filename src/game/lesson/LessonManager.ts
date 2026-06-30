@@ -3,6 +3,7 @@ import {
   PronunciationResultEvent,
   ShowLessonTitleEvent,
   WriteLessonDescriptionEvent,
+  WritingResult,
 } from "@/events/lesson/types";
 import { AudioRecorder } from "@/libs/audio/AudioRecorder";
 import { PronunciationAPI } from "@/libs/lesson/PronunciationAPI";
@@ -137,7 +138,7 @@ export class LessonManager extends LessonController {
   }
 
   public startWritingChallenge(payload: {
-    onClickNext: () => void;
+    onClickNext: (result: WritingResult) => void;
     onClickCancel?: () => void;
   }) {
     events.lesson.sync.emit("show-writing-board", {

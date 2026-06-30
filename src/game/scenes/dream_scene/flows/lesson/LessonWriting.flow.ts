@@ -4,11 +4,26 @@ import { DreamScene } from "../..";
 import { FlowResult } from "@/libs/game/game-flow/types";
 import { runSteps, stepBase } from "@/libs/game/game-flow/runSteps";
 import { events } from "@/events/events";
+import { WritingResult } from "@/events/lesson/types";
 
 export class LessonWritingFlow extends Flow<SceneStateNames, DreamScene> {
   public flowName: string = "LessonWritingFlow";
 
   private step = this.gameScene.lessonManager.getStepByType("writing");
+  private writingResult?: WritingResult;
+  private isAudioSamplePlaying = false;
+  private removePlayTargetAudioEvent: () => void = () => {};
+
+  private get hasWon(): boolean {
+    return !!this.writingResult?.success;
+  }
+
+  private async writingChallenge() {}
+
+  private async startWritingChallenge(): Promise<void> {
+    // this.writingChallenge()
+    // return this.waitInteractionEvent()
+  }
 
   async run(): Promise<FlowResult<SceneStateNames, DreamScene>> {
     const hasLearningNode = this.gameScene.learningNode.floor.hasActorAttached;
@@ -22,6 +37,17 @@ export class LessonWritingFlow extends Flow<SceneStateNames, DreamScene> {
         },
         { when: () => !hasLearningNode },
       ),
+      stepBase(() => {
+        this.removePlayTargetAudioEvent = events.audio.sync.on(
+          "audio:play-sample",
+          async () => {
+            if (this.isAudioSamplePlaying) return;
+            this.isAudioSamplePlaying = true;
+            await this.gameScene.lessonManager.playTargetAudio();
+            this.isAudioSamplePlaying = false;
+          },
+        );
+      }),
       stepBase(() => {
         this.gameScene.player.enterListening();
         this.gameScene.learningNode.enterPumpkinIdleState();
@@ -39,16 +65,47 @@ export class LessonWritingFlow extends Flow<SceneStateNames, DreamScene> {
       }),
       stepBase(() => {
         this.gameScene.lessonManager.startWritingChallenge({
-          onClickNext: () =>
-            events.interactions.sync.emit("interaction/accept"),
+          onClickNext: (result) => {
+            this.writingResult = result;
+            events.interactions.sync.emit("interaction/accept", {
+              id: this.flowName,
+            });
+          },
         });
       }),
-      stepBase(() => {
-        return this.waitInteractionEvent();
-      }),
+      stepBase(() => this.startWritingChallenge()),
+      stepBase(
+        async () => {
+          this.gameScene.lessonManager.writeLessonDescription({
+            dialogueTitle: "Step 3: Writing",
+            description: `Congrats! You earned +10 teru teru`,
+            hidePressContinue: true,
+          });
+          await this.delay(3_000);
+          return this.gameScene.tutor.dialogue([
+            "Very well, your new knowledge is almost ready to be harvested.",
+            "Let's move on to the next phase.",
+          ]);
+        },
+        { when: () => this.hasWon },
+      ),
+      stepBase(
+        async () => {
+          this.gameScene.lessonManager.writeLessonDescription({
+            dialogueTitle: "Step 3: Writing",
+            description: ``,
+            hidePressContinue: true,
+          });
+          await this.delay(3_000);
+          return this.gameScene.tutor.dialogue(["", "."]);
+        },
+        { when: () => !this.hasWon },
+      ),
     ]);
 
     return {};
   }
-  destroy(): void {}
+  destroy(): void {
+    this.removePlayTargetAudioEvent();
+  }
 }
