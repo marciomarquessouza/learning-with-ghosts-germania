@@ -21,6 +21,7 @@ function WritingBoardStory({ target }: ActionsProps) {
   useEffect(() => {
     events.lesson.sync.emit("show-writing-board", {
       target,
+      onClickNext: () => {},
     });
   }, [target]);
 
