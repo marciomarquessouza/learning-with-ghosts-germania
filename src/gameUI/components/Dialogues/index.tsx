@@ -71,7 +71,7 @@ export function Dialogue() {
 
     events.game.async.on("dialogue/show", handler);
     return () => events.game.async.off("dialogue/show", handler);
-  }, []);
+  }, [setTextToType]);
 
   useEffect(() => {
     const handle = () => {
