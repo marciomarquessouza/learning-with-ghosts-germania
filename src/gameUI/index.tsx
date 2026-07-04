@@ -18,10 +18,10 @@ export function GameUI() {
       <WorldTransition />
       <GameMessage />
       <GameActionPrompt />
-      <WritingBoard />
       <LessonNotebook />
       <LessonHeader />
       <LessonFooter />
+      <WritingBoard />
       <TrainLessonChallenges />
       <Dialogue />
     </>

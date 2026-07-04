@@ -88,10 +88,16 @@ export function FooterDialogue({
           aria-live="polite"
           className="border-none outline-none"
         >
-          <div className={[`${textColor}`, "min-h-14 w-[520px]"].join(" ")}>
+          <div
+            className={[
+              `${textColor}`,
+              "min-h-14 w-[520px] relative p-2 pr-8",
+            ].join(" ")}
+          >
             <p className="font-mono text-[#e8d7a5]">{title}</p>
             <p className="font-primary text-2xl h-8">{displayedText}</p>
-            <div className="flex flex-1 justify-end h-2 ">
+
+            <div className="absolute top-1 right-2">
               <PressContinue
                 text={isLastLine ? "next" : undefined}
                 isVisible={isComplete}
