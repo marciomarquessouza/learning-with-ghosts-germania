@@ -1,7 +1,7 @@
 import { useTypewriter } from "@/gameUI/hooks/useTypewriter";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
-import { PressContinue } from "./PressContinue";
+import { PressContinue } from "../../PressContinue";
 import { createDialogueKeyDownHandler } from "@/libs/inputs/createDialogueKeyDownHandler";
 import { renderFormattedText } from "@/libs/dialogues/renderFormattedText";
 import { IconAudio } from "../../LessonChallenges/icons/IconAudio";

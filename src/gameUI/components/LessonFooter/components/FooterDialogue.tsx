@@ -2,33 +2,41 @@ import { useTypewriter } from "@/gameUI/hooks/useTypewriter";
 import { createDialogueKeyDownHandler } from "@/libs/inputs/createDialogueKeyDownHandler";
 import { motion, AnimatePresence } from "framer-motion";
 import { useCallback, useEffect, useRef, useState } from "react";
+import { PressContinue } from "../../PressContinue";
 
 export interface FooterDialogueProps {
   isVisible: boolean;
-  text: string | string[];
+  content: string | string[];
   title?: string;
   textColor?: "text-white";
+  onComplete?: () => void;
 }
 
 export function FooterDialogue({
   isVisible,
-  text,
+  content,
   title,
   textColor = "text-white",
+  onComplete,
 }: FooterDialogueProps) {
   const [lines, setLines] = useState<string[]>([]);
+  const [isLastLine, setIsLastLine] = useState(false);
   const boxRef = useRef<HTMLDivElement>(null);
   const { displayedText, isComplete, setTextToType, startTyping, resumeText } =
     useTypewriter();
 
   const advanceLine = useCallback(() => {
     if (lines.length > 0) {
-      const nextLine = lines.pop();
+      const nextLine = lines.shift();
       if (nextLine) {
         setTextToType(nextLine);
+        startTyping();
+        setIsLastLine(lines.length === 0);
+        return;
       }
     }
-  }, [setTextToType, lines]);
+    onComplete?.();
+  }, [setTextToType, lines, startTyping, onComplete]);
 
   const handleClickOnText = useCallback(() => {
     advanceLine();
@@ -45,18 +53,23 @@ export function FooterDialogue({
   }, [isVisible]);
 
   useEffect(() => {
-    if (Array.isArray(text)) {
-      const firstLine = text.pop();
+    if (Array.isArray(content)) {
+      const dialogueLines = [...content];
+      const firstLine = dialogueLines.shift();
       if (firstLine) {
         setTextToType(firstLine);
       }
-      if (text.length > 0) {
-        setLines(text);
+      if (dialogueLines.length > 0) {
+        setLines(dialogueLines);
+        setIsLastLine(dialogueLines.length === 0);
+      } else {
+        setIsLastLine(true);
       }
       return;
     }
-    setTextToType(text);
-  }, [text, setTextToType]);
+    setTextToType(content);
+    setIsLastLine(true);
+  }, [content, setTextToType]);
 
   return (
     <AnimatePresence>
@@ -73,8 +86,20 @@ export function FooterDialogue({
           onKeyDown={handleKeyDown}
           role="dialog"
           aria-live="polite"
+          className="border-none outline-none"
         >
-          <p className={[`${textColor}`].join(" ")}>{displayedText}</p>
+          <div className={[`${textColor}`, "min-h-14 w-[520px]"].join(" ")}>
+            <p className="font-mono text-[#e8d7a5]">{title}</p>
+            <p className="font-primary text-2xl h-8">{displayedText}</p>
+            <div className="flex flex-1 justify-end h-2 ">
+              <PressContinue
+                text={isLastLine ? "next" : undefined}
+                isVisible={isComplete}
+                icon={isLastLine ? "▶" : undefined}
+                animationDirection={isLastLine ? "horizontal" : "vertical"}
+              />
+            </div>
+          </div>
         </motion.div>
       )}
     </AnimatePresence>

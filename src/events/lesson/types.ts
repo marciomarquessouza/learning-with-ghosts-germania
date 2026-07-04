@@ -50,3 +50,8 @@ export type WritingResult = {
   errors: number;
   tips: number;
 };
+
+export type WriteLessonDialogueEvent = {
+  title: string;
+  content: string | string[];
+};

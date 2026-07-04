@@ -7,6 +7,7 @@ import type {
   LoadingEvent,
   VoiceIndicatorEvent,
   ShowWritingBoardEvent,
+  WriteLessonDialogueEvent,
 } from "./types";
 import { createEventManagers } from "@/libs/events/createEventManagers";
 
@@ -31,6 +32,7 @@ export type LessonAsyncEvents = {
   "show-lesson-header": ShowLessonTitleEvent;
   "hide-lesson-header": undefined;
   "write-lesson-description": WriteLessonDescriptionEvent;
+  "write-lesson-dialogue": WriteLessonDialogueEvent;
   "hide-lesson-description": undefined;
   "action-button:reproduce-audio": undefined;
 };

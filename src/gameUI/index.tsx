@@ -8,6 +8,7 @@ import { RotateOverlay } from "./components/RotateOverlay";
 import { TrainLessonChallenges } from "./components/TrainLessonChallenges";
 import { LessonHeader } from "./components/LessonHeader/LessonHeader";
 import { WritingBoard } from "./components/WritingBoard";
+import { LessonFooter } from "./components/LessonFooter";
 
 export function GameUI() {
   return (
@@ -17,10 +18,11 @@ export function GameUI() {
       <WorldTransition />
       <GameMessage />
       <GameActionPrompt />
+      <WritingBoard />
       <LessonNotebook />
       <LessonHeader />
+      <LessonFooter />
       <TrainLessonChallenges />
-      <WritingBoard />
       <Dialogue />
     </>
   );
