@@ -4,6 +4,7 @@ import { DreamScene } from "../..";
 import { FlowResult } from "@/libs/game/game-flow/types";
 import { runSteps, stepBase } from "@/libs/game/game-flow/runSteps";
 import { LessonListeningFlow } from "./LessonListening.flow";
+import { getDialogueLines } from "@/store/dialogueStore";
 
 export class LessonIntroductionFlow extends Flow<SceneStateNames, DreamScene> {
   public flowName = "LessonIntroductionFlow";
@@ -21,9 +22,8 @@ export class LessonIntroductionFlow extends Flow<SceneStateNames, DreamScene> {
         });
       }),
       stepBase(() => {
-        return this.gameScene.dialogueManager.showDialogue(
-          "dream.lesson_begin",
-        );
+        const lines = getDialogueLines("dream.lesson_begin");
+        return this.gameScene.dialogueManager.LessonDialogueFromLines(lines);
       }),
     ]);
 

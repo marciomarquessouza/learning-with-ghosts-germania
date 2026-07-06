@@ -6,6 +6,7 @@ import {
   GameActionPromptEvent,
   GameMessageShowEvent,
 } from "@/events/game/types";
+import { InteractionLine } from "@/libs/dialogues/types";
 import { getDialogueLines } from "@/store/dialogueStore";
 
 export class DialogueManager {
@@ -15,6 +16,27 @@ export class DialogueManager {
       return events.game.async.emitAsync("dialogue/show", { lines });
     }
     return events.game.async.emitAsync("dialogue/show", dialogue);
+  }
+
+  async LessonDialogue(payload: {
+    title: string;
+    content: string | string[];
+  }): Promise<void> {
+    await events.lesson.async.emitAsync("write-lesson-dialogue", {
+      title: payload.title,
+      content: payload.content,
+    });
+  }
+
+  async LessonDialogueFromLines(lines: InteractionLine[]): Promise<void> {
+    for (const line of lines) {
+      if (line.type === "dialogue") {
+        await events.lesson.async.emitAsync("write-lesson-dialogue", {
+          title: line.character,
+          content: line.text,
+        });
+      }
+    }
   }
 
   dialogueSetMood({ mood, actor }: { mood: MOODS; actor: ACTORS }) {
