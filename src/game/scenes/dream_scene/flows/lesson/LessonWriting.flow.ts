@@ -18,11 +18,8 @@ export class LessonWritingFlow extends Flow<SceneStateNames, DreamScene> {
     return !!this.writingResult?.success;
   }
 
-  private async writingChallenge() {}
-
   private async startWritingChallenge(): Promise<void> {
-    // this.writingChallenge()
-    // return this.waitInteractionEvent()
+    return this.waitInteractionEvent();
   }
 
   async run(): Promise<FlowResult<SceneStateNames, DreamScene>> {
@@ -59,7 +56,8 @@ export class LessonWritingFlow extends Flow<SceneStateNames, DreamScene> {
       }),
       stepBase(() => {
         return this.gameScene.tutor.dialogue([
-          "Now your challenge is to write the name of your little knowledge so it can grow even more.",
+          "Now your challenge is to write the name of your little knowledge...",
+          "...so it can grow even more.",
           "Connect the letters on the board to form this word.",
         ]);
       }),
