@@ -1,3 +1,4 @@
+import { DREAM_SCENE_FLOWS } from "@/game/scenes/dream_scene/constants/flows";
 import { GameSnapshot } from "@/store/progressStore";
 
 const defaultLessonSnapshot: GameSnapshot = {
@@ -13,20 +14,24 @@ const defaultLessonSnapshot: GameSnapshot = {
 };
 
 export const developmentSnapshots: Record<string, GameSnapshot> = {
+  "before-lesson": {
+    ...defaultLessonSnapshot,
+    flow: DREAM_SCENE_FLOWS.BEFORE_LESSON,
+  },
   "lesson-introduction": {
     ...defaultLessonSnapshot,
-    flow: "LessonIntroductionFlow",
+    flow: DREAM_SCENE_FLOWS.LESSON_INTRODUCTION,
   },
   listening: {
     ...defaultLessonSnapshot,
-    flow: "LessonListeningFlow",
+    flow: DREAM_SCENE_FLOWS.LESSON_LISTENING,
   },
   pronunciation: {
     ...defaultLessonSnapshot,
-    flow: "LessonPronunciationFlow",
+    flow: DREAM_SCENE_FLOWS.LESSON_PRONUNCIATION,
   },
   writing: {
     ...defaultLessonSnapshot,
-    flow: "LessonWritingFlow",
+    flow: DREAM_SCENE_FLOWS.LESSON_WRITING,
   },
 };
