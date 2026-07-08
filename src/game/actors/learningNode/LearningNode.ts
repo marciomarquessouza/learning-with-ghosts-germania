@@ -153,6 +153,14 @@ export class LearningNode {
     this.audioPlayButton.setVisible(true);
   }
 
+  showPlayerButton() {
+    this.audioPlayButton.setVisible(true);
+  }
+
+  hidePlayerButton() {
+    this.audioPlayButton.setVisible(false);
+  }
+
   detachPlayerButton() {
     this.audioPlayButton.setVisible(false);
     this.audioPlayButton.destroy();
@@ -166,6 +174,14 @@ export class LearningNode {
       offset: -150,
     });
     this.lessonTargetLabel.setVisible(true);
+  }
+
+  showTargetLabel() {
+    this.lessonTargetLabel.setVisible(true);
+  }
+
+  hideTargetLabel() {
+    this.lessonTargetLabel.setVisible(false);
   }
 
   detachTargetLabel() {

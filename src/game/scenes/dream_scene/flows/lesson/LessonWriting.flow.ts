@@ -5,9 +5,10 @@ import { FlowResult } from "@/libs/game/game-flow/types";
 import { runSteps, stepBase } from "@/libs/game/game-flow/runSteps";
 import { events } from "@/events/events";
 import { WritingResult } from "@/events/lesson/types";
+import { DREAM_SCENE_FLOWS } from "../../constants/flows";
 
 export class LessonWritingFlow extends Flow<SceneStateNames, DreamScene> {
-  public flowName: string = "LessonWritingFlow";
+  public flowName: string = DREAM_SCENE_FLOWS.LESSON_WRITING;
 
   private step = this.gameScene.lessonManager.getStepByType("writing");
   private writingResult?: WritingResult;

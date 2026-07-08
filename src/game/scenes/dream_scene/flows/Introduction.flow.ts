@@ -6,9 +6,10 @@ import { runSteps, stepBase } from "@/libs/game/game-flow/runSteps";
 import { events } from "@/events/events";
 import { getDialogueLines } from "@/store/dialogueStore";
 import { useGameStore } from "@/store/gameStore";
+import { DREAM_SCENE_FLOWS } from "../constants/flows";
 
 export class IntroductionFlow extends Flow<SceneStateNames, DreamScene> {
-  public flowName: string = "IntroductionFlow";
+  public flowName: string = DREAM_SCENE_FLOWS.INTRO;
 
   async run(): Promise<FlowResult<SceneStateNames, DreamScene>> {
     await runSteps([

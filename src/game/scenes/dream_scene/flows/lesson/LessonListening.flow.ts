@@ -7,11 +7,12 @@ import { runSteps, stepBase } from "@/libs/game/game-flow/runSteps";
 import { DreamScene } from "../..";
 import { SceneStateNames } from "../../constants/states";
 import { LessonPronunciationFlow } from "./LessonPronunciation.flow";
+import { DREAM_SCENE_FLOWS } from "../../constants/flows";
 
 const LISTENING_REPETITION = 3;
 
 export class LessonListeningFlow extends Flow<SceneStateNames, DreamScene> {
-  public flowName = "LessonListeningFlow";
+  public flowName = DREAM_SCENE_FLOWS.LESSON_LISTENING;
 
   private step = this.gameScene.lessonManager.getStepByType("listening");
   private target = this.gameScene.lessonManager.getEntryTarget();
@@ -61,8 +62,10 @@ export class LessonListeningFlow extends Flow<SceneStateNames, DreamScene> {
           },
         ),
         stepBase(
-          () => {
-            return this.gameScene.tutor.dialogue(this.meanings);
+          async () => {
+            this.gameScene.learningNode.hidePlayerButton();
+            await this.gameScene.tutor.dialogue(this.meanings);
+            this.gameScene.learningNode.showPlayerButton();
           },
           {
             when: () => index === 1 && this.meanings.length > 0,

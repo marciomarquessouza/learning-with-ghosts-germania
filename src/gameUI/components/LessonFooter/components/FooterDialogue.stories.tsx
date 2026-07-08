@@ -49,3 +49,16 @@ export const MultiLines: StoryObj<FooterDialogueProps> = {
   },
   render: Component,
 };
+
+export const LongMultiLines: StoryObj<FooterDialogueProps> = {
+  args: {
+    isVisible: true,
+    title: "Masked Nun",
+    content: [
+      "First, you plant the seed. Then you nurture it, again and again. And when the time is right... you harvest it.",
+      "Short sentence.",
+      "Another sentence with more than 100 characters... but it will be split correctly, following the defined rules. This is a test.",
+    ],
+  },
+  render: Component,
+};

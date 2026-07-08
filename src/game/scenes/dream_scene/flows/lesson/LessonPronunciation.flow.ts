@@ -7,9 +7,10 @@ import { events } from "@/events/events";
 import { ClearEvent } from "@/libs/events/types";
 import { useAudioStore } from "@/store/audioStore";
 import { LessonWritingFlow } from "./LessonWriting.flow";
+import { DREAM_SCENE_FLOWS } from "../../constants/flows";
 
 export class LessonPronunciationFlow extends Flow<SceneStateNames, DreamScene> {
-  public flowName = "LessonPronunciationFlow";
+  public flowName = DREAM_SCENE_FLOWS.LESSON_PRONUNCIATION;
 
   private target = this.gameScene.lessonManager.getEntryTarget();
   private step = this.gameScene.lessonManager.getStepByType("pronunciation");
@@ -111,8 +112,7 @@ export class LessonPronunciationFlow extends Flow<SceneStateNames, DreamScene> {
         this.gameScene.tutor.enterTeaching();
         return this.gameScene.tutor.dialogue([
           "Very good, let's now move on to pronunciation.",
-          `Click the mic or click {{key|space}} and say: “{{target|${this.target}}}”.
-          ${this.step.text}`,
+          `Click the mic or click {{key|space}} and say: “{{target|${this.target}}}”.`,
         ]);
       }),
       stepBase(() => {

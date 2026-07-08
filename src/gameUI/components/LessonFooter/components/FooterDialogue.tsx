@@ -3,6 +3,8 @@ import { createDialogueKeyDownHandler } from "@/libs/inputs/createDialogueKeyDow
 import { motion, AnimatePresence } from "framer-motion";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { PressContinue } from "../../PressContinue";
+import { splitStringsByLimit } from "../util/splitString";
+import { renderFormattedText } from "@/libs/dialogues/renderFormattedText";
 
 export interface FooterDialogueProps {
   isVisible: boolean;
@@ -54,7 +56,7 @@ export function FooterDialogue({
 
   useEffect(() => {
     if (Array.isArray(content)) {
-      const dialogueLines = [...content];
+      const dialogueLines = splitStringsByLimit(content);
       const firstLine = dialogueLines.shift();
       if (firstLine) {
         setTextToType(firstLine);
@@ -91,11 +93,13 @@ export function FooterDialogue({
           <div
             className={[
               `${textColor}`,
-              "min-h-14 w-[520px] relative p-2 pr-8",
+              "min-h-14 w-[620px] relative p-2 pr-8",
             ].join(" ")}
           >
             <p className="font-mono text-[#e8d7a5]">{title}</p>
-            <p className="font-primary text-2xl h-8">{displayedText}</p>
+            <p className="font-primary text-2xl h-8">
+              {renderFormattedText(displayedText)}
+            </p>
 
             <div className="absolute top-1 right-2">
               <PressContinue

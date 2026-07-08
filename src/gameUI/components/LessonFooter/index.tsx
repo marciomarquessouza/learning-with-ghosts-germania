@@ -32,7 +32,7 @@ export function LessonFooter() {
   }
 
   return (
-    <div className="fixed left-1/2 -translate-x-1/2 bottom-10">
+    <div className="fixed left-1/2 -translate-x-1/2 bottom-15">
       <FooterDialogue
         isVisible={isVisible}
         title={dialogueProps.title}
