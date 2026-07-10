@@ -21,6 +21,21 @@ export const useTypewriter = (speed: number = TEXT_SPEED) => {
 
     const typeNext = () => {
       if (indexRef.current < text.length) {
+        if (
+          text[indexRef.current] === "{" &&
+          text[indexRef.current + 1] === "{"
+        ) {
+          const closeIndex = text.indexOf("}}", indexRef.current + 2);
+          if (closeIndex !== -1) {
+            const tagEnd = closeIndex + 2;
+            const tag = text.substring(indexRef.current, tagEnd);
+            setDisplayedText((prev) => prev + tag);
+            indexRef.current = tagEnd;
+            timeoutRef.current = window.setTimeout(typeNext, speed);
+            return;
+          }
+        }
+
         const nextChar = text[indexRef.current] ?? "";
         setDisplayedText((prev) => prev + nextChar);
         indexRef.current += 1;
