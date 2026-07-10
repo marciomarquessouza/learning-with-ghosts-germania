@@ -6,11 +6,12 @@ import { runSteps, stepBase } from "@/libs/game/game-flow/runSteps";
 import { events } from "@/events/events";
 import { WritingResult } from "@/events/lesson/types";
 import { DREAM_SCENE_FLOWS } from "../../constants/flows";
+import { LessonSuccessFlow } from "./LessonSuccess.flow";
+import { LessonFailureFlow } from "./LessonFailure.flow";
 
 export class LessonWritingFlow extends Flow<SceneStateNames, DreamScene> {
   public flowName: string = DREAM_SCENE_FLOWS.LESSON_WRITING;
 
-  private step = this.gameScene.lessonManager.getStepByType("writing");
   private writingResult?: WritingResult;
   private isAudioSamplePlaying = false;
   private removePlayTargetAudioEvent: () => void = () => {};
@@ -82,7 +83,15 @@ export class LessonWritingFlow extends Flow<SceneStateNames, DreamScene> {
       }),
     ]);
 
-    return {};
+    return this.hasWon
+      ? {
+          nextState: DreamScene.STATES.PERFORMING_LESSON,
+          nextFlow: LessonSuccessFlow,
+        }
+      : {
+          nextState: DreamScene.STATES.PERFORMING_LESSON,
+          nextFlow: LessonFailureFlow,
+        };
   }
   destroy(): void {
     this.removePlayTargetAudioEvent();
