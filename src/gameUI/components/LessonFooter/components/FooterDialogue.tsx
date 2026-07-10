@@ -1,4 +1,4 @@
-import { useTypewriter } from "@/gameUI/hooks/useTypewriter";
+import { useTypewriter } from "@/libs/typewriter/useTypewriter";
 import { createDialogueKeyDownHandler } from "@/libs/inputs/createDialogueKeyDownHandler";
 import { motion, AnimatePresence } from "framer-motion";
 import { useCallback, useEffect, useRef, useState } from "react";

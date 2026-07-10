@@ -1,6 +1,6 @@
 import { GHOSTS_TITLE } from "@/constants/images";
 import { events } from "@/events/events";
-import { useTypewriter } from "@/gameUI/hooks/useTypewriter";
+import { useTypewriter } from "@/libs/typewriter/useTypewriter";
 import { useLessonStore } from "@/store/lessonStore";
 import { AnimatePresence, motion } from "framer-motion";
 import Image from "next/image";

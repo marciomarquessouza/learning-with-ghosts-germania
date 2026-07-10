@@ -1,6 +1,6 @@
 import { useState, useEffect, useCallback, useRef, useMemo } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { useTypewriter } from "@/gameUI/hooks/useTypewriter";
+import { useTypewriter } from "@/libs/typewriter/useTypewriter";
 import { ACTORS } from "@/constants/game";
 import { useDeviceType } from "@/gameUI/hooks/useDeviceType";
 import Image from "next/image";

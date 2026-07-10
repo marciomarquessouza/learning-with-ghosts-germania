@@ -20,7 +20,7 @@
 
 type SupportedFormat = "key" | "audio" | "target";
 
-type RenderFormattedTextOptions = {
+export type RenderFormattedTextOptions = {
   audioIcon?: React.ReactNode;
   playAudio?: (audio: string) => void;
 };
