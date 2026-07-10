@@ -8,6 +8,7 @@ import {
 } from "@/events/game/types";
 import { InteractionLine } from "@/libs/dialogues/types";
 import { getDialogueLines } from "@/store/dialogueStore";
+import { getCharacterDetails } from "@/utils/getCharacterDetails";
 
 export class DialogueManager {
   async showDialogue(dialogue: DialogueEvent | DialogueKey): Promise<void> {
@@ -32,7 +33,7 @@ export class DialogueManager {
     for (const line of lines) {
       if (line.type === "dialogue") {
         await events.lesson.async.emitAsync("write-lesson-dialogue", {
-          title: line.character,
+          title: getCharacterDetails(line.character).characterName,
           content: line.text,
         });
       }

@@ -54,12 +54,11 @@ export const DIALOGUE_MAP: {
 } = {
   [ACTORS.JAILER]: {
     displayName: "Marlene",
-    honorific: "Fau",
+    honorific: "Frau",
     avatar: "/dialogue/dialogue_avatar_marlene.png",
   },
   [ACTORS.TUTOR]: {
-    displayName: "Nun",
-    honorific: "Masked",
+    displayName: "Masked Nun",
     avatar: "/dialogue/dialogue_avatar_masked_nun.png",
   },
   [ACTORS.PLAYER]: {

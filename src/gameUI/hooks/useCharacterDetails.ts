@@ -1,5 +1,6 @@
 import { useMemo } from "react";
 import { ACTORS, DIALOGUE_MAP } from "@/constants/game";
+import { getCharacterDetails } from "@/utils/getCharacterDetails";
 
 export interface CharacterDetails {
   characterName: string;
@@ -11,12 +12,5 @@ export interface CharacterDetails {
 export const useCharacterDetails = (
   character?: ACTORS | null,
 ): CharacterDetails => {
-  return useMemo(() => {
-    return {
-      characterName: !!character ? DIALOGUE_MAP[character].displayName : "",
-      avatarURL: !!character ? DIALOGUE_MAP[character].avatar : "",
-      hasHonorific: !!character && !!DIALOGUE_MAP[character]?.honorific,
-      honorific: !!character ? DIALOGUE_MAP[character]?.honorific || "" : "",
-    };
-  }, [character]);
+  return useMemo(() => getCharacterDetails(character), [character]);
 };
