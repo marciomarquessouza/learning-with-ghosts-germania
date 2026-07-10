@@ -81,10 +81,9 @@ export function useLessonHeader() {
 
   useEffect(() => {
     const handle = (payload: WriteLessonDescriptionEvent, done: () => void) => {
-      const hidePressContinue = payload.hidePressContinue ?? false;
       dispatch({
         type: "write-description",
-        payload: { ...payload, hidePressContinue },
+        payload: { ...payload },
       });
       onDescriptionReady.current = done;
     };

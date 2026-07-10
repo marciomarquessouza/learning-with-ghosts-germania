@@ -52,7 +52,6 @@ export class LessonWritingFlow extends Flow<SceneStateNames, DreamScene> {
         return this.gameScene.lessonManager.writeLessonDescription({
           dialogueTitle: "Step 3: Writing",
           description: `Follow the Masked Nun instructions`,
-          hidePressContinue: true,
         });
       }),
       stepBase(() => {
@@ -78,7 +77,6 @@ export class LessonWritingFlow extends Flow<SceneStateNames, DreamScene> {
           this.gameScene.lessonManager.writeLessonDescription({
             dialogueTitle: "Step 3: Writing",
             description: `Congrats! You earned +10 teru teru`,
-            hidePressContinue: true,
           });
           await this.delay(3_000);
           return this.gameScene.tutor.dialogue([
@@ -93,7 +91,6 @@ export class LessonWritingFlow extends Flow<SceneStateNames, DreamScene> {
           this.gameScene.lessonManager.writeLessonDescription({
             dialogueTitle: "Step 3: Writing",
             description: ``,
-            hidePressContinue: true,
           });
           await this.delay(3_000);
           return this.gameScene.tutor.dialogue(["", "."]);

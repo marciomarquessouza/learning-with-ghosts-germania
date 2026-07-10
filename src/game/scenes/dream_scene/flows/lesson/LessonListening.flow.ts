@@ -25,7 +25,6 @@ export class LessonListeningFlow extends Flow<SceneStateNames, DreamScene> {
         this.gameScene.lessonManager.writeLessonDescription({
           dialogueTitle: "Step 1: Listening",
           description: `Follow the Masked Nun instructions`,
-          hidePressContinue: true,
         });
         this.gameScene.player.enterScared();
         return this.gameScene.tutor.waitForSowing();
@@ -54,7 +53,6 @@ export class LessonListeningFlow extends Flow<SceneStateNames, DreamScene> {
               dialogueTitle: "Step 1: Listening",
               description:
                 "Press the {{key|play}} button or press {{key|space}} to hear the little creature’s name and make it grow.",
-              hidePressContinue: true,
             });
           },
           {
@@ -76,8 +74,7 @@ export class LessonListeningFlow extends Flow<SceneStateNames, DreamScene> {
             this.gameScene.lessonManager.writeLessonDescription({
               dialogueTitle: "Step 1: Listening",
               description:
-                "Very good, press the {{key|play}} button or press {{key|space}} one more time.",
-              hidePressContinue: true,
+                "Press the {{key|play}} button or press {{key|space}} one more time.",
             });
           },
           {
@@ -90,7 +87,6 @@ export class LessonListeningFlow extends Flow<SceneStateNames, DreamScene> {
               dialogueTitle: "Step 1: Listening",
               description:
                 "Now for the last time. Memorize the pronunciation well. Press the {{key|play}} button or press {{key|space}} one more time to hear the name again.",
-              hidePressContinue: true,
             });
           },
           {

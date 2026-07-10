@@ -36,7 +36,7 @@ export type LessonHeaderState = {
 
 export const lessonHeaderDefaultState: LessonHeaderState = {
   showHeader: false,
-  hidePressContinue: false,
+  hidePressContinue: true,
   closeAfter: 2_000,
   lesson: {
     show: false,

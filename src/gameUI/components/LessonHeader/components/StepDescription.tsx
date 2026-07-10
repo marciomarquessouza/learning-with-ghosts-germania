@@ -1,8 +1,6 @@
-import { useTypewriter } from "@/libs/typewriter/useTypewriter";
-import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { PressContinue } from "../../PressContinue";
-import { createDialogueKeyDownHandler } from "@/libs/inputs/createDialogueKeyDownHandler";
 import { renderFormattedText } from "@/libs/dialogues/renderFormattedText";
 import { IconAudio } from "../../LessonChallenges/icons/IconAudio";
 import { events } from "@/events/events";
@@ -17,7 +15,6 @@ export type DescriptionPhases =
 export interface StepDescriptionProps {
   isVisible: boolean;
   description: string;
-  descriptionUpdate?: string;
   hidePressContinue?: boolean;
   onPhaseChange: (phase: DescriptionPhases) => void;
 }
@@ -41,21 +38,11 @@ const MAXIMUM_SIZE_FOR_CENTERED_TEXT = 80;
 export function StepDescription({
   isVisible,
   description,
-  hidePressContinue = false,
-  descriptionUpdate,
+  hidePressContinue = true,
   onPhaseChange,
 }: StepDescriptionProps) {
   const [phase, setPhase] = useState<DescriptionPhases>("hidden");
-  const {
-    displayedText,
-    setTextToType,
-    startTyping,
-    updateDisplayedText,
-    resumeText,
-    isComplete,
-  } = useTypewriter();
   const lastDescription = useRef("");
-  const boxRef = useRef<HTMLDivElement>(null);
 
   const changePhase = useCallback(
     (nextPhase: DescriptionPhases) => {
@@ -77,55 +64,15 @@ export function StepDescription({
   }, [isVisible, phase, changePhase]);
 
   useEffect(() => {
-    if (isComplete && phase === "typing") {
+    if (phase === "ready" && lastDescription.current !== description) {
+      lastDescription.current = description;
       changePhase("ready");
     }
-  }, [isComplete, phase, changePhase]);
-
-  useEffect(() => {
-    if (
-      description &&
-      description !== lastDescription.current &&
-      phase === "ready"
-    ) {
-      lastDescription.current = description;
-      setTextToType(description);
-      changePhase("typing");
-      startTyping();
-    }
-  }, [description, phase, setTextToType, startTyping, changePhase]);
-
-  useEffect(() => {
-    if (descriptionUpdate && descriptionUpdate !== displayedText) {
-      updateDisplayedText(descriptionUpdate);
-    }
-  }, [descriptionUpdate, updateDisplayedText, displayedText]);
+  }, [changePhase, description, phase]);
 
   const handleOnExit = () => {
-    setTextToType("");
     changePhase("hidden");
   };
-
-  useEffect(() => {
-    if (isVisible) {
-      requestAnimationFrame(() => boxRef.current?.focus());
-    }
-  }, [isVisible]);
-
-  const handleKeyAction = useCallback(() => {
-    if (phase === "typing") {
-      resumeText();
-    }
-  }, [phase, resumeText]);
-
-  const handleKeyDown = useMemo(
-    () =>
-      createDialogueKeyDownHandler(
-        { keyAction: handleKeyAction },
-        { enabled: phase === "typing" },
-      ),
-    [handleKeyAction, phase],
-  );
 
   if (phase === "hidden") return null;
 
@@ -133,19 +80,15 @@ export function StepDescription({
     <AnimatePresence mode="wait" onExitComplete={handleOnExit}>
       {isVisible && (
         <motion.div
-          ref={boxRef}
           tabIndex={0}
           initial="hidden"
           animate="visible"
           exit="exit"
           variants={variants}
-          onKeyDown={handleKeyDown}
           onAnimationComplete={() => {
             if (phase === "entering") {
               lastDescription.current = description;
-              setTextToType(description);
-              changePhase("typing");
-              startTyping();
+              changePhase("ready");
             }
           }}
           className="pointer-events-none absolute left-0 top-12 flex w-full items-center px-12 text-white outline-none"
@@ -163,7 +106,7 @@ export function StepDescription({
                 }}
                 className="min-h-20 font-mono text-xl leading-relaxed text-[#FFF3E4]"
               >
-                {renderFormattedText(displayedText, {
+                {renderFormattedText(description, {
                   audioIcon: <IconAudio fill="#FFF3E4" stroke="#FFF3E4" />,
                   playAudio: (audio) =>
                     events.audio.sync.emit("audio:play-sample", {
@@ -173,7 +116,7 @@ export function StepDescription({
               </p>
               <div className="flex w-full h-8 justify-end items-end -my-2">
                 <PressContinue
-                  isVisible={phase === "ready" && !hidePressContinue}
+                  isVisible={!hidePressContinue && phase === "ready"}
                 />
               </div>
             </div>

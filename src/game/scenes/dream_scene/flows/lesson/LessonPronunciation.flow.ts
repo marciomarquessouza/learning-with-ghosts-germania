@@ -105,14 +105,13 @@ export class LessonPronunciationFlow extends Flow<SceneStateNames, DreamScene> {
         return this.gameScene.lessonManager.writeLessonDescription({
           dialogueTitle: "Step 2: Pronunciation",
           description: `Follow the Masked Nun instructions`,
-          hidePressContinue: true,
         });
       }),
       stepBase(() => {
         this.gameScene.tutor.enterTeaching();
         return this.gameScene.tutor.dialogue([
           "Very good, let's now move on to pronunciation.",
-          `Click the mic or click {{key|space}} and say: “{{target|${this.target}}}”.`,
+          `Click the mic or click {{key|space}} and say: {{target|${this.target}}}.`,
         ]);
       }),
       stepBase(() => {
@@ -120,7 +119,6 @@ export class LessonPronunciationFlow extends Flow<SceneStateNames, DreamScene> {
         this.gameScene.lessonManager.writeLessonDescription({
           dialogueTitle: "Step 2: Pronunciation",
           description: this.step.instruction,
-          hidePressContinue: true,
         });
         this.gameScene.player.attachRecordButton({
           skipNativeLoading: true,
@@ -145,7 +143,6 @@ export class LessonPronunciationFlow extends Flow<SceneStateNames, DreamScene> {
         this.gameScene.lessonManager.writeLessonDescription({
           dialogueTitle: "Step 2: Pronunciation",
           description: `Congrats! You earned +10 teru teru`,
-          hidePressContinue: true,
         });
         await this.delay(3_000);
         return this.gameScene.tutor.dialogue([
