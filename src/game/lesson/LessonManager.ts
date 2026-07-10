@@ -137,14 +137,22 @@ export class LessonManager extends LessonController {
     return this.audioRecorder.playRecording({ recordingId: id });
   }
 
-  public startWritingChallenge(payload: {
+  public async startWritingChallenge(payload: {
     onClickNext: (result: WritingResult) => void;
     onClickCancel?: () => void;
-  }) {
-    events.lesson.sync.emit("show-writing-board", {
-      target: this.getEntryTarget(),
-      onClickNext: payload.onClickNext,
-      onClickCancel: payload?.onClickCancel,
+  }): Promise<void> {
+    return new Promise((resolve) => {
+      events.lesson.sync.emit("show-writing-board", {
+        target: this.getEntryTarget(),
+        onClickNext: (result) => {
+          payload.onClickNext(result);
+          resolve();
+        },
+        onClickCancel: () => {
+          payload?.onClickCancel?.();
+          resolve();
+        },
+      });
     });
   }
 
