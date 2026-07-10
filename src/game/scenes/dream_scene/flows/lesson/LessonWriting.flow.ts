@@ -19,10 +19,6 @@ export class LessonWritingFlow extends Flow<SceneStateNames, DreamScene> {
     return !!this.writingResult?.success;
   }
 
-  private async startWritingChallenge(): Promise<void> {
-    return this.waitInteractionEvent();
-  }
-
   async run(): Promise<FlowResult<SceneStateNames, DreamScene>> {
     const hasLearningNode = this.gameScene.learningNode.floor.hasActorAttached;
     await runSteps([
@@ -62,41 +58,28 @@ export class LessonWritingFlow extends Flow<SceneStateNames, DreamScene> {
         ]);
       }),
       stepBase(() => {
-        this.gameScene.lessonManager.startWritingChallenge({
+        this.gameScene.lessonManager.writeLessonDescription({
+          dialogueTitle: "Step 3: Writing",
+          description: `Connect the letters on the board to form this word.`,
+        });
+        return this.gameScene.lessonManager.startWritingChallenge({
           onClickNext: (result) => {
             this.writingResult = result;
-            events.interactions.sync.emit("interaction/accept", {
-              id: this.flowName,
-            });
           },
         });
       }),
-      stepBase(() => this.startWritingChallenge()),
-      stepBase(
-        async () => {
-          this.gameScene.lessonManager.writeLessonDescription({
-            dialogueTitle: "Step 3: Writing",
-            description: `Congrats! You earned +10 teru teru`,
-          });
-          await this.delay(3_000);
-          return this.gameScene.tutor.dialogue([
-            "Very well, your new knowledge is almost ready to be harvested.",
-            "Let's move on to the next phase.",
-          ]);
-        },
-        { when: () => this.hasWon },
-      ),
-      stepBase(
-        async () => {
-          this.gameScene.lessonManager.writeLessonDescription({
-            dialogueTitle: "Step 3: Writing",
-            description: ``,
-          });
-          await this.delay(3_000);
-          return this.gameScene.tutor.dialogue(["", "."]);
-        },
-        { when: () => !this.hasWon },
-      ),
+      stepBase(async () => {
+        this.gameScene.lessonManager.writeLessonDescription({
+          dialogueTitle: "Step 3: Writing",
+          description: `Congrats`,
+        });
+        await this.delay(1_000);
+        await this.gameScene.learningNode.growPumpkinTo(1);
+        return this.gameScene.tutor.dialogue([
+          "Very well. Your little knowledge is ready.",
+          "Let's see if it likes you.",
+        ]);
+      }),
     ]);
 
     return {};

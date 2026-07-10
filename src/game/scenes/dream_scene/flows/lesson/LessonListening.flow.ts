@@ -30,6 +30,7 @@ export class LessonListeningFlow extends Flow<SceneStateNames, DreamScene> {
         return this.gameScene.tutor.waitForSowing();
       }),
       stepBase(() => {
+        this.gameScene.player.enterInclined();
         this.gameScene.learningNode.enterSproutingState();
         return new Promise((resolve) => {
           events.actors.learningNode.sync.once("sprouting:end", () => {
@@ -62,7 +63,9 @@ export class LessonListeningFlow extends Flow<SceneStateNames, DreamScene> {
         stepBase(
           async () => {
             this.gameScene.learningNode.hidePlayerButton();
+            this.gameScene.player.enterListening();
             await this.gameScene.tutor.dialogue(this.meanings);
+            this.gameScene.player.enterInclined();
             this.gameScene.learningNode.showPlayerButton();
           },
           {
