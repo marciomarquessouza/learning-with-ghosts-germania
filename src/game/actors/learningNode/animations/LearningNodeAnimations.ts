@@ -86,6 +86,11 @@ export class LearningNodeAnimations {
       repeat: -1,
     });
 
+    this.animationManager.createAnimation(scene, "pumpkin_out_idle", {
+      frameRate: 6,
+      repeat: -1,
+    });
+
     if (!scene.anims.exists(this.LEARNING_NODE_PUMPKIN_TRANSITION)) {
       scene.anims.create({
         key: this.LEARNING_NODE_PUMPKIN_TRANSITION,
@@ -194,6 +199,10 @@ export class LearningNodeAnimations {
       .anims.play(this.LEARNING_NODE_PUMPKIN_IDLE, true);
   }
 
+  playOutIdle() {
+    this.animationManager.playAnimation(this.sprite, "pumpkin_out_idle");
+  }
+
   preparePumpkinReveal({
     spritePosition,
     containerPosition,
@@ -267,6 +276,7 @@ export class LearningNodeAnimations {
       .setMask(this.pumpkinMask);
 
     this.sprite.anims.play(this.LEARNING_NODE_PUMPKIN_FULL_IDLE, true);
+    // this.animationManager.playAnimation(this.sprite, "pumpkin_out_idle");
   }
 
   async growPumpkinTo(progress: number): Promise<void> {
