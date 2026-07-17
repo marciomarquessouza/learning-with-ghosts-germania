@@ -276,7 +276,6 @@ export class LearningNodeAnimations {
       .setMask(this.pumpkinMask);
 
     this.sprite.anims.play(this.LEARNING_NODE_PUMPKIN_FULL_IDLE, true);
-    // this.animationManager.playAnimation(this.sprite, "pumpkin_out_idle");
   }
 
   async growPumpkinTo(progress: number): Promise<void> {
@@ -304,7 +303,12 @@ export class LearningNodeAnimations {
         y: targetY,
         duration: 550,
         ease: "Back.easeOut",
-        onComplete: () => resolve(),
+        onComplete: () => {
+          if (progress === 1) {
+            this.sprite.setX(this.sprite.x - 6);
+          }
+          resolve();
+        },
       });
     });
   }

@@ -45,7 +45,6 @@ export class LessonWritingFlow extends Flow<SceneStateNames, DreamScene> {
       }),
       stepBase(() => {
         this.gameScene.player.enterListening();
-        this.gameScene.learningNode.enterPumpkinIdleState();
         return this.gameScene.lessonManager.writeLessonDescription({
           dialogueTitle: "Step 3: Writing",
           description: `Follow the Masked Nun instructions`,
@@ -76,6 +75,7 @@ export class LessonWritingFlow extends Flow<SceneStateNames, DreamScene> {
         });
         await this.delay(1_000);
         await this.gameScene.learningNode.growPumpkinTo(1);
+        this.gameScene.learningNode.enterPumpkinIdleState();
         return this.gameScene.tutor.dialogue([
           "Very well. Your little knowledge is ready.",
           "Let's see if it likes you.",
