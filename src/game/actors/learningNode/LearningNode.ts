@@ -19,6 +19,7 @@ import { PumpkinIdleState } from "./states/pumpkin/PumpkinIdleState";
 import { PumpkinTransition } from "./states/pumpkin/PumpkinTransitionState";
 import { FloorAnimations } from "./animations/FloorAnimations";
 import { SeedAnimations } from "./animations/SeedAnimations";
+import { FullIdleState } from "./states/full/FullIdleState";
 
 interface CreatePayload {
   startX: number;
@@ -104,7 +105,8 @@ export class LearningNode {
       .addState(LearningNode.STATES.SPROUT_IDLE, SproutIdleState, this)
       .addState(LearningNode.STATES.SPROUT_TALKING, SproutTalkingState, this)
       .addState(LearningNode.STATES.PUMPKIN_TRANSITION, PumpkinTransition, this)
-      .addState(LearningNode.STATES.PUMPKIN_IDLE, PumpkinIdleState, this);
+      .addState(LearningNode.STATES.PUMPKIN_IDLE, PumpkinIdleState, this)
+      .addState(LearningNode.STATES.FULL_IDLE, FullIdleState, this);
   }
 
   public enterSproutingState() {
@@ -125,6 +127,10 @@ export class LearningNode {
 
   public enterPumpkinIdleState() {
     this.stateMachine.changeTo(LearningNode.STATES.PUMPKIN_IDLE);
+  }
+
+  public enterFullIdleState() {
+    this.stateMachine.changeTo(LearningNode.STATES.FULL_IDLE);
   }
 
   public preparePumpkinGrowth() {

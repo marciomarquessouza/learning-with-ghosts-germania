@@ -303,12 +303,7 @@ export class LearningNodeAnimations {
         y: targetY,
         duration: 550,
         ease: "Back.easeOut",
-        onComplete: () => {
-          if (progress === 1) {
-            this.sprite.setX(this.sprite.x - 6);
-          }
-          resolve();
-        },
+        onComplete: () => resolve(),
       });
     });
   }

@@ -1,7 +1,7 @@
 import { BaseState } from "@/libs/game/state-machine/BaseState";
 import { LearningNode } from "../../LearningNode";
 
-export class PumpkinIdleState extends BaseState {
+export class FullIdleState extends BaseState {
   constructor(
     scene: Phaser.Scene,
     private learningNode: LearningNode,
@@ -9,7 +9,9 @@ export class PumpkinIdleState extends BaseState {
     super(scene);
   }
 
-  enter(): void {}
+  enter(): void {
+    this.learningNode.animations.playOutIdle();
+  }
 
   exit(): void {}
 

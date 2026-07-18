@@ -74,8 +74,8 @@ export class LessonWritingFlow extends Flow<SceneStateNames, DreamScene> {
           description: `Congrats`,
         });
         await this.delay(1_000);
+        this.gameScene.learningNode.enterFullIdleState();
         await this.gameScene.learningNode.growPumpkinTo(1);
-        this.gameScene.learningNode.enterPumpkinIdleState();
         return this.gameScene.tutor.dialogue([
           "Very well. Your little knowledge is ready.",
           "Let's see if it likes you.",
