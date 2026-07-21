@@ -91,6 +91,11 @@ export class LearningNodeAnimations {
       repeat: -1,
     });
 
+    this.animationManager.createAnimation(scene, "pumpkin_side_idle", {
+      frameRate: 6,
+      repeat: -1,
+    });
+
     if (!scene.anims.exists(this.LEARNING_NODE_PUMPKIN_TRANSITION)) {
       scene.anims.create({
         key: this.LEARNING_NODE_PUMPKIN_TRANSITION,
@@ -201,6 +206,10 @@ export class LearningNodeAnimations {
 
   playOutIdle() {
     this.animationManager.playAnimation(this.sprite, "pumpkin_out_idle");
+  }
+
+  playSideIdle() {
+    this.animationManager.playAnimation(this.sprite, "pumpkin_side_idle");
   }
 
   preparePumpkinReveal({

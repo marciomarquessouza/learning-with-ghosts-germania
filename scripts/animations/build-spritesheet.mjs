@@ -29,6 +29,7 @@ function parseArgs(argv) {
     scale: undefined,
     count: undefined,
     python: "python3",
+    flipX: false,
   };
 
   for (let i = 0; i < argv.length; i += 1) {
@@ -55,6 +56,9 @@ function parseArgs(argv) {
       case "--python":
         options.python = argv[i + 1];
         i += 1;
+        break;
+      case "--flip-x":
+        options.flipX = true;
         break;
       case "--help":
       case "-h":
@@ -201,6 +205,10 @@ if (options.scale !== undefined) {
 
 if (options.count !== undefined) {
   pythonArgs.push("--count", options.count);
+}
+
+if (options.flipX) {
+  pythonArgs.push("--flip-x");
 }
 
 console.log(`\nGenerating spritesheet for ${actor}/${animation}`);

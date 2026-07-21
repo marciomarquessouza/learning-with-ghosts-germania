@@ -1,0 +1,53 @@
+{
+  "frames": {
+    "learningNode_pumpkin_side_idle_0": {
+      "frame": {
+        "x": 0,
+        "y": 0,
+        "w": 166,
+        "h": 227
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 166,
+        "h": 227
+      },
+      "sourceSize": {
+        "w": 166,
+        "h": 227
+      }
+    },
+    "learningNode_pumpkin_side_idle_1": {
+      "frame": {
+        "x": 166,
+        "y": 0,
+        "w": 166,
+        "h": 227
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 166,
+        "h": 227
+      },
+      "sourceSize": {
+        "w": 166,
+        "h": 227
+      }
+    }
+  },
+  "meta": {
+    "image": "spritesheet.png",
+    "size": {
+      "w": 996,
+      "h": 227
+    },
+    "scale": "0.5",
+    "flip_x": true
+  }
+}

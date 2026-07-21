@@ -44,6 +44,11 @@ def parse_args() -> argparse.Namespace:
         default=1.0,
         help="Scale factor for frames (e.g. 0.8). Default: 1.0",
     )
+    parser.add_argument(
+        "--flip-x",
+        action="store_true",
+        help="Apply horizontal flip (mirror) to all frames before assembling the spritesheet.",
+    )
     return parser.parse_args()
 
 
@@ -58,15 +63,18 @@ def validate_args(args: argparse.Namespace) -> None:
         raise ValueError("--count must be > 0 when provided")
 
 
-def load_and_scale(path: Path, scale_factor: float) -> Image.Image:
+def load_and_scale(path: Path, scale_factor: float, flip_x: bool = False) -> Image.Image:
     img = Image.open(path).convert("RGBA")
 
-    if scale_factor == 1.0:
-        return img
+    if scale_factor != 1.0:
+        new_w = max(1, int(round(img.width * scale_factor)))
+        new_h = max(1, int(round(img.height * scale_factor)))
+        img = img.resize((new_w, new_h), Image.LANCZOS)
 
-    new_w = max(1, int(round(img.width * scale_factor)))
-    new_h = max(1, int(round(img.height * scale_factor)))
-    return img.resize((new_w, new_h), Image.LANCZOS)
+    if flip_x:
+        img = img.transpose(Image.FLIP_LEFT_RIGHT)
+
+    return img
 
 
 def find_matching_files(input_dir: Path, basename: str) -> list[Path]:
@@ -127,7 +135,7 @@ def main() -> None:
             f"No images found in '{input_dir}' matching pattern: {args.basename}_<number>.png"
         )
 
-    frames = [load_and_scale(path, args.scale) for path in frame_paths]
+    frames = [load_and_scale(path, args.scale, args.flip_x) for path in frame_paths]
     frame_count = len(frames)
 
     frame_width, frame_height = ensure_same_frame_size(frames)
@@ -174,6 +182,7 @@ def main() -> None:
             },
             "sourceSize": {"w": frame_width, "h": frame_height},
         }
+        data["meta"]["flip_x"] = args.flip_x
 
     sheet.save(sheet_path)
 

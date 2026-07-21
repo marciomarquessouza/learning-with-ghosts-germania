@@ -596,6 +596,7 @@ src/constants/spritesheets.ts
 --columns <number>   Number of columns in the spritesheet
 --scale <number>     Scale factor applied to each frame
 --count <number>     Limit the number of frames used
+--flip-x Apply horizontal flip (mirror) to all frames before assembling the spritesheet
 ```
 
 ### Example workflow
@@ -609,7 +610,7 @@ asset-sources/dragonbones/actors/eliza/teaching/
 2. Run the build command
 
 ```
-yarn sprite -- eliza teaching --columns 6 --scale 0.8
+yarn sprite -- eliza teaching --columns 6 --scale 0.8 --flip-x
 ```
 
 3. The spritesheet and constants will be generated automatically.
