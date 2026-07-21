@@ -81,10 +81,12 @@ export function getSceneLastSnapshot(
   currentScene: GameScenes,
   currentDay: number,
 ) {
-  const devSnapshotKey =
+  const searchParams =
     typeof window !== "undefined"
-      ? new URLSearchParams(window.location.search).get("dev")
+      ? new URLSearchParams(window.location.search)
       : null;
+  const devSnapshotKey =
+    searchParams?.get("dev") || searchParams?.get("snapshot") || null;
 
   const developmentSnapshot = devSnapshotKey
     ? developmentSnapshots[devSnapshotKey]
