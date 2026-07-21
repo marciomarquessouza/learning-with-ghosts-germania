@@ -5,9 +5,7 @@ import { TutorAnimations } from "./animations/TutorAnimations";
 import { createTutorStateMachine } from "./helpers/createTutorStateMachine";
 import { getRequired } from "@/utils/getRequired";
 import { TutorBlockerZone } from "./zones/TutorBlockerZone";
-import { ACTORS } from "@/constants/game";
 import { events } from "@/events/events";
-import { InteractionLine } from "@/libs/dialogues/types";
 
 export class Tutor {
   public static readonly STATES = TUTOR_STATES;
