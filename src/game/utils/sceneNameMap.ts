@@ -5,10 +5,16 @@ export function getSceneName(name: string): GameScenes {
   switch (name) {
     case "cell":
     case "CellScene":
+    case "cellscene":
+    case "cell-scene":
+    case "cell_scene":
     case GAME_SCENES.CELL_SCENE:
       return GAME_SCENES.CELL_SCENE;
     case "dream":
     case "dreamScene":
+    case "dreamscene":
+    case "dream-scene":
+    case "dream_scene":
     case "GhostDreamScene":
     case GAME_SCENES.DREAM_SCENE:
       return GAME_SCENES.DREAM_SCENE;
