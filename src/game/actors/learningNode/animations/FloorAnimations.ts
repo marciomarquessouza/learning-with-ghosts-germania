@@ -9,6 +9,8 @@ type AttachActorOptions = {
 export class FloorAnimations {
   private static readonly OPEN_ANIMATION_KEY =
     "learningNode_floor_transition_open";
+  private static readonly CLOSE_ANIMATION_KEY =
+    "learningNode_floor_transition_close";
 
   public hasActorAttached: boolean = false;
 
@@ -56,6 +58,7 @@ export class FloorAnimations {
     this._container = container;
 
     this.createOpenAnimation(scene);
+    this.createCloseAnimation(scene);
 
     this._baseSprite = scene.add
       .sprite(0, 0, this.textureKey, this.getFrameName(11))
@@ -94,6 +97,27 @@ export class FloorAnimations {
     });
   }
 
+  private createCloseAnimation(scene: Phaser.Scene) {
+    if (scene.anims.exists(FloorAnimations.CLOSE_ANIMATION_KEY)) {
+      return;
+    }
+
+    const frames = scene.anims
+      .generateFrameNames(this.textureKey, {
+        prefix: "learningNode_floor_transition_",
+        start: 0,
+        end: 10,
+      })
+      .reverse();
+
+    scene.anims.create({
+      key: FloorAnimations.CLOSE_ANIMATION_KEY,
+      frames,
+      frameRate: 12,
+      repeat: 0,
+    });
+  }
+
   async playOpen(): Promise<void> {
     this.baseSprite.setVisible(false);
     this.frontSprite.setVisible(false);
@@ -114,6 +138,25 @@ export class FloorAnimations {
       );
 
       this.openingSprite.play(FloorAnimations.OPEN_ANIMATION_KEY);
+    });
+  }
+
+  playClose(): Promise<void> {
+    this.baseSprite.setVisible(false);
+    this.frontSprite.setVisible(false);
+
+    this.openingSprite.setFrame(this.getFrameName(10)).setVisible(true);
+
+    return new Promise((resolve) => {
+      this.openingSprite.once(
+        Phaser.Animations.Events.ANIMATION_COMPLETE,
+        () => {
+          this.openingSprite.setVisible(false);
+          resolve();
+        },
+      );
+
+      this.openingSprite.play(FloorAnimations.CLOSE_ANIMATION_KEY);
     });
   }
 

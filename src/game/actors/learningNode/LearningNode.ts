@@ -20,6 +20,7 @@ import { PumpkinTransition } from "./states/pumpkin/PumpkinTransitionState";
 import { FloorAnimations } from "./animations/FloorAnimations";
 import { SeedAnimations } from "./animations/SeedAnimations";
 import { FullIdleState } from "./states/full/FullIdleState";
+import { FullWalkingState } from "./states/full/FullWalkingState";
 
 interface CreatePayload {
   startX: number;
@@ -29,6 +30,7 @@ interface CreatePayload {
 
 export class LearningNode {
   public static readonly STATES = LEARNING_NODE_STATES;
+  private readonly WALK_SPEED = 800;
 
   private _scene?: Phaser.Scene;
   private _sprite?: Phaser.Types.Physics.Arcade.SpriteWithDynamicBody;
@@ -106,7 +108,8 @@ export class LearningNode {
       .addState(LearningNode.STATES.SPROUT_TALKING, SproutTalkingState, this)
       .addState(LearningNode.STATES.PUMPKIN_TRANSITION, PumpkinTransition, this)
       .addState(LearningNode.STATES.PUMPKIN_IDLE, PumpkinIdleState, this)
-      .addState(LearningNode.STATES.FULL_IDLE, FullIdleState, this);
+      .addState(LearningNode.STATES.FULL_IDLE, FullIdleState, this)
+      .addState(LearningNode.STATES.FULL_WALKING, FullWalkingState, this);
   }
 
   public enterSproutingState() {
@@ -131,6 +134,44 @@ export class LearningNode {
 
   public enterFullIdleState() {
     this.stateMachine.changeTo(LearningNode.STATES.FULL_IDLE);
+  }
+
+  public async enterFullSuccess(): Promise<void> {
+    return this.animations.playFullSuccess();
+  }
+
+  public enterFullWalking() {
+    this.stateMachine.changeTo(LearningNode.STATES.FULL_WALKING);
+  }
+
+  public async walkTo({
+    distance,
+    direction = -1,
+  }: {
+    distance: number;
+    direction?: number;
+  }): Promise<void> {
+    if (direction > 0) {
+      this.sprite.setFlipX(false);
+    }
+    this.animations.clearPumpkinMask();
+    this.enterFullWalking();
+
+    const targetX = this.sprite.x + distance * direction;
+    const durationMs = (distance / this.WALK_SPEED) * 1000;
+
+    return new Promise((resolve) => {
+      this.scene.tweens.add({
+        targets: this.sprite,
+        x: targetX,
+        duration: durationMs,
+        ease: "Linear",
+        onComplete: () => {
+          this.enterFullIdleState();
+          resolve();
+        },
+      });
+    });
   }
 
   public preparePumpkinGrowth() {

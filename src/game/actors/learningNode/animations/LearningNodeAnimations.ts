@@ -96,6 +96,16 @@ export class LearningNodeAnimations {
       repeat: -1,
     });
 
+    this.animationManager.createAnimation(scene, "pumpkin_full_success", {
+      frameRate: 6,
+      repeat: 0,
+    });
+
+    this.animationManager.createAnimation(scene, "pumpkin_full_walking", {
+      frameRate: 18,
+      repeat: -1,
+    });
+
     if (!scene.anims.exists(this.LEARNING_NODE_PUMPKIN_TRANSITION)) {
       scene.anims.create({
         key: this.LEARNING_NODE_PUMPKIN_TRANSITION,
@@ -212,6 +222,24 @@ export class LearningNodeAnimations {
     this.animationManager.playAnimation(this.sprite, "pumpkin_side_idle");
   }
 
+  async playFullSuccess(): Promise<void> {
+    return new Promise((resolve) => {
+      this.sprite.setX(this.sprite.x + 6);
+      this.animationManager
+        .playAnimation(this.sprite, "pumpkin_full_success", true)
+        .holdAnimationAt(9, 1_800)
+        .onAnimationComplete(() => resolve());
+    });
+  }
+
+  playFullWalking() {
+    this.animationManager.playAnimation(
+      this.sprite,
+      "pumpkin_full_walking",
+      true,
+    );
+  }
+
   preparePumpkinReveal({
     spritePosition,
     containerPosition,
@@ -322,7 +350,7 @@ export class LearningNodeAnimations {
     return this.growPumpkinTo(currentProgress + amount);
   }
 
-  private clearPumpkinMask() {
+  public clearPumpkinMask() {
     this.sprite.clearMask();
 
     this.pumpkinMask?.destroy();

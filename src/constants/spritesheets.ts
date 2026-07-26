@@ -36,6 +36,16 @@ export const SPRITESHEETS = {
       image: '/actors/learningNode/pumpkin_full/spritesheet.png',
       atlas: '/actors/learningNode/pumpkin_full/spritesheet.json'
     },
+    pumpkin_full_success: {
+      key: 'learningNode-pumpkin_full_success',
+      image: '/actors/learningNode/pumpkin_full_success/spritesheet.png',
+      atlas: '/actors/learningNode/pumpkin_full_success/spritesheet.json'
+    },
+    pumpkin_full_walking: {
+      key: 'learningNode-pumpkin_full_walking',
+      image: '/actors/learningNode/pumpkin_full_walking/spritesheet.png',
+      atlas: '/actors/learningNode/pumpkin_full_walking/spritesheet.json'
+    },
     pumpkin_out_idle: {
       key: 'learningNode-pumpkin_out_idle',
       image: '/actors/learningNode/pumpkin_out_idle/spritesheet.png',
