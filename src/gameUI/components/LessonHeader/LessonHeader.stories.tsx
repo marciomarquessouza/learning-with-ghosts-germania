@@ -40,6 +40,7 @@ const lesson: Lesson = {
   entries: [
     {
       id: "__ID__",
+      sequence: 0,
       reference: "Hello",
       target: "Hallo",
       steps: [],

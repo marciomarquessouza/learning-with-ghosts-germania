@@ -37,6 +37,7 @@ export const defaultLessonDetails: LessonDetails = {
 
 export const defaultLessonEntry: LessonEntry = {
   id: "",
+  sequence: 0,
   reference: "",
   target: "",
   steps: [],

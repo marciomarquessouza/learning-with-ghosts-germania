@@ -28,6 +28,7 @@ export type LessonEntry = {
   id: string;
   reference: string;
   target: string;
+  sequence: number;
   audio?: string;
   steps: LessonEntryStep[];
 };

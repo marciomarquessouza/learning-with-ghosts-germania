@@ -5,8 +5,8 @@ import { Lesson, LessonEntry, LessonStepType } from "./types";
 export class LessonController {
   private _scene?: Phaser.Scene;
   private _gameAudio?: GameAudio;
+  private _currentLessonEntry: LessonEntry | null = null;
   private nextEntries: LessonEntry[] = [];
-  public currentLessonEntry: LessonEntry | null = null;
   public lesson: Lesson;
 
   constructor(lesson: Lesson) {
@@ -23,6 +23,14 @@ export class LessonController {
     return getRequired(this._scene, "LessonController", "this._scene");
   }
 
+  public get currentLessonEntry(): LessonEntry {
+    return getRequired(
+      this._currentLessonEntry,
+      "LessonController",
+      "_currentLessonEntry",
+    );
+  }
+
   preload(scene: Phaser.Scene, gameAudio: GameAudio) {
     this.getLessonAudios().forEach(({ key, file }) => {
       if (file) gameAudio.preload(scene, key, file);
@@ -37,15 +45,19 @@ export class LessonController {
   private setCurrentLessonEntry() {
     if (this.hasNextEntry()) {
       const [entry, ...nextEntries] = this.nextEntries;
-      this.currentLessonEntry = entry;
+      this._currentLessonEntry = entry;
       this.nextEntries = nextEntries;
     }
+  }
+
+  public getCurrentLessonEntry(): LessonEntry {
+    return this.currentLessonEntry;
   }
 
   public callNextEntry(): boolean {
     if (this.hasNextEntry()) {
       const [entry, ...nextEntries] = this.nextEntries;
-      this.currentLessonEntry = entry;
+      this._currentLessonEntry = entry;
       this.nextEntries = nextEntries;
       return true;
     }

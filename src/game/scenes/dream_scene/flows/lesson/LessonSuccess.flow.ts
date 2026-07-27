@@ -7,6 +7,7 @@ import { runSteps, stepBase } from "@/libs/game/game-flow/runSteps";
 
 export class LessonSuccessFlow extends Flow<SceneStateNames, DreamScene> {
   public flowName: string = DREAM_SCENE_FLOWS.LESSON_SUCCESS;
+  private lessonEntry = this.gameScene.lessonManager.getCurrentLessonEntry();
 
   async run(): Promise<FlowResult<SceneStateNames, DreamScene>> {
     const hasLearningNode = this.gameScene.learningNode.floor.hasActorAttached;
@@ -29,11 +30,14 @@ export class LessonSuccessFlow extends Flow<SceneStateNames, DreamScene> {
         this.delay(400, () => {
           this.gameScene.learningNode.floor.playClose();
         });
-        return this.gameScene.learningNode.walkTo({ distance: 1_500 });
+        const entrySequence = this.lessonEntry.sequence;
+        const learningNodePosition = 300 + (15 * entrySequence + 1);
+        return this.gameScene.learningNode.walkTo({
+          distance: learningNodePosition,
+        });
       }),
       stepBase(() => {
         this.gameScene.player.enterIdle();
-        this.gameScene.learningNode.destroy();
       }),
     ]);
 

@@ -30,7 +30,7 @@ interface CreatePayload {
 
 export class LearningNode {
   public static readonly STATES = LEARNING_NODE_STATES;
-  private readonly WALK_SPEED = 800;
+  private readonly WALK_SPEED = 400;
 
   private _scene?: Phaser.Scene;
   private _sprite?: Phaser.Types.Physics.Arcade.SpriteWithDynamicBody;

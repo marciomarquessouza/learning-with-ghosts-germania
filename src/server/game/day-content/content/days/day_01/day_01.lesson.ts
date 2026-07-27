@@ -8,6 +8,7 @@ export const lesson: Lesson = {
     {
       id: "1",
       reference: "Hello",
+      sequence: 0,
       target: "Hallo",
       steps: [
         {
@@ -38,6 +39,7 @@ export const lesson: Lesson = {
     },
     {
       id: "2",
+      sequence: 1,
       reference: "Good day",
       target: "Guten Tag",
       steps: [
@@ -66,6 +68,7 @@ export const lesson: Lesson = {
     },
     {
       id: "3",
+      sequence: 2,
       reference: "Good evening",
       target: "Guten Abend",
       steps: [
