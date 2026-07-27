@@ -39,7 +39,7 @@ export class PronunciationAPI {
     formData.append("target", target);
 
     const apiResponse = await fetch(
-      `/api/game/pronunciation/score/${language}`,
+      `/api/game/pronunciation/score/${language}?mock=true`,
       {
         method: "POST",
         body: formData,
