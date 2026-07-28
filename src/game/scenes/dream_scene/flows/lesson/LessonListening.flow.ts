@@ -9,7 +9,7 @@ import { SceneStateNames } from "../../constants/states";
 import { LessonPronunciationFlow } from "./LessonPronunciation.flow";
 import { DREAM_SCENE_FLOWS } from "../../constants/flows";
 
-const LISTENING_REPETITION = 3;
+const LISTENING_REPETITION = 2;
 
 export class LessonListeningFlow extends Flow<SceneStateNames, DreamScene> {
   public flowName = DREAM_SCENE_FLOWS.LESSON_LISTENING;
@@ -64,6 +64,10 @@ export class LessonListeningFlow extends Flow<SceneStateNames, DreamScene> {
           async () => {
             this.gameScene.learningNode.hidePlayerButton();
             this.gameScene.player.enterListening();
+            this.gameScene.lessonManager.writeLessonDescription({
+              dialogueTitle: "Step 1: Listening",
+              description: "",
+            });
             await this.gameScene.tutor.dialogue(this.meanings);
             this.gameScene.player.enterInclined();
             this.gameScene.learningNode.showPlayerButton();
