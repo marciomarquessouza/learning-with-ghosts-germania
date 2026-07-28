@@ -15,6 +15,7 @@ export class LessonWritingFlow extends Flow<SceneStateNames, DreamScene> {
   private writingResult?: WritingResult;
   private isAudioSamplePlaying = false;
   private removePlayTargetAudioEvent: () => void = () => {};
+  private target = this.gameScene.lessonManager.getEntryTarget();
 
   private get hasWon(): boolean {
     return !!this.writingResult?.success;

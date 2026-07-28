@@ -10,7 +10,10 @@ import {
 import { LEARNING_NODE_STATES } from "./constants/states";
 import { LearningNodeAnimations as Animations } from "./animations/LearningNodeAnimations";
 import { AudioPlayButton } from "./components/AudioPlayButton";
-import { LessonTargetLabel } from "./components/LessonTargetLabel";
+import {
+  AttachOptions,
+  LessonTargetLabel,
+} from "./components/LessonTargetLabel";
 
 import { SproutingState } from "./states/sprout/SproutingState";
 import { SproutTalkingState } from "./states/sprout/SproutTalkingState";
@@ -213,12 +216,15 @@ export class LearningNode {
     this.audioPlayButton.destroy();
   }
 
-  attachTargetLabel(targetText: string, onComplete?: () => void) {
+  attachTargetLabel(
+    targetText: string,
+    options?: AttachOptions,
+    onComplete?: () => void,
+  ) {
     this.lessonTargetLabel.typeText({ text: targetText, onComplete });
-    this.lessonTargetLabel.attach({
-      target: this.sprite,
-      position: "top",
-      offset: -150,
+    this.lessonTargetLabel.attach(this.sprite, {
+      position: options?.position ?? "top",
+      offset: options?.offset ?? -150,
     });
     this.lessonTargetLabel.setVisible(true);
   }

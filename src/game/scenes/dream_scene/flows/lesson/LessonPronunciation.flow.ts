@@ -143,7 +143,7 @@ export class LessonPronunciationFlow extends Flow<SceneStateNames, DreamScene> {
           dialogueTitle: "Step 2: Pronunciation",
           description: ``,
         });
-        await this.delay(3_000);
+        await this.delay(500);
         return this.gameScene.tutor.dialogue([
           "Very well, your new knowledge is almost ready to be harvested.",
           "Let's move on to the next phase.",

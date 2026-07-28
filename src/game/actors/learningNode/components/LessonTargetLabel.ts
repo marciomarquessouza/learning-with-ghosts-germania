@@ -8,6 +8,16 @@ type TypeTextConfig = {
 
 type AttachPosition = "top" | "bottom" | "left" | "right";
 
+export type AttachTarget =
+  | Phaser.GameObjects.Container
+  | Phaser.GameObjects.Sprite
+  | Phaser.Types.Physics.Arcade.SpriteWithDynamicBody;
+
+export type AttachOptions = {
+  position?: AttachPosition;
+  offset?: number;
+};
+
 export class LessonTargetLabel {
   private container?: Phaser.GameObjects.Container;
   private background?: Phaser.GameObjects.Graphics;
@@ -103,22 +113,13 @@ export class LessonTargetLabel {
     this.container?.setVisible(visible);
   }
 
-  attach({
-    target,
-    position,
-    offset = 0,
-  }: {
-    target:
-      | Phaser.GameObjects.Container
-      | Phaser.GameObjects.Sprite
-      | Phaser.Types.Physics.Arcade.SpriteWithDynamicBody;
-    position: AttachPosition;
-    offset?: number;
-  }) {
+  attach(target: AttachTarget, options?: AttachOptions) {
     if (!this.container) return;
 
     const targetBounds = target.getBounds();
     const nodeBounds = this.getBounds();
+    const position = options?.position || "top";
+    const offset = options?.offset || 0;
 
     switch (position) {
       case "top":
