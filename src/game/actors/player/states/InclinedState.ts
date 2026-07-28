@@ -9,11 +9,17 @@ export class InclinedState extends BaseState {
     super(scene);
   }
 
+  private isRunning = false;
+
   enter(): void {
+    if (this.isRunning) return;
     this.player.animations.playInclined();
+    this.isRunning = true;
   }
 
-  exit(): void {}
+  exit(): void {
+    this.isRunning = false;
+  }
 
   update(): void {}
 

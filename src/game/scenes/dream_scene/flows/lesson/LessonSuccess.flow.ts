@@ -23,7 +23,9 @@ export class LessonSuccessFlow extends Flow<SceneStateNames, DreamScene> {
         { when: () => !hasLearningNode },
       ),
       stepBase(() => {
-        this.gameScene.player.enterInclined();
+        if (hasLearningNode) {
+          this.gameScene.player.enterInclined();
+        }
         return this.gameScene.learningNode.enterFullSuccess();
       }),
       stepBase(() => {
@@ -31,7 +33,7 @@ export class LessonSuccessFlow extends Flow<SceneStateNames, DreamScene> {
           this.gameScene.learningNode.floor.playClose();
         });
         const entrySequence = this.lessonEntry.sequence;
-        const learningNodePosition = 300 + (15 * entrySequence + 1);
+        const learningNodePosition = 340 + (15 * entrySequence + 1);
         return this.gameScene.learningNode.walkTo({
           distance: learningNodePosition,
         });
