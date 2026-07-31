@@ -10,6 +10,7 @@ export class PumpkinTransition extends BaseState {
   }
 
   enter(): void {
+    this.learningNode.lessonTargetLabel.moveVerticalTo(-25);
     this.learningNode.animations.playPumpkinTransition().then(() => {
       this.learningNode.preparePumpkinGrowth();
       this.learningNode.enterPumpkinIdleState();

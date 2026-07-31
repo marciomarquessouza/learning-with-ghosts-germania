@@ -190,6 +190,8 @@ export class LearningNode {
   }
 
   public increasePumpkinGrowth(amount = 0.25) {
+    const labelOffsetY = 15;
+    this.lessonTargetLabel.moveVerticalTo(-(100 * amount + labelOffsetY));
     return this.animations.increasePumpkinGrowth(amount);
   }
 
@@ -224,7 +226,8 @@ export class LearningNode {
     this.lessonTargetLabel.typeText({ text: targetText, onComplete });
     this.lessonTargetLabel.attach(this.sprite, {
       position: options?.position ?? "top",
-      offset: options?.offset ?? -150,
+      offsetX: options?.offsetX ?? 50,
+      offsetY: options?.offsetY ?? -150,
     });
     this.lessonTargetLabel.setVisible(true);
   }

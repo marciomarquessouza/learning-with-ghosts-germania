@@ -14,6 +14,7 @@ const LISTENING_REPETITION = 2;
 export class LessonListeningFlow extends Flow<SceneStateNames, DreamScene> {
   public flowName = DREAM_SCENE_FLOWS.LESSON_LISTENING;
 
+  private lessonEntry = this.gameScene.lessonManager.getCurrentLessonEntry();
   private step = this.gameScene.lessonManager.getStepByType("listening");
   private target = this.gameScene.lessonManager.getEntryTarget();
   private meanings =
@@ -118,8 +119,9 @@ export class LessonListeningFlow extends Flow<SceneStateNames, DreamScene> {
           );
         }),
         stepBase(async () => {
+          const entrySequence = this.lessonEntry.sequence + 1;
           this.gameScene.learningNode.lessonTargetLabel.setBadge(
-            `${index + 1}x`,
+            `${entrySequence}`,
           );
           this.gameScene.learningNode.enterIdleState();
           await this.delay(500);
@@ -132,7 +134,6 @@ export class LessonListeningFlow extends Flow<SceneStateNames, DreamScene> {
         ),
       ]),
       stepBase(() => {
-        this.gameScene.learningNode.detachTargetLabel();
         this.gameScene.learningNode.detachPlayerButton();
         this.gameScene.player.enterIdle();
         return this.gameScene.learningNode.enterPumpkinTransitionState();

@@ -1,3 +1,4 @@
+import { getRequired } from "@/utils/getRequired";
 import Phaser from "phaser";
 
 type TypeTextConfig = {
@@ -15,19 +16,19 @@ export type AttachTarget =
 
 export type AttachOptions = {
   position?: AttachPosition;
-  offset?: number;
+  offsetX?: number;
+  offsetY?: number;
 };
 
 export class LessonTargetLabel {
-  private container?: Phaser.GameObjects.Container;
+  private _scene?: Phaser.Scene;
+  private _container?: Phaser.GameObjects.Container;
+
   private background?: Phaser.GameObjects.Graphics;
   private badgeBackground?: Phaser.GameObjects.Graphics;
   private badgeText?: Phaser.GameObjects.Text;
   private mainText?: Phaser.GameObjects.Text;
   private typingEvent?: Phaser.Time.TimerEvent;
-
-  private scene?: Phaser.Scene;
-
   private text = "";
   private badge = "0x";
 
@@ -36,10 +37,18 @@ export class LessonTargetLabel {
   private readonly paddingX = 22;
   private readonly radius = 0;
 
-  create(scene: Phaser.Scene) {
-    this.scene = scene;
+  private get scene(): Phaser.Scene {
+    return getRequired(this._scene, "LessonTargetLabel", "_scene");
+  }
 
-    this.container = scene.add.container(0, 0);
+  private get container(): Phaser.GameObjects.Container {
+    return getRequired(this._container, "LessonTargetLabel", "_container");
+  }
+
+  create(scene: Phaser.Scene) {
+    this._scene = scene;
+
+    this._container = scene.add.container(0, 0);
 
     this.background = scene.add.graphics();
     this.badgeBackground = scene.add.graphics();
@@ -113,39 +122,49 @@ export class LessonTargetLabel {
     this.container?.setVisible(visible);
   }
 
+  async moveVerticalTo(y: number): Promise<void> {
+    this.scene?.tweens.add({
+      targets: this.container,
+      y: this.container.y + y,
+      ease: "easeInOut",
+      duration: 30,
+    });
+  }
+
   attach(target: AttachTarget, options?: AttachOptions) {
     if (!this.container) return;
 
     const targetBounds = target.getBounds();
     const nodeBounds = this.getBounds();
     const position = options?.position || "top";
-    const offset = options?.offset || 0;
+    const offsetX = options?.offsetX || 0;
+    const offsetY = options?.offsetY || 0;
 
     switch (position) {
       case "top":
         this.container.setPosition(
-          targetBounds.centerX - nodeBounds.width / 2,
-          targetBounds.y - nodeBounds.height - offset,
+          targetBounds.centerX - nodeBounds.width / 2 - offsetX,
+          targetBounds.y - nodeBounds.height - offsetY,
         );
         break;
 
       case "bottom":
         this.container.setPosition(
           targetBounds.centerX - nodeBounds.width / 2,
-          targetBounds.bottom + offset,
+          targetBounds.bottom + offsetY,
         );
         break;
 
       case "left":
         this.container.setPosition(
-          targetBounds.x - nodeBounds.width - offset,
+          targetBounds.x - nodeBounds.width - offsetX,
           targetBounds.centerY - nodeBounds.height / 2,
         );
         break;
 
       case "right":
         this.container.setPosition(
-          targetBounds.right + offset,
+          targetBounds.right + offsetX,
           targetBounds.centerY - nodeBounds.height / 2,
         );
         break;
@@ -159,12 +178,12 @@ export class LessonTargetLabel {
   destroy() {
     this.container?.destroy(true);
 
-    this.container = undefined;
+    this._scene = undefined;
+    this._container = undefined;
     this.background = undefined;
     this.badgeBackground = undefined;
     this.badgeText = undefined;
     this.mainText = undefined;
-    this.scene = undefined;
   }
 
   private render() {
