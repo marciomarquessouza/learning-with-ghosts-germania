@@ -131,6 +131,15 @@ export class LessonTargetLabel {
     });
   }
 
+  moveHorizontalTo(x: number, duration: number) {
+    this.scene?.tweens.add({
+      targets: this.container,
+      x: this.container.x + x,
+      ease: "easeInOut",
+      duration,
+    });
+  }
+
   attach(target: AttachTarget, options?: AttachOptions) {
     if (!this.container) return;
 

@@ -164,6 +164,7 @@ export class LearningNode {
     const durationMs = (distance / this.WALK_SPEED) * 1000;
 
     return new Promise((resolve) => {
+      this.lessonTargetLabel.moveHorizontalTo(distance * direction, durationMs);
       this.scene.tweens.add({
         targets: this.sprite,
         x: targetX,
