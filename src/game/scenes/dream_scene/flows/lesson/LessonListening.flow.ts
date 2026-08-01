@@ -119,15 +119,15 @@ export class LessonListeningFlow extends Flow<SceneStateNames, DreamScene> {
           );
         }),
         stepBase(async () => {
-          const entrySequence = this.lessonEntry.sequence + 1;
-          this.gameScene.learningNode.lessonTargetLabel.setBadge(
-            `${entrySequence}`,
-          );
           this.gameScene.learningNode.enterIdleState();
           await this.delay(500);
         }),
         stepBase(
           () => {
+            const entrySequence = this.lessonEntry.sequence + 1;
+            this.gameScene.learningNode.lessonTargetLabel.setBadge(
+              `${entrySequence}`,
+            );
             this.gameScene.learningNode.attachTargetLabel(this.target);
           },
           { when: () => index === 0 },

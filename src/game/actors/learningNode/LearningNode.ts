@@ -186,10 +186,6 @@ export class LearningNode {
     });
   }
 
-  public growPumpkinTo(progress: number) {
-    return this.animations.growPumpkinTo(progress);
-  }
-
   public increasePumpkinGrowth(amount = 0.25) {
     const labelOffsetY = 15;
     this.lessonTargetLabel.moveVerticalTo(-(100 * amount + labelOffsetY));
@@ -246,14 +242,25 @@ export class LearningNode {
     this.lessonTargetLabel.destroy();
   }
 
-  async resumeSproutToPumpkin(): Promise<void> {
+  async resumeSproutToPumpkin(options?: {
+    sequence?: number;
+    target?: string;
+    offsetY?: number;
+  }): Promise<void> {
     await this.floor.playOpen();
     this.floor.attachActor(this.sprite, {
       x: 80,
       y: -92,
     });
+
     await this.animations.playSproutTransition();
     await this.animations.playPumpkinTransition();
+    if (options && options.sequence && options.target && options.offsetY) {
+      this.lessonTargetLabel.setBadge(`${options.sequence}`);
+      this.attachTargetLabel(options.target, {
+        offsetY: options.offsetY,
+      });
+    }
     this.preparePumpkinGrowth();
   }
 

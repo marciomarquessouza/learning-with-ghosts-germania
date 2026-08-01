@@ -16,6 +16,7 @@ export class LessonWritingFlow extends Flow<SceneStateNames, DreamScene> {
   private isAudioSamplePlaying = false;
   private removePlayTargetAudioEvent: () => void = () => {};
   private target = this.gameScene.lessonManager.getEntryTarget();
+  private lessonEntry = this.gameScene.lessonManager.getCurrentLessonEntry();
 
   private get hasWon(): boolean {
     return !!this.writingResult?.success;
@@ -27,7 +28,12 @@ export class LessonWritingFlow extends Flow<SceneStateNames, DreamScene> {
       stepBase(
         async () => {
           this.gameScene.player.enterInclined();
-          await this.gameScene.learningNode.resumeSproutToPumpkin();
+          const sequence = this.lessonEntry.sequence + 1;
+          await this.gameScene.learningNode.resumeSproutToPumpkin({
+            sequence,
+            target: this.target,
+            offsetY: -130,
+          });
           await this.gameScene.learningNode.increasePumpkinGrowth(0.25);
           return this.delay(800);
         },

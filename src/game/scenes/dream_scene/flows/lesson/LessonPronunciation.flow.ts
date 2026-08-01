@@ -14,6 +14,7 @@ export class LessonPronunciationFlow extends Flow<SceneStateNames, DreamScene> {
 
   private target = this.gameScene.lessonManager.getEntryTarget();
   private step = this.gameScene.lessonManager.getStepByType("pronunciation");
+  private lessonEntry = this.gameScene.lessonManager.getCurrentLessonEntry();
   private isAudioSamplePlaying = false;
   private removePlayTargetAudioEvent: () => void = () => {};
   private removePlayRecordedAudioEvent: ClearEvent = { remove: () => {} };
@@ -84,7 +85,12 @@ export class LessonPronunciationFlow extends Flow<SceneStateNames, DreamScene> {
       stepBase(
         () => {
           this.gameScene.player.enterInclined();
-          return this.gameScene.learningNode.resumeSproutToPumpkin();
+          const sequence = this.lessonEntry.sequence + 1;
+          return this.gameScene.learningNode.resumeSproutToPumpkin({
+            sequence,
+            target: this.target,
+            offsetY: -125,
+          });
         },
         { when: () => !hasLearningNode },
       ),

@@ -8,16 +8,21 @@ import { runSteps, stepBase } from "@/libs/game/game-flow/runSteps";
 export class LessonSuccessFlow extends Flow<SceneStateNames, DreamScene> {
   public flowName: string = DREAM_SCENE_FLOWS.LESSON_SUCCESS;
   private lessonEntry = this.gameScene.lessonManager.getCurrentLessonEntry();
+  private target = this.gameScene.lessonManager.getEntryTarget();
 
   async run(): Promise<FlowResult<SceneStateNames, DreamScene>> {
     const hasLearningNode = this.gameScene.learningNode.floor.hasActorAttached;
     await runSteps([
       stepBase(
         async () => {
+          const sequence = this.lessonEntry.sequence + 1;
           this.gameScene.player.enterInclined();
-          await this.gameScene.learningNode.resumeSproutToPumpkin();
-          await this.gameScene.learningNode.increasePumpkinGrowth(0.25);
-          await this.gameScene.learningNode.growPumpkinTo(1);
+          await this.gameScene.learningNode.resumeSproutToPumpkin({
+            sequence,
+            target: this.target,
+            offsetY: -100,
+          });
+          await this.gameScene.learningNode.increasePumpkinGrowth(1);
           return this.delay(800);
         },
         { when: () => !hasLearningNode },
