@@ -73,29 +73,30 @@ Each in-game day is divided into two realities:
 
 ## The Real World – The Cell
 
-![Josef's Cell](https://learning-with-ghosts-germania.vercel.app/screenshots/cell.png)
-
+![Josef's Cell](https://learning-with-ghosts-germania.vercel.app/screenshots/cell_01.png)
 The player is evaluated under constrained conditions.  
+![Josef's Cell](https://learning-with-ghosts-germania.vercel.app/screenshots/cell_02.png)
 Performance directly affects in-game survival.
 
 ## The Dream World – The Cemetery
 
 ![Cemetery Phase](https://learning-with-ghosts-germania.vercel.app/screenshots/dream_01.png)
-
-New vocabulary is introduced and reinforced through structured challenges.
+Josef enters a surreal cemetery as a ghost, where narrative dialogue introduces the dream world and reframes the "ghost" feeling as the beginning of his learning journey.
 
 ![Cemetery Phase 2](https://learning-with-ghosts-germania.vercel.app/screenshots/dream_02.png)
+The Masked Nun guides Josef through a structured lesson, while interactive learning nodes connect vocabulary practice directly to the cemetery environment.
 
-## The Train Phase – Reinforcement Under Pressure
+![Cemetery Phase 2](https://learning-with-ghosts-germania.vercel.app/screenshots/dream_03.png)
+During pronunciation exercises, the player records each word and receives real-time visual feedback on vocal pitch and accuracy.
 
-![Train Phase](https://learning-with-ghosts-germania.vercel.app/screenshots/train_01.png)
+![Cemetery Phase 2](https://learning-with-ghosts-germania.vercel.app/screenshots/dream_04.png)
+Writing exercises challenge the player to connect letters in the correct sequence, with limited hints and mistakes reinforcing each word mechanically.
 
-- Pronunciation challenges fuel progression
-- Mistakes weaken mechanical stability
-- Pressure builds dynamically
+![Cemetery Phase 2](https://learning-with-ghosts-germania.vercel.app/screenshots/dream_05.png)
+Completing a lesson grows its learning node and unlocks new vocabulary, turning progression into visible changes within the dream world.
 
-![Train Phase 2](https://learning-with-ghosts-germania.vercel.app/screenshots/train_02.png)
-![Train Phase 3](https://learning-with-ghosts-germania.vercel.app/screenshots/train_03.png)
+![Cemetery Phase 2](https://learning-with-ghosts-germania.vercel.app/screenshots/dream_06.png)
+The listening phase combines spoken prompts, replay controls, character-based vocabulary nodes, and an in-game notebook for reviewing learned expressions.
 
 Learning is reinforced mechanically rather than abstractly.
 
