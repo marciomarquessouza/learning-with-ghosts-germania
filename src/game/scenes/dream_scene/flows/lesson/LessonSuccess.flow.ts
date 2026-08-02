@@ -41,7 +41,7 @@ export class LessonSuccessFlow extends Flow<SceneStateNames, DreamScene> {
           this.gameScene.learningNode.floor.playClose();
         });
         const entrySequence = this.lessonEntry.sequence;
-        const learningNodePosition = 340 + (15 * entrySequence + 1);
+        const learningNodePosition = 360 + 120 * entrySequence;
         return this.gameScene.learningNode.walkTo({
           distance: learningNodePosition,
         });
