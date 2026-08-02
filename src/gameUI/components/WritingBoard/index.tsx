@@ -50,11 +50,7 @@ export function WritingBoard() {
   };
 
   const handleRetry = () => {
-    setPhase("writing");
-    setNextIndex(1);
-    setErrors(0);
-    setTips(0);
-    setAnswerIndexes([0]);
+    resetWritingBoard();
   };
 
   const handleOnError = useCallback(() => {
@@ -114,6 +110,14 @@ export function WritingBoard() {
     }
   }, [errors, preparedTarget.sanitizedTarget.length, tips]);
 
+  const resetWritingBoard = useCallback(() => {
+    setPhase("writing");
+    setAnswerIndexes([0]);
+    setErrors(0);
+    setTips(0);
+    setNextIndex(1);
+  }, []);
+
   const onClickNext = () => {
     const result: WritingResult = {
       success: phase === "result:correct",
@@ -122,6 +126,7 @@ export function WritingBoard() {
       tips,
     };
     onClickNextRef.current(result);
+    resetWritingBoard();
     setIsVisible(false);
   };
 
