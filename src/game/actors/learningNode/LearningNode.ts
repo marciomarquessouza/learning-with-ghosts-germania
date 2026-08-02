@@ -24,8 +24,11 @@ import { FloorAnimations } from "./animations/FloorAnimations";
 import { SeedAnimations } from "./animations/SeedAnimations";
 import { FullIdleState } from "./states/full/FullIdleState";
 import { FullWalkingState } from "./states/full/FullWalkingState";
+import { slugify } from "@/utils/slugfy";
 
 interface CreatePayload {
+  target: string;
+  sequence: number;
   startX: number;
   startY: number;
   flipX: boolean;
@@ -45,6 +48,9 @@ export class LearningNode {
     LearningNodeSyncEvents,
     LearningNodeAsyncEvents
   >;
+  public target: string = "";
+  public sequence: number = 0;
+  public slug: string = "";
   public audioPlayButton = new AudioPlayButton();
   public lessonTargetLabel = new LessonTargetLabel();
   public floor = new FloorAnimations();
@@ -68,8 +74,14 @@ export class LearningNode {
     this.floor.preload(scene);
   }
 
-  create(scene: Phaser.Scene, { startX, startY, flipX }: CreatePayload) {
+  create(
+    scene: Phaser.Scene,
+    { target, sequence, startX, startY, flipX }: CreatePayload,
+  ) {
     this._scene = scene;
+    this.target = target;
+    this.sequence = sequence;
+    this.slug = slugify(`${target}-${sequence}`);
 
     const learningNodeX = startX - 160;
     const learningNodeY = startY;

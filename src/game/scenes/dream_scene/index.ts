@@ -48,6 +48,8 @@ import { LessonWritingFlow } from "./flows/lesson/LessonWriting.flow";
 import { getRequired } from "@/utils/getRequired";
 import { LessonSuccessFlow } from "./flows/lesson/LessonSuccess.flow";
 import { LessonFailureFlow } from "./flows/lesson/LessonFailure.flow";
+import { KnowledgeTroop } from "@/game/actors/knowledgeTroop/KnowledgeTroop";
+import { LessonNextEntryFlow } from "./flows/lesson/LessonNextEntry.flow";
 
 export class DreamScene extends Phaser.Scene {
   public static readonly STATES = SCENE_STATES;
@@ -59,6 +61,8 @@ export class DreamScene extends Phaser.Scene {
   public player = new Player();
   public tutor = new Tutor();
   public learningNode = new LearningNode();
+  public knowledgeTroop = new KnowledgeTroop();
+
   public gameAudio = new GameAudio();
   private _lessonManager?: LessonManager;
   public dialogueManager = new DialogueManager();
@@ -121,12 +125,6 @@ export class DreamScene extends Phaser.Scene {
 
     this.tutor.addCollisionWithPlayer(this.player.sprite);
 
-    this.learningNode.create(this, {
-      startX: this.tutor.container.x + 200,
-      startY: 870,
-      flipX: true,
-    });
-
     const hudContainer = this.hud.create(this, [HUD_ITEMS.WEIGHT]);
     this.children.bringToTop(hudContainer);
 
@@ -157,6 +155,7 @@ export class DreamScene extends Phaser.Scene {
       .addFlow(SCENE_FLOWS.PAUSE, PauseFlow)
       .addFlow(SCENE_FLOWS.BEFORE_LESSON, BeforeLessonFlow)
       .addFlow(SCENE_FLOWS.LESSON_INTRODUCTION, LessonIntroductionFlow)
+      .addFlow(SCENE_FLOWS.LESSON_NEXT_ENTRY, LessonNextEntryFlow)
       .addFlow(SCENE_FLOWS.LESSON_LISTENING, LessonListeningFlow)
       .addFlow(SCENE_FLOWS.LESSON_PRONUNCIATION, LessonPronunciationFlow)
       .addFlow(SCENE_FLOWS.LESSON_WRITING, LessonWritingFlow)
@@ -177,12 +176,29 @@ export class DreamScene extends Phaser.Scene {
     this.stateMachine.changeTo(nextState);
   }
 
+  public createLearningNode() {
+    const { sequence, target } = this.lessonManager.getCurrentLessonEntry();
+    if (sequence > 0) {
+      const knowledgeTroopMember = this.learningNode;
+      this.knowledgeTroop.add(knowledgeTroopMember);
+      this.learningNode = new LearningNode();
+    }
+    this.learningNode.create(this, {
+      target,
+      sequence,
+      startX: this.tutor.container.x + 200,
+      startY: 870,
+      flipX: true,
+    });
+  }
+
   update(time: number, delta: number) {
     this.stateMachine.updateAndHandleInput(delta);
     this.scenario.update(delta);
     this.player.update(time, delta);
     this.tutor.update(delta);
     this.learningNode.update(delta);
+    this.knowledgeTroop.update(delta);
   }
 
   destroy() {
@@ -191,6 +207,7 @@ export class DreamScene extends Phaser.Scene {
     this.scenario.destroy();
     this.hud.destroy();
     this.learningNode.destroy();
+    this.knowledgeTroop.destroy();
     this.player.destroy();
     this.lessonManager.destroy();
   }

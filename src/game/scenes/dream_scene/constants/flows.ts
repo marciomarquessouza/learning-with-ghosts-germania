@@ -3,6 +3,7 @@ export const DREAM_SCENE_FLOWS = {
   PAUSE: "PauseFlow",
   BEFORE_LESSON: "BeforeLessonFlow",
   LESSON_INTRODUCTION: "LessonIntroductionFlow",
+  LESSON_NEXT_ENTRY: "LessonNextEntryFlow",
   LESSON_LISTENING: "LessonListeningFlow",
   LESSON_PRONUNCIATION: "LessonPronunciationFlow",
   LESSON_WRITING: "LessonWritingFlow",

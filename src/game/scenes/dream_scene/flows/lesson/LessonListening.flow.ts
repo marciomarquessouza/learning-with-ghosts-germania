@@ -23,6 +23,9 @@ export class LessonListeningFlow extends Flow<SceneStateNames, DreamScene> {
   async run(): Promise<FlowResult<SceneStateNames, DreamScene>> {
     await runSteps([
       stepBase(() => {
+        this.gameScene.createLearningNode();
+      }),
+      stepBase(() => {
         this.gameScene.lessonManager.writeLessonDescription({
           dialogueTitle: "Step 1: Listening",
           description: `Follow the Masked Nun instructions`,
