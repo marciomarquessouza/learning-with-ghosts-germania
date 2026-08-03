@@ -47,6 +47,7 @@ export class LessonSuccessFlow extends Flow<SceneStateNames, DreamScene> {
         });
       }),
       stepBase(() => {
+        this.gameScene.learningNode.hideTargetLabel();
         this.gameScene.player.enterIdle();
       }),
     ]);

@@ -177,10 +177,6 @@ export class LearningNode {
 
     return new Promise((resolve) => {
       this.lessonTargetLabel.moveHorizontalTo(distance * direction, durationMs);
-      if (this.sequence % 2 === 0) {
-        this.lessonTargetLabel.moveVerticalTo(-60);
-      }
-
       this.scene.tweens.add({
         targets: this.sprite,
         x: targetX,
