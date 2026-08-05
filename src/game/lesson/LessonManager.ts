@@ -3,6 +3,7 @@ import {
   PronunciationResultEvent,
   ShowLessonTitleEvent,
   WriteLessonDescriptionEvent,
+  WritingLimits,
   WritingResult,
 } from "@/events/lesson/types";
 import { AudioRecorder } from "@/libs/audio/AudioRecorder";
@@ -138,12 +139,14 @@ export class LessonManager extends LessonController {
   }
 
   public async startWritingChallenge(payload: {
+    limits: WritingLimits;
     onClickNext: (result: WritingResult) => void;
     onClickCancel?: () => void;
   }): Promise<void> {
     return new Promise((resolve) => {
       events.lesson.sync.emit("show-writing-board", {
         target: this.getEntryTarget(),
+        limits: payload.limits,
         onClickNext: (result) => {
           payload.onClickNext(result);
           resolve();

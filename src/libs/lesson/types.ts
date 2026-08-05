@@ -1,3 +1,4 @@
+import { WritingLimits } from "@/events/lesson/types";
 import { AudioScoreSummary } from "../audio/types";
 
 export type LessonStepType =
@@ -37,6 +38,7 @@ export type Lesson = {
   id: string;
   day: number;
   title: string;
+  limits?: WritingLimits;
   entries: LessonEntry[];
 };
 

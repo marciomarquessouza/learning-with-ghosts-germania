@@ -4,6 +4,7 @@ export const lesson: Lesson = {
   id: "greetings",
   day: 1,
   title: "Greetings",
+  limits: { totalErrors: 3, totalTips: 3 },
   entries: [
     {
       id: "1",

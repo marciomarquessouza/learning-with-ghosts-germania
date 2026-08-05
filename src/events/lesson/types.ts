@@ -38,8 +38,14 @@ export interface LoadingEvent {
   text?: string;
 }
 
+export type WritingLimits = {
+  totalTips: number;
+  totalErrors: number;
+};
+
 export interface ShowWritingBoardEvent {
   target: string;
+  limits: WritingLimits;
   onClickNext: (result: WritingResult) => void;
   onClickCancel?: () => void;
 }

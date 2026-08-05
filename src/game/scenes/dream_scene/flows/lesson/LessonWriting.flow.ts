@@ -72,6 +72,7 @@ export class LessonWritingFlow extends Flow<SceneStateNames, DreamScene> {
           description: `Connect the letters on the board to form this word.`,
         });
         return this.gameScene.lessonManager.startWritingChallenge({
+          limits: { totalTips: 3, totalErrors: 3 },
           onClickNext: (result) => {
             this.writingResult = result;
           },

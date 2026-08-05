@@ -11,12 +11,20 @@ import { CornerLeft } from "./CornerLeft";
 import { CornerRight } from "./CornerRight";
 import { StepPhases } from "@/libs/lesson/types";
 import { events } from "@/events/events";
-import { ShowWritingBoardEvent, WritingResult } from "@/events/lesson/types";
+import {
+  ShowWritingBoardEvent,
+  WritingLimits,
+  WritingResult,
+} from "@/events/lesson/types";
 
 export const DEFAULT_SLOT_QNT_W = 4;
 export const DEFAULT_TOTAL_ERRORS = 5;
 export const DEFAULT_TOTAL_TIPS = 3;
 export const DEFAULT_SLOT_QNT_H = 4;
+const defaultLimits: WritingLimits = {
+  totalTips: DEFAULT_TOTAL_TIPS,
+  totalErrors: DEFAULT_TOTAL_ERRORS,
+};
 
 export function WritingBoard() {
   const [isVisible, setIsVisible] = useState(false);
@@ -31,6 +39,7 @@ export function WritingBoard() {
   const [answerIndexes, setAnswerIndexes] = useState<number[]>([0]);
   const [errors, setErrors] = useState(0);
   const [tips, setTips] = useState(0);
+  const [limits, setLimits] = useState<WritingLimits>(defaultLimits);
   const nextIndex = useRef<number>(1);
   const { slotQntH, slotQntW } = useMemo(
     () => balanceGrind(preparedTarget),
@@ -81,11 +90,13 @@ export function WritingBoard() {
   useEffect(() => {
     const handle = ({
       target,
+      limits,
       onClickNext,
       onClickCancel,
     }: ShowWritingBoardEvent) => {
       setTarget(target);
       setIsVisible(true);
+      setLimits(limits);
       onClickNextRef.current = onClickNext;
       onClickCancelRef.current = onClickCancel;
     };
@@ -116,6 +127,7 @@ export function WritingBoard() {
     setErrors(0);
     setTips(0);
     setNextIndex(1);
+    setLimits(defaultLimits);
   }, []);
 
   const onClickNext = () => {
@@ -176,9 +188,9 @@ export function WritingBoard() {
               onClickTip={handleOnClickTip}
               onClickNext={onClickNext}
             />
-            <CornerLeft totalTips={DEFAULT_TOTAL_TIPS} currentTips={tips} />
+            <CornerLeft totalTips={limits.totalTips} currentTips={tips} />
             <CornerRight
-              totalErrors={DEFAULT_TOTAL_ERRORS}
+              totalErrors={limits.totalErrors}
               currentErrors={errors}
             />
           </div>
