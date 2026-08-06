@@ -31,9 +31,20 @@ export class LessonSuccessFlow extends Flow<SceneStateNames, DreamScene> {
         { when: () => !hasLearningNode },
       ),
       stepBase(() => {
+        this.gameScene.lessonManager.writeLessonDescription({
+          dialogueTitle: `"${this.target}" was created`,
+          description: `Congrats`,
+        });
+        return this.gameScene.tutor.dialogue([
+          "Very well. Your little knowledge is ready.",
+          "Let's see if it likes you.",
+        ]);
+      }),
+      stepBase(() => {
         if (hasLearningNode) {
           this.gameScene.player.enterInclined();
         }
+        this.gameScene.learningNode.hideTargetLabel();
         return this.gameScene.learningNode.enterFullSuccess();
       }),
       stepBase(() => {
@@ -47,7 +58,6 @@ export class LessonSuccessFlow extends Flow<SceneStateNames, DreamScene> {
         });
       }),
       stepBase(() => {
-        this.gameScene.learningNode.hideTargetLabel();
         this.gameScene.player.enterIdle();
       }),
     ]);

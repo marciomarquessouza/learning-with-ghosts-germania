@@ -16,10 +16,9 @@ import {
   WritingLimits,
   WritingResult,
 } from "@/events/lesson/types";
+import { DEFAULT_TOTAL_ERRORS, DEFAULT_TOTAL_TIPS } from "@/constants/game";
 
 export const DEFAULT_SLOT_QNT_W = 4;
-export const DEFAULT_TOTAL_ERRORS = 5;
-export const DEFAULT_TOTAL_TIPS = 3;
 export const DEFAULT_SLOT_QNT_H = 4;
 const defaultLimits: WritingLimits = {
   totalTips: DEFAULT_TOTAL_TIPS,
@@ -69,7 +68,7 @@ export function WritingBoard() {
 
   const handleOnClickTip = useCallback(() => {
     if (phase !== "writing") return;
-    if (tips < DEFAULT_TOTAL_TIPS) {
+    if (tips < limits.totalTips) {
       const lastIndex =
         answerIndexes.length - 1 > 0
           ? answerIndexes[answerIndexes.length - 1]
@@ -79,7 +78,7 @@ export function WritingBoard() {
       setNextIndex(newIndex + 1);
       setTips((state) => state + 1);
     }
-  }, [phase, tips, answerIndexes]);
+  }, [phase, tips, answerIndexes, limits.totalTips]);
 
   useEffect(() => {
     if (isVisible) {
@@ -116,10 +115,10 @@ export function WritingBoard() {
   }, [answerIndexes, preparedTarget.sanitizedTarget.length, errors, tips]);
 
   useEffect(() => {
-    if (errors >= DEFAULT_TOTAL_ERRORS) {
+    if (errors >= limits.totalErrors) {
       setPhase("result:fail");
     }
-  }, [errors, preparedTarget.sanitizedTarget.length, tips]);
+  }, [errors, preparedTarget.sanitizedTarget.length, tips, limits.totalErrors]);
 
   const resetWritingBoard = useCallback(() => {
     setPhase("writing");
@@ -183,7 +182,7 @@ export function WritingBoard() {
             <StepControls
               isLast={false}
               phase={phase}
-              tipsDisabled={tips === DEFAULT_TOTAL_TIPS}
+              tipsDisabled={tips === limits.totalTips}
               onClickRetry={handleRetry}
               onClickTip={handleOnClickTip}
               onClickNext={onClickNext}

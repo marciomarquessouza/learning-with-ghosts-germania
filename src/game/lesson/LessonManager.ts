@@ -10,8 +10,10 @@ import { AudioRecorder } from "@/libs/audio/AudioRecorder";
 import { PronunciationAPI } from "@/libs/lesson/PronunciationAPI";
 import { LessonController } from "@/libs/lesson/LessonController";
 import { Lesson } from "@/libs/lesson/types";
+import { LessonScore } from "./LessonScore";
 
 export class LessonManager extends LessonController {
+  public lessonScore: LessonScore;
   private audioRecorder = new AudioRecorder({
     voiceDetectionEnabled: true,
     autoStopOnSilence: true,
@@ -20,6 +22,7 @@ export class LessonManager extends LessonController {
 
   constructor(lesson: Lesson) {
     super(lesson);
+    this.lessonScore = new LessonScore(lesson);
   }
 
   public async showLessonTitle(
@@ -79,6 +82,8 @@ export class LessonManager extends LessonController {
           audioBlob,
           target,
         );
+
+      this.lessonScore.addPronunciationScore(this.currentLessonEntry.id, score);
 
       return {
         recordId,
@@ -148,6 +153,7 @@ export class LessonManager extends LessonController {
         target: this.getEntryTarget(),
         limits: payload.limits,
         onClickNext: (result) => {
+          this.lessonScore.addWritingScore(this.currentLessonEntry.id, result);
           payload.onClickNext(result);
           resolve();
         },

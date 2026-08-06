@@ -92,3 +92,6 @@ export const MAX_ATTACK_REWARD = 10;
 export const MIN_ATTACK_REWARD = 2;
 
 export const HATE_PENALTY = 10;
+
+export const DEFAULT_TOTAL_ERRORS = 5;
+export const DEFAULT_TOTAL_TIPS = 3;

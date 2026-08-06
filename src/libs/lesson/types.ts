@@ -34,11 +34,13 @@ export type LessonEntry = {
   steps: LessonEntryStep[];
 };
 
+export type LessonChallengeLimits = { writing: WritingLimits };
+
 export type Lesson = {
   id: string;
   day: number;
   title: string;
-  limits?: WritingLimits;
+  limits?: LessonChallengeLimits;
   entries: LessonEntry[];
 };
 
