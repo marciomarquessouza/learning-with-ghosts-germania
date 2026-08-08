@@ -109,7 +109,7 @@ export function lessonHeaderReducer(
           show: false,
         },
         pronunciationScore: {
-          ...state.pronunciationScore,
+          pronunciationResult: undefined,
           show: false,
         },
         loading: { show: false },
@@ -149,7 +149,7 @@ export function lessonHeaderReducer(
           show: false,
         },
         pronunciationScore: {
-          ...state.pronunciationScore,
+          pronunciationResult: undefined,
           show: false,
         },
         loading: { show: false },
@@ -174,7 +174,7 @@ export function lessonHeaderReducer(
           show: false,
         },
         pronunciationScore: {
-          ...state.pronunciationScore,
+          pronunciationResult: undefined,
           show: false,
         },
         loading: { show: false },
@@ -206,7 +206,7 @@ export function lessonHeaderReducer(
           show: false,
         },
         pronunciationScore: {
-          ...state.pronunciationScore,
+          pronunciationResult: undefined,
           show: false,
         },
         loading: { show: false },

@@ -33,38 +33,40 @@ export abstract class Flow<TState extends string, TGameScene> {
     options?: WaitInteractionEventOptions,
   ): Promise<void> {
     return new Promise((resolve) => {
-      const handlerAccept = ({ id }: { id: string }) => {
-        if (id !== this.flowName) return;
-
-        options?.accept?.callback?.();
-        events.interactions.sync.off("interaction/accept", handlerAccept);
-        resolve();
+      const cleanup = () => {
+        events.interactions.sync.off("interaction/accept", handlers.accept);
+        events.interactions.sync.off("interaction/repeat", handlers.repeat);
+        events.interactions.sync.off("interaction/cancel", handlers.cancel);
       };
 
-      const handleRepeat = ({ id }: { id: string }) => {
-        if (id !== this.flowName) return;
+      const createHandler = (
+        option?: {
+          callback?: () => void;
+          resolvePromise?: boolean;
+        },
+        shouldResolve = false,
+      ) => {
+        return ({ id }: { id: string }) => {
+          if (id !== this.flowName) return;
 
-        options?.repeat?.callback?.();
-        events.interactions.sync.off("interaction/repeat", handlerAccept);
+          option?.callback?.();
 
-        if (options?.repeat?.resolvePromise) {
-          resolve();
-        }
+          if (shouldResolve || option?.resolvePromise) {
+            cleanup();
+            resolve();
+          }
+        };
       };
 
-      const handlerCancel = ({ id }: { id: string }) => {
-        if (id !== this.flowName) return;
-
-        options?.cancel?.callback?.();
-        events.interactions.sync.off("interaction/cancel", handlerAccept);
-        if (options?.cancel?.resolvePromise) {
-          resolve();
-        }
+      const handlers = {
+        accept: createHandler(options?.accept, true),
+        repeat: createHandler(options?.repeat),
+        cancel: createHandler(options?.cancel),
       };
 
-      events.interactions.sync.on("interaction/accept", handlerAccept);
-      events.interactions.sync.on("interaction/cancel", handlerCancel);
-      events.interactions.sync.on("interaction/repeat", handleRepeat);
+      events.interactions.sync.on("interaction/accept", handlers.accept);
+      events.interactions.sync.on("interaction/repeat", handlers.repeat);
+      events.interactions.sync.on("interaction/cancel", handlers.cancel);
     });
   }
 
