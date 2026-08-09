@@ -195,6 +195,8 @@ export class AudioRecordButton {
       this.scene.input.setDefaultCursor("pointer");
     });
 
+    this.button.setFrame("record_button_0");
+
     this.button.on("pointerout", () => {
       if (this.isLoading) return;
 

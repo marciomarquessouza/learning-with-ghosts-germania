@@ -22,6 +22,7 @@ export class LessonPronunciationFlow extends Flow<SceneStateNames, DreamScene> {
   private removePlayRecordedAudioEvent: ClearEvent = { remove: () => {} };
   private removeRepeatChallengeEvent = () => {};
   private removeActionNextEvent = () => {};
+  private removeStopRecordEvent = () => {};
 
   private registerRecordedAudioEvent(recordId: string): void {
     this.removePlayRecordedAudioEvent.remove();
@@ -77,6 +78,12 @@ export class LessonPronunciationFlow extends Flow<SceneStateNames, DreamScene> {
     );
   }
 
+  private stopRecording(id: string) {
+    const { isRecording } = useAudioStore.getState();
+    if (this.flowName !== id || !isRecording) return;
+    this.gameScene.lessonManager.stopPronunciationChallenge();
+  }
+
   private async pronunciationChallenge(): Promise<void> {
     const { setIsRecording, setCurrentVoiceRecordingVolume } =
       useAudioStore.getState();
@@ -95,10 +102,17 @@ export class LessonPronunciationFlow extends Flow<SceneStateNames, DreamScene> {
         if (!isRecording) {
           recordButton.setVisible(false);
         }
+
+        this.removeStopRecordEvent();
+        this.removeStopRecordEvent = events.interactions.sync.on(
+          "interaction/accept",
+          ({ id }) => this.stopRecording(id),
+        );
       },
       onVolumeChange: setCurrentVoiceRecordingVolume,
     });
 
+    this.removeStopRecordEvent();
     this.gameScene.player.enterIdle();
     recordButton.setVisible(false);
 
@@ -221,5 +235,6 @@ export class LessonPronunciationFlow extends Flow<SceneStateNames, DreamScene> {
     this.removePlayTargetAudioEvent();
     this.removeRepeatChallengeEvent();
     this.removeActionNextEvent();
+    this.removeStopRecordEvent();
   }
 }
