@@ -1,15 +1,24 @@
 import { Flow } from "@/libs/game/game-flow/Flow";
-import { SceneStateNames } from "../../constants/states";
-import { DreamScene } from "../..";
-import { DREAM_SCENE_FLOWS } from "../../constants/flows";
+import { SceneStateNames } from "../../../constants/states";
+import { DreamScene } from "../../..";
 import { FlowResult } from "@/libs/game/game-flow/types";
+import { DREAM_SCENE_FLOWS } from "../../../constants/flows";
 import { runSteps, stepBase } from "@/libs/game/game-flow/runSteps";
-import { LessonNextEntryFlow } from "./LessonNextEntry.flow";
+import { LessonSuccessFlow } from "./LessonSuccess.flow";
+import { LessonFailureFlow } from "./LessonFailure.flow";
 
-export class LessonSuccessFlow extends Flow<SceneStateNames, DreamScene> {
-  public flowName: string = DREAM_SCENE_FLOWS.LESSON_SUCCESS;
+export class LessonEvaluationFlow extends Flow<SceneStateNames, DreamScene> {
+  public flowName: string = DREAM_SCENE_FLOWS.LESSON_EVALUATION;
+
   private lessonEntry = this.gameScene.lessonManager.getCurrentLessonEntry();
   private target = this.gameScene.lessonManager.getEntryTarget();
+
+  private hasWon(): boolean {
+    const score = this.gameScene.lessonManager.getEntryScore();
+    return (
+      score > this.gameScene.lessonManager.getEntryMinimumSuccessPercentage()
+    );
+  }
 
   async run(): Promise<FlowResult<SceneStateNames, DreamScene>> {
     const hasLearningNode = this.gameScene.learningNode.floor.hasActorAttached;
@@ -33,43 +42,24 @@ export class LessonSuccessFlow extends Flow<SceneStateNames, DreamScene> {
       stepBase(() => {
         this.gameScene.lessonManager.writeLessonDescription({
           dialogueTitle: `"${this.target}" was created`,
-          description: `Congrats`,
+          description: `Your score is...`,
         });
         return this.gameScene.tutor.dialogue([
           "Very well. Your little knowledge is ready.",
           "Let's see if it likes you.",
         ]);
       }),
-      stepBase(() => {
-        if (hasLearningNode) {
-          this.gameScene.player.enterInclined();
-        }
-        this.gameScene.learningNode.hideTargetLabel();
-        return this.gameScene.learningNode.enterFullSuccess();
-      }),
-      stepBase(() => {
-        this.delay(400, () => {
-          this.gameScene.learningNode.floor.playClose();
-        });
-        const entrySequence = this.lessonEntry.sequence;
-        const learningNodePosition = 360 + 120 * entrySequence;
-        return this.gameScene.learningNode.walkTo({
-          distance: learningNodePosition,
-        });
-      }),
-      stepBase(() => {
-        this.gameScene.player.enterIdle();
-      }),
     ]);
 
-    if (this.gameScene.lessonManager.callNextEntry()) {
-      return {
-        nextState: DreamScene.STATES.PERFORMING_LESSON,
-        nextFlow: LessonNextEntryFlow,
-      };
-    }
-
-    return {};
+    return this.hasWon()
+      ? {
+          nextState: DreamScene.STATES.PERFORMING_LESSON,
+          nextFlow: LessonSuccessFlow,
+        }
+      : {
+          nextState: DreamScene.STATES.PERFORMING_LESSON,
+          nextFlow: LessonFailureFlow,
+        };
   }
 
   destroy(): void {}

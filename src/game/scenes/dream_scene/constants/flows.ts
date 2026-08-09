@@ -7,6 +7,7 @@ export const DREAM_SCENE_FLOWS = {
   LESSON_LISTENING: "LessonListeningFlow",
   LESSON_PRONUNCIATION: "LessonPronunciationFlow",
   LESSON_WRITING: "LessonWritingFlow",
+  LESSON_EVALUATION: "LessonEvaluationFlow",
   LESSON_SUCCESS: "LessonSuccessFlow",
   LESSON_FAILURE: "LessonFailureFlow",
 } as const;

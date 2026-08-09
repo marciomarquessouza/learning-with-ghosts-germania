@@ -4,7 +4,7 @@ import { InteractionArea } from "@/libs/game/interaction/InteractionArea";
 import { events } from "@/events/events";
 import { InputController } from "@/libs/inputs/InputController";
 import { createInputController } from "@/libs/inputs/createInputController";
-import { BeforeLessonFlow } from "../flows/lesson/BeforeLesson.flow";
+import { BeforeLessonFlow } from "../flows/lesson/0-introduction/BeforeLesson.flow";
 
 export class IdleState extends BaseState {
   private lessonInteractionArea: InteractionArea = new InteractionArea();

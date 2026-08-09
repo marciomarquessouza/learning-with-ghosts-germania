@@ -43,6 +43,11 @@ export type WritingLimits = {
   totalErrors: number;
 };
 
+export type PronunciationLimits = {
+  minimumRecordTime?: number;
+  maximumRecordTime?: number;
+};
+
 export interface ShowWritingBoardEvent {
   target: string;
   limits: WritingLimits;

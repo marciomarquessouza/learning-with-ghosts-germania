@@ -35,21 +35,22 @@ import { GameAudio } from "@/libs/audio/GameAudio";
 import { LessonManager } from "@/game/lesson/LessonManager";
 import { DialogueManager } from "@/game/dialogues/DialogueManager";
 import { IntroductionFlow } from "./flows/Introduction.flow";
-import { BeforeLessonFlow } from "./flows/lesson/BeforeLesson.flow";
-import { LessonIntroductionFlow } from "./flows/lesson/LessonIntroduction.flow";
-import { LessonListeningFlow } from "./flows/lesson/LessonListening.flow";
-import { LessonPronunciationFlow } from "./flows/lesson/LessonPronunciation.flow";
+import { BeforeLessonFlow } from "./flows/lesson/0-introduction/BeforeLesson.flow";
+import { LessonListeningFlow } from "./flows/lesson/1-challenges/LessonListening.flow";
+import { LessonPronunciationFlow } from "./flows/lesson/1-challenges/LessonPronunciation.flow";
 import { useGameStore } from "@/store/gameStore";
 import {
   createFlowSnapshot,
   getSceneLastSnapshot,
 } from "@/store/progressStore";
-import { LessonWritingFlow } from "./flows/lesson/LessonWriting.flow";
+import { LessonWritingFlow } from "./flows/lesson/1-challenges/LessonWriting.flow";
 import { getRequired } from "@/utils/getRequired";
-import { LessonSuccessFlow } from "./flows/lesson/LessonSuccess.flow";
-import { LessonFailureFlow } from "./flows/lesson/LessonFailure.flow";
+import { LessonSuccessFlow } from "./flows/lesson/2-after_challenges/LessonSuccess.flow";
+import { LessonFailureFlow } from "./flows/lesson/2-after_challenges/LessonFailure.flow";
 import { KnowledgeTroop } from "@/game/actors/knowledgeTroop/KnowledgeTroop";
-import { LessonNextEntryFlow } from "./flows/lesson/LessonNextEntry.flow";
+import { LessonNextEntryFlow } from "./flows/lesson/0-introduction/LessonNextEntry.flow";
+import { LessonIntroductionFlow } from "./flows/lesson/0-introduction/LessonIntroduction.flow";
+import { LessonEvaluationFlow } from "./flows/lesson/2-after_challenges/LessonEvaluation.flow";
 
 export class DreamScene extends Phaser.Scene {
   public static readonly STATES = SCENE_STATES;
@@ -68,6 +69,7 @@ export class DreamScene extends Phaser.Scene {
   public dialogueManager = new DialogueManager();
   public flowController?: FlowController<SceneStateNames, DreamScene>;
   public scenario = new CemeteryScenario();
+
   public get lessonManager(): LessonManager {
     return getRequired(this._lessonManager, "DreamScene", "lessonManager");
   }
@@ -159,6 +161,7 @@ export class DreamScene extends Phaser.Scene {
       .addFlow(SCENE_FLOWS.LESSON_LISTENING, LessonListeningFlow)
       .addFlow(SCENE_FLOWS.LESSON_PRONUNCIATION, LessonPronunciationFlow)
       .addFlow(SCENE_FLOWS.LESSON_WRITING, LessonWritingFlow)
+      .addFlow(SCENE_FLOWS.LESSON_EVALUATION, LessonEvaluationFlow)
       .addFlow(SCENE_FLOWS.LESSON_SUCCESS, LessonSuccessFlow)
       .addFlow(SCENE_FLOWS.LESSON_FAILURE, LessonFailureFlow);
 

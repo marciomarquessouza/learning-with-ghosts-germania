@@ -1,26 +1,19 @@
 import { Flow } from "@/libs/game/game-flow/Flow";
-import { SceneStateNames } from "../../constants/states";
-import { DreamScene } from "../..";
+import { SceneStateNames } from "../../../constants/states";
+import { DreamScene } from "../../..";
 import { FlowResult } from "@/libs/game/game-flow/types";
 import { runSteps, stepBase } from "@/libs/game/game-flow/runSteps";
 import { events } from "@/events/events";
-import { WritingResult } from "@/events/lesson/types";
-import { DREAM_SCENE_FLOWS } from "../../constants/flows";
-import { LessonSuccessFlow } from "./LessonSuccess.flow";
-import { LessonFailureFlow } from "./LessonFailure.flow";
+import { DREAM_SCENE_FLOWS } from "../../../constants/flows";
+import { LessonEvaluationFlow } from "../2-after_challenges/LessonEvaluation.flow";
 
 export class LessonWritingFlow extends Flow<SceneStateNames, DreamScene> {
   public flowName: string = DREAM_SCENE_FLOWS.LESSON_WRITING;
 
-  private writingResult?: WritingResult;
   private isAudioSamplePlaying = false;
   private removePlayTargetAudioEvent: () => void = () => {};
   private target = this.gameScene.lessonManager.getEntryTarget();
   private lessonEntry = this.gameScene.lessonManager.getCurrentLessonEntry();
-
-  private get hasWon(): boolean {
-    return !!this.writingResult?.success;
-  }
 
   async run(): Promise<FlowResult<SceneStateNames, DreamScene>> {
     const hasLearningNode = this.gameScene.learningNode.floor.hasActorAttached;
@@ -73,9 +66,6 @@ export class LessonWritingFlow extends Flow<SceneStateNames, DreamScene> {
         });
         return this.gameScene.lessonManager.startWritingChallenge({
           limits: { totalTips: 3, totalErrors: 3 },
-          onClickNext: (result) => {
-            this.writingResult = result;
-          },
         });
       }),
       stepBase(async () => {
@@ -85,15 +75,10 @@ export class LessonWritingFlow extends Flow<SceneStateNames, DreamScene> {
       }),
     ]);
 
-    return this.hasWon
-      ? {
-          nextState: DreamScene.STATES.PERFORMING_LESSON,
-          nextFlow: LessonSuccessFlow,
-        }
-      : {
-          nextState: DreamScene.STATES.PERFORMING_LESSON,
-          nextFlow: LessonFailureFlow,
-        };
+    return {
+      nextState: DreamScene.STATES.PERFORMING_LESSON,
+      nextFlow: LessonEvaluationFlow,
+    };
   }
   destroy(): void {
     this.removePlayTargetAudioEvent();

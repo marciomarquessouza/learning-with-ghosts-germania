@@ -1,4 +1,4 @@
-import { WritingLimits } from "@/events/lesson/types";
+import { PronunciationLimits, WritingLimits } from "@/events/lesson/types";
 import { AudioScoreSummary } from "../audio/types";
 
 export type LessonStepType =
@@ -34,7 +34,13 @@ export type LessonEntry = {
   steps: LessonEntryStep[];
 };
 
-export type LessonChallengeLimits = { writing: WritingLimits };
+export type LessonChallengeLimits = {
+  pronunciation?: PronunciationLimits;
+  writing?: WritingLimits;
+  entry: {
+    minimumSuccessPercentage?: number;
+  };
+};
 
 export type Lesson = {
   id: string;

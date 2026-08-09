@@ -1,12 +1,12 @@
 import { Flow } from "@/libs/game/game-flow/Flow";
-import { SceneStateNames } from "../../constants/states";
-import { DreamScene } from "../..";
+import { SceneStateNames } from "../../../constants/states";
+import { DreamScene } from "../../..";
 import { FlowResult } from "@/libs/game/game-flow/types";
 import { runSteps, stepBase } from "@/libs/game/game-flow/runSteps";
 import { events } from "@/events/events";
 import { useAudioStore } from "@/store/audioStore";
 import { LessonWritingFlow } from "./LessonWriting.flow";
-import { DREAM_SCENE_FLOWS } from "../../constants/flows";
+import { DREAM_SCENE_FLOWS } from "../../../constants/flows";
 import { ClearEvent } from "@/libs/events/types";
 
 export class LessonPronunciationFlow extends Flow<SceneStateNames, DreamScene> {

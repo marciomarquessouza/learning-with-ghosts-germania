@@ -4,10 +4,10 @@ import { FlowResult } from "@/libs/game/game-flow/types";
 import { AUDIO_SPEED } from "@/libs/audio/GameAudio";
 import { runSteps, stepBase } from "@/libs/game/game-flow/runSteps";
 
-import { DreamScene } from "../..";
-import { SceneStateNames } from "../../constants/states";
+import { DreamScene } from "../../..";
+import { SceneStateNames } from "../../../constants/states";
 import { LessonPronunciationFlow } from "./LessonPronunciation.flow";
-import { DREAM_SCENE_FLOWS } from "../../constants/flows";
+import { DREAM_SCENE_FLOWS } from "../../../constants/flows";
 
 const LISTENING_REPETITION = 2;
 
