@@ -72,7 +72,7 @@ export class LessonScore {
     const tipPenalty =
       (writingScore.tips / this.limits.totalTips) * WRITING_TIP_WEIGHT;
 
-    const finalScore = Math.max(0, 100 - errorPenalty - tipPenalty);
+    const finalScore = Math.max(0, 1 - errorPenalty - tipPenalty) * 100;
 
     this.entriesScore.set(entryId, {
       ...current,

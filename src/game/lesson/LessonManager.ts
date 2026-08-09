@@ -12,8 +12,11 @@ import { LessonController } from "@/libs/lesson/LessonController";
 import { Lesson } from "@/libs/lesson/types";
 import { LessonScore } from "./LessonScore";
 
+const WRITING_SCORE_WEIGHT = 0.5;
+const PRONUNCIATION_SCORE_WEIGHT = 0.5;
+
 export class LessonManager extends LessonController {
-  public lessonScore: LessonScore;
+  private lessonScore: LessonScore;
   private audioRecorder = new AudioRecorder({
     voiceDetectionEnabled: true,
     autoStopOnSilence: true,
@@ -163,6 +166,21 @@ export class LessonManager extends LessonController {
         },
       });
     });
+  }
+
+  public getEntryScore(): number {
+    const entryScore = this.lessonScore.getEntryScore(
+      this.currentLessonEntry.id,
+    );
+    const pronunciationScore = entryScore?.pronunciation ?? 0;
+    const writingScore = entryScore?.writing ?? 0;
+    const finalScore = Math.max(
+      0,
+      pronunciationScore * PRONUNCIATION_SCORE_WEIGHT +
+        writingScore * WRITING_SCORE_WEIGHT,
+    );
+
+    return Number(finalScore.toFixed(2));
   }
 
   destroy() {
