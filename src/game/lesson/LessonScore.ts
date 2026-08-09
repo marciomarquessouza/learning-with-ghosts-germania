@@ -67,10 +67,13 @@ export class LessonScore {
     }
 
     const errorPenalty =
-      (writingScore.errors / this.limits.totalErrors) * WRITING_ERROR_WEIGHT;
+      (writingScore.errors /
+        (this.limits?.totalErrors ?? DEFAULT_TOTAL_ERRORS)) *
+      WRITING_ERROR_WEIGHT;
 
     const tipPenalty =
-      (writingScore.tips / this.limits.totalTips) * WRITING_TIP_WEIGHT;
+      (writingScore.tips / (this.limits?.totalTips ?? DEFAULT_TOTAL_TIPS)) *
+      WRITING_TIP_WEIGHT;
 
     const finalScore = Math.max(0, 1 - errorPenalty - tipPenalty) * 100;
 
