@@ -7,12 +7,6 @@ import {
   CEMETERY_CLOUDS_IMG,
   CEMETERY_DANGER_LAYER_IMG,
 } from "@/constants/images";
-import { events } from "@/events/events";
-
-type PunisherReleasedPayload = {
-  skyEffectAmount?: number;
-  onFinish?: () => void;
-};
 
 const CEMETERY_SKY = "cemeterySky";
 const CEMETERY_BLACK = "cemeteryBlack";
@@ -29,12 +23,6 @@ export class CemeteryScenario {
   private dangerTween?: Phaser.Tweens.Tween;
   private punisherDangerAmount = 0;
   private onDangerTransitionFinish: null | (() => void) = null;
-  private onPunisherReleased = ({
-    skyEffectAmount = 1,
-    onFinish,
-  }: PunisherReleasedPayload) => {
-    this.setDanger(skyEffectAmount, onFinish);
-  };
   public width = 0;
   public height = 0;
   public container!: Phaser.GameObjects.Container;
@@ -98,11 +86,6 @@ export class CemeteryScenario {
       .setAlpha(0);
     this.container.add(this.cemeteryDangerLayer);
 
-    events.actors.punisher.sync.on(
-      "punisher/released",
-      this.onPunisherReleased,
-    );
-
     this.width = background.width;
     this.height = background.height;
   }
@@ -113,32 +96,31 @@ export class CemeteryScenario {
     }
   }
 
-  private setDanger(skyEffectAmount: number = 1, onFinish?: () => void) {
-    this.punisherDangerAmount = Phaser.Math.Clamp(skyEffectAmount, 0, 1);
-    this.onDangerTransitionFinish = onFinish ?? null;
+  public setDanger(skyEffectAmount: number = 1): Promise<void> {
+    return new Promise((resolve) => {
+      this.punisherDangerAmount = Phaser.Math.Clamp(skyEffectAmount, 0, 1);
 
-    const layer = this.cemeteryDangerLayer;
-    if (!layer) return;
+      const layer = this.cemeteryDangerLayer;
+      if (!layer) return;
 
-    this.dangerTween?.stop();
-    this.dangerTween = undefined;
+      this.dangerTween?.stop();
+      this.dangerTween = undefined;
 
-    if (Math.abs(layer.alpha - this.punisherDangerAmount) < 0.001) {
-      layer.setAlpha(this.punisherDangerAmount);
-      this.onDangerTransitionFinish?.();
-      this.onDangerTransitionFinish = null;
-      return;
-    }
+      if (Math.abs(layer.alpha - this.punisherDangerAmount) < 0.001) {
+        layer.setAlpha(this.punisherDangerAmount);
+        resolve();
+        return;
+      }
 
-    this.dangerTween = layer.scene.tweens.add({
-      targets: layer,
-      alpha: this.punisherDangerAmount,
-      duration: 1500,
-      ease: "Linear",
-      onComplete: () => {
-        this.onDangerTransitionFinish?.();
-        this.onDangerTransitionFinish = null;
-      },
+      this.dangerTween = layer.scene.tweens.add({
+        targets: layer,
+        alpha: this.punisherDangerAmount,
+        duration: 1500,
+        ease: "Linear",
+        onComplete: () => {
+          resolve();
+        },
+      });
     });
   }
 
@@ -149,9 +131,5 @@ export class CemeteryScenario {
   destroy() {
     this.dangerTween?.stop();
     this.dangerTween = undefined;
-    events.actors.punisher.sync.off(
-      "punisher/released",
-      this.onPunisherReleased,
-    );
   }
 }
