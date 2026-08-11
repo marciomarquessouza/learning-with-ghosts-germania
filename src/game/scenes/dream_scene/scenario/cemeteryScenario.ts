@@ -101,7 +101,10 @@ export class CemeteryScenario {
       this.punisherDangerAmount = Phaser.Math.Clamp(skyEffectAmount, 0, 1);
 
       const layer = this.cemeteryDangerLayer;
-      if (!layer) return;
+      if (!layer) {
+        resolve();
+        return;
+      }
 
       this.dangerTween?.stop();
       this.dangerTween = undefined;
@@ -115,6 +118,37 @@ export class CemeteryScenario {
       this.dangerTween = layer.scene.tweens.add({
         targets: layer,
         alpha: this.punisherDangerAmount,
+        duration: 1500,
+        ease: "Linear",
+        onComplete: () => {
+          resolve();
+        },
+      });
+    });
+  }
+
+  public removeDanger(): Promise<void> {
+    return new Promise((resolve) => {
+      this.punisherDangerAmount = 0;
+
+      const layer = this.cemeteryDangerLayer;
+      if (!layer) {
+        resolve();
+        return;
+      }
+
+      this.dangerTween?.stop();
+      this.dangerTween = undefined;
+
+      if (layer.alpha < 0.001) {
+        layer.setAlpha(0);
+        resolve();
+        return;
+      }
+
+      this.dangerTween = layer.scene.tweens.add({
+        targets: layer,
+        alpha: 0,
         duration: 1500,
         ease: "Linear",
         onComplete: () => {

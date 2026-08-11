@@ -36,6 +36,11 @@ export const SPRITESHEETS = {
       image: '/actors/learningNode/pumpkin_full/spritesheet.png',
       atlas: '/actors/learningNode/pumpkin_full/spritesheet.json'
     },
+    pumpkin_full_failure: {
+      key: 'learningNode-pumpkin_full_failure',
+      image: '/actors/learningNode/pumpkin_full_failure/spritesheet.png',
+      atlas: '/actors/learningNode/pumpkin_full_failure/spritesheet.json'
+    },
     pumpkin_full_success: {
       key: 'learningNode-pumpkin_full_success',
       image: '/actors/learningNode/pumpkin_full_success/spritesheet.png',

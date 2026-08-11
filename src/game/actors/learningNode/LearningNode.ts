@@ -155,6 +155,10 @@ export class LearningNode {
     return this.animations.playFullSuccess();
   }
 
+  public async enterFullFailure(): Promise<void> {
+    return this.animations.playFullFailure();
+  }
+
   public enterFullWalking() {
     this.stateMachine.changeTo(LearningNode.STATES.FULL_WALKING);
   }
