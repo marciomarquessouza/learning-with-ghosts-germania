@@ -5,7 +5,7 @@
         "x": 0,
         "y": 0,
         "w": 103,
-        "h": 206
+        "h": 204
       },
       "rotated": false,
       "trimmed": false,
@@ -13,11 +13,11 @@
         "x": 0,
         "y": 0,
         "w": 103,
-        "h": 206
+        "h": 204
       },
       "sourceSize": {
         "w": 103,
-        "h": 206
+        "h": 204
       }
     },
     "learningNode_pumpkin_out_idle_1": {
@@ -25,7 +25,7 @@
         "x": 103,
         "y": 0,
         "w": 103,
-        "h": 206
+        "h": 204
       },
       "rotated": false,
       "trimmed": false,
@@ -33,11 +33,11 @@
         "x": 0,
         "y": 0,
         "w": 103,
-        "h": 206
+        "h": 204
       },
       "sourceSize": {
         "w": 103,
-        "h": 206
+        "h": 204
       }
     },
     "learningNode_pumpkin_out_idle_2": {
@@ -45,7 +45,7 @@
         "x": 206,
         "y": 0,
         "w": 103,
-        "h": 206
+        "h": 204
       },
       "rotated": false,
       "trimmed": false,
@@ -53,11 +53,11 @@
         "x": 0,
         "y": 0,
         "w": 103,
-        "h": 206
+        "h": 204
       },
       "sourceSize": {
         "w": 103,
-        "h": 206
+        "h": 204
       }
     },
     "learningNode_pumpkin_out_idle_3": {
@@ -65,7 +65,7 @@
         "x": 309,
         "y": 0,
         "w": 103,
-        "h": 206
+        "h": 204
       },
       "rotated": false,
       "trimmed": false,
@@ -73,11 +73,11 @@
         "x": 0,
         "y": 0,
         "w": 103,
-        "h": 206
+        "h": 204
       },
       "sourceSize": {
         "w": 103,
-        "h": 206
+        "h": 204
       }
     },
     "learningNode_pumpkin_out_idle_4": {
@@ -85,7 +85,7 @@
         "x": 412,
         "y": 0,
         "w": 103,
-        "h": 206
+        "h": 204
       },
       "rotated": false,
       "trimmed": false,
@@ -93,11 +93,11 @@
         "x": 0,
         "y": 0,
         "w": 103,
-        "h": 206
+        "h": 204
       },
       "sourceSize": {
         "w": 103,
-        "h": 206
+        "h": 204
       }
     },
     "learningNode_pumpkin_out_idle_5": {
@@ -105,7 +105,7 @@
         "x": 515,
         "y": 0,
         "w": 103,
-        "h": 206
+        "h": 204
       },
       "rotated": false,
       "trimmed": false,
@@ -113,19 +113,19 @@
         "x": 0,
         "y": 0,
         "w": 103,
-        "h": 206
+        "h": 204
       },
       "sourceSize": {
         "w": 103,
-        "h": 206
+        "h": 204
       }
     },
     "learningNode_pumpkin_out_idle_6": {
       "frame": {
         "x": 0,
-        "y": 206,
+        "y": 204,
         "w": 103,
-        "h": 206
+        "h": 204
       },
       "rotated": false,
       "trimmed": false,
@@ -133,11 +133,11 @@
         "x": 0,
         "y": 0,
         "w": 103,
-        "h": 206
+        "h": 204
       },
       "sourceSize": {
         "w": 103,
-        "h": 206
+        "h": 204
       }
     }
   },
@@ -145,8 +145,9 @@
     "image": "spritesheet.png",
     "size": {
       "w": 618,
-      "h": 412
+      "h": 408
     },
-    "scale": "0.5"
+    "scale": "0.5",
+    "flip_x": true
   }
 }
