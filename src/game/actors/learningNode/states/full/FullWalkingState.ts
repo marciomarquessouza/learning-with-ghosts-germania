@@ -10,7 +10,11 @@ export class FullWalkingState extends BaseState {
   }
 
   enter(): void {
-    this.learningNode.animations.playFullWalking();
+    if (this.learningNode.isEvil()) {
+      this.learningNode.animations.playEvilWalking();
+    } else {
+      this.learningNode.animations.playFullWalking();
+    }
   }
 
   exit(): void {}

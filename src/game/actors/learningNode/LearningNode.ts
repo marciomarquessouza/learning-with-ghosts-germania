@@ -14,7 +14,6 @@ import {
   AttachOptions,
   LessonTargetLabel,
 } from "./components/LessonTargetLabel";
-
 import { SproutingState } from "./states/sprout/SproutingState";
 import { SproutTalkingState } from "./states/sprout/SproutTalkingState";
 import { SproutIdleState } from "./states/sprout/SproutIdleState";
@@ -41,6 +40,7 @@ export class LearningNode {
   private _scene?: Phaser.Scene;
   private _sprite?: Phaser.Types.Physics.Arcade.SpriteWithDynamicBody;
   private _container?: Phaser.GameObjects.Container;
+  private _isEvil = false;
 
   public animations = new Animations();
   public stateMachine!: StateMachine;
@@ -156,6 +156,7 @@ export class LearningNode {
   }
 
   public async enterFullFailure(): Promise<void> {
+    this.setEvil();
     return this.animations.playFullFailure();
   }
 
@@ -290,6 +291,18 @@ export class LearningNode {
       duration: 350,
       ease: "Back.easeOut",
     });
+  }
+
+  public isEvil(): boolean {
+    return this._isEvil;
+  }
+
+  public setEvil() {
+    this._isEvil = true;
+  }
+
+  public removeEvil() {
+    this._isEvil = true;
   }
 
   update(delta: number) {

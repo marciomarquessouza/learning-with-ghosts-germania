@@ -10,7 +10,11 @@ export class FullIdleState extends BaseState {
   }
 
   enter(): void {
-    this.learningNode.animations.playOutIdle();
+    if (this.learningNode.isEvil()) {
+      this.learningNode.animations.playEvilIdle();
+    } else {
+      this.learningNode.animations.playOutIdle();
+    }
   }
 
   exit(): void {}

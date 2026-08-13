@@ -116,6 +116,11 @@ export class LearningNodeAnimations {
       repeat: -1,
     });
 
+    this.animationManager.createAnimation(scene, "pumpkin_evil_walking", {
+      frameRate: 18,
+      repeat: -1,
+    });
+
     if (!scene.anims.exists(this.LEARNING_NODE_PUMPKIN_TRANSITION)) {
       scene.anims.create({
         key: this.LEARNING_NODE_PUMPKIN_TRANSITION,
@@ -260,6 +265,14 @@ export class LearningNodeAnimations {
     this.animationManager.playAnimation(
       this.sprite,
       "pumpkin_full_walking",
+      true,
+    );
+  }
+
+  playEvilWalking() {
+    this.animationManager.playAnimation(
+      this.sprite,
+      "pumpkin_evil_walking",
       true,
     );
   }

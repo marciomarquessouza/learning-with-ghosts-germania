@@ -36,6 +36,11 @@ export const SPRITESHEETS = {
       image: '/actors/learningNode/pumpkin_evil_idle/spritesheet.png',
       atlas: '/actors/learningNode/pumpkin_evil_idle/spritesheet.json'
     },
+    pumpkin_evil_walking: {
+      key: 'learningNode-pumpkin_evil_walking',
+      image: '/actors/learningNode/pumpkin_evil_walking/spritesheet.png',
+      atlas: '/actors/learningNode/pumpkin_evil_walking/spritesheet.json'
+    },
     pumpkin_full: {
       key: 'learningNode-pumpkin_full',
       image: '/actors/learningNode/pumpkin_full/spritesheet.png',
