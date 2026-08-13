@@ -1,0 +1,153 @@
+{
+  "frames": {
+    "learningNode_pumpkin_evil_idle_0": {
+      "frame": {
+        "x": 0,
+        "y": 0,
+        "w": 103,
+        "h": 204
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 103,
+        "h": 204
+      },
+      "sourceSize": {
+        "w": 103,
+        "h": 204
+      }
+    },
+    "learningNode_pumpkin_evil_idle_1": {
+      "frame": {
+        "x": 103,
+        "y": 0,
+        "w": 103,
+        "h": 204
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 103,
+        "h": 204
+      },
+      "sourceSize": {
+        "w": 103,
+        "h": 204
+      }
+    },
+    "learningNode_pumpkin_evil_idle_2": {
+      "frame": {
+        "x": 206,
+        "y": 0,
+        "w": 103,
+        "h": 204
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 103,
+        "h": 204
+      },
+      "sourceSize": {
+        "w": 103,
+        "h": 204
+      }
+    },
+    "learningNode_pumpkin_evil_idle_3": {
+      "frame": {
+        "x": 309,
+        "y": 0,
+        "w": 103,
+        "h": 204
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 103,
+        "h": 204
+      },
+      "sourceSize": {
+        "w": 103,
+        "h": 204
+      }
+    },
+    "learningNode_pumpkin_evil_idle_4": {
+      "frame": {
+        "x": 412,
+        "y": 0,
+        "w": 103,
+        "h": 204
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 103,
+        "h": 204
+      },
+      "sourceSize": {
+        "w": 103,
+        "h": 204
+      }
+    },
+    "learningNode_pumpkin_evil_idle_5": {
+      "frame": {
+        "x": 515,
+        "y": 0,
+        "w": 103,
+        "h": 204
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 103,
+        "h": 204
+      },
+      "sourceSize": {
+        "w": 103,
+        "h": 204
+      }
+    },
+    "learningNode_pumpkin_evil_idle_6": {
+      "frame": {
+        "x": 0,
+        "y": 204,
+        "w": 103,
+        "h": 204
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 103,
+        "h": 204
+      },
+      "sourceSize": {
+        "w": 103,
+        "h": 204
+      }
+    }
+  },
+  "meta": {
+    "image": "spritesheet.png",
+    "size": {
+      "w": 618,
+      "h": 408
+    },
+    "scale": "0.5",
+    "flip_x": true
+  }
+}

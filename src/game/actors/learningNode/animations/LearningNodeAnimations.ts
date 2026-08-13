@@ -91,6 +91,11 @@ export class LearningNodeAnimations {
       repeat: -1,
     });
 
+    this.animationManager.createAnimation(scene, "pumpkin_evil_idle", {
+      frameRate: 6,
+      repeat: -1,
+    });
+
     this.animationManager.createAnimation(scene, "pumpkin_side_idle", {
       frameRate: 6,
       repeat: -1,
@@ -221,6 +226,10 @@ export class LearningNodeAnimations {
 
   playOutIdle() {
     this.animationManager.playAnimation(this.sprite, "pumpkin_out_idle");
+  }
+
+  playEvilIdle() {
+    this.animationManager.playAnimation(this.sprite, "pumpkin_evil_idle");
   }
 
   playSideIdle() {
