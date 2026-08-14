@@ -51,6 +51,7 @@ import { KnowledgeTroop } from "@/game/actors/knowledgeTroop/KnowledgeTroop";
 import { LessonNextEntryFlow } from "./flows/lesson/0-introduction/LessonNextEntry.flow";
 import { LessonIntroductionFlow } from "./flows/lesson/0-introduction/LessonIntroduction.flow";
 import { LessonEvaluationFlow } from "./flows/lesson/2-after_challenges/LessonEvaluation.flow";
+import { LessonConclusionFlow } from "./flows/lesson/2-after_challenges/LessonConclusion.flow";
 
 export class DreamScene extends Phaser.Scene {
   public static readonly STATES = SCENE_STATES;
@@ -163,7 +164,8 @@ export class DreamScene extends Phaser.Scene {
       .addFlow(SCENE_FLOWS.LESSON_WRITING, LessonWritingFlow)
       .addFlow(SCENE_FLOWS.LESSON_EVALUATION, LessonEvaluationFlow)
       .addFlow(SCENE_FLOWS.LESSON_SUCCESS, LessonSuccessFlow)
-      .addFlow(SCENE_FLOWS.LESSON_FAILURE, LessonFailureFlow);
+      .addFlow(SCENE_FLOWS.LESSON_FAILURE, LessonFailureFlow)
+      .addFlow(SCENE_FLOWS.LESSON_CONCLUSION, LessonConclusionFlow);
 
     const nextFlow =
       snapshot?.flow ?? (DREAM_SCENE_FLOWS.INTRO as SceneFlowNames);

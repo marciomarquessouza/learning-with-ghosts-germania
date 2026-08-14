@@ -10,6 +10,7 @@ export const DREAM_SCENE_FLOWS = {
   LESSON_EVALUATION: "LessonEvaluationFlow",
   LESSON_SUCCESS: "LessonSuccessFlow",
   LESSON_FAILURE: "LessonFailureFlow",
+  LESSON_CONCLUSION: "LessonConclusionFlow",
 } as const;
 
 export type SceneFlowNames =
