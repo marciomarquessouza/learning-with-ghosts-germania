@@ -9,7 +9,13 @@ export class LessonConclusionFlow extends Flow<SceneStateNames, DreamScene> {
   public flowName: string = DREAM_SCENE_FLOWS.LESSON_CONCLUSION;
 
   async run(): Promise<FlowResult<SceneStateNames, DreamScene>> {
-    await runSteps([stepBase(() => {})]);
+    await runSteps([
+      stepBase(() => {
+        this.gameScene.tutor.dialogue([
+          "Esta fala deve ser movida para o Servidor",
+        ]);
+      }),
+    ]);
 
     return {};
   }
