@@ -194,19 +194,6 @@ export const dialogues = defineDialogues<DayDialogues>({
         So I offer you one more challenge —
         to seal it inside that restless head of yours. †
       `.reactions([{ mood: MOODS.SURPRISED, character: ACTORS.PLAYER }]),
-
-      alternatives.player.neutral`
-        What kind of challenge?
-      `.alternatives(
-        {
-          id: "train_challenge",
-          text: "Accept the nun’s challenge.",
-        },
-        {
-          id: "return",
-          text: "Wake up and face the final test.",
-        },
-      ),
     ],
   },
 
