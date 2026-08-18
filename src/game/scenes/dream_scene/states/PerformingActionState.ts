@@ -19,6 +19,12 @@ export class PerformingActionState extends BaseState {
     events.game.sync.emit("game-action-prompt/hide");
     events.game.sync.emit("dialogue/hide");
 
+    const lastState = this.stateMachine.getPreviousStateName();
+
+    if (lastState === DreamScene.STATES.PERFORMING_LESSON) {
+      this.lessonConclusion();
+    }
+
     if (!this.dreamScene.flowController) {
       this.stateMachine.log("Scene flow was not created", "error");
       return;
@@ -43,6 +49,17 @@ export class PerformingActionState extends BaseState {
       this.dreamScene.flowController.clearNextFlow();
       this.changeTo(DreamScene.STATES.IDLE);
     }
+  }
+
+  private async lessonConclusion() {
+    const playerSprite = this.dreamScene.player.sprite;
+    this.dreamScene.gameCamera.centerOnTarget(playerSprite);
+    this.dreamScene.gameCamera.zoomTo({
+      zoom: 1,
+      duration: 1_000,
+    });
+    await events.lesson.async.emitAsync("hide-lesson-header");
+    this.dreamScene.hud.setVisible(true);
   }
 
   handleInput(): void {

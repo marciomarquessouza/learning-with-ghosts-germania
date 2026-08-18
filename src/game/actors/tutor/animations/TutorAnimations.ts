@@ -67,4 +67,9 @@ export class TutorAnimations {
   playLeaving() {
     this.animationManager.playAnimation(this.sprite, "leaving");
   }
+
+  playAway() {
+    this.sprite.anims.stop();
+    this.sprite.setTexture(SPRITESHEETS.tutor.leaving.key, "tutor_leaving_8");
+  }
 }

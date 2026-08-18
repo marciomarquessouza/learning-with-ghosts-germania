@@ -71,6 +71,10 @@ export class Tutor {
     this.stateMachine.changeTo(Tutor.STATES.TEACHING);
   }
 
+  enterAway() {
+    this.stateMachine.changeTo(Tutor.STATES.AWAY);
+  }
+
   async waitForSowing(): Promise<void> {
     return new Promise((resolve) => {
       this.resolveSowing = resolve;

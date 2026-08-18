@@ -8,6 +8,7 @@ import { IdleState } from "../states/IdleState";
 import { SowingState } from "../states/SowingState";
 import { TeachingState } from "../states/TeachingState";
 import { TutorStateNames } from "../constants/states";
+import { AwayState } from "../states/AwayState";
 
 export function createTutorStateMachine(
   scene: Phaser.Scene,
@@ -18,6 +19,7 @@ export function createTutorStateMachine(
     [Tutor.STATES.IDLE, IdleState],
     [Tutor.STATES.TEACHING, TeachingState],
     [Tutor.STATES.SOWING, SowingState],
+    [Tutor.STATES.AWAY, AwayState],
   ];
 
   states.forEach(([name, state]) => {

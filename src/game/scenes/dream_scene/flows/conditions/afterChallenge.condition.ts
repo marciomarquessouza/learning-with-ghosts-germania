@@ -15,7 +15,7 @@ export async function afterChallengeCondition(
   }
 
   return {
-    nextState: DreamScene.STATES.PERFORMING_LESSON,
+    nextState: DreamScene.STATES.PERFORMING_ACTION,
     nextFlow: LessonConclusionFlow,
   };
 }

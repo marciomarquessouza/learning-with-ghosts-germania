@@ -4,6 +4,7 @@ export const TUTOR_STATES = {
   PRAISING: "TUTOR_PRAISING",
   SOWING: "TUTOR_SOWING",
   SWEARING: "TUTOR_SWEARING",
+  AWAY: "TUTOR_AWAY",
 } as const;
 
 export type TutorStateNames = (typeof TUTOR_STATES)[keyof typeof TUTOR_STATES];
