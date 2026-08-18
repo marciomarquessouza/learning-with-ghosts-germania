@@ -190,9 +190,10 @@ export const dialogues = defineDialogues<DayDialogues>({
       `.reactions([{ mood: MOODS.SURPRISED, character: ACTORS.PLAYER }]),
 
       dialogue.tutor.talking`
-        But learning fades quickly.
-        So I offer you one more challenge —
-        to seal it inside that restless head of yours. †
+        Leve os seus pequenos conhecimentos
+        Um pouco mais a frente
+        Para o Lago da Memória
+        Onde eles crescerão com saúde †
       `.reactions([{ mood: MOODS.SURPRISED, character: ACTORS.PLAYER }]),
     ],
   },

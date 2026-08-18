@@ -132,6 +132,11 @@ export const SPRITESHEETS = {
       image: '/actors/tutor/idle/spritesheet.png',
       atlas: '/actors/tutor/idle/spritesheet.json'
     },
+    leaving: {
+      key: 'tutor-leaving',
+      image: '/actors/tutor/leaving/spritesheet.png',
+      atlas: '/actors/tutor/leaving/spritesheet.json'
+    },
     sowing: {
       key: 'tutor-sowing',
       image: '/actors/tutor/sowing/spritesheet.png',
