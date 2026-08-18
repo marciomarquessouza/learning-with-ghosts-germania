@@ -10,6 +10,7 @@ export class FullIdleState extends BaseState {
   }
 
   enter(): void {
+    this.learningNode.animations.setVisible(true);
     if (this.learningNode.isEvil()) {
       this.learningNode.animations.playEvilIdle();
     } else {

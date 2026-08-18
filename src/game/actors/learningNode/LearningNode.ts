@@ -24,10 +24,10 @@ import { SeedAnimations } from "./animations/SeedAnimations";
 import { FullIdleState } from "./states/full/FullIdleState";
 import { FullWalkingState } from "./states/full/FullWalkingState";
 import { slugify } from "@/utils/slugfy";
+import { LessonEntry } from "@/libs/lesson/types";
 
 interface CreatePayload {
-  target: string;
-  sequence: number;
+  lessonEntry: LessonEntry;
   startX: number;
   startY: number;
   flipX: boolean;
@@ -41,6 +41,7 @@ export class LearningNode {
   private _sprite?: Phaser.Types.Physics.Arcade.SpriteWithDynamicBody;
   private _container?: Phaser.GameObjects.Container;
   private _isEvil = false;
+  private _lessonEntry?: LessonEntry;
 
   public animations = new Animations();
   public stateMachine!: StateMachine;
@@ -68,6 +69,10 @@ export class LearningNode {
     return getRequired(this._sprite, "LearningNode", "_sprite");
   }
 
+  public get lessonEntry(): LessonEntry {
+    return getRequired(this._lessonEntry, "LearningNode", "lessonEntry");
+  }
+
   preload(scene: Phaser.Scene) {
     this.animations.preload(scene);
     this.audioPlayButton.preload(scene);
@@ -76,12 +81,13 @@ export class LearningNode {
 
   create(
     scene: Phaser.Scene,
-    { target, sequence, startX, startY, flipX }: CreatePayload,
+    { startX, startY, flipX, lessonEntry }: CreatePayload,
   ) {
     this._scene = scene;
-    this.target = target;
-    this.sequence = sequence;
-    this.slug = slugify(`${target}-${sequence}`);
+    this._lessonEntry = lessonEntry;
+    this.target = lessonEntry.target;
+    this.sequence = lessonEntry.sequence;
+    this.slug = slugify(`${lessonEntry.target}-${lessonEntry.sequence}`);
 
     const learningNodeX = startX - 160;
     const learningNodeY = startY;
@@ -92,6 +98,8 @@ export class LearningNode {
       .sprite(learningNodeX, learningNodeY, "", "")
       .setFlipX(!!flipX)
       .setVisible(false);
+
+    this._lessonEntry = lessonEntry;
 
     const handPositionY = startY - 360;
 

@@ -52,6 +52,7 @@ import { LessonNextEntryFlow } from "./flows/lesson/0-introduction/LessonNextEnt
 import { LessonIntroductionFlow } from "./flows/lesson/0-introduction/LessonIntroduction.flow";
 import { LessonEvaluationFlow } from "./flows/lesson/2-after_challenges/LessonEvaluation.flow";
 import { LessonConclusionFlow } from "./flows/lesson/2-after_challenges/LessonConclusion.flow";
+import { LessonEntry } from "@/libs/lesson/types";
 
 export class DreamScene extends Phaser.Scene {
   public static readonly STATES = SCENE_STATES;
@@ -182,19 +183,32 @@ export class DreamScene extends Phaser.Scene {
   }
 
   public createLearningNode() {
-    const { sequence, target } = this.lessonManager.getCurrentLessonEntry();
-    if (sequence > 0) {
+    const lessonEntry = this.lessonManager.getCurrentLessonEntry();
+    if (lessonEntry.sequence > 0) {
       const knowledgeTroopMember = this.learningNode;
       this.knowledgeTroop.add(knowledgeTroopMember);
       this.learningNode = new LearningNode();
     }
     this.learningNode.create(this, {
-      target,
-      sequence,
+      lessonEntry,
       startX: this.tutor.container.x + 200,
       startY: 870,
       flipX: true,
     });
+  }
+
+  public createTroop(lessonEntries: LessonEntry[]) {
+    for (const lessonEntry of lessonEntries) {
+      const learningNode = new LearningNode();
+      learningNode.create(this, {
+        lessonEntry,
+        flipX: true,
+        startY: 778,
+        startX: this.tutor.container.x - 390 + 120 * lessonEntry.sequence,
+      });
+      learningNode.enterFullIdleState();
+      this.knowledgeTroop.add(learningNode);
+    }
   }
 
   update(time: number, delta: number) {
