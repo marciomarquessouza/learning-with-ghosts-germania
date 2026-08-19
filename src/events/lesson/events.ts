@@ -1,5 +1,4 @@
 import type {
-  LessonEntryNotebookEvent,
   WriteLessonDescriptionEvent,
   ShowLessonTitleEvent,
   ToggleNotebookEvent,
@@ -14,7 +13,6 @@ import { createEventManagers } from "@/libs/events/createEventManagers";
 export type LessonSyncEvents = {
   "start-lesson": undefined;
   "toggle-notebook": ToggleNotebookEvent;
-  "lesson-entry-notebook-phase": LessonEntryNotebookEvent;
   "show-description": undefined;
   "show-voice-indicator": VoiceIndicatorEvent;
   "hide-voice-indicator": undefined;

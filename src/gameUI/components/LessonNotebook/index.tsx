@@ -5,11 +5,10 @@ import { usePagination } from "@/gameUI/hooks/usePagination";
 import { AnimatePresence, motion } from "framer-motion";
 import { ButtonTransparent } from "@/components/Button/ButtonTransparent";
 import { PaginationControls } from "@/components/Pagination/PaginationControl";
-import { LessonEntryNotebookEvent } from "@/events/lesson/types";
 import { events } from "@/events/events";
 
 export function LessonNotebook() {
-  const { lesson, updateEntriesPhase } = useLessonStore();
+  const { lesson } = useLessonStore();
   const {
     list: lessonEntries,
     currentPage,
@@ -19,15 +18,6 @@ export function LessonNotebook() {
     hasPagination,
   } = usePagination(lesson.entries, 6);
   const [visible, setVisible] = useState(false);
-
-  useEffect(() => {
-    const handle = ({ ids, phase }: LessonEntryNotebookEvent) => {
-      updateEntriesPhase(ids, phase);
-    };
-    events.lesson.sync.on("lesson-entry-notebook-phase", handle);
-
-    return () => events.lesson.sync.off("lesson-entry-notebook-phase", handle);
-  }, [updateEntriesPhase]);
 
   useEffect(() => {
     const handler = (payload: { delay?: number }) => {

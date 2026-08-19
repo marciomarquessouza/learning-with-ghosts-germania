@@ -18,6 +18,8 @@ export type GameSnapshot = {
   scene?: GameScenes;
   day?: number;
   lessonId?: string;
+  lessonEntryId?: string;
+  completedLessonEntries?: [];
   state?: SCENE_STATES;
   flow?: SCENE_FLOWS;
   playerPosition?: Vector2;
