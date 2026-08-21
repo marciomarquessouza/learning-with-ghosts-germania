@@ -1,12 +1,16 @@
 import { getRequired } from "@/utils/getRequired";
 import { AUDIO_SPEED, GameAudio } from "../audio/GameAudio";
 import { Lesson, LessonEntry, LessonStepType } from "./types";
+import { useLessonStore } from "@/store/lessonStore";
+import { GameSnapshot } from "@/store/progressStore";
 
 export class LessonController {
   private _scene?: Phaser.Scene;
   private _gameAudio?: GameAudio;
   private _currentLessonEntry: LessonEntry | null = null;
-  private nextEntries: LessonEntry[] = [];
+
+  public nextEntries: LessonEntry[] = [];
+  public completedEntries: LessonEntry[] = [];
   public lesson: Lesson;
 
   constructor(lesson: Lesson) {
@@ -45,8 +49,11 @@ export class LessonController {
   private setCurrentLessonEntry() {
     if (this.hasNextEntry()) {
       const [entry, ...nextEntries] = this.nextEntries;
+
       this._currentLessonEntry = entry;
       this.nextEntries = nextEntries;
+
+      useLessonStore.getState().setCurrentLessonEntryId(entry.id);
     }
   }
 
@@ -56,13 +63,43 @@ export class LessonController {
 
   public callNextEntry(): boolean {
     if (this.hasNextEntry()) {
+      useLessonStore
+        .getState()
+        .addCompletedLessonEntry(this.currentLessonEntry.id);
+
       const [entry, ...nextEntries] = this.nextEntries;
+
       this._currentLessonEntry = entry;
       this.nextEntries = nextEntries;
+
+      useLessonStore.getState().setCurrentLessonEntryId(entry.id);
+
       return true;
     }
 
     return false;
+  }
+
+  public setLessonBySnapshot(snapshot?: GameSnapshot | null): void {
+    if (!snapshot?.lessonEntryId) return;
+
+    if (
+      this.lesson.day !== snapshot.day ||
+      this.lesson.id !== snapshot.lessonId
+    ) {
+      return;
+    }
+
+    const currentEntryIndex = this.lesson.entries.findIndex(
+      ({ id }) => id === snapshot.lessonEntryId,
+    );
+
+    if (currentEntryIndex === -1) return;
+
+    this._currentLessonEntry = this.lesson.entries[currentEntryIndex];
+
+    this.completedEntries = this.lesson.entries.slice(0, currentEntryIndex);
+    this.nextEntries = this.lesson.entries.slice(currentEntryIndex + 1);
   }
 
   public getStepByType(stepType: LessonStepType) {
@@ -91,6 +128,7 @@ export class LessonController {
     if (!this.currentLessonEntry?.target) {
       throw new Error("Lesson Controller: target not available");
     }
+
     return this.currentLessonEntry.target;
   }
 
@@ -101,10 +139,16 @@ export class LessonController {
     }));
   }
 
+  private getEntryById(id: string): LessonEntry | undefined {
+    const lessonEntry = this.lesson.entries.find((entry) => entry.id === id);
+    return lessonEntry;
+  }
+
   public async playTargetAudio(
     speed: number = AUDIO_SPEED.NORMAL,
   ): Promise<void> {
     const entryId = this.currentLessonEntry?.id;
+
     if (!entryId) {
       throw new Error("playTargetAudio: Lesson entry id not available");
     }

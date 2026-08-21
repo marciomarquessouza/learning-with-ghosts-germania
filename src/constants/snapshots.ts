@@ -42,4 +42,9 @@ export const developmentSnapshots: Record<string, GameSnapshot> = {
     ...defaultLessonSnapshot,
     flow: DREAM_SCENE_FLOWS.LESSON_FAILURE,
   },
+  "lesson-success-e2": {
+    ...defaultLessonSnapshot,
+    flow: DREAM_SCENE_FLOWS.LESSON_SUCCESS,
+    lessonEntryId: "2",
+  },
 };

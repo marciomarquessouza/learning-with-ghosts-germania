@@ -19,7 +19,7 @@ export type GameSnapshot = {
   day?: number;
   lessonId?: string;
   lessonEntryId?: string;
-  completedLessonEntries?: [];
+  completedLessonEntries?: string[];
   state?: SCENE_STATES;
   flow?: SCENE_FLOWS;
   playerPosition?: Vector2;
@@ -66,7 +66,8 @@ export const useGameProgressStore = create<GameProgressStore>()(
 export function createFlowSnapshot(scene: GameScenes, flow: SCENE_FLOWS) {
   const { currentSceneState, playerSnapshot, gameWorld, day } =
     useGameStore.getState();
-  const { lesson } = useLessonStore.getState();
+  const { lesson, currentLessonEntryId, completedLessonEntryIds } =
+    useLessonStore.getState();
   const snapshot: GameSnapshot = {
     scene,
     day,
@@ -74,6 +75,8 @@ export function createFlowSnapshot(scene: GameScenes, flow: SCENE_FLOWS) {
     world: gameWorld,
     state: currentSceneState,
     lessonId: lesson.id,
+    lessonEntryId: currentLessonEntryId,
+    completedLessonEntries: completedLessonEntryIds,
     playerPosition: playerSnapshot?.position,
   };
   useGameProgressStore.getState().createSnapshot(scene, day, snapshot);

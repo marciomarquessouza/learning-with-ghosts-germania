@@ -16,13 +16,18 @@ const WRITING_SCORE_WEIGHT = 0.5;
 const PRONUNCIATION_SCORE_WEIGHT = 0.5;
 const DEFAULT_MINIMUM_ENTRY_SUCCESS = 0.5;
 
+const LOADING_MESSAGES = {
+  MIC_SETUP: "Mic Setuuup...",
+  CHECKING_AUDIO: "Checking Auuudio...",
+} as const;
+
 export class LessonManager extends LessonController {
-  private lessonScore: LessonScore;
-  private audioRecorder = new AudioRecorder({
+  private readonly lessonScore: LessonScore;
+  private readonly audioRecorder = new AudioRecorder({
     voiceDetectionEnabled: true,
     autoStopOnSilence: true,
   });
-  private pronunciationAPI = new PronunciationAPI();
+  private readonly pronunciationAPI = new PronunciationAPI();
 
   constructor(lesson: Lesson) {
     super(lesson);
@@ -32,39 +37,39 @@ export class LessonManager extends LessonController {
   public async showLessonTitle(
     lessonTitleContent: ShowLessonTitleEvent,
   ): Promise<void> {
-    return events.lesson.async.emitAsync(
+    await events.lesson.async.emitAsync(
       "show-lesson-header",
       lessonTitleContent,
     );
   }
 
   public async hideLessonTitle(): Promise<void> {
-    return events.lesson.async.emitAsync("hide-lesson-header");
+    await events.lesson.async.emitAsync("hide-lesson-header");
   }
 
   public async writeLessonDescription(
     lessonDescription: WriteLessonDescriptionEvent,
   ): Promise<void> {
-    return events.lesson.async.emitAsync(
+    await events.lesson.async.emitAsync(
       "write-lesson-description",
       lessonDescription,
     );
   }
 
-  public showLessonDescription() {
+  public showLessonDescription(): void {
     events.lesson.sync.emit("show-description");
   }
 
   public async hideLessonDescription(): Promise<void> {
-    return events.lesson.async.emitAsync("hide-lesson-description");
+    await events.lesson.async.emitAsync("hide-lesson-description");
   }
 
-  public showVoiceIndicator() {
+  public showVoiceIndicator(): void {
     const target = this.getEntryTarget();
-    return events.lesson.sync.emit("show-voice-indicator", { target });
+    events.lesson.sync.emit("show-voice-indicator", { target });
   }
 
-  public hideVoiceIndicator() {
+  public hideVoiceIndicator(): void {
     events.lesson.sync.emit("hide-voice-indicator");
   }
 
@@ -73,78 +78,80 @@ export class LessonManager extends LessonController {
     onVolumeChange?: (volume: number) => void;
     onRecordTimeout?: (elapsed: number, maxTime: number) => void;
   }): Promise<PronunciationResultEvent> {
-    try {
-      events.lesson.sync.emit("show-loading", { text: "Mic Setuuup..." });
-      const target = this.getEntryTarget();
-      const { recordId, audioBlob } = await this.startRecording({
-        onRecording: options?.onRecording,
-        onVolumeChange: options?.onVolumeChange,
-        onRecordTimeout: options?.onRecordTimeout,
-      });
-      const { score, feedback } =
-        await this.pronunciationAPI.calculatePronunciationScore(
-          audioBlob,
-          target,
-        );
+    events.lesson.sync.emit("show-loading", {
+      text: LOADING_MESSAGES.MIC_SETUP,
+    });
 
-      this.lessonScore.addPronunciationScore(this.currentLessonEntry.id, score);
+    const target = this.getEntryTarget();
+    const { recordId, audioBlob } = await this.startRecording(options);
 
-      return {
-        recordId,
-        score,
-        feedback,
-      };
-    } catch (error) {
-      throw error;
-    }
+    const { score, feedback } =
+      await this.pronunciationAPI.calculatePronunciationScore(
+        audioBlob,
+        target,
+      );
+
+    this.lessonScore.addPronunciationScore(this.currentLessonEntry.id, score);
+
+    return { recordId, score, feedback };
   }
 
-  private async startRecording(options: {
-    onRecording?: (value: boolean) => void;
+  private startRecording(options?: {
+    onRecording?: (isRecording: boolean) => void;
     onVolumeChange?: (volume: number) => void;
     onRecordTimeout?: (elapsed: number, maxTime: number) => void;
   }): Promise<{ recordId: string; audioBlob: Blob }> {
-    return new Promise((resolve) => {
+    return new Promise((resolve, reject) => {
       this.audioRecorder.startRecording({
         targetPhrase: this.getEntryTarget(),
-        onStartRecord: async () => {
-          options.onRecording?.(true);
+
+        onStartRecord: () => {
+          options?.onRecording?.(true);
           this.showVoiceIndicator();
         },
+
         onVolumeChange: (volume) => {
           options?.onVolumeChange?.(volume);
         },
-        onSpeakingEnd: async (recordId, audioBlob) => {
-          options.onRecording?.(false);
+
+        onSpeakingEnd: (recordId, audioBlob) => {
+          options?.onRecording?.(false);
+          this.hideVoiceIndicator();
+
           events.lesson.sync.emit("show-loading", {
-            text: "Checking Auuudio...",
+            text: LOADING_MESSAGES.CHECKING_AUDIO,
           });
+
           resolve({ recordId, audioBlob });
         },
+
         onRecordTimeout: (elapsed, maxTime) => {
           this.hideVoiceIndicator();
           options?.onRecordTimeout?.(elapsed, maxTime);
         },
-        onError: () => {
+
+        onError: (error) => {
           this.hideVoiceIndicator();
-          options.onRecording?.(false);
-          console.error("Pronunciation Challenge Error");
+          options?.onRecording?.(false);
+
+          console.error("Pronunciation Challenge Error:", error);
+          reject(error ?? new Error("Failed to record audio"));
         },
       });
     });
   }
 
-  public showPronunciationScore(value: PronunciationResultEvent) {
+  public showPronunciationScore(value: PronunciationResultEvent): void {
     events.lesson.sync.emit("show-pronunciation-score", value);
   }
 
-  public stopPronunciationChallenge() {
+  public stopPronunciationChallenge(): void {
     this.audioRecorder.stopRecording();
-    events.lesson.sync.emit("hide-voice-indicator");
+    this.hideVoiceIndicator();
   }
 
   public async playPronunciationRecord(id: string): Promise<void> {
-    return this.audioRecorder.playRecording({ recordingId: id });
+    await this.audioRecorder.playRecording({ recordingId: id });
   }
 
   public async startWritingChallenge(payload: {
@@ -156,13 +163,15 @@ export class LessonManager extends LessonController {
       events.lesson.sync.emit("show-writing-board", {
         target: this.getEntryTarget(),
         limits: payload.limits,
+
         onClickNext: (result) => {
           this.lessonScore.addWritingScore(this.currentLessonEntry.id, result);
-          payload?.onClickNext?.(result);
+          payload.onClickNext?.(result);
           resolve();
         },
+
         onClickCancel: () => {
-          payload?.onClickCancel?.();
+          payload.onClickCancel?.();
           resolve();
         },
       });
@@ -173,15 +182,15 @@ export class LessonManager extends LessonController {
     const entryScore = this.lessonScore.getEntryScore(
       this.currentLessonEntry.id,
     );
+
     const pronunciationScore = entryScore?.pronunciation ?? 0;
     const writingScore = entryScore?.writing ?? 0;
-    const finalScore = Math.max(
-      0,
-      pronunciationScore * PRONUNCIATION_SCORE_WEIGHT +
-        writingScore * WRITING_SCORE_WEIGHT,
-    );
 
-    return Number(finalScore.toFixed(2));
+    const finalScore =
+      pronunciationScore * PRONUNCIATION_SCORE_WEIGHT +
+      writingScore * WRITING_SCORE_WEIGHT;
+
+    return Number(Math.max(0, finalScore).toFixed(2));
   }
 
   public getEntryMinimumSuccessPercentage(): number {
@@ -192,7 +201,7 @@ export class LessonManager extends LessonController {
     );
   }
 
-  destroy() {
+  public destroy(): void {
     this.audioRecorder.destroy();
   }
 }

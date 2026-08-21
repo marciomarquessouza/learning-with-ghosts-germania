@@ -1,9 +1,32 @@
 import { Player } from "../player/Player";
 import { LearningNode } from "../learningNode/LearningNode";
+import { LessonEntry } from "@/libs/lesson/types";
 
 export class KnowledgeTroop {
   private readonly members = new Map<string, LearningNode>();
   private player: Player | null = null;
+
+  public create(
+    scene: Phaser.Scene,
+    completedEntries: LessonEntry[],
+    player: Player,
+  ) {
+    this.player = player;
+    if (completedEntries.length === 0) return;
+
+    for (const lessonEntry of completedEntries) {
+      const learningNode = new LearningNode();
+      learningNode.create(scene, {
+        lessonEntry,
+        flipX: true,
+        startY: 778,
+        // TODO: Adjust fist position
+        startX: player.sprite.x - 390 + 120 * lessonEntry.sequence,
+      });
+      learningNode.enterFullIdleState();
+      this.add(learningNode);
+    }
+  }
 
   public add(learningNode: LearningNode): boolean {
     if (this.members.has(learningNode.slug)) {

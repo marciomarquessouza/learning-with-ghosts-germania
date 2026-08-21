@@ -17,7 +17,6 @@ export class LessonSuccessFlow extends Flow<SceneStateNames, DreamScene> {
       stepBase(
         async () => {
           this.gameScene.createLearningNode();
-          // TODO: add Knowledge Troop
           this.gameScene.player.enterInclined();
           const sequence = this.lessonEntry.sequence + 1;
           await this.gameScene.learningNode.resumeSproutToPumpkin({

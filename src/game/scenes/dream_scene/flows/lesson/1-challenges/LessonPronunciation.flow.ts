@@ -143,8 +143,6 @@ export class LessonPronunciationFlow extends Flow<SceneStateNames, DreamScene> {
       stepBase(
         () => {
           this.gameScene.createLearningNode();
-
-          // TODO: add Knowledge Troop
           this.gameScene.player.enterInclined();
 
           return this.gameScene.learningNode.resumeSproutToPumpkin({

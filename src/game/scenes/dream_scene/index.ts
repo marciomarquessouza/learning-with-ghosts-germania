@@ -112,6 +112,8 @@ export class DreamScene extends Phaser.Scene {
     const snapshot = getSceneLastSnapshot(GAME_SCENES.DREAM_SCENE, day);
     const { setCurrentSceneState, setCurrentFlow } = useGameStore.getState();
 
+    this.lessonManager.setLessonBySnapshot(snapshot);
+
     const playerSprite = this.player.create(this, {
       startX: snapshot?.playerPosition?.x ?? DEFAULT_PLAYER_POSITION_X,
       startY: snapshot?.playerPosition?.y ?? DEFAULT_PLAYER_POSITION_Y,
@@ -136,6 +138,7 @@ export class DreamScene extends Phaser.Scene {
       source: "scene",
       onStateChange: (state) => setCurrentSceneState(state as SceneStateNames),
     });
+
     this.stateMachine
       .addState(SCENE_STATES.IDLE, IdleState, this)
       .addState(SCENE_STATES.INTRO, IntroState, this)
@@ -195,20 +198,6 @@ export class DreamScene extends Phaser.Scene {
       startY: 870,
       flipX: true,
     });
-  }
-
-  public createTroop(lessonEntries: LessonEntry[]) {
-    for (const lessonEntry of lessonEntries) {
-      const learningNode = new LearningNode();
-      learningNode.create(this, {
-        lessonEntry,
-        flipX: true,
-        startY: 778,
-        startX: this.tutor.container.x - 390 + 120 * lessonEntry.sequence,
-      });
-      learningNode.enterFullIdleState();
-      this.knowledgeTroop.add(learningNode);
-    }
   }
 
   update(time: number, delta: number) {
