@@ -130,6 +130,7 @@ export class DreamScene extends Phaser.Scene {
     });
 
     this.tutor.addCollisionWithPlayer(this.player.sprite);
+    this.knowledgeTroop.create(this, this.player);
 
     const hudContainer = this.hud.create(this, [HUD_ITEMS.WEIGHT]);
     this.children.bringToTop(hudContainer);

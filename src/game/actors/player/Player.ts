@@ -8,6 +8,8 @@ import { PlayerAnimations } from "./animations/PlayerAnimations";
 import { createPlayerStateMachine } from "./helpers/createPlayerStateMachine";
 import { getRequired } from "@/utils/getRequired";
 import { AudioRecordButton } from "./components/AudioRecordButton";
+import { Vector2 } from "@/utils/vectors";
+import { getSpriteWorldPosition } from "@/utils/getSpriteWorldPosition";
 
 export const KEY_CODES = Phaser.Input.Keyboard.KeyCodes;
 const DEFAULT_SPEED = 200;
@@ -123,6 +125,14 @@ export class Player {
 
   faceTarget(targetX: number) {
     this.sprite.setFlipX(targetX < this.sprite.x);
+  }
+
+  public getWorldPosition(): Vector2 {
+    return getSpriteWorldPosition(this.sprite);
+  }
+
+  public getPosition(): Vector2 {
+    return { x: this.sprite.x, y: this.sprite.y };
   }
 
   attachRecordButton({

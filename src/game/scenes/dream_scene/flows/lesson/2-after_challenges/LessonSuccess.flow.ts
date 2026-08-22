@@ -5,6 +5,7 @@ import { DREAM_SCENE_FLOWS } from "../../../constants/flows";
 import { FlowResult } from "@/libs/game/game-flow/types";
 import { runSteps, stepBase } from "@/libs/game/game-flow/runSteps";
 import { afterChallengeCondition } from "../../conditions/afterChallenge.condition";
+import { KnowledgeTroop } from "@/game/actors/knowledgeTroop/KnowledgeTroop";
 
 export class LessonSuccessFlow extends Flow<SceneStateNames, DreamScene> {
   public flowName: string = DREAM_SCENE_FLOWS.LESSON_SUCCESS;
@@ -45,11 +46,15 @@ export class LessonSuccessFlow extends Flow<SceneStateNames, DreamScene> {
         this.delay(400, () => {
           this.gameScene.learningNode.floor.playClose();
         });
-        const entrySequence = this.lessonEntry.sequence;
-        const learningNodePosition = 360 + 120 * entrySequence;
-        return this.gameScene.learningNode.walkTo({
-          distance: learningNodePosition,
-        });
+
+        const firstWorldPosition =
+          this.gameScene.knowledgeTroop.getFirstWorldPosition();
+
+        const targetWorldX =
+          firstWorldPosition.x -
+          KnowledgeTroop.DEFAULT_GAP * this.lessonEntry.sequence;
+
+        return this.gameScene.learningNode.walkToWorldX(targetWorldX);
       }),
       stepBase(() => {
         this.gameScene.player.enterIdle();

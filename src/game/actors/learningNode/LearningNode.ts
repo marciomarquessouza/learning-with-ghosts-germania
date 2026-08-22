@@ -25,6 +25,8 @@ import { FullIdleState } from "./states/full/FullIdleState";
 import { FullWalkingState } from "./states/full/FullWalkingState";
 import { slugify } from "@/utils/slugfy";
 import { LessonEntry } from "@/libs/lesson/types";
+import { Vector2 } from "@/utils/vectors";
+import { getSpriteWorldPosition } from "@/utils/getSpriteWorldPosition";
 
 interface CreatePayload {
   lessonEntry: LessonEntry;
@@ -135,6 +137,10 @@ export class LearningNode {
       .addState(LearningNode.STATES.FULL_WALKING, FullWalkingState, this);
   }
 
+  public getWorldPosition(): Vector2 {
+    return getSpriteWorldPosition(this.sprite);
+  }
+
   public enterSproutingState() {
     this.stateMachine.changeTo(LearningNode.STATES.SPROUTING);
   }
@@ -190,6 +196,41 @@ export class LearningNode {
 
     return new Promise((resolve) => {
       this.lessonTargetLabel.moveHorizontalTo(distance * direction, durationMs);
+      this.scene.tweens.add({
+        targets: this.sprite,
+        x: targetX,
+        duration: durationMs,
+        ease: "Linear",
+        onComplete: () => {
+          this.enterFullIdleState();
+          resolve();
+        },
+      });
+    });
+  }
+
+  public async walkToWorldX(targetWorldX: number): Promise<void> {
+    this.animations.clearPumpkinMask();
+    this.enterFullWalking();
+
+    const nodeWorldX = this.getWorldPosition().x;
+
+    const distance = Math.abs(targetWorldX - nodeWorldX);
+    const direction = targetWorldX > nodeWorldX ? 1 : -1;
+
+    if (direction > 0) {
+      this.sprite.setFlipX(false);
+    }
+
+    const targetX = this.sprite.x + distance * direction;
+    const durationMs = (distance / this.WALK_SPEED) * 1000;
+
+    return new Promise((resolve) => {
+      this.lessonTargetLabel.moveHorizontalTo(
+        targetX - this.sprite.x,
+        durationMs,
+      );
+
       this.scene.tweens.add({
         targets: this.sprite,
         x: targetX,

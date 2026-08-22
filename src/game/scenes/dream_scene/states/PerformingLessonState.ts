@@ -40,11 +40,9 @@ export class PerformingLessonState extends BaseState {
     const tutorContainer = this.dreamScene.tutor.container;
     this.dreamScene.player.faceTarget(tutorContainer.x);
 
-    this.dreamScene.knowledgeTroop.create(
-      this.dreamScene,
-      this.dreamScene.lessonManager.completedEntries,
-      this.dreamScene.player,
-    );
+    const completedEntries = this.dreamScene.lessonManager.completedEntries;
+
+    this.dreamScene.knowledgeTroop.addByEntries(completedEntries);
 
     if (!this.dreamScene.flowController) {
       this.stateMachine.log("Scene flow was not created", "error");
