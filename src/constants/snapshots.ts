@@ -6,6 +6,7 @@ const defaultLessonSnapshot: GameSnapshot = {
   scene: "DreamScene",
   day: 1,
   lessonId: "greetings",
+  lessonCompleted: false,
   state: "PERFORMING_LESSON",
   playerPosition: {
     x: 2326.5,

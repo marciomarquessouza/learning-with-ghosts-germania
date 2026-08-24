@@ -52,7 +52,7 @@ import { LessonNextEntryFlow } from "./flows/lesson/0-introduction/LessonNextEnt
 import { LessonIntroductionFlow } from "./flows/lesson/0-introduction/LessonIntroduction.flow";
 import { LessonEvaluationFlow } from "./flows/lesson/2-after_challenges/LessonEvaluation.flow";
 import { LessonConclusionFlow } from "./flows/lesson/2-after_challenges/LessonConclusion.flow";
-import { LessonEntry } from "@/libs/lesson/types";
+import { PostLessonState } from "./states/PostLessonState";
 
 export class DreamScene extends Phaser.Scene {
   public static readonly STATES = SCENE_STATES;
@@ -144,7 +144,8 @@ export class DreamScene extends Phaser.Scene {
       .addState(SCENE_STATES.IDLE, IdleState, this)
       .addState(SCENE_STATES.INTRO, IntroState, this)
       .addState(SCENE_STATES.PERFORMING_ACTION, PerformingActionState, this)
-      .addState(SCENE_STATES.PERFORMING_LESSON, PerformingLessonState, this);
+      .addState(SCENE_STATES.PERFORMING_LESSON, PerformingLessonState, this)
+      .addState(SCENE_STATES.POST_LESSON, PostLessonState, this);
 
     this.flowController = new FlowController({
       scene: this,

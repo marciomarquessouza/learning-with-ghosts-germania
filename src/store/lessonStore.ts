@@ -15,12 +15,12 @@ const INITIAL_LESSON: Lesson = {
 export interface LessonState {
   lesson: Lesson;
   currentLessonEntryId?: string;
-  completedLessonEntryIds: string[];
+  completed: boolean;
 
   setLesson: (lesson: Lesson) => void;
   setCurrentLessonEntryId: (id?: string) => void;
-  addCompletedLessonEntry: (id: string) => void;
-  setCompletedLessonEntries: (ids: string[]) => void;
+  setCompleted: (completed: boolean) => void;
+  completeLesson: () => void;
 }
 
 export const useLessonStore = create<LessonState>()(
@@ -28,28 +28,16 @@ export const useLessonStore = create<LessonState>()(
     (set) => ({
       lesson: INITIAL_LESSON,
       currentLessonEntryId: undefined,
-      completedLessonEntryIds: [],
+      completed: false,
 
       setLesson: (lesson) => set({ lesson }),
 
       setCurrentLessonEntryId: (currentLessonEntryId) =>
         set({ currentLessonEntryId }),
 
-      addCompletedLessonEntry: (id) =>
-        set((state) => {
-          if (state.completedLessonEntryIds.includes(id)) {
-            return state;
-          }
+      setCompleted: (completed: boolean) => set({ completed }),
 
-          return {
-            completedLessonEntryIds: [...state.completedLessonEntryIds, id],
-          };
-        }),
-
-      setCompletedLessonEntries: (completedLessonEntryIds) =>
-        set({
-          completedLessonEntryIds: [...new Set(completedLessonEntryIds)],
-        }),
+      completeLesson: () => set({ completed: true }),
     }),
     {
       name: "lesson-storage",

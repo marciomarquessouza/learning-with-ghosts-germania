@@ -21,7 +21,11 @@ export class TutorBlockerZone {
     return getRequired(this._zone, "TutorBlockerZone", "_zone");
   }
 
-  create(scene: Phaser.Scene, config: TutorBlockerZoneConfig) {
+  private get body(): Phaser.Physics.Arcade.StaticBody {
+    return this.zone.body as Phaser.Physics.Arcade.StaticBody;
+  }
+
+  public create(scene: Phaser.Scene, config: TutorBlockerZoneConfig) {
     this._scene = scene;
     const { x, y, width, height, debug = false } = config;
 
@@ -41,18 +45,30 @@ export class TutorBlockerZone {
     return this._zone;
   }
 
-  addCollisionWith(
+  public addCollisionWith(
     player: Phaser.Types.Physics.Arcade.ArcadeColliderType,
   ): Phaser.Physics.Arcade.Collider {
     return this.scene.physics.add.collider(player, this.zone);
   }
 
-  refreshBody() {
-    const body = this.zone.body as Phaser.Physics.Arcade.StaticBody;
-    body.updateFromGameObject();
+  public setActive(value: boolean) {
+    this.zone.setActive(value);
+    this.body.enable = value;
   }
 
-  destroy() {
+  public activeBlockerZone() {
+    this.setActive(true);
+  }
+
+  public deactivateBlockerZone() {
+    this.setActive(false);
+  }
+
+  public refreshBody() {
+    this.body.updateFromGameObject();
+  }
+
+  public destroy() {
     this._debugGraphics?.destroy();
     this._zone?.destroy();
 

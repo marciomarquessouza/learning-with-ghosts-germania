@@ -20,13 +20,17 @@ export class LessonConclusionFlow extends Flow<SceneStateNames, DreamScene> {
         });
       }),
       stepBase(() => {
+        return this.gameScene.tutor.animations.playLeaving();
+      }),
+      stepBase(() => {
         this.gameScene.tutor.enterAway();
         this.gameScene.player.enterIdle();
+        this.gameScene.lessonManager.completeLesson();
       }),
     ]);
 
     return {
-      nextState: DreamScene.STATES.IDLE,
+      nextState: DreamScene.STATES.POST_LESSON,
     };
   }
 

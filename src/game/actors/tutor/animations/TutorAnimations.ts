@@ -64,11 +64,21 @@ export class TutorAnimations {
       .holdAnimationAt([1, 6], 4_200);
   }
 
-  playLeaving() {
-    this.animationManager.playAnimation(this.sprite, "leaving");
+  playLeaving(): Promise<void> {
+    return new Promise((resolve) => {
+      this.animationManager
+        .playAnimation(this.sprite, "leaving")
+        .onAnimationComplete(() => resolve());
+    });
   }
 
   playAway() {
+    const isLeaving =
+      this.sprite.anims.isPlaying &&
+      this.sprite.anims.currentAnim?.key === "leaving";
+
+    if (isLeaving) return;
+
     this.sprite.anims.stop();
     this.sprite.setTexture(SPRITESHEETS.tutor.leaving.key, "tutor_leaving_8");
   }

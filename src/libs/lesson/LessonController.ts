@@ -8,10 +8,11 @@ export class LessonController {
   private _scene?: Phaser.Scene;
   private _gameAudio?: GameAudio;
   private _currentLessonEntry: LessonEntry | null = null;
+  private _lessonCompleted = false;
 
+  public lesson: Lesson;
   public nextEntries: LessonEntry[] = [];
   public completedEntries: LessonEntry[] = [];
-  public lesson: Lesson;
 
   constructor(lesson: Lesson) {
     this.lesson = lesson;
@@ -27,12 +28,26 @@ export class LessonController {
     return getRequired(this._scene, "LessonController", "this._scene");
   }
 
+  public get lessonCompleted(): boolean {
+    return this._lessonCompleted;
+  }
+
+  private set lessonCompleted(completed: boolean) {
+    useLessonStore.getState().setCompleted(completed);
+    this._lessonCompleted = completed;
+  }
+
   public get currentLessonEntry(): LessonEntry {
     return getRequired(
       this._currentLessonEntry,
       "LessonController",
       "_currentLessonEntry",
     );
+  }
+
+  private set currentLessonEntry(entry: LessonEntry) {
+    useLessonStore.getState().setCurrentLessonEntryId(entry.id);
+    this._currentLessonEntry = entry;
   }
 
   preload(scene: Phaser.Scene, gameAudio: GameAudio) {
@@ -50,10 +65,8 @@ export class LessonController {
     if (this.hasNextEntry()) {
       const [entry, ...nextEntries] = this.nextEntries;
 
-      this._currentLessonEntry = entry;
+      this.currentLessonEntry = entry;
       this.nextEntries = nextEntries;
-
-      useLessonStore.getState().setCurrentLessonEntryId(entry.id);
     }
   }
 
@@ -63,16 +76,10 @@ export class LessonController {
 
   public callNextEntry(): boolean {
     if (this.hasNextEntry()) {
-      useLessonStore
-        .getState()
-        .addCompletedLessonEntry(this.currentLessonEntry.id);
-
       const [entry, ...nextEntries] = this.nextEntries;
 
-      this._currentLessonEntry = entry;
+      this.currentLessonEntry = entry;
       this.nextEntries = nextEntries;
-
-      useLessonStore.getState().setCurrentLessonEntryId(entry.id);
 
       return true;
     }
@@ -90,13 +97,15 @@ export class LessonController {
       return;
     }
 
+    this.lessonCompleted = snapshot.lessonCompleted ?? false;
+
     const currentEntryIndex = this.lesson.entries.findIndex(
       ({ id }) => id === snapshot.lessonEntryId,
     );
 
     if (currentEntryIndex === -1) return;
 
-    this._currentLessonEntry = this.lesson.entries[currentEntryIndex];
+    this.currentLessonEntry = this.lesson.entries[currentEntryIndex];
 
     this.completedEntries = this.lesson.entries.slice(0, currentEntryIndex);
     this.nextEntries = this.lesson.entries.slice(currentEntryIndex + 1);
@@ -120,6 +129,10 @@ export class LessonController {
     return this.nextEntries.length > 0;
   }
 
+  public completeLesson() {
+    this.lessonCompleted = true;
+  }
+
   public getCurrentLessonDay() {
     return this.lesson.day;
   }
@@ -137,11 +150,6 @@ export class LessonController {
       key: id,
       file: audio,
     }));
-  }
-
-  private getEntryById(id: string): LessonEntry | undefined {
-    const lessonEntry = this.lesson.entries.find((entry) => entry.id === id);
-    return lessonEntry;
   }
 
   public async playTargetAudio(

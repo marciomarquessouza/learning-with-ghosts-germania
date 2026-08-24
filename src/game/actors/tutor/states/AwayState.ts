@@ -1,6 +1,5 @@
 import { BaseState } from "@/libs/game/state-machine/BaseState";
 import { Tutor } from "../Tutor";
-import { TUTOR_STATES } from "../constants/states";
 
 export class AwayState extends BaseState {
   constructor(
@@ -11,11 +10,8 @@ export class AwayState extends BaseState {
   }
 
   enter(): void {
-    if (this.stateMachine.getPreviousStateName() === TUTOR_STATES.AWAY) {
-      return this.tutor.animations.playAway();
-    }
-
-    this.tutor.animations.playLeaving();
+    this.tutor.blockerZone.deactivateBlockerZone();
+    return this.tutor.animations.playAway();
   }
 
   exit(): void {}

@@ -23,7 +23,6 @@ export class IdleState extends BaseState {
     this.dreamScene.hud.setVisible(true);
     this.dreamScene.flowController?.clearNextFlow();
     this.dreamScene.player.enterIdle();
-    this.dreamScene.tutor.enterIdle();
 
     const playerSprite = this.dreamScene.player.sprite;
     const tutorSprite = this.dreamScene.tutor.sprite;

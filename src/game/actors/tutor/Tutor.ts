@@ -13,9 +13,9 @@ export class Tutor {
   private _container?: Phaser.GameObjects.Container;
   private _sprite?: Phaser.Types.Physics.Arcade.SpriteWithDynamicBody;
   private stateMachine!: StateMachine;
-  private blockerZone = new TutorBlockerZone();
   private resolveSowing: (() => void) | null = null;
 
+  public blockerZone = new TutorBlockerZone();
   public animations = new TutorAnimations();
 
   public get container(): Phaser.GameObjects.Container {
