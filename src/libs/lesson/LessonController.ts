@@ -141,8 +141,13 @@ export class LessonController {
 
     this.currentLessonEntry = this.lesson.entries[currentEntryIndex];
 
-    this.completedEntries = this.lesson.entries.slice(0, currentEntryIndex);
-    this.nextEntries = this.lesson.entries.slice(currentEntryIndex + 1);
+    if (!this.lessonCompleted) {
+      this.completedEntries = this.lesson.entries.slice(0, currentEntryIndex);
+      this.nextEntries = this.lesson.entries.slice(currentEntryIndex + 1);
+    } else {
+      this.completedEntries = [...this.lesson.entries];
+      this.nextEntries = [];
+    }
 
     if (snapshot?.scores) {
       const scores = snapshot?.scores;

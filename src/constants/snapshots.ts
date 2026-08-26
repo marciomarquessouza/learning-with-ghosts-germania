@@ -90,4 +90,15 @@ export const developmentSnapshots: Record<string, GameSnapshot> = {
       "3": { pronunciation: 100, writing: 100 },
     },
   },
+  "lesson-conclusion": {
+    ...defaultLessonSnapshot,
+    flow: DREAM_SCENE_FLOWS.LESSON_CONCLUSION,
+    lessonCompleted: true,
+    lessonEntryId: "3",
+    scores: {
+      "1": { pronunciation: 0, writing: 0 },
+      "2": { pronunciation: 100, writing: 100 },
+      "3": { pronunciation: 100, writing: 100 },
+    },
+  },
 };

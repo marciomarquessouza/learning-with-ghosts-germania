@@ -9,11 +9,14 @@ export class KnowledgeTroop {
   public static DEFAULT_POSITION_Y = 778;
   public static DEFAULT_GAP = 120;
   public static DEFAULT_PLAYER_DISTANCE = 180;
+  public static MIN_DISTANCE_TO_FOLLOW_PLAYER = 20;
 
   private _scene?: Phaser.Scene;
   private _player?: Player;
   private _lesson?: Lesson;
+
   private readonly members = new Map<string, LearningNode>();
+  private isFollowingTarget = false;
 
   private get scene(): Phaser.Scene {
     return getRequired(this._scene, "KnowledgeTroop", "_scene");
@@ -57,6 +60,9 @@ export class KnowledgeTroop {
         startX: firstWorldPosition.x,
       });
 
+      learningNode.sprite.setOrigin(0.5, 1);
+      learningNode.sprite.setPosition(firstWorldPosition.x, 883);
+
       const targetWorldX =
         firstWorldPosition.x -
         KnowledgeTroop.DEFAULT_GAP * lessonEntry.sequence;
@@ -82,12 +88,55 @@ export class KnowledgeTroop {
     return this.members.delete(learningNode.slug);
   }
 
-  public followPlayer() {
+  public startToFollowTarget() {
+    this.isFollowingTarget = true;
+  }
+
+  private followTarget(learningNode: LearningNode) {
+    // console.log({
+    //   target: learningNode.target,
+    //   originX: learningNode.sprite.originX,
+    //   originY: learningNode.sprite.originY,
+    //   displayOriginY: learningNode.sprite.displayOriginY,
+    //   displayOriginX: learningNode.sprite.displayOriginX,
+    //   y: learningNode.sprite.y,
+    //   globalY: learningNode.getWorldPosition().y,
+    // });
+    if (!this.isFollowingTarget) return;
+    const lnGlobalPositionX = learningNode.getWorldPosition().x;
+    const targetGlobalPositionX = this.player.getWorldPosition().x;
+
+    const direction = targetGlobalPositionX > lnGlobalPositionX ? 1 : -1;
+    const distance = Math.abs(targetGlobalPositionX - lnGlobalPositionX);
+    const minDistance =
+      KnowledgeTroop.DEFAULT_PLAYER_DISTANCE +
+      KnowledgeTroop.DEFAULT_GAP * learningNode.lessonEntry.sequence +
+      KnowledgeTroop.MIN_DISTANCE_TO_FOLLOW_PLAYER;
+
+    if (distance > minDistance) {
+      learningNode.stateMachine.changeTo(LearningNode.STATES.FULL_WALKING);
+
+      if (direction > 0) {
+        learningNode.sprite.setVelocityX(+this.player.speed);
+        learningNode.sprite.setFlipX(false);
+      }
+
+      if (direction < 0) {
+        learningNode.sprite.setVelocityX(-this.player.speed);
+        learningNode.sprite.setFlipX(true);
+      }
+    } else {
+      learningNode.stateMachine.changeTo(LearningNode.STATES.FULL_IDLE);
+      learningNode.sprite.setVelocityX(0);
+    }
+  }
+
+  private regroupTroop() {
     throw new Error("Method not implemented");
   }
 
-  public unfollowPlayer() {
-    throw new Error("Method not implemented");
+  public stopToFollowPlayer() {
+    this.isFollowingTarget = false;
   }
 
   public moveToMemoryGuardian() {
@@ -95,7 +144,10 @@ export class KnowledgeTroop {
   }
 
   public update(delta: number) {
-    this.members.forEach((learningNode) => learningNode.update(delta));
+    this.members.forEach((learningNode) => {
+      this.followTarget(learningNode);
+      learningNode.update(delta);
+    });
   }
 
   public destroy() {

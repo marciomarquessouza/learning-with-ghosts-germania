@@ -20,6 +20,7 @@ export class PostLessonState extends BaseState {
     this.dreamScene.flowController?.clearNextFlow();
     this.dreamScene.player.enterIdle();
     this.dreamScene.tutor.enterAway();
+    this.dreamScene.knowledgeTroop.startToFollowTarget();
   }
 
   handleInput(): void {}

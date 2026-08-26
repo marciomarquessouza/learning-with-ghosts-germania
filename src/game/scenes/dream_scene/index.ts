@@ -189,18 +189,16 @@ export class DreamScene extends Phaser.Scene {
 
   public createLearningNode() {
     const lessonEntry = this.lessonManager.getCurrentLessonEntry();
-    if (lessonEntry.sequence > 0) {
-      const knowledgeTroopMember = this.learningNode;
-      this.knowledgeTroop.add(knowledgeTroopMember);
-      this.learningNode = new LearningNode();
-    }
-    this.learningNode.create(this, {
+    const learningNode = new LearningNode();
+    learningNode.create(this, {
       lessonId: this.lessonManager.lesson.id,
       lessonEntry,
       startX: this.tutor.container.x + 200,
       startY: 870,
       flipX: true,
     });
+    this.knowledgeTroop.add(learningNode);
+    this.learningNode = learningNode;
   }
 
   update(time: number, delta: number) {
