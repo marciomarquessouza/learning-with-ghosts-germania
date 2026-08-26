@@ -93,15 +93,6 @@ export class KnowledgeTroop {
   }
 
   private followTarget(learningNode: LearningNode) {
-    // console.log({
-    //   target: learningNode.target,
-    //   originX: learningNode.sprite.originX,
-    //   originY: learningNode.sprite.originY,
-    //   displayOriginY: learningNode.sprite.displayOriginY,
-    //   displayOriginX: learningNode.sprite.displayOriginX,
-    //   y: learningNode.sprite.y,
-    //   globalY: learningNode.getWorldPosition().y,
-    // });
     if (!this.isFollowingTarget) return;
     const lnGlobalPositionX = learningNode.getWorldPosition().x;
     const targetGlobalPositionX = this.player.getWorldPosition().x;
