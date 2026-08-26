@@ -10,10 +10,7 @@ import { AudioRecorder } from "@/libs/audio/AudioRecorder";
 import { PronunciationAPI } from "@/libs/lesson/PronunciationAPI";
 import { LessonController } from "@/libs/lesson/LessonController";
 import { Lesson } from "@/libs/lesson/types";
-
-const WRITING_SCORE_WEIGHT = 0.5;
-const PRONUNCIATION_SCORE_WEIGHT = 0.5;
-const DEFAULT_MINIMUM_ENTRY_SUCCESS = 0.5;
+import { LessonScore } from "@/libs/lesson/LessonScore";
 
 const LOADING_MESSAGES = {
   MIC_SETUP: "Mic Setuuup...",
@@ -25,6 +22,7 @@ export class LessonManager extends LessonController {
     voiceDetectionEnabled: true,
     autoStopOnSilence: true,
   });
+
   private readonly pronunciationAPI = new PronunciationAPI();
 
   constructor(lesson: Lesson) {
@@ -180,22 +178,9 @@ export class LessonManager extends LessonController {
       this.currentLessonEntry.id,
     );
 
-    const pronunciationScore = entryScore?.pronunciation ?? 0;
-    const writingScore = entryScore?.writing ?? 0;
+    if (!entryScore) return 0;
 
-    const finalScore =
-      pronunciationScore * PRONUNCIATION_SCORE_WEIGHT +
-      writingScore * WRITING_SCORE_WEIGHT;
-
-    return Number(Math.max(0, finalScore).toFixed(2));
-  }
-
-  public getEntryMinimumSuccessPercentage(): number {
-    return Math.max(
-      0,
-      this.lesson.limits?.entry.minimumSuccessPercentage ??
-        DEFAULT_MINIMUM_ENTRY_SUCCESS,
-    );
+    return this.lessonScore.calculateFinalScore(entryScore);
   }
 
   public destroy(): void {

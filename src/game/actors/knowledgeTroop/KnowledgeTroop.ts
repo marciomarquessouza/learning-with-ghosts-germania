@@ -63,6 +63,7 @@ export class KnowledgeTroop {
 
       this.add(learningNode);
 
+      learningNode.setBehaviorByCurrentScore();
       await learningNode.walkToWorldX(targetWorldX);
       learningNode.enterFullIdleState();
     }

@@ -6,6 +6,7 @@ import { DREAM_SCENE_FLOWS } from "../../../constants/flows";
 import { runSteps, stepBase } from "@/libs/game/game-flow/runSteps";
 import { LessonSuccessFlow } from "./LessonSuccess.flow";
 import { LessonFailureFlow } from "./LessonFailure.flow";
+import { getMinimumEntryScore } from "@/store/lessonStore";
 
 export class LessonEvaluationFlow extends Flow<SceneStateNames, DreamScene> {
   public flowName: string = DREAM_SCENE_FLOWS.LESSON_EVALUATION;
@@ -15,9 +16,8 @@ export class LessonEvaluationFlow extends Flow<SceneStateNames, DreamScene> {
 
   private hasWon(): boolean {
     const score = this.gameScene.lessonManager.getEntryScore();
-    return (
-      score > this.gameScene.lessonManager.getEntryMinimumSuccessPercentage()
-    );
+    const minScore = getMinimumEntryScore();
+    return score > minScore;
   }
 
   async run(): Promise<FlowResult<SceneStateNames, DreamScene>> {

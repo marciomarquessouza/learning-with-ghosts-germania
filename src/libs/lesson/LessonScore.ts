@@ -5,6 +5,7 @@ import { PronunciationScore } from "@/libs/lesson/PronunciationAPI";
 import { Lesson, LessonChallengeLimits } from "@/libs/lesson/types";
 import { useLessonStore } from "@/store/lessonStore";
 import { getRequired } from "@/utils/getRequired";
+import { calculateFinalScore } from "./calculateFinalScore";
 
 export type EntryScore = {
   pronunciation?: number;
@@ -13,10 +14,12 @@ export type EntryScore = {
   grammar?: number;
 };
 
-const WRITING_ERROR_WEIGHT = 0.4;
-const WRITING_TIP_WEIGHT = 0.6;
+const WRITING_ERROR_WEIGHT = 0.8;
+const WRITING_TIP_WEIGHT = 0.2;
 
 export class LessonScore {
+  public static DEFAULT_MINIMUM_ENTRY_SUCCESS = 50;
+
   private readonly entriesScore = new Map<string, EntryScore>();
   private readonly limits: Required<LessonChallengeLimits["writing"]>;
 
@@ -105,5 +108,9 @@ export class LessonScore {
     });
 
     return true;
+  }
+
+  public calculateFinalScore(entryScore: EntryScore) {
+    return calculateFinalScore(entryScore);
   }
 }

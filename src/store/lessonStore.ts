@@ -1,4 +1,4 @@
-import { EntryScore } from "@/libs/lesson/LessonScore";
+import { EntryScore, LessonScore } from "@/libs/lesson/LessonScore";
 import { Lesson } from "@/libs/lesson/types";
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
@@ -59,3 +59,11 @@ export const useLessonStore = create<LessonState>()(
     },
   ),
 );
+
+export function getMinimumEntryScore(): number {
+  return Math.max(
+    0,
+    useLessonStore.getState().lesson.limits?.entry.minimumSuccessPercentage ??
+      LessonScore.DEFAULT_MINIMUM_ENTRY_SUCCESS,
+  );
+}

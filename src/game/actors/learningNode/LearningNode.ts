@@ -27,7 +27,9 @@ import { slugify } from "@/utils/slugfy";
 import { Vector2 } from "@/utils/vectors";
 import { getSpriteWorldPosition } from "@/utils/getSpriteWorldPosition";
 import { LessonEntryWithScore } from "@/libs/lesson/LessonController";
-import { EntryScore } from "@/libs/lesson/LessonScore";
+import { EntryScore, LessonScore } from "@/libs/lesson/LessonScore";
+import { calculateFinalScore } from "@/libs/lesson/calculateFinalScore";
+import { getMinimumEntryScore, useLessonStore } from "@/store/lessonStore";
 
 export interface CreatePayload {
   startX: number;
@@ -388,7 +390,16 @@ export class LearningNode {
   }
 
   public removeEvil() {
-    this._isEvil = true;
+    this._isEvil = false;
+  }
+
+  setBehaviorByCurrentScore() {
+    if (!this.lessonEntry.score) return;
+    const finalScore = calculateFinalScore(this.lessonEntry.score);
+    const minScore = getMinimumEntryScore();
+    if (finalScore < minScore) {
+      this.setEvil();
+    }
   }
 
   update(delta: number) {
