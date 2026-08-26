@@ -3,21 +3,26 @@ import { AUDIO_SPEED, GameAudio } from "../audio/GameAudio";
 import { Lesson, LessonEntry, LessonStepType } from "./types";
 import { useLessonStore } from "@/store/lessonStore";
 import { GameSnapshot } from "@/store/progressStore";
+import { EntryScore, LessonScore } from "./LessonScore";
+
+export type LessonEntryWithScore = LessonEntry & { score?: EntryScore };
 
 export class LessonController {
   private _scene?: Phaser.Scene;
   private _gameAudio?: GameAudio;
   private _currentLessonEntry: LessonEntry | null = null;
+  public _completedEntries: LessonEntry[] = [];
+  public _nextEntries: LessonEntry[] = [];
   private _lessonCompleted = false;
 
   public lesson: Lesson;
-  public nextEntries: LessonEntry[] = [];
-  public completedEntries: LessonEntry[] = [];
+  public lessonScore: LessonScore;
 
   constructor(lesson: Lesson) {
     this.lesson = lesson;
-    this.nextEntries = [...this.lesson.entries];
+    this._nextEntries = [...this.lesson.entries];
     this.setCurrentLessonEntry();
+    this.lessonScore = new LessonScore(lesson);
   }
 
   private get gameAudio(): GameAudio {
@@ -50,6 +55,24 @@ export class LessonController {
     this._currentLessonEntry = entry;
   }
 
+  public get completedEntries(): ReadonlyArray<LessonEntry> {
+    return this._completedEntries;
+  }
+
+  private set completedEntries(entries: LessonEntry[]) {
+    const ids = entries.map(({ id }) => id);
+    useLessonStore.getState().setCompletedEntriesIds(ids);
+    this._completedEntries = entries;
+  }
+
+  public get nextEntries(): ReadonlyArray<LessonEntry> {
+    return this._nextEntries;
+  }
+
+  private set nextEntries(entries: LessonEntry[]) {
+    this._nextEntries = entries;
+  }
+
   preload(scene: Phaser.Scene, gameAudio: GameAudio) {
     this.getLessonAudios().forEach(({ key, file }) => {
       if (file) gameAudio.preload(scene, key, file);
@@ -78,6 +101,10 @@ export class LessonController {
     if (this.hasNextEntry()) {
       const [entry, ...nextEntries] = this.nextEntries;
 
+      this.completedEntries = [
+        ...this.completedEntries,
+        this.currentLessonEntry,
+      ];
       this.currentLessonEntry = entry;
       this.nextEntries = nextEntries;
 
@@ -85,6 +112,13 @@ export class LessonController {
     }
 
     return false;
+  }
+
+  public getCompletedEntriesWithScores(): LessonEntryWithScore[] {
+    return this.completedEntries.map((entry) => {
+      const score = this.lessonScore.getEntryScore(entry.id);
+      return { ...entry, score };
+    });
   }
 
   public setLessonBySnapshot(snapshot?: GameSnapshot | null): void {
@@ -109,6 +143,13 @@ export class LessonController {
 
     this.completedEntries = this.lesson.entries.slice(0, currentEntryIndex);
     this.nextEntries = this.lesson.entries.slice(currentEntryIndex + 1);
+
+    if (snapshot?.scores) {
+      const scores = snapshot?.scores;
+      Object.keys(scores).forEach((id) => {
+        this.lessonScore.updateEntryScore(id, scores[id]);
+      });
+    }
   }
 
   public getStepByType(stepType: LessonStepType) {

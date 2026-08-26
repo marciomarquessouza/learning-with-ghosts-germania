@@ -24,15 +24,17 @@ import { SeedAnimations } from "./animations/SeedAnimations";
 import { FullIdleState } from "./states/full/FullIdleState";
 import { FullWalkingState } from "./states/full/FullWalkingState";
 import { slugify } from "@/utils/slugfy";
-import { LessonEntry } from "@/libs/lesson/types";
 import { Vector2 } from "@/utils/vectors";
 import { getSpriteWorldPosition } from "@/utils/getSpriteWorldPosition";
+import { LessonEntryWithScore } from "@/libs/lesson/LessonController";
+import { EntryScore } from "@/libs/lesson/LessonScore";
 
-interface CreatePayload {
-  lessonEntry: LessonEntry;
+export interface CreatePayload {
   startX: number;
   startY: number;
   flipX: boolean;
+  lessonId: string;
+  lessonEntry: LessonEntryWithScore;
 }
 
 export class LearningNode {
@@ -43,7 +45,8 @@ export class LearningNode {
   private _sprite?: Phaser.Types.Physics.Arcade.SpriteWithDynamicBody;
   private _container?: Phaser.GameObjects.Container;
   private _isEvil = false;
-  private _lessonEntry?: LessonEntry;
+  private _lessonId?: string;
+  private _lessonEntry?: LessonEntryWithScore;
 
   public animations = new Animations();
   public stateMachine!: StateMachine;
@@ -59,20 +62,30 @@ export class LearningNode {
   public floor = new FloorAnimations();
   public seed = new SeedAnimations();
 
+  private detachScoreUpdateEvent = () => {};
+
   private get scene(): Phaser.Scene {
     return getRequired(this._scene, "LearningNode", "_scene");
   }
 
-  private get container(): Phaser.GameObjects.Container {
+  public get container(): Phaser.GameObjects.Container {
     return getRequired(this._container, "LearningNode", "_container");
+  }
+
+  private get lessonId(): string {
+    return getRequired(this._lessonId, "LearningNode", "_lessonId");
   }
 
   public get sprite(): Phaser.Types.Physics.Arcade.SpriteWithDynamicBody {
     return getRequired(this._sprite, "LearningNode", "_sprite");
   }
 
-  public get lessonEntry(): LessonEntry {
+  public get lessonEntry(): LessonEntryWithScore {
     return getRequired(this._lessonEntry, "LearningNode", "lessonEntry");
+  }
+
+  public set lessonEntry(entry: LessonEntryWithScore) {
+    this._lessonEntry = entry;
   }
 
   preload(scene: Phaser.Scene) {
@@ -83,9 +96,10 @@ export class LearningNode {
 
   create(
     scene: Phaser.Scene,
-    { startX, startY, flipX, lessonEntry }: CreatePayload,
+    { startX, startY, flipX, lessonId, lessonEntry }: CreatePayload,
   ) {
     this._scene = scene;
+    this._lessonId = lessonId;
     this._lessonEntry = lessonEntry;
     this.target = lessonEntry.target;
     this.sequence = lessonEntry.sequence;
@@ -126,6 +140,8 @@ export class LearningNode {
       events.actors.learningNode.async,
     );
 
+    this.attachScoreUpdateEvent();
+
     this.stateMachine = new StateMachine(scene);
     this.stateMachine
       .addState(LearningNode.STATES.SPROUTING, SproutingState, this)
@@ -135,6 +151,25 @@ export class LearningNode {
       .addState(LearningNode.STATES.PUMPKIN_IDLE, PumpkinIdleState, this)
       .addState(LearningNode.STATES.FULL_IDLE, FullIdleState, this)
       .addState(LearningNode.STATES.FULL_WALKING, FullWalkingState, this);
+  }
+
+  private updateEntryScore(
+    lessonId: string,
+    entryId: string,
+    score: EntryScore,
+  ) {
+    if (this.lessonId === lessonId && this.lessonEntry.id === entryId) {
+      const updatedEntry: LessonEntryWithScore = { ...this.lessonEntry, score };
+      this.lessonEntry = updatedEntry;
+    }
+  }
+
+  private attachScoreUpdateEvent() {
+    this.detachScoreUpdateEvent = events.lesson.sync.on(
+      "update-lesson-score",
+      ({ lessonId, entryId, score }) =>
+        this.updateEntryScore(lessonId, entryId, score),
+    );
   }
 
   public getWorldPosition(): Vector2 {
@@ -166,11 +201,13 @@ export class LearningNode {
   }
 
   public async enterFullSuccess(): Promise<void> {
+    this.animations.setVisible(true);
     return this.animations.playFullSuccess();
   }
 
   public async enterFullFailure(): Promise<void> {
     this.setEvil();
+    this.animations.setVisible(true);
     return this.animations.playFullFailure();
   }
 
@@ -364,5 +401,6 @@ export class LearningNode {
     this.eventController.offAllEvents();
     this.audioPlayButton.destroy();
     this.lessonTargetLabel.destroy();
+    this.detachScoreUpdateEvent();
   }
 }

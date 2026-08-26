@@ -1,12 +1,22 @@
+import Phaser from "phaser";
 import { useEffect, useRef } from "react";
 
 interface PhaserStoryProps {
+  backgroundColor?: string;
   preload?: (scene: Phaser.Scene) => void;
   create: (scene: Phaser.Scene) => void;
   update?: (time: number, delta: number) => void;
 }
 
-export function PhaserStory({ preload, create, update }: PhaserStoryProps) {
+export const DEFAULT_STORY_WIDTH = 800;
+export const DEFAULT_STORY_HEIGHT = 600;
+
+export function PhaserStory({
+  backgroundColor = "#FFF",
+  preload,
+  create,
+  update,
+}: PhaserStoryProps) {
   const containerRef = useRef<HTMLDivElement>(null);
 
   const preloadRef = useRef(preload);
@@ -53,7 +63,7 @@ export function PhaserStory({ preload, create, update }: PhaserStoryProps) {
     return () => {
       game.destroy(true);
     };
-  }, [preload, create, update]);
+  }, []);
 
-  return <div ref={containerRef} />;
+  return <div style={{ background: backgroundColor }} ref={containerRef} />;
 }

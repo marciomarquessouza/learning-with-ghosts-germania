@@ -1,11 +1,16 @@
 import { DEFAULT_TOTAL_ERRORS, DEFAULT_TOTAL_TIPS } from "@/constants/game";
+import { events } from "@/events/events";
 import { WritingResult } from "@/events/lesson/types";
 import { PronunciationScore } from "@/libs/lesson/PronunciationAPI";
 import { Lesson, LessonChallengeLimits } from "@/libs/lesson/types";
+import { useLessonStore } from "@/store/lessonStore";
+import { getRequired } from "@/utils/getRequired";
 
-type EntryScore = {
+export type EntryScore = {
   pronunciation?: number;
   writing?: number;
+  listening?: number;
+  grammar?: number;
 };
 
 const WRITING_ERROR_WEIGHT = 0.4;
@@ -15,8 +20,11 @@ export class LessonScore {
   private readonly entriesScore = new Map<string, EntryScore>();
   private readonly limits: Required<LessonChallengeLimits["writing"]>;
 
+  private _lesson?: Lesson;
+
   constructor(lesson: Lesson) {
     const { entries, limits } = lesson;
+    this._lesson = lesson;
 
     this.limits = {
       totalTips: limits?.writing?.totalTips ?? DEFAULT_TOTAL_TIPS,
@@ -28,12 +36,26 @@ export class LessonScore {
     }
   }
 
+  private get lesson(): Lesson {
+    return getRequired(this._lesson, "LessonScore", "lesson");
+  }
+
+  public updateEntryScore(entryId: string, score: EntryScore): void {
+    this.entriesScore.set(entryId, score);
+    useLessonStore.getState().setScore(entryId, score);
+    events.lesson.sync.emit("update-lesson-score", {
+      lessonId: this.lesson.id,
+      entryId,
+      score,
+    });
+  }
+
   public getEntryScore(entryId: string): EntryScore | undefined {
     return this.entriesScore.get(entryId);
   }
 
-  public getAllScores(): ReadonlyMap<string, EntryScore> {
-    return this.entriesScore;
+  public getAllScores(): Record<string, EntryScore> {
+    return Object.fromEntries(this.entriesScore);
   }
 
   public addPronunciationScore(
@@ -47,7 +69,7 @@ export class LessonScore {
       return false;
     }
 
-    this.entriesScore.set(entryId, {
+    this.updateEntryScore(entryId, {
       ...current,
       pronunciation: pronunciationScore.accuracyPercentage,
     });
@@ -77,7 +99,7 @@ export class LessonScore {
 
     const finalScore = Math.max(0, 1 - errorPenalty - tipPenalty) * 100;
 
-    this.entriesScore.set(entryId, {
+    this.updateEntryScore(entryId, {
       ...current,
       writing: Number(finalScore.toFixed(2)),
     });

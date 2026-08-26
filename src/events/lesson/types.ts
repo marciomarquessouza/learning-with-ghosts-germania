@@ -1,3 +1,4 @@
+import { EntryScore } from "@/libs/lesson/LessonScore";
 import {
   PronunciationFeedback,
   PronunciationScore,
@@ -60,4 +61,10 @@ export type WritingResult = {
 export type WriteLessonDialogueEvent = {
   title: string;
   content: string | string[];
+};
+
+export type UpdateLessonScoreEvent = {
+  lessonId: string;
+  entryId: string;
+  score: EntryScore;
 };

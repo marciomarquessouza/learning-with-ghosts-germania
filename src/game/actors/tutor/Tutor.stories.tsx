@@ -39,7 +39,7 @@ const TutorStory = ({
 };
 
 const meta: Meta<typeof TutorStory> = {
-  title: "Phaser/Tutor",
+  title: "Phaser/Actors/Tutor",
   component: TutorStory,
   parameters: {
     layout: "centered",

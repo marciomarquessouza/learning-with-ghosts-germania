@@ -65,12 +65,12 @@ export class DreamScene extends Phaser.Scene {
   public tutor = new Tutor();
   public learningNode = new LearningNode();
   public knowledgeTroop = new KnowledgeTroop();
-
   public gameAudio = new GameAudio();
-  private _lessonManager?: LessonManager;
   public dialogueManager = new DialogueManager();
   public flowController?: FlowController<SceneStateNames, DreamScene>;
   public scenario = new CemeteryScenario();
+
+  private _lessonManager?: LessonManager;
 
   public get lessonManager(): LessonManager {
     return getRequired(this._lessonManager, "DreamScene", "lessonManager");
@@ -130,7 +130,7 @@ export class DreamScene extends Phaser.Scene {
     });
 
     this.tutor.addCollisionWithPlayer(this.player.sprite);
-    this.knowledgeTroop.create(this, this.player);
+    this.knowledgeTroop.create(this, this.player, this.lessonManager.lesson);
 
     const hudContainer = this.hud.create(this, [HUD_ITEMS.WEIGHT]);
     this.children.bringToTop(hudContainer);
@@ -195,6 +195,7 @@ export class DreamScene extends Phaser.Scene {
       this.learningNode = new LearningNode();
     }
     this.learningNode.create(this, {
+      lessonId: this.lessonManager.lesson.id,
       lessonEntry,
       startX: this.tutor.container.x + 200,
       startY: 870,

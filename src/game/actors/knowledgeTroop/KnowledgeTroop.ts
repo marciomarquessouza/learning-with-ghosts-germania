@@ -1,8 +1,9 @@
 import { Player } from "../player/Player";
 import { LearningNode } from "../learningNode/LearningNode";
-import { LessonEntry } from "@/libs/lesson/types";
 import { getRequired } from "@/utils/getRequired";
 import { Vector2 } from "@/utils/vectors";
+import { LessonEntryWithScore } from "@/libs/lesson/LessonController";
+import { Lesson } from "@/libs/lesson/types";
 
 export class KnowledgeTroop {
   public static DEFAULT_POSITION_Y = 778;
@@ -11,19 +12,25 @@ export class KnowledgeTroop {
 
   private _scene?: Phaser.Scene;
   private _player?: Player;
+  private _lesson?: Lesson;
   private readonly members = new Map<string, LearningNode>();
 
   private get scene(): Phaser.Scene {
-    return getRequired(this._scene, "KnowledgeTroop", "this._scene");
+    return getRequired(this._scene, "KnowledgeTroop", "_scene");
   }
 
   private get player(): Player {
-    return getRequired(this._player, "KnowledgeTroop", "this._player");
+    return getRequired(this._player, "KnowledgeTroop", "_player");
   }
 
-  public create(scene: Phaser.Scene, player: Player) {
+  private get lesson(): Lesson {
+    return getRequired(this._lesson, "KnowledgeTroop", "_lesson");
+  }
+
+  public create(scene: Phaser.Scene, player: Player, lesson: Lesson) {
     this._scene = scene;
     this._player = player;
+    this._lesson = lesson;
   }
 
   public getFirstWorldPosition(): Vector2 {
@@ -35,7 +42,7 @@ export class KnowledgeTroop {
     };
   }
 
-  public async addByEntries(completedEntries: LessonEntry[]) {
+  public async addByEntries(completedEntries: LessonEntryWithScore[]) {
     if (completedEntries.length === 0) return;
 
     for (const lessonEntry of completedEntries) {
@@ -43,6 +50,7 @@ export class KnowledgeTroop {
       const firstWorldPosition = this.getFirstWorldPosition();
 
       learningNode.create(this.scene, {
+        lessonId: this.lesson.id,
         lessonEntry,
         flipX: true,
         startY: firstWorldPosition.y,

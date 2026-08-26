@@ -9,6 +9,7 @@ import { Vector2 } from "@/utils/vectors";
 import { useGameStore } from "./gameStore";
 import { useLessonStore } from "./lessonStore";
 import { developmentSnapshots } from "@/constants/snapshots";
+import { EntryScore } from "@/libs/lesson/LessonScore";
 
 export type SCENE_STATES = CellSceneStates | DreamSceneStates;
 export type SCENE_FLOWS = CellSceneFlows | DreamSceneFlows;
@@ -23,6 +24,7 @@ export type GameSnapshot = {
   flow?: SCENE_FLOWS;
   playerPosition?: Vector2;
   lessonCompleted?: boolean;
+  scores?: Record<string, EntryScore>;
 };
 
 export interface GameProgressStates {
@@ -70,6 +72,7 @@ export function createFlowSnapshot(scene: GameScenes, flow: SCENE_FLOWS) {
     lesson,
     currentLessonEntryId,
     completed: lessonCompleted,
+    scores,
   } = useLessonStore.getState();
   const snapshot: GameSnapshot = {
     scene,
@@ -80,6 +83,7 @@ export function createFlowSnapshot(scene: GameScenes, flow: SCENE_FLOWS) {
     lessonId: lesson.id,
     lessonEntryId: currentLessonEntryId,
     lessonCompleted,
+    scores,
     playerPosition: playerSnapshot?.position,
   };
   useGameProgressStore.getState().createSnapshot(scene, day, snapshot);

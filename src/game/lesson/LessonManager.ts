@@ -10,7 +10,6 @@ import { AudioRecorder } from "@/libs/audio/AudioRecorder";
 import { PronunciationAPI } from "@/libs/lesson/PronunciationAPI";
 import { LessonController } from "@/libs/lesson/LessonController";
 import { Lesson } from "@/libs/lesson/types";
-import { LessonScore } from "./LessonScore";
 
 const WRITING_SCORE_WEIGHT = 0.5;
 const PRONUNCIATION_SCORE_WEIGHT = 0.5;
@@ -22,7 +21,6 @@ const LOADING_MESSAGES = {
 } as const;
 
 export class LessonManager extends LessonController {
-  private readonly lessonScore: LessonScore;
   private readonly audioRecorder = new AudioRecorder({
     voiceDetectionEnabled: true,
     autoStopOnSilence: true,
@@ -31,7 +29,6 @@ export class LessonManager extends LessonController {
 
   constructor(lesson: Lesson) {
     super(lesson);
-    this.lessonScore = new LessonScore(lesson);
   }
 
   public async showLessonTitle(

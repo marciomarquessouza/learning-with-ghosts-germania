@@ -7,6 +7,7 @@ import type {
   VoiceIndicatorEvent,
   ShowWritingBoardEvent,
   WriteLessonDialogueEvent,
+  UpdateLessonScoreEvent,
 } from "./types";
 import { createEventManagers } from "@/libs/events/createEventManagers";
 
@@ -24,6 +25,7 @@ export type LessonSyncEvents = {
   "action-button:repeat": undefined;
   "show-writing-board": ShowWritingBoardEvent;
   "hide-writing-board": undefined;
+  "update-lesson-score": UpdateLessonScoreEvent;
 };
 
 export type LessonAsyncEvents = {
