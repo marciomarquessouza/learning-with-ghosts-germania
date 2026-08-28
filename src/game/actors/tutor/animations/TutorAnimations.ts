@@ -4,8 +4,13 @@ import { getRequired } from "@/utils/getRequired";
 
 export class TutorAnimations {
   private animationManager = new AnimationManager<"tutor">(SPRITESHEETS.tutor);
+  private _scene?: Phaser.Scene;
   private _sprite?: Phaser.Types.Physics.Arcade.SpriteWithDynamicBody;
   private static readonly FRAME_OPENING_HAND = 21;
+
+  private get scene(): Phaser.Scene {
+    return getRequired(this._scene, "TutorAnimations", "_scene");
+  }
 
   private get sprite(): Phaser.GameObjects.Sprite {
     return getRequired(this._sprite, "TutorAnimations", "sprite");
@@ -19,6 +24,7 @@ export class TutorAnimations {
     scene: Phaser.Scene,
     sprite: Phaser.Types.Physics.Arcade.SpriteWithDynamicBody,
   ) {
+    this._scene = scene;
     this._sprite = sprite;
 
     this.animationManager.createAnimation(scene, "idle", {
@@ -64,11 +70,25 @@ export class TutorAnimations {
       .holdAnimationAt([1, 6], 4_200);
   }
 
-  playLeaving(): Promise<void> {
+  playLeaving(payload?: { hideAfter?: boolean }): Promise<void> {
     return new Promise((resolve) => {
       this.animationManager
         .playAnimation(this.sprite, "leaving")
-        .onAnimationComplete(() => resolve());
+        .onAnimationComplete(() => {
+          if (payload?.hideAfter) {
+            this.scene.tweens.add({
+              targets: this.sprite,
+              alpha: 0,
+              ease: "Power1",
+              duration: 1_000,
+              onComplete: () => {
+                resolve();
+              },
+            });
+          } else {
+            resolve();
+          }
+        });
     });
   }
 

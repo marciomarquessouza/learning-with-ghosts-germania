@@ -19,7 +19,6 @@ export class PostLessonState extends BaseState {
     this.dreamScene.hud.setVisible(true);
     this.dreamScene.flowController?.clearNextFlow();
     this.dreamScene.player.enterIdle();
-    this.dreamScene.tutor.enterAway();
     this.dreamScene.knowledgeTroop.startToFollowTarget();
   }
 

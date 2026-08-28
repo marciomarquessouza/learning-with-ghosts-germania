@@ -19,11 +19,11 @@ export class LessonConclusionFlow extends Flow<SceneStateNames, DreamScene> {
           lines: getDialogueLines("dream.lesson_finish"),
         });
       }),
-      stepBase(() => {
-        return this.gameScene.tutor.animations.playLeaving();
+      stepBase(async () => {
+        await this.gameScene.tutor.leaveScene();
+        this.gameScene.tutor.destroy();
       }),
       stepBase(() => {
-        this.gameScene.tutor.enterAway();
         this.gameScene.player.enterIdle();
         this.gameScene.lessonManager.completeLesson();
       }),

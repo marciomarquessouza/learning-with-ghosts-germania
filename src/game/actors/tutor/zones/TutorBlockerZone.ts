@@ -68,15 +68,6 @@ export class TutorBlockerZone {
     this.body.updateFromGameObject();
   }
 
-  public destroy() {
-    this._debugGraphics?.destroy();
-    this._zone?.destroy();
-
-    this._debugGraphics = undefined;
-    this._zone = undefined;
-    this._scene = undefined;
-  }
-
   private createDebug(x: number, y: number, width: number, height: number) {
     this._debugGraphics = this.scene.add.graphics();
 
@@ -91,5 +82,14 @@ export class TutorBlockerZone {
       width,
       height,
     );
+  }
+
+  public destroy() {
+    this._debugGraphics?.destroy();
+    this._zone?.destroy();
+
+    this._debugGraphics = undefined;
+    this._zone = undefined;
+    this._scene = undefined;
   }
 }

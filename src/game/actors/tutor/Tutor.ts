@@ -10,6 +10,7 @@ import { events } from "@/events/events";
 export class Tutor {
   public static readonly STATES = TUTOR_STATES;
 
+  private _scene?: Phaser.Scene;
   private _container?: Phaser.GameObjects.Container;
   private _sprite?: Phaser.Types.Physics.Arcade.SpriteWithDynamicBody;
   private stateMachine!: StateMachine;
@@ -17,6 +18,10 @@ export class Tutor {
 
   public blockerZone = new TutorBlockerZone();
   public animations = new TutorAnimations();
+
+  public get scene(): Phaser.Scene {
+    return getRequired(this._scene, "Tutor", "_scene");
+  }
 
   public get container(): Phaser.GameObjects.Container {
     return getRequired(this._container, "Tutor", "_container");
@@ -32,6 +37,8 @@ export class Tutor {
 
   create(scene: Phaser.Scene, payload: ActorPayload) {
     const { startX, startY, scale, flipX } = payload;
+
+    this._scene = scene;
 
     this._container = scene.add.container(startX, startY);
 
@@ -75,6 +82,10 @@ export class Tutor {
     this.stateMachine.changeTo(Tutor.STATES.AWAY);
   }
 
+  public async leaveScene() {
+    return this.animations.playLeaving({ hideAfter: true });
+  }
+
   async waitForSowing(): Promise<void> {
     return new Promise((resolve) => {
       this.resolveSowing = resolve;
@@ -100,6 +111,9 @@ export class Tutor {
   }
 
   destroy() {
+    this.container.destroy();
+    this.sprite.destroy();
     this.stateMachine.clear();
+    this.blockerZone.destroy();
   }
 }
