@@ -1,119 +1,176 @@
 import {
-  CEMETERY_SKY_IMG,
-  CEMETERY_BLACK_BCK_IMG,
-  CEMETERY_BACKGROUND_IMG,
-  CEMETERY_ROAD_IMG,
-  CEMETERY_MOON_IMG,
-  CEMETERY_CLOUDS_IMG,
   CEMETERY_DANGER_LAYER_IMG,
+  CEMETERY_FIRST_LAYER_IMG,
+  CEMETERY_SECOND_LAYER_IMG,
+  CEMETERY_THIRD_LAYER_IMG,
+  CEMETERY_ROAD_IMG_V2 as CEMETERY_ROAD_IMG,
+  CEMETERY_SUN_IMG_V2 as CEMETERY_SUN_IMG,
+  CEMETERY_CLOUDS_IMG_V2 as CEMETERY_CLOUDS_IMG,
 } from "@/constants/images";
 
-const CEMETERY_SKY = "cemeterySky";
-const CEMETERY_BLACK = "cemeteryBlack";
-const CEMETERY_BACKGROUND = "cemeteryBackground";
+const CEMETERY_FIRST_LAYER = "cemeteryFirstLayer";
+const CEMETERY_SECOND_LAYER = "cemeterySecondLayer";
+const CEMETERY_THIRD_LAYER = "cemeteryThirdLayer";
 const CEMETERY_ROAD = "cemeteryRoad";
-const CEMETERY_MOON = "cemeteryMoon";
 const CEMETERY_CLOUDS = "cemeteryClouds";
+const CEMETERY_SUN = "cemeterySun";
 const DANGER_LAYER = "dangerLayer";
 
 export class CemeteryScenario {
+  private static readonly THIRD_LAYER_SCROLL_FACTOR = 0.1;
+  private static readonly CLOUDS_SCROLL_FACTOR = 0.2;
+  private static readonly SECOND_LAYER_SCROLL_FACTOR = 0.3;
+  private static readonly FIRST_LAYER_SCROLL_FACTOR = 0.6;
+  private static readonly CLOUD_FLOAT_SPEED = 0.0005;
+  private static readonly CLOUD_FLOAT_DISTANCE = 8;
+  private static readonly SECOND_LAYER_FLOAT_SPEED = 0.0007;
+  private static readonly SECOND_LAYER_FLOAT_DISTANCE = 2;
+
+  private scene?: Phaser.Scene;
+  private firstLayer?: Phaser.GameObjects.TileSprite;
+  private secondLayer?: Phaser.GameObjects.TileSprite;
+  private thirdLayer?: Phaser.GameObjects.TileSprite;
+  private sun?: Phaser.GameObjects.TileSprite;
+  private sunGlow?: Phaser.FX.Glow;
   private clouds?: Phaser.GameObjects.TileSprite;
-  private cloudsSpeedPxPerSec = 8;
-  private cemeteryDangerLayer: Phaser.GameObjects.Image | null = null;
+  private road?: Phaser.GameObjects.TileSprite;
+
+  private cemeteryDangerLayer: Phaser.GameObjects.Rectangle | null = null;
   private dangerTween?: Phaser.Tweens.Tween;
+
   private punisherDangerAmount = 0;
-  private onDangerTransitionFinish: null | (() => void) = null;
+
   public width = 0;
   public height = 0;
-  public container!: Phaser.GameObjects.Container;
 
   preload(scene: Phaser.Scene) {
-    const load: Phaser.Loader.LoaderPlugin = scene.load;
-
-    load.image(CEMETERY_BLACK, CEMETERY_BLACK_BCK_IMG);
-    load.image(CEMETERY_SKY, CEMETERY_SKY_IMG);
-    load.image(CEMETERY_BACKGROUND, CEMETERY_BACKGROUND_IMG);
-    load.image(CEMETERY_ROAD, CEMETERY_ROAD_IMG);
-    load.image(CEMETERY_MOON, CEMETERY_MOON_IMG);
-    load.image(CEMETERY_CLOUDS, CEMETERY_CLOUDS_IMG);
-    load.image(DANGER_LAYER, CEMETERY_DANGER_LAYER_IMG);
+    scene.load.image(CEMETERY_FIRST_LAYER, CEMETERY_FIRST_LAYER_IMG);
+    scene.load.image(CEMETERY_SECOND_LAYER, CEMETERY_SECOND_LAYER_IMG);
+    scene.load.image(CEMETERY_THIRD_LAYER, CEMETERY_THIRD_LAYER_IMG);
+    scene.load.image(CEMETERY_ROAD, CEMETERY_ROAD_IMG);
+    scene.load.image(CEMETERY_CLOUDS, CEMETERY_CLOUDS_IMG);
+    scene.load.image(CEMETERY_SUN, CEMETERY_SUN_IMG);
+    scene.load.image(DANGER_LAYER, CEMETERY_DANGER_LAYER_IMG);
   }
 
   create(scene: Phaser.Scene) {
-    this.container = scene.add.container(0, 0);
-    const background = scene.add
-      .image(0, 0, CEMETERY_BLACK)
-      .setOrigin(0, 0)
+    this.scene = scene;
+    const camera = scene.cameras.main;
+
+    this.width = camera.width;
+    this.height = camera.height;
+
+    this.thirdLayer = scene.add
+      .tileSprite(0, 0, this.width, this.height, CEMETERY_THIRD_LAYER)
+      .setOrigin(0)
+      .setScrollFactor(0)
       .setDepth(-100);
-    this.container.add(background);
 
-    const cemeterySky = scene.add
-      .image(0, 0, CEMETERY_SKY)
-      .setOrigin(0, 0)
+    this.sun = scene.add
+      .tileSprite(0, 0, this.width, this.height, CEMETERY_SUN)
+      .setOrigin(0)
+      .setScrollFactor(0)
+      .setDepth(-98);
+
+    this.sunGlow = this.sun.postFX.addGlow(0xffb347, 2, 0, false, 0.1, 8);
+
+    this.clouds = scene.add
+      .tileSprite(0, 0, this.width, this.height, CEMETERY_CLOUDS)
+      .setOrigin(0)
+      .setScrollFactor(0)
+      .setDepth(-96);
+
+    this.secondLayer = scene.add
+      .tileSprite(0, 0, this.width, this.height, CEMETERY_SECOND_LAYER)
+      .setOrigin(0)
+      .setScrollFactor(0)
       .setDepth(-90);
-    this.container.add(cemeterySky);
+    this.secondLayer.postFX.addBlur(0, 2, 2, 1.3);
 
-    const cemeteryClouds = scene.add
-      .tileSprite(0, 0, background.width, background.height, CEMETERY_CLOUDS)
-      .setOrigin(0, 0)
+    this.firstLayer = scene.add
+      .tileSprite(0, 0, this.width, this.height, CEMETERY_FIRST_LAYER)
+      .setOrigin(0)
+      .setScrollFactor(0)
       .setDepth(-80);
-    this.container.add(cemeteryClouds);
-    this.clouds = cemeteryClouds;
 
-    const cemeteryMoon = scene.add
-      .image(0, 0, CEMETERY_MOON)
-      .setOrigin(0, 0)
+    this.firstLayer.postFX.addBlur(0, 2, 2, 1.3);
+
+    this.road = scene.add
+      .tileSprite(0, -50, this.width, this.height, CEMETERY_ROAD)
+      .setOrigin(0)
+      .setScrollFactor(0)
       .setDepth(-70);
-    this.container.add(cemeteryMoon);
-
-    const cemeteryBackground = scene.add
-      .image(0, 0, CEMETERY_BACKGROUND)
-      .setOrigin(0, 0)
-      .setDepth(-60);
-    this.container.add(cemeteryBackground);
-
-    const cemeteryRoad = scene.add
-      .image(0, 0, CEMETERY_ROAD)
-      .setOrigin(0, 0)
-      .setDepth(-50);
-    this.container.add(cemeteryRoad);
 
     this.cemeteryDangerLayer = scene.add
-      .image(0, 0, DANGER_LAYER)
-      .setOrigin(0, 0)
-      .setDepth(-45)
+      .rectangle(0, 0, this.width, this.height, 0xff0000)
+      .setOrigin(0)
+      .setScrollFactor(0)
+      .setDepth(-60)
       .setBlendMode(Phaser.BlendModes.MULTIPLY)
       .setAlpha(0);
-    this.container.add(this.cemeteryDangerLayer);
-
-    this.width = background.width;
-    this.height = background.height;
   }
 
-  private cloudsAnimation(delta: number) {
+  private updateParallax() {
+    if (!this.scene) return;
+
+    const scrollX = this.scene.cameras.main.scrollX;
+    const time = this.scene.time.now;
+    const sunPulse = (Math.sin(time * 0.005) + 2) / 2;
+
+    if (this.thirdLayer) {
+      this.thirdLayer.tilePositionX =
+        scrollX * CemeteryScenario.THIRD_LAYER_SCROLL_FACTOR;
+    }
+
+    if (this.sun) {
+      this.sun.tilePositionX =
+        scrollX * CemeteryScenario.THIRD_LAYER_SCROLL_FACTOR;
+      this.sun.setAlpha(Phaser.Math.Linear(0.9, 1, sunPulse));
+    }
+
+    if (this.sunGlow) {
+      this.sunGlow.outerStrength = Phaser.Math.Linear(1.5, 4, sunPulse);
+    }
+
     if (this.clouds) {
-      this.clouds.tilePositionX += (this.cloudsSpeedPxPerSec * delta) / 1000;
+      this.clouds.tilePositionX =
+        scrollX * CemeteryScenario.CLOUDS_SCROLL_FACTOR;
+      this.clouds.tilePositionY =
+        Math.sin(this.scene.time.now * CemeteryScenario.CLOUD_FLOAT_SPEED) *
+        CemeteryScenario.CLOUD_FLOAT_DISTANCE;
+    }
+
+    if (this.secondLayer) {
+      this.secondLayer.tilePositionX =
+        scrollX * CemeteryScenario.SECOND_LAYER_SCROLL_FACTOR;
+      this.secondLayer.tilePositionY =
+        Math.sin(
+          this.scene.time.now * CemeteryScenario.SECOND_LAYER_FLOAT_SPEED,
+        ) * CemeteryScenario.SECOND_LAYER_FLOAT_DISTANCE;
+    }
+
+    if (this.firstLayer) {
+      this.firstLayer.tilePositionX =
+        scrollX * CemeteryScenario.FIRST_LAYER_SCROLL_FACTOR;
+    }
+
+    if (this.road) {
+      this.road.tilePositionX = scrollX;
     }
   }
 
-  public setDanger(skyEffectAmount: number = 1): Promise<void> {
+  public setDanger(skyEffectAmount = 1): Promise<void> {
     return new Promise((resolve) => {
       this.punisherDangerAmount = Phaser.Math.Clamp(skyEffectAmount, 0, 1);
 
       const layer = this.cemeteryDangerLayer;
+
       if (!layer) {
         resolve();
         return;
       }
 
       this.dangerTween?.stop();
-      this.dangerTween = undefined;
-
-      if (Math.abs(layer.alpha - this.punisherDangerAmount) < 0.001) {
-        layer.setAlpha(this.punisherDangerAmount);
-        resolve();
-        return;
-      }
 
       this.dangerTween = layer.scene.tweens.add({
         targets: layer,
@@ -129,22 +186,14 @@ export class CemeteryScenario {
 
   public removeDanger(): Promise<void> {
     return new Promise((resolve) => {
-      this.punisherDangerAmount = 0;
-
       const layer = this.cemeteryDangerLayer;
+
       if (!layer) {
         resolve();
         return;
       }
 
       this.dangerTween?.stop();
-      this.dangerTween = undefined;
-
-      if (layer.alpha < 0.001) {
-        layer.setAlpha(0);
-        resolve();
-        return;
-      }
 
       this.dangerTween = layer.scene.tweens.add({
         targets: layer,
@@ -158,8 +207,8 @@ export class CemeteryScenario {
     });
   }
 
-  update(delta: number) {
-    this.cloudsAnimation(delta);
+  update() {
+    this.updateParallax();
   }
 
   destroy() {

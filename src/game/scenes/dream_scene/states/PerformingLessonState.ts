@@ -61,8 +61,6 @@ export class PerformingLessonState extends BaseState {
         mapWidth,
         mapHeight,
       );
-      this.dreamScene.gameCamera.centerOnTarget(playerSprite);
-      this.dreamScene.gameCamera.zoomTo({ zoom: 1.2, duration: 1_000 });
     }
   }
 
