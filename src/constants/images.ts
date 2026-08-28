@@ -63,6 +63,13 @@ export const AUDIO_RECORD_BUTTON_IMG =
 export const AUDIO_RECORD_BUTTON_JSON =
   "/ui/lesson/record_button_spritesheet.json";
 
+export const CEMETERY_FIRST_LAYER_IMG = "/ghost_dream/stage/first_layer.png";
+export const CEMETERY_SECOND_LAYER_IMG = "/ghost_dream/stage/second_layer.png";
+export const CEMETERY_THIRD_LAYER_IMG = "/ghost_dream/stage/third_layer.png";
+export const CEMETERY_ROAD_IMG_V2 = "/ghost_dream/stage/cemetery_road.png";
+export const CEMETERY_CLOUDS_IMG_V2 = "/ghost_dream/stage/cemetery_clouds.png";
+export const CEMETERY_SUN_IMG_V2 = "/ghost_dream/stage/cemetery_sun.png";
+
 // TRAIN SCENARIO
 export const TRAIN_BACKGROUND_IMG = "/train/scenario/train_background.png";
 export const TRAIN_RAILROAD_IMG = "/train/scenario/train_railroad.png";

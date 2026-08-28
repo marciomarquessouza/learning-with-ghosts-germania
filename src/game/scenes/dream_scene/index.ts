@@ -2,7 +2,7 @@ import { createScene } from "@/game/core/CreateScene";
 import { GameCamera } from "@/game/cameras/GameCamera";
 import { Hud, HUD_ITEMS } from "../../hud";
 import { CemeteryScenario } from "./scenario/cemeteryScenario";
-import { GAME_SCENES } from "@/constants/game";
+import { DEFAULT_HEIGHT, DEFAULT_WIDTH, GAME_SCENES } from "@/constants/game";
 
 import { useLessonStore } from "@/store/lessonStore";
 
@@ -100,11 +100,14 @@ export class DreamScene extends Phaser.Scene {
     this.gameCamera.create(this);
     this.gameCamera.fadeOut({ duration: 0 });
     const cursors = this.input.keyboard?.createCursorKeys();
+
     this.scenario.create(this);
-    const boundW = this.scenario.width;
-    const boundH = this.scenario.height;
+    const boundW = DEFAULT_WIDTH * 3;
+    const boundH = DEFAULT_HEIGHT;
+
     this.physics.world.setBounds(0, 0, boundW, boundH);
     this.gameCamera.setBounds(0, 0, boundW, boundH);
+
     this.gameAudio.create(this);
     this.lessonManager.create(this, this.gameAudio);
 
@@ -123,7 +126,7 @@ export class DreamScene extends Phaser.Scene {
     this.gameCamera.attachTarget(playerSprite);
 
     this.tutor.create(this, {
-      startX: this.scenario.width - 800,
+      startX: this.gameCamera.camera.width + 200,
       startY: DEFAULT_PLAYER_POSITION_Y - 100,
       scale: 0.8,
       flipX: true,
@@ -203,7 +206,7 @@ export class DreamScene extends Phaser.Scene {
 
   update(time: number, delta: number) {
     this.stateMachine.updateAndHandleInput(delta);
-    this.scenario.update(delta);
+    this.scenario.update();
     this.player.update(time, delta);
     this.tutor.update(delta);
     this.learningNode.update(delta);
