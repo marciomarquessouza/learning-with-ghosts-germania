@@ -10,9 +10,9 @@ export class Guardian {
 
   private _scene?: Phaser.Scene;
   private _sprite?: Phaser.Types.Physics.Arcade.SpriteWithDynamicBody;
-
   private stateMachine!: StateMachine;
 
+  public hasCreated = false;
   public animations = new GuardianAnimations();
 
   public get scene(): Phaser.Scene {
@@ -42,7 +42,8 @@ export class Guardian {
     this.animations.create(scene, this.sprite);
 
     this.stateMachine = createGuardianStateMachine(scene, this);
-    this.stateMachine.changeTo(Guardian.STATES.IDLE);
+    this.stateMachine.changeTo(Guardian.STATES.INITIAL);
+    this.hasCreated = true;
   }
 
   setVisibleAndAlpha(visibility: boolean, alpha: number) {
@@ -50,12 +51,12 @@ export class Guardian {
     this.sprite.setVisible(visibility);
   }
 
-  fadeIn() {
-    this.animations.playFadeIn();
+  fadeIn(): Promise<void> {
+    return this.animations.playFadeIn();
   }
 
-  fadeOut() {
-    this.animations.playFadeOut();
+  fadeOut(): Promise<void> {
+    return this.animations.playFadeOut();
   }
 
   enterIdleState() {

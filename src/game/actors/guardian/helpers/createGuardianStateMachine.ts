@@ -8,6 +8,7 @@ import { GuardianStateNames } from "../constants/states";
 import { IdleState } from "../states/IdleState";
 import { LeanIdleState } from "../states/LeanIdleState";
 import { LeanSpeakingState } from "../states/LeanSpeakingState";
+import { InitialState } from "../states/InitialState";
 
 export function createGuardianStateMachine(
   scene: Phaser.Scene,
@@ -15,6 +16,7 @@ export function createGuardianStateMachine(
 ): StateMachine {
   const stateMachine = new StateMachine(scene);
   const states: [GuardianStateNames, StateConstructor<IState>][] = [
+    [Guardian.STATES.INITIAL, InitialState],
     [Guardian.STATES.IDLE, IdleState],
     [Guardian.STATES.LEAN_IDLE, LeanIdleState],
     [Guardian.STATES.LEAN_SPEAKING, LeanSpeakingState],
