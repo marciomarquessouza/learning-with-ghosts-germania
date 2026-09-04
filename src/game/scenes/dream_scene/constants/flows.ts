@@ -1,6 +1,8 @@
 export const DREAM_SCENE_FLOWS = {
+  // SCENE FLOWS
   INTRO: "IntroductionFlow",
   PAUSE: "PauseFlow",
+  // LESSON FLOWS
   BEFORE_LESSON: "BeforeLessonFlow",
   LESSON_INTRODUCTION: "LessonIntroductionFlow",
   LESSON_NEXT_ENTRY: "LessonNextEntryFlow",
@@ -11,6 +13,8 @@ export const DREAM_SCENE_FLOWS = {
   LESSON_SUCCESS: "LessonSuccessFlow",
   LESSON_FAILURE: "LessonFailureFlow",
   LESSON_CONCLUSION: "LessonConclusionFlow",
+  // REVIEW FLOWS
+  BEFORE_REVIEW: "BeforeReviewFlow",
 } as const;
 
 export type SceneFlowNames =

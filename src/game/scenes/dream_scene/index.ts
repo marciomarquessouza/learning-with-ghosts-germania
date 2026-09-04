@@ -3,16 +3,11 @@ import { GameCamera } from "@/game/cameras/GameCamera";
 import { Hud, HUD_ITEMS } from "../../hud";
 import { CemeteryScenario } from "./scenario/cemeteryScenario";
 import { DEFAULT_HEIGHT, DEFAULT_WIDTH, GAME_SCENES } from "@/constants/game";
-
 import { useLessonStore } from "@/store/lessonStore";
-
 import { Player } from "@/game/actors/player/Player";
 import { Tutor } from "@/game/actors/tutor/Tutor";
 import { LearningNode } from "@/game/actors/learningNode/LearningNode";
-
 import { FlowController } from "@/libs/game/game-flow/FlowController";
-import { PauseFlow } from "./flows/Pause.flow";
-
 import {
   DREAM_SCENE_STATES as SCENE_STATES,
   SceneStateNames,
@@ -27,32 +22,18 @@ import {
   DEFAULT_PLAYER_POSITION_Y,
 } from "./constants/game";
 import { StateMachine } from "@/libs/game/state-machine/StateMachine";
-import { IdleState } from "./states/IdleState";
-import { IntroState } from "./states/IntroState";
-import { PerformingActionState } from "./states/PerformingActionState";
-import { PerformingLessonState } from "./states/PerformingLessonState";
 import { GameAudio } from "@/libs/audio/GameAudio";
 import { LessonManager } from "@/game/lesson/LessonManager";
 import { DialogueManager } from "@/game/dialogues/DialogueManager";
-import { IntroductionFlow } from "./flows/Introduction.flow";
-import { BeforeLessonFlow } from "./flows/lesson/0-introduction/BeforeLesson.flow";
-import { LessonListeningFlow } from "./flows/lesson/1-challenges/LessonListening.flow";
-import { LessonPronunciationFlow } from "./flows/lesson/1-challenges/LessonPronunciation.flow";
 import { useGameStore } from "@/store/gameStore";
-import {
-  createFlowSnapshot,
-  getSceneLastSnapshot,
-} from "@/store/progressStore";
-import { LessonWritingFlow } from "./flows/lesson/1-challenges/LessonWriting.flow";
+import { getSceneLastSnapshot } from "@/store/progressStore";
 import { getRequired } from "@/utils/getRequired";
-import { LessonSuccessFlow } from "./flows/lesson/2-after_challenges/LessonSuccess.flow";
-import { LessonFailureFlow } from "./flows/lesson/2-after_challenges/LessonFailure.flow";
 import { KnowledgeTroop } from "@/game/actors/knowledgeTroop/KnowledgeTroop";
-import { LessonNextEntryFlow } from "./flows/lesson/0-introduction/LessonNextEntry.flow";
-import { LessonIntroductionFlow } from "./flows/lesson/0-introduction/LessonIntroduction.flow";
-import { LessonEvaluationFlow } from "./flows/lesson/2-after_challenges/LessonEvaluation.flow";
-import { LessonConclusionFlow } from "./flows/lesson/2-after_challenges/LessonConclusion.flow";
-import { PostLessonState } from "./states/PostLessonState";
+import { Guardian } from "@/game/actors/guardian/Guardian";
+import { createSceneFlowController } from "./helpers/createSceneFlowController";
+import { attachSceneFlows } from "./helpers/attachSceneFlows";
+import { createSceneStates } from "./helpers/createSceneStates";
+import { attachSceneStates } from "./helpers/attachSceneStates";
 
 export class DreamScene extends Phaser.Scene {
   public static readonly STATES = SCENE_STATES;
@@ -65,10 +46,12 @@ export class DreamScene extends Phaser.Scene {
   public tutor = new Tutor();
   public learningNode = new LearningNode();
   public knowledgeTroop = new KnowledgeTroop();
+  public guardian = new Guardian();
   public gameAudio = new GameAudio();
   public dialogueManager = new DialogueManager();
   public flowController?: FlowController<SceneStateNames, DreamScene>;
   public scenario = new CemeteryScenario();
+  public tutorPositionX = 0;
 
   private _lessonManager?: LessonManager;
 
@@ -87,6 +70,7 @@ export class DreamScene extends Phaser.Scene {
     this.player.preload(this);
     this.tutor.preload(this);
     this.learningNode.preload(this);
+    this.guardian.preload(this);
     this._lessonManager = new LessonManager(useLessonStore.getState().lesson);
     this._lessonManager.preload(this, this.gameAudio);
     this.hud.preload(this);
@@ -113,7 +97,6 @@ export class DreamScene extends Phaser.Scene {
 
     const day = useGameStore.getState().day;
     const snapshot = getSceneLastSnapshot(GAME_SCENES.DREAM_SCENE, day);
-    const { setCurrentSceneState, setCurrentFlow } = useGameStore.getState();
 
     this.lessonManager.setLessonBySnapshot(snapshot);
 
@@ -132,49 +115,19 @@ export class DreamScene extends Phaser.Scene {
       flipX: true,
     });
 
+    this.tutorPositionX = this.tutor.container.x;
+
     this.tutor.addCollisionWithPlayer(this.player.sprite);
     this.knowledgeTroop.create(this, this.player, this.lessonManager.lesson);
 
     const hudContainer = this.hud.create(this, [HUD_ITEMS.WEIGHT]);
     this.children.bringToTop(hudContainer);
 
-    this.stateMachine = new StateMachine(this, {
-      source: "scene",
-      onStateChange: (state) => setCurrentSceneState(state as SceneStateNames),
-    });
+    this.stateMachine = createSceneStates(this);
+    attachSceneStates(this.stateMachine, this);
 
-    this.stateMachine
-      .addState(SCENE_STATES.IDLE, IdleState, this)
-      .addState(SCENE_STATES.INTRO, IntroState, this)
-      .addState(SCENE_STATES.PERFORMING_ACTION, PerformingActionState, this)
-      .addState(SCENE_STATES.PERFORMING_LESSON, PerformingLessonState, this)
-      .addState(SCENE_STATES.POST_LESSON, PostLessonState, this);
-
-    this.flowController = new FlowController({
-      scene: this,
-      gameScene: this as DreamScene,
-      cancelFlow: PauseFlow,
-      onRunNewFlow: (flowName) => {
-        const newFlow = flowName as SceneFlowNames;
-        setCurrentFlow(newFlow);
-        createFlowSnapshot(GAME_SCENES.DREAM_SCENE, newFlow);
-      },
-      onRunScheduledFlow: (state) =>
-        this.stateMachine.changeTo(state || DreamScene.STATES.IDLE),
-    });
-    this.flowController
-      .addFlow(SCENE_FLOWS.INTRO, IntroductionFlow)
-      .addFlow(SCENE_FLOWS.PAUSE, PauseFlow)
-      .addFlow(SCENE_FLOWS.BEFORE_LESSON, BeforeLessonFlow)
-      .addFlow(SCENE_FLOWS.LESSON_INTRODUCTION, LessonIntroductionFlow)
-      .addFlow(SCENE_FLOWS.LESSON_NEXT_ENTRY, LessonNextEntryFlow)
-      .addFlow(SCENE_FLOWS.LESSON_LISTENING, LessonListeningFlow)
-      .addFlow(SCENE_FLOWS.LESSON_PRONUNCIATION, LessonPronunciationFlow)
-      .addFlow(SCENE_FLOWS.LESSON_WRITING, LessonWritingFlow)
-      .addFlow(SCENE_FLOWS.LESSON_EVALUATION, LessonEvaluationFlow)
-      .addFlow(SCENE_FLOWS.LESSON_SUCCESS, LessonSuccessFlow)
-      .addFlow(SCENE_FLOWS.LESSON_FAILURE, LessonFailureFlow)
-      .addFlow(SCENE_FLOWS.LESSON_CONCLUSION, LessonConclusionFlow);
+    this.flowController = createSceneFlowController(this, this.stateMachine);
+    attachSceneFlows(this.flowController);
 
     const nextFlow =
       snapshot?.flow ?? (DREAM_SCENE_FLOWS.INTRO as SceneFlowNames);
@@ -188,20 +141,6 @@ export class DreamScene extends Phaser.Scene {
 
     this.flowController.setNextFlow(nextFlowClass);
     this.stateMachine.changeTo(nextState);
-  }
-
-  public createLearningNode() {
-    const lessonEntry = this.lessonManager.getCurrentLessonEntry();
-    const learningNode = new LearningNode();
-    learningNode.create(this, {
-      lessonId: this.lessonManager.lesson.id,
-      lessonEntry,
-      startX: this.tutor.container.x + 200,
-      startY: 870,
-      flipX: true,
-    });
-    this.knowledgeTroop.add(learningNode);
-    this.learningNode = learningNode;
   }
 
   update(time: number, delta: number) {
