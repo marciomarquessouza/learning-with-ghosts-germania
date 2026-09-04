@@ -27,9 +27,9 @@ import { slugify } from "@/utils/slugfy";
 import { Vector2 } from "@/utils/vectors";
 import { getSpriteWorldPosition } from "@/utils/getSpriteWorldPosition";
 import { LessonEntryWithScore } from "@/libs/lesson/LessonController";
-import { EntryScore, LessonScore } from "@/libs/lesson/LessonScore";
+import { EntryScore } from "@/libs/lesson/LessonScore";
 import { calculateFinalScore } from "@/libs/lesson/calculateFinalScore";
-import { getMinimumEntryScore, useLessonStore } from "@/store/lessonStore";
+import { getMinimumEntryScore } from "@/store/lessonStore";
 
 export interface CreatePayload {
   startX: number;
