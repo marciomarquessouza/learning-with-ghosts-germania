@@ -8,6 +8,7 @@ import { DreamScene } from "../../..";
 import { SceneStateNames } from "../../../constants/states";
 import { LessonPronunciationFlow } from "./LessonPronunciation.flow";
 import { DREAM_SCENE_FLOWS } from "../../../constants/flows";
+import { attachLearningNode } from "../../../helpers/attachLearningNode";
 
 const LISTENING_REPETITION = 2;
 
@@ -23,7 +24,7 @@ export class LessonListeningFlow extends Flow<SceneStateNames, DreamScene> {
   async run(): Promise<FlowResult<SceneStateNames, DreamScene>> {
     await runSteps([
       stepBase(() => {
-        this.gameScene.createLearningNode();
+        attachLearningNode(this.gameScene);
       }),
       stepBase(() => {
         this.gameScene.lessonManager.writeLessonDescription({

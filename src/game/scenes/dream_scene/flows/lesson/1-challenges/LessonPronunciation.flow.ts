@@ -8,6 +8,7 @@ import { useAudioStore } from "@/store/audioStore";
 import { LessonWritingFlow } from "./LessonWriting.flow";
 import { DREAM_SCENE_FLOWS } from "../../../constants/flows";
 import { ClearEvent } from "@/libs/events/types";
+import { attachLearningNode } from "../../../helpers/attachLearningNode";
 
 export class LessonPronunciationFlow extends Flow<SceneStateNames, DreamScene> {
   public flowName = DREAM_SCENE_FLOWS.LESSON_PRONUNCIATION;
@@ -142,7 +143,7 @@ export class LessonPronunciationFlow extends Flow<SceneStateNames, DreamScene> {
     await runSteps([
       stepBase(
         () => {
-          this.gameScene.createLearningNode();
+          attachLearningNode(this.gameScene);
           this.gameScene.player.enterInclined();
 
           return this.gameScene.learningNode.resumeSproutToPumpkin({

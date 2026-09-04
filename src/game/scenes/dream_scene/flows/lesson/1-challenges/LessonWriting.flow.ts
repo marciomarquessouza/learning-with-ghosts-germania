@@ -6,6 +6,7 @@ import { runSteps, stepBase } from "@/libs/game/game-flow/runSteps";
 import { events } from "@/events/events";
 import { DREAM_SCENE_FLOWS } from "../../../constants/flows";
 import { LessonEvaluationFlow } from "../2-after_challenges/LessonEvaluation.flow";
+import { attachLearningNode } from "../../../helpers/attachLearningNode";
 
 export class LessonWritingFlow extends Flow<SceneStateNames, DreamScene> {
   public flowName: string = DREAM_SCENE_FLOWS.LESSON_WRITING;
@@ -20,7 +21,7 @@ export class LessonWritingFlow extends Flow<SceneStateNames, DreamScene> {
     await runSteps([
       stepBase(
         async () => {
-          this.gameScene.createLearningNode();
+          attachLearningNode(this.gameScene);
           this.gameScene.player.enterInclined();
           const sequence = this.lessonEntry.sequence + 1;
           await this.gameScene.learningNode.resumeSproutToPumpkin({

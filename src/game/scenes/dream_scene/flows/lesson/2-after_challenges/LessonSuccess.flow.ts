@@ -6,6 +6,7 @@ import { FlowResult } from "@/libs/game/game-flow/types";
 import { runSteps, stepBase } from "@/libs/game/game-flow/runSteps";
 import { afterChallengeCondition } from "../../conditions/afterChallenge.condition";
 import { KnowledgeTroop } from "@/game/actors/knowledgeTroop/KnowledgeTroop";
+import { attachLearningNode } from "../../../helpers/attachLearningNode";
 
 export class LessonSuccessFlow extends Flow<SceneStateNames, DreamScene> {
   public flowName: string = DREAM_SCENE_FLOWS.LESSON_SUCCESS;
@@ -17,7 +18,7 @@ export class LessonSuccessFlow extends Flow<SceneStateNames, DreamScene> {
     await runSteps([
       stepBase(
         async () => {
-          this.gameScene.createLearningNode();
+          attachLearningNode(this.gameScene);
           this.gameScene.player.enterInclined();
           const sequence = this.lessonEntry.sequence + 1;
           await this.gameScene.learningNode.resumeSproutToPumpkin({
