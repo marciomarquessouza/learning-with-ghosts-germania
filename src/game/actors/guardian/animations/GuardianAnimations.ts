@@ -49,21 +49,27 @@ export class GuardianAnimations {
     });
   }
 
-  playFadeIn() {
-    this.scene.tweens.add({
-      targets: this.sprite,
-      alpha: 1,
-      duration: 1_200,
-      ease: "Power2",
+  playFadeIn(): Promise<void> {
+    return new Promise((resolve) => {
+      this.scene.tweens.add({
+        targets: this.sprite,
+        alpha: 1,
+        duration: 1_200,
+        ease: "Power2",
+        onComplete: () => resolve(),
+      });
     });
   }
 
-  playFadeOut() {
-    this.scene.tweens.add({
-      targets: this.sprite,
-      alpha: 0,
-      duration: 1_000,
-      ease: "Power2",
+  playFadeOut(): Promise<void> {
+    return new Promise((resolve) => {
+      this.scene.tweens.add({
+        targets: this.sprite,
+        alpha: 0,
+        duration: 1_000,
+        ease: "Power2",
+        onComplete: () => resolve(),
+      });
     });
   }
 
