@@ -8,6 +8,28 @@ export type SpritesheetEntry = {
 };
 
 export const SPRITESHEETS = {
+  guardian: {
+    idle: {
+      key: 'guardian-idle',
+      image: '/actors/guardian/idle/spritesheet.png',
+      atlas: '/actors/guardian/idle/spritesheet.json'
+    },
+    lean: {
+      key: 'guardian-lean',
+      image: '/actors/guardian/lean/spritesheet.png',
+      atlas: '/actors/guardian/lean/spritesheet.json'
+    },
+    lean_idle: {
+      key: 'guardian-lean_idle',
+      image: '/actors/guardian/lean_idle/spritesheet.png',
+      atlas: '/actors/guardian/lean_idle/spritesheet.json'
+    },
+    lean_speaking: {
+      key: 'guardian-lean_speaking',
+      image: '/actors/guardian/lean_speaking/spritesheet.png',
+      atlas: '/actors/guardian/lean_speaking/spritesheet.json'
+    }
+  },
   jailer: {
     idle: {
       key: 'jailer-idle',
@@ -85,28 +107,6 @@ export const SPRITESHEETS = {
       key: 'learningNode-sprouting_transition',
       image: '/actors/learningNode/sprouting_transition/spritesheet.png',
       atlas: '/actors/learningNode/sprouting_transition/spritesheet.json'
-    }
-  },
-  memoryGuardian: {
-    inclined_idle: {
-      key: 'memoryGuardian-inclined_idle',
-      image: '/actors/memoryGuardian/inclined_idle/spritesheet.png',
-      atlas: '/actors/memoryGuardian/inclined_idle/spritesheet.json'
-    },
-    inclined_speaking: {
-      key: 'memoryGuardian-inclined_speaking',
-      image: '/actors/memoryGuardian/inclined_speaking/spritesheet.png',
-      atlas: '/actors/memoryGuardian/inclined_speaking/spritesheet.json'
-    },
-    inclining: {
-      key: 'memoryGuardian-inclining',
-      image: '/actors/memoryGuardian/inclining/spritesheet.png',
-      atlas: '/actors/memoryGuardian/inclining/spritesheet.json'
-    },
-    normal_idle: {
-      key: 'memoryGuardian-normal_idle',
-      image: '/actors/memoryGuardian/normal_idle/spritesheet.png',
-      atlas: '/actors/memoryGuardian/normal_idle/spritesheet.json'
     }
   },
   player: {

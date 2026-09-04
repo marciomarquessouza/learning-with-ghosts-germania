@@ -37,6 +37,7 @@ export enum ACTORS {
   PLAYER = "player",
   PUNISHER = "punisher",
   LEARNING_NODE = "learningNode",
+  GUARDIAN = "guardian",
 }
 
 export enum MOODS {
@@ -64,6 +65,10 @@ export const DIALOGUE_MAP: {
   [ACTORS.PLAYER]: {
     displayName: "Josef G.",
     avatar: "/dialogue/dialogue_avatar_josef.png",
+  },
+  [ACTORS.GUARDIAN]: {
+    displayName: "Memory Guardian",
+    avatar: "/dialogue/dialogue_avatar_guardian.png",
   },
 };
 
