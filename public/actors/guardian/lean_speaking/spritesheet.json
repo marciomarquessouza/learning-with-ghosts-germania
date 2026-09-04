@@ -4,110 +4,110 @@
       "frame": {
         "x": 0,
         "y": 0,
-        "w": 471,
-        "h": 589
+        "w": 486,
+        "h": 609
       },
       "rotated": false,
       "trimmed": false,
       "spriteSourceSize": {
         "x": 0,
         "y": 0,
-        "w": 471,
-        "h": 589
+        "w": 486,
+        "h": 609
       },
       "sourceSize": {
-        "w": 471,
-        "h": 589
+        "w": 486,
+        "h": 609
       }
     },
     "guardian_lean_speaking_1": {
       "frame": {
-        "x": 471,
+        "x": 486,
         "y": 0,
-        "w": 471,
-        "h": 589
+        "w": 486,
+        "h": 609
       },
       "rotated": false,
       "trimmed": false,
       "spriteSourceSize": {
         "x": 0,
         "y": 0,
-        "w": 471,
-        "h": 589
+        "w": 486,
+        "h": 609
       },
       "sourceSize": {
-        "w": 471,
-        "h": 589
+        "w": 486,
+        "h": 609
       }
     },
     "guardian_lean_speaking_2": {
       "frame": {
-        "x": 942,
+        "x": 972,
         "y": 0,
-        "w": 471,
-        "h": 589
+        "w": 486,
+        "h": 609
       },
       "rotated": false,
       "trimmed": false,
       "spriteSourceSize": {
         "x": 0,
         "y": 0,
-        "w": 471,
-        "h": 589
+        "w": 486,
+        "h": 609
       },
       "sourceSize": {
-        "w": 471,
-        "h": 589
+        "w": 486,
+        "h": 609
       }
     },
     "guardian_lean_speaking_3": {
       "frame": {
-        "x": 1413,
+        "x": 1458,
         "y": 0,
-        "w": 471,
-        "h": 589
+        "w": 486,
+        "h": 609
       },
       "rotated": false,
       "trimmed": false,
       "spriteSourceSize": {
         "x": 0,
         "y": 0,
-        "w": 471,
-        "h": 589
+        "w": 486,
+        "h": 609
       },
       "sourceSize": {
-        "w": 471,
-        "h": 589
+        "w": 486,
+        "h": 609
       }
     },
     "guardian_lean_speaking_4": {
       "frame": {
-        "x": 1884,
+        "x": 1944,
         "y": 0,
-        "w": 471,
-        "h": 589
+        "w": 486,
+        "h": 609
       },
       "rotated": false,
       "trimmed": false,
       "spriteSourceSize": {
         "x": 0,
         "y": 0,
-        "w": 471,
-        "h": 589
+        "w": 486,
+        "h": 609
       },
       "sourceSize": {
-        "w": 471,
-        "h": 589
+        "w": 486,
+        "h": 609
       }
     }
   },
   "meta": {
     "image": "spritesheet.png",
     "size": {
-      "w": 2826,
-      "h": 589
+      "w": 2916,
+      "h": 609
     },
-    "scale": "0.3",
+    "scale": "0.31",
     "flip_x": false
   }
 }
