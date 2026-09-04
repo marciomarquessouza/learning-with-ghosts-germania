@@ -1,0 +1,113 @@
+{
+  "frames": {
+    "memoryGuardian_normal_idle_0": {
+      "frame": {
+        "x": 0,
+        "y": 0,
+        "w": 339,
+        "h": 590
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 339,
+        "h": 590
+      },
+      "sourceSize": {
+        "w": 339,
+        "h": 590
+      }
+    },
+    "memoryGuardian_normal_idle_1": {
+      "frame": {
+        "x": 339,
+        "y": 0,
+        "w": 339,
+        "h": 590
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 339,
+        "h": 590
+      },
+      "sourceSize": {
+        "w": 339,
+        "h": 590
+      }
+    },
+    "memoryGuardian_normal_idle_2": {
+      "frame": {
+        "x": 678,
+        "y": 0,
+        "w": 339,
+        "h": 590
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 339,
+        "h": 590
+      },
+      "sourceSize": {
+        "w": 339,
+        "h": 590
+      }
+    },
+    "memoryGuardian_normal_idle_3": {
+      "frame": {
+        "x": 1017,
+        "y": 0,
+        "w": 339,
+        "h": 590
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 339,
+        "h": 590
+      },
+      "sourceSize": {
+        "w": 339,
+        "h": 590
+      }
+    },
+    "memoryGuardian_normal_idle_4": {
+      "frame": {
+        "x": 1356,
+        "y": 0,
+        "w": 339,
+        "h": 590
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 339,
+        "h": 590
+      },
+      "sourceSize": {
+        "w": 339,
+        "h": 590
+      }
+    }
+  },
+  "meta": {
+    "image": "spritesheet.png",
+    "size": {
+      "w": 2034,
+      "h": 590
+    },
+    "scale": "0.3",
+    "flip_x": false
+  }
+}

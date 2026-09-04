@@ -1,0 +1,113 @@
+{
+  "frames": {
+    "memoryGuardian_inclined_idle_0": {
+      "frame": {
+        "x": 0,
+        "y": 0,
+        "w": 470,
+        "h": 531
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 470,
+        "h": 531
+      },
+      "sourceSize": {
+        "w": 470,
+        "h": 531
+      }
+    },
+    "memoryGuardian_inclined_idle_1": {
+      "frame": {
+        "x": 470,
+        "y": 0,
+        "w": 470,
+        "h": 531
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 470,
+        "h": 531
+      },
+      "sourceSize": {
+        "w": 470,
+        "h": 531
+      }
+    },
+    "memoryGuardian_inclined_idle_2": {
+      "frame": {
+        "x": 940,
+        "y": 0,
+        "w": 470,
+        "h": 531
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 470,
+        "h": 531
+      },
+      "sourceSize": {
+        "w": 470,
+        "h": 531
+      }
+    },
+    "memoryGuardian_inclined_idle_3": {
+      "frame": {
+        "x": 1410,
+        "y": 0,
+        "w": 470,
+        "h": 531
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 470,
+        "h": 531
+      },
+      "sourceSize": {
+        "w": 470,
+        "h": 531
+      }
+    },
+    "memoryGuardian_inclined_idle_4": {
+      "frame": {
+        "x": 1880,
+        "y": 0,
+        "w": 470,
+        "h": 531
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 470,
+        "h": 531
+      },
+      "sourceSize": {
+        "w": 470,
+        "h": 531
+      }
+    }
+  },
+  "meta": {
+    "image": "spritesheet.png",
+    "size": {
+      "w": 2820,
+      "h": 531
+    },
+    "scale": "0.3",
+    "flip_x": false
+  }
+}

@@ -87,6 +87,28 @@ export const SPRITESHEETS = {
       atlas: '/actors/learningNode/sprouting_transition/spritesheet.json'
     }
   },
+  memoryGuardian: {
+    inclined_idle: {
+      key: 'memoryGuardian-inclined_idle',
+      image: '/actors/memoryGuardian/inclined_idle/spritesheet.png',
+      atlas: '/actors/memoryGuardian/inclined_idle/spritesheet.json'
+    },
+    inclined_speaking: {
+      key: 'memoryGuardian-inclined_speaking',
+      image: '/actors/memoryGuardian/inclined_speaking/spritesheet.png',
+      atlas: '/actors/memoryGuardian/inclined_speaking/spritesheet.json'
+    },
+    inclining: {
+      key: 'memoryGuardian-inclining',
+      image: '/actors/memoryGuardian/inclining/spritesheet.png',
+      atlas: '/actors/memoryGuardian/inclining/spritesheet.json'
+    },
+    normal_idle: {
+      key: 'memoryGuardian-normal_idle',
+      image: '/actors/memoryGuardian/normal_idle/spritesheet.png',
+      atlas: '/actors/memoryGuardian/normal_idle/spritesheet.json'
+    }
+  },
   player: {
     idle: {
       key: 'player-idle',

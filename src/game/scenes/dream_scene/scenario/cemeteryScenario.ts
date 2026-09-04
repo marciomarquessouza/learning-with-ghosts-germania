@@ -125,7 +125,7 @@ export class CemeteryScenario {
     if (this.sun) {
       this.sun.tilePositionX =
         scrollX * CemeteryScenario.THIRD_LAYER_SCROLL_FACTOR;
-      this.sun.setAlpha(Phaser.Math.Linear(0.9, 1, sunPulse));
+      this.sun.setAlpha(Phaser.Math.Linear(0.85, 0.9, sunPulse));
     }
 
     if (this.sunGlow) {

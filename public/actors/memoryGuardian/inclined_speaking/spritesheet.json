@@ -1,0 +1,113 @@
+{
+  "frames": {
+    "memoryGuardian_inclined_speaking_0": {
+      "frame": {
+        "x": 0,
+        "y": 0,
+        "w": 472,
+        "h": 539
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 472,
+        "h": 539
+      },
+      "sourceSize": {
+        "w": 472,
+        "h": 539
+      }
+    },
+    "memoryGuardian_inclined_speaking_1": {
+      "frame": {
+        "x": 472,
+        "y": 0,
+        "w": 472,
+        "h": 539
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 472,
+        "h": 539
+      },
+      "sourceSize": {
+        "w": 472,
+        "h": 539
+      }
+    },
+    "memoryGuardian_inclined_speaking_2": {
+      "frame": {
+        "x": 944,
+        "y": 0,
+        "w": 472,
+        "h": 539
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 472,
+        "h": 539
+      },
+      "sourceSize": {
+        "w": 472,
+        "h": 539
+      }
+    },
+    "memoryGuardian_inclined_speaking_3": {
+      "frame": {
+        "x": 1416,
+        "y": 0,
+        "w": 472,
+        "h": 539
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 472,
+        "h": 539
+      },
+      "sourceSize": {
+        "w": 472,
+        "h": 539
+      }
+    },
+    "memoryGuardian_inclined_speaking_4": {
+      "frame": {
+        "x": 1888,
+        "y": 0,
+        "w": 472,
+        "h": 539
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 472,
+        "h": 539
+      },
+      "sourceSize": {
+        "w": 472,
+        "h": 539
+      }
+    }
+  },
+  "meta": {
+    "image": "spritesheet.png",
+    "size": {
+      "w": 2832,
+      "h": 539
+    },
+    "scale": "0.3",
+    "flip_x": false
+  }
+}
