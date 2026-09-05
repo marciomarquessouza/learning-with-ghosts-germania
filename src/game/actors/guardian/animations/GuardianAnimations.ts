@@ -54,8 +54,8 @@ export class GuardianAnimations {
       this.scene.tweens.add({
         targets: this.sprite,
         alpha: 1,
-        duration: 1_200,
         ease: "Power2",
+        duration: 1_200,
         onComplete: () => resolve(),
       });
     });

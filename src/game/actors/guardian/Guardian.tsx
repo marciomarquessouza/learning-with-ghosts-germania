@@ -36,7 +36,6 @@ export class Guardian {
       .sprite(startX, startY, "", "")
       .setFlipX(!!flipX)
       .setScale(scale ?? 1)
-      .setVisible(false)
       .setAlpha(0);
 
     this.animations.create(scene, this.sprite);
@@ -46,13 +45,15 @@ export class Guardian {
     this.hasCreated = true;
   }
 
-  setVisibleAndAlpha(visibility: boolean, alpha: number) {
+  setAlpha(alpha: number) {
     this.sprite.setAlpha(alpha);
-    this.sprite.setVisible(visibility);
   }
 
-  fadeIn(): Promise<void> {
-    return this.animations.playFadeIn();
+  async fadeIn(): Promise<void> {
+    console.log("#HERE alpha", this.sprite.alpha);
+    await this.animations.playFadeIn();
+    console.log("#HERE alpha", this.sprite.alpha);
+    this.stateMachine.changeTo(Guardian.STATES.IDLE);
   }
 
   fadeOut(): Promise<void> {
@@ -64,11 +65,13 @@ export class Guardian {
   }
 
   async lean(): Promise<void> {
+    this.setAlpha(1);
     await this.animations.playLean();
     this.stateMachine.changeTo(Guardian.STATES.LEAN_IDLE);
   }
 
   async unlean(): Promise<void> {
+    this.setAlpha(1);
     await this.animations.playUnlean();
     this.stateMachine.changeTo(Guardian.STATES.IDLE);
   }

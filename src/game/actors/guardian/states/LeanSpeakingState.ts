@@ -10,7 +10,7 @@ export class LeanSpeakingState extends BaseState {
   }
 
   enter(): void {
-    this.guardian.setVisibleAndAlpha(true, 1);
+    this.guardian.setAlpha(1);
     this.guardian.animations.playLeanSpeaking();
   }
 

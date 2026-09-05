@@ -10,7 +10,7 @@ export class LeanIdleState extends BaseState {
   }
 
   enter(): void {
-    this.guardian.setVisibleAndAlpha(true, 1);
+    this.guardian.setAlpha(1);
     this.guardian.animations.playLeanIdle();
   }
 

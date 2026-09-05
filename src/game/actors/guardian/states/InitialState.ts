@@ -10,7 +10,8 @@ export class InitialState extends BaseState {
   }
 
   enter(): void {
-    this.guardian.setVisibleAndAlpha(false, 0);
+    this.guardian.setAlpha(0);
+    this.guardian.animations.playIdle();
   }
 
   exit(): void {}

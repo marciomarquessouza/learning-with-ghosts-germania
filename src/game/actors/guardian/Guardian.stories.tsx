@@ -56,12 +56,17 @@ export default meta;
 
 type Story = StoryObj<typeof GuardianStory>;
 
-export const Default: Story = {};
+export const Default: Story = {
+  args: {
+    actions: (guardian) => {
+      guardian.enterIdleState();
+    },
+  },
+};
 
 export const FadeIn: Story = {
   args: {
     actions: (guardian) => {
-      guardian.sprite.setAlpha(0);
       guardian.fadeIn();
     },
   },
@@ -70,7 +75,10 @@ export const FadeIn: Story = {
 export const FadeOut: Story = {
   args: {
     actions: (guardian) => {
-      guardian.fadeOut();
+      guardian.enterIdleState();
+      setTimeout(() => {
+        guardian.fadeOut();
+      }, 800);
     },
   },
 };
@@ -86,6 +94,10 @@ export const Lean: Story = {
 export const LeanIdle: Story = {
   args: {
     actions: (guardian) => {
+      guardian.enterIdleState();
+      setTimeout(() => {
+        guardian.lean();
+      }, 800);
       guardian.enterLeanIdleState();
     },
   },

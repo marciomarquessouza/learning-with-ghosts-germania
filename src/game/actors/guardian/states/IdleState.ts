@@ -10,7 +10,7 @@ export class IdleState extends BaseState {
   }
 
   enter(): void {
-    this.guardian.setVisibleAndAlpha(true, 1);
+    this.guardian.setAlpha(1);
     this.guardian.animations.playIdle();
   }
 

@@ -105,7 +105,12 @@ export class KnowledgeTroop {
       KnowledgeTroop.MIN_DISTANCE_TO_FOLLOW_PLAYER;
 
     if (distance > minDistance) {
-      learningNode.stateMachine.changeTo(LearningNode.STATES.FULL_WALKING);
+      if (
+        learningNode.stateMachine.getPreviousStateName() !==
+        LearningNode.STATES.FULL_WALKING
+      ) {
+        learningNode.stateMachine.changeTo(LearningNode.STATES.FULL_WALKING);
+      }
 
       if (direction > 0) {
         learningNode.sprite.setVelocityX(+this.player.speed);
@@ -117,7 +122,12 @@ export class KnowledgeTroop {
         learningNode.sprite.setFlipX(true);
       }
     } else {
-      learningNode.stateMachine.changeTo(LearningNode.STATES.FULL_IDLE);
+      if (
+        learningNode.stateMachine.getPreviousStateName() !==
+        LearningNode.STATES.FULL_IDLE
+      ) {
+        learningNode.stateMachine.changeTo(LearningNode.STATES.FULL_IDLE);
+      }
       learningNode.sprite.setVelocityX(0);
     }
   }

@@ -4,110 +4,110 @@
       "frame": {
         "x": 0,
         "y": 0,
-        "w": 486,
-        "h": 609
+        "w": 628,
+        "h": 786
       },
       "rotated": false,
       "trimmed": false,
       "spriteSourceSize": {
         "x": 0,
         "y": 0,
-        "w": 486,
-        "h": 609
+        "w": 628,
+        "h": 786
       },
       "sourceSize": {
-        "w": 486,
-        "h": 609
+        "w": 628,
+        "h": 786
       }
     },
     "guardian_lean_idle_1": {
       "frame": {
-        "x": 486,
+        "x": 628,
         "y": 0,
-        "w": 486,
-        "h": 609
+        "w": 628,
+        "h": 786
       },
       "rotated": false,
       "trimmed": false,
       "spriteSourceSize": {
         "x": 0,
         "y": 0,
-        "w": 486,
-        "h": 609
+        "w": 628,
+        "h": 786
       },
       "sourceSize": {
-        "w": 486,
-        "h": 609
+        "w": 628,
+        "h": 786
       }
     },
     "guardian_lean_idle_2": {
       "frame": {
-        "x": 972,
+        "x": 1256,
         "y": 0,
-        "w": 486,
-        "h": 609
+        "w": 628,
+        "h": 786
       },
       "rotated": false,
       "trimmed": false,
       "spriteSourceSize": {
         "x": 0,
         "y": 0,
-        "w": 486,
-        "h": 609
+        "w": 628,
+        "h": 786
       },
       "sourceSize": {
-        "w": 486,
-        "h": 609
+        "w": 628,
+        "h": 786
       }
     },
     "guardian_lean_idle_3": {
       "frame": {
-        "x": 1458,
+        "x": 1884,
         "y": 0,
-        "w": 486,
-        "h": 609
+        "w": 628,
+        "h": 786
       },
       "rotated": false,
       "trimmed": false,
       "spriteSourceSize": {
         "x": 0,
         "y": 0,
-        "w": 486,
-        "h": 609
+        "w": 628,
+        "h": 786
       },
       "sourceSize": {
-        "w": 486,
-        "h": 609
+        "w": 628,
+        "h": 786
       }
     },
     "guardian_lean_idle_4": {
       "frame": {
-        "x": 1944,
+        "x": 2512,
         "y": 0,
-        "w": 486,
-        "h": 609
+        "w": 628,
+        "h": 786
       },
       "rotated": false,
       "trimmed": false,
       "spriteSourceSize": {
         "x": 0,
         "y": 0,
-        "w": 486,
-        "h": 609
+        "w": 628,
+        "h": 786
       },
       "sourceSize": {
-        "w": 486,
-        "h": 609
+        "w": 628,
+        "h": 786
       }
     }
   },
   "meta": {
     "image": "spritesheet.png",
     "size": {
-      "w": 2916,
-      "h": 609
+      "w": 3768,
+      "h": 786
     },
-    "scale": "0.31",
+    "scale": "0.4",
     "flip_x": false
   }
 }
