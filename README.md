@@ -521,21 +521,21 @@ Spritesheets for animations are generated automatically from the raw frames expo
 
 ### Source directory
 
-Export the animation frames to the following directory structure:
+Export the animation frames using the following directory structure:
 
-```
+```text
 asset-sources/dragonbones/actors/<actor>/<animation>/
 ```
 
 Example:
 
-```
+```text
 asset-sources/dragonbones/actors/eliza/teaching/
 ```
 
 Frames must follow this naming convention:
 
-```
+```text
 <actor>_<animation>_1.png
 <actor>_<animation>_2.png
 <actor>_<animation>_3.png
@@ -544,74 +544,296 @@ Frames must follow this naming convention:
 
 Example:
 
-```
+```text
 eliza_teaching_1.png
 eliza_teaching_2.png
 eliza_teaching_3.png
 ```
 
-### Generate the spritesheet
+### Create the spritesheet configuration
 
-Run the sprite build script:
+Each actor uses a `spritesheet.yaml` file to define its animations and generation settings.
 
-```
-yarn sprite -- <actor> <animation> [options]
+To create a default configuration based on the animation directories already available for an actor, run:
+
+```bash
+yarn sprite:default-config -- <actor>
 ```
 
 Example:
 
-```
-yarn sprite -- eliza teaching --columns 6 --scale 0.8
-```
-
-This will:
-
-1. Read the source frames from
-
-```
-asset-sources/dragonbones/actors/<actor>/<animation>
+```bash
+yarn sprite:default-config -- eliza
 ```
 
-2. Generate the spritesheet and atlas in
+The script scans:
 
+```text
+asset-sources/dragonbones/actors/eliza/
 ```
+
+and creates:
+
+```text
+asset-sources/dragonbones/actors/eliza/spritesheet.yaml
+```
+
+For example, given:
+
+```text
+eliza/
+├── idle/
+├── teaching/
+└── speaking/
+```
+
+the generated configuration will contain:
+
+```yaml
+actor: eliza
+
+defaults:
+  columns: 6
+  scale: 1
+
+animations:
+  - idle
+  - teaching
+  - speaking
+```
+
+### Configure animations
+
+The `defaults` section defines the options shared by all animations:
+
+```yaml
+defaults:
+  columns: 6
+  scale: 0.8
+```
+
+Individual animations can override these values using `configs`:
+
+```yaml
+configs:
+  teaching:
+    columns: 8
+    scale: 0.7
+
+  speaking:
+    flipX: true
+```
+
+The available configuration options are:
+
+```text
+columns   Number of columns in the spritesheet
+scale     Scale factor applied to each frame
+count     Limit the number of frames used
+flipX     Apply a horizontal flip to all frames
+```
+
+### Generate spritesheets
+
+To generate all animations configured for an actor:
+
+```bash
+yarn sprite -- <actor>
+```
+
+Example:
+
+```bash
+yarn sprite -- eliza
+```
+
+To generate only one configured animation:
+
+```bash
+yarn sprite -- <actor> <animation>
+```
+
+Example:
+
+```bash
+yarn sprite -- eliza teaching
+```
+
+For each animation, the script will:
+
+1. Read the source frames from:
+
+```text
+asset-sources/dragonbones/actors/<actor>/<animation>/
+```
+
+2. Apply the default configuration and any animation-specific overrides.
+
+3. Generate the spritesheet and atlas in:
+
+```text
 public/actors/<actor>/<animation>/
 ```
 
 Output files:
 
-```
+```text
 spritesheet.png
 spritesheet.json
 ```
 
-3. Automatically update the spritesheet registry in
+4. Automatically update the spritesheet registry in:
 
-```
+```text
 src/constants/spritesheets.ts
-```
-
-### Available options
-
-```
---columns <number>   Number of columns in the spritesheet
---scale <number>     Scale factor applied to each frame
---count <number>     Limit the number of frames used
---flip-x Apply horizontal flip (mirror) to all frames before assembling the spritesheet
 ```
 
 ### Example workflow
 
-1. Export frames from DragonBones
+1. Export the frames from DragonBones:
 
-```
+```text
 asset-sources/dragonbones/actors/eliza/teaching/
+asset-sources/dragonbones/actors/eliza/speaking/
 ```
 
-2. Run the build command
+2. Generate the initial configuration:
 
-```
-yarn sprite -- eliza teaching --columns 6 --scale 0.8 --flip-x
+```bash
+yarn sprite:default-config -- eliza
 ```
 
-3. The spritesheet and constants will be generated automatically.
+3. Adjust `spritesheet.yaml` defaults or animation-specific settings when necessary.
+
+4. Generate all configured spritesheets:
+
+```bash
+yarn sprite -- eliza
+```
+
+The spritesheets, JSON atlases, and spritesheet constants will be generated automatically.
+
+### Animation configuration
+
+Each actor has a `spritesheet.yaml` file that defines which animations should be generated and how their spritesheets should be configured.
+
+Example:
+
+```yaml
+actor: guardian
+
+defaults:
+  columns: 6
+  scale: 0.31
+
+animations:
+  - idle
+  - lean
+  - lean_idle
+  - lean_speaking
+
+configs:
+  lean:
+    columns: 8
+
+  lean_speaking:
+    scale: 0.4
+    flipX: true
+```
+
+#### `actor`
+
+Defines the actor associated with the configuration:
+
+```yaml
+actor: guardian
+```
+
+#### `defaults`
+
+Defines the settings applied to every animation unless overridden in `configs`:
+
+```yaml
+defaults:
+  columns: 6
+  scale: 0.31
+```
+
+Supported options:
+
+- `columns`: number of columns in the generated spritesheet.
+- `scale`: scale factor applied to each frame.
+- `count`: maximum number of frames to include.
+- `flipX`: horizontally flips the frames before generating the spritesheet.
+
+#### `animations`
+
+Defines which animations should be generated:
+
+```yaml
+animations:
+  - idle
+  - lean
+  - lean_idle
+  - lean_speaking
+```
+
+Each name must correspond to a directory under the actor's source directory:
+
+```text
+asset-sources/dragonbones/actors/guardian/
+├── idle/
+├── lean/
+├── lean_idle/
+└── lean_speaking/
+```
+
+Running:
+
+```bash
+yarn sprite -- guardian
+```
+
+generates every animation listed in `animations`.
+
+#### `configs`
+
+Defines optional overrides for individual animations:
+
+```yaml
+configs:
+  lean:
+    columns: 8
+
+  lean_speaking:
+    scale: 0.4
+    flipX: true
+```
+
+These values are merged with `defaults`. Only the properties that differ from the defaults need to be specified.
+
+For example:
+
+```yaml
+defaults:
+  columns: 6
+  scale: 0.31
+
+configs:
+  lean:
+    columns: 8
+```
+
+The effective configuration for `lean` is:
+
+```yaml
+columns: 8
+scale: 0.31
+```
+
+while all other animations continue using:
+
+```yaml
+columns: 6
+scale: 0.31
+```
