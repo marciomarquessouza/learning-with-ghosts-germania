@@ -44,10 +44,10 @@
   "meta": {
     "image": "spritesheet.png",
     "size": {
-      "w": 996,
+      "w": 332,
       "h": 227
     },
     "scale": "0.5",
-    "flip_x": true
+    "flip_x": false
   }
 }

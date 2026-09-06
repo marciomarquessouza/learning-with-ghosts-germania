@@ -82,8 +82,8 @@
     },
     "learningNode_pumpkin_full_failure_4": {
       "frame": {
-        "x": 824,
-        "y": 0,
+        "x": 0,
+        "y": 248,
         "w": 206,
         "h": 248
       },
@@ -102,8 +102,8 @@
     },
     "learningNode_pumpkin_full_failure_5": {
       "frame": {
-        "x": 1030,
-        "y": 0,
+        "x": 206,
+        "y": 248,
         "w": 206,
         "h": 248
       },
@@ -122,7 +122,7 @@
     },
     "learningNode_pumpkin_full_failure_6": {
       "frame": {
-        "x": 0,
+        "x": 412,
         "y": 248,
         "w": 206,
         "h": 248
@@ -142,7 +142,7 @@
     },
     "learningNode_pumpkin_full_failure_7": {
       "frame": {
-        "x": 206,
+        "x": 618,
         "y": 248,
         "w": 206,
         "h": 248
@@ -162,86 +162,6 @@
     },
     "learningNode_pumpkin_full_failure_8": {
       "frame": {
-        "x": 412,
-        "y": 248,
-        "w": 206,
-        "h": 248
-      },
-      "rotated": false,
-      "trimmed": false,
-      "spriteSourceSize": {
-        "x": 0,
-        "y": 0,
-        "w": 206,
-        "h": 248
-      },
-      "sourceSize": {
-        "w": 206,
-        "h": 248
-      }
-    },
-    "learningNode_pumpkin_full_failure_9": {
-      "frame": {
-        "x": 618,
-        "y": 248,
-        "w": 206,
-        "h": 248
-      },
-      "rotated": false,
-      "trimmed": false,
-      "spriteSourceSize": {
-        "x": 0,
-        "y": 0,
-        "w": 206,
-        "h": 248
-      },
-      "sourceSize": {
-        "w": 206,
-        "h": 248
-      }
-    },
-    "learningNode_pumpkin_full_failure_10": {
-      "frame": {
-        "x": 824,
-        "y": 248,
-        "w": 206,
-        "h": 248
-      },
-      "rotated": false,
-      "trimmed": false,
-      "spriteSourceSize": {
-        "x": 0,
-        "y": 0,
-        "w": 206,
-        "h": 248
-      },
-      "sourceSize": {
-        "w": 206,
-        "h": 248
-      }
-    },
-    "learningNode_pumpkin_full_failure_11": {
-      "frame": {
-        "x": 1030,
-        "y": 248,
-        "w": 206,
-        "h": 248
-      },
-      "rotated": false,
-      "trimmed": false,
-      "spriteSourceSize": {
-        "x": 0,
-        "y": 0,
-        "w": 206,
-        "h": 248
-      },
-      "sourceSize": {
-        "w": 206,
-        "h": 248
-      }
-    },
-    "learningNode_pumpkin_full_failure_12": {
-      "frame": {
         "x": 0,
         "y": 496,
         "w": 206,
@@ -260,7 +180,7 @@
         "h": 248
       }
     },
-    "learningNode_pumpkin_full_failure_13": {
+    "learningNode_pumpkin_full_failure_9": {
       "frame": {
         "x": 206,
         "y": 496,
@@ -280,10 +200,90 @@
         "h": 248
       }
     },
-    "learningNode_pumpkin_full_failure_14": {
+    "learningNode_pumpkin_full_failure_10": {
       "frame": {
         "x": 412,
         "y": 496,
+        "w": 206,
+        "h": 248
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 206,
+        "h": 248
+      },
+      "sourceSize": {
+        "w": 206,
+        "h": 248
+      }
+    },
+    "learningNode_pumpkin_full_failure_11": {
+      "frame": {
+        "x": 618,
+        "y": 496,
+        "w": 206,
+        "h": 248
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 206,
+        "h": 248
+      },
+      "sourceSize": {
+        "w": 206,
+        "h": 248
+      }
+    },
+    "learningNode_pumpkin_full_failure_12": {
+      "frame": {
+        "x": 0,
+        "y": 744,
+        "w": 206,
+        "h": 248
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 206,
+        "h": 248
+      },
+      "sourceSize": {
+        "w": 206,
+        "h": 248
+      }
+    },
+    "learningNode_pumpkin_full_failure_13": {
+      "frame": {
+        "x": 206,
+        "y": 744,
+        "w": 206,
+        "h": 248
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 206,
+        "h": 248
+      },
+      "sourceSize": {
+        "w": 206,
+        "h": 248
+      }
+    },
+    "learningNode_pumpkin_full_failure_14": {
+      "frame": {
+        "x": 412,
+        "y": 744,
         "w": 206,
         "h": 248
       },
@@ -304,8 +304,8 @@
   "meta": {
     "image": "spritesheet.png",
     "size": {
-      "w": 1236,
-      "h": 744
+      "w": 824,
+      "h": 992
     },
     "scale": "0.5",
     "flip_x": true

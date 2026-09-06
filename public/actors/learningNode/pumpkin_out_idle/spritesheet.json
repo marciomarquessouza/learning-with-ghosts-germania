@@ -62,8 +62,8 @@
     },
     "learningNode_pumpkin_out_idle_3": {
       "frame": {
-        "x": 309,
-        "y": 0,
+        "x": 0,
+        "y": 204,
         "w": 103,
         "h": 204
       },
@@ -82,8 +82,8 @@
     },
     "learningNode_pumpkin_out_idle_4": {
       "frame": {
-        "x": 412,
-        "y": 0,
+        "x": 103,
+        "y": 204,
         "w": 103,
         "h": 204
       },
@@ -102,8 +102,8 @@
     },
     "learningNode_pumpkin_out_idle_5": {
       "frame": {
-        "x": 515,
-        "y": 0,
+        "x": 206,
+        "y": 204,
         "w": 103,
         "h": 204
       },
@@ -123,7 +123,7 @@
     "learningNode_pumpkin_out_idle_6": {
       "frame": {
         "x": 0,
-        "y": 204,
+        "y": 408,
         "w": 103,
         "h": 204
       },
@@ -144,10 +144,10 @@
   "meta": {
     "image": "spritesheet.png",
     "size": {
-      "w": 618,
-      "h": 408
+      "w": 309,
+      "h": 612
     },
     "scale": "0.5",
-    "flip_x": true
+    "flip_x": false
   }
 }

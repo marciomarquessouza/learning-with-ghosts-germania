@@ -102,8 +102,8 @@
     },
     "learningNode_sprouting_transition_5": {
       "frame": {
-        "x": 725,
-        "y": 0,
+        "x": 0,
+        "y": 242,
         "w": 145,
         "h": 242
       },
@@ -122,7 +122,7 @@
     },
     "learningNode_sprouting_transition_6": {
       "frame": {
-        "x": 0,
+        "x": 145,
         "y": 242,
         "w": 145,
         "h": 242
@@ -142,7 +142,7 @@
     },
     "learningNode_sprouting_transition_7": {
       "frame": {
-        "x": 145,
+        "x": 290,
         "y": 242,
         "w": 145,
         "h": 242
@@ -162,7 +162,7 @@
     },
     "learningNode_sprouting_transition_8": {
       "frame": {
-        "x": 290,
+        "x": 435,
         "y": 242,
         "w": 145,
         "h": 242
@@ -182,7 +182,7 @@
     },
     "learningNode_sprouting_transition_9": {
       "frame": {
-        "x": 435,
+        "x": 580,
         "y": 242,
         "w": 145,
         "h": 242
@@ -202,46 +202,6 @@
     },
     "learningNode_sprouting_transition_10": {
       "frame": {
-        "x": 580,
-        "y": 242,
-        "w": 145,
-        "h": 242
-      },
-      "rotated": false,
-      "trimmed": false,
-      "spriteSourceSize": {
-        "x": 0,
-        "y": 0,
-        "w": 145,
-        "h": 242
-      },
-      "sourceSize": {
-        "w": 145,
-        "h": 242
-      }
-    },
-    "learningNode_sprouting_transition_11": {
-      "frame": {
-        "x": 725,
-        "y": 242,
-        "w": 145,
-        "h": 242
-      },
-      "rotated": false,
-      "trimmed": false,
-      "spriteSourceSize": {
-        "x": 0,
-        "y": 0,
-        "w": 145,
-        "h": 242
-      },
-      "sourceSize": {
-        "w": 145,
-        "h": 242
-      }
-    },
-    "learningNode_sprouting_transition_12": {
-      "frame": {
         "x": 0,
         "y": 484,
         "w": 145,
@@ -260,7 +220,7 @@
         "h": 242
       }
     },
-    "learningNode_sprouting_transition_13": {
+    "learningNode_sprouting_transition_11": {
       "frame": {
         "x": 145,
         "y": 484,
@@ -280,7 +240,7 @@
         "h": 242
       }
     },
-    "learningNode_sprouting_transition_14": {
+    "learningNode_sprouting_transition_12": {
       "frame": {
         "x": 290,
         "y": 484,
@@ -300,7 +260,7 @@
         "h": 242
       }
     },
-    "learningNode_sprouting_transition_15": {
+    "learningNode_sprouting_transition_13": {
       "frame": {
         "x": 435,
         "y": 484,
@@ -320,7 +280,7 @@
         "h": 242
       }
     },
-    "learningNode_sprouting_transition_16": {
+    "learningNode_sprouting_transition_14": {
       "frame": {
         "x": 580,
         "y": 484,
@@ -340,10 +300,50 @@
         "h": 242
       }
     },
+    "learningNode_sprouting_transition_15": {
+      "frame": {
+        "x": 0,
+        "y": 726,
+        "w": 145,
+        "h": 242
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 145,
+        "h": 242
+      },
+      "sourceSize": {
+        "w": 145,
+        "h": 242
+      }
+    },
+    "learningNode_sprouting_transition_16": {
+      "frame": {
+        "x": 145,
+        "y": 726,
+        "w": 145,
+        "h": 242
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 145,
+        "h": 242
+      },
+      "sourceSize": {
+        "w": 145,
+        "h": 242
+      }
+    },
     "learningNode_sprouting_transition_17": {
       "frame": {
-        "x": 725,
-        "y": 484,
+        "x": 290,
+        "y": 726,
         "w": 145,
         "h": 242
       },
@@ -362,7 +362,7 @@
     },
     "learningNode_sprouting_transition_18": {
       "frame": {
-        "x": 0,
+        "x": 435,
         "y": 726,
         "w": 145,
         "h": 242
@@ -384,9 +384,10 @@
   "meta": {
     "image": "spritesheet.png",
     "size": {
-      "w": 870,
+      "w": 725,
       "h": 968
     },
-    "scale": "0.5"
+    "scale": "0.5",
+    "flip_x": false
   }
 }

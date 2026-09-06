@@ -1,0 +1,88 @@
+actor: learningNode
+
+defaults:
+  columns: 3
+  scale: 0.5
+  flipX: true
+
+animations:
+  - floor_transition
+  - pumpkin_default
+  - pumpkin_evil_idle
+  - pumpkin_evil_walking
+  - pumpkin_full
+  - pumpkin_full_failure
+  - pumpkin_full_success
+  - pumpkin_full_walking
+  - pumpkin_out_idle
+  - pumpkin_side_idle
+  - sprouting_idle
+  - sprouting_talking
+  - sprouting_transition
+
+configs:
+  floor_transition:
+    columns: 4
+    #    scale: 0.5
+    flipX: false
+
+  pumpkin_default:
+    #    columns: 3
+    #    scale: 0.5
+    flipX: false
+
+  pumpkin_evil_idle:
+  #    columns: 3
+  #    scale: 0.5
+  #    flipX: true
+
+  pumpkin_evil_walking:
+    columns: 4
+  #    scale: 0.5
+  #    flipX: true
+
+  pumpkin_full:
+    columns: 2
+    flipX: false
+  #    scale: 0.5
+  #    flipX: true
+
+  pumpkin_full_failure:
+    columns: 4
+  #    scale: 0.5
+  #    flipX: true
+
+  pumpkin_full_success:
+    columns: 4
+  #    scale: 0.5
+  #    flipX: true
+
+  pumpkin_full_walking:
+    columns: 4
+  #    scale: 0.5
+  #    flipX: true
+
+  pumpkin_out_idle:
+    #    columns: 3
+    #    scale: 0.5
+    flipX: false
+
+  pumpkin_side_idle:
+    columns: 2
+    #    scale: 0.5
+    flipX: false
+
+  sprouting_idle:
+    #    columns: 3
+    #    scale: 0.5
+    flipX: false
+
+  sprouting_talking:
+    #    columns: 3
+    #    scale: 0.5
+    flipX: false
+
+  sprouting_transition:
+    columns: 5
+    #    scale: 0.5
+    flipX: false

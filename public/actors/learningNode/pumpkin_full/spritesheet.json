@@ -42,8 +42,8 @@
     },
     "learningNode_pumpkin_full_2": {
       "frame": {
-        "x": 188,
-        "y": 0,
+        "x": 0,
+        "y": 201,
         "w": 94,
         "h": 201
       },
@@ -64,9 +64,10 @@
   "meta": {
     "image": "spritesheet.png",
     "size": {
-      "w": 564,
-      "h": 201
+      "w": 188,
+      "h": 402
     },
-    "scale": "0.5"
+    "scale": "0.5",
+    "flip_x": false
   }
 }
