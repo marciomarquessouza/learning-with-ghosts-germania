@@ -31,6 +31,23 @@ try {
   }
 }
 
+async function calculateSpritesheetColumns(animationDir) {
+  const entries = await fs.readdir(animationDir, {
+    withFileTypes: true,
+  });
+
+  const frameCount = entries.filter(
+    (entry) =>
+      entry.isFile() && path.extname(entry.name).toLowerCase() === ".png",
+  ).length;
+
+  if (frameCount === 0) {
+    throw new Error(`No PNG frames found in: ${animationDir}`);
+  }
+
+  return Math.ceil(Math.sqrt(frameCount));
+}
+
 const entries = await fs.readdir(actorAssetsDir, {
   withFileTypes: true,
 });
@@ -44,37 +61,49 @@ const readline = createInterface({
   output,
 });
 
-const columns = await readline.question("Columns [6]: ");
+const columns = await readline.question("Default Columns [3]: ");
 const scale = await readline.question("Scale [1]: ");
 const flipX = await readline.question("FlipX [y/N]: ");
 
 readline.close();
 
-const configs = {
-  columns: Number(columns || 6),
+const defaultConfigs = {
+  columns: Number(columns || 3),
   scale: Number(scale || 1),
   flipX: flipX.trim().toLowerCase() === "y",
 };
 
+const configs = new Map();
+
+for (const animation of animations) {
+  const animationDir = path.join(actorAssetsDir, animation);
+  const columns = await calculateSpritesheetColumns(animationDir);
+  const columnsRow =
+    columns === defaultConfigs.columns
+      ? `#    columns: ${defaultConfigs.columns}`
+      : `     columns: ${columns}`;
+
+  configs.set(
+    animation,
+    `   ${animation}:
+${columnsRow}
+#    scale: ${defaultConfigs.scale}
+#    flipX: ${defaultConfigs.flipX}`,
+  );
+}
+
 const yaml = `actor: ${actor}
 
 defaults:
-  columns: ${configs.columns}
-  scale: ${configs.scale}
-  flipX: ${configs.flipX}
+  columns: ${defaultConfigs.columns}
+  scale: ${defaultConfigs.scale}
+  flipX: ${defaultConfigs.flipX}
 
 animations:
 ${animations.map((animation) => `  - ${animation}`).join("\n")}
 
-# configs:
-${animations
-  .map(
-    (animation) => `#   ${animation}:
-#     columns: ${configs.columns}
-#     scale: ${configs.scale}
-#     flipX: ${configs.flipX}`,
-  )
-  .join("\n\n")}
+configs:
+${animations.map((animation) => configs.get(animation)).join("\n\n")}
 `;
 
 await fs.mkdir(actorConfigDir, {

@@ -519,6 +519,16 @@ npm run dev
 
 Spritesheets for animations are generated automatically from the raw frames exported from DragonBones.
 
+```bash
+npm run sprite <actor>
+```
+
+Example
+
+```bash
+npm run sprite guardian
+```
+
 ### Source directory
 
 Export the animation frames using the following directory structure:
@@ -554,7 +564,7 @@ eliza_teaching_3.png
 
 Each actor uses a `spritesheet.yaml` file to define its animations and generation settings.
 
-To create a default configuration based on the animation directories already available for an actor, run:
+To create the configuration based on the animation directories already available for an actor, run:
 
 ```bash
 yarn sprite:default-config -- <actor>
@@ -575,10 +585,38 @@ asset-sources/dragonbones/actors/eliza/
 and creates:
 
 ```text
-asset-sources/dragonbones/actors/eliza/spritesheet.yaml
+src/game/actors/eliza/spritesheet.yaml
 ```
 
-For example, given:
+During configuration, the script asks for the default values:
+
+```text
+Default Columns [6]:
+Scale [1]:
+FlipX [y/N]:
+```
+
+Pressing Enter without providing a value uses the value shown between brackets.
+
+The script also analyzes the number of PNG frames available in each animation directory and automatically calculates an appropriate number of columns for that animation.
+
+The number of columns is calculated using:
+
+```text
+ceil(sqrt(frame count))
+```
+
+For example:
+
+```text
+6 frames  → 3 columns
+12 frames → 4 columns
+24 frames → 5 columns
+36 frames → 6 columns
+60 frames → 8 columns
+```
+
+Given the following source directories:
 
 ```text
 eliza/
@@ -587,7 +625,7 @@ eliza/
 └── speaking/
 ```
 
-the generated configuration will contain:
+the generated configuration could look like:
 
 ```yaml
 actor: eliza
@@ -595,123 +633,33 @@ actor: eliza
 defaults:
   columns: 6
   scale: 1
+  flipX: false
 
 animations:
   - idle
   - teaching
   - speaking
-```
 
-### Configure animations
-
-The `defaults` section defines the options shared by all animations:
-
-```yaml
-defaults:
-  columns: 6
-  scale: 0.8
-```
-
-Individual animations can override these values using `configs`:
-
-```yaml
 configs:
+  idle:
+    columns: 6
+  #    scale: 1
+  #    flipX: false
+
   teaching:
-    columns: 8
-    scale: 0.7
+    columns: 5
+  #    scale: 1
+  #    flipX: false
 
   speaking:
-    flipX: true
+    columns: 7
+#    scale: 1
+#    flipX: false
 ```
 
-The available configuration options are:
+A `configs` entry is generated for every discovered animation. This makes the automatically calculated number of columns explicit and allows the configuration of each animation to be adjusted independently.
 
-```text
-columns   Number of columns in the spritesheet
-scale     Scale factor applied to each frame
-count     Limit the number of frames used
-flipX     Apply a horizontal flip to all frames
-```
-
-### Generate spritesheets
-
-To generate all animations configured for an actor:
-
-```bash
-yarn sprite -- <actor>
-```
-
-Example:
-
-```bash
-yarn sprite -- eliza
-```
-
-To generate only one configured animation:
-
-```bash
-yarn sprite -- <actor> <animation>
-```
-
-Example:
-
-```bash
-yarn sprite -- eliza teaching
-```
-
-For each animation, the script will:
-
-1. Read the source frames from:
-
-```text
-asset-sources/dragonbones/actors/<actor>/<animation>/
-```
-
-2. Apply the default configuration and any animation-specific overrides.
-
-3. Generate the spritesheet and atlas in:
-
-```text
-public/actors/<actor>/<animation>/
-```
-
-Output files:
-
-```text
-spritesheet.png
-spritesheet.json
-```
-
-4. Automatically update the spritesheet registry in:
-
-```text
-src/constants/spritesheets.ts
-```
-
-### Example workflow
-
-1. Export the frames from DragonBones:
-
-```text
-asset-sources/dragonbones/actors/eliza/teaching/
-asset-sources/dragonbones/actors/eliza/speaking/
-```
-
-2. Generate the initial configuration:
-
-```bash
-yarn sprite:default-config -- eliza
-```
-
-3. Adjust `spritesheet.yaml` defaults or animation-specific settings when necessary.
-
-4. Generate all configured spritesheets:
-
-```bash
-yarn sprite -- eliza
-```
-
-The spritesheets, JSON atlases, and spritesheet constants will be generated automatically.
+The commented `scale` and `flipX` properties can be uncommented when an animation needs to override the defaults.
 
 ### Animation configuration
 
@@ -725,6 +673,7 @@ actor: guardian
 defaults:
   columns: 6
   scale: 0.31
+  flipX: false
 
 animations:
   - idle
@@ -733,10 +682,17 @@ animations:
   - lean_speaking
 
 configs:
+  idle:
+    columns: 6
+
   lean:
-    columns: 8
+    columns: 5
+
+  lean_idle:
+    columns: 6
 
   lean_speaking:
+    columns: 7
     scale: 0.4
     flipX: true
 ```
@@ -757,6 +713,7 @@ Defines the settings applied to every animation unless overridden in `configs`:
 defaults:
   columns: 6
   scale: 0.31
+  flipX: false
 ```
 
 Supported options:
@@ -798,42 +755,130 @@ generates every animation listed in `animations`.
 
 #### `configs`
 
-Defines optional overrides for individual animations:
+Defines animation-specific configuration:
 
 ```yaml
 configs:
+  idle:
+    columns: 6
+
   lean:
-    columns: 8
+    columns: 5
+
+  lean_idle:
+    columns: 6
 
   lean_speaking:
+    columns: 7
     scale: 0.4
     flipX: true
 ```
 
-These values are merged with `defaults`. Only the properties that differ from the defaults need to be specified.
+When the initial YAML is created, the script calculates `columns` independently for every animation based on its number of PNG frames.
 
-For example:
+Other properties can be added to override the defaults for a specific animation.
+
+The animation configuration is merged with `defaults`. For example:
 
 ```yaml
 defaults:
   columns: 6
   scale: 0.31
+  flipX: false
 
 configs:
   lean:
-    columns: 8
+    columns: 5
 ```
 
 The effective configuration for `lean` is:
 
 ```yaml
-columns: 8
+columns: 5
 scale: 0.31
+flipX: false
 ```
 
-while all other animations continue using:
+### Generate spritesheets
 
-```yaml
-columns: 6
-scale: 0.31
+To generate all animations configured for an actor:
+
+```bash
+yarn sprite -- <actor>
 ```
+
+Example:
+
+```bash
+yarn sprite -- eliza
+```
+
+To generate only one configured animation:
+
+```bash
+yarn sprite -- <actor> <animation>
+```
+
+Example:
+
+```bash
+yarn sprite -- eliza teaching
+```
+
+If the actor does not have a `spritesheet.yaml` yet, the sprite build script automatically starts the configuration process before generating the spritesheets.
+
+For each animation, the script will:
+
+1. Read the source frames from:
+
+```text
+asset-sources/dragonbones/actors/<actor>/<animation>/
+```
+
+2. Apply the default configuration and animation-specific configuration.
+
+3. Generate the spritesheet and atlas in:
+
+```text
+public/actors/<actor>/<animation>/
+```
+
+Output files:
+
+```text
+spritesheet.png
+spritesheet.json
+```
+
+4. Automatically update the spritesheet registry in:
+
+```text
+src/constants/spritesheets.ts
+```
+
+### Example workflow
+
+1. Export the frames from DragonBones:
+
+```text
+asset-sources/dragonbones/actors/eliza/teaching/
+asset-sources/dragonbones/actors/eliza/speaking/
+```
+
+2. Generate the spritesheet configuration:
+
+```bash
+yarn sprite:default-config -- eliza
+```
+
+3. Enter the desired default `columns`, `scale`, and `flipX` values.
+
+4. Review `src/game/actors/eliza/spritesheet.yaml` and adjust animation-specific settings when necessary.
+
+5. Generate all configured spritesheets:
+
+```bash
+yarn sprite -- eliza
+```
+
+The spritesheets, JSON atlases, and spritesheet constants will be generated automatically.
