@@ -62,8 +62,8 @@
     },
     "player_talking_3": {
       "frame": {
-        "x": 330,
-        "y": 0,
+        "x": 0,
+        "y": 252,
         "w": 110,
         "h": 252
       },
@@ -82,7 +82,7 @@
     },
     "player_talking_4": {
       "frame": {
-        "x": 0,
+        "x": 110,
         "y": 252,
         "w": 110,
         "h": 252
@@ -104,9 +104,10 @@
   "meta": {
     "image": "spritesheet.png",
     "size": {
-      "w": 440,
+      "w": 330,
       "h": 504
     },
-    "scale": "0.3"
+    "scale": "0.3",
+    "flip_x": false
   }
 }

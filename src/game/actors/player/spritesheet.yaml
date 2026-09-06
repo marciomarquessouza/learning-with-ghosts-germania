@@ -1,0 +1,33 @@
+actor: player
+
+defaults:
+  columns: 3
+  scale: 0.3
+  flipX: false
+
+animations:
+  - idle
+  - inclined
+  - move
+  - talking
+
+configs:
+   idle:
+#    columns: 3
+#    scale: 0.3
+#    flipX: false
+
+   inclined:
+#    columns: 3
+#    scale: 0.3
+#    flipX: false
+
+   move:
+#    columns: 3
+#    scale: 0.3
+#    flipX: false
+
+   talking:
+#    columns: 3
+#    scale: 0.3
+#    flipX: false
