@@ -1,0 +1,21 @@
+actor: jailer
+
+defaults:
+  columns: 3
+  scale: 1
+  flipX: false
+
+animations:
+  - idle
+  - talking
+
+configs:
+   idle:
+#    columns: 3
+#    scale: 1
+#    flipX: false
+
+   talking:
+#    columns: 3
+#    scale: 1
+#    flipX: false
