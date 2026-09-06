@@ -3,6 +3,8 @@ import fs from "node:fs";
 import path from "node:path";
 import YAML from "yaml";
 
+const rootDir = process.cwd();
+
 function runCommand(command, args) {
   const result = spawnSync(command, args, {
     stdio: "inherit",
@@ -19,11 +21,19 @@ function runCommand(command, args) {
   }
 }
 
-function loadActorConfig(actorDir) {
+function loadActorConfig(actorDir, actor) {
   const configPath = path.join(actorDir, "spritesheet.yaml");
 
   if (!fs.existsSync(configPath)) {
-    throw new Error(`Spritesheet config not found: ${configPath}`);
+    console.log("⚠️ spritesheet.yaml not found. Creating a new one");
+    const defaultConfigScriptPath = path.join(
+      rootDir,
+      "scripts",
+      "animations",
+      "build-default-spritesheet-config.mjs",
+    );
+
+    runCommand("node", [defaultConfigScriptPath, actor]);
   }
 
   return YAML.parse(fs.readFileSync(configPath, "utf8"));
@@ -31,27 +41,18 @@ function loadActorConfig(actorDir) {
 
 const [actor, requestedAnimation] = process.argv.slice(2);
 
-if (requestedAnimation && !animations.includes(requestedAnimation)) {
-  console.error(
-    `Animation "${requestedAnimation}" is not configured for actor "${actor}".`,
-  );
-  process.exit(1);
-}
-
 if (!actor) {
   console.error("Usage: yarn sprite <actor> [animation]");
   process.exit(1);
 }
 
-const rootDir = process.cwd();
+const actorGamePath = process.env.ACTOR_GAME_PATH ?? "src/game/actors";
+const actorAssetSourcesPath =
+  process.env.ACTOR_DRAGONBONES_PATH ?? "asset-sources/dragonbones/actors";
 
-const actorDir = path.join(
-  rootDir,
-  "asset-sources",
-  "dragonbones",
-  "actors",
-  actor,
-);
+const actorConfigDir = path.join(rootDir, actorGamePath, actor);
+
+const actorAssetSourcesDir = path.join(rootDir, actorAssetSourcesPath, actor);
 
 const pythonScriptPath = path.join(
   rootDir,
@@ -67,11 +68,18 @@ const updateConstantsScriptPath = path.join(
   "update-spritesheets-constants.mjs",
 );
 
-const actorConfig = loadActorConfig(actorDir);
+const actorConfig = loadActorConfig(actorConfigDir, actor);
 
 const defaults = actorConfig.defaults ?? {};
 const animations = actorConfig.animations ?? [];
 const configs = actorConfig.configs ?? {};
+
+if (requestedAnimation && !animations.includes(requestedAnimation)) {
+  console.error(
+    `Animation "${requestedAnimation}" is not configured for actor "${actor}".`,
+  );
+  process.exit(1);
+}
 
 const animationNames = requestedAnimation ? [requestedAnimation] : animations;
 
@@ -85,7 +93,7 @@ for (const animation of animationNames) {
 
   const basename = `${actor}_${animation}`;
 
-  const inputDir = path.join(actorDir, animation);
+  const inputDir = path.join(actorAssetSourcesDir, animation);
 
   const outputDir = path.join(rootDir, "public", "actors", actor, animation);
 
