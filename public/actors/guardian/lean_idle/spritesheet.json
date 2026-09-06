@@ -4,110 +4,110 @@
       "frame": {
         "x": 0,
         "y": 0,
-        "w": 628,
-        "h": 786
+        "w": 596,
+        "h": 746
       },
       "rotated": false,
       "trimmed": false,
       "spriteSourceSize": {
         "x": 0,
         "y": 0,
-        "w": 628,
-        "h": 786
+        "w": 596,
+        "h": 746
       },
       "sourceSize": {
-        "w": 628,
-        "h": 786
+        "w": 596,
+        "h": 746
       }
     },
     "guardian_lean_idle_1": {
       "frame": {
-        "x": 628,
+        "x": 596,
         "y": 0,
-        "w": 628,
-        "h": 786
+        "w": 596,
+        "h": 746
       },
       "rotated": false,
       "trimmed": false,
       "spriteSourceSize": {
         "x": 0,
         "y": 0,
-        "w": 628,
-        "h": 786
+        "w": 596,
+        "h": 746
       },
       "sourceSize": {
-        "w": 628,
-        "h": 786
+        "w": 596,
+        "h": 746
       }
     },
     "guardian_lean_idle_2": {
       "frame": {
-        "x": 1256,
+        "x": 1192,
         "y": 0,
-        "w": 628,
-        "h": 786
+        "w": 596,
+        "h": 746
       },
       "rotated": false,
       "trimmed": false,
       "spriteSourceSize": {
         "x": 0,
         "y": 0,
-        "w": 628,
-        "h": 786
+        "w": 596,
+        "h": 746
       },
       "sourceSize": {
-        "w": 628,
-        "h": 786
+        "w": 596,
+        "h": 746
       }
     },
     "guardian_lean_idle_3": {
       "frame": {
-        "x": 1884,
-        "y": 0,
-        "w": 628,
-        "h": 786
+        "x": 0,
+        "y": 746,
+        "w": 596,
+        "h": 746
       },
       "rotated": false,
       "trimmed": false,
       "spriteSourceSize": {
         "x": 0,
         "y": 0,
-        "w": 628,
-        "h": 786
+        "w": 596,
+        "h": 746
       },
       "sourceSize": {
-        "w": 628,
-        "h": 786
+        "w": 596,
+        "h": 746
       }
     },
     "guardian_lean_idle_4": {
       "frame": {
-        "x": 2512,
-        "y": 0,
-        "w": 628,
-        "h": 786
+        "x": 596,
+        "y": 746,
+        "w": 596,
+        "h": 746
       },
       "rotated": false,
       "trimmed": false,
       "spriteSourceSize": {
         "x": 0,
         "y": 0,
-        "w": 628,
-        "h": 786
+        "w": 596,
+        "h": 746
       },
       "sourceSize": {
-        "w": 628,
-        "h": 786
+        "w": 596,
+        "h": 746
       }
     }
   },
   "meta": {
     "image": "spritesheet.png",
     "size": {
-      "w": 3768,
-      "h": 786
+      "w": 1788,
+      "h": 1492
     },
-    "scale": "0.4",
+    "scale": "0.38",
     "flip_x": false
   }
 }

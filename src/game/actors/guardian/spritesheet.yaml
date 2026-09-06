@@ -1,0 +1,33 @@
+actor: guardian
+
+defaults:
+  columns: 3
+  scale: 0.38
+  flipX: false
+
+animations:
+  - idle
+  - lean
+  - lean_idle
+  - lean_speaking
+
+configs:
+   idle:
+#    columns: 3
+#    scale: 0.38
+#    flipX: false
+
+   lean:
+#    columns: 3
+#    scale: 0.38
+#    flipX: false
+
+   lean_idle:
+#    columns: 3
+#    scale: 0.38
+#    flipX: false
+
+   lean_speaking:
+#    columns: 3
+#    scale: 0.38
+#    flipX: false
