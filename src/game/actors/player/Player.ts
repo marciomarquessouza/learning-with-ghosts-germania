@@ -34,6 +34,7 @@ export class Player {
   > | null = null;
   public audioRecordButton = new AudioRecordButton();
   public animations = new PlayerAnimations();
+  private inputLocked = false;
   public sawMovementInstructions = false;
   public hadMovement = false;
 
@@ -96,8 +97,16 @@ export class Player {
     this.stateMachine.changeTo(Player.STATES.INCLINED);
   }
 
+  lockInput() {
+    this.inputLocked = true;
+  }
+
+  unlockInput() {
+    this.inputLocked = false;
+  }
+
   public getHorizontalInput() {
-    if (!this.sprite) {
+    if (!this.sprite || this.inputLocked) {
       return {
         left: false,
         right: false,

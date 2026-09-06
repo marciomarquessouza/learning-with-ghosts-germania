@@ -94,6 +94,7 @@ export class KnowledgeTroop {
 
   private followTarget(learningNode: LearningNode) {
     if (!this.isFollowingTarget) return;
+
     const lnGlobalPositionX = learningNode.getWorldPosition().x;
     const targetGlobalPositionX = this.player.getWorldPosition().x;
 
@@ -138,6 +139,10 @@ export class KnowledgeTroop {
 
   public stopToFollowPlayer() {
     this.isFollowingTarget = false;
+    this.members.forEach((learningNode) => {
+      learningNode.stateMachine.changeTo(LearningNode.STATES.FULL_IDLE);
+      learningNode.sprite.setVelocityX(0);
+    });
   }
 
   public moveToMemoryGuardian() {

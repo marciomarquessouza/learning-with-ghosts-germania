@@ -4,6 +4,7 @@ export const DREAM_SCENE_STATES = {
   PERFORMING_ACTION: "PERFORMING_ACTION",
   PERFORMING_LESSON: "PERFORMING_LESSON",
   POST_LESSON: "POST_LESSON",
+  PERFORMING_REVIEW: "PerformingReviewState",
 } as const;
 
 export type SceneStateNames =

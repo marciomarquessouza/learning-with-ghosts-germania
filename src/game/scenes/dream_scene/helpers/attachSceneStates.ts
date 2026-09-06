@@ -6,6 +6,7 @@ import { IntroState } from "../states/IntroState";
 import { PerformingActionState } from "../states/PerformingActionState";
 import { PerformingLessonState } from "../states/PerformingLessonState";
 import { PostLessonState } from "../states/PostLessonState";
+import { PerformingReviewState } from "../states/PerformingReviewState";
 
 export function attachSceneStates(
   stateMachine: StateMachine,
@@ -16,5 +17,6 @@ export function attachSceneStates(
     .addState(SCENE_STATES.INTRO, IntroState, scene)
     .addState(SCENE_STATES.PERFORMING_ACTION, PerformingActionState, scene)
     .addState(SCENE_STATES.PERFORMING_LESSON, PerformingLessonState, scene)
-    .addState(SCENE_STATES.POST_LESSON, PostLessonState, scene);
+    .addState(SCENE_STATES.POST_LESSON, PostLessonState, scene)
+    .addState(SCENE_STATES.PERFORMING_REVIEW, PerformingReviewState, scene);
 }

@@ -50,9 +50,7 @@ export class Guardian {
   }
 
   async fadeIn(): Promise<void> {
-    console.log("#HERE alpha", this.sprite.alpha);
     await this.animations.playFadeIn();
-    console.log("#HERE alpha", this.sprite.alpha);
     this.stateMachine.changeTo(Guardian.STATES.IDLE);
   }
 
@@ -85,7 +83,7 @@ export class Guardian {
   }
 
   update(delta: number) {
-    this.stateMachine.update(delta);
+    this.stateMachine?.update(delta);
   }
 
   destroy() {

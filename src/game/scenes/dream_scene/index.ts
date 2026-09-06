@@ -50,16 +50,14 @@ export class DreamScene extends Phaser.Scene {
   public gameAudio = new GameAudio();
   public dialogueManager = new DialogueManager();
   public flowController?: FlowController<SceneStateNames, DreamScene>;
+  public stateMachine!: StateMachine;
   public scenario = new CemeteryScenario();
-  public tutorPositionX = 0;
 
   private _lessonManager?: LessonManager;
 
   public get lessonManager(): LessonManager {
     return getRequired(this._lessonManager, "DreamScene", "lessonManager");
   }
-
-  private stateMachine!: StateMachine;
 
   constructor() {
     super({ key: GAME_SCENES.DREAM_SCENE });
@@ -115,8 +113,6 @@ export class DreamScene extends Phaser.Scene {
       flipX: true,
     });
 
-    this.tutorPositionX = this.tutor.container.x;
-
     this.tutor.addCollisionWithPlayer(this.player.sprite);
     this.knowledgeTroop.create(this, this.player, this.lessonManager.lesson);
 
@@ -150,6 +146,7 @@ export class DreamScene extends Phaser.Scene {
     this.tutor.update(delta);
     this.learningNode.update(delta);
     this.knowledgeTroop.update(delta);
+    this.guardian.update(delta);
   }
 
   destroy() {
@@ -161,6 +158,7 @@ export class DreamScene extends Phaser.Scene {
     this.knowledgeTroop.destroy();
     this.player.destroy();
     this.lessonManager.destroy();
+    this.guardian.destroy();
   }
 }
 

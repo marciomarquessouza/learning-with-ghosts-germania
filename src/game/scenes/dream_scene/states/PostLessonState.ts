@@ -1,30 +1,53 @@
 import { BaseState } from "@/libs/game/state-machine/BaseState";
-import { createInputController } from "@/libs/inputs/createInputController";
-import { InputController } from "@/libs/inputs/InputController";
 import { DreamScene } from "..";
+import { PositionTrigger } from "@/libs/game/interaction/PositionTrigger";
+import { BeforeReviewFlow } from "../flows/lesson/3-review/BeforeReview.flow";
 
 export class PostLessonState extends BaseState {
-  private input: InputController;
+  private guardianTrigger?: PositionTrigger;
 
   constructor(
     scene: Phaser.Scene,
     private dreamScene: DreamScene,
   ) {
     super(scene);
-    this.input = createInputController(scene);
   }
 
   enter(): void {
     this.dreamScene.gameCamera.zoomTo({ zoom: 1, duration: 1_000 });
     this.dreamScene.hud.setVisible(true);
     this.dreamScene.flowController?.clearNextFlow();
-    this.dreamScene.player.enterIdle();
+
     this.dreamScene.knowledgeTroop.startToFollowTarget();
+
+    const tutorPositionX = this.dreamScene.gameCamera.camera.width + 200;
+    this.guardianTrigger = new PositionTrigger(
+      { targetX: tutorPositionX + 400, once: true },
+      () => {
+        if (!this.dreamScene.flowController) {
+          this.stateMachine.log("Scene flow was not created", "error");
+          return;
+        }
+
+        this.dreamScene.flowController
+          .run(BeforeReviewFlow)
+          .then(({ nextState }) => {
+            this.changeTo(nextState ?? DreamScene.STATES.IDLE);
+          })
+          .catch((error) => {
+            this.stateMachine.log(error, "error");
+            this.changeTo(DreamScene.STATES.IDLE);
+          });
+      },
+    );
   }
 
   handleInput(): void {}
 
-  update(): void {}
+  update(): void {
+    const triggerX = this.dreamScene.player.sprite.x;
+    this.guardianTrigger?.update(triggerX);
+  }
 
   exit(): void {}
 }
