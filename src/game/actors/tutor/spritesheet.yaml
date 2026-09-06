@@ -1,0 +1,33 @@
+actor: tutor
+
+defaults:
+  columns: 3
+  scale: 0.8
+  flipX: false
+
+animations:
+  - idle
+  - leaving
+  - sowing
+  - teaching
+
+configs:
+   idle:
+     columns: 7
+#    scale: 0.8
+#    flipX: false
+
+   leaving:
+#    columns: 3
+#    scale: 0.8
+#    flipX: false
+
+   sowing:
+     columns: 6
+#    scale: 0.8
+#    flipX: false
+
+   teaching:
+     columns: 4
+#    scale: 0.8
+#    flipX: false
