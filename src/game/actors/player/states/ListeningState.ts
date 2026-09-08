@@ -15,6 +15,7 @@ export class ListeningState extends BaseState {
 
   enter(): void {
     this.player.animations.playIdle();
+    this.player.sprite.setVelocityX(0);
 
     this.removeListeners.push(
       events.game.sync.on("dialogue/set-mood", ({ actor, mood }) => {

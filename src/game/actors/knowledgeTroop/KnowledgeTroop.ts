@@ -30,6 +30,10 @@ export class KnowledgeTroop {
     return getRequired(this._lesson, "KnowledgeTroop", "_lesson");
   }
 
+  public get isEmpty(): boolean {
+    return this.members.size === 0;
+  }
+
   public create(scene: Phaser.Scene, player: Player, lesson: Lesson) {
     this._scene = scene;
     this._player = player;
