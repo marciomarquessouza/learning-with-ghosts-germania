@@ -13,7 +13,8 @@ export class Tutor {
   private _scene?: Phaser.Scene;
   private _container?: Phaser.GameObjects.Container;
   private _sprite?: Phaser.Types.Physics.Arcade.SpriteWithDynamicBody;
-  private stateMachine!: StateMachine;
+  private stateMachine?: StateMachine;
+  private _destroyed = true;
   private resolveSowing: (() => void) | null = null;
 
   public blockerZone = new TutorBlockerZone();
@@ -31,13 +32,17 @@ export class Tutor {
     return getRequired(this._sprite, "Tutor", "_sprite");
   }
 
+  public get isDestroyed(): boolean {
+    return this._destroyed;
+  }
+
   preload(scene: Phaser.Scene) {
     this.animations.preload(scene);
   }
 
   create(scene: Phaser.Scene, payload: ActorPayload) {
     const { startX, startY, scale, flipX } = payload;
-
+    this._destroyed = false;
     this._scene = scene;
 
     this._container = scene.add.container(startX, startY);
@@ -71,15 +76,15 @@ export class Tutor {
   }
 
   enterIdle() {
-    this.stateMachine.changeTo(Tutor.STATES.IDLE);
+    this.stateMachine?.changeTo(Tutor.STATES.IDLE);
   }
 
   enterTeaching() {
-    this.stateMachine.changeTo(Tutor.STATES.TEACHING);
+    this.stateMachine?.changeTo(Tutor.STATES.TEACHING);
   }
 
   enterAway() {
-    this.stateMachine.changeTo(Tutor.STATES.AWAY);
+    this.stateMachine?.changeTo(Tutor.STATES.AWAY);
   }
 
   public async leaveScene() {
@@ -89,7 +94,7 @@ export class Tutor {
   async waitForSowing(): Promise<void> {
     return new Promise((resolve) => {
       this.resolveSowing = resolve;
-      this.stateMachine.changeTo(Tutor.STATES.SOWING);
+      this.stateMachine?.changeTo(Tutor.STATES.SOWING);
     });
   }
 
@@ -107,13 +112,26 @@ export class Tutor {
   }
 
   update(delta: number) {
+    if (this._destroyed) return;
     this.stateMachine?.updateAndHandleInput(delta);
   }
 
   destroy() {
-    this.container.destroy();
-    this.sprite.destroy();
-    this.stateMachine.clear();
+    if (this._destroyed) return;
+    this._destroyed = true;
+
+    this.resolveSowing?.();
+    this.resolveSowing = null;
+
+    this.stateMachine?.clear();
     this.blockerZone.destroy();
+
+    this._container?.destroy();
+    this.sprite.destroy();
+
+    this.stateMachine = undefined;
+    this._sprite = undefined;
+    this._container = undefined;
+    this._scene = undefined;
   }
 }

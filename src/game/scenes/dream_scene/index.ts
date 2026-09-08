@@ -139,6 +139,11 @@ export class DreamScene extends Phaser.Scene {
     this.stateMachine.changeTo(nextState);
   }
 
+  public async removeTutor(): Promise<void> {
+    await this.tutor.leaveScene();
+    this.tutor.destroy();
+  }
+
   update(time: number, delta: number) {
     this.stateMachine.updateAndHandleInput(delta);
     this.scenario.update();
