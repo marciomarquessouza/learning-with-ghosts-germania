@@ -13,6 +13,7 @@ export const DREAM_SCENE_FLOWS = {
   LESSON_SUCCESS: "LessonSuccessFlow",
   LESSON_FAILURE: "LessonFailureFlow",
   LESSON_CONCLUSION: "LessonConclusionFlow",
+  POST_LESSON: "PostLessonFlow",
   // REVIEW FLOWS
   BEFORE_REVIEW: "BeforeReviewFlow",
 } as const;

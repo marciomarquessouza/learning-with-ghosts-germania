@@ -2,6 +2,7 @@ import { BaseState } from "@/libs/game/state-machine/BaseState";
 import { DreamScene } from "..";
 import { PositionTrigger } from "@/libs/game/interaction/PositionTrigger";
 import { BeforeReviewFlow } from "../flows/lesson/3-review/BeforeReview.flow";
+import { PostLessonFlow } from "../flows/lesson/2-after_challenges/PostLesson.flow";
 
 export class PostLessonState extends BaseState {
   private guardianTrigger?: PositionTrigger;
@@ -14,6 +15,8 @@ export class PostLessonState extends BaseState {
   }
 
   enter(): void {
+    this.dreamScene.flowController?.run(PostLessonFlow);
+
     this.dreamScene.gameCamera.zoomTo({ zoom: 1, duration: 1_000 });
     this.dreamScene.hud.setVisible(true);
     this.dreamScene.flowController?.clearNextFlow();
