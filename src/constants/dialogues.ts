@@ -14,12 +14,14 @@ export const DIALOGUES = {
   },
 
   DREAM: {
+    // game
     INTRODUCTION: "dream.introduction",
+    // Lesson
     LESSON_PREPARATION: "dream.lesson_preparation",
     LESSON_BEGIN: "dream.lesson_begin",
     LESSON_FINISH: "dream.lesson_finish",
-    CHALLENGE_ACCEPTED: "dream.challenge_accepted",
-    RETURN_TO_CELL: "dream.return_to_cell",
+    // Review
+    REVIEW_INTRO: "dream.review_intro",
   },
 
   TRAIN: {

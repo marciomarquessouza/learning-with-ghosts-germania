@@ -5,6 +5,8 @@ import { FlowResult } from "@/libs/game/game-flow/types";
 import { runSteps, stepBase } from "@/libs/game/game-flow/runSteps";
 import { DREAM_SCENE_FLOWS } from "../../../constants/flows";
 import { attachGuardian } from "../../../helpers/attachGuardian";
+import { events } from "@/events/events";
+import { getDialogueLines } from "@/store/dialogueStore";
 
 export class BeforeReviewFlow extends Flow<SceneStateNames, DreamScene> {
   public flowName = DREAM_SCENE_FLOWS.BEFORE_REVIEW;
@@ -15,6 +17,18 @@ export class BeforeReviewFlow extends Flow<SceneStateNames, DreamScene> {
         attachGuardian(this.gameScene);
         await this.gameScene.guardian.fadeIn();
         await this.gameScene.guardian.lean();
+      }),
+      stepBase(() => this.delay(600)),
+      stepBase(() => {
+        this.gameScene.guardian.enterLeanSpeakingState();
+        return events.game.async.emitAsync("dialogue/show", {
+          lines: getDialogueLines("dream.review_intro"),
+        });
+      }),
+      stepBase(() => this.delay(300)),
+      stepBase(async () => {
+        this.gameScene.guardian.unlean();
+        return this.gameScene.guardian.enterIdleState();
       }),
     ]);
 

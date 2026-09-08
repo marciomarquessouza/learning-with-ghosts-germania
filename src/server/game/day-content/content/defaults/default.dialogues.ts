@@ -1,5 +1,5 @@
 import { ACTORS, MOODS } from "@/constants/game";
-import { alternatives, dialogue } from "@/libs/dialogues";
+import { dialogue } from "@/libs/dialogues";
 import { defineDialogues } from "@/libs/dialogues/defineDialogues";
 import { DefaultDialogues } from "@/libs/dialogues/types";
 
@@ -154,30 +154,24 @@ export const dialogues = defineDialogues<DefaultDialogues>({
     ],
   },
 
-  "dream.challenge_accepted": {
+  "dream.review_intro": {
     scene: "DreamScene",
     lines: [
-      alternatives.jailer.neutral`
-        Você realmente quer iniciar o desafio do dia agora?
-      `.alternatives(
-        {
-          id: "skip",
-          text: "NÃO - eu quero me preparar mais",
-        },
-        {
-          id: "challenge",
-          text: "SIM - eu quero fayer o desafio agora!",
-        },
-      ),
-    ],
-  },
-
-  "dream.return_to_cell": {
-    scene: "DreamScene",
-    lines: [
-      dialogue.player.neutral`
-        I suppose it's time to wake up...
-      `,
+      dialogue.guardian.neutral`
+        Olá sonhador.
+        Sou o Guardião da Memória.
+        Vejo que traz pequenos conhecimentos para mim.
+      `.reactions([{ character: ACTORS.GUARDIAN, mood: MOODS.NEUTRAL }]),
+      dialogue.guardian.neutral`
+        Caso se lembre corretamente o nome de cada conhecimento
+        Este será enviado ao Lago da Memória
+        E Mnemosyne cuidará dle...
+      `.reactions([{ character: ACTORS.GUARDIAN, mood: MOODS.NEUTRAL }]),
+      dialogue.guardian.neutral`
+        Mas caso não se recorde corretamente ou tenha esquecido em completo
+        Ele será enviado ao Lago do Esquecimento
+        Para os braços de Lethe
+      `.reactions([{ character: ACTORS.GUARDIAN, mood: MOODS.NEUTRAL }]),
     ],
   },
 

@@ -21,6 +21,7 @@ export class PostLessonState extends BaseState {
     this.dreamScene.knowledgeTroop.startToFollowTarget();
 
     const tutorPositionX = this.dreamScene.gameCamera.camera.width + 200;
+
     this.guardianTrigger = new PositionTrigger(
       { targetX: tutorPositionX + 400, once: true },
       () => {

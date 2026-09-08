@@ -1,0 +1,8 @@
+version: "0.2"
+ignorePaths:
+  - src/server/game/day-content
+dictionaryDefinitions: []
+dictionaries: []
+words: []
+ignoreWords: []
+import: []

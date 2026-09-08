@@ -34,7 +34,7 @@ export class GuardianAnimations {
     });
 
     this.animationManager.createAnimation(scene, "lean", {
-      frameRate: 6,
+      frameRate: 4.5,
       repeat: 0,
     });
 

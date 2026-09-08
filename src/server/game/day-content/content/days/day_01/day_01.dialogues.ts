@@ -197,27 +197,4 @@ export const dialogues = defineDialogues<DayDialogues>({
       `.reactions([{ mood: MOODS.SURPRISED, character: ACTORS.PLAYER }]),
     ],
   },
-
-  "dream.challenge_accepted": {
-    scene: "DreamScene",
-    lines: [
-      dialogue.tutor.talking`
-        Oh?
-        Braver than you look.
-        Come, then.
-        Let us see what remains in that head. †
-      `.reactions([{ mood: MOODS.SURPRISED, character: ACTORS.PLAYER }]),
-    ],
-  },
-
-  "dream.return_to_cell": {
-    scene: "DreamScene",
-    lines: [
-      dialogue.tutor.talking`
-        Very well.
-        May your memory serve you better than your fear.
-        We shall see soon enough. †
-      `.reactions([{ mood: MOODS.NEUTRAL, character: ACTORS.PLAYER }]),
-    ],
-  },
 });
