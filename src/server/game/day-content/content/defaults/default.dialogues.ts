@@ -66,7 +66,7 @@ export const dialogues = defineDialogues<DefaultDialogues>({
     scene: "CellScene",
     lines: [
       dialogue.player.neutral`
-        Não está na hora de comer ainda.
+        It’s not time to eat yet.
       `,
     ],
   },
@@ -85,7 +85,7 @@ export const dialogues = defineDialogues<DefaultDialogues>({
     scene: "CellScene",
     lines: [
       dialogue.player.neutral`
-        Não quero mexer nisso agora.
+        I don’t want to mess with that right now.
       `,
     ],
   },
@@ -104,7 +104,7 @@ export const dialogues = defineDialogues<DefaultDialogues>({
     scene: "CellScene",
     lines: [
       dialogue.player.neutral`
-        Você tem coisas para fazer antes de dormir.
+        You have things to do before you go to sleep.
       `,
     ],
   },
@@ -123,14 +123,15 @@ export const dialogues = defineDialogues<DefaultDialogues>({
     scene: "DreamScene",
     lines: [
       dialogue.tutor.neutral`
-        Bem vindo para mais um dia de aula Josef.
-        Vamos plantas mais algumas palavras no seu cu.
+        Welcome to another day of lessons, Josef.
+
+        Let’s plant a few more words up your ass.
       `,
       dialogue.player.surprised`
-        O que?
+        What?
       `,
       dialogue.tutor.neutral`
-        Digo... na sua cabeça
+        I mean... in your head.
       `,
     ],
   },
@@ -139,8 +140,8 @@ export const dialogues = defineDialogues<DefaultDialogues>({
     scene: "DreamScene",
     lines: [
       dialogue.tutor.talking`
-      Let's start a new Lesson Josef.
-    `.reactions([{ mood: MOODS.NEUTRAL, character: ACTORS.PLAYER }]),
+        Let's start a new Lesson Josef.
+      `.reactions([{ mood: MOODS.NEUTRAL, character: ACTORS.PLAYER }]),
     ],
   },
 
@@ -158,19 +159,21 @@ export const dialogues = defineDialogues<DefaultDialogues>({
     scene: "DreamScene",
     lines: [
       dialogue.guardian.neutral`
-        Olá sonhador.
-        Sou o Guardião da Memória.
-        Vejo que traz pequenos conhecimentos para mim.
+        Hello, dreamer.
+        I am the Guardian of Memory.
+        I see you bring small pieces of knowledge to me.
       `.reactions([{ character: ACTORS.GUARDIAN, mood: MOODS.NEUTRAL }]),
+
       dialogue.guardian.neutral`
-        Caso se lembre corretamente o nome de cada conhecimento
-        Este será enviado ao Lago da Memória
-        E Mnemosyne cuidará dle...
+        If you correctly remember the name of each piece of knowledge,
+        it will be sent to the Lake of Memory,
+        and Mnemosyne will take care of it...
       `.reactions([{ character: ACTORS.GUARDIAN, mood: MOODS.NEUTRAL }]),
+
       dialogue.guardian.neutral`
-        Mas caso não se recorde corretamente ou tenha esquecido em completo
-        Ele será enviado ao Lago do Esquecimento
-        Para os braços de Lethe
+        But if you fail to remember it correctly, or have forgotten it completely,
+        it will be sent to the Lake of Forgetfulness,
+        into the arms of Lethe.
       `.reactions([{ character: ACTORS.GUARDIAN, mood: MOODS.NEUTRAL }]),
     ],
   },
