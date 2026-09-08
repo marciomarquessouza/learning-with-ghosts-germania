@@ -1,3 +1,4 @@
+import { DreamScene } from "@/game/scenes/dream_scene";
 import { DREAM_SCENE_FLOWS } from "@/game/scenes/dream_scene/constants/flows";
 import { GameSnapshot } from "@/store/progressStore";
 
@@ -90,9 +91,10 @@ export const developmentSnapshots: Record<string, GameSnapshot> = {
       "3": { pronunciation: 100, writing: 100 },
     },
   },
-  "lesson-conclusion": {
+  "post-lesson": {
     ...defaultLessonSnapshot,
-    flow: DREAM_SCENE_FLOWS.LESSON_CONCLUSION,
+    flow: DREAM_SCENE_FLOWS.POST_LESSON,
+    state: DreamScene.STATES.POST_LESSON,
     lessonCompleted: true,
     lessonEntryId: "3",
     scores: {
