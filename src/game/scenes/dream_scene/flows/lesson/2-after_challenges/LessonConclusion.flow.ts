@@ -20,8 +20,7 @@ export class LessonConclusionFlow extends Flow<SceneStateNames, DreamScene> {
         });
       }),
       stepBase(async () => {
-        await this.gameScene.tutor.leaveScene();
-        this.gameScene.tutor.destroy();
+        await this.gameScene.removeTutor();
       }),
       stepBase(() => {
         this.gameScene.player.enterIdle();

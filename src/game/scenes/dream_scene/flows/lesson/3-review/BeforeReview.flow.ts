@@ -15,6 +15,8 @@ export class BeforeReviewFlow extends Flow<SceneStateNames, DreamScene> {
     await runSteps([
       stepBase(async () => {
         attachGuardian(this.gameScene);
+        this.gameScene.player.lockInput();
+        this.gameScene.player.enterListening();
         await this.gameScene.guardian.fadeIn();
         await this.gameScene.guardian.lean();
       }),

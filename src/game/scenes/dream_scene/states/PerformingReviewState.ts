@@ -14,6 +14,10 @@ export class PerformingReviewState extends BaseState {
     this.dreamScene.hud.setVisible(true);
     this.dreamScene.flowController?.clearNextFlow();
 
+    if (!this.dreamScene.tutor.isDestroyed) {
+      this.dreamScene.removeTutor();
+    }
+
     this.dreamScene.player.lockInput();
     this.dreamScene.knowledgeTroop.stopToFollowPlayer();
 

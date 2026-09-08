@@ -21,6 +21,16 @@ export class PostLessonState extends BaseState {
     this.dreamScene.hud.setVisible(true);
     this.dreamScene.flowController?.clearNextFlow();
 
+    if (!this.dreamScene.tutor.isDestroyed) {
+      this.dreamScene.tutor.destroy();
+    }
+
+    if (this.dreamScene.knowledgeTroop.isEmpty) {
+      const completedEntriesWithScores =
+        this.dreamScene.lessonManager.getCompletedEntriesWithScores();
+      this.dreamScene.knowledgeTroop.addByEntries(completedEntriesWithScores);
+    }
+
     this.dreamScene.knowledgeTroop.startToFollowTarget();
 
     const tutorPositionX = this.dreamScene.gameCamera.camera.width + 200;
