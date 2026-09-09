@@ -11,7 +11,12 @@ export class IdleState extends BaseState {
 
   enter(): void {
     this.guardian.setAlpha(1);
-    this.guardian.animations.playIdle();
+
+    if (this.guardian.isLeaning) {
+      this.guardian.animations.playLeanIdle();
+    } else {
+      this.guardian.animations.playIdle();
+    }
   }
 
   exit(): void {}

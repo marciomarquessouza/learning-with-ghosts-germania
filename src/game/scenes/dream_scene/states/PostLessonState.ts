@@ -50,11 +50,11 @@ export class PostLessonState extends BaseState {
         this.dreamScene.flowController
           .run(BeforeReviewFlow)
           .then(({ nextState }) => {
-            this.changeTo(nextState ?? DreamScene.STATES.IDLE);
+            if (!nextState) return;
+            this.changeTo(nextState);
           })
           .catch((error) => {
             this.stateMachine.log(error, "error");
-            this.changeTo(DreamScene.STATES.IDLE);
           });
       },
     );

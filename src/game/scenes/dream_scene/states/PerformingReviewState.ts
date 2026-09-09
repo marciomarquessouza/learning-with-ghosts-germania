@@ -48,8 +48,6 @@ export class PerformingReviewState extends BaseState {
         });
     } catch (error) {
       this.stateMachine.log(error, "error");
-      this.dreamScene.flowController?.clearNextFlow();
-      this.changeTo(DreamScene.STATES.IDLE);
     }
   }
 

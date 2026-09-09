@@ -22,15 +22,15 @@ export class BeforeReviewFlow extends Flow<SceneStateNames, DreamScene> {
       }),
       stepBase(() => this.delay(600)),
       stepBase(() => {
-        this.gameScene.guardian.enterLeanSpeakingState();
+        this.gameScene.guardian.enterSpeakingState();
         return events.game.async.emitAsync("dialogue/show", {
           lines: getDialogueLines("dream.review_intro"),
         });
       }),
       stepBase(() => this.delay(300)),
       stepBase(async () => {
-        this.gameScene.guardian.unlean();
-        return this.gameScene.guardian.enterIdleState();
+        await this.gameScene.guardian.unlean();
+        this.gameScene.guardian.enterIdleState();
       }),
     ]);
 

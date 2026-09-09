@@ -11,6 +11,7 @@ export class Guardian {
   private _scene?: Phaser.Scene;
   private _sprite?: Phaser.Types.Physics.Arcade.SpriteWithDynamicBody;
   private stateMachine!: StateMachine;
+  private _isLeaning = false;
 
   public hasCreated = false;
   public animations = new GuardianAnimations();
@@ -21,6 +22,10 @@ export class Guardian {
 
   public get sprite(): Phaser.Types.Physics.Arcade.SpriteWithDynamicBody {
     return getRequired(this._sprite, "Guardian", "_sprite");
+  }
+
+  public get isLeaning(): boolean {
+    return this._isLeaning;
   }
 
   preload(scene: Phaser.Scene) {
@@ -62,24 +67,24 @@ export class Guardian {
     this.stateMachine.changeTo(Guardian.STATES.IDLE);
   }
 
-  async lean(): Promise<void> {
-    this.setAlpha(1);
-    await this.animations.playLean();
-    this.stateMachine.changeTo(Guardian.STATES.LEAN_IDLE);
+  enterSpeakingState() {
+    this.stateMachine.changeTo(Guardian.STATES.SPEAKING);
   }
 
-  async unlean(): Promise<void> {
+  async lean(): Promise<void> {
+    if (this._isLeaning) return;
     this.setAlpha(1);
-    await this.animations.playUnlean();
+    await this.animations.playLean();
+    this._isLeaning = true;
     this.stateMachine.changeTo(Guardian.STATES.IDLE);
   }
 
-  enterLeanIdleState() {
-    this.stateMachine.changeTo(Guardian.STATES.LEAN_IDLE);
-  }
-
-  enterLeanSpeakingState() {
-    this.stateMachine.changeTo(Guardian.STATES.LEAN_SPEAKING);
+  async unlean(): Promise<void> {
+    if (!this._isLeaning) return;
+    this.setAlpha(1);
+    await this.animations.playUnlean();
+    this._isLeaning = false;
+    this.stateMachine.changeTo(Guardian.STATES.IDLE);
   }
 
   update(delta: number) {

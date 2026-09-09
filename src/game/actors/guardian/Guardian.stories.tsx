@@ -7,6 +7,8 @@ import type { Meta, StoryObj } from "@storybook/nextjs-vite";
 import { ActorPayload } from "../types/Actor";
 import { useRef } from "react";
 import { Guardian } from "./Guardian";
+import { events } from "@/events/events";
+import { ACTORS } from "@/constants/game";
 
 const positionX = DEFAULT_STORY_WIDTH / 2;
 const positionY = DEFAULT_STORY_HEIGHT / 2;
@@ -91,22 +93,34 @@ export const Lean: Story = {
   },
 };
 
+export const Unlean: Story = {
+  args: {
+    actions: async (guardian) => {
+      await guardian.lean();
+      await guardian.unlean();
+    },
+  },
+};
+
 export const LeanIdle: Story = {
   args: {
-    actions: (guardian) => {
+    actions: async (guardian) => {
+      await guardian.lean();
       guardian.enterIdleState();
-      setTimeout(() => {
-        guardian.lean();
-      }, 800);
-      guardian.enterLeanIdleState();
     },
   },
 };
 
 export const LeanSpeaking: Story = {
   args: {
-    actions: (guardian) => {
-      guardian.enterLeanSpeakingState();
+    actions: async (guardian) => {
+      await guardian.lean();
+      guardian.enterSpeakingState();
+      setTimeout(() => {
+        events.game.sync.emit("dialogue/typing-start", {
+          actor: ACTORS.GUARDIAN,
+        });
+      }, 500);
     },
   },
 };

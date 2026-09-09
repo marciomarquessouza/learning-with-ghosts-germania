@@ -3,7 +3,7 @@ import { Guardian } from "../Guardian";
 import { events } from "@/events/events";
 import { ACTORS } from "@/constants/game";
 
-export class LeanSpeakingState extends BaseState {
+export class SpeakingState extends BaseState {
   private removeListeners: (() => void)[] = [];
   private isTalking = false;
 
@@ -21,7 +21,12 @@ export class LeanSpeakingState extends BaseState {
       events.game.sync.on("dialogue/typing-start", ({ actor }) => {
         if (actor && actor === ACTORS.GUARDIAN) {
           this.isTalking = true;
-          this.guardian.animations.playLeanSpeaking();
+          if (this.guardian.isLeaning) {
+            this.guardian.animations.playLeanSpeaking();
+          } else {
+            // TODO: add speaking
+            this.guardian.animations.playIdle();
+          }
         }
       }),
     );
@@ -29,7 +34,11 @@ export class LeanSpeakingState extends BaseState {
     this.removeListeners.push(
       events.game.sync.on("dialogue/typing-end", () => {
         this.isTalking = false;
-        this.guardian.animations.playLeanIdle();
+        if (this.guardian.isLeaning) {
+          this.guardian.animations.playLeanIdle();
+        } else {
+          this.guardian.animations.playIdle();
+        }
       }),
     );
   }
