@@ -44,7 +44,7 @@ export class GuardianAnimations {
     });
 
     this.animationManager.createAnimation(scene, "lean_speaking", {
-      frameRate: 2.4,
+      frameRate: 4,
       repeat: -1,
     });
   }
