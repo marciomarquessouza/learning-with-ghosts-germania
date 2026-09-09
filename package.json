@@ -9,6 +9,7 @@
     "lint": "next lint",
     "gen:audio": "tsx /scripts/audio/generate-audio.ts",
     "sprite:init": "node scripts/animations/build-default-spritesheet-config.mjs",
+    "sprite:update": "node scripts/animations/update-spritesheet-config.mjs",
     "sprite": "node scripts/animations/build-spritesheet.mjs",
     "update-spritesheets-constants": "node scripts/animations/update-spritesheets-constants.mjs",
     "storybook": "storybook dev -p 6006",

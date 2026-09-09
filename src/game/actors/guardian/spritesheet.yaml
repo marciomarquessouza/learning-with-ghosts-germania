@@ -10,6 +10,7 @@ animations:
   - lean
   - lean_idle
   - lean_speaking
+  - speaking
 
 configs:
    idle:
@@ -28,6 +29,11 @@ configs:
 #    flipX: false
 
    lean_speaking:
+#    columns: 3
+#    scale: 0.38
+#    flipX: false
+
+   speaking:
 #    columns: 3
 #    scale: 0.38
 #    flipX: false

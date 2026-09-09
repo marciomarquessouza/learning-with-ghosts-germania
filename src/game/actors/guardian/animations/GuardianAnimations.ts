@@ -33,6 +33,11 @@ export class GuardianAnimations {
       repeat: -1,
     });
 
+    this.animationManager.createAnimation(scene, "speaking", {
+      frameRate: 4,
+      repeat: -1,
+    });
+
     this.animationManager.createAnimation(scene, "lean", {
       frameRate: 4.5,
       repeat: 0,
@@ -75,6 +80,10 @@ export class GuardianAnimations {
 
   playIdle() {
     this.animationManager.playAnimation(this.sprite, "idle", true);
+  }
+
+  playSpeaking() {
+    this.animationManager.playAnimation(this.sprite, "speaking", true);
   }
 
   async playLean(): Promise<void> {

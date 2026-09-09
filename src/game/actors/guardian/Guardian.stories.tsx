@@ -66,6 +66,15 @@ export const Default: Story = {
   },
 };
 
+export const Speaking: Story = {
+  args: {
+    actions: (guardian) => {
+      guardian.setAlpha(1);
+      guardian.animations.playSpeaking();
+    },
+  },
+};
+
 export const FadeIn: Story = {
   args: {
     actions: (guardian) => {
@@ -113,14 +122,9 @@ export const LeanIdle: Story = {
 
 export const LeanSpeaking: Story = {
   args: {
-    actions: async (guardian) => {
-      await guardian.lean();
-      guardian.enterSpeakingState();
-      setTimeout(() => {
-        events.game.sync.emit("dialogue/typing-start", {
-          actor: ACTORS.GUARDIAN,
-        });
-      }, 500);
+    actions: (guardian) => {
+      guardian.setAlpha(1);
+      guardian.animations.playLeanSpeaking();
     },
   },
 };

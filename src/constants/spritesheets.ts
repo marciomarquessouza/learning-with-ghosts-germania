@@ -28,6 +28,11 @@ export const SPRITESHEETS = {
       key: 'guardian-lean_speaking',
       image: '/actors/guardian/lean_speaking/spritesheet.png',
       atlas: '/actors/guardian/lean_speaking/spritesheet.json'
+    },
+    speaking: {
+      key: 'guardian-speaking',
+      image: '/actors/guardian/speaking/spritesheet.png',
+      atlas: '/actors/guardian/speaking/spritesheet.json'
     }
   },
   jailer: {

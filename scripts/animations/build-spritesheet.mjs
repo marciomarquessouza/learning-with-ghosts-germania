@@ -36,6 +36,17 @@ function loadActorConfig(actorDir, actor) {
     runCommand("node", [defaultConfigScriptPath, actor]);
   }
 
+  console.log("\nUpdating spritesheet config...");
+
+  const updateConfigScriptPath = path.join(
+    rootDir,
+    "scripts",
+    "animations",
+    "update-spritesheet-config.mjs",
+  );
+
+  runCommand("node", [updateConfigScriptPath, actor]);
+
   return YAML.parse(fs.readFileSync(configPath, "utf8"));
 }
 

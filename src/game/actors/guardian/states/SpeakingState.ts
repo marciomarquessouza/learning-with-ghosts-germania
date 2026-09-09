@@ -24,8 +24,7 @@ export class SpeakingState extends BaseState {
           if (this.guardian.isLeaning) {
             this.guardian.animations.playLeanSpeaking();
           } else {
-            // TODO: add speaking
-            this.guardian.animations.playIdle();
+            this.guardian.animations.playSpeaking();
           }
         }
       }),
