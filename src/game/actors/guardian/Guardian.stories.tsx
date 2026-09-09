@@ -7,8 +7,6 @@ import type { Meta, StoryObj } from "@storybook/nextjs-vite";
 import { ActorPayload } from "../types/Actor";
 import { useRef } from "react";
 import { Guardian } from "./Guardian";
-import { events } from "@/events/events";
-import { ACTORS } from "@/constants/game";
 
 const positionX = DEFAULT_STORY_WIDTH / 2;
 const positionY = DEFAULT_STORY_HEIGHT / 2;
@@ -49,6 +47,7 @@ const GuardianStory = ({
 const meta: Meta<typeof GuardianStory> = {
   title: "Phaser/Actors/Guardian",
   component: GuardianStory,
+  tags: ["autodocs"],
   parameters: {
     layout: "centered",
   },

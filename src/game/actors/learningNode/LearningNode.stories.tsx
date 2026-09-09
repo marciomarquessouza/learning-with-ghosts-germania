@@ -56,6 +56,7 @@ const LearningNodeStory = ({
 const meta: Meta<typeof LearningNodeStory> = {
   title: "Phaser/Actors/LearningNode",
   component: LearningNodeStory,
+  tags: ["autodocs"],
   parameters: {
     layout: "centered",
   },

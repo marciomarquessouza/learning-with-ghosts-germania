@@ -41,6 +41,7 @@ const TutorStory = ({
 const meta: Meta<typeof TutorStory> = {
   title: "Phaser/Actors/Tutor",
   component: TutorStory,
+  tags: ["autodocs"],
   parameters: {
     layout: "centered",
   },
