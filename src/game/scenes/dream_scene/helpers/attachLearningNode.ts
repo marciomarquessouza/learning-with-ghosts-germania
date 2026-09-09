@@ -4,13 +4,13 @@ import { DreamScene } from "..";
 export function attachLearningNode(gameScene: DreamScene) {
   const lessonId = gameScene.lessonManager.lesson.id;
   const lessonEntry = gameScene.lessonManager.getCurrentLessonEntry();
-  const startX = gameScene.tutor.container.x + 200;
+  const position = gameScene.getActorDefaultPositions("learningNode");
   const learningNode = new LearningNode();
   learningNode.create(gameScene, {
     lessonId,
     lessonEntry,
-    startX,
-    startY: 870,
+    startX: position.x,
+    startY: position.y,
     flipX: true,
   });
   gameScene.knowledgeTroop.add(learningNode);

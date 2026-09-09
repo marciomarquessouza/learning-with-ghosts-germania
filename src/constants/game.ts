@@ -40,6 +40,8 @@ export enum ACTORS {
   GUARDIAN = "guardian",
 }
 
+export type ActorNames = `${ACTORS}`;
+
 export enum MOODS {
   NEUTRAL = "neutral",
   TALKING = "talking",

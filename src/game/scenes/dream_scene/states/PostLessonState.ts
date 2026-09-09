@@ -33,10 +33,14 @@ export class PostLessonState extends BaseState {
 
     this.dreamScene.knowledgeTroop.startToFollowTarget();
 
-    const tutorPositionX = this.dreamScene.gameCamera.camera.width + 200;
+    const guardianPosition =
+      this.dreamScene.getActorDefaultPositions("guardian");
 
     this.guardianTrigger = new PositionTrigger(
-      { targetX: tutorPositionX + 400, once: true },
+      {
+        targetX: guardianPosition.x - 300,
+        once: true,
+      },
       () => {
         if (!this.dreamScene.flowController) {
           this.stateMachine.log("Scene flow was not created", "error");

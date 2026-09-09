@@ -2,7 +2,12 @@ import { createScene } from "@/game/core/CreateScene";
 import { GameCamera } from "@/game/cameras/GameCamera";
 import { Hud, HUD_ITEMS } from "../../hud";
 import { CemeteryScenario } from "./scenario/cemeteryScenario";
-import { DEFAULT_HEIGHT, DEFAULT_WIDTH, GAME_SCENES } from "@/constants/game";
+import {
+  ActorNames,
+  DEFAULT_HEIGHT,
+  DEFAULT_WIDTH,
+  GAME_SCENES,
+} from "@/constants/game";
 import { useLessonStore } from "@/store/lessonStore";
 import { Player } from "@/game/actors/player/Player";
 import { Tutor } from "@/game/actors/tutor/Tutor";
@@ -34,6 +39,9 @@ import { createSceneFlowController } from "./helpers/createSceneFlowController";
 import { attachSceneFlows } from "./helpers/attachSceneFlows";
 import { createSceneStates } from "./helpers/createSceneStates";
 import { attachSceneStates } from "./helpers/attachSceneStates";
+import { Vector2 } from "@/utils/vectors";
+
+type SceneActors = Exclude<ActorNames, "punisher" | "jailer">;
 
 export class DreamScene extends Phaser.Scene {
   public static readonly STATES = SCENE_STATES;
@@ -54,6 +62,7 @@ export class DreamScene extends Phaser.Scene {
   public scenario = new CemeteryScenario();
 
   private _lessonManager?: LessonManager;
+  private defaultPositions = new Map<SceneActors, Vector2>();
 
   public get lessonManager(): LessonManager {
     return getRequired(this._lessonManager, "DreamScene", "lessonManager");
@@ -103,6 +112,10 @@ export class DreamScene extends Phaser.Scene {
       startY: snapshot?.playerPosition?.y ?? DEFAULT_PLAYER_POSITION_Y,
       cursors,
     });
+    this.defaultPositions.set("player", {
+      x: DEFAULT_PLAYER_POSITION_X,
+      y: DEFAULT_PLAYER_POSITION_Y,
+    });
 
     this.gameCamera.attachTarget(playerSprite);
 
@@ -112,9 +125,24 @@ export class DreamScene extends Phaser.Scene {
       scale: 0.8,
       flipX: true,
     });
+    this.defaultPositions.set("tutor", {
+      x: this.tutor.container.x,
+      y: this.tutor.container.y,
+    });
 
     this.tutor.addCollisionWithPlayer(this.player.sprite);
+
     this.knowledgeTroop.create(this, this.player, this.lessonManager.lesson);
+
+    this.defaultPositions.set("learningNode", {
+      x: this.tutor.container.x + 200,
+      y: 870,
+    });
+
+    this.defaultPositions.set("guardian", {
+      x: this.tutor.container.x + 1200,
+      y: 520,
+    });
 
     const hudContainer = this.hud.create(this, [HUD_ITEMS.WEIGHT]);
     this.children.bringToTop(hudContainer);
@@ -142,6 +170,15 @@ export class DreamScene extends Phaser.Scene {
   public async removeTutor(): Promise<void> {
     await this.tutor.leaveScene();
     this.tutor.destroy();
+  }
+
+  public getActorDefaultPositions(actorName: SceneActors): Vector2 {
+    return (
+      this.defaultPositions.get(actorName) ?? {
+        x: 0,
+        y: 0,
+      }
+    );
   }
 
   update(time: number, delta: number) {
