@@ -96,7 +96,9 @@ export function FooterDialogue({
               "min-h-14 w-[620px] relative p-2 pr-8",
             ].join(" ")}
           >
-            <p className="font-mono text-[#e8d7a5]">{title}</p>
+            <p className="font-mono text-[#e8d7a5] bg-black w-fit px-1">
+              {title}
+            </p>
             <p className="font-primary text-2xl h-8">
               {renderFormattedText(displayedText)}
             </p>

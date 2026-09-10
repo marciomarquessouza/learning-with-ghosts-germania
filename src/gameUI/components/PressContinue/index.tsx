@@ -43,8 +43,9 @@ export function PressContinue({
           exit="exit"
           className="pointer-events-none"
         >
-          <div className="flex items-center justify-center gap-2 font-primary text-sm text-[#e8d7a5]">
+          <div className="flex w-fit items-center justify-center gap-2 bg-black px-2 py-0.5 font-primary text-sm text-[#e8d7a5]">
             <span className="tracking-wide">{text}</span>
+
             <motion.span
               animate={{
                 y: animationDirection === "vertical" ? [0, 4, 0] : undefined,
