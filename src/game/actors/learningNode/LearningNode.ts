@@ -14,15 +14,8 @@ import {
   AttachOptions,
   LessonTargetLabel,
 } from "./components/LessonTargetLabel";
-import { SproutingState } from "./states/sprout/SproutingState";
-import { SproutTalkingState } from "./states/sprout/SproutTalkingState";
-import { SproutIdleState } from "./states/sprout/SproutIdleState";
-import { PumpkinIdleState } from "./states/pumpkin/PumpkinIdleState";
-import { PumpkinTransition } from "./states/pumpkin/PumpkinTransitionState";
 import { FloorAnimations } from "./animations/FloorAnimations";
 import { SeedAnimations } from "./animations/SeedAnimations";
-import { FullIdleState } from "./states/full/FullIdleState";
-import { FullWalkingState } from "./states/full/FullWalkingState";
 import { slugify } from "@/utils/slugfy";
 import { Vector2 } from "@/utils/vectors";
 import { getSpriteWorldPosition } from "@/utils/getSpriteWorldPosition";
@@ -30,6 +23,7 @@ import { LessonEntryWithScore } from "@/libs/lesson/LessonController";
 import { EntryScore } from "@/libs/lesson/LessonScore";
 import { calculateFinalScore } from "@/libs/lesson/calculateFinalScore";
 import { getMinimumEntryScore } from "@/store/lessonStore";
+import { createLearningNodeStateMachine } from "./helpers/createLearningNodeStateMachine";
 
 export interface CreatePayload {
   startX: number;
@@ -107,7 +101,7 @@ export class LearningNode {
     this.sequence = lessonEntry.sequence;
     this.slug = slugify(`${lessonEntry.target}-${lessonEntry.sequence}`);
 
-    const learningNodeX = startX - 160;
+    const learningNodeX = startX + 240;
     const learningNodeY = startY;
 
     this._container = scene.add.container(learningNodeX - 80, startY);
@@ -144,15 +138,7 @@ export class LearningNode {
 
     this.attachScoreUpdateEvent();
 
-    this.stateMachine = new StateMachine(scene);
-    this.stateMachine
-      .addState(LearningNode.STATES.SPROUTING, SproutingState, this)
-      .addState(LearningNode.STATES.SPROUT_IDLE, SproutIdleState, this)
-      .addState(LearningNode.STATES.SPROUT_TALKING, SproutTalkingState, this)
-      .addState(LearningNode.STATES.PUMPKIN_TRANSITION, PumpkinTransition, this)
-      .addState(LearningNode.STATES.PUMPKIN_IDLE, PumpkinIdleState, this)
-      .addState(LearningNode.STATES.FULL_IDLE, FullIdleState, this)
-      .addState(LearningNode.STATES.FULL_WALKING, FullWalkingState, this);
+    this.stateMachine = createLearningNodeStateMachine(scene, this);
   }
 
   private updateEntryScore(

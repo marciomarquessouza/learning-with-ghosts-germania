@@ -135,7 +135,7 @@ export class DreamScene extends Phaser.Scene {
     this.knowledgeTroop.create(this, this.player, this.lessonManager.lesson);
 
     this.defaultPositions.set("learningNode", {
-      x: this.tutor.container.x + 200,
+      x: this.tutor.container.x - 200,
       y: 870,
     });
 
