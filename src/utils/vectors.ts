@@ -18,7 +18,16 @@ export function vector4(
   x: number,
   y: number,
   width: number,
-  height: number
+  height: number,
 ): Vector4 {
   return { x, y, width, height };
+}
+
+export interface Size {
+  width: number;
+  height: number;
+}
+
+export function size(width: number, height: number): Size {
+  return { width, height };
 }

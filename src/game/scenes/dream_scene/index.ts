@@ -39,7 +39,7 @@ import { createSceneFlowController } from "./helpers/createSceneFlowController";
 import { attachSceneFlows } from "./helpers/attachSceneFlows";
 import { createSceneStates } from "./helpers/createSceneStates";
 import { attachSceneStates } from "./helpers/attachSceneStates";
-import { Vector2 } from "@/utils/vectors";
+import { size, Size, Vector2 } from "@/utils/vectors";
 
 type SceneActors = Exclude<ActorNames, "punisher" | "jailer">;
 
@@ -50,6 +50,7 @@ export class DreamScene extends Phaser.Scene {
 
   public gameCamera = new GameCamera();
   public hud = new Hud();
+  public scenario = new CemeteryScenario();
   public player = new Player();
   public tutor = new Tutor();
   public learningNode = new LearningNode();
@@ -59,13 +60,23 @@ export class DreamScene extends Phaser.Scene {
   public dialogueManager = new DialogueManager();
   public flowController?: FlowController<SceneStateNames, DreamScene>;
   public stateMachine!: StateMachine;
-  public scenario = new CemeteryScenario();
 
   private _lessonManager?: LessonManager;
   private defaultPositions = new Map<SceneActors, Vector2>();
+  private _screenSize?: Size;
 
   public get lessonManager(): LessonManager {
     return getRequired(this._lessonManager, "DreamScene", "lessonManager");
+  }
+
+  public get screenSize(): Size {
+    return getRequired(this._screenSize, "DreamScene", "screenSize");
+  }
+
+  public get halfScreenSize(): Size {
+    const width = this.screenSize.width / 2;
+    const height = this.screenSize.height / 2;
+    return { width, height };
   }
 
   constructor() {
@@ -98,6 +109,10 @@ export class DreamScene extends Phaser.Scene {
 
     this.physics.world.setBounds(0, 0, boundW, boundH);
     this.gameCamera.setBounds(0, 0, boundW, boundH);
+    this._screenSize = size(
+      this.gameCamera.camera.worldView.right,
+      this.gameCamera.camera.height,
+    );
 
     this.gameAudio.create(this);
     this.lessonManager.create(this, this.gameAudio);
@@ -120,7 +135,7 @@ export class DreamScene extends Phaser.Scene {
     this.gameCamera.attachTarget(playerSprite);
 
     this.tutor.create(this, {
-      startX: this.gameCamera.camera.width + 200,
+      startX: this.screenSize.width,
       startY: DEFAULT_PLAYER_POSITION_Y - 100,
       scale: 0.8,
       flipX: true,
@@ -140,7 +155,7 @@ export class DreamScene extends Phaser.Scene {
     });
 
     this.defaultPositions.set("guardian", {
-      x: this.tutor.container.x + 1200,
+      x: this.tutor.container.x + this.halfScreenSize.width / 2,
       y: 520,
     });
 

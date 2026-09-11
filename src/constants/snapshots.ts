@@ -9,7 +9,7 @@ const defaultLessonSnapshot: GameSnapshot = {
   lessonCompleted: false,
   state: "PERFORMING_LESSON",
   playerPosition: {
-    x: 2326.5,
+    x: 2270.5,
     y: 696.7192682443374,
   },
 };
