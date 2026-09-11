@@ -4,7 +4,7 @@ import { PromptStates } from "../GameActionPrompt.boundary";
 export interface TimerProps {
   state: PromptStates;
   durationMs?: number;
-  onFinish: () => void;
+  onFinish?: () => void;
 }
 
 const DEFAULT_TIME = 30_000;
@@ -27,7 +27,7 @@ export function Timer({
     if (state === "hidden") return;
 
     if (timeMs <= 0) {
-      onFinish();
+      onFinish?.();
       return;
     }
 

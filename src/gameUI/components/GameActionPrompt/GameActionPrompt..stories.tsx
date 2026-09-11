@@ -4,6 +4,7 @@ import { action, HandlerFunction } from "storybook/actions";
 import { useState } from "react";
 import { PromptStates } from "./GameActionPrompt.boundary";
 import { Button } from "@/components/Button";
+import { SquareIconsButtonVariants } from "@/components/IconButton/SquareIconButton";
 
 const meta: Meta<typeof GameActionPrompt> = {
   title: "Game/UI/GameActionPrompt",
@@ -22,7 +23,8 @@ type ActionsProps = {
   description: string;
   durationMs?: number;
   fixed?: boolean;
-  onAction: HandlerFunction;
+  hideIcons: Array<SquareIconsButtonVariants>;
+  onAction?: HandlerFunction;
 };
 
 const component = ({
@@ -31,6 +33,7 @@ const component = ({
   description,
   durationMs,
   fixed,
+  hideIcons,
   onAction,
 }: ActionsProps) => {
   const [state, setState] = useState<PromptStates>(initialState);
@@ -50,6 +53,7 @@ const component = ({
         fixed={fixed}
         description={description}
         onAction={onAction}
+        hideIcons={hideIcons}
         onExpanded={() => setState("expanded")}
         onClosed={() => setState(fixed ? "minimized" : "hidden")}
       />
@@ -86,6 +90,16 @@ export const Minimized: StoryObj<ActionsProps> = {
     description: "Press {{key|Space}} or {{key|E}} to interact",
     fixed: true,
     onAction: action("Action"),
+  },
+  render: component,
+};
+
+export const HideActionIcon: StoryObj<ActionsProps> = {
+  args: {
+    initialState: "expanded",
+    title: "Default",
+    description: "Press {{key|Space}} or {{key|E}} to interact",
+    hideIcons: ["action"],
   },
   render: component,
 };

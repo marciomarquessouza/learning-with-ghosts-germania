@@ -33,9 +33,7 @@ export class IdleState extends BaseState {
       if (this.player.sawMovementInstructions && !this.player.hadMovement) {
         this.player.hadMovement = true;
         setTimeout(() => {
-          events.game.sync.emit("game-message/hide", {
-            id: "game-message/movement-instructions",
-          });
+          events.game.sync.emit("game-action-prompt/hide");
         }, 1_000);
       }
       this.changeTo(Player.STATES.MOVING);

@@ -1,18 +1,35 @@
-import { SquareIconButton } from "@/components/IconButton/SquareIconButton";
+import {
+  SquareIconButton,
+  SquareIconsButtonVariants,
+} from "@/components/IconButton/SquareIconButton";
 
 interface SideButtonsProps {
   hide?: boolean;
-  onAction: () => void;
+  hideIcons?: Array<SquareIconsButtonVariants>;
+  onAction?: () => void;
   onClosed: () => void;
 }
 
-export function SideButtons({ hide, onClosed, onAction }: SideButtonsProps) {
+export function SideButtons({
+  hide,
+  hideIcons = [],
+  onClosed,
+  onAction,
+}: SideButtonsProps) {
   if (hide) return;
 
   return (
     <div className="flex flex-col gap-2">
-      <SquareIconButton variant="close" onClick={onClosed} />
-      <SquareIconButton variant="action" onClick={onAction} />
+      <SquareIconButton
+        hide={hideIcons.includes("close")}
+        variant="close"
+        onClick={onClosed}
+      />
+      <SquareIconButton
+        hide={hideIcons.includes("action")}
+        variant="action"
+        onClick={onAction}
+      />
     </div>
   );
 }

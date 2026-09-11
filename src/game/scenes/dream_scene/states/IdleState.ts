@@ -44,14 +44,16 @@ export class IdleState extends BaseState {
   }
 
   private onEnterLessonInteractionArea() {
-    events.game.sync.emit("game-message/show", {
-      title: "Talk with Eliza",
-      text: "Press the Space key or the “E” key on your keyboard.",
+    this.dreamScene.dialogueManager.showGameActionPrompt({
+      title: "Talk to the Masked Nun",
+      description: "Press {{key|Space}} or {{key|E}} to interact",
+      hideIcons: ["action"],
+      fixed: false,
     });
   }
 
   private onLeaveLessonInteractionArea() {
-    events.game.sync.emit("game-message/hide");
+    this.dreamScene.dialogueManager.hideGameActionPrompt();
   }
 
   update(): void {

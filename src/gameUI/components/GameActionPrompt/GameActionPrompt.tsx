@@ -19,7 +19,7 @@ import { PromptWrapper } from "./components/PromptWrapper";
 
 interface GameActionPromptProps extends GameActionPromptEvent {
   state: PromptStates;
-  onAction: () => void;
+  onAction?: () => void;
   onExpanded: () => void;
   onClosed: () => void;
 }
@@ -28,6 +28,7 @@ export function GameActionPrompt({
   title,
   description,
   state,
+  hideIcons,
   durationMs,
   onAction,
   onExpanded,
@@ -71,6 +72,7 @@ export function GameActionPrompt({
                 <SideButtons
                   onAction={onAction}
                   onClosed={onClosed}
+                  hideIcons={hideIcons}
                   hide={state === "minimized"}
                 />
               </div>

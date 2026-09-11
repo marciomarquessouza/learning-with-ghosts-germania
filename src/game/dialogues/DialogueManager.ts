@@ -56,8 +56,18 @@ export class DialogueManager {
     events.game.sync.emit("game-message/hide");
   }
 
-  async showGameActionPrompt(prompt: GameActionPromptEvent): Promise<void> {
+  async showAsyncGameActionPrompt(
+    prompt: GameActionPromptEvent,
+  ): Promise<void> {
     return events.game.async.emitAsync("game-action-prompt/show", prompt);
+  }
+
+  showGameActionPrompt(payload: GameActionPromptEvent, hideAfter?: number) {
+    events.game.async.emitAsync("game-action-prompt/show", payload);
+
+    if (!hideAfter) return;
+
+    setTimeout(this.hideGameActionPrompt, hideAfter);
   }
 
   hideGameActionPrompt() {

@@ -65,6 +65,7 @@ export function GameActionPromptBoundary() {
   return (
     <GameActionPrompt
       state={state}
+      hideIcons={data?.hideIcons || []}
       onAction={handleAction}
       onClosed={handleClosePrompt}
       onExpanded={handleExpanded}

@@ -1,3 +1,4 @@
+import { SquareIconsButtonVariants } from "@/components/IconButton/SquareIconButton";
 import { TransitionOptions } from "@/game/core/SceneManager";
 import { InteractionLine } from "@/libs/dialogues/types";
 import { GameScenes, GameWorlds } from "@/types";
@@ -43,6 +44,7 @@ export type ChangeWorldEvent = {
 export type GameActionPromptEvent = {
   title: string;
   description: string;
+  hideIcons?: Array<SquareIconsButtonVariants>;
   fixed?: boolean;
   durationMs?: number;
   onAction?: () => void;

@@ -27,12 +27,16 @@ export class IntroductionFlow extends Flow<SceneStateNames, DreamScene> {
       }),
       stepBase(() => {
         useGameStore.getState().setMovementLocked(false);
-        this.gameScene.dialogueManager.showGameMessage({
-          id: "game-message/movement-instructions",
-          title: "Go to Eliza",
-          text: "Use the arrow keys or the A and D keys",
-          closeAfter: 8_000,
-        });
+        this.gameScene.dialogueManager.showGameActionPrompt(
+          {
+            title: "Go to Masked Nun",
+            description:
+              "Use the arrow ({{key|←}} | {{key|→}}) or the ({{key|A}} | {{key|D}}) keys",
+            hideIcons: ["action"],
+            fixed: false,
+          },
+          8_000,
+        );
         this.gameScene.player.sawMovementInstructions = true;
       }),
     ]);

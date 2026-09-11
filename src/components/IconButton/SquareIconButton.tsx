@@ -2,15 +2,16 @@ import { CloseIcon } from "../Icons/CloseIcon";
 import { SuccessIcon } from "../Icons/SuccessIcon";
 import { IconProps } from "../Icons/types";
 
-type ButtonVariants = "action" | "close";
+export type SquareIconsButtonVariants = "action" | "close";
 
 export interface SquareIconButtonProps {
-  variant: ButtonVariants;
-  onClick: () => void;
+  variant: SquareIconsButtonVariants;
+  hide?: boolean;
+  onClick?: () => void;
 }
 
 const VARIANT_CONFIG: Record<
-  ButtonVariants,
+  SquareIconsButtonVariants,
   { color: string; Icon: React.ComponentType<IconProps> }
 > = {
   action: {
@@ -23,12 +24,18 @@ const VARIANT_CONFIG: Record<
   },
 };
 
-export function SquareIconButton({ variant, onClick }: SquareIconButtonProps) {
+export function SquareIconButton({
+  variant,
+  hide,
+  onClick,
+}: SquareIconButtonProps) {
   const { color, Icon } = VARIANT_CONFIG[variant];
 
   const handleClick: React.MouseEventHandler<HTMLButtonElement> = () => {
-    onClick();
+    onClick?.();
   };
+
+  if (hide) return;
 
   return (
     <button
