@@ -99,7 +99,7 @@ export function FooterDialogue({
             <p className="font-mono text-[#e8d7a5] bg-black w-fit px-1">
               {title}
             </p>
-            <p className="font-primary text-2xl h-8">
+            <p className="font-primary text-2xl h-8 bg-black w-fit px-1">
               {renderFormattedText(displayedText)}
             </p>
 
