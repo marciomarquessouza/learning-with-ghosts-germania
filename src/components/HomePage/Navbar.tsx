@@ -10,7 +10,7 @@ export function Navbar() {
     >
       <Link href="/" aria-label="Go to homepage">
         <Image
-          className="w-64 md:w-[515px]"
+          className="w-64 "
           src={MAIN_LOGO}
           alt="Learning With Ghosts — Germania"
           width={515}
