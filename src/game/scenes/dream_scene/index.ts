@@ -110,7 +110,7 @@ export class DreamScene extends Phaser.Scene {
     this.physics.world.setBounds(0, 0, boundW, boundH);
     this.gameCamera.setBounds(0, 0, boundW, boundH);
     this._screenSize = size(
-      this.gameCamera.camera.worldView.right,
+      this.gameCamera.camera.width,
       this.gameCamera.camera.height,
     );
 
