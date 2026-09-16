@@ -1,6 +1,6 @@
-import { FileSystemDayContentSource } from "@/server/game/day-content/adapters/FileSystemDayContentSource";
-import { DayContentComposer } from "@/server/game/day-content/core/DayContentComposer";
-import { DayContentService } from "@/server/game/day-content/DayContentService";
+import { FileSystemDayContentSource } from "@/server/lessons/day-content/adapters/FileSystemDayContentSource";
+import { DayContentComposer } from "@/server/lessons/day-content/core/DayContentComposer";
+import { DayContentService } from "@/server/lessons/day-content/DayContentService";
 import { DayContent } from "@/types";
 
 export async function getLesson(
