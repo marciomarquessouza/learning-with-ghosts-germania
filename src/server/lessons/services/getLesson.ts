@@ -2,14 +2,19 @@ import { FileSystemDayContentSource } from "@/server/lessons/day-content/adapter
 import { DayContentComposer } from "@/server/lessons/day-content/core/DayContentComposer";
 import { DayContentService } from "@/server/lessons/day-content/DayContentService";
 import { DayContent } from "@/types";
+import { Level } from "../validators/levels";
+import { Language } from "../validators/language";
 
-export async function getLesson(
-  day: number,
-  language: string,
-): Promise<DayContent> {
+export interface LessonOptions {
+  day: number;
+  language: Language;
+  level: Level;
+}
+
+export async function getLesson(options: LessonOptions): Promise<DayContent> {
   const contentSource = new FileSystemDayContentSource();
   const contentComposer = new DayContentComposer();
   const service = new DayContentService(contentSource, contentComposer);
-  const dayData = await service.getDayContent(Number(day));
+  const dayData = await service.getDayContent(options);
   return dayData;
 }
