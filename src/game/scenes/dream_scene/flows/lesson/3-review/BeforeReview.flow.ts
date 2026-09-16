@@ -7,6 +7,7 @@ import { DREAM_SCENE_FLOWS } from "../../../constants/flows";
 import { attachGuardian } from "../../../helpers/attachGuardian";
 import { events } from "@/events/events";
 import { getDialogueLines } from "@/store/dialogueStore";
+import { ReviewInitFlow } from "./ReviewInit.flow";
 
 export class BeforeReviewFlow extends Flow<SceneStateNames, DreamScene> {
   public flowName = DREAM_SCENE_FLOWS.BEFORE_REVIEW;
@@ -36,6 +37,7 @@ export class BeforeReviewFlow extends Flow<SceneStateNames, DreamScene> {
 
     return {
       nextState: DreamScene.STATES.PERFORMING_REVIEW,
+      nextFlow: ReviewInitFlow,
     };
   }
 

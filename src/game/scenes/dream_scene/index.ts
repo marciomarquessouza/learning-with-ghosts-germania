@@ -155,7 +155,7 @@ export class DreamScene extends Phaser.Scene {
     });
 
     this.defaultPositions.set("guardian", {
-      x: this.tutor.container.x + this.halfScreenSize.width / 2,
+      x: this.tutor.container.x + this.halfScreenSize.width / 2 + 300,
       y: 520,
     });
 

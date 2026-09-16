@@ -38,7 +38,7 @@ export class PostLessonState extends BaseState {
 
     this.guardianTrigger = new PositionTrigger(
       {
-        targetX: guardianPosition.x - 300,
+        targetX: guardianPosition.x - 400,
         once: true,
       },
       () => {

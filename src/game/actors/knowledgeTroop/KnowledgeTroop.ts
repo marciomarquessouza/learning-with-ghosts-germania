@@ -149,8 +149,37 @@ export class KnowledgeTroop {
     });
   }
 
-  public moveToMemoryGuardian() {
-    throw new Error("Method not implemented");
+  public moveToMemoryGuardian({
+    playerGlobalPositionX,
+    guardianGlobalPositionX,
+  }: {
+    playerGlobalPositionX: number;
+    guardianGlobalPositionX: number;
+  }) {
+    const firstLearningNode = this.getRightmostMember();
+    if (!firstLearningNode) return;
+
+    const distance =
+      Math.abs(playerGlobalPositionX - guardianGlobalPositionX) / 2;
+    const direction = guardianGlobalPositionX > playerGlobalPositionX ? 1 : -1;
+
+    return firstLearningNode.walkTo({ distance, direction });
+  }
+
+  private getRightmostMember(): LearningNode | null {
+    let rightmostMember: LearningNode | null = null;
+    let rightmostX = -Infinity;
+
+    for (const member of this.members.values()) {
+      const x = member.getWorldPosition().x;
+
+      if (rightmostMember && x > rightmostX) {
+        rightmostX = x;
+        rightmostMember = member;
+      }
+    }
+
+    return rightmostMember;
   }
 
   public update(delta: number) {

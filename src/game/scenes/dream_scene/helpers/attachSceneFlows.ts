@@ -16,6 +16,7 @@ import { LessonFailureFlow } from "../flows/lesson/2-after_challenges/LessonFail
 import { LessonConclusionFlow } from "../flows/lesson/2-after_challenges/LessonConclusion.flow";
 import { BeforeReviewFlow } from "../flows/lesson/3-review/BeforeReview.flow";
 import { PostLessonFlow } from "../flows/lesson/2-after_challenges/PostLesson.flow";
+import { ReviewInitFlow } from "../flows/lesson/3-review/ReviewInit.flow";
 
 export function attachSceneFlows(
   flowController: FlowController<SceneStateNames, DreamScene>,
@@ -34,5 +35,6 @@ export function attachSceneFlows(
     .addFlow(SCENE_FLOWS.LESSON_FAILURE, LessonFailureFlow)
     .addFlow(SCENE_FLOWS.LESSON_CONCLUSION, LessonConclusionFlow)
     .addFlow(SCENE_FLOWS.POST_LESSON, PostLessonFlow)
-    .addFlow(SCENE_FLOWS.BEFORE_REVIEW, BeforeReviewFlow);
+    .addFlow(SCENE_FLOWS.BEFORE_REVIEW, BeforeReviewFlow)
+    .addFlow(SCENE_FLOWS.REVIEW_INIT, ReviewInitFlow);
 }

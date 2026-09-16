@@ -4,6 +4,8 @@ import { getRequired } from "@/utils/getRequired";
 import { GUARDIAN_STATES } from "./constants/states";
 import { GuardianAnimations } from "./animations/GuardianAnimations";
 import { createGuardianStateMachine } from "./helpers/createGuardianStateMachine";
+import { getSpriteWorldPosition } from "@/utils/getSpriteWorldPosition";
+import { Vector2 } from "@/utils/vectors";
 
 export class Guardian {
   public static readonly STATES = GUARDIAN_STATES;
@@ -48,6 +50,10 @@ export class Guardian {
     this.stateMachine = createGuardianStateMachine(scene, this);
     this.stateMachine.changeTo(Guardian.STATES.INITIAL);
     this.hasCreated = true;
+  }
+
+  public getWorldPosition(): Vector2 {
+    return getSpriteWorldPosition(this.sprite);
   }
 
   setAlpha(alpha: number) {

@@ -16,6 +16,7 @@ export const DREAM_SCENE_FLOWS = {
   POST_LESSON: "PostLessonFlow",
   // REVIEW FLOWS
   BEFORE_REVIEW: "BeforeReviewFlow",
+  REVIEW_INIT: "ReviewInitFlow",
 } as const;
 
 export type SceneFlowNames =
