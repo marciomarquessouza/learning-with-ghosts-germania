@@ -11,8 +11,8 @@ export const dayContentImporters: Record<
   }
 > = {
   1: {
-    lesson: () => import("../content/days/day_01/day_01.lesson"),
-    dialogues: () => import("../content/days/day_01/day_01.dialogues"),
-    audio: () => import("../content/days/day_01/day_01.audio.json"),
+    lesson: () => import("./days/day_01/day_01.lesson"),
+    dialogues: () => import("./days/day_01/day_01.dialogues"),
+    audio: () => import("./days/day_01/day_01.audio.json"),
   },
 };

@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import { DeepgramTranscriptionResponse } from "@/server/types";
-import { calculatePronunciationScore } from "@/server/game/pronunciation/calculatePronunciationScore";
+import { calculatePronunciationScore } from "@/server/lessons/pronunciation/calculatePronunciationScore";
 import { PronunciationResult } from "@/libs/lesson/PronunciationAPI";
 
 export const runtime = "nodejs";

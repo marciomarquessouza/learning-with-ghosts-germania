@@ -1,6 +1,7 @@
 import { DayContent } from "@/types";
 import { DayContentComposer } from "./core/DayContentComposer";
 import { DayContentSource } from "./core/DayContentSource";
+import { LessonOptions } from "../services/getLesson";
 
 export class DayContentService {
   constructor(
@@ -8,13 +9,13 @@ export class DayContentService {
     private composer: DayContentComposer,
   ) {}
 
-  async getDayContent(day: number): Promise<DayContent> {
+  async getDayContent(options: LessonOptions): Promise<DayContent> {
     const [lesson, dialogues, defaultDialogues, audioManifest] =
       await Promise.all([
-        this.source.getLesson(day),
-        this.source.getDialogues(day),
-        this.source.getDefaultDialogues(),
-        this.source.getAudioManifest(day),
+        this.source.getLesson(options),
+        this.source.getDialogues(options),
+        this.source.getDefaultDialogues(options),
+        this.source.getAudioManifest(options),
       ]);
 
     return this.composer.compose({
