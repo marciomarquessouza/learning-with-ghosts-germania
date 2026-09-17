@@ -1,9 +1,8 @@
+import { Language, Level } from "@/constants/lesson";
 import { FileSystemDayContentSource } from "@/server/lessons/day-content/adapters/FileSystemDayContentSource";
 import { DayContentComposer } from "@/server/lessons/day-content/core/DayContentComposer";
 import { DayContentService } from "@/server/lessons/day-content/DayContentService";
 import { DayContent } from "@/types";
-import { Level } from "../validators/levels";
-import { Language } from "../validators/language";
 
 export interface LessonOptions {
   day: number;

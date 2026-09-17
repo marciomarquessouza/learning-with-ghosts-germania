@@ -1,5 +1,4 @@
-import { Language } from "../../validators/language";
-import { Level } from "../../validators/levels";
+import { Language, Level } from "@/constants/lesson";
 import { DayImportContent } from "./de-DE/A1-1/dayContentImporters";
 
 export const contentImporters = {
