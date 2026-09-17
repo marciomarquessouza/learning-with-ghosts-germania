@@ -27,11 +27,12 @@ export type GameSnapshot = {
   scores?: Record<string, EntryScore>;
 };
 
-export interface GameProgressStates {
+export interface GameProgressState {
   scene?: GameScenes;
   day?: number;
   snapshot?: GameSnapshot;
   hasHydrated: boolean;
+  hasCompletedInitialSetup: boolean;
 }
 
 export interface GameProgressActions {
@@ -42,19 +43,24 @@ export interface GameProgressActions {
   ) => void;
   clearSnapshot: () => void;
   setHasHydrated: (value: boolean) => void;
+  completeInitialSetup: () => void;
 }
 
-export type GameProgressStore = GameProgressStates & GameProgressActions;
+export type GameProgressStore = GameProgressState & GameProgressActions;
 
 export const useGameProgressStore = create<GameProgressStore>()(
   persist(
     (set) => ({
       hasHydrated: false,
+      hasCompletedInitialSetup: false,
       createSnapshot: (scene, day, snapshot = {}) =>
         set({ scene, day, snapshot }),
       clearSnapshot: () =>
         set({ scene: undefined, day: undefined, snapshot: undefined }),
       setHasHydrated: (value) => set({ hasHydrated: value }),
+      completeInitialSetup: () => {
+        set({ hasCompletedInitialSetup: true });
+      },
     }),
     {
       name: "game-progress",
@@ -113,4 +119,12 @@ export function getSceneLastSnapshot(
   if (currentScene !== scene || currentDay !== day) return null;
 
   return snapshot;
+}
+
+export function hasCompletedInitialSetup() {
+  return useGameProgressStore.getState().hasCompletedInitialSetup;
+}
+
+export function completeInitialSetup() {
+  useGameProgressStore.getState().completeInitialSetup();
 }

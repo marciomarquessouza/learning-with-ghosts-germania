@@ -1,4 +1,5 @@
-import { useEffect, useRef, ReactNode } from "react";
+"use client";
+import { useEffect, useRef, ReactNode, useState } from "react";
 import { createPortal } from "react-dom";
 
 type ModalSize = "sm" | "md" | "lg" | "xl" | "full";
@@ -38,6 +39,11 @@ export function Modal({
 }: ModalProps) {
   const overlayRef = useRef<HTMLDivElement>(null);
   const canClose = dismissible && typeof onClose === "function";
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   const handleClose = () => {
     if (canClose) onClose!();
@@ -74,13 +80,13 @@ export function Modal({
     focusable?.focus();
   }, [isOpen]);
 
-  if (!isOpen) return null;
-
   const handleOverlayClick = (e: React.MouseEvent<HTMLDivElement>) => {
     if (canClose && closeOnOverlayClick && e.target === e.currentTarget) {
       handleClose();
     }
   };
+
+  if (!isOpen || !mounted) return null;
 
   const shouldShowCloseButton = showCloseButton && canClose;
 
@@ -109,7 +115,7 @@ export function Modal({
             {shouldShowCloseButton && (
               <button
                 onClick={handleClose}
-                aria-label="Fechar modal"
+                aria-label="Close modal"
                 className="ml-auto text-gray-400 hover:text-gray-600 dark:hover:text-gray-200 transition-colors"
               >
                 <svg
