@@ -1,11 +1,20 @@
-const SUPPORTED_LANGUAGES = ["de-DE", "en-US", "pt-BR"] as const;
+import {
+  DEFAULT_LANGUAGE,
+  DEFAULT_LESSON_LANGUAGE,
+  DEFAULT_PLAYER_LANGUAGE,
+  Language,
+  SUPPORTED_LANGUAGES,
+} from "@/constants/lesson";
 
-export type Language = (typeof SUPPORTED_LANGUAGES)[number];
+type LanguageTarget = "lesson" | "player";
 
-export const DEFAULT_LANGUAGE: Language = "de-DE";
-
-export function parseLanguage(value?: string | null): Language {
+export function parseLanguage(
+  value?: string | null,
+  target: LanguageTarget = "lesson",
+): Language {
+  const languageDefault =
+    target === "lesson" ? DEFAULT_LESSON_LANGUAGE : DEFAULT_PLAYER_LANGUAGE;
   return SUPPORTED_LANGUAGES.includes(value as Language)
     ? (value as Language)
-    : DEFAULT_LANGUAGE;
+    : languageDefault;
 }
