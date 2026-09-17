@@ -18,7 +18,7 @@ export default function Home() {
           aria-hidden="true"
           fill
           priority
-          className="hidden sm:block object-contain object-center"
+          className="hidden sm:block object-cover object-center"
         />
 
         {/* Mobile */}
