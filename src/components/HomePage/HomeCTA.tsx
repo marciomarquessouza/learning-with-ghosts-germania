@@ -13,7 +13,7 @@ export function HomeCTA() {
   const onNewGame = () => {
     setIsStartingNewGame(true);
     clearSnapshot();
-    router.push("/game/1");
+    router.push("/game/A1-1/1");
   };
 
   if (!hasHydrated || isStartingNewGame) {
@@ -38,7 +38,7 @@ export function HomeCTA() {
   if (!hasSavedProgress) {
     return (
       <Link
-        href="/game/1"
+        href="/game/A1-1/1"
         aria-label="Start Learning With Ghosts — Germania"
         className={[
           "rounded-xl border-2 border-black bg-[#F3B162]",
@@ -76,7 +76,7 @@ export function HomeCTA() {
       </button>
 
       <Link
-        href={`/game/${snapshot.day}?scene=${snapshot.scene}`}
+        href={`/game/A1-1/${snapshot.day}?scene=${snapshot.scene}`}
         aria-label="Continue Saved Game"
         className={[
           "rounded-xl border-2 border-black bg-[#F7EEDB]",
