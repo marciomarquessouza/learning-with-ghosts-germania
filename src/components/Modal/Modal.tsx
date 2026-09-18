@@ -7,7 +7,7 @@ type ModalSize = "sm" | "md" | "lg" | "xl" | "full";
 export interface ModalProps {
   isOpen: boolean;
   onClose?: () => void;
-  title?: string;
+  title?: string | ReactNode;
   children: ReactNode;
   footer?: ReactNode;
   size?: ModalSize;
@@ -94,29 +94,26 @@ export function Modal({
     <div
       ref={overlayRef}
       onClick={handleOverlayClick}
-      className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm p-4"
+      className={[
+        "fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm p-4",
+      ].join()}
       role="dialog"
       aria-modal="true"
       aria-labelledby={title ? "modal-title" : undefined}
     >
       <div
-        className={`w-full ${sizeClasses[size]} bg-white dark:bg-gray-800 rounded-lg shadow-xl`}
+        className={[
+          `w-full ${sizeClasses[size]} bg-white rounded-lg shadow-xl `,
+        ].join()}
       >
         {(title || shouldShowCloseButton) && (
-          <div className="flex items-center justify-between px-6 py-4 border-b border-gray-200 dark:border-gray-700">
-            {title && (
-              <h2
-                id="modal-title"
-                className="text-lg font-semibold text-gray-900 dark:text-white"
-              >
-                {title}
-              </h2>
-            )}
+          <div className="flex items-center justify-between px-6 py-4 border-b border-gray-200">
+            {title}
             {shouldShowCloseButton && (
               <button
                 onClick={handleClose}
                 aria-label="Close modal"
-                className="ml-auto text-gray-400 hover:text-gray-600 dark:hover:text-gray-200 transition-colors"
+                className="ml-auto text-gray-400 hover:text-gray-600 transition-colors"
               >
                 <svg
                   className="w-5 h-5"
@@ -136,12 +133,10 @@ export function Modal({
           </div>
         )}
 
-        <div className="px-6 py-4 text-gray-700 dark:text-gray-300">
-          {children}
-        </div>
+        <div className="px-6 py-4 text-gray-700 ">{children}</div>
 
         {footer && (
-          <div className="flex justify-end gap-2 px-6 py-4 border-t border-gray-200 dark:border-gray-700">
+          <div className="flex justify-end gap-2 px-6 py-4 border-t border-gray-200">
             {footer}
           </div>
         )}
