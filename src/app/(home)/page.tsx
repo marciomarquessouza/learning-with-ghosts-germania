@@ -1,6 +1,5 @@
 import Image from "next/image";
 import { HomeCTA } from "@/components/HomePage/HomeCTA";
-import { SettingsModal } from "@/components/SettingModal/SettingsModal";
 
 export default function Home() {
   return (
@@ -39,7 +38,6 @@ export default function Home() {
           <HomeCTA />
         </div>
       </main>
-      <SettingsModal />
     </>
   );
 }
