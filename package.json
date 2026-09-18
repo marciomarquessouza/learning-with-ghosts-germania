@@ -6,6 +6,9 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
+    "android:sync": "yarn build && cap sync android",
+    "android:open": "cap open android",
+    "android:run": "yarn android:sync && cap open android",
     "lint": "next lint",
     "gen:audio": "tsx /scripts/audio/generate-audio.ts",
     "sprite:init": "node scripts/animations/build-default-spritesheet-config.mjs",
@@ -16,6 +19,9 @@
     "build-storybook": "storybook build"
   },
   "dependencies": {
+    "@capacitor/android": "^8.5.2",
+    "@capacitor/core": "^8.5.2",
+    "@capacitor/status-bar": "^8.0.3",
     "@vercel/analytics": "^1.6.1",
     "framer-motion": "^12.23.6",
     "howler": "^2.2.4",
@@ -30,6 +36,7 @@
     "zustand": "^5.0.6"
   },
   "devDependencies": {
+    "@capacitor/cli": "^8.5.2",
     "@chromatic-com/storybook": "^5.1.1",
     "@eslint/eslintrc": "^3",
     "@storybook/addon-a11y": "^10.3.3",

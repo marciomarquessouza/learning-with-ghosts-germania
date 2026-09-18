@@ -1,9 +1,11 @@
 import Image from "next/image";
 import { HomeCTA } from "@/components/HomePage/HomeCTA";
+import { NativeAppRedirect } from "@/components/NativeAppRedirect/NativeAppRedirect";
 
 export default function Home() {
   return (
     <>
+      <NativeAppRedirect />
       <main
         className="relative w-full flex-1 min-h-0 overflow-hidden bg-[#FF161A]"
         aria-label="Learning With Ghosts — Germania"
