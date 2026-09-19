@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">Learning With Ghosts</string>
+    <string name="title_activity_main">Learning With Ghosts</string>
+    <string name="package_name">com.learningwithghosts.app</string>
+    <string name="custom_url_scheme">com.learningwithghosts.app</string>
+</resources>

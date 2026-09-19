@@ -15,6 +15,8 @@ import { DayContent, GameScenes, GameWorlds } from "@/types";
 import { events } from "@/events/events";
 import { useLessonStore } from "@/store/lessonStore";
 import { useDialoguesStore } from "@/store/dialogueStore";
+import { StatusBar } from "@capacitor/status-bar";
+import { Capacitor } from "@capacitor/core";
 
 interface MainGameProps {
   day: number;
@@ -61,6 +63,12 @@ export default function MainGame({ day, dayContent }: MainGameProps) {
     setLoading(true);
     started.current = false;
   }, [currentScene, gameWorld, setGameScene, urlScene, urlWorld]);
+
+  useEffect(() => {
+  if (Capacitor.isNativePlatform()) {
+    StatusBar.hide();
+  }
+}, []);
 
   useEffect(() => {
     if (typeof window !== "object") {
