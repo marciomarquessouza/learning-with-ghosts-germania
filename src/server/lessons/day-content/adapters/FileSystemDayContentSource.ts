@@ -1,10 +1,11 @@
 import { DayContentSource } from "../core/DayContentSource";
 import { dialogues as defaultDialogues } from "../content/de-DE/A1-1/default.dialogues";
 import { DayDialogues, DefaultDialogues } from "@/libs/dialogues/types";
-import { Lesson } from "@/libs/lesson/types";
+import { ChallengeOptions, Lesson } from "@/libs/lesson/types";
 import { AudioManifest } from "@/libs/audio/types";
 import { LessonOptions } from "../../services/getLesson";
 import { contentImporters } from "../content/contentImporters";
+import { Language, Level } from "@/constants/lesson";
 
 export class FileSystemDayContentSource implements DayContentSource {
   private async getDayImporter(
@@ -63,5 +64,22 @@ export class FileSystemDayContentSource implements DayContentSource {
     language,
   }: LessonOptions): Promise<DefaultDialogues> {
     return defaultDialogues;
+  }
+
+  getChallengeOptions(): ChallengeOptions {
+    const lessonLanguages = Object.keys(contentImporters) as Language[];
+    const lessonLevels = new Set<Level>();
+
+    lessonLanguages.forEach((language) => {
+      (Object.keys(contentImporters[language]) as Level[]).forEach((level) => {
+        lessonLevels.add(level);
+      });
+    });
+
+    return {
+      lessonLanguages,
+      lessonLevels: Array.from(lessonLevels),
+      playerLanguages: [],
+    };
   }
 }
