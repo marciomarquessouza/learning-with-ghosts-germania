@@ -1,5 +1,6 @@
 import { PronunciationLimits, WritingLimits } from "@/events/lesson/types";
 import { AudioScoreSummary } from "../audio/types";
+import { Language, Level } from "@/constants/lesson";
 
 export type LessonStepType =
   | "introduction"
@@ -48,6 +49,12 @@ export type Lesson = {
   title: string;
   limits?: LessonChallengeLimits;
   entries: LessonEntry[];
+};
+
+export type ChallengeOptions = {
+  playerLanguages: Language[];
+  lessonLanguages: Language[];
+  lessonLevels: Level[];
 };
 
 export type LessonDetails = Omit<Lesson, "entries">;

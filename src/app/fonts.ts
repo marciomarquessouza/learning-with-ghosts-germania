@@ -5,6 +5,7 @@ import {
   Russo_One,
   Special_Elite,
   UnifrakturMaguntia,
+  Staatliches,
 } from "next/font/google";
 
 export const geistSans = Geist({
@@ -38,4 +39,10 @@ export const specialElite = Special_Elite({
   weight: "400",
   variable: "--font-special-elite",
   subsets: ["latin", "latin-ext"],
+});
+
+export const staatliches = Staatliches({
+  weight: "400",
+  subsets: ["latin"],
+  variable: "--font-staatliches",
 });

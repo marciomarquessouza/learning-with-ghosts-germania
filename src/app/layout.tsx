@@ -6,6 +6,7 @@ import {
   russoOne,
   specialElite,
   unifrakturMaguntia,
+  staatliches,
 } from "./fonts";
 import "./globals.css";
 import { Analytics } from "@vercel/analytics/next";
@@ -24,7 +25,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${geistMono.variable} ${geistSans.variable} ${josefinSans.variable} ${russoOne.variable} ${specialElite.variable} ${unifrakturMaguntia.variable} antialiased`}
+        className={`${geistMono.variable} ${geistSans.variable} ${josefinSans.variable} ${russoOne.variable} ${specialElite.variable} ${unifrakturMaguntia.variable} ${staatliches.variable} antialiased`}
       >
         {children}
         <Analytics />

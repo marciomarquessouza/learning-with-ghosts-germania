@@ -15,6 +15,7 @@
   --font-mono: var(--font-special-elite);
   --font-primary: var(--font-primary);
   --font-secondary: var(--font-secondary);
+  --font-staatliches: var(--font-staatliches);
 }
 
 @font-face {

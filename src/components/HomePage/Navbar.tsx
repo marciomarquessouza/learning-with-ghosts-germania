@@ -12,7 +12,7 @@ export function Navbar() {
         <Image
           className="w-64 "
           src={MAIN_LOGO}
-          alt="Learning With Ghosts — Germania"
+          alt="Learning With Ghosts"
           width={515}
           height={68}
           priority

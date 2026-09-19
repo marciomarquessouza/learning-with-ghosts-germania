@@ -1,4 +1,4 @@
-import { Footer } from "@/components/HomePage/Footer";
+import { Footer } from "@/components/Footer.tsx";
 import { Navbar } from "@/components/HomePage/Navbar";
 
 export default function HomeGroupLayout({
