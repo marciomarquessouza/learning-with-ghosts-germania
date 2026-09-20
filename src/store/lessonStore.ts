@@ -1,3 +1,4 @@
+import { Language } from "@/constants/lesson";
 import { EntryScore, LessonScore } from "@/libs/lesson/LessonScore";
 import { Lesson } from "@/libs/lesson/types";
 import { create } from "zustand";
@@ -15,12 +16,14 @@ const INITIAL_LESSON: Lesson = {
  */
 export interface LessonState {
   lesson: Lesson;
+  lessonLanguage: Language;
   currentLessonEntryId?: string;
   completedEntriesIds: string[];
   completed: boolean;
   scores: Record<string, EntryScore>;
 
   setLesson: (lesson: Lesson) => void;
+  setLessonLanguage: (language: Language) => void;
   setCurrentLessonEntryId: (id?: string) => void;
   setCompletedEntriesIds: (ids: string[]) => void;
   setCompleted: (completed: boolean) => void;
@@ -33,12 +36,15 @@ export const useLessonStore = create<LessonState>()(
   persist(
     (set) => ({
       lesson: INITIAL_LESSON,
+      lessonLanguage: "de-DE",
       currentLessonEntryId: undefined,
       completedEntriesIds: [],
       scores: {},
       completed: false,
 
       setLesson: (lesson) => set({ lesson }),
+
+      setLessonLanguage: (language) => set({ lessonLanguage: language }),
 
       setCurrentLessonEntryId: (currentLessonEntryId) =>
         set({ currentLessonEntryId }),

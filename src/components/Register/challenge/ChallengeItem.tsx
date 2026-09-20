@@ -1,5 +1,5 @@
 import { Language, LessonChallengeDetail } from "@/constants/lesson";
-import { NationIcon } from "../Icons/NationIcon";
+import { NationIcon } from "../../Icons/NationIcon";
 
 interface ChallengeItemProps {
   challenge: LessonChallengeDetail;
