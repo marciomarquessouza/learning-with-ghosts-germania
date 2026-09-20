@@ -2,7 +2,7 @@ import Link from "next/link";
 
 export function Footer() {
   return (
-    <footer className="w-full bg-black text-center py-4 landscape-short:py-2 text-sm sm:text-base landscape-short:text-xs">
+    <footer className="absolute left-0 bottom-0 w-full bg-black text-center py-4 landscape-short:py-2 text-sm sm:text-base landscape-short:text-xs">
       <p className="text-white">
         <span className="font-bold">Created by:</span>{" "}
         <Link

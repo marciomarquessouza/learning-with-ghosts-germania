@@ -1,11 +1,25 @@
 import Image from "next/image";
 import { HomeCTA } from "@/components/HomePage/HomeCTA";
+import { HomeMobile } from "@/components/HomePage/HomeMobile";
 
 export default function Home() {
   return (
     <>
+      {/* app mobile - landscape */}
       <main
-        className="relative w-full flex-1 min-h-0 overflow-hidden bg-[#FF161A]"
+        className={[
+          "hidden landscape-short:block landscape-short:h-screen landscape-short:w-screen",
+        ].join(" ")}
+      >
+        <HomeMobile />
+      </main>
+
+      {/* web */}
+      <main
+        className={[
+          "relative w-full flex-1 min-h-0 overflow-hidden bg-[#FF161A]",
+          "landscape-short:hidden",
+        ].join(" ")}
         aria-label="Learning With Ghosts — Germania"
       >
         <h1 className="sr-only">Learning With Ghosts — Germania</h1>

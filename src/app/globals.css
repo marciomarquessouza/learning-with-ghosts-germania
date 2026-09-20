@@ -112,3 +112,174 @@ body {
     @slot;
   }
 }
+
+@keyframes marlene-glitch {
+  0%,
+  88%,
+  100% {
+    transform: translate(0, 0);
+    filter: blur(0);
+  }
+
+  89% {
+    transform: translate(-2px, 1px);
+    filter: blur(0.4px);
+  }
+
+  90% {
+    transform: translate(3px, -1px);
+    filter: blur(1px);
+  }
+
+  91% {
+    transform: translate(-1px, 0);
+    filter: blur(0);
+  }
+
+  92% {
+    transform: translate(0, 0);
+  }
+
+  96% {
+    transform: translate(1px, 0);
+  }
+
+  97% {
+    transform: translate(-2px, 1px);
+    filter: blur(0.5px);
+  }
+
+  98% {
+    transform: translate(0, 0);
+    filter: blur(0);
+  }
+}
+
+.animate-marlene-glitch {
+  animation: marlene-glitch 4.7s steps(1, end) infinite;
+}
+
+@keyframes stain-pulse {
+  0%,
+  100% {
+    opacity: 0.6;
+    transform: scale(1);
+  }
+
+  50% {
+    opacity: 1;
+    transform: scale(1.015);
+  }
+}
+
+.animate-stain-pulse {
+  animation: stain-pulse 7s ease-in-out infinite;
+}
+
+@keyframes marlene-blur {
+  0%,
+  82%,
+  100% {
+    filter: blur(0);
+    transform: translate(0, 0);
+  }
+
+  83% {
+    filter: blur(1px);
+  }
+
+  84% {
+    filter: blur(4px);
+    transform: translateX(-2px);
+  }
+
+  85% {
+    filter: blur(0);
+    transform: translateX(2px);
+  }
+
+  86% {
+    filter: blur(2px);
+    transform: translateX(-1px);
+  }
+
+  87% {
+    filter: blur(0);
+    transform: translate(0, 0);
+  }
+
+  94% {
+    filter: blur(0);
+  }
+
+  95% {
+    filter: blur(3px);
+  }
+
+  96% {
+    filter: blur(0);
+  }
+}
+
+.animate-marlene-blur {
+  animation: marlene-blur 5.3s steps(1, end) infinite;
+}
+
+@keyframes title-glitch-1 {
+  0%,
+  90%,
+  100% {
+    clip-path: inset(0 0 100% 0);
+    transform: translateX(0);
+  }
+
+  91% {
+    clip-path: inset(25% 0 55% 0);
+    transform: translateX(-5px);
+  }
+
+  92% {
+    clip-path: inset(55% 0 25% 0);
+    transform: translateX(7px);
+  }
+
+  93% {
+    clip-path: inset(10% 0 75% 0);
+    transform: translateX(-3px);
+  }
+
+  94% {
+    clip-path: inset(0 0 100% 0);
+  }
+}
+
+@keyframes title-glitch-2 {
+  0%,
+  92%,
+  100% {
+    clip-path: inset(100% 0 0 0);
+    transform: translateX(0);
+  }
+
+  93% {
+    clip-path: inset(65% 0 15% 0);
+    transform: translateX(4px);
+  }
+
+  94% {
+    clip-path: inset(40% 0 45% 0);
+    transform: translateX(-6px);
+  }
+
+  95% {
+    clip-path: inset(100% 0 0 0);
+  }
+}
+
+.animate-title-glitch-1 {
+  animation: title-glitch-1 6.1s steps(1, end) infinite;
+}
+
+.animate-title-glitch-2 {
+  animation: title-glitch-2 6.1s steps(1, end) infinite;
+}
