@@ -2,6 +2,7 @@
 // HOME PAGE IMAGES
 export const MAIN_LOGO = "/ui/home_page/logo-header.svg";
 export const MAIN_LOGO_INVERTED = "/ui/home_page/logo-inverted.svg";
+export const MAIN_LOGO_MOBILE = "/ui/home_page/logo-mobile.svg";
 export const HERO_IMAGE = "/ui/home_page/marlene-hero.png";
 // LOADING PAGE IMAGES
 export const GHOST_LOADER_BODY = "/ui/loading_screen/ghost-loader-body.png";

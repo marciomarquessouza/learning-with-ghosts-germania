@@ -13,11 +13,22 @@ export default function RegisterLayout({
         "font-primary text-[#FFF3E4]",
       ].join(" ")}
     >
-      <Header />
-      <main className="flex-1 min-h-0 flex flex-col px-6 md:px-8">
+      <div className={["landscape-short:hidden"].join(" ")}>
+        <Header />
+      </div>
+
+      <main
+        className={[
+          "flex-1 min-h-0 flex flex-col px-6 md:px-8",
+          "landscape-short:mt-4",
+        ].join(" ")}
+      >
         {children}
       </main>
-      <Footer />
+
+      <div className={["landscape-short:hidden"].join(" ")}>
+        <Footer />
+      </div>
     </div>
   );
 }

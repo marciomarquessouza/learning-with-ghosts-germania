@@ -106,3 +106,9 @@ body {
 .fade-out-500 {
   animation: fadeOut 0.5s ease-in-out forwards;
 }
+
+@custom-variant landscape-short {
+  @media (orientation: landscape) and (max-height: 600px) {
+    @slot;
+  }
+}
