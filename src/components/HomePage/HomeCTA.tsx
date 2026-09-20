@@ -13,7 +13,7 @@ export function HomeCTA() {
   const onNewGame = () => {
     setIsStartingNewGame(true);
     clearSnapshot();
-    router.push("/game/A1-1/1");
+    router.push("/register");
   };
 
   if (!hasHydrated || isStartingNewGame) {
@@ -38,7 +38,7 @@ export function HomeCTA() {
   if (!hasSavedProgress) {
     return (
       <Link
-        href="/game/A1-1/1"
+        href="/register"
         aria-label="Start Learning With Ghosts — Germania"
         className={[
           "rounded-xl border-2 border-black bg-[#F3B162]",
