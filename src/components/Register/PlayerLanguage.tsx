@@ -1,20 +1,12 @@
 "use client";
 import { useRouter } from "next/navigation";
-import { ChallengeSelector } from "@/components/Register/challenge/ChallengeSelector";
-import { Language } from "@/constants/lesson";
 import { PageTransition } from "../PageTransition";
-import { useLessonStore } from "@/store/lessonStore";
 import { usePageTransition } from "../PageTransition/usePageTransition";
 import { FooterNavigation } from "./common/FooterNavigation";
 
-interface ChallengeProps {
-  languages: Language[];
-}
-
-export function Challenge({ languages }: ChallengeProps) {
+export function PlayerLanguage() {
   const router = useRouter();
   const { nextPath, setNextPath, isTransitioning } = usePageTransition();
-  const { lessonLanguage, setLessonLanguage } = useLessonStore();
 
   return (
     <>
@@ -35,7 +27,7 @@ export function Challenge({ languages }: ChallengeProps) {
         <div className="mx-auto w-full max-w-[872px]">
           <header>
             <h1 className="font-staatliches text-5xl md:text-6xl">
-              I WANT TO LEARN...
+              What language do you speak?
             </h1>
 
             <p
@@ -51,17 +43,13 @@ export function Challenge({ languages }: ChallengeProps) {
           <section
             className={["mt-6 md:mt-14", "landscape-short:mt-0"].join(" ")}
           >
-            <ChallengeSelector
-              languages={languages}
-              selectedLanguage={lessonLanguage}
-              onSelected={setLessonLanguage}
-            />
+            Language Selector
           </section>
 
           <FooterNavigation
-            disabled={isTransitioning || !lessonLanguage}
-            onClickBack={() => setNextPath("/")}
-            onClickNext={() => setNextPath("/register/player-language")}
+            disabled={isTransitioning}
+            onClickBack={() => setNextPath("/register/challenge")}
+            onClickNext={() => setNextPath("/register/level")}
           />
         </div>
       </main>
