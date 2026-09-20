@@ -2,19 +2,29 @@
 import Image from "next/image";
 import { useEffect, useState } from "react";
 import { MenuButton } from "./MenuButton";
-import { useRouter } from "next/navigation";
+
+interface HomeMenuProps {
+  hideContinue: boolean;
+  onNewGame: () => void;
+  onContinueGame: () => void;
+}
 
 type MenuOption = "new" | "continue";
 
-export function HomeMenu() {
-  const router = useRouter();
+export function HomeMenu({
+  hideContinue,
+  onNewGame,
+  onContinueGame,
+}: HomeMenuProps) {
   const [selected, setSelected] = useState<MenuOption | null>(null);
 
-  function select(option: MenuOption, action: () => void) {
+  function select(option: MenuOption) {
     setSelected(option);
-    setTimeout(() => {
-      action();
-    }, 200);
+    if (option == "new") {
+      onNewGame();
+      return;
+    }
+    onContinueGame();
   }
 
   useEffect(() => {
@@ -36,25 +46,19 @@ export function HomeMenu() {
         <div className="flex flex-col">
           <MenuButton
             selected={selected === "new"}
-            onClick={() => {
-              select("new", () => {
-                router.push("/register");
-              });
-            }}
+            onClick={() => select("new")}
           >
             New Game
           </MenuButton>
 
-          <MenuButton
-            selected={selected === "continue"}
-            onClick={() => {
-              select("continue", () => {
-                console.log("Continue");
-              });
-            }}
-          >
-            Continue
-          </MenuButton>
+          {!hideContinue && (
+            <MenuButton
+              selected={selected === "continue"}
+              onClick={() => select("continue")}
+            >
+              Continue
+            </MenuButton>
+          )}
         </div>
       </div>
     </div>
