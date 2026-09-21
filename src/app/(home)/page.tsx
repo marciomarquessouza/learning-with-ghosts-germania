@@ -20,9 +20,9 @@ export default function Home() {
           "relative w-full flex-1 min-h-0 overflow-hidden bg-[#FF161A]",
           "landscape-short:hidden",
         ].join(" ")}
-        aria-label="Learning With Ghosts — Germania"
+        aria-label="Learning With Ghosts"
       >
-        <h1 className="sr-only">Learning With Ghosts — Germania</h1>
+        <h1 className="sr-only">Learning With Ghosts</h1>
 
         {/* Desktop/Tablet */}
         <Image
@@ -45,7 +45,7 @@ export default function Home() {
         />
 
         <div
-          className="absolute inset-0 flex items-end justify-center p-6 sm:p-20"
+          className="absolute inset-0 flex items-end justify-center p-6 mb-20 sm:p-20"
           role="navigation"
           aria-label="Primary action"
         >

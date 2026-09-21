@@ -18,7 +18,6 @@ export function HomeMobile() {
   };
 
   const handleOnContinueGame = () => {
-    clearSnapshot();
     setTransitioning(true);
   };
 
@@ -39,7 +38,7 @@ export function HomeMobile() {
       >
         <HeroMobile />
         <HomeMenu
-          hideContinue={hasSavedProgress}
+          hideContinue={!hasSavedProgress}
           onNewGame={handleOnNewGame}
           onContinueGame={handleOnContinueGame}
         />
