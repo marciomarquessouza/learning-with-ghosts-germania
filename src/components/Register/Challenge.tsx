@@ -44,7 +44,7 @@ export function Challenge({ languages }: ChallengeProps) {
                 "landscape-short:mt-0",
               ].join(" ")}
             >
-              Select the language for your challenge.
+              Select the language you want to learn.
             </p>
           </header>
 

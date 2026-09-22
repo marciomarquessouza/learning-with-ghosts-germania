@@ -3,10 +3,13 @@ import { useRouter } from "next/navigation";
 import { PageTransition } from "../PageTransition";
 import { usePageTransition } from "../PageTransition/usePageTransition";
 import { FooterNavigation } from "./common/FooterNavigation";
+import { PlayerLanguageSelector } from "./player-language/PlayerLanguageSelector";
+import { useLessonStore } from "@/store/lessonStore";
 
 export function PlayerLanguage() {
   const router = useRouter();
   const { nextPath, setNextPath, isTransitioning } = usePageTransition();
+  const { playerLanguage, setPlayerLanguage } = useLessonStore();
 
   return (
     <>
@@ -27,7 +30,7 @@ export function PlayerLanguage() {
         <div className="mx-auto w-full max-w-[872px]">
           <header>
             <h1 className="font-staatliches text-5xl md:text-6xl">
-              What language do you speak?
+              I SPEAK...
             </h1>
 
             <p
@@ -36,14 +39,17 @@ export function PlayerLanguage() {
                 "landscape-short:mt-0",
               ].join(" ")}
             >
-              Select the language for your challenge.
+              Select the language for instructions and lessons.
             </p>
           </header>
 
           <section
             className={["mt-6 md:mt-14", "landscape-short:mt-0"].join(" ")}
           >
-            Language Selector
+            <PlayerLanguageSelector
+              selectedLanguage={playerLanguage}
+              onSelected={setPlayerLanguage}
+            />
           </section>
 
           <FooterNavigation

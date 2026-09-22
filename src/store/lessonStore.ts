@@ -17,6 +17,7 @@ const INITIAL_LESSON: Lesson = {
 export interface LessonState {
   lesson: Lesson;
   lessonLanguage: Language;
+  playerLanguage: Language;
   currentLessonEntryId?: string;
   completedEntriesIds: string[];
   completed: boolean;
@@ -24,6 +25,7 @@ export interface LessonState {
 
   setLesson: (lesson: Lesson) => void;
   setLessonLanguage: (language: Language) => void;
+  setPlayerLanguage: (language: Language) => void;
   setCurrentLessonEntryId: (id?: string) => void;
   setCompletedEntriesIds: (ids: string[]) => void;
   setCompleted: (completed: boolean) => void;
@@ -37,6 +39,7 @@ export const useLessonStore = create<LessonState>()(
     (set) => ({
       lesson: INITIAL_LESSON,
       lessonLanguage: "de-DE",
+      playerLanguage: "en-UK",
       currentLessonEntryId: undefined,
       completedEntriesIds: [],
       scores: {},
@@ -45,6 +48,8 @@ export const useLessonStore = create<LessonState>()(
       setLesson: (lesson) => set({ lesson }),
 
       setLessonLanguage: (language) => set({ lessonLanguage: language }),
+
+      setPlayerLanguage: (language) => set({ playerLanguage: language }),
 
       setCurrentLessonEntryId: (currentLessonEntryId) =>
         set({ currentLessonEntryId }),

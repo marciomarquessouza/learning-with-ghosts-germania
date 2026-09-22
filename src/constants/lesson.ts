@@ -15,7 +15,13 @@ export type Level = (typeof SUPPORTED_LEVELS)[number];
 
 export const DEFAULT_LEVEL: Level = "A1-1";
 
-export const SUPPORTED_LANGUAGES = ["de-DE", "en-US", "pt-BR"] as const;
+export const SUPPORTED_LANGUAGES = [
+  "de-DE",
+  "en-US",
+  "en-UK",
+  "pt-BR",
+  "es-ES",
+] as const;
 
 export const SUPPORTED_LESSON_LANGUAGES = ["de-DE", "en-US"] as const;
 
