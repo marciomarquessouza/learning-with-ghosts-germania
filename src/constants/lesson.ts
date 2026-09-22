@@ -43,29 +43,3 @@ export const LESSON_NATIONS = [
 ] as const;
 
 export type Nation = (typeof LESSON_NATIONS)[number];
-
-export type LessonChallengeDetail = {
-  language: Language;
-  title: string;
-  nation: Nation;
-  description: string;
-};
-
-export const LESSON_CHALLENGE_DETAILS: Partial<
-  Record<Language, LessonChallengeDetail>
-> = {
-  "de-DE": {
-    language: "de-DE",
-    title: "GERMAN",
-    nation: "GERMANIA",
-    description:
-      "Live in GERMANIA, a city-state where not knowing German is a crime",
-  },
-  "en-US": {
-    language: "en-US",
-    title: "ENGLISH",
-    nation: "BRITANNIA",
-    description:
-      "Live in BRITANNIA, the empire on which the sun never sets—where not speaking English can cost you your life.",
-  },
-};

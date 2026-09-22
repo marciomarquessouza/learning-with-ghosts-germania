@@ -1,4 +1,4 @@
-import { Language } from "@/constants/lesson";
+import { Language, Level } from "@/constants/lesson";
 import { EntryScore, LessonScore } from "@/libs/lesson/LessonScore";
 import { Lesson } from "@/libs/lesson/types";
 import { create } from "zustand";
@@ -18,6 +18,7 @@ export interface LessonState {
   lesson: Lesson;
   lessonLanguage: Language;
   playerLanguage: Language;
+  level: Level;
   currentLessonEntryId?: string;
   completedEntriesIds: string[];
   completed: boolean;
@@ -26,6 +27,7 @@ export interface LessonState {
   setLesson: (lesson: Lesson) => void;
   setLessonLanguage: (language: Language) => void;
   setPlayerLanguage: (language: Language) => void;
+  setLevel: (level: Level) => void;
   setCurrentLessonEntryId: (id?: string) => void;
   setCompletedEntriesIds: (ids: string[]) => void;
   setCompleted: (completed: boolean) => void;
@@ -40,6 +42,7 @@ export const useLessonStore = create<LessonState>()(
       lesson: INITIAL_LESSON,
       lessonLanguage: "de-DE",
       playerLanguage: "en-UK",
+      level: "A1-1",
       currentLessonEntryId: undefined,
       completedEntriesIds: [],
       scores: {},
@@ -50,6 +53,8 @@ export const useLessonStore = create<LessonState>()(
       setLessonLanguage: (language) => set({ lessonLanguage: language }),
 
       setPlayerLanguage: (language) => set({ playerLanguage: language }),
+
+      setLevel: (level) => set({ level }),
 
       setCurrentLessonEntryId: (currentLessonEntryId) =>
         set({ currentLessonEntryId }),

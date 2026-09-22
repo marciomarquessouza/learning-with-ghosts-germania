@@ -1,32 +1,13 @@
 import Image from "next/image";
 import { NationIcon } from "../../Icons/NationIcon";
 import { Language } from "@/constants/lesson";
+import { PLAYER_LANGUAGE_DETAILS } from "../data/register-data";
 
 interface PlayerLanguageItemProps {
   selected: boolean;
   language: Language;
   onSelected: (language: Language) => void;
 }
-
-export type PlayerLanguageDetails = Record<
-  Language,
-  { label: string; icon: string }
->;
-
-const PLAYER_LANGUAGE_DETAILS: Partial<PlayerLanguageDetails> = {
-  "en-UK": {
-    label: "ENGLISH",
-    icon: "/ui/flags/flag_en-UK.svg",
-  },
-  "pt-BR": {
-    label: "PORTUGUESE",
-    icon: "/ui/flags/flag_pt-BR.svg",
-  },
-  "es-ES": {
-    label: "SPANISH",
-    icon: "/ui/flags/flag_es-ES.svg",
-  },
-};
 
 export function PlayerLanguageItem({
   selected,

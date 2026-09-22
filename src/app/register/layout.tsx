@@ -25,10 +25,6 @@ export default function RegisterLayout({
       >
         {children}
       </main>
-
-      <div className={["landscape-short:hidden"].join(" ")}>
-        <Footer />
-      </div>
     </div>
   );
 }

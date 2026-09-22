@@ -1,21 +1,22 @@
-import { Language, LessonChallengeDetail } from "@/constants/lesson";
 import { NationIcon } from "../../Icons/NationIcon";
+import { Level } from "@/constants/lesson";
+import { LEVEL_DETAILS } from "../data/register-data";
 
-interface ChallengeItemProps {
-  challenge: LessonChallengeDetail;
+interface LevelItemProps {
   selected: boolean;
-  onSelected: (language: Language) => void;
+  level: Level;
+  onSelected: (language: Level) => void;
 }
 
-export function ChallengeItem({
-  challenge,
-  selected,
-  onSelected,
-}: ChallengeItemProps) {
+export function LevelItem({ selected, level, onSelected }: LevelItemProps) {
+  const details = LEVEL_DETAILS[level];
+
+  if (!details) return null;
+
   return (
     <button
       type="button"
-      onClick={() => onSelected(challenge.language)}
+      onClick={() => onSelected(level)}
       className={`
         flex h-[180px] w-[280px] flex-col
         rounded-lg border p-5
@@ -40,7 +41,7 @@ export function ChallengeItem({
             }
           `}
         >
-          {challenge.nation}
+          {details.label}
         </span>
 
         {selected && <NationIcon />}
@@ -52,7 +53,7 @@ export function ChallengeItem({
           ${selected ? "text-[#171719]" : "text-[#f5f1ec]"}
         `}
       >
-        {challenge.title}
+        {details.title}
       </h3>
 
       <p
@@ -61,7 +62,7 @@ export function ChallengeItem({
           ${selected ? "text-[#45403b]" : "text-[#8d8580]"}
         `}
       >
-        {challenge.description}
+        {details.description}
       </p>
     </button>
   );

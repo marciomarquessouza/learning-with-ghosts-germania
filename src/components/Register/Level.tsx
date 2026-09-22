@@ -1,15 +1,16 @@
 "use client";
 import { useRouter } from "next/navigation";
-import { PageTransition } from "../PageTransition";
+import { useLessonStore } from "@/store/lessonStore";
 import { usePageTransition } from "../PageTransition/usePageTransition";
 import { FooterNavigation } from "./common/FooterNavigation";
-import { PlayerLanguageSelector } from "./components/PlayerLanguageSelector";
-import { useLessonStore } from "@/store/lessonStore";
+import { PageTransition } from "../PageTransition";
+import { LevelSelector } from "./components/LevelSelector";
+import { AVAILABLE_LEVELS } from "./data/register-data";
 
-export function PlayerLanguage() {
+export function Level() {
   const router = useRouter();
   const { nextPath, setNextPath, isTransitioning } = usePageTransition();
-  const { playerLanguage, setPlayerLanguage } = useLessonStore();
+  const { lessonLanguage, level, setLevel } = useLessonStore();
 
   return (
     <>
@@ -30,7 +31,7 @@ export function PlayerLanguage() {
         <div className="mx-auto w-full max-w-[872px]">
           <header>
             <h1 className="font-staatliches text-5xl md:text-6xl">
-              I SPEAK...
+              CHOOSE YOUR LEVEL...
             </h1>
 
             <p
@@ -39,23 +40,22 @@ export function PlayerLanguage() {
                 "landscape-short:mt-0",
               ].join(" ")}
             >
-              Select the language for instructions and lessons.
+              Select the level for your challenge.
             </p>
           </header>
 
-          <section
-            className={["mt-6 md:mt-14", "landscape-short:mt-0"].join(" ")}
-          >
-            <PlayerLanguageSelector
-              selectedLanguage={playerLanguage}
-              onSelected={setPlayerLanguage}
+          <section className={["mt-6", "landscape-short:mt-0"].join(" ")}>
+            <LevelSelector
+              levels={AVAILABLE_LEVELS[lessonLanguage] ?? []}
+              selectedLevel={level}
+              onSelected={setLevel}
             />
           </section>
 
           <FooterNavigation
             disabled={isTransitioning}
-            onClickBack={() => setNextPath("/register/challenge")}
-            onClickNext={() => setNextPath("/register/level")}
+            onClickBack={() => setNextPath("/register/player-language")}
+            onClickNext={() => setNextPath("/")}
           />
         </div>
       </main>

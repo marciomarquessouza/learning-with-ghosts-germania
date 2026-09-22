@@ -1,5 +1,5 @@
 "use client";
-import { Language, LESSON_CHALLENGE_DETAILS } from "@/constants/lesson";
+import { Language } from "@/constants/lesson";
 import { ChallengeItem } from "./ChallengeItem";
 
 interface ChallengeSelectorProps {
@@ -13,17 +13,13 @@ export function ChallengeSelector({
   onSelected,
   languages,
 }: ChallengeSelectorProps) {
-  const challenges = languages
-    .map((language) => LESSON_CHALLENGE_DETAILS[language])
-    .filter((value) => value !== undefined);
-
   return (
     <div className="grid grid-cols-1 gap-4 landscape-short:gap-0 sm:grid-cols-2 lg:grid-cols-3">
-      {challenges.map((challenge) => (
+      {languages.map((language) => (
         <ChallengeItem
-          key={challenge.language}
-          selected={selectedLanguage === challenge.language}
-          challenge={challenge}
+          key={language}
+          selected={selectedLanguage === language}
+          language={language}
           onSelected={onSelected}
         />
       ))}

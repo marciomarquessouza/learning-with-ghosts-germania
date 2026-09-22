@@ -1,6 +1,6 @@
 "use client";
 import { useRouter } from "next/navigation";
-import { ChallengeSelector } from "@/components/Register/challenge/ChallengeSelector";
+import { ChallengeSelector } from "@/components/Register/components/ChallengeSelector";
 import { Language } from "@/constants/lesson";
 import { PageTransition } from "../PageTransition";
 import { useLessonStore } from "@/store/lessonStore";
