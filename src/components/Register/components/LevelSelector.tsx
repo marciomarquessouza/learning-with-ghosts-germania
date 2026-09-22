@@ -1,6 +1,7 @@
 "use client";
 import { Level } from "@/constants/lesson";
 import { LevelItem } from "./LevelItem";
+import { Carousel } from "@/components/Carousel";
 
 interface LevelSelectorProps {
   selectedLevel: Level;
@@ -14,38 +15,16 @@ export function LevelSelector({
   levels,
 }: LevelSelectorProps) {
   return (
-    <div
-      className={[
-        // Mobile / Tablet: carousel
-        "flex w-full gap-0 overflow-x-auto",
-        "snap-x snap-mandatory scroll-smooth",
-        "pb-2",
-        "[scrollbar-width:none] [&::-webkit-scrollbar]:hidden",
-
-        // Desktop: grid
-        "lg:grid lg:grid-cols-3",
-        "lg:overflow-visible lg:snap-none",
-      ].join(" ")}
-    >
+    <Carousel desktopGrid="lg:grid-cols-3" ariaLabel="Level selector">
       {levels.map((level) => (
-        <div
-          key={level}
-          className={[
-            // Carousel
-            "w-[85%] shrink-0 snap-center",
-            "sm:w-[45%]",
-
-            // Grid
-            "lg:w-auto lg:shrink lg:snap-align-none",
-          ].join(" ")}
-        >
+        <Carousel.Item key={level}>
           <LevelItem
             selected={selectedLevel === level}
             level={level}
             onSelected={onSelected}
           />
-        </div>
+        </Carousel.Item>
       ))}
-    </div>
+    </Carousel>
   );
 }
