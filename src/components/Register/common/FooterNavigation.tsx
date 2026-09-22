@@ -11,9 +11,10 @@ export function FooterNavigation({
 }: FooterNavigationProps) {
   return (
     <footer
-      className={["mt-12 flex items-center gap-6", "landscape-short:mt-6"].join(
-        " ",
-      )}
+      className={[
+        "mt-12 flex items-center justify-center gap-6",
+        "landscape-short:mt-6",
+      ].join(" ")}
     >
       <button
         id="back"
@@ -45,17 +46,6 @@ export function FooterNavigation({
         <span className="text-4xl" aria-hidden="true">
           ▸
         </span>
-      </button>
-
-      <button
-        type="button"
-        disabled
-        className={[
-          "cursor-not-allowed font-mono text-sm",
-          "text-[#8A8378] opacity-70",
-        ].join(" ")}
-      >
-        ...I already have an account
       </button>
     </footer>
   );
