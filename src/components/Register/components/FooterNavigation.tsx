@@ -1,14 +1,17 @@
+"use client";
+import { useRegisterFlow } from "../hooks/usePageNavigation";
+
 interface FooterNavigationProps {
   disabled?: boolean;
-  onClickBack: () => void;
-  onClickNext: () => void;
+  onNavigate: (nextPath: string) => void;
 }
 
 export function FooterNavigation({
   disabled,
-  onClickBack,
-  onClickNext,
+  onNavigate,
 }: FooterNavigationProps) {
+  const { isLast, getNextPath, getPreviousPath } = useRegisterFlow();
+
   return (
     <footer
       className={[
@@ -20,7 +23,7 @@ export function FooterNavigation({
         id="back"
         type="button"
         disabled={disabled}
-        onClick={onClickBack}
+        onClick={() => onNavigate(getPreviousPath())}
         className={[
           "flex h-16 min-w-[64px] items-center justify-center gap-2",
           "rounded-md bg-[#FF1F26] px-8",
@@ -34,7 +37,7 @@ export function FooterNavigation({
       <button
         type="button"
         disabled={disabled}
-        onClick={onClickNext}
+        onClick={() => onNavigate(getNextPath())}
         className={[
           "flex h-16 min-w-[164px] items-center justify-center gap-2",
           "rounded-md bg-[#FF1F26] px-8",
@@ -42,10 +45,12 @@ export function FooterNavigation({
           "transition-colors hover:bg-[#E71920]",
         ].join(" ")}
       >
-        NEXT
-        <span className="text-4xl" aria-hidden="true">
-          ▸
-        </span>
+        {isLast ? "START" : "NEXT"}
+        {!isLast && (
+          <span className="text-4xl" aria-hidden="true">
+            ▸
+          </span>
+        )}
       </button>
     </footer>
   );

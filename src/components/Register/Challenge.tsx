@@ -5,7 +5,7 @@ import { Language } from "@/constants/lesson";
 import { PageTransition } from "../PageTransition";
 import { useLessonStore } from "@/store/lessonStore";
 import { usePageTransition } from "../PageTransition/usePageTransition";
-import { FooterNavigation } from "./common/FooterNavigation";
+import { FooterNavigation } from "./components/FooterNavigation";
 
 interface ChallengeProps {
   languages: Language[];
@@ -60,8 +60,7 @@ export function Challenge({ languages }: ChallengeProps) {
 
           <FooterNavigation
             disabled={isTransitioning || !lessonLanguage}
-            onClickBack={() => setNextPath("/")}
-            onClickNext={() => setNextPath("/register/player-language")}
+            onNavigate={(path) => setNextPath(path)}
           />
         </div>
       </main>

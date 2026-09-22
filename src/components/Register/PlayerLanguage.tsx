@@ -2,7 +2,7 @@
 import { useRouter } from "next/navigation";
 import { PageTransition } from "../PageTransition";
 import { usePageTransition } from "../PageTransition/usePageTransition";
-import { FooterNavigation } from "./common/FooterNavigation";
+import { FooterNavigation } from "./components/FooterNavigation";
 import { PlayerLanguageSelector } from "./components/PlayerLanguageSelector";
 import { useLessonStore } from "@/store/lessonStore";
 
@@ -54,8 +54,7 @@ export function PlayerLanguage() {
 
           <FooterNavigation
             disabled={isTransitioning}
-            onClickBack={() => setNextPath("/register/challenge")}
-            onClickNext={() => setNextPath("/register/level")}
+            onNavigate={(path) => setNextPath(path)}
           />
         </div>
       </main>

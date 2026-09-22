@@ -2,7 +2,7 @@
 import { useRouter } from "next/navigation";
 import { useLessonStore } from "@/store/lessonStore";
 import { usePageTransition } from "../PageTransition/usePageTransition";
-import { FooterNavigation } from "./common/FooterNavigation";
+import { FooterNavigation } from "./components/FooterNavigation";
 import { PageTransition } from "../PageTransition";
 import { LevelSelector } from "./components/LevelSelector";
 import { AVAILABLE_LEVELS } from "./data/register-data";
@@ -53,9 +53,8 @@ export function Level() {
           </section>
 
           <FooterNavigation
-            disabled={isTransitioning}
-            onClickBack={() => setNextPath("/register/player-language")}
-            onClickNext={() => setNextPath("/")}
+            disabled={isTransitioning || !lessonLanguage}
+            onNavigate={(path) => setNextPath(path)}
           />
         </div>
       </main>
