@@ -16,7 +16,7 @@ export function PlayerLanguageSelector({
   return (
     <div
       className={[
-        "flex w-full gap-4 overflow-x-auto px-[7.5%]",
+        "flex w-full gap-6 landscape-short:gap-4 overflow-x-auto landscape-short:px-[7.5%]",
         "snap-x snap-mandatory",
         "scroll-smooth",
         "pb-2",
