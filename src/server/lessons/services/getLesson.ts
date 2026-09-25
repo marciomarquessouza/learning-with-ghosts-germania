@@ -6,7 +6,8 @@ import { DayContent } from "@/types";
 
 export interface LessonOptions {
   day: number;
-  language: Language;
+  challengeLanguage: Language;
+  playerLanguage: Language;
   level: Level;
 }
 

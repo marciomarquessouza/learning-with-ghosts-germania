@@ -3,20 +3,34 @@ import { parseLanguage } from "@/server/lessons/validators/language";
 import { parseLevel } from "@/server/lessons/validators/levels";
 import { NextRequest } from "next/server";
 
-type Params = { params: Promise<{ day: string; level: string }> };
+type Params = {
+  params: Promise<{
+    challenge_language: string;
+    level: string;
+    day: string;
+    player_language: string;
+  }>;
+};
 
-export async function GET(request: NextRequest, { params }: Params) {
-  const { day: dayRaw, level: levelRaw } = await params;
-  const searchParams = request.nextUrl.searchParams;
-  const language = parseLanguage(searchParams.get("language"));
+export async function GET(_: NextRequest, { params }: Params) {
+  const {
+    challenge_language,
+    level: levelRaw,
+    day: dayRaw,
+    player_language,
+  } = await params;
+
+  const challengeLanguage = parseLanguage(challenge_language);
+  const playerLanguage = parseLanguage(player_language);
   const level = parseLevel(levelRaw);
   const day = Number(dayRaw);
 
   try {
     const dayContent = await getLesson({
-      day,
-      language,
+      challengeLanguage,
       level,
+      day,
+      playerLanguage,
     });
 
     return Response.json(dayContent, { status: 200 });

@@ -9,20 +9,22 @@ import { Language, Level } from "@/constants/lesson";
 
 export class FileSystemDayContentSource implements DayContentSource {
   private async getDayImporter(
-    { day, language, level }: LessonOptions,
+    { day, challengeLanguage, playerLanguage, level }: LessonOptions,
     contentType: string,
   ) {
-    const languageContent = contentImporters[language];
+    const languageContent = contentImporters[challengeLanguage];
 
     if (!languageContent) {
-      throw new Error(`Language content not found - language ${language}`);
+      throw new Error(
+        `Challenge Language content not found - language ${challengeLanguage}`,
+      );
     }
 
     const levelContent = languageContent[level];
 
     if (!levelContent) {
       throw new Error(
-        `Level not found - level ${level} - language ${language}`,
+        `Level not found - level ${level} - language ${challengeLanguage}`,
       );
     }
 
@@ -61,7 +63,8 @@ export class FileSystemDayContentSource implements DayContentSource {
   async getDefaultDialogues({
     level,
     day,
-    language,
+    challengeLanguage,
+    playerLanguage,
   }: LessonOptions): Promise<DefaultDialogues> {
     return defaultDialogues;
   }
