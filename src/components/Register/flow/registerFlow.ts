@@ -1,3 +1,5 @@
+import { Language, Level } from "@/constants/lesson";
+
 const REGISTER_PATHS = [
   "/register/challenge",
   "/register/player-language",
@@ -22,4 +24,20 @@ export function getRegisterFlow(path: string): RegisterFlowDetails {
     previous: REGISTER_PATHS[index - 1],
     next: REGISTER_PATHS[index + 1],
   };
+}
+
+type GamePathOptions = {
+  challengeLanguage: Language;
+  playerLanguage: Language;
+  level: Level;
+  day: number;
+};
+
+export function getGamePath({
+  challengeLanguage,
+  playerLanguage,
+  level,
+  day,
+}: GamePathOptions): string {
+  return `/game/${challengeLanguage}/${level}/${day}/${playerLanguage}`;
 }

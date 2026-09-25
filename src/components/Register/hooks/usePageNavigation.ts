@@ -1,10 +1,14 @@
 import { useLessonStore } from "@/store/lessonStore";
 import { usePathname } from "next/navigation";
-import { getRegisterFlow } from "../flow/registerFlow";
+import { getGamePath, getRegisterFlow } from "../flow/registerFlow";
 
 export function useRegisterFlow() {
   const pathName = usePathname();
-  const { level, lessonLanguage } = useLessonStore();
+  const {
+    level,
+    lessonLanguage: challengeLanguage,
+    playerLanguage,
+  } = useLessonStore();
   const { isLast, isFirst, previous, next } = getRegisterFlow(pathName);
   const day = 1;
 
@@ -16,7 +20,12 @@ export function useRegisterFlow() {
   };
 
   const getNextPath = (): string => {
-    const gamePath = `/game/${lessonLanguage}/${level}/${day}`;
+    const gamePath = getGamePath({
+      challengeLanguage,
+      playerLanguage,
+      level,
+      day,
+    });
     if (isLast) {
       return gamePath;
     }
