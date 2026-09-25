@@ -17,15 +17,14 @@ export const DEFAULT_LEVEL: Level = "A1-1";
 
 export const SUPPORTED_LANGUAGES = [
   "de-DE",
-  "en-US",
   "en-UK",
   "pt-BR",
   "es-ES",
 ] as const;
 
-export const SUPPORTED_LESSON_LANGUAGES = ["de-DE", "en-US"] as const;
+export const SUPPORTED_LESSON_LANGUAGES = ["de-DE", "en-UK"] as const;
 
-export const SUPPORTED_PLAYER_LANGUAGES = ["en-US", "pt-BR"] as const;
+export const SUPPORTED_PLAYER_LANGUAGES = ["en-UK", "pt-BR"] as const;
 
 export type Language = (typeof SUPPORTED_LANGUAGES)[number];
 
@@ -33,7 +32,7 @@ export const DEFAULT_LANGUAGE: Language = "de-DE";
 
 export const DEFAULT_LESSON_LANGUAGE: Language = "de-DE";
 
-export const DEFAULT_PLAYER_LANGUAGE: Language = "en-US";
+export const DEFAULT_PLAYER_LANGUAGE: Language = "en-UK";
 
 export const LESSON_NATIONS = [
   "GERMANIA",

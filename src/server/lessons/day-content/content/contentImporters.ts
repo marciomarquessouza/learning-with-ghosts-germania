@@ -5,8 +5,8 @@ export const contentImporters = {
   "de-DE": {
     "A1-1": () => import("./de-DE/A1-1/dayContentImporters"),
   },
-  "en-US": {
-    "A1-1": () => import("./en-US/A1-1/dayContentImporters"),
+  "en-UK": {
+    "A1-1": () => import("./en-UK/A1-1/dayContentImporters"),
   },
 } as Record<
   Language,

@@ -15,8 +15,8 @@ export const LESSON_CHALLENGE_DETAILS: Partial<
     description:
       "Live in GERMANIA, a city-state where not knowing German is a crime",
   },
-  "en-US": {
-    language: "en-US",
+  "en-UK": {
+    language: "en-UK",
     title: "ENGLISH",
     nation: "BRITANNIA",
     description:
