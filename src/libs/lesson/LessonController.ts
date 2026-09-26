@@ -3,11 +3,7 @@ import { AUDIO_SPEED, GameAudio } from "../audio/GameAudio";
 import { useLessonStore } from "@/store/lessonStore";
 import { GameSnapshot } from "@/store/progressStore";
 import { EntryScore, LessonScore } from "./LessonScore";
-import {
-  Lesson,
-  LessonEntry,
-  LessonStepType,
-} from "@/server/lessons/schemas/lesson";
+import { Lesson, LessonEntry, LessonStepType } from "@/schemas/lesson";
 
 export type LessonEntryWithScore = LessonEntry & { score?: EntryScore };
 

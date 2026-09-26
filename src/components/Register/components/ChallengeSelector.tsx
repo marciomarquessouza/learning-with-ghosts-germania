@@ -1,5 +1,5 @@
 "use client";
-import { Language } from "@/server/lessons/schemas/language";
+import { Language } from "@/schemas/language";
 import { ChallengeItem } from "./ChallengeItem";
 
 interface ChallengeSelectorProps {

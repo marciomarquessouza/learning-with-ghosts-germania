@@ -1,4 +1,4 @@
-import { Language } from "@/server/lessons/schemas/language";
+import { Language } from "@/schemas/language";
 
 export const ENABLED_LEVELS = ["A1-1", "A1-2"];
 

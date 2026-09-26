@@ -1,7 +1,7 @@
-import { createLanguageSchema } from "@/server/lessons/schemas/language";
+import { createLanguageSchema } from "@/schemas/language";
 import { GamePageClient } from "./GamePageClient";
 import { getDayContent } from "@/server/lessons/services/getDayContent";
-import { levelWithDefaultSchema } from "@/server/lessons/schemas/level";
+import { levelWithDefaultSchema } from "@/schemas/level";
 
 type Params = {
   params: Promise<{

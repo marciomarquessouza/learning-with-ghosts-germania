@@ -1,7 +1,7 @@
 import { AudioScoreSummary } from "../audio/types";
 
-import { Language } from "@/server/lessons/schemas/language";
-import { Level } from "@/server/lessons/schemas/level";
+import { Language } from "@/schemas/language";
+import { Level } from "@/schemas/level";
 
 export type {
   Lesson,
@@ -12,7 +12,7 @@ export type {
   LessonChallengeLimits,
   PronunciationLimits,
   WritingLimits,
-} from "@/server/lessons/schemas/lesson";
+} from "@/schemas/lesson";
 
 export type StepPhases =
   | "show"

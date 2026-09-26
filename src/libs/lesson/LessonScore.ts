@@ -5,7 +5,7 @@ import { PronunciationScore } from "@/libs/lesson/PronunciationAPI";
 import { useLessonStore } from "@/store/lessonStore";
 import { getRequired } from "@/utils/getRequired";
 import { calculateFinalScore } from "./calculateFinalScore";
-import { Lesson, LessonChallengeLimits } from "@/server/lessons/schemas/lesson";
+import { Lesson, LessonChallengeLimits } from "@/schemas/lesson";
 
 export type EntryScore = {
   pronunciation?: number;

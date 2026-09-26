@@ -1,6 +1,6 @@
 import { getGamePath } from "@/components/Register/flow/registerFlow";
-import { Language } from "@/server/lessons/schemas/language";
-import { Level } from "@/server/lessons/schemas/level";
+import { Language } from "@/schemas/language";
+import { Level } from "@/schemas/level";
 import { redirect } from "next/navigation";
 
 export default async function GameRedirectPage() {

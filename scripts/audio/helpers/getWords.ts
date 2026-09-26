@@ -1,4 +1,4 @@
-import { Lesson } from "@/server/lessons/schemas/lesson";
+import { Lesson } from "@/schemas/lesson";
 import { padDay } from "@/utils/padDay";
 
 export async function getEntries(rawDay: number | string) {

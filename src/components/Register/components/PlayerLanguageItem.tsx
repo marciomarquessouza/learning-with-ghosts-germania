@@ -1,7 +1,7 @@
 import Image from "next/image";
 import { NationIcon } from "../../Icons/NationIcon";
 import { PLAYER_LANGUAGE_DETAILS } from "../data/register-data";
-import { Language } from "@/server/lessons/schemas/language";
+import { Language } from "@/schemas/language";
 
 interface PlayerLanguageItemProps {
   selected: boolean;

@@ -3,7 +3,7 @@ import { LearningNode } from "../learningNode/LearningNode";
 import { getRequired } from "@/utils/getRequired";
 import { Vector2 } from "@/utils/vectors";
 import { LessonEntryWithScore } from "@/libs/lesson/LessonController";
-import { Lesson } from "@/server/lessons/schemas/lesson";
+import { Lesson } from "@/schemas/lesson";
 
 export class KnowledgeTroop {
   public static DEFAULT_POSITION_Y = 778;

@@ -1,10 +1,10 @@
-import { Language } from "@/server/lessons/schemas/language";
+import { Language } from "@/schemas/language";
 import {
   LessonChallengeDetail,
   LevelDetails,
   PlayerLanguageDetails,
 } from "../types";
-import { Level } from "@/server/lessons/schemas/level";
+import { Level } from "@/schemas/level";
 
 export const LESSON_CHALLENGE_DETAILS: Partial<
   Record<Language, LessonChallengeDetail>

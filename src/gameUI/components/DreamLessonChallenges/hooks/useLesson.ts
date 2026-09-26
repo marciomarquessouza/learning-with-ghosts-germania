@@ -6,11 +6,7 @@ import {
   defaultLessonEntry,
   defaultLessonDetails,
 } from "./reducers/lessonReducer";
-import {
-  Lesson,
-  LessonEntry,
-  LessonEntryStep,
-} from "@/server/lessons/schemas/lesson";
+import { Lesson, LessonEntry, LessonEntryStep } from "@/schemas/lesson";
 import { LessonDetails } from "@/libs/lesson/types";
 
 export const useLesson = () => {

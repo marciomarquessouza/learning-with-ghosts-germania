@@ -1,7 +1,7 @@
 import { EntryScore, LessonScore } from "@/libs/lesson/LessonScore";
-import { Language } from "@/server/lessons/schemas/language";
-import { Lesson } from "@/server/lessons/schemas/lesson";
-import { Level } from "@/server/lessons/schemas/level";
+import { Language } from "@/schemas/language";
+import { Lesson } from "@/schemas/lesson";
+import { Level } from "@/schemas/level";
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
 

@@ -1,5 +1,5 @@
-import { createLanguageSchema } from "@/server/lessons/schemas/language";
-import { levelWithDefaultSchema } from "@/server/lessons/schemas/level";
+import { createLanguageSchema } from "@/schemas/language";
+import { levelWithDefaultSchema } from "@/schemas/level";
 import { getDayContent } from "@/server/lessons/services/getDayContent";
 import { NextRequest } from "next/server";
 

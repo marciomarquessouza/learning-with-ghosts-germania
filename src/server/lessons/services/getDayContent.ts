@@ -1,7 +1,7 @@
 import { DayContent, LessonOptions } from "@/server/types";
 import { loadDayContent } from "../loaders/loadDayContent";
 import { composeLesson } from "../helpers/composeLesson";
-import { Dialogues } from "../schemas/dialogues";
+import { Dialogues } from "@/schemas/dialogues";
 
 export async function getDayContent(
   options: LessonOptions,

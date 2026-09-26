@@ -11,4 +11,4 @@ export type {
   InputLine,
   InteractionLine,
   InteractionTypes,
-} from "@/server/lessons/schemas/dialogues";
+} from "@/schemas/dialogues";

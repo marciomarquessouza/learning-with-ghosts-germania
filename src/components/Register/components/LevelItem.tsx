@@ -1,4 +1,4 @@
-import { Level } from "@/server/lessons/schemas/level";
+import { Level } from "@/schemas/level";
 import { NationIcon } from "../../Icons/NationIcon";
 import { LEVEL_DETAILS } from "../data/register-data";
 
