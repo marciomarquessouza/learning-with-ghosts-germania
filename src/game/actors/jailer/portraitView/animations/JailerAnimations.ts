@@ -1,4 +1,4 @@
-import { MOODS } from "@/constants/game";
+import { Mood } from "@/constants/game";
 import { SPRITESHEETS } from "@/constants/spritesheets";
 import { AnimationManager } from "@/libs/animation/AnimationManager";
 
@@ -45,7 +45,7 @@ export class JailerAnimations {
     this.animationManager.playAnimation(this.getSprite(), "talking", true);
   }
 
-  playAnimationByMood(mood: MOODS) {
+  playAnimationByMood(mood: Mood) {
     switch (mood) {
       default:
         this.animationManager.playAnimation(this.getSprite(), "idle", true);

@@ -1,4 +1,4 @@
-import { Language } from "@/constants/lesson";
+import { Language } from "@/server/lessons/schemas/language";
 import { NationIcon } from "../../Icons/NationIcon";
 import { LESSON_CHALLENGE_DETAILS } from "../data/register-data";
 

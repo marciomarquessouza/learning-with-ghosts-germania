@@ -1,6 +1,6 @@
 import { create } from "zustand";
-import { Dialogues, InteractionLine } from "@/libs/dialogues/types";
 import { DialogueKey } from "@/constants/dialogues";
+import { Dialogues, InteractionLine } from "@/libs/dialogues/types";
 
 interface DialoguesStore {
   dialogues: Dialogues | null;

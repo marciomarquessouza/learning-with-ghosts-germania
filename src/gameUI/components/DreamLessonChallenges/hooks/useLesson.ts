@@ -8,10 +8,10 @@ import {
 } from "./reducers/lessonReducer";
 import {
   Lesson,
-  LessonDetails,
   LessonEntry,
   LessonEntryStep,
-} from "@/libs/lesson/types";
+} from "@/server/lessons/schemas/lesson";
+import { LessonDetails } from "@/libs/lesson/types";
 
 export const useLesson = () => {
   const [state, dispatch] = useReducer(lessonReducer, defaultState);

@@ -1,8 +1,8 @@
 "use client";
 import { ChallengeSelector } from "@/components/Register/components/ChallengeSelector";
-import { Language } from "@/constants/lesson";
 import { useLessonStore } from "@/store/lessonStore";
 import { RegisterPageLayout } from "./layout/RegisterPageLayout";
+import { Language } from "@/server/lessons/schemas/language";
 
 interface ChallengeProps {
   languages: Language[];

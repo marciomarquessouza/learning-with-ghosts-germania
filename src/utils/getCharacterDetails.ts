@@ -1,4 +1,5 @@
-import { ACTORS, DIALOGUE_MAP } from "@/constants/game";
+import { DIALOGUE_MAP } from "@/constants/game";
+import { Character } from "@/libs/dialogues/types";
 
 export interface CharacterDetails {
   characterName: string;
@@ -8,7 +9,7 @@ export interface CharacterDetails {
 }
 
 export const getCharacterDetails = (
-  character?: ACTORS | null,
+  character?: Character | null,
 ): CharacterDetails => {
   return {
     characterName: !!character ? DIALOGUE_MAP[character].displayName : "",

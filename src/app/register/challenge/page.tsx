@@ -1,8 +1,8 @@
 import { Challenge } from "@/components/Register/Challenge";
-import { getRegisterOptions } from "@/server/lessons/services/getRegisterOptions";
+import { Language } from "@/server/lessons/schemas/language";
 
 export default async function ChallengePage() {
-  const { lessonLanguages } = getRegisterOptions();
+  const lessonLanguages: Language[] = ["de-DE", "en-UK"];
 
   return <Challenge languages={lessonLanguages} />;
 }

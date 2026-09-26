@@ -7,8 +7,9 @@ import type {
   UpdateWeightEvent,
   ZoomPropsEvent,
 } from "./types";
-import { ACTORS, MOODS } from "@/constants/game";
+import { Mood } from "@/constants/game";
 import { HUD_ITEMS } from "@/game/hud";
+import { Character } from "@/libs/dialogues/types";
 import { createEventManagers } from "@/libs/events/createEventManagers";
 
 export type GameSyncEvents = {
@@ -20,9 +21,9 @@ export type GameSyncEvents = {
   "game-message/hide": { id?: string } | undefined;
   "game-action-prompt/hide": undefined;
   "dialogue/hide": undefined;
-  "dialogue/typing-start": { actor?: ACTORS | null };
+  "dialogue/typing-start": { actor?: Character | null };
   "dialogue/typing-end": undefined;
-  "dialogue/set-mood": { mood: MOODS; actor: ACTORS };
+  "dialogue/set-mood": { mood: Mood; actor: Character };
   "hud/weight-decrease": UpdateWeightEvent;
   "hud/show-items": HUD_ITEMS[];
   "hud/hide-items": HUD_ITEMS[];

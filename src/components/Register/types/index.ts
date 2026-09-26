@@ -1,4 +1,6 @@
-import { Language, Level, Nation } from "@/constants/lesson";
+import { Language } from "@/server/lessons/schemas/language";
+import { Level } from "@/server/lessons/schemas/level";
+import { Nation } from "@/server/lessons/schemas/nation";
 
 export type LessonChallengeDetail = {
   language: Language;

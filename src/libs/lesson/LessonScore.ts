@@ -2,10 +2,10 @@ import { DEFAULT_TOTAL_ERRORS, DEFAULT_TOTAL_TIPS } from "@/constants/game";
 import { events } from "@/events/events";
 import { WritingResult } from "@/events/lesson/types";
 import { PronunciationScore } from "@/libs/lesson/PronunciationAPI";
-import { Lesson, LessonChallengeLimits } from "@/libs/lesson/types";
 import { useLessonStore } from "@/store/lessonStore";
 import { getRequired } from "@/utils/getRequired";
 import { calculateFinalScore } from "./calculateFinalScore";
+import { Lesson, LessonChallengeLimits } from "@/server/lessons/schemas/lesson";
 
 export type EntryScore = {
   pronunciation?: number;

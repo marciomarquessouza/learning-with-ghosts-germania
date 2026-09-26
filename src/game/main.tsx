@@ -11,14 +11,19 @@ import {
   GAME_WORLDS,
   sceneWorldMap,
 } from "@/constants/game";
-import { DayContent, GameScenes, GameWorlds } from "@/types";
+import { GameScenes, GameWorlds } from "@/types";
 import { events } from "@/events/events";
 import { useLessonStore } from "@/store/lessonStore";
 import { useDialoguesStore } from "@/store/dialogueStore";
+import { Lesson } from "@/libs/lesson/types";
+import { Dialogues } from "@/libs/dialogues/types";
 
 interface MainGameProps {
   day: number;
-  dayContent: DayContent;
+  dayContent: {
+    lesson: Lesson;
+    dialogues: Dialogues;
+  };
 }
 
 export default function MainGame({ day, dayContent }: MainGameProps) {

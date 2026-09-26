@@ -1,0 +1,422 @@
+{
+  "lesson": {
+    "title": "Greetings",
+    "entries": {
+      "1": {
+        "reference": "Hello",
+        "steps": {
+          "introduction": {
+            "text": "",
+            "instruction": ""
+          },
+          "listening": {
+            "text": "",
+            "instruction": "Listen and repeat (don’t be shy, say it out loud!)",
+            "meanings": [
+              "“Hallo” is a common German greeting. It means “hello” and is used to greet someone in both casual and neutral situations."
+            ]
+          },
+          "pronunciation": {
+            "text": "HA-loh (like “HAH-loh”). The first syllable is short, the final “o” is an open “oh”.",
+            "instruction": "Click the mic or click {{key|space}} and say: “{{audio|Hallo}}”."
+          },
+          "writing": {
+            "text": "Let us move on. Listen to the audio and complete the word by clicking on the letters in the correct sequence.",
+            "instruction": ""
+          }
+        }
+      },
+      "2": {
+        "reference": "Good morning",
+        "steps": {
+          "introduction": {
+            "text": "",
+            "instruction": ""
+          },
+          "listening": {
+            "text": "",
+            "instruction": "Listen and repeat (don’t be shy, say it out loud!)",
+            "meanings": [
+              "“Guten Morgen” means “good morning” and is commonly used when greeting someone in the morning."
+            ]
+          },
+          "pronunciation": {
+            "text": "GOO-ten MOR-gen. Keep the first syllable of each word clear and short.",
+            "instruction": "Click the mic or click {{key|space}} and say: “{{audio|Guten Morgen}}”."
+          },
+          "writing": {
+            "text": "Listen to the audio and complete the words by clicking on the letters in the correct sequence.",
+            "instruction": ""
+          }
+        }
+      },
+      "3": {
+        "reference": "Goodbye",
+        "steps": {
+          "introduction": {
+            "text": "",
+            "instruction": ""
+          },
+          "listening": {
+            "text": "",
+            "instruction": "Listen and repeat (don’t be shy, say it out loud!)",
+            "meanings": [
+              "“Tschüss” means “bye” or “goodbye” and is commonly used in casual situations."
+            ]
+          },
+          "pronunciation": {
+            "text": "CHOOSS. The “tsch” sound is similar to the English “ch”, followed by a short “ü” sound.",
+            "instruction": "Click the mic or click {{key|space}} and say: “{{audio|Tschüss}}”."
+          },
+          "writing": {
+            "text": "Listen to the audio and complete the word by clicking on the letters in the correct sequence.",
+            "instruction": ""
+          }
+        }
+      }
+    }
+  },
+  "dialogues": {
+    "cell.welcome": {
+      "lines": [
+        {
+          "type": "dialogue",
+          "character": "player",
+          "moods": [{ "character": "player", "mood": "neutral" }],
+          "text": "This cell is my new home.\nI was jailed for not speaking German in Germany.\nLogic... or absurdity?"
+        },
+        {
+          "type": "dialogue",
+          "character": "player",
+          "moods": [{ "character": "player", "mood": "neutral" }],
+          "text": "I don’t want to do anything.\nI don’t want to think.\nI just want to sleep."
+        }
+      ]
+    },
+    "cell.marlene_first_interaction": {
+      "lines": [
+        {
+          "type": "dialogue",
+          "character": "jailer",
+          "moods": [{ "character": "jailer", "mood": "neutral" }],
+          "text": "Prisoner Josef G.\nMy name is Marlene Weiss.\nI am the jailer responsible\nfor the wing of non-German speakers."
+        },
+        {
+          "type": "dialogue",
+          "character": "jailer",
+          "moods": [{ "character": "jailer", "mood": "neutral" }],
+          "text": "You may only speak your native language when I allow it.\nYou will only leave this place when you speak German.\nAnd you will only eat if you SPEAK GERMAN."
+        },
+        {
+          "type": "dialogue",
+          "character": "jailer",
+          "moods": [{ "character": "jailer", "mood": "neutral" }],
+          "text": "At the first hour of the morning\nI will give you a German test.\nThe subject will be GERMAN GREETINGS."
+        },
+        {
+          "type": "dialogue",
+          "character": "jailer",
+          "moods": [{ "character": "jailer", "mood": "neutral" }],
+          "text": "You will receive your meal\nonly if you pass the test.\nIf you fail,\nhunger will improve your motivation."
+        },
+        {
+          "type": "dialogue",
+          "character": "player",
+          "moods": [{ "character": "player", "mood": "sad" }],
+          "text": "But… I have no books.\nI have nothing in this cell\nto learn German."
+        },
+        {
+          "type": "dialogue",
+          "character": "jailer",
+          "moods": [{ "character": "jailer", "mood": "neutral" }],
+          "text": "That is not my problem.\nIt is time to sleep. The lights will be turned off.\nI will return early tomorrow with your test."
+        }
+      ]
+    },
+    "cell.daily_challenge": {
+      "lines": [
+        {
+          "type": "dialogue",
+          "character": "player",
+          "moods": [{ "character": "player", "mood": "neutral" }],
+          "text": "I don’t want to do the challenge now.\nI’d rather sleep before meeting that terrible woman."
+        }
+      ]
+    },
+    "cell.desk_interaction": {
+      "lines": [
+        {
+          "type": "dialogue",
+          "character": "player",
+          "moods": [{ "character": "player", "mood": "neutral" }],
+          "text": "I don’t want to do anything at the table right now.\nI just want to sleep..."
+        }
+      ]
+    },
+    "cell.desk_blocked": {
+      "lines": [
+        {
+          "type": "dialogue",
+          "character": "player",
+          "moods": [{ "character": "player", "mood": "neutral" }],
+          "text": "I don’t want to do anything at the table right now."
+        }
+      ]
+    },
+    "cell.food_interaction": {
+      "lines": [
+        {
+          "type": "dialogue",
+          "character": "player",
+          "moods": [{ "character": "player", "mood": "neutral" }],
+          "text": "We won’t have any food until we win the language challenge.\nForget it. I just want to sleep"
+        }
+      ]
+    },
+    "cell.food_blocked": {
+      "lines": [
+        {
+          "type": "dialogue",
+          "character": "player",
+          "moods": [{ "character": "player", "mood": "neutral" }],
+          "text": "It’s not time to eat yet."
+        }
+      ]
+    },
+    "cell.rat_interaction": {
+      "lines": [
+        {
+          "type": "dialogue",
+          "character": "player",
+          "moods": [{ "character": "player", "mood": "neutral" }],
+          "text": "It looks like I need to be careful with my food.\nThere’s a rat here"
+        }
+      ]
+    },
+    "cell.rat_blocked": {
+      "lines": [
+        {
+          "type": "dialogue",
+          "character": "player",
+          "moods": [{ "character": "player", "mood": "neutral" }],
+          "text": "I don’t want to mess with that right now."
+        }
+      ]
+    },
+    "cell.bed_interaction": {
+      "lines": [
+        {
+          "type": "alternatives",
+          "text": "What do you want to do?",
+          "character": "player",
+          "moods": [{ "character": "player", "mood": "neutral" }],
+          "alternatives": [
+            { "id": "dream", "text": "Try to sleep before the test" },
+            { "id": "nothing", "text": "Do nothing" }
+          ]
+        }
+      ]
+    },
+    "cell.bed_blocked": {
+      "lines": [
+        {
+          "type": "dialogue",
+          "character": "player",
+          "moods": [{ "character": "player", "mood": "neutral" }],
+          "text": "You have things to do before you go to sleep."
+        }
+      ]
+    },
+
+    "dream.introduction": {
+      "lines": [
+        {
+          "type": "dialogue",
+          "character": "player",
+          "moods": [{ "character": "player", "mood": "neutral" }],
+          "text": "Wait a second...  \nCould it be that I died...  \nAnd became a Ghost?"
+        },
+        {
+          "type": "dialogue",
+          "character": "player",
+          "moods": [{ "character": "player", "mood": "happy" }],
+          "text": "Does that mean I don’t need\nto go back to that prison anymore?"
+        },
+        {
+          "type": "dialogue",
+          "character": "tutor",
+          "moods": [
+            { "character": "tutor", "mood": "neutral" },
+            { "character": "player", "mood": "surprised" }
+          ],
+          "text": "You didn’t die, Josef — don’t get so smug. ♦  \nYou’re only dreaming that you’re dead, a ghost. †"
+        },
+        {
+          "type": "dialogue",
+          "character": "player",
+          "moods": [{ "character": "player", "mood": "surprised" }],
+          "text": "Whose voice is this?  \nWho are you?"
+        },
+        {
+          "type": "dialogue",
+          "character": "tutor",
+          "moods": [{ "character": "tutor", "mood": "surprised" }],
+          "text": "Walk a bit further, and open your eyes. †\nThen you will see me, darling — lucky you. ♦"
+        }
+      ]
+    },
+    "dream.lesson_preparation": {
+      "lines": [
+        {
+          "type": "dialogue",
+          "character": "player",
+          "moods": [
+            { "character": "player", "mood": "surprised" },
+            { "character": "tutor", "mood": "talking" }
+          ],
+          "text": "A confessional… with a nun?\nWho are you?\nWhat is happening?"
+        },
+        {
+          "type": "dialogue",
+          "character": "tutor",
+          "moods": [
+            { "character": "tutor", "mood": "talking" },
+            { "character": "player", "mood": "surprised" }
+          ],
+          "text": "Don’t overthink it, Josef.\nThat’s not your strength.\nYou’re dreaming."
+        },
+        {
+          "type": "dialogue",
+          "character": "player",
+          "moods": [
+            { "character": "player", "mood": "sad" },
+            { "character": "tutor", "mood": "talking" }
+          ],
+          "text": "I… I don’t understand.\nWhy am I here?\nWhy are you here?"
+        },
+        {
+          "type": "dialogue",
+          "character": "tutor",
+          "moods": [
+            { "character": "tutor", "mood": "talking" },
+            { "character": "player", "mood": "surprised" }
+          ],
+          "text": "You can call me \"Masked Nun\".\nThe “why” comes later.\nNow: you need to learn German."
+        },
+        {
+          "type": "dialogue",
+          "character": "player",
+          "moods": [
+            { "character": "player", "mood": "surprised" },
+            { "character": "tutor", "mood": "talking" }
+          ],
+          "text": "Learn… in a dream?\nAnd if I wake up…\nI’ll forget everything."
+        },
+        {
+          "type": "dialogue",
+          "character": "tutor",
+          "moods": [
+            { "character": "tutor", "mood": "talking" },
+            { "character": "player", "mood": "neutral" }
+          ],
+          "text": "You won’t forget what matters.\nPass today’s test and you eat.\nFail it… and you don’t.\nNow… let’s begin, Josef. †"
+        }
+      ]
+    },
+    "dream.lesson_begin": {
+      "lines": [
+        {
+          "type": "dialogue",
+          "character": "tutor",
+          "moods": [
+            { "character": "tutor", "mood": "talking" },
+            { "character": "player", "mood": "neutral" }
+          ],
+          "text": "Josef, learning a new language is like growing a plant."
+        },
+        {
+          "type": "dialogue",
+          "character": "tutor",
+          "moods": [
+            { "character": "tutor", "mood": "talking" },
+            { "character": "player", "mood": "talking" }
+          ],
+          "text": "First, you plant the seed.\nThen you nurture it, again and again.\nAnd when the time is right...\nyou harvest it."
+        },
+        {
+          "type": "dialogue",
+          "character": "tutor",
+          "moods": [
+            { "character": "tutor", "mood": "talking" },
+            { "character": "player", "mood": "surprised" }
+          ],
+          "text": "Since we are inside your head,\nI can make that process quite literal."
+        },
+        {
+          "type": "dialogue",
+          "character": "tutor",
+          "moods": [
+            { "character": "tutor", "mood": "talking" },
+            { "character": "player", "mood": "neutral" }
+          ],
+          "text": "The first word I will cultivate\ninside this empty little garden of yours\nis “Hallo”."
+        }
+      ]
+    },
+    "dream.lesson_finish": {
+      "lines": [
+        {
+          "type": "dialogue",
+          "character": "tutor",
+          "moods": [
+            { "character": "tutor", "mood": "talking" },
+            { "character": "player", "mood": "surprised" }
+          ],
+          "text": "There… that is enough for today, Josef.\nYou did well.\nBetter than I expected. †"
+        },
+        {
+          "type": "dialogue",
+          "character": "tutor",
+          "moods": [
+            { "character": "tutor", "mood": "talking" },
+            { "character": "player", "mood": "surprised" }
+          ],
+          "text": "Leve os seus pequenos conhecimentos\nUm pouco mais a frente\nPara o Lago da Memória\nOnde eles crescerão com saúde †"
+        }
+      ]
+    },
+    "dream.review_intro": {
+      "lines": [
+        {
+          "type": "dialogue",
+          "character": "guardian",
+          "moods": [{ "character": "guardian", "mood": "neutral" }],
+          "text": "Hello, dreamer.\nI am the Guardian of Memory.\nI see you bring small pieces of knowledge to me."
+        },
+        {
+          "type": "dialogue",
+          "character": "guardian",
+          "moods": [{ "character": "guardian", "mood": "neutral" }],
+          "text": "If you correctly remember the name of each piece of knowledge,\nit will be sent to the Lake of Memory,\nand Mnemosyne will take care of it..."
+        },
+        {
+          "type": "dialogue",
+          "character": "guardian",
+          "moods": [{ "character": "guardian", "mood": "neutral" }],
+          "text": "But if you fail to remember it correctly, or have forgotten it completely,\nit will be sent to the Lake of Forgetfulness,\ninto the arms of Lethe."
+        }
+      ]
+    },
+
+    "train.introduction": {
+      "lines": [
+        {
+          "type": "dialogue",
+          "character": "player",
+          "moods": [{ "character": "player", "mood": "surprised" }],
+          "text": "A train...?\nHow did I get here?"
+        }
+      ]
+    }
+  }
+}

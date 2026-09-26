@@ -1,5 +1,5 @@
 "use client";
-import { Level } from "@/constants/lesson";
+import { Level } from "@/server/lessons/schemas/level";
 import { LevelItem } from "./LevelItem";
 import { Carousel } from "@/components/Carousel";
 

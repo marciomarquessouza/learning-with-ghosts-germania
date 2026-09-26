@@ -1,7 +1,7 @@
 "use client";
 import dynamic from "next/dynamic";
 import { GameUI } from "@/gameUI";
-import { DayContent } from "@/types";
+import { DayContent } from "@/server/types";
 
 const GameRoot = dynamic(() => import("@/game/main"), {
   ssr: false,

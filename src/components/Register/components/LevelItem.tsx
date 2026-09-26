@@ -1,5 +1,5 @@
+import { Level } from "@/server/lessons/schemas/level";
 import { NationIcon } from "../../Icons/NationIcon";
-import { Level } from "@/constants/lesson";
 import { LEVEL_DETAILS } from "../data/register-data";
 
 interface LevelItemProps {

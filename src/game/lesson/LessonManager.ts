@@ -9,7 +9,7 @@ import {
 import { AudioRecorder } from "@/libs/audio/AudioRecorder";
 import { PronunciationAPI } from "@/libs/lesson/PronunciationAPI";
 import { LessonController } from "@/libs/lesson/LessonController";
-import { Lesson } from "@/libs/lesson/types";
+import { Lesson } from "@/server/lessons/schemas/lesson";
 
 const LOADING_MESSAGES = {
   MIC_SETUP: "Mic Setuuup...",

@@ -1,4 +1,4 @@
-import { MOODS } from "@/constants/game";
+import { Mood, MOODS } from "@/constants/game";
 import { SPRITESHEETS } from "@/constants/spritesheets";
 import { AnimationManager } from "@/libs/animation/AnimationManager";
 
@@ -138,24 +138,24 @@ export class PlayerAnimations {
     this.animationManager.playAnimation(this.sprite, "talking", true);
   }
 
-  playAnimationByMood(mood: MOODS) {
+  playAnimationByMood(mood: Mood) {
     switch (mood) {
-      case MOODS.HAPPY:
+      case "happy":
         this.sprite.play(this.PLAYER_EXPRESSIONS[MOODS.HAPPY]);
         break;
-      case MOODS.SAD:
+      case "sad":
         this.sprite.play(this.PLAYER_EXPRESSIONS[MOODS.SAD]);
         break;
-      case MOODS.ANGRY:
+      case "angry":
         this.sprite.play(this.PLAYER_EXPRESSIONS[MOODS.ANGRY]);
         break;
-      case MOODS.SURPRISED:
+      case "surprised":
         this.sprite.play(this.PLAYER_EXPRESSIONS[MOODS.SURPRISED]);
         break;
-      case MOODS.FLUSHED:
+      case "flushed":
         this.sprite.play(this.PLAYER_EXPRESSIONS[MOODS.FLUSHED]);
         break;
-      case MOODS.NEUTRAL:
+      case "neutral":
       default:
         this.animationManager.playAnimation(this.sprite, "idle", true);
         break;

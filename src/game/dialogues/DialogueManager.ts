@@ -1,5 +1,5 @@
 import { DialogueKey } from "@/constants/dialogues";
-import { ACTORS, MOODS } from "@/constants/game";
+import { ACTORS, Mood } from "@/constants/game";
 import { events } from "@/events/events";
 import {
   DialogueEvent,
@@ -40,7 +40,7 @@ export class DialogueManager {
     }
   }
 
-  dialogueSetMood({ mood, actor }: { mood: MOODS; actor: ACTORS }) {
+  dialogueSetMood({ mood, actor }: { mood: Mood; actor: ACTORS }) {
     events.game.sync.emit("dialogue/set-mood", { mood, actor });
   }
 

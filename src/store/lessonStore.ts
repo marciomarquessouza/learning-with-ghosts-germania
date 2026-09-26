@@ -1,6 +1,7 @@
-import { Language, Level } from "@/constants/lesson";
 import { EntryScore, LessonScore } from "@/libs/lesson/LessonScore";
-import { Lesson } from "@/libs/lesson/types";
+import { Language } from "@/server/lessons/schemas/language";
+import { Lesson } from "@/server/lessons/schemas/lesson";
+import { Level } from "@/server/lessons/schemas/level";
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
 
@@ -79,7 +80,7 @@ export const useLessonStore = create<LessonState>()(
 export function getMinimumEntryScore(): number {
   return Math.max(
     0,
-    useLessonStore.getState().lesson.limits?.entry.minimumSuccessPercentage ??
+    useLessonStore.getState().lesson.limits?.entry?.minimumSuccessPercentage ??
       LessonScore.DEFAULT_MINIMUM_ENTRY_SUCCESS,
   );
 }

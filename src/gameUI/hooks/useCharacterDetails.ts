@@ -1,5 +1,5 @@
 import { useMemo } from "react";
-import { ACTORS, DIALOGUE_MAP } from "@/constants/game";
+import { ACTORS } from "@/constants/game";
 import { getCharacterDetails } from "@/utils/getCharacterDetails";
 
 export interface CharacterDetails {

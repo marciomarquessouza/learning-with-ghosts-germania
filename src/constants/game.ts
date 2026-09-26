@@ -52,6 +52,8 @@ export enum MOODS {
   FLUSHED = "flushed",
 }
 
+export type Mood = `${MOODS}`;
+
 export const DIALOGUE_MAP: {
   [key: string]: { displayName: string; honorific?: string; avatar: string };
 } = {

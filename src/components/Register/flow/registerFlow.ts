@@ -1,4 +1,5 @@
-import { Language, Level } from "@/constants/lesson";
+import { Language } from "@/server/lessons/schemas/language";
+import { Level } from "@/server/lessons/schemas/level";
 
 const REGISTER_PATHS = [
   "/register/challenge",

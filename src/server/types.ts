@@ -1,3 +1,38 @@
+import { Dialogues } from "@/libs/dialogues/types";
+import { Language } from "./lessons/schemas/language";
+import { Lesson } from "./lessons/schemas/lesson";
+import { Level } from "./lessons/schemas/level";
+
+export interface LessonOptions {
+  day: number;
+  lessonLanguage: Language;
+  playerLanguage: Language;
+  level: Level;
+}
+
+export type JsonImporter = () => Promise<{ default: unknown }>;
+
+export type DayContentImporters = {
+  lesson: JsonImporter;
+  audio: JsonImporter;
+  locales: Partial<Record<Language, JsonImporter>>;
+};
+
+export type DayContent = {
+  lesson: Lesson;
+  dialogues: Dialogues;
+};
+
+export type LevelContentImporters = Record<number, DayContentImporters>;
+
+export type LanguageContentImporters = Partial<
+  Record<Level, LevelContentImporters>
+>;
+
+export type ContentImporters = Partial<
+  Record<Language, LanguageContentImporters>
+>;
+
 export interface DeepgramTranscriptionResponse {
   metadata: {
     transaction_key: string;

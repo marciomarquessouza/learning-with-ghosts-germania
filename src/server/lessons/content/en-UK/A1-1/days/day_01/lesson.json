@@ -1,0 +1,31 @@
+{
+  "id": "greetings",
+  "day": 1,
+  "limits": {
+    "pronunciation": {
+      "minimumRecordTime": 1000,
+      "maximumRecordTime": 6000
+    },
+    "writing": {
+      "totalErrors": 3,
+      "totalTips": 3
+    },
+    "entry": {
+      "minimumSuccessPercentage": 65
+    }
+  },
+  "entries": {
+    "1": {
+      "sequence": 0,
+      "target": "Hallo"
+    },
+    "2": {
+      "sequence": 1,
+      "target": "Guten Tag"
+    },
+    "3": {
+      "sequence": 2,
+      "target": "Guten Abend"
+    }
+  }
+}

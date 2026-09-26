@@ -1,6 +1,6 @@
-import { getLesson } from "@/server/lessons/services/getLesson";
-import { parseLanguage } from "@/server/lessons/validators/language";
-import { parseLevel } from "@/server/lessons/validators/levels";
+import { createLanguageSchema } from "@/server/lessons/schemas/language";
+import { levelWithDefaultSchema } from "@/server/lessons/schemas/level";
+import { getDayContent } from "@/server/lessons/services/getDayContent";
 import { NextRequest } from "next/server";
 
 type Params = {
@@ -20,14 +20,15 @@ export async function GET(_: NextRequest, { params }: Params) {
     player_language,
   } = await params;
 
-  const challengeLanguage = parseLanguage(challenge_language);
-  const playerLanguage = parseLanguage(player_language);
-  const level = parseLevel(levelRaw);
+  const lessonLanguage =
+    createLanguageSchema("lesson").parse(challenge_language);
+  const playerLanguage = createLanguageSchema("player").parse(player_language);
+  const level = levelWithDefaultSchema.parse(levelRaw);
   const day = Number(dayRaw);
 
   try {
-    const dayContent = await getLesson({
-      challengeLanguage,
+    const dayContent = await getDayContent({
+      lessonLanguage,
       level,
       day,
       playerLanguage,

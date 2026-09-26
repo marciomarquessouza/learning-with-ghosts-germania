@@ -1,12 +1,18 @@
-import { PronunciationLimits, WritingLimits } from "@/events/lesson/types";
 import { AudioScoreSummary } from "../audio/types";
-import { Language, Level } from "@/constants/lesson";
 
-export type LessonStepType =
-  | "introduction"
-  | "listening"
-  | "pronunciation"
-  | "writing";
+import { Language } from "@/server/lessons/schemas/language";
+import { Level } from "@/server/lessons/schemas/level";
+
+export type {
+  Lesson,
+  LessonDetails,
+  LessonEntry,
+  LessonEntryStep,
+  LessonStepType,
+  LessonChallengeLimits,
+  PronunciationLimits,
+  WritingLimits,
+} from "@/server/lessons/schemas/lesson";
 
 export type StepPhases =
   | "show"
@@ -18,46 +24,11 @@ export type StepPhases =
   | "result:feedback"
   | "hide";
 
-export type LessonEntryStep = {
-  type: LessonStepType;
-  text: string;
-  instruction: string;
-  meanings?: string[];
-  gender?: string;
-};
-
-export type LessonEntry = {
-  id: string;
-  reference: string;
-  target: string;
-  sequence: number;
-  audio?: string;
-  steps: LessonEntryStep[];
-};
-
-export type LessonChallengeLimits = {
-  pronunciation?: PronunciationLimits;
-  writing?: WritingLimits;
-  entry: {
-    minimumSuccessPercentage?: number;
-  };
-};
-
-export type Lesson = {
-  id: string;
-  day: number;
-  title: string;
-  limits?: LessonChallengeLimits;
-  entries: LessonEntry[];
-};
-
 export type ChallengeOptions = {
   playerLanguages: Language[];
   lessonLanguages: Language[];
   lessonLevels: Level[];
 };
-
-export type LessonDetails = Omit<Lesson, "entries">;
 
 export type PronunciationResult = {
   type: "pronunciation";
