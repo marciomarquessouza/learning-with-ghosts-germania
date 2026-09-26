@@ -32,8 +32,6 @@ export async function loadDayContent({
 
   const lesson = LessonDefinitionSchema.parse(lessonModule.default);
 
-  console.log("#localeModule.default", localeModule.default);
-
   const locales = LocalesSchema.parse(localeModule.default);
 
   const audio = AudioManifestSchema.parse(audioModule.default);
