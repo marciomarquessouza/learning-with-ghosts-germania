@@ -13,7 +13,8 @@
     "sprite": "node scripts/animations/build-spritesheet.mjs",
     "update-spritesheets-constants": "node scripts/animations/update-spritesheets-constants.mjs",
     "storybook": "storybook dev -p 6006",
-    "build-storybook": "storybook build"
+    "build-storybook": "storybook build",
+    "content:generate": "node scripts/lesson/generate-content-importers.mjs"
   },
   "dependencies": {
     "@vercel/analytics": "^1.6.1",
