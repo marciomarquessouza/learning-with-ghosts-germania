@@ -24,7 +24,6 @@ export function composeLesson({
     limits: lesson.limits,
 
     entries: Object.entries(lesson.entries).map(([id, entry]) => {
-      console.log("#localizedEntry", locale.entries);
       const localizedEntry = locale.entries[id];
       const audioEntry = audio[id];
 

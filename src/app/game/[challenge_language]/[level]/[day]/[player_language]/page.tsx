@@ -35,3 +35,14 @@ export default async function GamePage({ params }: Params) {
 
   return <GamePageClient day={day} dayContent={dayContent} />;
 }
+
+// export function generateStaticParams() {
+//   return [
+//     {
+//       challenge_language: "de-DE",
+//       level: "A1-1",
+//       day: 1,
+//       player_language: "en-UK",
+//     },
+//   ];
+// }

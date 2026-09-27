@@ -1,21 +1,10 @@
 import { NextResponse } from "next/server";
 import { DeepgramTranscriptionResponse } from "@/server/types";
-import { calculatePronunciationScore } from "@/server/lessons/pronunciation/calculatePronunciationScore";
+import { calculatePronunciationScore } from "@/libs/pronunciation/calculatePronunciationScore";
 import { PronunciationResult } from "@/libs/lesson/PronunciationAPI";
+import { createMockPronunciationResult } from "@/libs/pronunciation/createMockPronunciationResult";
 
 export const runtime = "nodejs";
-
-function createMockPronunciationResult(target: string): PronunciationResult {
-  const transcript = target;
-  const words = target.trim().split(/\s+/).filter(Boolean);
-
-  return {
-    pronunciationScore: calculatePronunciationScore(target, transcript),
-    confidence: 0.99,
-    transcript,
-    words,
-  };
-}
 
 export async function POST(
   request: Request,

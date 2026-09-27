@@ -1,4 +1,6 @@
 import { PRONUNCIATION_FEEDBACK_THRESHOLDS } from "@/constants/game";
+import { MOCK_PRONUNCIATION_API } from "@/constants/lesson";
+import { createMockPronunciationResult } from "../pronunciation/createMockPronunciationResult";
 
 export interface PronunciationCharacterResult {
   id: string;
@@ -34,6 +36,18 @@ export class PronunciationAPI {
     score: PronunciationScore;
     feedback: PronunciationFeedback;
   }> {
+    if (MOCK_PRONUNCIATION_API) {
+      const data = createMockPronunciationResult(target);
+      const accuracyPercentage =
+        data?.pronunciationScore?.accuracyPercentage ?? 0;
+      const pronunciationFeedback = this.getScoreFeedback(accuracyPercentage);
+      return Promise.resolve({
+        transcript: data?.transcript ?? "",
+        score: data.pronunciationScore,
+        feedback: pronunciationFeedback,
+      });
+    }
+
     const formData = new FormData();
     formData.append("audio", audioBlob, "recording.webm");
     formData.append("target", target);
