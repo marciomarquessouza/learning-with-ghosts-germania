@@ -1,7 +1,7 @@
 {
-  "description": "",
-  "lore": "",
-  "plannedLessons": "",
+  "description": "Description",
+  "lore": "Lone",
+  "plannedLessons": "-Ye",
   "plannedDays": 20,
   "locales": ["pt-BR"]
 }
