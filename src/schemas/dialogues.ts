@@ -2,7 +2,7 @@ import { z } from "zod";
 
 import { ACTORS } from "@/constants/game";
 import { DialogueKey } from "@/constants/dialogues";
-import { CharacterMoodSchema, GameSceneSchema } from "./game";
+import { CharacterMoodSchema } from "./game";
 
 /**
  * Interaction Type
